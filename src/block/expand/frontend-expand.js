@@ -45,12 +45,18 @@ class StackableExpand {
 		}
 
 		els.forEach( el => {
-			el.addEventListener( 'click', onClick )
+			if ( ! el._StackableHasInitExpand ) {
+				el.addEventListener( 'click', onClick )
+				el._StackableHasInitExpand = true
+			}
 		} )
 
 		blocks.forEach( block => {
-			fixAriaAttributes( block )
-			addAriaAttributes( block )
+			if ( ! block._StackableHasInitExpandFix ) {
+				fixAriaAttributes( block )
+				addAriaAttributes( block )
+				block._StackableHasInitExpandFix = true
+			}
 		} )
 	}
 }

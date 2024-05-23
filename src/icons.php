@@ -19,60 +19,43 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 		 * Initialize
 		 */
         function __construct() {
-			// Enqueue our FA Kit.
-			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+			add_action( 'admin_init', array( $this, 'register_icon_settings' ) );
+			add_action( 'rest_api_init', array( $this, 'register_icon_settings' ) );
 
-			// Add our FA Kit as a dependency to our editor script.
-			add_filter( 'stackable_editor_js_dependencies', array( $this, 'add_kit_dependency' ) );
-			// Deprecated v2 call.
-			add_filter( 'stackable_editor_js_dependencies_v2', array( $this, 'add_kit_dependency' ) );
+			// Make our settings available in the editor.
+			add_action( 'stackable_localize_script', array( $this, 'add_settings' ) );
 		}
 
 		/**
-		 * Add our Font Awesome script as a dependency on our editor script.
-		 *
-		 * @param array $deps
-		 * @return array
-		 */
-		public function add_kit_dependency( $deps ) {
-			$deps[] = 'ugb-font-awesome-kit';
-			return $deps;
-		}
-
-		/**
-		 * Enqueue our Font Awesome free kit.
+		 * Register the setting to select FontAwesome version
 		 *
 		 * @return void
 		 */
-		public function enqueue_block_editor_assets() {
-			// Load our Free Font Awesome Icons.
-			if ( apply_filters( 'stackable_load_font_awesome_kit', true ) ) {
-				wp_enqueue_script(
-					'ugb-font-awesome-kit',
-					// 'https://kit.fontawesome.com/9664e939d9.js', // This is our free kit.
-					'https://use.fontawesome.com/releases/v5.15.4/js/all.js',
-					null,
-					null,
-					true
-				);
-
-				// Add FA parameters to the script tag.
-				add_filter( 'script_loader_tag', array( $this, 'script_loader_tag' ), 10, 2 );
-			}
+		public function register_icon_settings() {
+			register_setting(
+				'stackable_icons',
+				'stackable_icons_fa_free_version',
+				array(
+					'type' => 'string',
+					'description' => __( 'Select FontAwesome version', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
 		}
 
 		/**
-		 * Added the necessary parameters to the FA Kit.
+		 * Add the JS variables needed by our icon settings.
 		 *
-		 * @param string $html
-		 * @param string $handle
-		 * @return string The script that will be printed on the header.
+		 * @param array $args
+		 * @return array
 		 */
-		public function script_loader_tag( $html, $handle ) {
-			if ( $handle === 'ugb-font-awesome-kit' ) {
-				$html = str_replace( '></script>', ' crossorigin="anonymous" data-auto-replace-svg="false" data-auto-add-css="false" data-family-prefix="fa" data-observe-mutations="false" data-show-missing-icons="false" async></script>', $html );
-			}
-			return $html;
+		public function add_settings( $args ) {
+			return array_merge( $args, array(
+				'iconsFaFreeKitVersion' => get_option( 'stackable_icons_fa_free_version' ),
+			) );
+			return $args;
 		}
 	}
 

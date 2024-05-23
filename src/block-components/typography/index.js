@@ -28,7 +28,7 @@ import {
 	memo,
 } from '@wordpress/element'
 
-export { deprecateTypographyGradientColor } from './deprecated'
+export { deprecateTypographyGradientColor, deprecateTypographyShadowColor } from './deprecated'
 
 export const Typography = memo( forwardRef( ( props, ref ) => {
 	const {
@@ -44,6 +44,7 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 		defaultValue,
 		withoutInteractiveFormatting = false,
 		allowedFormats = null,
+		enableDebounce = true, // If false, onChange will be called immediately.
 		...propsToPass
 	} = props
 
@@ -81,7 +82,7 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 
 	useEffect( () => {
 		let timeout
-		if ( value !== debouncedText ) {
+		if ( value !== debouncedText && enableDebounce ) {
 			timeout = setTimeout( () => {
 				onChange( debouncedText || defaultValue )
 			}, 300 )
@@ -102,7 +103,13 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 			className={ className }
 			tagName={ TagName }
 			value={ dynamicContentText }
-			onChange={ setDebouncedText }
+			onChange={ value => {
+				if ( enableDebounce ) {
+					setDebouncedText( value )
+				} else {
+					onChange( value )
+				}
+			 } }
 			ref={ ref }
 			withoutInteractiveFormatting={ withoutInteractiveFormatting }
 			allowedFormats={ allowedFormats }

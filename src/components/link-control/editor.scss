@@ -1,5 +1,6 @@
 .stk-link-control__input {
-	width: 100%;
+	// Adjust width to ensure reset button is visible.
+	width: calc(100% - 32px);
 
 	> .block-editor-link-control {
 		min-width: auto;
@@ -88,6 +89,10 @@
 
 		.stk-link-control__input {
 			margin-top: -1px;
+		}
+
+		.components-button.is-compact.has-icon:not(.has-text) {
+			margin-top: 2px;
 		}
 	}
 }

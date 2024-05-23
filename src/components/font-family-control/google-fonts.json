@@ -157,6 +157,27 @@
     ]
   },
   {
+    "family": "Afacad",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Agbalumo",
     "variants": [
       "regular"
@@ -526,7 +547,10 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -535,7 +559,10 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -1060,6 +1087,20 @@
     ]
   },
   {
+    "family": "Annapurna SIL",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Annie Use Your Telescope",
     "variants": [
       "regular"
@@ -1081,6 +1122,18 @@
       "greek",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Anta",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -1510,7 +1563,11 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -2848,7 +2905,9 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -4576,6 +4635,17 @@
     ]
   },
   {
+    "family": "Danfo",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Dangrek",
     "variants": [
       "regular"
@@ -4624,6 +4694,8 @@
       "hebrew",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -6108,6 +6180,17 @@
     ]
   },
   {
+    "family": "Freeman",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Fresca",
     "variants": [
       "regular"
@@ -6345,12 +6428,12 @@
     "family": "Gelasio",
     "variants": [
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -6870,6 +6953,9 @@
       "regular"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -7229,6 +7315,30 @@
     ]
   },
   {
+    "family": "Hedvig Letters Sans",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Hedvig Letters Serif",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Heebo",
     "variants": [
       "100",
@@ -7243,7 +7353,10 @@
     ],
     "subsets": [
       "hebrew",
-      "latin"
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -7407,6 +7520,19 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Honk",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
     ]
   },
   {
@@ -8110,6 +8236,74 @@
     ]
   },
   {
+    "family": "Jacquard 12",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Jacquard 12 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Jacquard 24",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jacquard 24 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jacquarda Bastarda 9",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Jacquarda Bastarda 9 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Jacques Francois",
     "variants": [
       "regular"
@@ -8128,6 +8322,28 @@
     ]
   },
   {
+    "family": "Jaini",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jaini Purva",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Jaldi",
     "variants": [
       "regular",
@@ -8135,6 +8351,97 @@
     ],
     "subsets": [
       "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jaro",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Jersey 10",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 10 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 15",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 15 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 20",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 20 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 25",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 25 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]
@@ -8526,6 +8833,23 @@
     ]
   },
   {
+    "family": "Kalnia",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math"
+    ]
+  },
+  {
     "family": "Kameron",
     "variants": [
       "regular",
@@ -8894,6 +9218,19 @@
     ]
   },
   {
+    "family": "Kode Mono",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Koh Santepheap",
     "variants": [
       "100",
@@ -9118,7 +9455,8 @@
     "subsets": [
       "latin",
       "latin-ext",
-      "math"
+      "math",
+      "symbols"
     ]
   },
   {
@@ -9940,6 +10278,8 @@
       "cyrillic-ext",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -9960,7 +10300,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10235,6 +10576,18 @@
       "arabic",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Madimi One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -10888,6 +11241,30 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Micro 5",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Micro 5 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -11609,6 +11986,21 @@
     ]
   },
   {
+    "family": "Namdhinggo",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "limbu"
+    ]
+  },
+  {
     "family": "Nanum Brush Script",
     "variants": [
       "regular"
@@ -11666,12 +12058,18 @@
   {
     "family": "Narnoor",
     "variants": [
-      "regular"
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
     ],
     "subsets": [
       "gunjala-gondi",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -11935,7 +12333,11 @@
       "900"
     ],
     "subsets": [
-      "arabic"
+      "arabic",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -11960,7 +12362,9 @@
     "subsets": [
       "arabic",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12000,22 +12404,22 @@
     "family": "Noto Sans",
     "variants": [
       "100",
-      "100italic",
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
-      "800italic",
       "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -12206,7 +12610,9 @@
     "subsets": [
       "brahmi",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12247,7 +12653,9 @@
     "subsets": [
       "canadian-aboriginal",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12329,7 +12737,9 @@
     "subsets": [
       "chorasmian",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12516,9 +12926,13 @@
       "900"
     ],
     "subsets": [
+      "cyrillic-ext",
       "georgian",
+      "greek-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12530,7 +12944,9 @@
       "cyrillic-ext",
       "glagolitic",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12571,7 +12987,9 @@
     "subsets": [
       "gujarati",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -13190,7 +13608,9 @@
     "subsets": [
       "latin",
       "latin-ext",
-      "mongolian"
+      "math",
+      "mongolian",
+      "symbols"
     ]
   },
   {
@@ -14362,7 +14782,9 @@
     "subsets": [
       "gujarati",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -14432,11 +14854,15 @@
       "500",
       "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
+      "cyrillic",
       "japanese",
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -14448,11 +14874,15 @@
       "500",
       "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
+      "cyrillic",
       "korean",
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -14642,11 +15072,15 @@
       "500",
       "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
       "chinese-simplified",
-      "latin"
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -14677,11 +15111,15 @@
       "500",
       "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
       "chinese-traditional",
-      "latin"
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -14835,6 +15273,19 @@
       "latin",
       "latin-ext",
       "nushu"
+    ]
+  },
+  {
+    "family": "Noto Znamenny Musical Notation",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "znamenny"
     ]
   },
   {
@@ -15031,6 +15482,25 @@
     ]
   },
   {
+    "family": "Ojuju",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Old Standard TT",
     "variants": [
       "regular",
@@ -15143,6 +15613,8 @@
       "hebrew",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -15916,6 +16388,28 @@
     ]
   },
   {
+    "family": "Platypi",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Play",
     "variants": [
       "regular",
@@ -16020,10 +16514,10 @@
       "800"
     ],
     "subsets": [
+      "emoji",
       "latin",
       "latin-ext",
       "math",
-      "symbols",
       "vietnamese"
     ]
   },
@@ -16067,6 +16561,16 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Poetsen One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -16173,7 +16677,6 @@
       "900italic"
     ],
     "subsets": [
-      "devanagari",
       "latin",
       "latin-ext"
     ]
@@ -16340,6 +16843,58 @@
       "cyrillic",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Protest Guerrilla",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Protest Revolution",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Protest Riot",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Protest Strike",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
     ]
   },
   {
@@ -16594,6 +17149,23 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Radio Canada Big",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -16933,6 +17505,68 @@
     ]
   },
   {
+    "family": "Reddit Mono",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Reddit Sans",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Reddit Sans Condensed",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Redressed",
     "variants": [
       "regular"
@@ -17000,6 +17634,25 @@
     "subsets": [
       "cyrillic",
       "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rethink Sans",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]
@@ -17262,7 +17915,6 @@
       "regular"
     ],
     "subsets": [
-      "cyrillic",
       "japanese",
       "latin",
       "latin-ext"
@@ -17435,6 +18087,21 @@
     ]
   },
   {
+    "family": "Rubik Broken Fax",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Rubik Bubbles",
     "variants": [
       "regular"
@@ -17487,6 +18154,36 @@
     ]
   },
   {
+    "family": "Rubik Doodle Shadow",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Rubik Doodle Triangles",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Rubik Gemstones",
     "variants": [
       "regular"
@@ -17513,6 +18210,21 @@
     ]
   },
   {
+    "family": "Rubik Glitch Pop",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Rubik Iso",
     "variants": [
       "regular"
@@ -17523,6 +18235,36 @@
       "hebrew",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Lines",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Rubik Maps",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -17612,6 +18354,21 @@
       "hebrew",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Scribble",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -17733,7 +18490,9 @@
     "subsets": [
       "cyrillic",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -18194,6 +18953,27 @@
     ]
   },
   {
+    "family": "Sedan",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Sedan SC",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Sedgwick Ave",
     "variants": [
       "regular"
@@ -18569,6 +19349,18 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Sixtyfour",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -19555,6 +20347,19 @@
     ]
   },
   {
+    "family": "Tac One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Tai Heritage Pro",
     "variants": [
       "regular",
@@ -19651,6 +20456,26 @@
       "latin-ext",
       "thai",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Teachers",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "greek-ext",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -20270,6 +21095,56 @@
       "regular",
       "italic",
       "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Ubuntu Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Ubuntu Sans Mono",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -20910,6 +21785,17 @@
     ]
   },
   {
+    "family": "Workbench",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Xanh Mono",
     "variants": [
       "regular",
@@ -20949,8 +21835,11 @@
     ],
     "subsets": [
       "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -20968,6 +21857,50 @@
       "devanagari",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Yarndings 12",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Yarndings 12 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Yarndings 20",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Yarndings 20 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -21093,6 +22026,8 @@
       "greek",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -21124,6 +22059,8 @@
       "greek",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -21155,6 +22092,8 @@
       "greek",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -21177,6 +22116,8 @@
       "greek",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },

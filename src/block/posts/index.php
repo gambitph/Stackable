@@ -23,28 +23,16 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		$readmore_text = $attributes['readmoreText'];
 		$meta_separator = $attributes['metaSeparator'];
 		$category_highlighted = $attributes['categoryHighlighted'];
+		$post_id = $post['ID'];
 
 		$new_template = $template;
+
 		// Featured Image.
-		$featured_image = '';
-		$post_id = $post['ID'];
-		$featured_image_id = get_post_thumbnail_id( $post_id );
+		if ( strpos( $new_template, '<img' ) !== false || strpos( $new_template, '<figure' ) !== false ) {
+			$featured_image = '';
 
-		if ( ! empty( $featured_image_id ) ) {
-			$featured_image_urls = Stackable_Posts_Block::get_featured_image_urls_from_attachment_id( $featured_image_id );
-			$featured_image_src = array_key_exists( $image_size, $featured_image_urls ) ? $featured_image_urls[ $image_size ] : $featured_image_urls['full'];
-			if ( ! empty( $featured_image_src ) ) {
-				$image_alt = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
-				$thumbnail = get_the_post_thumbnail(
-					$post_id,
-					$image_size,
-					array(
-						'alt' => esc_attr( ! empty( $image_alt ) ? $image_alt : '' ),
-						'width' => esc_attr( $featured_image_src[1] ),
-						'height' => esc_attr( $featured_image_src[2] ),
-					)
-				);
-
+			$thumbnail = get_the_post_thumbnail( $post_id, $image_size );
+			if ( ! empty( $thumbnail ) ) {
 				// Get the image tag in the thumbnail markup.
 				preg_match( "/<img[^\>]*>/", $thumbnail, $match );
 
@@ -55,79 +43,94 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 					$featured_image = preg_replace( "/<img[^\>]*>/", $new_img, $thumbnail );
 				}
 			}
-		}
 
-		// If the featured_image is empty, remove the markup.
-		if ( empty( $featured_image ) ) {
-			$new_template = preg_replace( '/<figure[^>]*>(.*)<\/figure>/', '', $new_template );
-		} else {
-			$new_template = preg_replace( '/<img[^>]*>/', $featured_image, $new_template );
+			// If the featured_image is empty, remove the markup.
+			if ( empty( $featured_image ) ) {
+				$new_template = preg_replace( '/<figure[^>]*>(.*)<\/figure>/', '', $new_template );
+			} else {
+				$new_template = preg_replace( '/<img[^>]*>/', $featured_image, $new_template );
+			}
 		}
 
 		// Title.
-		$title = get_the_title( $post_id );
-		if ( ! $title ) {
-			$title = __( '(Untitled)', STACKABLE_I18N );
+		if ( strpos( $new_template, '!#title!#' ) !== false ) {
+			$title = $post['post_title'];
+			if ( empty( $title ) ) {
+				$title = __( '(Untitled)', STACKABLE_I18N );
+			}
+			$new_template = str_replace( '!#title!#', $title, $new_template );
 		}
-		$new_template = str_replace( '!#title!#', $title, $new_template );
 
 		// Category.
-		$category = Stackable_Posts_Block::get_category_list_by_id( $post_id );
-		if ( $category_highlighted ) {
-			preg_match_all( '/<a href="([^"]*)"[^>]*>([^<]*)<\/a>/', $category, $matches );
-			foreach ( $matches[0] as $i=>$match ) {
-				$href = $matches[1][$i];
-				$category_title = $matches[2][$i];
-				$category = str_replace( "<a href=\"$href\"", "<a class=\"stk-button\" href=\"$href\"", $category );
-				$category = str_replace( ">$category_title<", "><span class=\"stk-button__inner-text\">$category_title</span><", $category );
+		if ( strpos( $new_template, '!#category!#' ) !== false ) {
+			$category = Stackable_Posts_Block::get_category_list_by_id( $post_id );
+			if ( $category_highlighted ) {
+				preg_match_all( '/<a href="([^"]*)"[^>]*>([^<]*)<\/a>/', $category, $matches );
+				foreach ( $matches[0] as $i=>$match ) {
+					$href = $matches[1][$i];
+					$category_title = $matches[2][$i];
+					$category = str_replace( "<a href=\"$href\"", "<a class=\"stk-button\" href=\"$href\"", $category );
+					$category = str_replace( ">$category_title<", "><span class=\"stk-button__inner-text\">$category_title</span><", $category );
+				}
 			}
+
+			$new_template = str_replace( '!#category!#', $category, $new_template );
 		}
 
-		$new_template = str_replace( '!#category!#', $category, $new_template );
-
 		// Separator.
-		$separator = Stackable_Posts_Block::meta_separators[ $meta_separator ];
-		$new_template = str_replace( '!#metaSeparator!#', $separator, $new_template );
+		if ( strpos( $new_template, '!#metaSeparator!#' ) !== false ) {
+			$separator = Stackable_Posts_Block::meta_separators[ $meta_separator ];
+			$new_template = str_replace( '!#metaSeparator!#', $separator, $new_template );
+		}
+
 		// Author.
-		$author = esc_html( get_the_author_meta( 'display_name', $post['post_author'] ) );
-		$new_template = str_replace( '!#authorName!#', $author, $new_template );
+		if ( strpos( $new_template, '!#authorName!#' ) !== false ) {
+			$author = esc_html( get_the_author_meta( 'display_name', $post['post_author'] ) );
+			$new_template = str_replace( '!#authorName!#', $author, $new_template );
+		}
 
 		// Date.
-		$datetime = get_the_date( 'c', $post_id );
-		$date = get_the_date( '', $post_id );
-		$new_template = str_replace( '!#dateTime!#', $datetime, $new_template );
-		$new_template = str_replace( '!#date!#', $date, $new_template );
+		if ( strpos( $new_template, '!#dateTime!#' ) !== false || strpos( $new_template, '!#date!#' ) !== false ) {
+			$datetime = date( 'c', strtotime( $post['post_date'] ) );
+			$date_format = get_option( 'date_format' );
+			if ( empty( $date_format ) ) {
+				$date_format = 'F j, Y';
+			}
+			$date = date( $date_format, strtotime( $post['post_date'] ) );
+			$new_template = str_replace( '!#dateTime!#', $datetime, $new_template );
+			$new_template = str_replace( '!#date!#', $date, $new_template );
+		}
 
 		// Comments.
-		$num = get_comments_number( $post_id );
-		$num = sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
-		$new_template = str_replace( '!#commentsNum!#', $num, $new_template );
+		if ( strpos( $new_template, '!#commentsNum!#' ) !== false ) {
+			$num = get_comments_number( $post_id );
+			$num = sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
+			$new_template = str_replace( '!#commentsNum!#', $num, $new_template );
+		}
 
 		// Excerpt.
-		$excerpt = Stackable_Posts_Block::get_excerpt_by_post_id( $post_id, $post );
+		if ( strpos( $new_template, '!#excerpt!#' ) !== false ) {
+			$excerpt = Stackable_Posts_Block::get_excerpt_by_post_id( $post_id, $post, (int) $excerpt_length );
 
-		// Trim the excerpt.
-		if ( ! empty( $excerpt ) ) {
-			$excerpt = explode( ' ', $excerpt );
-			$trim_to_length = (int) $excerpt_length;
-			if ( count( $excerpt ) > $trim_to_length ) {
-				$excerpt = implode( ' ', array_slice( $excerpt, 0, $trim_to_length ) ) . '...';
+			// Trim the excerpt.
+			if ( ! empty( $excerpt ) ) {
+				$excerpt = wp_kses_post( $excerpt );
+				$new_template = str_replace( '!#excerpt!#', $excerpt, $new_template );
 			} else {
-				$excerpt = implode( ' ', $excerpt );
+				// If the excerpt is empty, remove the markup.
+				$new_template = preg_replace( '/<div class="stk-block-posts__excerpt">!#excerpt!#<\/div>/', '', $new_template );
 			}
-
-			$excerpt = wp_kses_post( $excerpt );
-			$new_template = str_replace( '!#excerpt!#', $excerpt, $new_template );
-		} else {
-			// If the excerpt is empty, remove the markup.
-			$new_template = preg_replace( '/<div class="stk-block-posts__excerpt">!#excerpt!#<\/div>/', '', $new_template );
 		}
 
 		// Post Link.
-		$new_template = str_replace( '!#postLink!#', esc_url( get_permalink( $post_id ) ), $new_template );
+		if ( strpos( $new_template, '!#postLink!#' ) !== false ) {
+			$new_template = str_replace( '!#postLink!#', esc_url( get_permalink( $post_id ) ), $new_template );
+		}
 
 		// Read More Link.
-		$new_template = str_replace( '!#readmoreText!#', esc_html( $readmore_text ), $new_template );
+		if ( strpos( $new_template, '!#readmoreText!#' ) !== false ) {
+			$new_template = str_replace( '!#readmoreText!#', esc_html( $readmore_text ), $new_template );
+		}
 
 		return $new_template;
 	}
@@ -213,83 +216,21 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @since 3.0.0
 		 */
 		public function register_rest_fields() {
-			$post_types = get_post_types( array( 'public' => true ), 'objects' );
-
-			foreach ( $post_types as $post_type => $data ) {
-				if ( $post_type === 'attachment' ) {
-					continue;
-				}
-
-				// Feature image urls.
-				register_rest_field( $post_type, 'featured_image_urls',
-					array(
-						'get_callback' => array( 'Stackable_Posts_Block', 'get_featured_image_urls' ),
-						'update_callback' => null,
-						'schema' => array(
-							'description' => __( 'Different sized featured images', STACKABLE_I18N ),
-							'type' => 'array',
-						)
-					)
-				);
-
-				// Excerpt.
-				register_rest_field( $post_type, 'post_excerpt_stackable',
-					array(
-						'get_callback' => array( 'Stackable_Posts_Block', 'get_excerpt' ),
-						'update_callback' => null,
-						'schema' => array(
-							'description' => __( 'Post excerpt for Stackable', STACKABLE_I18N ),
-							'type' => 'string',
-						),
-					)
-				);
-
-				// Category links.
-				register_rest_field( $post_type, 'category_list',
-					array(
-						'get_callback' => array( 'Stackable_Posts_Block', 'get_category_list' ),
-						'update_callback' => null,
-						'schema' => array(
-							'description' => __( 'Category list links', STACKABLE_I18N ),
-							'type' => 'string',
-						),
-					)
-				);
-
-				// Author name.
-				register_rest_field( $post_type, 'author_info',
-					array(
-						'get_callback' => array( 'Stackable_Posts_Block', 'get_author_info' ),
-						'update_callback' => null,
-						'schema' => array(
-							'description' => __( 'Author information', STACKABLE_I18N ),
-							'type' => 'array',
-						),
-					)
-				);
-
-				// Number of comments.
-				register_rest_field( $post_type, 'comments_num',
-					array(
-						'get_callback' => 'stackable_commments_number_v2',
-						'get_callback' => array( 'Stackable_Posts_Block', 'get_comments_number' ),
-						'update_callback' => null,
-						'schema' => array(
-							'description' => __( 'Number of comments', STACKABLE_I18N ),
-							'type' => 'number',
-						),
-					)
-				);
-
-				// API endpoint for getting all the terms/taxonomies.
-				register_rest_route( 'stackable/v3', '/terms', array(
-					'methods' => 'GET',
-					'callback' => array( 'Stackable_Posts_Block', 'get_terms' ),
-					'permission_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
-				) );
-			}
+			// API endpoint for getting all the terms/taxonomies.
+			register_rest_route( 'stackable/v3', '/terms', array(
+				'methods' => 'GET',
+				'callback' => array( 'Stackable_Posts_Block', 'get_terms' ),
+				'permission_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
+			) );
+			register_rest_route( 'stackable/v3', '/get_posts', array(
+				'methods' => 'GET',
+				'callback' => array( $this, 'get_posts' ),
+				'permission_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
+			) );
 		}
 
 		/**
@@ -327,20 +268,12 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				'excludeCurrentPost' => false,
 			);
 
-			$out = array();
-			foreach ( $attributes as $name => $value ) {
-				$out[ $name ] = $value;
+			// Make sure we have the default values.
+			foreach ( $default_attributes as $name => $default_value ) {
+				$attributes[ $name ] = isset( $attributes[ $name ] ) && $attributes[ $name ] !== '' ? $attributes[ $name ] : $default_value;
 			}
-			foreach ( $default_attributes as $name => $default ) {
-				if ( array_key_exists( $name, $out ) ) {
-					if ( $out[ $name ] === '' ) {
-						$out[ $name ] = $default;
-					}
-				} else {
-					$out[ $name ] = $default;
-				}
-			}
-			return $out;
+
+			return $attributes;
 		}
 
 		/**
@@ -404,19 +337,20 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * Render the post items
 		 */
 		public function render_post_items( $to_replace, $template, $content, $attributes, $query_string ) {
-			$posts = '';
 			$post_query = generate_post_query_from_stackable_posts_block( $attributes, $query_string );
 			$recent_posts = wp_get_recent_posts( $post_query );
+
 			// Manually slice the array based on the number of posts per page.
 			if ( is_array( $recent_posts ) && count( $recent_posts ) > (int) $post_query['numberposts'] ) {
 				$recent_posts = array_slice( $recent_posts, 0, (int) $post_query['numberposts'] );
 			}
 
+			$posts = array();
 			foreach ( $recent_posts as $post ) {
-				$posts .= generate_render_item_from_stackable_posts_block( $post, $attributes, $template );
+				$posts[] = generate_render_item_from_stackable_posts_block( $post, $attributes, $template );
 			}
 
-			$new_content = str_replace( $to_replace, $posts, $content );
+			$new_content = str_replace( $to_replace, implode( '', $posts ), $content );
 			return $new_content;
 		}
 
@@ -440,25 +374,15 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		}
 
 		/**
-		 * Get the featured image URLs.
-		 *
-		 * @param array post object
-		 *
-		 * @return array featured image URLs
-		 */
-		public static function get_featured_image_urls( $object, $field_name, $request ) {
-			return Stackable_Posts_Block::get_featured_image_urls_from_attachment_id( ! empty( $object['featured_media'] ) ? $object['featured_media'] : '' );
-		}
-
-		/**
 		 * Get the post excerpt by post ID
 		 *
 		 * @param string $post_id
 		 * @param array $post
+		 * @param int $max_excerpt Defaults to 55 (WordPress default)
 		 *
 		 * @return string the excerpt.
 		 */
-		public static function get_excerpt_by_post_id( $post_id, $post = null ) {
+		public static function get_excerpt_by_post_id( $post_id, $post = null, $max_excerpt = 55 ) {
 			// Remove jetpack sharing button.
 			add_filter( 'sharing_show', '__return_false' );
 			$excerpt = get_post_field( 'post_excerpt', $post_id, 'display' );
@@ -468,8 +392,6 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			}
 
 			if ( empty( $excerpt ) ) {
-				$max_excerpt = 100; // WP default is 55.
-
 				// If there's post content given to us, trim it and use that.
 				if ( ! empty( $post['post_content'] ) ) {
 					$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
@@ -483,21 +405,9 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 					}
 				}
 			}
-
 			// Remove the jetpack sharing button filter.
 			remove_filter( 'sharing_show', '__return_false' );
 			return empty( $excerpt ) ? "" : $excerpt;
-		}
-
-		/**
-		 * Get the post excerpt
-		 *
-		 * @param array post object
-		 *
-		 * @return string the excerpt.
-		 */
-		public static function get_excerpt( $object ) {
-			return Stackable_Posts_Block::get_excerpt_by_post_id( $object['id'] );
 		}
 
 		/**
@@ -512,17 +422,6 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		}
 
 		/**
-		 * Get the category list
-		 *
-		 * @param array post object
-		 *
-		 * @return string the category list.
-		 */
-		public static function get_category_list( $object ) {
-			return Stackable_Posts_Block::get_category_list_by_id( $object['id'] );
-		}
-
-		/**
 		 * Get the author info
 		 *
 		 * @param array post object
@@ -530,7 +429,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @return author info.
 		 */
 		public static function get_author_info( $object ) {
-			if ( ! array_key_exists( 'author', $object ) ) {
+			if ( ! isset( $object['post_author'] ) ) {
 				return array(
 					'name' => '',
 					'url' => ''
@@ -538,8 +437,8 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			}
 
 			return array(
-				'name' => get_the_author_meta( 'display_name', $object['author'] ),
-				'url' => get_author_posts_url( $object['author'] )
+				'name' => get_the_author_meta( 'display_name', $object['post_author'] ),
+				'url' => get_author_posts_url( $object['post_author'] )
 			);
 		}
 
@@ -551,7 +450,10 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @return comments number.
 		 */
 		public static function get_comments_number( $object ) {
-			$num = get_comments_number( $object['id'] );
+			$num = 0;
+			if ( isset( $object['comment_count'] ) ) {
+				$num = $object['comment_count'];
+			}
 			return sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
 		}
 
@@ -597,9 +499,36 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 
 			return new WP_REST_Response( $return, 200 );
 		}
-	}
 
+		/**
+		 * Response handler for getting the queried posts
+		 *
+		 * @param WP_Request $request
+		 * @return string the API response
+		 */
+		public function get_posts( $request ) {
+			$args = $request->get_query_params();
+
+			$query = new WP_Query( $args );
+
+			foreach ( $query->posts as $key=>$post ) {
+				$post_array = $post->to_array();
+
+				if ( isset($args['max_excerpt'] ) && is_int( $args['max_excerpt'] ) ) {
+					$query->posts[$key]->post_excerpt_stackable = $this->get_excerpt_by_post_id( $post->ID, $post_array, $args['max_excerpt'] );
+				} else {
+					$query->posts[$key]->post_excerpt_stackable = $this->get_excerpt_by_post_id( $post->ID, $post_array );
+				}
+
+				$query->posts[$key]->comments_num = $this->get_comments_number( $post_array );
+				$query->posts[$key]->author_info = $this->get_author_info( $post_array );
+				$query->posts[$key]->category_list = $this->get_category_list_by_id( $post->ID );
+				$query->posts[$key]->featured_image_urls = $this->get_featured_image_urls_from_attachment_id( get_post_thumbnail_id($post->ID) );
+			}
+
+			return new WP_REST_Response( $query->posts, 200 );
+		}
+	}
 
 	new Stackable_Posts_Block();
 }
-

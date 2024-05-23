@@ -79,6 +79,9 @@ export const getVideoProviderFromURL = url => {
 	if ( ! id ) {
 		id = ( url.match( /youtu\.be\/([^\&\?\/]+)/i ) || [] )[ 1 ]
 	}
+	if ( ! id ) {
+		id = ( url.match( /youtube\.com\/shorts\/([^\&\?\/]+)/i ) || [] )[ 1 ]
+	}
 
 	if ( id ) {
 		return {
@@ -88,7 +91,11 @@ export const getVideoProviderFromURL = url => {
 	}
 
 	// Check for Vimeo.
-	id = ( url.match( /vimeo\.com\/(\w*\/)*(\d+)/i ) || [] )[ 2 ]
+	id = ( url.match( /vimeo\.com\/(\d+)/i ) || [] )[ 1 ] // https://vimeo.com/VIDEO_ID or https://vimeo.com/VIDEO_ID/PRIVACY_HASH
+
+	if ( ! id ) {
+		id = ( url.match( /vimeo\.com\/(\w*\/)*(\d+)/i ) || [] )[ 2 ] // https://vimeo.com/CATEGORY/IDENTIFIER/VIDEO_ID
+	}
 	if ( ! id ) {
 		id = ( url.match( /^\d+$/i ) || [] )[ 0 ]
 	}

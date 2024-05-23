@@ -13,9 +13,10 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
+	AdvancedToggleControl,
 	IconControl,
 	ColorPaletteControl,
-	IconSearchPopover,
+	AdvancedToolbarControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
 } from '~stackable/components'
@@ -38,17 +39,23 @@ import {
 	getAlignmentClasses,
 	Transform,
 } from '~stackable/block-components'
+import { useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { useSelect } from '@wordpress/data'
-import {
-	useRef, useEffect, useState,
-} from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
-import { createIconListControls, DEFAULT_SVG } from './util'
+import { DEFAULT_SVG, IconSvgDef } from './util'
 import { compose } from '@wordpress/compose'
+import { useInnerBlocksProps } from '@wordpress/block-editor'
+import { dispatch } from '@wordpress/data'
+import { addFilter } from '@wordpress/hooks'
+
+const ALLOWED_INNER_BLOCKS = [ 'stackable/icon-list-item' ]
+
+const TEMPLATE = [
+	[ 'stackable/icon-list-item', {	text: '' } ],
+]
 
 const listTypeOptions = [
 	{
@@ -58,6 +65,17 @@ const listTypeOptions = [
 	{
 		label: __( 'Ordered List', i18n ),
 		value: 'ordered',
+	},
+]
+
+const listDisplayOptions = [
+	{
+		label: __( 'List', i18n ), // uses  display: block & column-count
+		value: '',
+	},
+	{
+		label: __( 'Grid', i18n ), // uses display: grid & grid template columns
+		value: 'grid',
 	},
 ]
 
@@ -88,94 +106,54 @@ const listStyleTypeOptions = [
 	},
 ]
 
+const BORDER_CONTROLS = [
+	{
+		value: '',
+		title: __( 'None', i18n ),
+	},
+	{
+		value: 'solid',
+		title: __( 'Solid', i18n ),
+	},
+	{
+		value: 'dashed',
+		title: __( 'Dashed', i18n ),
+	},
+	{
+		value: 'dotted',
+		title: __( 'Dotted', i18n ),
+	},
+]
+
+const ICON_VERTICAL_ALIGN_OMIT = [ 'stretch' ]
+
 const Edit = props => {
-	const textRef = useRef()
-	const typographyWrapperRef = useRef()
-	const [ isOpenIconSearch, setIsOpenIconSearch ] = useState( false )
-	const [ iconSearchAnchor, setIconSearchAnchor ] = useState( null )
-	const [ selectedIconCSSSelector, setSelectedIconCSSSelector ] = useState( null )
-	const [ selectedEvent, setSelectedEvent ] = useState( null )
-	const {
-		isTyping,
-	} = useSelect( select => ( {
-		isTyping: select( 'core/block-editor' ).isTyping(),
-	} ) )
-
-	useEffect( () => {
-		// Click handler to detect whether an icon is clicked, and open the icon
-		// picker for that icon.
-		const iconClickHandler = event => {
-			// If li isn't clicked, close the icon search.
-			setSelectedEvent( event )
-			if ( event.target.tagName !== 'LI' || event.target.parentElement.tagName !== 'UL' ) {
-				return setIsOpenIconSearch( false )
-			}
-
-			/**
-			 * Check if the click is on the icon.
-			 */
-
-			if ( event.offsetX <= 2 ) {
-				// Get the selected li and show the icon picker on it.
-				const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
-				const { currentlyOpenIndex } = event.target.parentElement
-
-				if ( currentlyOpenIndex && currentlyOpenIndex === index ) {
-					event.target.parentElement.currentlyOpenIndex = undefined
-					return setIsOpenIconSearch( false )
-				}
-
-				event.target.parentElement.currentlyOpenIndex = index
-
-				/**
-				 * Get the CSS selector of the selected icon.
-				 *
-				 * @since 3.0.0
-				 */
-				let traverseToRichText = event.target
-				let found = null
-				while ( traverseToRichText.tagName !== 'DIV' ) {
-					for ( let i = 0; i < Array.from( traverseToRichText.parentElement.childNodes ).length; i++ ) {
-						if ( traverseToRichText.parentElement.childNodes[ i ] === traverseToRichText && found === null ) {
-							found = i + 1
-							break
-						}
-					}
-					traverseToRichText = traverseToRichText.parentElement
-				}
-
-				setSelectedIconCSSSelector( `ul li:nth-child(${ found })` )
-				setIconSearchAnchor( event.target )
-				return setIsOpenIconSearch( true )
-			}
-
-			// Hide the icon picker.
-			event.target.parentElement.currentlyOpenIndex = undefined
-			setIconSearchAnchor( null )
-			return setIsOpenIconSearch( false )
-		}
-
-		textRef.current.addEventListener( 'click', iconClickHandler )
-		return () => textRef.current?.removeEventListener( 'click', iconClickHandler )
-	}, [ setSelectedEvent, setSelectedIconCSSSelector, setIconSearchAnchor, setIsOpenIconSearch, textRef.current ] )
-
 	const {
 		clientId,
 		attributes,
 		setAttributes,
 		className,
 		isSelected,
-		onRemove,
-		mergeBlocks,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
-	const { ordered } = attributes
-	const tagName = ordered ? 'ol' : 'ul'
+	const {
+		ordered,
+		icon,
+		listItemBorderStyle,
+		listItemBorderColor,
+		listDisplayStyle,
+		listFullWidth,
+	} = attributes
+
+	const wrapList = ! listFullWidth && listDisplayStyle !== 'grid'
+	const TagName = ordered ? 'ol' : 'ul'
+	const ParentTagName = wrapList ? 'div' : TagName
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
+	const { innerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
@@ -184,47 +162,86 @@ const Edit = props => {
 		textClasses,
 	] )
 
-	const controls = createIconListControls( {
-		isSelected, tagName,
+	const tagNameClassNames = classnames( [
+		ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul',
+		listDisplayStyle && listDisplayStyle === 'grid' ? 'stk-block-icon-list--grid' : 'stk-block-icon-list--column',
+	] )
+
+	const resetCustomIcons = () => {
+		innerBlocks.forEach( block => {
+			dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, { icon: '' } )
+		} )
+	}
+
+	const innerBlocksProps = useInnerBlocksProps( {
+		className: tagNameClassNames,
+	}, {
+		allowedBlocks: ALLOWED_INNER_BLOCKS,
+		template: TEMPLATE,
+		templateInsertUpdatesSelection: true,
+		renderAppender: false,
+		__experimentalCaptureToolbars: true,
 	} )
 
 	return (
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
-
+					<InspectorTabs hasLayoutPanel={ false } />
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
 							title={ __( 'General', i18n ) }
 							initialOpen={ true }
 							id="general"
 						>
-							<AdvancedSelectControl
-								label={ __( 'List Type', i18n ) }
-								options={ listTypeOptions }
-								value={ ordered ? 'ordered' : 'unordered' }
-								onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
-								default="unordered"
+							<AlignButtonsControl
+								label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
+								attribute="listAlignment"
+								responsive="all"
 							/>
+							<AdvancedToggleControl
+								label={ __( 'Full Width', i18n ) }
+								attribute="listFullWidth"
+								defaultValue={ true }
+								help={ __( 'More noticeable when using wide layouts or list item borders', i18n ) }
+							/>
+							{ ! listFullWidth && (
+								<AlignButtonsControl
+									label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+									attribute="contentAlign"
+									responsive="all"
+									justified={ false }
+								/>
+							) }
 
 							<AdvancedRangeControl
 								label={ __( 'Columns', i18n ) }
 								attribute="columns"
 								min="1"
-								sliderMax="3"
+								sliderMax="4"
 								step="1"
 								placeholder="1"
 								responsive="all"
 							/>
 
-							<AdvancedRangeControl
-								label={ __( 'Column Gap', i18n ) }
-								attribute="columnGap"
-								min="0"
-								sliderMax="50"
-								responsive="all"
-							/>
+							{ attributes.columns > 1 && (
+								<AdvancedSelectControl
+									label={ __( 'List Display Style', i18n ) }
+									options={ listDisplayOptions }
+									attribute="listDisplayStyle"
+								/>
+							) }
+
+							{ attributes.columns > 1 && (
+								<AdvancedRangeControl
+									label={ __( 'Column Gap', i18n ) }
+									attribute="columnGap"
+									min="0"
+									sliderMax="50"
+									responsive="all"
+									placeholder="16"
+								/>
+							) }
 
 							<AdvancedRangeControl
 								label={ __( 'Row Gap', i18n ) }
@@ -240,6 +257,7 @@ const Edit = props => {
 								min="0"
 								sliderMax="20"
 								responsive="all"
+								placeholder="8"
 							/>
 
 							<AdvancedRangeControl
@@ -250,11 +268,7 @@ const Edit = props => {
 								responsive="all"
 								placeholder=""
 							/>
-							<AlignButtonsControl
-								label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
-								attribute="listAlignment"
-								responsive="all"
-							/>
+
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 
@@ -264,21 +278,42 @@ const Edit = props => {
 							initialOpen={ false }
 							id="icon-and-markers"
 						>
-							<IconControl
-								label={ __( 'Icon', i18n ) }
-								value={ attributes.icon }
-								onChange={ icon => {
-									// Reset custom individual icons.
-									setAttributes( { icon, icons: [] } )
-								} }
-								defaultValue={ DEFAULT_SVG }
-							/>
-
 							<AdvancedSelectControl
 								label={ __( 'List Type', i18n ) }
-								attribute="listType"
-								options={ listStyleTypeOptions }
+								options={ listTypeOptions }
+								value={ ordered ? 'ordered' : 'unordered' }
+								onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
+								default="unordered"
 							/>
+
+							{ ! attributes.ordered && (
+								<IconControl
+									label={ __( 'Icon', i18n ) }
+									value={ attributes.icon }
+									onChange={ icon => {
+										setAttributes( { icon } )
+										// Reset custom individual icons.
+										resetCustomIcons()
+									} }
+									defaultValue={ DEFAULT_SVG }
+								/>
+							) }
+
+							{ attributes.ordered && (
+								<AdvancedSelectControl
+									label={ __( 'List Type', i18n ) }
+									attribute="listType"
+									options={ listStyleTypeOptions }
+								/>
+							) }
+
+							{ attributes.ordered && (
+								<AdvancedToggleControl
+									label={ __( 'With Period', i18n ) }
+									attribute="hasPeriod"
+									defaultValue={ true }
+								/>
+							) }
 
 							<ColorPaletteControl
 								label={ __( 'Color', i18n ) }
@@ -287,14 +322,14 @@ const Edit = props => {
 							/>
 
 							<AdvancedRangeControl
-								label={ __( 'Icon / Number Size', i18n ) }
+								label={ sprintf( __( '%s Size', i18n ), ! attributes.ordered ? __( 'Icon', i18n ) : __( 'Number', i18n ) ) }
 								attribute="iconSize"
 								min={ 0 }
-								max={ 5 }
-								step={ 0.1 }
+								max={ 50 }
+								step={ 1 }
 								allowReset={ true }
 								responsive="all"
-								placeholder="1"
+								placeholder="16"
 							/>
 
 							<AdvancedRangeControl
@@ -316,6 +351,68 @@ const Edit = props => {
 								allowReset={ true }
 								placeholder="0"
 							/>
+
+							<AdvancedToolbarControl
+								label={ __( 'Icon Vertical Alignment', i18n ) }
+								controls="flex-vertical"
+								omit={ ICON_VERTICAL_ALIGN_OMIT }
+								attribute="iconVerticalAlignment"
+								fullwidth={ true }
+								responsive="all"
+								help={ __( 'This is more visible if you have long text in your list.', i18n ) }
+								placeholder="center"
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Icon Vertical Offset', i18n ) }
+								attribute="iconVerticalOffset"
+								min={ -1000 }
+								sliderMin={ -50 }
+								sliderMax={ 50 }
+								step={ 1 }
+								allowReset={ true }
+								responsive="all"
+								placeholder="0"
+							/>
+						</PanelAdvancedSettings>
+
+						<PanelAdvancedSettings
+							title={ __( 'Icon List Item Borders', i18n ) }
+							initialOpen={ false }
+							id="icon-list-item-borders"
+						>
+							<AdvancedToolbarControl
+								label={ __( 'Borders', i18n ) }
+								controls={ BORDER_CONTROLS }
+								className="ugb-border-controls__border-type-toolbar"
+								attribute="listItemBorderStyle"
+								fullwidth={ true }
+								isSmall={ true }
+							/>
+
+							{ listItemBorderStyle &&
+								<AdvancedRangeControl
+									label={ __( 'Border Width', i18n ) }
+									attribute="listItemBorderWidth"
+									responsive="all"
+									min={ 0 }
+									max={ 99 }
+									step={ 1 }
+									sliderMax={ 5 }
+									defaultLocked={ true }
+									placeholder="1"
+								/>
+							}
+
+							{ listItemBorderStyle &&
+								<ColorPaletteControl
+									label={ __( 'Border Color', i18n ) }
+									attribute="listItemBorderColor"
+									value={ listItemBorderColor ? listItemBorderColor : '#00000066' }
+									default="#00000066"
+								/>
+							}
+
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 
@@ -327,7 +424,9 @@ const Edit = props => {
 						hasTextContent={ false }
 					/>
 
-					<Alignment.InspectorControls />
+					<Alignment.InspectorControls
+						enableContentAlign={ false }
+					/>
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
@@ -352,59 +451,15 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
-				{ /* eslint-disable-next-line */ }
-				<div
-					ref={ typographyWrapperRef }
-					onClick={ e => {
-						// When the div wrapper is clicked, pass the focus to the list.
-						if ( e.target === typographyWrapperRef.current ) {
-							textRef.current.focus()
-							const range = document.createRange()
-							range.selectNodeContents( textRef.current )
-							range.collapse( false )
-
-							const selection = window.getSelection() // eslint-disable-line
-							selection.removeAllRanges()
-							selection.addRange( range )
-						}
-					} }
-				>
-					<Typography
-						tagName={ tagName }
-						multiline="li"
-						onRemove={ onRemove }
-						onMerge={ mergeBlocks }
-						ref={ textRef }
-					>
-						{ controls }
-					</Typography>
-					{ ! isTyping && isSelected && isOpenIconSearch && (
-						<IconSearchPopover
-							__deprecatedAnchorRef={ iconSearchAnchor }
-							__deprecatedPosition="bottom left"
-							__hasPopover={ true }
-							onClose={ () => {
-								if ( selectedEvent ) {
-									selectedEvent.target.parentElement.currentlyOpenIndex = undefined
-								}
-								setIsOpenIconSearch( false )
-							} }
-							onChange={ icon => {
-								const icons = { ...props.attributes.icons }
-								if ( ! icon ) {
-									// Remove the icon inside the icons.
-									delete icons[ selectedIconCSSSelector ]
-								} else {
-									icons[ selectedIconCSSSelector ] = icon
-								}
-
-								setAttributes( {
-									icons: { ...icons },
-								} )
-							} }
-						/>
-					) }
-				</div>
+				{ ! ordered && <IconSvgDef icon={ icon } uniqueId={ attributes.uniqueId } /> }
+				<ParentTagName { ...innerBlocksProps } >
+					{ wrapList &&
+						<TagName className="stk-block-icon-list__group">
+							{ innerBlocksProps.children }
+						</TagName>
+					}
+					{ ! wrapList && innerBlocksProps.children }
+				</ParentTagName>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>
@@ -416,3 +471,7 @@ export default compose(
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
+
+addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/icon-list', ( enabled, parentBlock ) => {
+	return parentBlock?.name === 'stackable/icon-list-item' ? false : enabled
+} )

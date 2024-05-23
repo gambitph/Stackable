@@ -98,6 +98,7 @@ const Edit = props => {
 		{
 			'stk--is-slide': carouselType === 'slide',
 			'stk--is-fade': carouselType === 'fade',
+			'stk--infinite-scroll': carouselType === 'slide' && attributes.infiniteScroll,
 			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 
@@ -277,6 +278,15 @@ const Edit = props => {
 							] }
 							attribute="carouselType"
 						/>
+						{ carouselType === 'slide' &&
+							<AdvancedToggleControl
+								label={ __( 'Infinite Scrolling', i18n ) }
+								checked={ attributes.infiniteScroll }
+								onChange={ infiniteScroll => setAttributes( { infiniteScroll } ) }
+								defaultValue={ false }
+								help={ __( 'Only visible in the frontend.', i18n ) }
+							/>
+						}
 						{ carouselType === 'slide' && (
 							<>
 								<AdvancedRangeControl

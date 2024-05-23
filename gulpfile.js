@@ -90,6 +90,113 @@ gulp.task( 'generate-indexphp', function() {
 	return g
 } )
 
+gulp.task( 'generate-stk-block-typesphp', function( cb ) {
+	// generate stk-block-types.php
+
+	const fs = require( 'fs' )
+
+	const toSnakeCase = str => {
+		// Don't convert strings that are starting with 'stackable/
+		return str.startsWith( 'stackable/' ) ? str : str.replace( /([a-z])([A-Z])/g, '$1_$2' ).toLowerCase()
+	}
+
+	const parseBlockJson = ( obj, callback, indent, parentKey = null ) => {
+		let blockArgs = '[\n'
+		const tab = '\t'.repeat( indent )
+		const changeToSnakeCase = parentKey !== 'providesContext'
+		if ( Array.isArray( obj ) ) {
+			const els = []
+			obj.forEach( item => {
+				if ( Array.isArray( item ) || typeof item === 'object' ) {
+					// if array contains another array or object as its element, parse it first
+					els.push( `${ tab }${ parseBlockJson( item, callback, indent + 1, parentKey ) }` )
+				} else {
+					// array contains a string
+					els.push( `${ tab }${ callback( parentKey, item, true, changeToSnakeCase ) }` )
+				}
+			} )
+			blockArgs += els.join( ',\n' ) + '\n'
+		} else if ( typeof obj === 'object' && obj !== null ) {
+			const entries = Object.entries( obj )
+			entries.forEach( ( [ key, value ], index ) => {
+				if ( Array.isArray( value ) || typeof value === 'object' ) {
+					// obj[key] contains another array or object
+					blockArgs += `${ tab }'${ toSnakeCase( key ) }' => `
+					blockArgs += parseBlockJson( value, callback, indent + 1, key )
+				} else {
+					// obj[key] contains a string
+					blockArgs += `${ tab }${ callback( key, value, false, changeToSnakeCase ) }`
+				}
+
+				blockArgs += index === entries.length - 1 ? '\n' : ',\n'
+			} )
+		}
+
+		blockArgs += '\t'.repeat( indent - 1 ) + ']'
+		return blockArgs
+	}
+
+	const blockJsonToAssocArray = ( key, value, isArrayElement, changeToSnakeCase ) => {
+		const needTranslate = [ 'title', 'description', 'keywords' ]
+		const _value = needTranslate.includes( key ) ? `__( '${ value }', STACKABLE_I18N )` : `'${ value }'`
+
+		// for array elements
+		if ( isArrayElement ) {
+			return _value
+		}
+
+		// for key-value pairs
+		return `'${ changeToSnakeCase ? toSnakeCase( key ) : key }' => ${ _value }`
+	}
+
+	const getBlockNames = path => {
+		return fs.readdirSync( path, { withFileTypes: true } )
+			.filter( dirent => dirent.isDirectory() )
+			.map( dirent => dirent.name )
+	}
+
+	const blocks = getBlockNames( path.resolve( __dirname, 'src/block' ) )
+	const data = []
+
+	blocks.forEach( block => {
+		const jsonPath = path.resolve( __dirname, `src/block/${ block }/block.json` )
+		if ( fs.existsSync( jsonPath ) ) {
+			const fileContent = fs.readFileSync( jsonPath, 'utf-8' )
+			const blockJson = JSON.parse( fileContent )
+			const blockArgs = parseBlockJson( blockJson, blockJsonToAssocArray, 4 )
+			const blockEntry = `'${ blockJson.name }' => ${ blockArgs }`
+			data.push( blockEntry )
+		}
+	} )
+
+	// Generate PHP variable string
+	const script = `<?php
+// This is a generated file by gulp generate-stk-block-typesphp
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( ! function_exists( 'stackable_get_blocks_array') ) {
+	function stackable_get_blocks_array( $blocks = array() ) {
+		$stk_blocks = array(
+			${ data.join( ',\n\t\t\t' ) }
+		);
+
+		return array_merge( $blocks, $stk_blocks );
+	}
+
+	add_filter( 'stackable.blocks', 'stackable_get_blocks_array' );
+}
+?>`
+
+	// Write PHP variable to file
+	fs.writeFileSync( path.resolve( __dirname, 'src/stk-block-types.php' ), script )
+
+	cb()
+} )
+
 gulp.task( 'generate-translations-js', gulp.series(
 	// The collect function has an issue where it will not continue if the
 	// folder will it writes to doesn't exist, create it to prevent an error.
@@ -382,7 +489,7 @@ gulp.task( 'style-deprecated', gulp.parallel(
  * END deprecated build styles, we still build these
  ********************************************************************/
 
-gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated', 'generate-translations-js' ) )
+gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated', 'generate-translations-js', 'generate-stk-block-typesphp' ) )
 
 gulp.task( 'build', gulp.series( 'build-process' ) )
 
@@ -407,6 +514,11 @@ const watchFuncs = ( basePath = '.' ) => {
 	gulp.watch(
 		[ `${ basePath }/src/welcome/**/*.scss` ],
 		gulp.parallel( [ 'welcome-styles' ] )
+	)
+
+	gulp.watch(
+		[ `${ basePath }/src/block/**/block.json` ],
+		gulp.parallel( [ 'generate-stk-block-typesphp' ] )
 	)
 }
 

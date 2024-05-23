@@ -41,6 +41,14 @@ export const iconListAttributes = {
 		type: 'string',
 		default: '',
 	},
+	listDisplayStyle: {
+		type: 'string',
+		default: '',
+	},
+	listFullWidth: {
+		type: 'boolean',
+		default: true,
+	},
 
 	// Icon.
 	icon: {
@@ -70,6 +78,16 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
+	iconVerticalAlignment: {
+		stkResponsive: true,
+		type: 'string',
+		default: '',
+	},
+	iconVerticalOffset: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
 
 	// Numbers.
 	listType: {
@@ -84,6 +102,25 @@ export const iconListAttributes = {
 	rowGap: {
 		stkResponsive: true,
 		type: 'number',
+		default: '',
+	},
+	hasPeriod: {
+		type: 'boolean',
+		default: true,
+	},
+
+	// List item borders.
+	listItemBorderStyle: {
+		type: 'string',
+		default: '',
+	},
+	listItemBorderWidth: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	listItemBorderColor: {
+		type: 'string',
 		default: '',
 	},
 }
@@ -103,8 +140,6 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, 'ul,ol', {
 		hasTextTag: false,
-		multiline: 'li',
-		multilineWrapperTags: [ 'ol', 'ul' ],
 	} )
 	MarginBottom.addAttributes( attrObject )
 

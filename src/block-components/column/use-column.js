@@ -21,12 +21,40 @@ export const useColumn = () => {
 				results[ 1 ][ clientId ] = {
 					columnWidth: width,
 					columnAdjacentCount: widths.length,
+					columnWrapDesktop: false,
 				}
 				return results
 			}, [ [], {} ] )
 
 			dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 		}
+	}
+
+	const onChangeDesktopWrap = ( width, widths ) => {
+		const clientIds = [ clientId ]
+		const attributes = {
+			[ clientId ]: { columnWidth: width },
+		}
+
+		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const adjacentBlocks = parentBlock?.innerBlocks || []
+
+		if ( adjacentBlocks.length ) {
+			const columnRows = getRowsFromColumns( widths )
+
+			// Update multiple blocks.
+			widths.forEach( ( width, i ) => {
+				const clientId = adjacentBlocks[ i ].clientId
+				clientIds.push( clientId )
+				attributes[ clientId ] = {
+					columnWidth: width,
+					columnAdjacentCount: columnRows.filter( n => n === columnRows[ i ] ).length,
+					columnWrapDesktop: true,
+				}
+			} )
+		}
+
+		dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 	}
 
 	const onChangeTablet = ( width, widths ) => {
@@ -103,6 +131,7 @@ export const useColumn = () => {
 
 	return {
 		onChangeDesktop,
+		onChangeDesktopWrap,
 		onChangeTablet,
 		onChangeMobile,
 		onResetDesktop,

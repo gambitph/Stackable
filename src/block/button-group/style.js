@@ -181,9 +181,16 @@ const Styles = props => {
 				styleRule="flex"
 				attrName="buttonFullWidth"
 				key="buttonFullWidth-save"
-				valueCallback={ value => {
-					return value ? '1' : undefined
+				valueCallback={ ( value, getAttribute ) => {
+					let basis = '0%' // This is the default value of flex-basis
+					// If we're wrapping, we need to set flex-basis to auto so
+					// that it will wrap and go full-width.
+					if ( getAttribute( 'flexWrap' ) ) {
+						basis = 'auto'
+					}
+					return value ? ( '1 0 ' + basis ) : undefined
 				} }
+				dependencies={ [ 'flexWrap' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -192,19 +199,39 @@ const Styles = props => {
 				styleRule="flex"
 				attrName="buttonFullWidth"
 				key="buttonFullWidth"
+				valueCallback={ ( value, getAttribute ) => {
+					let basis = '0%' // This is the default value of flex-basis
+					// If we're wrapping, we need to set flex-basis to auto so
+					// that it will wrap and go full-width.
+					if ( getAttribute( 'flexWrap' ) ) {
+						basis = 'auto'
+					}
+					return value ? ( '1 0 ' + basis ) : undefined
+				} }
+				dependencies={ [ 'flexWrap' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".stk-button-group"
+				styleRule="--stk-button-group-flex-wrap"
+				attrName="flexWrap"
+				key="flexWrap-save-button-group"
+				responsive="all"
 				valueCallback={ value => {
-					return value ? '1' : undefined
+					return value ? 'auto' : undefined
 				} }
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				// This is to make icon buttons stretch.
-				selector=".%s, .stk-block-icon-button .stk-button"
+				renderIn="save"
+				selector=".stk-button-group .stk-block-button"
 				styleRule="width"
-				attrName="buttonFullWidth"
-				key="buttonFullWidth-icon-button"
+				attrName="flexWrap"
+				key="flexWrap-save-button-group-unset-width"
+				responsive="all"
 				valueCallback={ value => {
-					return value ? '100%' : undefined
+					return value ? 'unset' : undefined
 				} }
 			/>
 		</>
@@ -215,7 +242,7 @@ export const ButtonGroupStyles = memo( props => {
 	return (
 		<>
 			<Alignment.Style { ...props } />
-			<BlockDiv.Style { ...props } />
+			<BlockDiv.Style { ...props } verticalAlignSelector=".stk-button-group > .block-editor-inner-blocks > .block-editor-block-list__layout" />
 			<MarginBottom.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
@@ -238,7 +265,7 @@ ButtonGroupStyles.Content = props => {
 	return (
 		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } verticalAlignSelector=".stk-button-group" />
 			<MarginBottom.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />

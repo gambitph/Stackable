@@ -4,6 +4,7 @@
 import { fixFractionWidths, getSnapWidths } from './get-snap-widths'
 import { AdvancedTextControl, Popover } from '..'
 import { ColumnShowTooltipContext } from '../column-inner-blocks'
+import ArrowDownSvg from './images/arrow-down.svg'
 
 /**
  * External dependencies
@@ -37,6 +38,11 @@ const MIN_COLUMN_WIDTH_PERCENTAGE = {
 	Mobile: 10,
 }
 
+// Prevent rounding off decimals.
+const formatLabel = value => {
+	return ( Math.trunc( value * 10 ) / 10 ).toFixed( 1 )
+}
+
 const ResizableColumn = props => {
 	const { clientId } = useBlockEditContext()
 	const blockContext = useBlockContext()
@@ -48,6 +54,7 @@ const ResizableColumn = props => {
 
 	// Block context is provided from the parent Columns block.
 	const allowResize = ! props.context[ 'stackable/innerBlockOrientation' ]
+	const columnWrapDesktop = !! props.context[ 'stackable/columnWrapDesktop' ]
 
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
@@ -88,6 +95,12 @@ const ResizableColumn = props => {
 		}
 	}, [ adjacentBlocks ] )
 
+	useEffect( () => {
+		if ( parentBlock && isDesktop && ! columnWrapDesktop ) {
+			fixWidthOnDisableWrap()
+		}
+	}, [ columnWrapDesktop ] )
+
 	// We have a timeout below, this ensures that our timeout only runs while
 	// this Component is mounted.
 	const [ isMounted, setIsMounted ] = useState( false )
@@ -110,9 +123,9 @@ const ResizableColumn = props => {
 
 	const enable = {
 		top: false,
-		right: deviceType === 'Desktop' ? ! isOnlyBlock && ! isLastBlock : ! isOnlyBlock,
+		right: deviceType === 'Desktop' ? ! isOnlyBlock && ( ! isLastBlock || columnWrapDesktop ) : ! isOnlyBlock,
 		bottom: false,
-		left: deviceType === 'Desktop' ? ! isOnlyBlock && ! isFirstBlock : false,
+		left: deviceType === 'Desktop' ? ! isOnlyBlock && ! isFirstBlock && ! columnWrapDesktop : false,
 		topRight: false,
 		bottomRight: false,
 		bottomLeft: false,
@@ -141,7 +154,7 @@ const ResizableColumn = props => {
 		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
 
 		// In desktop, get all the column widths.
-		if ( isDesktop ) {
+		if ( isDesktop && ! columnWrapDesktop ) {
 			// In desktop, the column gaps will affect the width of the parent column, take it into account.
 			const totalColumnGap = parentColumnGaps.desktop * ( adjacentBlocks.length - 1 )
 
@@ -197,7 +210,7 @@ const ResizableColumn = props => {
 		const adjacentBlocks = _adjacentBlocks.current
 
 		// In desktop, when one column is resized, the next column is adjusted also.
-		if ( isDesktop ) {
+		if ( isDesktop && ! columnWrapDesktop ) {
 			// Compute for the new widths.
 			const columnWidths = [ ...currentWidths ]
 			const totalWidth = currentWidths.reduce( ( a, b ) => a + b, 0 )
@@ -207,7 +220,7 @@ const ResizableColumn = props => {
 
 			// Fix the widths, ensure that our total width is 100%
 			columnPercentages = ( columnWidths || [] ).map( width => {
-				return parseFloat( ( width / totalWidth * 100 ).toFixed( 1 ) )
+				return parseFloat( formatLabel( width / totalWidth * 100 ) )
 			} )
 			// Fix the widths, ensure that we don't end up with off numbers 49.9% and 50.1%.
 			columnPercentages = fixFractionWidths( columnPercentages, isShiftKey )
@@ -215,7 +228,7 @@ const ResizableColumn = props => {
 			// Ensure that the total width is exactly 100%.
 			let totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
 			if ( totalCurrentWidth !== 100 ) {
-				columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )
+				columnPercentages[ adjacentBlockIndex ] = parseFloat( formatLabel( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ) )
 			}
 
 			// There are cases where the total width may slightly go past 100%
@@ -235,7 +248,7 @@ const ResizableColumn = props => {
 					max-width: ${ width }% !important;
 				}
 				[data-block="${ adjacentBlocks[ i ].clientId }"] .stk-resizable-column__size-tooltip {
-					--width: '${ width.toFixed( 1 ) }%' !important;
+					--width: '${ formatLabel( width ) }%' !important;
 				}`
 			} ).join( '' )
 			setTempStyles( columnStyles )
@@ -251,8 +264,10 @@ const ResizableColumn = props => {
 		// control.
 		} else {
 			const newWidth = currentWidth + delta.width
-			columnPercentages = clamp( parseFloat( ( newWidth / maxWidth * 100 ).toFixed( 1 ) ), 0, 100 )
+			columnPercentages = clamp( parseFloat( formatLabel( newWidth / maxWidth * 100 ) ), 0, 100 )
 
+			// Fix the widths, ensure that we don't end up with off numbers 49.9% and 50.1%.
+			columnPercentages = fixFractionWidths( [ columnPercentages ], isShiftKey )[ 0 ]
 			setNewWidthsPercent( columnPercentages )
 
 			// Take into account the number of adjacent columns per row
@@ -267,7 +282,7 @@ const ResizableColumn = props => {
 					max-width: calc(${ columnPercentages }% - var(--stk-column-gap, 0px) * ${ adjacentColumnCount - 1 } / ${ adjacentColumnCount } ) !important;
 				}
 				[data-block="${ clientId }"] .stk-resizable-column__size-tooltip {
-					--width: '${ columnPercentages.toFixed( 1 ) }%' !important;
+					--width: '${ formatLabel( columnPercentages ) }%' !important;
 				}`
 			setTempStyles( columnStyles )
 
@@ -284,7 +299,7 @@ const ResizableColumn = props => {
 
 		// Update the block widths.
 		if ( delta.width ) {
-			if ( isDesktop ) {
+			if ( isDesktop && ! columnWrapDesktop ) {
 				// For even 3-columns, floats have a tendency of being
 				// unequal, e.g. 33.35 or 33.43, assume to be equal.
 				if ( isEqual( newWidthsPercent.map( n => n | 0 ), [ 33, 33, 33 ] ) ) { // eslint-disable-line no-bitwise
@@ -292,6 +307,13 @@ const ResizableColumn = props => {
 				} else {
 					props.onChangeDesktop( newWidthsPercent )
 				}
+			} else if ( isDesktop ) {
+				const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
+					return attributes.columnWidth || 100 / adjacentBlocks.length
+				} )
+				columnWidths[ blockIndex ] = newWidthsPercent
+
+				props.onChangeDesktopWrap( newWidthsPercent, columnWidths, blockIndex )
 			} else if ( isTablet ) {
 				// Get the current column widths for tablet.
 				const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
@@ -334,7 +356,7 @@ const ResizableColumn = props => {
 		const adjacentBlocks = parentBlock.innerBlocks
 
 		// For desktop, column adjustments also affect the adjacent column.
-		if ( isDesktop ) {
+		if ( isDesktop && ! columnWrapDesktop ) {
 			// Get the current column widths.
 			const isFirstResize = adjacentBlocks.every( ( { attributes } ) => ! attributes.columnWidth )
 			const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
@@ -357,6 +379,17 @@ const ResizableColumn = props => {
 			columnWidths[ blockIndex ] = finalWidth
 
 			props.onChangeDesktop( columnWidths )
+		} else if ( isDesktop ) {
+			// Get the current column widths.
+			const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
+				return attributes.columnWidth || 100 / adjacentBlocks.length
+			} )
+
+			const finalWidth = width ? clamp( width, MIN_COLUMN_WIDTH_PERCENTAGE[ deviceType ], 100 ) : ''
+
+			columnWidths[ blockIndex ] = finalWidth
+
+			props.onChangeDesktopWrap( finalWidth, columnWidths, blockIndex )
 		} else if ( isTablet ) {
 			// Get the current column widths.
 			const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
@@ -381,6 +414,33 @@ const ResizableColumn = props => {
 			columnWidths[ blockIndex ] = finalWidth
 
 			props.onChangeMobile( finalWidth, columnWidths, blockIndex )
+		}
+	}
+
+	const fixWidthOnDisableWrap = () => {
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
+		// parentBlockClientId might be outdated and cause parentBlock to be null.
+		if ( ! parentBlock ) {
+			return
+		}
+		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
+
+		let totalPercentages = 0
+		const columnPercentages = adjacentBlocks.map( ( { attributes } ) => {
+			totalPercentages += attributes.columnWidth
+			return attributes.columnWidth
+		} )
+
+		// Update the last column width to make it 100%
+		// if the columnWidth of adjacent blocks is set and the total percentage is less than 100
+		if ( totalPercentages < 100 && totalPercentages > 0 ) {
+			columnPercentages[ columnPercentages.length - 1 ] += ( 100 - totalPercentages )
+
+			if ( isEqual( columnPercentages.map( n => n | 0 ), [ 33, 33, 33 ] ) ) { // eslint-disable-line no-bitwise
+				props.onChangeDesktop( [ 33.33, 33.33, 33.33 ] )
+			} else {
+				props.onChangeDesktop( columnPercentages )
+			}
 		}
 	}
 
@@ -465,25 +525,21 @@ const ResizableTooltip = memo( props => {
 	let columnLabel = ''
 	if ( typeof adjacentBlocks !== 'undefined' && ! props.value && ! originalInputValue ) {
 		// The columns are evenly distributed by default.
-		if ( deviceType === 'Desktop' ) {
-			const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
+		if ( deviceType === 'Desktop' || deviceType === 'Tablet' ) {
+			const value = formatLabel( 100 / adjacentBlocks.length )
 			if ( value.toString() === '33.3' ) {
 				columnLabel = 33.33
 			} else {
 				columnLabel = value
 			}
+		} else {
+			// In mobile, the columns collapse to 100%.
+			columnLabel = 100.0
 		}
-		// In mobile, the columns are  "auto" so that we don't display
-		// inaccurate percentage widths.
-	} else if ( deviceType === 'Tablet' ) {
-		columnLabel = __( 'Auto', i18n )
-	} else {
-		// In mobile, the columns collapse to 100%.
-		columnLabel = 100.0
 	}
 
 	// Create the label of the tooltip.
-	const _label = ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel
+	const _label = ( props.value ? formatLabel( parseFloat( props.value ) ) : '' ) || originalInputValue || columnLabel
 	const tooltipLabel = _label !== __( 'Auto', i18n ) ? `'${ _label }%'` : `'${ _label }'`
 
 	// Setup the input field when the popup opens.
@@ -593,6 +649,7 @@ const ResizableTooltip = memo( props => {
 						role="button"
 						tabIndex="0"
 					>
+						<ArrowDownSvg fill="currentColor" width="10" />
 					</div>
 				)
 			}

@@ -13,122 +13,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
-	/**
-	 * Function for getting the block.json metadata
-	 * based on folder names array.
-	 *
-	 * @array array folders
-	 * @array string handle
-	 * @return array metadata
-	 */
-	function stackable_get_metadata_by_folders( $block_folders, $handle = 'metadata' ) {
-		$blocks = array();
-		$blocks_dir = dirname( __FILE__ ) . '/block';
-		if ( ! file_exists( $blocks_dir ) ) {
-			return $blocks;
-		}
-
-		foreach ( $block_folders as $folder_name ) {
-			$block_json_file = $blocks_dir . '/' . $folder_name . '/block.json';
-			if ( ! file_exists( $block_json_file ) ) {
-				continue;
-			}
-
-			$metadata = json_decode( file_get_contents( $block_json_file ), true );
-			array_push( $blocks, array_merge( $metadata, array( 'block_json_file' => $block_json_file ) ) );
-		}
-
-		return $blocks;
-	}
-}
-
-if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
-	function stackable_get_stk_block_folders_metadata() {
-	/**
-	 * folders containing stackable blocks without inner blocks.
-	 */
-	$stk_block_folders = array(
-		'button',
-		'count-up',
-		'countdown',
-		'divider',
-		'heading',
-		'icon-button',
-		'icon-list',
-		'icon',
-		'image',
-		'number-box',
-		'map',
-		'progress-bar',
-		'progress-circle',
-		'separator',
-		'spacer',
-		'subtitle',
-		'table-of-contents',
-		'tab-labels',
-		'text',
-	);
-
-	return stackable_get_metadata_by_folders( $stk_block_folders, 'stk-block-folders' );
-	}
-}
-
-if ( ! function_exists( 'stackable_get_stk_wrapper_block_folders_metadata' ) ) {
-	function stackable_get_stk_wrapper_block_folders_metadata() {
-		/**
-		 * folders containing stackable blocks with inner blocks.
-		 */
-		$stk_wrapper_block_folders = array(
-			'accordion',
-			'blockquote',
-			'button-group',
-			'call-to-action',
-			'card',
-			'column',
-			'columns',
-			'expand',
-			'feature-grid',
-			'feature',
-			'hero',
-			'icon-box',
-			'icon-label',
-			'image-box',
-			'notification',
-			'posts',
-			'price',
-			'tabs',
-			'tab-content',
-			'pricing-box',
-			'team-member',
-			'testimonial',
-			'timeline',
-			'video-popup',
-			'horizontal-scroller',
-		);
-
-		return stackable_get_metadata_by_folders( $stk_wrapper_block_folders, 'stk-wrapper-block-folders' );
-	}
-
-}
-
 if ( ! function_exists( 'stackable_register_blocks' ) ) {
 	function stackable_register_blocks() {
-		// Blocks directory may not exist if working from a fresh clone.
-		$blocks_dir = dirname( __FILE__ ) . '/block';
-		if ( ! file_exists( $blocks_dir ) ) {
-			return;
-		}
+		$blocks_array = apply_filters( 'stackable.blocks', array() );
 
-		$blocks_metadata = array_merge(
-			stackable_get_stk_block_folders_metadata(),
-			stackable_get_stk_wrapper_block_folders_metadata()
-		);
-
-		foreach ( $blocks_metadata as $metadata ) {
-			$registry = WP_Block_Type_Registry::get_instance();
-			if ( $registry->is_registered( $metadata['name'] ) ) {
-				$registry->unregister( $metadata['name'] );
+		$registry = WP_Block_Type_Registry::get_instance();
+		foreach ( $blocks_array as $name => $metadata ) {
+			if ( $registry->is_registered( $name ) ) {
+				$registry->unregister( $name );
 			}
 
 			$register_options = apply_filters( 'stackable.register-blocks.options',
@@ -143,7 +35,8 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 				$metadata
 			);
 
-			register_block_type_from_metadata( $metadata['block_json_file'], $register_options );
+			$block_args = array_merge( $metadata, $register_options );
+			register_block_type( $metadata['name'], $block_args );
 		}
 	}
 	add_action( 'init', 'stackable_register_blocks' );
@@ -160,19 +53,34 @@ if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks' ) ) {
 	 * Register stackable blocks with inner blocks.
 	 */
 	function stackable_add_excerpt_wrapper_blocks( $allowed_wrapper_blocks ) {
-		$blocks_dir = dirname( __FILE__ ) . '/block';
-		if ( ! file_exists( $blocks_dir ) ) {
-			return $allowed_wrapper_blocks;
-		}
-
-		$allowed_stackable_wrapper_blocks = array();
-		$blocks_metadata = stackable_get_stk_wrapper_block_folders_metadata();
-
-		foreach ( $blocks_metadata as $metadata ) {
-			array_push( $allowed_stackable_wrapper_blocks, $metadata['name'] );
-		}
-
-		return array_merge( $allowed_stackable_wrapper_blocks, $allowed_wrapper_blocks );
+		return array_merge( $allowed_wrapper_blocks,  array(
+			'stackable/accordion',
+			'stackable/blockquote',
+			'stackable/button-group',
+			'stackable/call-to-action',
+			'stackable/card',
+			'stackable/column',
+			'stackable/columns',
+			'stackable/expand',
+			'stackable/feature-grid',
+			'stackable/feature',
+			'stackable/hero',
+			'stackable/icon-box',
+			'stackable/icon-label',
+			'stackable/image-box',
+			'stackable/notification',
+			'stackable/posts',
+			'stackable/price',
+			'stackable/tabs',
+			'stackable/tab-content',
+			'stackable/pricing-box',
+			'stackable/team-member',
+			'stackable/testimonial',
+			'stackable/timeline',
+			'stackable/video-popup',
+			'stackable/horizontal-scroller',
+			)
+	 	);
 	}
 
 	add_filter( 'excerpt_allowed_wrapper_blocks', 'stackable_add_excerpt_wrapper_blocks' );
@@ -183,19 +91,28 @@ if ( ! function_exists( 'stackable_add_excerpt_blocks' ) ) {
 	 * Register "unit" stackable blocks (blocks without inner blocks)
 	 */
 	function stackable_add_excerpt_blocks( $allowed_blocks ) {
-		$blocks_dir = dirname( __FILE__ ) . '/block';
-		if ( ! file_exists( $blocks_dir ) ) {
-			return $allowed_blocks;
-		}
-
-		$allowed_stackable_blocks = array();
-		$blocks_metadata = stackable_get_stk_block_folders_metadata();
-
-		foreach ( $blocks_metadata as $metadata ) {
-			array_push( $allowed_stackable_blocks, $metadata['name'] );
-		}
-
-		return array_merge( $allowed_stackable_blocks, $allowed_blocks );
+		return array_merge( $allowed_blocks, array(
+			'stackable/button',
+			'stackable/count-up',
+			'stackable/countdown',
+			'stackable/divider',
+			'stackable/heading',
+			'stackable/icon-button',
+			'stackable/icon-list',
+			'stackable/icon',
+			'stackable/image',
+			'stackable/number-box',
+			'stackable/map',
+			'stackable/progress-bar',
+			'stackable/progress-circle',
+			'stackable/separator',
+			'stackable/spacer',
+			'stackable/subtitle',
+			'stackable/table-of-contents',
+			'stackable/tab-labels',
+			'stackable/text',
+			)
+		);
 	}
 
 	add_filter( 'excerpt_allowed_blocks', 'stackable_add_excerpt_blocks' );

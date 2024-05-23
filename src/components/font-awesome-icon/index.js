@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	faAPILoaded, faIsAPILoaded, faGetSVGIcon, faIconLoaded, createElementFromHTMLString,
+	faGetIcon, faFetchIcon, createElementFromHTMLString,
 } from '~stackable/util'
 import { pick } from 'lodash'
 
@@ -10,7 +10,7 @@ import { pick } from 'lodash'
  * WordPress dependencies
  */
 import {
-	useState, useEffect, RawHTML, memo,
+	useState, RawHTML, memo,
 } from '@wordpress/element'
 import { Spinner } from '@wordpress/components'
 
@@ -85,11 +85,6 @@ const FontAwesomeIcon = memo( props => {
 		setForceUpdateCount( forceUpdateCount + 1 )
 	}
 
-	// Wait for the FA API to load.
-	useEffect( () => {
-		faAPILoaded().then( forceUpdate )
-	}, [] )
-
 	const propsToPass = pick( props, [ 'className', 'color', 'fill', 'style' ] )
 
 	// If given an svg, just display it.
@@ -100,20 +95,15 @@ const FontAwesomeIcon = memo( props => {
 		return <RawHTML { ...propsToPass }>{ props.prependRenderString + svg }</RawHTML>
 	}
 
-	// There's a chance that the Font Awesome library hasn't loaded yet, wait for it.
-	if ( ! faIsAPILoaded() ) {
-		return <Spinner />
-	}
-
 	const prefix = props.value ? props.value.replace( /-.*$/, '' ) : props.prefix
 	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
 
 	// Display the icon.
 	if ( prefix && iconName ) {
-		const iconHTML = faGetSVGIcon( prefix, iconName )
+		const iconHTML = faGetIcon( prefix, iconName )
 
 		if ( ! iconHTML ) {
-			faIconLoaded( prefix, iconName ).then( forceUpdate )
+			faFetchIcon( prefix, iconName ).then( forceUpdate )
 			return <Spinner />
 		}
 
@@ -124,7 +114,13 @@ const FontAwesomeIcon = memo( props => {
 	}
 
 	// If no value, just display a smiley placeholder.
-	const iconHTML = faGetSVGIcon( 'far', 'smile' )
+	const iconHTML = faGetIcon( 'far', 'smile' )
+
+	if ( ! iconHTML ) {
+		faFetchIcon( 'far', 'smile' ).then( forceUpdate )
+		return <Spinner />
+	}
+
 	let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 	// Add fallback SVG width and height values.
 	svg = addSVGAttributes( svg, { width: '32', height: '32' } )
@@ -152,7 +148,7 @@ FontAwesomeIcon.Content = props => {
 	const prefix = props.value ? props.value.replace( /-.*$/, '' ) : props.prefix
 	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
 
-	const iconHTML = faGetSVGIcon( prefix, iconName )
+	const iconHTML = faGetIcon( prefix, iconName )
 	let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 	// Add fallback SVG width and height values.
 	svg = addSVGAttributes( svg, { width: '32', height: '32' } )

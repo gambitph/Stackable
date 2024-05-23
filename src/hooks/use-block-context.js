@@ -20,14 +20,14 @@ import {
  * WordPress dependencies
  */
 import {
-	subscribe, select, createReduxStore, register, dispatch, useSelect,
+	select, createReduxStore, register, useSelect,
 } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 // Create our store.
 const STORE_ACTIONS = {
-	setBlockTree: blockTree => {
-		return { type: 'UPDATE_BLOCK_TREE', blockTree }
+	updateClientTree: () => {
+		return { type: 'UPDATE_BLOCK_TREE' }
 	},
 }
 
@@ -35,135 +35,28 @@ const STORE_SELECTORS = {
 	getBlockContext: ( state, clientId ) => state[ clientId ] || {},
 }
 
-const STORE_REDUCER = ( state = {}, action ) => {
-	switch ( action.type ) {
-		case 'UPDATE_BLOCK_TREE': {
-			const blocks = {}
+/**
+ * This function is used in Gutenberg's List View.
+ * https://github.com/WordPress/gutenberg/blob/trunk/packages/block-editor/src/store/private-selectors.js#L75
+ *
+ * @param {?string} rootClientId
+ */
+const getUnmemoizedClientTree = rootClientId => {
+	const blockOrder = select( 'core/block-editor' ).getBlockOrder( rootClientId )
+	const result = []
 
-			action.blockTree.forEach( ( rootBlock, index, siblingBlocks ) => {
-				// Gather information about the root block.
-				const {
-					clientId, innerBlocks, name,
-				} = rootBlock
-				blocks[ clientId ] = {
-					blockIndex: index,
-					numInnerBlocks: innerBlocks.length,
-					hasInnerBlocks: !! innerBlocks.length,
-					adjacentBlocks: siblingBlocks || [],
-					nextBlock: nth( siblingBlocks, index + 1 ),
-					previousBlock: index === 0 ? undefined : nth( siblingBlocks, index - 1 ), // nth will loop back to the last if index is -1.
-					innerBlocks,
-					rootBlockClientId: clientId,
-					parentTree: [],
-				}
-
-				// Form the block name tree so inner blocks would know their locations.
-				const parentTree = [ { clientId, name } ]
-
-				const parseBlock = ( innerBlocks, parentBlock ) => {
-					innerBlocks.forEach( ( block, index ) => {
-						// Some of our other blocks use the Column block in
-						// non-column arrangements, for those, we need to
-						// set special parameters so that the other UI
-						// elements (like column width drag handlers) do not
-						// show up.
-						if ( block.name === 'stackable/column' ) {
-							const supportsColumnResize = select( 'core/blocks' ).getBlockSupport( parentBlock.name, 'stkColumnResize' ) !== false
-							if ( ! supportsColumnResize ) {
-								blocks[ block.clientId ] = {
-									blockIndex: index,
-									parentBlock,
-									isFirstBlock: true,
-									isLastBlock: true,
-									isOnlyBlock: true,
-									adjacentBlock: null,
-									adjacentBlockIndex: -1,
-									adjacentBlocks: [],
-									numInnerBlocks: block.innerBlocks.length,
-									hasInnerBlocks: !! block.innerBlocks.length,
-									innerBlocks: block.innerBlocks,
-									rootBlockClientId: rootBlock.clientId,
-									parentTree: cloneDeep( parentTree ),
-								}
-							}
-						}
-
-						// Gather all the info about the block.
-						if ( ! blocks[ block.clientId ] ) {
-							const isLastBlock = innerBlocks.length - 1 === index
-							blocks[ block.clientId ] = {
-								blockIndex: index,
-								parentBlock,
-								isFirstBlock: index === 0,
-								isLastBlock,
-								isOnlyBlock: innerBlocks.length === 1,
-								adjacentBlock: nth( innerBlocks, ! isLastBlock ? index + 1 : index - 1 ),
-								adjacentBlockIndex: ! isLastBlock ? index + 1 : index - 1,
-								adjacentBlocks: innerBlocks || [],
-								nextBlock: nth( innerBlocks, index + 1 ),
-								previousBlock: index === 0 ? undefined : nth( innerBlocks, index - 1 ), // nth will loop back to the last if index is -1.
-								numInnerBlocks: block.innerBlocks.length,
-								hasInnerBlocks: !! block.innerBlocks.length,
-								innerBlocks: block.innerBlocks,
-								rootBlockClientId: rootBlock.clientId,
-								parentTree: cloneDeep( parentTree ),
-							}
-						}
-
-						// Update the parent tree.
-						parentTree.push( {
-							clientId: block.clientId,
-							name: block.name,
-						} )
-
-						// Recurse innerBlocks.
-						parseBlock( block.innerBlocks, block )
-
-						// Update the parent tree.
-						parentTree.pop()
-					} )
-				}
-
-				// Go through all the inner blocks.
-				parseBlock( innerBlocks, rootBlock )
-			} )
-
-			return { ...blocks }
+	for ( const clientId of blockOrder ) {
+		const innerBlocks = getUnmemoizedClientTree( clientId )
+		const blockEditingMode = select( 'core/block-editor' ).getBlockEditingMode?.( clientId )
+		if ( blockEditingMode !== 'disabled' ) {
+			result.push( { clientId, innerBlocks } )
+		} else {
+			result.push( ...innerBlocks )
 		}
 	}
-	return state
+
+	return result
 }
-
-register( createReduxStore( 'stackable/block-context', {
-	reducer: STORE_REDUCER,
-	actions: STORE_ACTIONS,
-	selectors: STORE_SELECTORS,
-} ) )
-
-// This holds the current tree of client ids, we check against this if the
-// block/content structure has changed.
-let prevClientIds = null
-
-// Subscribe to all editor changes, so we can listen in to block structure
-// changes.
-subscribe( () => {
-	const tree = select( 'core/block-editor' ).__unstableGetClientIdsTree()
-	if ( ! prevClientIds ) {
-		prevClientIds = tree
-		const blocks = fixReusableInnerBlocks( tree )
-		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
-		return
-	}
-
-	// We can do a direct comparison here since the object being returned
-	// isn't changed unless the client id tree is changed, so this holds up
-	// even when blocks are edited.
-	if ( tree !== prevClientIds ) {
-		prevClientIds = tree
-		const blocks = fixReusableInnerBlocks( tree )
-		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
-	}
-} )
 
 // Use to correct the blocks returned from getBlocks.
 // Applies only core/block (reusable blocks) - Adds missing innerBlocks
@@ -176,6 +69,116 @@ const fixReusableInnerBlocks = blocks => {
 		}
 	} )
 }
+
+const STORE_REDUCER = ( state = {}, action ) => {
+	switch ( action.type ) {
+		case 'UPDATE_BLOCK_TREE': {
+			const blocks = {}
+
+			let tree = getUnmemoizedClientTree()
+			if ( tree ) {
+				tree = fixReusableInnerBlocks( tree )
+
+				tree.forEach( ( rootBlock, index, siblingBlocks ) => {
+					// Gather information about the root block.
+					const {
+						clientId, innerBlocks, name,
+					} = rootBlock
+					blocks[ clientId ] = {
+						blockIndex: index,
+						numInnerBlocks: innerBlocks.length,
+						hasInnerBlocks: !! innerBlocks.length,
+						adjacentBlocks: siblingBlocks || [],
+						nextBlock: nth( siblingBlocks, index + 1 ),
+						previousBlock: index === 0 ? undefined : nth( siblingBlocks, index - 1 ), // nth will loop back to the last if index is -1.
+						innerBlocks,
+						rootBlockClientId: clientId,
+						parentTree: [],
+					}
+
+					// Form the block name tree so inner blocks would know their locations.
+					const parentTree = [ { clientId, name } ]
+
+					const parseBlock = ( innerBlocks, parentBlock ) => {
+						innerBlocks.forEach( ( block, index ) => {
+							// Some of our other blocks use the Column block in
+							// non-column arrangements, for those, we need to
+							// set special parameters so that the other UI
+							// elements (like column width drag handlers) do not
+							// show up.
+							if ( block.name === 'stackable/column' ) {
+								const supportsColumnResize = select( 'core/blocks' ).getBlockSupport( parentBlock.name, 'stkColumnResize' ) !== false
+								if ( ! supportsColumnResize ) {
+									blocks[ block.clientId ] = {
+										blockIndex: index,
+										parentBlock,
+										isFirstBlock: true,
+										isLastBlock: true,
+										isOnlyBlock: true,
+										adjacentBlock: null,
+										adjacentBlockIndex: -1,
+										adjacentBlocks: [],
+										numInnerBlocks: block.innerBlocks.length,
+										hasInnerBlocks: !! block.innerBlocks.length,
+										innerBlocks: block.innerBlocks,
+										rootBlockClientId: rootBlock.clientId,
+										parentTree: cloneDeep( parentTree ),
+									}
+								}
+							}
+
+							// Gather all the info about the block.
+							if ( ! blocks[ block.clientId ] ) {
+								const isLastBlock = innerBlocks.length - 1 === index
+								blocks[ block.clientId ] = {
+									blockIndex: index,
+									parentBlock,
+									isFirstBlock: index === 0,
+									isLastBlock,
+									isOnlyBlock: innerBlocks.length === 1,
+									adjacentBlock: nth( innerBlocks, ! isLastBlock ? index + 1 : index - 1 ),
+									adjacentBlockIndex: ! isLastBlock ? index + 1 : index - 1,
+									adjacentBlocks: innerBlocks || [],
+									nextBlock: nth( innerBlocks, index + 1 ),
+									previousBlock: index === 0 ? undefined : nth( innerBlocks, index - 1 ), // nth will loop back to the last if index is -1.
+									numInnerBlocks: block.innerBlocks.length,
+									hasInnerBlocks: !! block.innerBlocks.length,
+									innerBlocks: block.innerBlocks,
+									rootBlockClientId: rootBlock.clientId,
+									parentTree: cloneDeep( parentTree ),
+								}
+							}
+
+							// Update the parent tree.
+							parentTree.push( {
+								clientId: block.clientId,
+								name: block.name,
+							} )
+
+							// Recurse innerBlocks.
+							parseBlock( block.innerBlocks, block )
+
+							// Update the parent tree.
+							parentTree.pop()
+						} )
+					}
+
+					// Go through all the inner blocks.
+					parseBlock( innerBlocks, rootBlock )
+				} )
+			}
+
+			return { ...blocks }
+		}
+	}
+	return state
+}
+
+register( createReduxStore( 'stackable/block-context', {
+	reducer: STORE_REDUCER,
+	actions: STORE_ACTIONS,
+	selectors: STORE_SELECTORS,
+} ) )
 
 // The default context if none is found. This can be true when the block is
 // being previewed as an example.

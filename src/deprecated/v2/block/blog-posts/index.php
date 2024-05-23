@@ -241,6 +241,10 @@ if ( ! function_exists( 'stackable_render_blog_posts_block_v2' ) ) {
 				}
 			}
 
+			if ( ! in_array( $attributes['titleTag'], [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p' ] ) ) {
+				$attachment['titleTag'] = 'h3';
+			}
+
 			// Title.
 			$title = get_the_title( $post_id );
 			if ( ! $title ) {
@@ -372,7 +376,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block_v2' ) ) {
 
 		do_action( 'stackable/blog-posts/v2/render', $attributes, $content );
 
-        return apply_filters( 'stackable/blog-posts/v2/edit.output.markup', $posts_markup, $attributes, $content );
+        return wp_kses_post( apply_filters( 'stackable/blog-posts/v2/edit.output.markup', $posts_markup, $attributes, $content ) );
     }
 }
 
@@ -711,50 +715,5 @@ if ( ! function_exists( 'stackable_get_terms_endpoint_v2' ) ) {
 	}
 	if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() ) {
 		add_action( 'rest_api_init', 'stackable_get_terms_endpoint_v2' );
-	}
-}
-
-if ( ! function_exists( 'stackable_add_custom_orderby_params_v2' ) ) {
-	/**
-	 * The callback to add `rand` as an option for orderby param in REST API.
-	 * Hook to `rest_{$this->post_type}_collection_params` filter.
-	 *
-	 * @param array $query_params Accepted parameters.
-	 * @return array
-	 *
-	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
-	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
-	 */
-	function stackable_add_custom_orderby_params_v2( $query_params ) {
-		if ( ! in_array( 'rand', $query_params['orderby']['enum'] ) ) {
-			$query_params['orderby']['enum'][] = 'rand';
-		}
-		if ( ! in_array( 'menu_order', $query_params['orderby']['enum'] ) ) {
-			$query_params['orderby']['enum'][] = 'menu_order';
-		}
-		return $query_params;
-	}
-}
-
-if ( ! function_exists( 'stackable_add_custom_orderby_v2' ) ) {
-	/**
-	 * Add `rand` as an option for orderby param in REST API.
-	 * Hook to `rest_{$this->post_type}_collection_params` filter.
-	 *
-	 * @param array $query_params Accepted parameters.
-	 * @return array
-	 *
-	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
-	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
-	 */
-	function stackable_add_custom_orderby_v2() {
-		$post_types = get_post_types( array( 'public' => true ) );
-		foreach ( $post_types as $post_type ) {
-			add_filter( 'rest_' . $post_type . '_collection_params', 'stackable_add_custom_orderby_params_v2' );
-		}
-	}
-
-	if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() ) {
-		add_action( 'rest_api_init', 'stackable_add_custom_orderby_v2' );
 	}
 }

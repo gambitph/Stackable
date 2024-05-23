@@ -295,7 +295,7 @@ export const Edit = props => {
 
 	return (
 		<>
-			{ ( hasLink && enableLink ) && <Link /> }
+			{ ( hasLink && enableLink ) && <Link hasAnchorId={ true } /> }
 			<Colors hasTextColor={ hasTextColor } { ...propsToPass } />
 			<Size hasFullWidth={ hasFullWidth } />
 			<Borders

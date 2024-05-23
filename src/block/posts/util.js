@@ -117,10 +117,10 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 	return ( post, idx ) => {
 		const {
 			featured_image_urls: featuredImageUrls,
-			title: _title,
+			post_title: _title,
 			category_list: categoryList,
 			author_info: authorInfo,
-			date_gmt: dateGmt,
+			post_date_gmt: dateGmt,
 			comments_num: commentsNum,
 			post_excerpt_stackable: postExcerptStackable,
 		} = post
@@ -159,7 +159,7 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 				defaultTag="h3"
 				attrNameTemplate="title%s"
 				className={ titleClassNames }
-				value={ decodeEntities( _title.rendered.trim() ) || __( '(Untitled)', i18n ) }
+				value={ decodeEntities( _title.trim() ) || __( '(Untitled)', i18n ) }
 				editable={ false }
 			/>
 		)

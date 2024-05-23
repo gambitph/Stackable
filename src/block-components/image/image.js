@@ -16,7 +16,9 @@ import { ResizerTooltip } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { MediaUpload, useBlockEditContext } from '@wordpress/block-editor'
+import {
+	MediaUpload, RichText, useBlockEditContext,
+} from '@wordpress/block-editor'
 import {
 	Button, Dashicon, ResizableBox,
 } from '@wordpress/components'
@@ -452,7 +454,12 @@ const ImageContent = props => {
 
 	// Allow a custom wrapper, mostly used to turn the image into an anchor
 	// link.
-	const Wrapper = props.customWrapper || 'figure'
+	const Wrapper = props.customWrapper
+
+	const ConditionalWrapper = ( {
+		condition, children,
+	} ) =>
+		condition ? ( <Wrapper>{ children }</Wrapper> ) : children
 
 	let image = (
 		<img // eslint-disable-line jsx-a11y/alt-text
@@ -465,18 +472,21 @@ const ImageContent = props => {
 	)
 
 	image = ! props.hasWrapper ? image : (
-		<div className={ imageWrapperClasses }>
+		<span className={ imageWrapperClasses }>
 			{ image }
-		</div>
+		</span>
 	)
 
 	return (
 		applyFilters( 'stackable.image.save.wrapper',
-			( <Wrapper className={ props.hasWrapper ? undefined : imageWrapperClasses }>
-				{ image }
-				{ props.figcaptionShow && props.src && <figcaption className={ figcaptionClassnames }>{ props.figcaption }</figcaption> }
+			( <figure className={ props.hasWrapper ? undefined : imageWrapperClasses }>
+				<ConditionalWrapper
+					condition={ !! props.customWrapper }
+					children={ image }
+				/>
+				{ props.figcaptionShow && props.src && <RichText.Content tagName="figcaption" className={ figcaptionClassnames } value={ props.figcaption } /> }
 				{ props.children }
-			</Wrapper> ), props, imageWrapperClasses, image
+			</figure> ), props, imageWrapperClasses, image, figcaptionClassnames
 		)
 	)
 }

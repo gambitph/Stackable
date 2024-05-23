@@ -28,6 +28,7 @@ import {
 import classnames from 'classnames'
 import { importBlocks } from '~stackable/util/admin'
 import { createRoot } from '~stackable/util/element'
+import AdminSelectSetting from '~stackable/components/admin-select-setting'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 import { GettingStarted } from './getting-started'
@@ -231,11 +232,11 @@ const EditorSettings = () => {
 					'stackable_google_maps_api_key',
 					'stackable_enable_design_library',
 					'stackable_optimize_inline_css',
-					'stackable_enable_navigation_panel',
 					'stackable_block_default_width',
 					'stackable_block_wide_width',
 					'stackable_auto_collapse_panels',
 					'stackable_enable_block_linking',
+					'stackable_enable_carousel_lazy_loading',
 				] ) )
 			} )
 		} )
@@ -269,20 +270,6 @@ const EditorSettings = () => {
 				} )
 			} }
 			help={ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
-		/>
-		<AdminToggleSetting
-			label={ __( 'Navigation Panel', i18n ) }
-			value={ settings.stackable_enable_navigation_panel }
-			onChange={ value => {
-				setIsBusy( true )
-				const model = new models.Settings( { stackable_enable_navigation_panel: value } ) // eslint-disable-line camelcase
-				model.save().then( () => setIsBusy( false ) )
-				setSettings( {
-					...settings,
-					stackable_enable_navigation_panel: value, // eslint-disable-line camelcase
-				} )
-			} }
-			help={ __( 'A block Navigation panel that floats at the bottom of the inspector that helps with adjusting the different blocks in your column layout.', i18n ) }
 		/>
 		<AdminToggleSetting
 			label={ __( 'Auto-Collapse Panels', i18n ) }
@@ -385,6 +372,20 @@ const EditorSettings = () => {
 				</>
 				 }
 		/>
+		<AdminToggleSetting
+			label={ __( 'Lazy Load Images within Carousels', i18n ) }
+			value={ settings.stackable_enable_carousel_lazy_loading }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_carousel_lazy_loading: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
+		/>
 		{ isBusy &&
 			<div className="s-absolute-spinner">
 				<Spinner />
@@ -482,6 +483,55 @@ const GlobalSettings = () => {
 			disabled={ __( 'Not forced', i18n ) }
 			enabled={ __( 'Force styles', i18n ) }
 		/>
+	</Fragment>
+}
+
+const IconSettings = () => {
+	const [ faVersion, setFaVersion ] = useState( '' )
+
+	useEffect( () => {
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setFaVersion( response.stackable_icons_fa_free_version || '6.5.1' )
+			} )
+		} )
+	}, [] )
+
+	const updateFaVersion = value => {
+		const model = new models.Settings( { stackable_icons_fa_free_version: value } ) // eslint-disable-line camelcase
+		model.save()
+		setFaVersion( value )
+	}
+
+	return <Fragment>
+		<div className="s-icon-settings-fa-pro-version">
+			<label className="ugb-admin-setting__label-wrapper" htmlFor="s-icon-settings-fa-pro-version">
+				<span className="ugb-admin-setting__label"> { __( 'FontAwesome Icon Library Version', i18n ) }</span>
+				<div className="ugb-admin-setting__field">
+					<p>
+						{ __( 'You are using the version set in your Font Awesome Pro Kit.', i18n ) }
+					</p>
+				</div>
+			</label>
+		</div>
+		<div className="s-icon-settings-fa-free-version">
+			<AdminSelectSetting
+				label={ __( 'FontAwesome Icon Library Version', i18n ) }
+				value={ faVersion }
+				options={ [
+					{
+						name: '6.5.1',
+						value: '6.5.1',
+					},
+					{
+						name: '5.15.4',
+						value: '5.15.4',
+					},
+				] }
+				onChange={ updateFaVersion }
+			/>
+		</div>
 	</Fragment>
 }
 
@@ -650,6 +700,14 @@ domReady( () => {
 			document.querySelector( '.s-global-settings' )
 		).render(
 			<GlobalSettings />
+		)
+	}
+
+	if ( document.querySelector( '.s-icon-settings-fa-version' ) ) {
+		createRoot(
+			document.querySelector( '.s-icon-settings-fa-version' )
+		).render(
+			<IconSettings />
 		)
 	}
 

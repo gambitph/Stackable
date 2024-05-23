@@ -40,7 +40,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Checks if a Stackable block is rendered in the frontend, then loads our scripts.
-			if ( ! is_admin() ) {
+			if ( is_frontend() ) {
 				add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
 				add_action( 'template_redirect', array( $this, 'load_frontend_scripts_conditionally_head' ) );
 			}
@@ -53,8 +53,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
-			// Adds a special class to the body tag, to indicate we can now run animations.
-			add_action( 'wp_footer', array( $this, 'init_animation' ) );
+			add_action( 'wp_footer', array( $this, 'init_stackable_vars' ) );
 
 			// Add the fallback values for the default block width and wide block width.
 			// These are used for the inside "Content width" option of Columns.
@@ -100,12 +99,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			if ( ! is_admin() ) {
 				wp_register_script( 'ugb-block-frontend-js', null, [], STACKABLE_VERSION );
 			}
-
-			$args = apply_filters( 'stackable_localize_frontend_script', array(
-				'restUrl' => get_rest_url(),
-				'i18n' => array(), // Translatable labels used in the frontend should go here.
-			) );
-			wp_localize_script( 'ugb-block-frontend-js', 'stackable', $args );
 
 			// Register inline frontend styles, these are always loaded.
 			// Register via a dummy style.
@@ -192,41 +185,38 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$block_content = "";
 			}
 
-			// Load our main frontend scripts if there's a Stackable block loaded in the
-			// frontend.
+			// Load our main frontend scripts if there's a Stackable block
+			// loaded in the frontend.
 			if ( ! $this->is_main_script_loaded && ! is_admin() ) {
-				$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-				if (
-					stripos( $block_name, 'stackable/' ) === 0 ||
-					stripos( $block_content, '<!-- wp:stackable/' ) !==  false ||
-					stripos( $block_content, 'stk-highlight' ) !==  false
+				if ( strpos( $block_content, '<!-- wp:stackable/' ) !== false ||
+					 strpos( $block_content, 'stk-highlight' ) !== false
 				) {
 					$this->block_enqueue_frontend_assets();
 					$this->is_main_script_loaded = true;
 				}
 			}
 
-			// Load our individual block script if they're used in the page.
-			$stackable_block = '';
-			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-			if ( stripos( $block_name, 'stackable/' ) === 0 ) {
-				$stackable_block = substr( $block_name, 10 );
-			} else if ( stripos( $block_content, '<!-- wp:stackable/' ) !==  false ) {
-				if ( preg_match( '#stackable/([\w\d-]+)#', $block_content, $matches ) ) {
-					$stackable_block = $matches[1];
-				}
+			// Only do this for Stackable blocks.
+			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
+				return $block_content;
 			}
+
+			// Load our main frontend scripts if not yet loaded.
+			if ( ! $this->is_main_script_loaded && ! is_admin() ) {
+				$this->block_enqueue_frontend_assets();
+				$this->is_main_script_loaded = true;
+			}
+
 			// Enqueue the block script once.
-			if ( ! empty( $stackable_block ) && ! array_key_exists( $stackable_block, $this->scripts_loaded ) ) {
+			if ( ! isset( $this->scripts_loaded[ $block['blockName'] ] ) ) {
+				$stackable_block = substr( $block['blockName'], 10 );
 				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
-				$this->scripts_loaded[] = $stackable_block;
+				$this->scripts_loaded[ $block['blockName'] ] = true;
 			}
 
 			// Check whether the current block needs to enqueue some scripts.
 			// This gets called across all the blocks.
-			if ( stripos( $block_name, 'stackable/' ) === 0 ) {
-				do_action( 'stackable/enqueue_scripts', $block_content, $block );
-			}
+			do_action( 'stackable/enqueue_scripts', $block_content, $block );
 
 			return $block_content;
 		}
@@ -445,15 +435,15 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		}
 
 		/**
-		 * Adds a special class to the body tag, to indicate we can now run
-		 * hover transitions and other effects.
-		 *
-		 * @see src/styles/block-transitions.scss
+		 * Adds the stackable object with frontend constants if needed.
 		 *
 		 * @return void
 		 */
-		public function init_animation() {
-			echo '<script>requestAnimationFrame(() => document.body.classList.add( "stk--anim-init" ))</script>';
+		public function init_stackable_vars() {
+			$args = apply_filters( 'stackable_localize_frontend_script', array() );
+			if ( ! empty( $args ) ) {
+				echo '<script>stackable = ' . json_encode( $args ) . '</script>';
+			}
 		}
 	}
 

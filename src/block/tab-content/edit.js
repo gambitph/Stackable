@@ -32,7 +32,6 @@ import {
 	Transform,
 	getContentAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapper,
@@ -45,6 +44,10 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { useSetActiveTabContext } from '../tabs/with-active-tab'
+import {
+	useSelect,
+} from '@wordpress/data'
+
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -75,8 +78,17 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { innerBlocks, hasInnerBlocks } = useBlockContext()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
+    const { innerBlocks, hasInnerBlocks } = useSelect(
+        select => {
+            const innerBlocks = select( 'core/block-editor' ).getBlock( clientId ).innerBlocks
+            return {
+                innerBlocks: innerBlocks,
+                hasInnerBlocks: innerBlocks.length > 0,
+            }
+        },
+        [ clientId ]
+    )
 
 	const blockClassNames = classnames( [
 		className,

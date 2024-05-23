@@ -1,56 +1,61 @@
-export const faGetSVGIcon = ( prefix, iconName ) => {
-	const icon = faGetIcon( prefix, iconName )
-	if ( icon ) {
-		return icon.html[ 0 ]
+import {
+	iconsFaKit, iconsFaProKitVersion, iconsFaFreeKitVersion,
+} from 'stackable'
+
+const faTokenV5 = 'd2a8ea0b89'
+const faTokenV6 = '8f4ebede24'
+const faVersion = ( iconsFaKit ? iconsFaProKitVersion : ( iconsFaFreeKitVersion || '6.5.1' ) ) || '5.15.4'
+
+const aliasToFamilyStyle = {
+	fas: 'solid',
+	far: 'regular',
+	fal: 'light',
+	fat: 'thin',
+	fad: 'duotone',
+	fab: 'brands',
+	fass: 'sharp-solid',
+	fasr: 'sharp-regular',
+	fasl: 'sharp-light',
+}
+
+const getFamilyStyle = prefix => {
+	return aliasToFamilyStyle[ prefix ] || 'solid'
+}
+const getToken = () => {
+	if ( iconsFaKit ) {
+		return iconsFaKit
+	} else if ( iconsFaFreeKitVersion === '5.15.4' ) {
+		return faTokenV5
 	}
-	return ''
+	return faTokenV6
 }
 
 export const faGetIcon = ( prefix, iconName ) => {
-	if ( ! window.FontAwesome ) {
-		return null
+	if ( ! window.StkFontAwesome || ! window.StkFontAwesome[ `${ prefix }-${ iconName }` ] ) {
+		return ''
 	}
-	return window.FontAwesome.icon( { prefix, iconName } )
+
+	return window.StkFontAwesome[ `${ prefix }-${ iconName }` ]
 }
 
-export const faIsAPILoaded = () => {
-	return !! window.FontAwesome
-}
+export const faFetchIcon = ( prefix, iconName ) => {
+	const token = getToken()
+	const familyStyle = getFamilyStyle( prefix )
 
-export const faAPILoaded = () => {
-	if ( ! window.FontAwesome ) {
-		return new Promise( ( resolve, reject ) => {
-			let timeoutCounter = 240
-			const interval = setInterval( () => {
-				if ( window.FontAwesome ) {
-					clearInterval( interval )
-					resolve( true )
-				} else if ( timeoutCounter-- < 0 ) {
-					clearInterval( interval )
-					reject( false )
-				}
-			}, 250 )
-		} )
+	let url
+	if ( ! iconsFaKit ) {
+		url = `https://ka-f.fontawesome.com/releases/v${ faVersion }/svgs/${ familyStyle }/${ iconName }.svg?token=${ token }`
+	} else {
+		url = `https://ka-p.fontawesome.com/releases/v${ faVersion }/svgs/${ familyStyle }/${ iconName }.svg?token=${ token }`
 	}
-	return Promise.resolve( true )
-}
+	return new Promise( async ( resolve, reject ) => {
+		const svgText = await fetch( url ).then( response => response.text() ).catch( () => reject( false ) )
 
-export const faIconLoaded = ( prefix, iconName ) => {
-	const icon = faGetIcon( prefix, iconName )
-	if ( ! icon ) {
-		return new Promise( ( resolve, reject ) => {
-			let timeoutCounter = 240
-			const interval = setInterval( () => {
-				const icon = faGetIcon( prefix, iconName )
-				if ( window.FontAwesome ) {
-					clearInterval( interval )
-					resolve( icon )
-				} else if ( timeoutCounter-- < 0 ) {
-					clearInterval( interval )
-					reject( false )
-				}
-			}, 250 )
-		} )
-	}
-	return Promise.resolve( icon )
+		if ( ! window.StkFontAwesome ) {
+			window.StkFontAwesome = {}
+		}
+
+		window.StkFontAwesome[ `${ prefix }-${ iconName }` ] = svgText
+		resolve( true )
+	} )
 }

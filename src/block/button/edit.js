@@ -128,13 +128,12 @@ const Edit = props => {
 				clientId={ props.clientId }
 				attributes={ props.attributes }
 				className={ blockClassNames }
-				applyAdvancedAttributes={ false }
 				applyCustomAttributes={ false }
 			>
 				<Button
 					buttonProps={ {
 						tagName: props.attributes.linkTag,
-						id: props.attributes.anchor || undefined,
+						id: props.attributes.anchorId || undefined,
 						...customAttributes,
 					} }
 				>

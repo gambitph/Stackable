@@ -45,7 +45,7 @@ const Styles = props => {
 				attrName="fullWidth"
 				attrNameTemplate={ attrNameTemplate }
 				key="buttonFullWidth-save"
-				valueCallback={ () => '1 1 0' }
+				valueCallback={ () => '1 0 var(--stk-button-group-flex-wrap, 0)' }
 				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) }
 			/>
 			<BlockCss
@@ -56,7 +56,7 @@ const Styles = props => {
 				attrName="fullWidth"
 				attrNameTemplate={ attrNameTemplate }
 				key="buttonFullWidth-flex"
-				valueCallback={ () => '1 1 0' }
+				valueCallback={ () => '1 0 var(--stk-button-group-flex-wrap, 0)' }
 				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) }
 			/>
 			<BlockCss

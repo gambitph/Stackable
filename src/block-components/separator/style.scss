@@ -50,7 +50,6 @@
 		pointer-events: none;
 		inset: -1px 0; // -1px on the sides might make horizontal scrollbars appear.
 		overflow: hidden;
-
 		svg {
 			filter: drop-shadow(0px 2px 20px rgba(153, 153, 153, 0.2));
 			left: 0;

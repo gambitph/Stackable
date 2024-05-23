@@ -30,6 +30,7 @@ export const Edit = props => {
 	const {
 		hasSizeSpacing,
 		initialOpen,
+		backgroundMediaAllowVideo,
 	} = props
 	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
 	const setAttributes = useBlockSetAttributesContext()
@@ -69,7 +70,10 @@ export const Edit = props => {
 					onChange={ hasBackground => setAttributes( { hasBackground } ) }
 					initialOpen={ initialOpen === 'background' }
 				>
-					<BackgroundControls attrNameTemplate="block%s" onBackgroundEnableAttribute="hasBackground" />
+					<BackgroundControls
+						attrNameTemplate="block%s"
+						onBackgroundEnableAttribute="hasBackground"
+						backgroundMediaAllowVideo={ backgroundMediaAllowVideo } />
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
 					title={ __( 'Borders & Shadows', i18n ) }

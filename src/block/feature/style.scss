@@ -16,3 +16,20 @@
 		}
 	}
 }
+
+.stk-block-feature {
+	> * > .stk-row {
+		display: flex;
+		flex-direction: row;
+		// We need to add wrapping here for the desktop wrapping to work. We
+		// need to be able to override this.
+		flex-wrap: var(--stk-feature-flex-wrap, wrap);
+	}
+	@include desktop {
+		> * > .stk-row {
+			// We need to add wrapping here for the desktop wrapping to work. We
+			// need to be able to override this.
+			flex-wrap: var(--stk-feature-flex-wrap, nowrap);
+		}
+	}
+}

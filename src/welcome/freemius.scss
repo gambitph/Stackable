@@ -104,6 +104,10 @@
 		border: 0;
 		padding: 16px;
 	}
+	// Hide other information like billing and payments.
+	// > .has-sidebar > .has-sidebar-content > .postbox ~ * {
+	// 	display: none !important;
+	// }
 }
 
 /**
@@ -142,4 +146,15 @@ body.stackable_page_stackable-pricing {
 body.settings_page_stackable-account {
 	position: relative;
 	height: auto;
+}
+
+/**
+ * Hide the upgrade button on the accounts page.
+ */
+// li:has(a[href*="page=stackable-pricing"]),
+li:has(a[href="#fs_billing"]) {
+	&,
+	+ li {
+		display: none !important;
+	}
 }

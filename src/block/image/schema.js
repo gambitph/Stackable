@@ -23,7 +23,7 @@ export const attributes = ( version = VERSION ) => {
 	BlockDiv.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
 	Image.addAttributes( attrObject )
-	Link.addAttributes( attrObject )
+	Link.addAttributes( attrObject, { selector: 'a.stk-link' } )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Transform.addAttributes( attrObject )

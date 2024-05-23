@@ -1,5 +1,6 @@
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor,
 } from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
@@ -7,6 +8,31 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			return hasBlockShadow || hasContainerShadow || isNotV4
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'digit%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'label%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	// Support the new combined opacity and color.
 	{
 		attributes: attributes( '3.11.9' ),
@@ -29,6 +55,8 @@ const deprecated = [
 			newAttributes = deprecateTypographyGradientColor.migrate( 'digit%s' )( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( 'label%s' )( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return newAttributes
 		},
@@ -70,6 +98,8 @@ const deprecated = [
 			newAttributes = deprecateTypographyGradientColor.migrate( 'digit%s' )( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( 'label%s' )( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return newAttributes
 		},
@@ -83,6 +113,8 @@ const deprecated = [
 			newAttributes = deprecateTypographyGradientColor.migrate( 'digit%s' )( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( 'label%s' )( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 		},

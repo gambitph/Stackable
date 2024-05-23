@@ -54,7 +54,6 @@ export const Save = props => {
 		<BlockDiv.Content
 			{ ...useBlockProps.save( { className: blockClassNames } ) }
 			attributes={ props.attributes }
-			applyAdvancedAttributes={ false }
 			applyCustomAttributes={ false }
 			version={ props.version }
 		>
@@ -64,7 +63,7 @@ export const Save = props => {
 				{ ...propsToPass }
 				attributes={ props.attributes }
 				buttonProps={ {
-					id: props.attributes.anchor || undefined,
+					id: props.attributes.anchorId || undefined,
 					...customAttributes,
 				} }
 			>

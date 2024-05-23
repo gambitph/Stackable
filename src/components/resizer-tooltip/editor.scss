@@ -29,9 +29,7 @@
 	// Save for next time on when we decide to allow people to click and type in margins.
 	cursor: pointer;
 	z-index: 3;
-	&::after {
-		content: "\f347";
-		font-family: Dashicons;
+	svg {
 		top: 2px;
 		position: relative;
 		margin-left: 4px;

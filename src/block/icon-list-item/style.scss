@@ -1,0 +1,92 @@
+.stk-block-icon-list-item {
+	list-style-type: none !important;
+}
+.stk-block-icon-list.stk-block {
+	.wp-block-stackable-icon-list-item:not(:last-child)::after {
+		content: "" !important;
+		display: block;
+		width: 100%;
+		position: absolute;
+		border-top: 0;
+		border-left: 0;
+		border-right: 0;
+		bottom: calc(var(--stk-icon-list-row-gap, 0px) / -2) !important;
+		left: 0;
+		border-style: none;
+		border-width: 1px;
+		border-color: rgba(0, 0, 0, 0.4);
+	}
+}
+
+.stk-block-icon-list-item__content {
+	gap: 8px;
+}
+
+.stk-block-icon-list .stk-block-icon-list__ul .stk-block-icon-list-item {
+	flex-direction: column;
+	// Need to make this fit the content so that we can align left/center/right
+	// the list alignment.
+	width: 100%;
+	margin-inline: 0 auto;
+
+	.stk-block-icon-list-item__content {
+		display: flex;
+		align-items: center;
+		width: fit-content;
+		position: relative;
+		.stk--svg-wrapper {
+			.stk--inner-svg svg {
+				height: var(--stk-icon-height, 16px);
+				width: var(--stk-icon-height, 16px);
+				transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
+				opacity: var(--stk-icon-list-icon-opacity, 1);
+				fill: var(--stk-icon-list-marker-color);
+				color: var(--stk-icon-list-marker-color);
+				position: relative;
+
+				:is(use,g,path,rect,polygon,ellipse) {
+					fill: var(--stk-icon-list-marker-color);
+					color: var(--stk-icon-list-marker-color);
+				}
+			}
+		}
+
+	}
+}
+
+.stk-block-icon-list [data-type^="stackable/"] .stk-block-icon-list-item .stk--svg-wrapper svg {
+	cursor: copy;
+}
+
+.stk-block-icon-list.stk-block [data-block][data-type="stackable/icon-list-item"]:not(:focus):hover::after {
+	outline: none;
+}
+
+.stk-block-icon-list .stk-block-icon-list__ol li.stk-block-icon-list-item {
+	width: 100%;
+	margin-inline: 0 auto;
+	counter-increment: stk-icon-list-counter;
+
+	.stk-block-icon-list-item__content {
+		display: flex;
+		align-items: center;
+		width: fit-content;
+		position: relative;
+
+		.stk-block-icon-list-item__marker::before {
+			content: counter(stk-icon-list-counter, var(--stk-list-style-type, decimal)) ". ";
+			display: block;
+			font-size: var(--stk-icon-height, 16px);
+			color: var(--stk-icon-list-marker-color);
+			transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
+			opacity: var(--stk-icon-list-icon-opacity, 1);
+			vertical-align: middle;
+			white-space: nowrap;
+		}
+	}
+
+}
+
+li.wp-block-stackable-icon-list-item.stk-block-icon-list-item {
+	margin-bottom: 0;
+}

@@ -27,10 +27,12 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 				add_action( 'rest_api_init', array( $this, 'register_optimization_settings' ) );
 
 				// Prevent the scripts from loading normally. Low priority so we can remove the assets.
-				add_action( 'init', array( $this, 'disable_frontend_scripts' ), 9 );
+				if ( is_frontend() ) {
+					add_action( 'init', array( $this, 'disable_frontend_scripts' ), 9 );
 
-				// Load the scripts only when Stackable blocks are detected.
-				add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
+					// Load the scripts only when Stackable blocks are detected.
+					add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
+				}
 
 				// Add the optimization setting.
 				add_action( 'stackable_settings_page_mid', array( $this, 'add_optimization_settings' ) );
@@ -65,7 +67,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 		 * @since 2.17.0
 		 */
 		public function disable_frontend_scripts() {
-			if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
+			if ( get_option( 'stackable_optimize_script_load' ) ) {
 				remove_action( 'init', 'stackable_block_assets_v2' );
 				remove_action( 'enqueue_block_assets', 'stackable_add_required_block_styles_v2' );
 			}
@@ -87,18 +89,17 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 				return $block_content;
 			}
 
-			if ( ! $this->is_script_loaded ) {
-				if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
-					$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-					if (
-						stripos( $block_name, 'ugb/' ) === 0 ||
-						stripos( $block_content, '<!-- wp:ugb/' ) !==  false ||
-						stripos( $block_content, 'ugb-highlight' ) !==  false
-					) {
-						stackable_block_enqueue_frontend_assets_v2();
-						stackable_add_required_block_styles_v2();
-						$this->is_script_loaded = true;
-					}
+			if ( ! $this->is_script_loaded && get_option( 'stackable_optimize_script_load' ) ) {
+				if (
+					( isset( $block['blockName'] ) && strpos( $block['blockName'], 'ugb/' ) === 0 ) ||
+					strpos( $block_content, '<!-- wp:ugb/' ) !==  false ||
+					strpos( $block_content, 'ugb-highlight' ) !==  false
+				) {
+					stackable_block_enqueue_frontend_assets_v2();
+					stackable_add_required_block_styles_v2();
+					$this->is_script_loaded = true;
+
+					remove_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10 );
 				}
 			}
 

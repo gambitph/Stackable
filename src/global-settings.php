@@ -37,14 +37,21 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		public $generated_body_typography_css = false;
 
 		/**
+		 * Corresponds to the stackable_global_force_typography option for forcing important
+		 *
+		 * @var boolean
+		 */
+		private $force_typography = false;
+
+		/**
 		 * Initialize
 		 */
-  	function __construct() {
+  		function __construct() {
 			// Register our settings.
 			add_action( 'admin_init', array( $this, 'register_global_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_global_settings' ) );
 
-			if ( ! is_admin() ) {
+			if ( is_frontend() ) {
 
 				/**
 				 * Color hooks
@@ -65,6 +72,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				// Don't do anything if we don't have any global typography.
 				$typography = get_option( 'stackable_global_typography' );
 				if ( ! empty( $typography ) && is_array( $typography ) ) {
+					$this->force_typography = get_option( 'stackable_global_force_typography' );
 					add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
 				}
 
@@ -284,9 +292,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 */
 		public function fix_deprecated_options() {
 			if ( ! empty( get_option( 'stackable_global_colors_palette_only' ) ) ) {
-				update_option( 'stackable_global_hide_theme_colors', '1' );
-				update_option( 'stackable_global_hide_default_colors', '1' );
-				update_option( 'stackable_global_hide_site_editor_colors', '1' );
+				update_option( 'stackable_global_hide_theme_colors', '1', 'no' );
+				update_option( 'stackable_global_hide_default_colors', '1', 'no' );
+				update_option( 'stackable_global_hide_site_editor_colors', '1', 'no' );
 				delete_option( 'stackable_global_colors_palette_only' );
 			}
 		}
@@ -380,7 +388,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$css[] = $this->generate_typography_styles( implode( ', ', $selectors ), $styles );
 
 				// Gather the Google Fonts.
-				if ( array_key_exists( 'fontFamily', $styles ) ) {
+				if ( isset( $styles['fontFamily'] ) ) {
 					Stackable_Google_Fonts::register_font( $styles['fontFamily'] );
 				}
 
@@ -451,14 +459,16 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			// Include Stackable blocks.
 			$selectors[] = '.stk-block ' . $tag;
 
+			$apply_to = $this->get_apply_typography_to();
+
 			// Include native blocks.
-			if ( $this->get_apply_typography_to() !== 'blocks-stackable' ) {
+			if ( $apply_to !== 'blocks-stackable' ) {
 				$selectors[] = '[data-block-type="core"] ' . $tag;
 				$selectors[] = $tag . '[data-block-type="core"]';
 			}
 
 			// Include all other blocks.
-			if ( $this->get_apply_typography_to() === 'blocks-all' ) {
+			if ( $apply_to === 'blocks-all' ) {
 				$selectors[] = '[class*="wp-block-"] ' . $tag;
 				$selectors[] = $tag . '[class*="wp-block-"]';
 			}
@@ -483,13 +493,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return string
 		 */
 		public function create_style( $style, $value ) {
-			$imp = get_option( 'stackable_global_force_typography' ) ? ' !important' : '';
-
-			return sprintf( '%s: %s%s;',
-				$style,
-				$value,
-				$imp
-			);
+			return $style . ': ' . $value . ( $this->force_typography ? ' !important' : '' ) . ';';
 		}
 
 		/**
@@ -532,44 +536,44 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			/**
 			 * Desktop styles.
 			 */
-			if ( array_key_exists( 'fontFamily', $styles ) ) {
+			if ( isset( $styles['fontFamily'] ) ) {
 				$css['desktop'][] = $this->create_style( 'font-family', $this->get_font_family( $styles['fontFamily'] ) );
 			}
-			if ( array_key_exists( 'fontSize', $styles ) ) {
+			if ( isset( $styles['fontSize'] ) ) {
 				$css['desktop'][] = $this->create_style( 'font-size', $styles['fontSize'] . $styles['fontSizeUnit'] );
 			}
-			if ( array_key_exists( 'fontWeight', $styles ) ) {
+			if ( isset( $styles['fontWeight'] ) ) {
 				$css['desktop'][] = $this->create_style( 'font-weight', $styles['fontWeight'] );
 			}
-			if ( array_key_exists( 'textTransform', $styles ) ) {
+			if ( isset( $styles['textTransform'] ) ) {
 				$css['desktop'][] = $this->create_style( 'text-transform', $styles['textTransform'] );
 			}
-			if ( array_key_exists( 'lineHeight', $styles ) ) {
+			if ( isset( $styles['lineHeight'] ) ) {
 				$css['desktop'][] = $this->create_style( 'line-height', $styles['lineHeight'] . $styles['lineHeightUnit'] );
 			}
-			if ( array_key_exists( 'letterSpacing', $styles ) ) {
+			if ( isset( $styles['letterSpacing'] ) ) {
 				$css['desktop'][] = $this->create_style( 'letter-spacing', $styles['letterSpacing'] . 'px' );
 			}
 
 			/**
 			 * Tablet styles.
 			 */
-			if ( array_key_exists( 'tabletLineHeight', $styles ) ) {
+			if ( isset( $styles['tabletLineHeight'] ) ) {
 				$css['tablet'][] = $this->create_style( 'line-height', $styles['tabletLineHeight'] . $styles['tabletLineHeightUnit'] );
 			}
-			if ( array_key_exists( 'tabletLetterSpacing', $styles ) ) {
+			if ( isset( $styles['tabletLetterSpacing'] ) ) {
 				$css['tablet'][] = $this->create_style( 'letter-spacing', $styles['tabletLetterSpacing'] . 'px' );
 			}
 			$font_size = '';
 			if ( $inherit ) {
-				if ( array_key_exists( 'fontSize', $styles ) ) {
+				if ( isset( $styles['fontSize'] ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( ! empty( $clamp_desktop_value ) ) {
 						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
 					}
 				}
 			}
-			if ( array_key_exists( 'tabletFontSize', $styles ) ) {
+			if ( isset( $styles['tabletFontSize'] ) ) {
 				$font_size = $this->create_style( 'font-size', $styles['tabletFontSize'] . $styles['tabletFontSizeUnit'] );
 			}
 			if ( ! empty( $font_size ) ) {
@@ -579,10 +583,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			/**
 			 * Mobile styles.
 			 */
-			if ( array_key_exists( 'mobileLineHeight', $styles ) ) {
+			if ( isset( $styles['mobileLineHeight'] ) ) {
 				$css['mobile'][] = $this->create_style( 'line-height', $styles['mobileLineHeight'] . $styles['mobileLineHeightUnit'] );
 			}
-			if ( array_key_exists( 'mobileLetterSpacing', $styles ) ) {
+			if ( isset( $styles['mobileLetterSpacing'] ) ) {
 				$css['mobile'][] = $this->create_style( 'letter-spacing', $styles['mobileLetterSpacing'] . 'px' );
 			}
 
@@ -590,7 +594,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( $inherit ) {
 				$clamp_desktop_value = null;
 				$has_clamped_font_size = false;
-				if ( array_key_exists( 'fontSize', $styles ) ) {
+				if ( isset( $styles['fontSize'] ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( ! empty( $clamp_desktop_value ) ) {
 						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
@@ -598,14 +602,14 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 
 				$clamp_tablet_value = null;
-				if ( array_key_exists( 'tabletFontSize', $styles ) ) {
+				if ( isset( $styles['tabletFontSize'] ) ) {
 					$clamp_tablet_value = $this->clamp_inherited_style( $styles['tabletFontSize'], $inherit_max );
 					if ( ! empty( $clamp_tablet_value ) ) {
 						$font_size = $this->create_style( 'font-size', $clamp_tablet_value . $styles['tabletFontSizeUnit'] );
 					}
 				}
 				if ( empty( $clamp_tablet_value ) ) {
-					if ( ! empty( $clamp_desktop_value ) || array_key_exists( 'tabletFontSize', $styles ) ) {
+					if ( ! empty( $clamp_desktop_value ) || isset( $styles['tabletFontSize'] ) ) {
 						// If we have a desktop value clamped, and there's a tablet value, don't do anything.
 						if ( $has_clamped_font_size ) {
 							$font_size = '';
@@ -613,7 +617,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					}
 				}
 			}
-			if ( array_key_exists( 'mobileFontSize', $styles ) ) {
+			if ( isset( $styles['mobileFontSize'] ) ) {
 				$font_size = $this->create_style( 'font-size', $styles['mobileFontSize'] . $styles['mobileFontSizeUnit'] );
 			}
 			if ( ! empty( $font_size ) ) {
@@ -687,42 +691,40 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return string Rendered block
 		 */
 		public function typography_detect_native_blocks( $block_content, $block ) {
-			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-
-			if ( $block_content === null ) {
-				return $block_content;
-			}
-
 			// Only do this if we have some global typography settings to apply.
 			if ( empty( $this->generated_typography_css ) ) {
 				return $block_content;
 			}
 
 			// Only do this for native blocks.
-			if ( stripos( $block_name, 'core/' ) !== 0 ) {
+			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'core/' ) !== 0 ) {
+				return $block_content;
+			}
+
+			if ( $block_content === null ) {
 				return $block_content;
 			}
 
 			// Only do the native paragraph blocks only if body text is used.
-			if ( $block_name === 'core/paragraph' && ! $this->generated_body_typography_css ) {
+			if ( $block['blockName'] === 'core/paragraph' && ! $this->generated_body_typography_css ) {
 				return $block_content;
 			}
 
 			// Only do the native hedaing blocks only if headings is used.
-			if ( $block_name === 'core/heading' && ! $this->generated_heading_typography_css ) {
+			if ( $block['blockName'] === 'core/heading' && ! $this->generated_heading_typography_css ) {
 				return $block_content;
 			}
 
 			// Don't do this for custom HTML blocks.
-			if ( in_array( $block_name, array( 'core/html', 'core/embed' ) ) ) {
+			if ( in_array( $block['blockName'], array( 'core/html', 'core/embed' ) ) ) {
 				return $block_content;
 			}
 
 			// If a native block, let's add a new data- attribute to it so we can target it in css.
-			if ( stripos( $block_content, '>' ) !== false ) {
+			if ( strpos( $block_content, '>' ) !== false ) {
 				$new_block_content = $this->str_replace_first( '>', ' data-block-type="core">', $block_content );
 				// If we encounter a comment that got converted, we can detect that.
-				if ( stripos( $new_block_content, '-- data-block-type="core">' ) === false ) {
+				if ( strpos( $new_block_content, '-- data-block-type="core">' ) === false ) {
 					return $new_block_content;
 				}
 			}

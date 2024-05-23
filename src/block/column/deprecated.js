@@ -15,7 +15,10 @@ import classnames from 'classnames/dedupe'
  */
 import { addFilter } from '@wordpress/hooks'
 import { semverCompare } from '~stackable/util'
-import { deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity } from '~stackable/block-components'
+import {
+	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
+	deprecateBlockShadowColor, deprecateContainerShadowColor,
+} from '~stackable/block-components'
 
 // Version 3.8 added horizontal flex, we changed the stk--block-orientation-* to stk--block-horizontal-flex.
 addFilter( 'stackable.column.save.innerClassNames', 'stackable/3.8.0', ( output, props ) => {
@@ -73,6 +76,80 @@ addFilter( 'stackable.column.save.blockClassNames', 'stackable/3.8.0', ( output,
 
 const deprecated = [
 	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+			const isNotV4 = attributes.version < 4 || typeof attributes.version === 'undefined'
+
+			return hasBlockShadow || hasContainerShadow || isNotV4
+		},
+		migrate: ( attributes, innerBlocks ) => {
+			const isNotV4 = attributes.version < 4 || typeof attributes.version === 'undefined'
+
+			let newAttributes = {
+				...attributes,
+			}
+
+			if ( isNotV4 ) {
+				newAttributes = {
+					...newAttributes,
+					version: 4,
+					className: classnames( attributes.className, {
+						'stk-block-column--v2': false,
+						'stk-block-column--v3': false,
+					} ),
+				}
+
+				// Update the vertical align into flexbox
+				const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
+
+				if ( hasOldVerticalAlign ) {
+					newAttributes = {
+						...newAttributes,
+						containerVerticalAlign: '',
+						innerBlockAlign: attributes.containerVerticalAlign,
+					}
+				}
+
+				// If the inner blocks are horizontal, adjust to accomodate the new
+				// column gap, it will modify blocks because people used block
+				// margins before instead of a proper column gap.
+				if ( attributes.innerBlockOrientation === 'horizontal' ) {
+					innerBlocks.forEach( ( block, index ) => {
+						if ( index ) {
+							if ( ! block.attributes.blockMargin ) {
+								block.attributes.blockMargin = {
+									top: '',
+									right: '',
+									bottom: '',
+									left: '',
+								}
+							}
+							if ( block.attributes.blockMargin.left === '' ) {
+								block.attributes.blockMargin.left = 24
+							}
+						}
+					} )
+
+					newAttributes = {
+						...newAttributes,
+						innerBlockColumnGap: 0,
+					}
+				}
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+
+			return [ newAttributes, innerBlocks ]
+		},
+	},
+	{
 		// Support the new combined opacity and color.
 		attributes: attributes( '3.11.9' ),
 		save: withVersion( '3.11.9' )( Save ),
@@ -84,54 +161,64 @@ const deprecated = [
 			return hasContainerOpacity || hasBlockOpacity || isNotV4
 		},
 		migrate: ( attributes, innerBlocks ) => {
+			const isNotV4 = attributes.version < 4 || typeof attributes.version === 'undefined'
+
 			let newAttributes = {
 				...attributes,
-				version: 4,
-				className: classnames( attributes.className, {
-					'stk-block-column--v2': false,
-					'stk-block-column--v3': false,
-				} ),
 			}
 
-			// Update the vertical align into flexbox
-			const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
-
-			if ( hasOldVerticalAlign ) {
+			if ( isNotV4 ) {
 				newAttributes = {
 					...newAttributes,
-					containerVerticalAlign: '',
-					innerBlockAlign: attributes.containerVerticalAlign,
+					version: 4,
+					className: classnames( attributes.className, {
+						'stk-block-column--v2': false,
+						'stk-block-column--v3': false,
+					} ),
 				}
-			}
 
-			// If the inner blocks are horizontal, adjust to accomodate the new
-			// column gap, it will modify blocks because people used block
-			// margins before instead of a proper column gap.
-			if ( attributes.innerBlockOrientation === 'horizontal' ) {
-				innerBlocks.forEach( ( block, index ) => {
-					if ( index ) {
-						if ( ! block.attributes.blockMargin ) {
-							block.attributes.blockMargin = {
-								top: '',
-								right: '',
-								bottom: '',
-								left: '',
+				// Update the vertical align into flexbox
+				const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
+
+				if ( hasOldVerticalAlign ) {
+					newAttributes = {
+						...newAttributes,
+						containerVerticalAlign: '',
+						innerBlockAlign: attributes.containerVerticalAlign,
+					}
+				}
+
+				// If the inner blocks are horizontal, adjust to accomodate the new
+				// column gap, it will modify blocks because people used block
+				// margins before instead of a proper column gap.
+				if ( attributes.innerBlockOrientation === 'horizontal' ) {
+					innerBlocks.forEach( ( block, index ) => {
+						if ( index ) {
+							if ( ! block.attributes.blockMargin ) {
+								block.attributes.blockMargin = {
+									top: '',
+									right: '',
+									bottom: '',
+									left: '',
+								}
+							}
+							if ( block.attributes.blockMargin.left === '' ) {
+								block.attributes.blockMargin.left = 24
 							}
 						}
-						if ( block.attributes.blockMargin.left === '' ) {
-							block.attributes.blockMargin.left = 24
-						}
-					}
-				} )
+					} )
 
-				newAttributes = {
-					...newAttributes,
-					innerBlockColumnGap: 0,
+					newAttributes = {
+						...newAttributes,
+						innerBlockColumnGap: 0,
+					}
 				}
 			}
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return [ newAttributes, innerBlocks ]
 		},
@@ -214,6 +301,8 @@ const deprecated = [
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return [ newAttributes, innerBlocks ]
 		},

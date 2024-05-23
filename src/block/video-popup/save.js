@@ -22,6 +22,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 
 export const Save = props => {
@@ -60,9 +61,17 @@ export const Save = props => {
 		>
 			<IconLabelStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<button className={ contentClassNames } aria-label={ attributes.ariaLabel || __( 'Play Video', i18n ) }>
-				<InnerBlocks.Content />
-			</button>
+			{ applyFilters( 'stackable.video-popup.save.div.content', (
+				<div
+					className={ contentClassNames }
+					aria-label={ attributes.ariaLabel || __( 'Play Video', i18n ) }
+					tabIndex="0"
+					role="button"
+				>
+					<InnerBlocks.Content />
+				</div>
+			), props, contentClassNames ) }
+
 		</BlockDiv.Content>
 	)
 }

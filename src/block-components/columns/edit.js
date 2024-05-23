@@ -10,6 +10,7 @@ import { getRowsFromColumns } from '../column/util'
 import { i18n } from 'stackable'
 import {
 	AdvancedRangeControl,
+	AdvancedToggleControl,
 	ColumnsWidthControl,
 	ColumnsWidthMultiControl,
 	ControlSeparator,
@@ -39,6 +40,7 @@ export const Controls = props => {
 		return {
 			columnArrangementTablet: attributes.columnArrangementTablet,
 			columnArrangementMobile: attributes.columnArrangementMobile,
+			columnWrapDesktop: attributes.columnWrapDesktop,
 		}
 	} )
 	const setAttributes = useBlockSetAttributesContext()
@@ -71,7 +73,13 @@ export const Controls = props => {
 	return (
 		<>
 			{ props.hasColumnsControl && <ColumnsControl /> }
-			{ numInnerBlocks > 1 && deviceType !== 'Tablet' && deviceType !== 'Mobile' &&
+			{ numInnerBlocks > 1 && deviceType === 'Desktop' &&
+				<AdvancedToggleControl
+					label={ __( 'Allow Column Wrapping', i18n ) }
+					attribute="columnWrapDesktop"
+				/>
+			}
+			{ numInnerBlocks > 1 && deviceType !== 'Tablet' && deviceType !== 'Mobile' && ! attributes.columnWrapDesktop &&
 				<ColumnsWidthControl
 					columns={ numInnerBlocks }
 					values={ columnWidths }
@@ -95,14 +103,16 @@ export const Controls = props => {
 					} }
 				/>
 			}
-			{ numInnerBlocks > 1 && ( deviceType === 'Tablet' || deviceType === 'Mobile' ) &&
+			{ numInnerBlocks > 1 && ( deviceType === 'Tablet' || deviceType === 'Mobile' || attributes.columnWrapDesktop ) &&
 				<ColumnsWidthMultiControl
 					columns={ numInnerBlocks }
-					values={ deviceType === 'Tablet' ? columnWidthsTablet : columnWidthsMobile }
+					values={ deviceType === 'Desktop' ? columnWidths
+						: deviceType === 'Tablet' ? columnWidthsTablet
+						 : columnWidthsMobile }
 					responsive="all"
 					hasTabletValue={ hasTabletColumnWidths }
 					hasMobileValue={ hasMobileColumnWidths }
-					placeholders={ deviceType === 'Tablet' ? columnWidths : Array( numInnerBlocks ).fill( '100' ) }
+					placeholders={ deviceType === 'Mobile' ? Array( numInnerBlocks ).fill( '100' ) : columnWidths }
 					allowReset={ true }
 					onChange={ columnWidths => {
 						const columnRows = getRowsFromColumns( columnWidths )

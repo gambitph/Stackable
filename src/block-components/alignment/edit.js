@@ -13,7 +13,6 @@ import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 	useDeviceType,
-	useBlockContext,
 } from '~stackable/hooks'
 
 /**
@@ -26,7 +25,7 @@ import {
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
-import { select } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 
 const ALIGN_OPTIONS = [
 	{
@@ -84,6 +83,7 @@ export const Edit = props => {
 
 	const {
 		labelContentAlign = sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ),
+		enableContentAlign = true,
 	} = props
 
 	const containerSize = props.hasContainerSize && <>
@@ -148,7 +148,7 @@ export const Edit = props => {
 			</BlockControls>
 			<InspectorLayoutControls>
 				{ props.containerSizePriority < 5 && containerSize }
-				<AlignButtonsControl
+				{ enableContentAlign && <AlignButtonsControl
 					label={ labelContentAlign }
 					attribute="contentAlign"
 					responsive="all"
@@ -157,7 +157,7 @@ export const Edit = props => {
 						video: 'alignment-all',
 						description: __( 'Adjusts the placement of all content in the block to align left, center or right', i18n ),
 					} }
-				/>
+				/> }
 				{ props.hasColumnJustify &&
 					<AdvancedToolbarControl
 						label={ sprintf( __( '%s Justify', i18n ), __( 'Column', i18n ) ) }
@@ -355,15 +355,15 @@ export const Edit = props => {
 // Add additional classes when browser is Firefox to fix alignment
 const userAgent = navigator?.userAgent
 if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
-	addFilter( 'stackable.block-components.block-div.classnames', 'alignment-editor-has-polyfill', classes => {
-		const {
-			hasInnerBlocks, numInnerBlocks, innerBlocks,
-		} = useBlockContext()
+	addFilter( 'stackable.block-components.block-div.classnames', 'alignment-editor-has-polyfill', ( classes, props ) => {
+		// Use WP's block edit context since our useBlockContext might still be updating when a block is removed
+		const innerBlocks = useSelect( select => {
+			return select( 'core/block-editor' ).getBlock( props.clientId )?.innerBlocks || []
+		}, [ props.clientId ] )
 
-		if ( hasInnerBlocks ) {
-			for ( let i = 0; i < numInnerBlocks; i++ ) {
-				const innerBlockClientId = innerBlocks[ i ].clientId
-				const { blockMargin } = select( 'core/block-editor' ).getBlockAttributes( innerBlockClientId )
+		if ( innerBlocks.length > 0 ) {
+			for ( let i = 0; i < innerBlocks.length; i++ ) {
+				const { blockMargin } = innerBlocks[ i ].attributes
 				if ( blockMargin && ( blockMargin.top === 'auto' || blockMargin.bottom === 'auto' ) ) {
 					classes.push( 'stk--alignment-polyfill' )
 				}

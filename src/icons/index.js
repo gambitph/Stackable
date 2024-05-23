@@ -27,6 +27,7 @@ import SVGIconButtonIcon from './images/icon-button-icon.svg'
 import SVGIconButtonsIcon from './images/icon-buttons.svg'
 import SVGIconBoxIcon from './images/icon-box-icon.svg'
 import SVGIconListIcon from './images/icon-list-icon.svg'
+import SVGIconListItemIcon from './images/icon-list-item-icon.svg'
 import SVGIconLabelIcon from './images/icon-label-icon.svg'
 import SVGImageIcon from './images/image-icon.svg'
 import SVGImageBoxIcon from './images/image-box-icon.svg'
@@ -212,6 +213,9 @@ export function IconBoxIcon() {
 
 export function IconListIcon() {
 	return colorizeIcon( <SVGIconListIcon width="20" height="20" /> )
+}
+export function IconListItemIcon() {
+	return colorizeIcon( <SVGIconListItemIcon width="20" height="20" /> )
 }
 
 export function IconLabelIcon() {

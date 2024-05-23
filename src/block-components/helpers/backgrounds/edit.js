@@ -61,12 +61,14 @@ export const BackgroundControls = props => {
 	getAttribute( 'backgroundMediaExternalUrl' ) ||
 	getAttribute( 'backgroundMediaExternalUrlTablet' ) ||
 	getAttribute( 'backgroundMediaExternalUrlMobile' )
-	const isBackgroundVideo = () => {
+	const checkIsBackgroundVideo = () => {
 		return [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ]
 			.filter( value => value )
 			.filter( urlIsVideo )
 			.length > 0
 	}
+
+	const isBackgroundVideo = checkIsBackgroundVideo()
 
 	return (
 		<Fragment>
@@ -173,7 +175,34 @@ export const BackgroundControls = props => {
 				/>
 			}
 
-			{ hasBackgroundMedia && ! isBackgroundVideo() &&
+			{ hasBackgroundMedia && isBackgroundVideo &&
+				<ImageControl2
+					label={ __( 'Background Video Thumbnail', i18n ) }
+					allowedTypes={ IMAGE_TYPES }
+					attribute={ getAttrName( 'backgroundMediaThumbnail' ) }
+					onChange={ image => {
+						const attrNameId = getAttributeName( `${ getAttrName( 'backgroundMediaThumbnail' ) }Id`, deviceType )
+						const attrNameUrl = getAttributeName( `${ getAttrName( 'backgroundMediaThumbnail' ) }Url`, deviceType )
+						const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMediaThumbnail' ) }HeightAttribute`, deviceType )
+						const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMediaThumbnail' ) }WidthAttribute`, deviceType )
+						const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMediaThumbnail' ) }Alt`, deviceType )
+
+						const attributes = {
+							[ attrNameId ]: image.id,
+							[ attrNameUrl ]: image.url,
+							[ attrWidthAttribute ]: image.width || '',
+							[ attrHeightAttribute ]: image.height || '',
+							[ attrAlt ]: image.alt || '',
+						}
+
+						setAttributes( attributes )
+					}
+					}
+					responsive="all"
+				/>
+			}
+
+			{ hasBackgroundMedia && ! isBackgroundVideo &&
 				<AdvancedToggleControl
 					help={ __( 'Note: Fixed Background works on Desktop and Android devices only.', i18n ) }
 					label={ __( 'Fixed Background', i18n ) }

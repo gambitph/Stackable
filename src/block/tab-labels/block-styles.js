@@ -71,6 +71,18 @@ const ATTRIBUTES_TO_CLEAR = {
 	activeTabIconColor1: '',
 	tabIconColor1Hover: '',
 	activeTabIconColor1Hover: '',
+	tabBorderRadius2: {
+		top: '',
+		right: '',
+		bottom: '',
+		left: '',
+	},
+	blockBorderRadius2: {
+		top: '',
+		right: '',
+		bottom: '',
+		left: '',
+	},
 }
 
 export const blockStyles = [

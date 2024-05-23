@@ -17,19 +17,19 @@ import { CustomAttributes } from '../custom-attributes'
 import { version as VERSION } from 'stackable'
 
 export { useUniqueId }
-export { deprecateBlockBackgroundColorOpacity } from './deprecated'
+export { deprecateBlockBackgroundColorOpacity, deprecateBlockShadowColor } from './deprecated'
 
 export const BlockDiv = props => {
 	const {
 		className,
 		applyCustomAttributes,
-		applyAdvancedAttributes,
 		renderHtmlTag,
 		enableVariationPicker,
 		withUniqueClass,
 		blockHoverClass,
 		clientId,
 		attributes,
+		blockTag,
 		version: _version,
 		...propsToPass
 	} = props
@@ -80,13 +80,16 @@ export const BlockDiv = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
+		id={ attributes.anchor || undefined }
 		data-block-id={ attributes.uniqueId || tempUniqueId }
-		blockTag={ renderHtmlTag ? htmlTag : 'div' }
+		blockTag={ renderHtmlTag ? htmlTag : blockTag }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.blockBackgroundMediaExternalUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.blockBackgroundMediaExternalUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile || attributes.blockBackgroundMediaExternalUrlMobile }
+		backgroundThumbnailUrl={ attributes.blockBackgroundMediaThumbnailUrl }
+		backgroundThumbnailUrlTablet={ attributes.blockBackgroundMediaThumbnailUrlTablet }
+		backgroundThumbnailUrlMobile={ attributes.blockBackgroundMediaThumbnailUrlMobile }
 		backgroundColorType={ attributes.blockBackgroundColorType }
 		{ ...applyFilters( 'stackable.block-components.block-div.attributes', {}, attributes ) }
 	>
@@ -98,11 +101,11 @@ export const BlockDiv = props => {
 BlockDiv.defaultProps = {
 	className: '',
 	applyCustomAttributes: true,
-	applyAdvancedAttributes: true,
 	renderHtmlTag: true, // If true, this renders the HTML Tag based from the block attributes.
 	enableVariationPicker: false,
 	withUniqueClass: true,
 	blockHoverClass: '',
+	blockTag: 'div',
 }
 
 BlockDiv.Content = props => {
@@ -110,7 +113,7 @@ BlockDiv.Content = props => {
 		className,
 		attributes,
 		applyCustomAttributes,
-		applyAdvancedAttributes,
+		blockTag,
 		version: _version,
 		...propsToPass
 	} = props
@@ -144,13 +147,16 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		{ ...useBlockProps.save( { className: classNames } ) }
-		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
+		id={ attributes.anchor || undefined }
 		data-block-id={ attributes.uniqueId || undefined }
-		blockTag={ htmlTag }
+		blockTag={ blockTag || htmlTag }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.blockBackgroundMediaExternalUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.blockBackgroundMediaExternalUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile || attributes.blockBackgroundMediaExternalUrlMobile }
+		backgroundThumbnailUrl={ attributes.blockBackgroundMediaThumbnailUrl }
+		backgroundThumbnailUrlTablet={ attributes.blockBackgroundMediaThumbnailUrlTablet }
+		backgroundThumbnailUrlMobile={ attributes.blockBackgroundMediaThumbnailUrlMobile }
 		backgroundColorType={ attributes.blockBackgroundColorType }
 		{ ...applyFilters( 'stackable.block-components.block-div.attributes.content', {}, attributes ) }
 	/>
@@ -161,7 +167,7 @@ BlockDiv.Content.defaultProps = {
 	className: '',
 	attributes: {},
 	applyCustomAttributes: true,
-	applyAdvancedAttributes: true,
+	blockTag: '',
 }
 
 BlockDiv.InspectorControls = Edit

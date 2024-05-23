@@ -97,6 +97,18 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector=".%s-horizontal-scroller"
+				styleRule="--stk-scrollbar-height-firefox"
+				attrName="scrollbarHeight"
+				key="scrollbarHeightFirefox"
+				valueCallback={ value => {
+					return value === 0 ? 'none' : ( value < 10 ? 'thin' : 'auto' )
+				} }
+				enabledCallback={ getAttribute => getAttribute( 'showScrollbar' ) }
+				dependencies={ [ 'showScrollbar' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s-horizontal-scroller"
 				styleRule="--stk-scrollbar-track-color"
 				attrName="scrollbarTrackColor"
 				key="scrollbarTrackColor"

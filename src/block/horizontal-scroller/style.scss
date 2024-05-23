@@ -19,6 +19,8 @@
 			width: 100% !important;
 		}
 		&.stk--with-scrollbar {
+			scrollbar-color: var(--stk-scrollbar-thumb-color, #d3d3d3) var(--stk-scrollbar-track-color, #eee); // For Firefox
+			scrollbar-width: var(--stk-scrollbar-height-firefox, "auto"); // For Firefox
 			&::-webkit-scrollbar {
 				height: var(--stk-scrollbar-height, 10px);
 			}
@@ -32,6 +34,7 @@
 			}
 		}
 		&:not(.stk--with-scrollbar) {
+			scrollbar-width: none; // For Firefox
 			&::-webkit-scrollbar {
 				height: 0 !important;
 			}
@@ -51,4 +54,9 @@
 			user-select: none;
 		}
 	}
+}
+
+// Support for SiteGround lazy loaded images: they make the horizontal scroller taller.
+.stk-block-horizontal-scroller .stk-img-horizontal-scroller.lazyload[src*="data:"] {
+	height: 1px !important;
 }

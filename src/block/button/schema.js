@@ -44,6 +44,13 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+			anchorId: {
+				type: 'string',
+				selector: 'a.stk-button',
+				source: 'attribute',
+				attribute: 'id',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

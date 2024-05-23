@@ -47,6 +47,7 @@ export const Save = props => {
 		{
 			'stk--is-slide': attributes.carouselType === '',
 			'stk--is-fade': attributes.carouselType === 'fade',
+			'stk--infinite-scroll': attributes.carouselType === '' && attributes.infiniteScroll,
 			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 

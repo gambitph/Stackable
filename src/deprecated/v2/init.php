@@ -29,8 +29,8 @@ if ( ! function_exists( 'stackable_auto_compatibility_v2' ) ) {
 			if ( get_option( 'stackable_v2_editor_compatibility' ) === false &&
 				get_option( 'stackable_v2_editor_compatibility_usage' ) === false
 			) {
-				update_option( 'stackable_v2_editor_compatibility_usage', '1' ); // Load version 2 blocks in the editor
-				update_option( 'stackable_v2_disabled_blocks', get_option( 'stackable_disabled_blocks' ) ); // Migrate the disabled blocks.
+				update_option( 'stackable_v2_editor_compatibility_usage', '1', 'no' ); // Load version 2 blocks in the editor
+				update_option( 'stackable_v2_disabled_blocks', get_option( 'stackable_disabled_blocks' ), 'no' ); // Migrate the disabled blocks.
 			}
 
 			// Always enable frontend compatibility when updating so that the frontend will always look okay.
@@ -307,10 +307,9 @@ if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 			return $block_content;
 		}
 
-		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
-			stripos( $block_name, 'ugb/' ) === 0 ||
-			stripos( $block_content, '<!-- wp:ugb/' ) !==  false
+			( isset( $block['blockName'] ) && strpos( $block['blockName'], 'ugb/' ) === 0 ) ||
+			strpos( $block_content, '<!-- wp:ugb/' ) !==  false
 		) {
 			stackable_block_enqueue_frontend_assets_v2();
 			stackable_add_required_block_styles_v2();
@@ -323,7 +322,7 @@ if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 	}
 
 	if ( has_stackable_v2_frontend_compatibility() && ! has_stackable_v2_editor_compatibility() ) {
-		if ( ! is_admin() ) {
+		if ( is_frontend() ) {
 			add_filter( 'render_block', 'load_frontend_scripts_conditionally_v2', 10, 2 );
 		}
 	}
@@ -363,9 +362,8 @@ if ( ! function_exists( 'stackable_frontend_v2_try_migration' ) ) {
 			return $block_content;
 		}
 
-		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
-			stripos( $block_name, 'ugb/' ) === 0 ||
+			( isset( $block['blockName'] ) && stripos( $block['blockName'], 'ugb/' ) === 0 ) ||
 			stripos( $block_content, '<!-- wp:ugb/' ) !==  false
 		) {
 			stackable_frontend_v2_try_migration_detected();
@@ -416,19 +414,20 @@ if ( ! function_exists( 'stackable_frontend_v2_try_migration' ) ) {
 	 * Check for v2 blocks in the frontend and enable frontend compatibility if
 	 * any are detected. Do this check a few times only.
 	 */
-	if ( ! is_admin() ) {
-		$detector_counter = get_option( 'stackable_v2_frontend_detector_counter' );
-		$detector_counter = empty( $detector_counter ) ? 0 : (int) $detector_counter;
+	// DEV NOTE: Commented out for now as of v3.13, we need to check if this is still needed.
+	// if ( ! is_admin() ) {
+	// 	$detector_counter = get_option( 'stackable_v2_frontend_detector_counter' );
+	// 	$detector_counter = empty( $detector_counter ) ? 0 : (int) $detector_counter;
 
-		if ( $detector_counter < STACKABLE_FRONTEND_V2_DETECTOR_LIMIT && ! has_stackable_v2_frontend_compatibility() ) {
-			// Try and check if we need to perform v2 frontend migration.
-			add_filter( 'render_block', 'stackable_frontend_v2_try_migration', 9, 2 );
-			// Need to also do this in the_content, since catching a v2 blog
-			// posts block here allows it to be loaded correctly.
-			add_filter( 'the_content', 'stackable_frontend_v2_try_migration_content', 1 );
+	// 	if ( $detector_counter < STACKABLE_FRONTEND_V2_DETECTOR_LIMIT && ! has_stackable_v2_frontend_compatibility() ) {
+	// 		// Try and check if we need to perform v2 frontend migration.
+	// 		add_filter( 'render_block', 'stackable_frontend_v2_try_migration', 9, 2 );
+	// 		// Need to also do this in the_content, since catching a v2 blog
+	// 		// posts block here allows it to be loaded correctly.
+	// 		add_filter( 'the_content', 'stackable_frontend_v2_try_migration_content', 1 );
 
-			// Increment our detector counter.
-			update_option( 'stackable_v2_frontend_detector_counter', $detector_counter + 1 );
-		}
-	}
+	// 		// Increment our detector counter.
+	// 		update_option( 'stackable_v2_frontend_detector_counter', $detector_counter + 1 );
+	// 	}
+	// }
 }
