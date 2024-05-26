@@ -199,4 +199,24 @@ class StackableAccordion {
 }
 
 window.stackableAccordion = new StackableAccordion()
+
+// Open closed accordions when printing
+// and close them again after printing
+window.matchMedia( 'print' ).addEventListener( 'change', event => {
+	if ( event.matches ) {
+		const els = document.querySelectorAll( 'details.stk-block-accordion:not([open])' )
+		for ( const el of els ) {
+			el.setAttribute( 'open', '' )
+			// Mark the elements so they can be closed again after printing
+			el.dataset.wasclosed = ''
+		}
+	} else {
+		const els = document.body.querySelectorAll( 'details.stk-block-accordion[data-wasclosed]' )
+		for ( const el of els ) {
+			el.removeAttribute( 'open' )
+			delete el.dataset.wasclosed
+		}
+	}
+} )
+
 domReady( window.stackableAccordion.init )
