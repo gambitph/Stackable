@@ -1,11 +1,23 @@
+import { getIconOptions } from './util'
+
 import { Save } from './save'
 import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
+import { semverCompare } from '~stackable/util'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor,
 } from '~stackable/block-components'
+
+import { addFilter } from '@wordpress/hooks'
+
+addFilter( 'stackable.map.util.applySVGAttributes', 'stackable/3.13.0', ( output, attribute, props ) => {
+	if ( semverCompare( props.version, '<', '3.13.0' ) ) {
+		return getIconOptions( attribute, true )
+	}
+	return output
+} )
 
 const deprecated = [
 	{
