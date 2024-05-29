@@ -20,7 +20,7 @@
 		}
 		&.stk--with-scrollbar {
 			scrollbar-color: var(--stk-scrollbar-thumb-color, #d3d3d3) var(--stk-scrollbar-track-color, #eee); // For Firefox
-			scrollbar-width: var(--stk-scrollbar-height-firefox, "auto"); // For Firefox
+			scrollbar-width: var(--stk-scrollbar-height-firefox, auto); // For Firefox
 			&::-webkit-scrollbar {
 				height: var(--stk-scrollbar-height, 10px);
 			}
