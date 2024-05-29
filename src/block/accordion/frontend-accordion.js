@@ -202,7 +202,7 @@ window.stackableAccordion = new StackableAccordion()
 
 // Open closed accordions when printing
 // and close them again after printing
-window.matchMedia( 'print' ).addEventListener( 'change', event => {
+window?.matchMedia( 'print' ).addEventListener( 'change', event => {
 	if ( event.matches ) {
 		const els = document.querySelectorAll( 'details.stk-block-accordion:not([open])' )
 		for ( const el of els ) {
