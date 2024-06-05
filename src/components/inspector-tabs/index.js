@@ -10,6 +10,7 @@ import { i18n } from 'stackable'
 import { memo } from '@wordpress/element'
 import { createSlotFill } from '@wordpress/components'
 import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
+import { useSelect } from '@wordpress/data'
 import { useGlobalState } from '~stackable/util/global-state'
 import { __ } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
@@ -43,10 +44,20 @@ const InspectorBlockControls = ( { children } ) => {
 }
 
 const InspectorStyleControls = ( { children } ) => {
-	const { isSelected, name } = useBlockEditContext()
+	const { clientId, name } = useBlockEditContext()
+	const { firstBlockSelected, sameBlockSelected } = useSelect( select => {
+		const {
+			getSelectedBlockClientId, getFirstMultiSelectedBlockClientId, getMultiSelectedBlocks,
+		} = select( 'core/block-editor' )
+		const selectedBlocks = getMultiSelectedBlocks()
+		return {
+			firstBlockSelected: getSelectedBlockClientId() || getFirstMultiSelectedBlockClientId(),
+			sameBlockSelected: selectedBlocks ? selectedBlocks.every( block => block.name === selectedBlocks[ 0 ].name ) : false,
+		}
+	} )
 	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
 
-	if ( ! isSelected || activeTab !== 'style' ) {
+	if ( clientId !== firstBlockSelected || ! sameBlockSelected || activeTab !== 'style' ) {
 		return null
 	}
 
