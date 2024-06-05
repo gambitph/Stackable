@@ -184,6 +184,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.13 Improved Stackable Server Performance](https://wpstackable.com/blog/improved-server-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.12 WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.11 New Timeline Block](https://wpstackable.com/blog/introducing-new-timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.10 New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -295,6 +296,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.13.0 =
+[Improved Stackable Server Performance](https://wpstackable.com/blog/improved-server-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: x2-x3 plugin performance - improved plugin execution times, reduced memory usage, and faster loading times #340 #3169 #347 #3178
 * New: Performance improvements - options are now autoloaded correctly for better database performance #343 #3175
 * New: Role Manager - when in content editing mode, a console warning will appear #2911
