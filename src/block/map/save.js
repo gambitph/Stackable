@@ -93,8 +93,8 @@ export const Save = props => {
 						data-marker-options={ JSON.stringify( markerOptions ) }
 						data-icon-options={ JSON.stringify(
 							applyFilters(
-								'stackable.map.util.applySVGAttributes',
-								getIconOptions( attributes, false ),
+								'stackable.map.icon-options',
+								getIconOptions( attributes ),
 								attributes,
 								props
 							)

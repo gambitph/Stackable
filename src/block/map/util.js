@@ -38,7 +38,7 @@ export const getMapStyles = ( { mapStyle, customMapStyle } ) => {
 	return styleJSON
 }
 
-export const getIconOptions = ( attributes, isDeprecated ) => {
+export const getIconOptions = attributes => {
 	const {
 		icon,
 		iconColor1,
@@ -57,10 +57,8 @@ export const getIconOptions = ( attributes, isDeprecated ) => {
 		return null
 	}
 
-	if ( isDeprecated ) {
-		// Deprecate this since sets the fill to the default color black, even when no color is selected.
-		svgEl.firstElementChild.setAttribute( 'fill', 'currentColor' )
-	} else if ( iconColor1 ) {
+	// Check if svgEl has a fill attribute
+	if ( iconColor1 && svgEl.firstElementChild.getAttribute( 'fill' ) !== 'currentColor' ) {
 		// Apply the fill directly to the SVG shapes
 		const svgShapes = svgEl.querySelectorAll( 'g,path,rect,polygon,ellipse' )
 		svgShapes.forEach( svgShape => {

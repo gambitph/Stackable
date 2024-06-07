@@ -4,7 +4,7 @@ import { Save } from './save'
 import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
-import { semverCompare } from '~stackable/util'
+import { semverCompare, createElementFromHTMLString } from '~stackable/util'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor,
@@ -12,9 +12,17 @@ import {
 
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.map.util.applySVGAttributes', 'stackable/3.13.0', ( output, attribute, props ) => {
+const getIconOptions_3_13_0 = attributes => {
+	const newAttributes = { ...attributes }
+	const svgEl = createElementFromHTMLString( attributes.icon )
+	svgEl.firstElementChild.setAttribute( 'fill', 'currentColor' )
+	newAttributes.icon = svgEl.outerHTML
+	return getIconOptions( newAttributes )
+}
+
+addFilter( 'stackable.map.icon-options', 'stackable/3.13.0', ( output, attribute, props ) => {
 	if ( semverCompare( props.version, '<', '3.13.0' ) ) {
-		return getIconOptions( attribute, true )
+		return getIconOptions_3_13_0( attribute )
 	}
 	return output
 } )
