@@ -118,7 +118,7 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 				$new_template = str_replace( '!#excerpt!#', $excerpt, $new_template );
 			} else {
 				// If the excerpt is empty, remove the markup.
-				$new_template = preg_replace( '/<div class="stk-block-posts__excerpt">!#excerpt!#<\/div>/', '', $new_template );
+				$new_template = preg_replace( '/<div class="stk-block-posts__excerpt[^>]*>!#excerpt!#<\/div>/', '', $new_template );
 			}
 		}
 
