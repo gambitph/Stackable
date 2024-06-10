@@ -16,66 +16,59 @@ import { __ } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
 
 const { Slot: PreInspectorTabSlot, Fill: PreInspectorTabFill } = createSlotFill( 'StackablePreInspectorTab' )
-const { Slot: BlockInspectorTabSlot, Fill: BlockInspectorTabFill } = createSlotFill( 'StackableBlockInspectorTab' )
-const { Slot: StyleInspectorTabSlot, Fill: StyleInspectorTabFill } = createSlotFill( 'StackableStyleInspectorTab' )
-const { Slot: AdvancedInspectorTabSlot, Fill: AdvancedInspectorTabFill } = createSlotFill( 'StackableAdvancedInspectorTab' )
+const { Slot: BlockInspectorTabSlot } = createSlotFill( 'StackableBlockInspectorTab' )
+const { Slot: StyleInspectorTabSlot } = createSlotFill( 'StackableStyleInspectorTab' )
+const { Slot: AdvancedInspectorTabSlot } = createSlotFill( 'StackableAdvancedInspectorTab' )
 const { Slot: LayoutPanelSlot, Fill: LayoutPanelFill } = createSlotFill( 'StackableLayoutPanel' )
 
 const InspectorLayoutControls = ( { children } ) => {
-	const { isSelected, name } = useBlockEditContext()
+	const { clientId, name } = useBlockEditContext()
 	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
 
-	if ( ! isSelected || activeTab !== 'layout' ) {
+	if ( activeTab !== 'layout' ) {
 		return null
 	}
 
-	return <LayoutPanelFill>{ children }</LayoutPanelFill>
+	return <LayoutPanelFill>
+		{ ( { selectedBlockClientId } ) => clientId === selectedBlockClientId && children }
+	</LayoutPanelFill>
 }
 
 const InspectorBlockControls = ( { children } ) => {
-	const { isSelected, name } = useBlockEditContext()
+	const { name } = useBlockEditContext()
 	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
 
-	if ( ! isSelected || activeTab !== 'layout' ) {
+	if ( activeTab !== 'layout' ) {
 		return null
 	}
 
-	return <BlockInspectorTabFill>{ children }</BlockInspectorTabFill>
+	return <InspectorControls>{ children }</InspectorControls>
 }
+InspectorBlockControls.Slot = BlockInspectorTabSlot
 
 const InspectorStyleControls = ( { children } ) => {
-	const { clientId, name } = useBlockEditContext()
-	const { firstBlockSelected, sameBlockSelected } = useSelect( select => {
-		const {
-			getSelectedBlockClientId, getFirstMultiSelectedBlockClientId, getMultiSelectedBlocks,
-		} = select( 'core/block-editor' )
-		const selectedBlocks = getMultiSelectedBlocks()
-		return {
-			firstBlockSelected: getSelectedBlockClientId() || getFirstMultiSelectedBlockClientId(),
-			sameBlockSelected: selectedBlocks ? selectedBlocks.every( block => block.name === selectedBlocks[ 0 ].name ) : false,
-		}
-	} )
+	const { name } = useBlockEditContext()
 	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
 
-	if ( clientId !== firstBlockSelected || ! sameBlockSelected || activeTab !== 'style' ) {
+	if ( activeTab !== 'style' ) {
 		return null
 	}
 
-	return (
-		<StyleInspectorTabFill>{ children }</StyleInspectorTabFill>
-	)
+	return <InspectorControls>{ children }</InspectorControls>
 }
+InspectorStyleControls.Slot = StyleInspectorTabSlot
 
 const InspectorAdvancedControls = ( { children } ) => {
-	const { isSelected, name } = useBlockEditContext()
+	const { name } = useBlockEditContext()
 	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
 
-	if ( ! isSelected || activeTab !== 'advanced' ) {
+	if ( activeTab !== 'advanced' ) {
 		return null
 	}
 
-	return <AdvancedInspectorTabFill>{ children }</AdvancedInspectorTabFill>
+	return <InspectorControls>{ children }</InspectorControls>
 }
+InspectorAdvancedControls.Slot = AdvancedInspectorTabSlot
 
 export {
 	PreInspectorTabFill,
@@ -89,22 +82,13 @@ const InspectorTabs = props => {
 	const { name } = useBlockEditContext()
 	const defaultTab = getBlockSupport( name, 'stkDefaultTab' ) || 'style'
 	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, props.tabs.includes( defaultTab ) ? defaultTab : 'style' )
+	const firstBlockSelected = useSelect( select => {
+		const { getSelectedBlockClientId, getFirstMultiSelectedBlockClientId } = select( 'core/block-editor' )
+		return getSelectedBlockClientId() || getFirstMultiSelectedBlockClientId()
+	} )
 
 	return (
 		<>
-			{ /* Make sure the layout panel is the very first one */ }
-			<InspectorBlockControls>
-				{ props.hasLayoutPanel && (
-					<PanelAdvancedSettings
-						title={ __( 'Layout', i18n ) }
-						id="layout"
-						initialOpen={ true }
-					>
-						<LayoutPanelSlot />
-					</PanelAdvancedSettings>
-				) }
-			</InspectorBlockControls>
-
 			<InspectorControls>
 				<PreInspectorTabSlot />
 
@@ -113,12 +97,25 @@ const InspectorTabs = props => {
 					initialTab={ activeTab }
 					onClick={ setActiveTab }
 				/>
-
-				<BlockInspectorTabSlot />
-				<StyleInspectorTabSlot />
-				<AdvancedInspectorTabSlot />
-
 			</InspectorControls>
+
+			{ /* Make sure the layout panel is the very first one */ }
+			<InspectorBlockControls>
+				{ props.hasLayoutPanel && (
+					<PanelAdvancedSettings
+						title={ __( 'Layout', i18n ) }
+						id="layout"
+						initialOpen={ true }
+					>
+						<LayoutPanelSlot fillProps={ { selectedBlockClientId: firstBlockSelected } } />
+					</PanelAdvancedSettings>
+				) }
+			</InspectorBlockControls>
+
+			<BlockInspectorTabSlot />
+			<StyleInspectorTabSlot />
+			<AdvancedInspectorTabSlot />
+
 		</>
 	)
 }
