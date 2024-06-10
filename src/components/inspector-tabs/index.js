@@ -10,28 +10,16 @@ import { i18n } from 'stackable'
 import { memo } from '@wordpress/element'
 import { createSlotFill } from '@wordpress/components'
 import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
-import { useSelect } from '@wordpress/data'
 import { useGlobalState } from '~stackable/util/global-state'
 import { __ } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
 
-const { Slot: PreInspectorTabSlot, Fill: PreInspectorTabFill } = createSlotFill( 'StackablePreInspectorTab' )
-const { Slot: BlockInspectorTabSlot } = createSlotFill( 'StackableBlockInspectorTab' )
-const { Slot: StyleInspectorTabSlot } = createSlotFill( 'StackableStyleInspectorTab' )
-const { Slot: AdvancedInspectorTabSlot } = createSlotFill( 'StackableAdvancedInspectorTab' )
 const { Slot: LayoutPanelSlot, Fill: LayoutPanelFill } = createSlotFill( 'StackableLayoutPanel' )
 
 const InspectorLayoutControls = ( { children } ) => {
-	const { clientId, name } = useBlockEditContext()
-	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
-
-	if ( activeTab !== 'layout' ) {
-		return null
-	}
-
-	return <LayoutPanelFill>
-		{ ( { selectedBlockClientId } ) => clientId === selectedBlockClientId && children }
-	</LayoutPanelFill>
+	return <InspectorControls>
+		<LayoutPanelFill>{ children }</LayoutPanelFill>
+	</InspectorControls>
 }
 
 const InspectorBlockControls = ( { children } ) => {
@@ -44,7 +32,6 @@ const InspectorBlockControls = ( { children } ) => {
 
 	return <InspectorControls>{ children }</InspectorControls>
 }
-InspectorBlockControls.Slot = BlockInspectorTabSlot
 
 const InspectorStyleControls = ( { children } ) => {
 	const { name } = useBlockEditContext()
@@ -56,7 +43,6 @@ const InspectorStyleControls = ( { children } ) => {
 
 	return <InspectorControls>{ children }</InspectorControls>
 }
-InspectorStyleControls.Slot = StyleInspectorTabSlot
 
 const InspectorAdvancedControls = ( { children } ) => {
 	const { name } = useBlockEditContext()
@@ -68,10 +54,8 @@ const InspectorAdvancedControls = ( { children } ) => {
 
 	return <InspectorControls>{ children }</InspectorControls>
 }
-InspectorAdvancedControls.Slot = AdvancedInspectorTabSlot
 
 export {
-	PreInspectorTabFill,
 	InspectorLayoutControls,
 	InspectorBlockControls,
 	InspectorStyleControls,
@@ -82,16 +66,10 @@ const InspectorTabs = props => {
 	const { name } = useBlockEditContext()
 	const defaultTab = getBlockSupport( name, 'stkDefaultTab' ) || 'style'
 	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, props.tabs.includes( defaultTab ) ? defaultTab : 'style' )
-	const firstBlockSelected = useSelect( select => {
-		const { getSelectedBlockClientId, getFirstMultiSelectedBlockClientId } = select( 'core/block-editor' )
-		return getSelectedBlockClientId() || getFirstMultiSelectedBlockClientId()
-	} )
 
 	return (
 		<>
 			<InspectorControls>
-				<PreInspectorTabSlot />
-
 				<PanelTabs
 					tabs={ props.tabs }
 					initialTab={ activeTab }
@@ -107,14 +85,10 @@ const InspectorTabs = props => {
 						id="layout"
 						initialOpen={ true }
 					>
-						<LayoutPanelSlot fillProps={ { selectedBlockClientId: firstBlockSelected } } />
+						<LayoutPanelSlot />
 					</PanelAdvancedSettings>
 				) }
 			</InspectorBlockControls>
-
-			<BlockInspectorTabSlot />
-			<StyleInspectorTabSlot />
-			<AdvancedInspectorTabSlot />
 
 		</>
 	)

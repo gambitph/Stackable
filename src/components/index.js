@@ -91,7 +91,6 @@ export { default as ResponsiveControl2 } from './responsive-control2'
 export { default as ResizableBottomMargin } from './resizable-bottom-margin'
 export {
 	default as InspectorTabs,
-	PreInspectorTabFill,
 	InspectorLayoutControls,
 	InspectorBlockControls,
 	InspectorStyleControls,
