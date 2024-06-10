@@ -49,20 +49,6 @@ const IMAGE_SHADOWS = [
 	'70px 60px 60px rgba(72, 73, 121, 0.2) ',
 ]
 
-const ASPECT_RATIOS = [
-	{ label: __( 'Default', i18n ), value: '' },
-	{ label: __( 'Square 1:1', i18n ), value: '1/1' },
-	{ label: __( 'Standard 4:3', i18n ), value: '4/3' },
-	{ label: __( 'Classic 3:2', i18n ), value: '3/2' },
-	{ label: __( 'Wide 16:9', i18n ), value: '16/9' },
-	{ label: __( 'Cinematic 2:1', i18n ), value: '2/1' },
-	{ label: __( 'Ultra Wide 3:1', i18n ), value: '3/1' },
-	{ label: __( 'Panoramic 4:1', i18n ), value: '4/1' },
-	{ label: __( 'Portrait 3:4', i18n ), value: '3/4' },
-	{ label: __( 'Classic Portrait 2:3', i18n ), value: '2/3' },
-	{ label: __( 'Tall 9:16', i18n ), value: '9/16' },
-]
-
 const Controls = props => {
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
@@ -168,7 +154,19 @@ const Controls = props => {
 			<AdvancedSelectControl
 				label={ __( 'Aspect Ratio', i18n ) }
 				attribute="imageAspectRatio"
-				options={ ASPECT_RATIOS }
+				options={ [
+					{ label: __( 'Original', i18n ), value: '' },
+					{ label: __( 'Square 1:1', i18n ), value: '1/1' },
+					{ label: __( 'Standard 4:3', i18n ), value: '4/3' },
+					{ label: __( 'Classic 3:2', i18n ), value: '3/2' },
+					{ label: __( 'Wide 16:9', i18n ), value: '16/9' },
+					{ label: __( 'Cinematic 2:1', i18n ), value: '2/1' },
+					{ label: __( 'Ultra Wide 3:1', i18n ), value: '3/1' },
+					{ label: __( 'Panoramic 4:1', i18n ), value: '4/1' },
+					{ label: __( 'Portrait 3:4', i18n ), value: '3/4' },
+					{ label: __( 'Classic Portrait 2:3', i18n ), value: '2/3' },
+					{ label: __( 'Tall 9:16', i18n ), value: '9/16' },
+				] }
 				helpTooltip={ {
 					title: __( 'Aspect Ratio', i18n ),
 					description: __( 'Sets the aspect ratio of the image', i18n ),
@@ -210,7 +208,15 @@ const Controls = props => {
 						//TODO: Add a working video
 						title: __( 'Image height', i18n ),
 						description: __( 'Adjusts the image height', i18n ),
-					} }s
+					} }
+					// Set the width to auto if the aspect ratio is set and the width is currently empty
+					// to allow the aspect ratio to take effect with height changes.
+					onChange={ value => {
+						setAttributes( { imageHeight: value } )
+						if ( attributes.imageAspectRatio !== '' && attributes.imageWidth === '' ) {
+							setAttributes( { imageWidth: 'auto' } )
+						}
+					} }
 				/>
 			}
 
