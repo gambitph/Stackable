@@ -35,9 +35,16 @@ const Styles = props => {
 		heightUnitCallback = null,
 		dependencies = [],
 	} = props
-
 	return (
 		<>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="aspect-ratio"
+				attrName="imageAspectRatio"
+				key="imageAspectRatio"
+				responsive="all"
+			/>
 			<BlockCss
 				{ ...propsToPass }
 				selector={ `${ selector }:not(.stk--is-resizing)` }

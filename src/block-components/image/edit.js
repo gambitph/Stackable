@@ -49,10 +49,25 @@ const IMAGE_SHADOWS = [
 	'70px 60px 60px rgba(72, 73, 121, 0.2) ',
 ]
 
+const ASPECT_RATIOS = [
+	{ label: __( 'Default', i18n ), value: '' },
+	{ label: __( 'Square 1:1', i18n ), value: '1/1' },
+	{ label: __( 'Standard 4:3', i18n ), value: '4/3' },
+	{ label: __( 'Classic 3:2', i18n ), value: '3/2' },
+	{ label: __( 'Wide 16:9', i18n ), value: '16/9' },
+	{ label: __( 'Cinematic 2:1', i18n ), value: '2/1' },
+	{ label: __( 'Ultra Wide 3:1', i18n ), value: '3/1' },
+	{ label: __( 'Panoramic 4:1', i18n ), value: '4/1' },
+	{ label: __( 'Portrait 3:4', i18n ), value: '3/4' },
+	{ label: __( 'Classic Portrait 2:3', i18n ), value: '2/3' },
+	{ label: __( 'Tall 9:16', i18n ), value: '9/16' },
+]
+
 const Controls = props => {
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
 			imageId: attributes.imageId,
+			imageAspectRatio: attributes.imageAspectRatio,
 			imageWidthUnit: attributes.imageWidthUnit,
 			imageHeightUnit: attributes.imageHeightUnit,
 			imageWidth: attributes.imageWidth,
@@ -149,6 +164,16 @@ const Controls = props => {
 						imageHeightAttribute: '',
 					} )
 				} }
+			/>
+			<AdvancedSelectControl
+				label={ __( 'Aspect Ratio', i18n ) }
+				attribute="imageAspectRatio"
+				options={ ASPECT_RATIOS }
+				helpTooltip={ {
+					title: __( 'Aspect Ratio', i18n ),
+					description: __( 'Sets the aspect ratio of the image', i18n ),
+				} }
+				responsive="all"
 			/>
 			{ props.hasWidth &&
 				<AdvancedRangeControl
