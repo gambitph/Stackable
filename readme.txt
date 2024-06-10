@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.2
-Tested up to: 6.5.3
+Tested up to: 6.5.4
 Requires PHP: 7.3
-Stable tag: 3.13.0
+Stable tag: 3.13.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -294,6 +294,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.13.1 =
+* Fixed: (Hotfix update): Style codes can show on some instances
+* Fixed: Copy and paste styles now work correctly #350
 
 = 3.13.0 =
 [Improved Stackable Server Performance](https://wpstackable.com/blog/improved-server-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
