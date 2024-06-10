@@ -48,7 +48,6 @@ const Edit = props => {
 		attributes,
 		setAttributes,
 		clientId,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -78,43 +77,41 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<BlockControls>
-						<AlignmentToolbar
-							value={ attributes.contentAlign }
-							onChange={ contentAlign => setAttributes( { contentAlign } ) }
-						/>
-					</BlockControls>
-
-					<InspectorTabs hasLayoutPanel={ false } />
-
-					<BlockStyle.InspectorControls styles={ blockStyles }>
-						<Button.InspectorControls.HoverEffects />
-					</BlockStyle.InspectorControls>
-					<Button.InspectorControls
-						blockState={ props.blockState }
-						borderSelector=".stk-button"
-						hasFullWidth={ true }
+			<>
+				<BlockControls>
+					<AlignmentToolbar
+						value={ attributes.contentAlign }
+						onChange={ contentAlign => setAttributes( { contentAlign } ) }
 					/>
-					<Typography.InspectorControls
-						{ ...props }
-						hasTextTag={ false }
-						initialOpen={ false }
-						hasColor={ false }
-					/>
+				</BlockControls>
 
-					<BlockDiv.InspectorControls initialOpen="spacing" />
+				<InspectorTabs hasLayoutPanel={ false } />
 
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<BlockStyle.InspectorControls styles={ blockStyles }>
+					<Button.InspectorControls.HoverEffects />
+				</BlockStyle.InspectorControls>
+				<Button.InspectorControls
+					blockState={ props.blockState }
+					borderSelector=".stk-button"
+					hasFullWidth={ true }
+				/>
+				<Typography.InspectorControls
+					{ ...props }
+					hasTextTag={ false }
+					initialOpen={ false }
+					hasColor={ false }
+				/>
+
+				<BlockDiv.InspectorControls initialOpen="spacing" />
+
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<ButtonStyles
 				version={ VERSION }

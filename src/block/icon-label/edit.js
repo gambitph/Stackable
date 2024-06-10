@@ -54,7 +54,6 @@ const Edit = props => {
 		className,
 		attributes,
 		clientId,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -76,41 +75,39 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs hasLayoutPanel={ false } />
+			<>
+				<InspectorTabs hasLayoutPanel={ false } />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="general"
-							initialOpen={ true }
-						>
-							<AdvancedRangeControl
-								label={ __( 'Icon Gap', i18n ) }
-								attribute="iconGap"
-								responsive="all"
-								min={ 0 }
-								sliderMax={ 300 }
-								placeholder="64"
-							/>
-						</PanelAdvancedSettings>
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'General', i18n ) }
+						id="general"
+						initialOpen={ true }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Icon Gap', i18n ) }
+							attribute="iconGap"
+							responsive="all"
+							min={ 0 }
+							sliderMax={ 300 }
+							placeholder="64"
+						/>
+					</PanelAdvancedSettings>
 
-					</InspectorStyleControls>
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+				</InspectorStyleControls>
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
 
-					<InspectorStyleControls>
-						<InspectorBottomTip />
-					</InspectorStyleControls>
-				</>
-			) }
+				<InspectorStyleControls>
+					<InspectorBottomTip />
+				</InspectorStyleControls>
+			</>
 
 			<IconLabelStyles
 				version={ VERSION }

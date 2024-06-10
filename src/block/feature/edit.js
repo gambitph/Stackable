@@ -50,7 +50,6 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -77,29 +76,27 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<Columns.InspectorControls hasColumnsControl={ false } />
-					<ContentAlign.InspectorControls />
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<ContainerDiv.InspectorControls hasContentVerticalAlign={ true } />
-					<Separator.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-feature" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+				<Columns.InspectorControls hasColumnsControl={ false } />
+				<ContentAlign.InspectorControls />
+				<Alignment.InspectorControls />
+				<BlockDiv.InspectorControls />
+				<ContainerDiv.InspectorControls hasContentVerticalAlign={ true } />
+				<Separator.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-feature" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
 
-					<InspectorStyleControls>
-						<InspectorBottomTip />
-					</InspectorStyleControls>
-				</>
-			) }
+				<InspectorStyleControls>
+					<InspectorBottomTip />
+				</InspectorStyleControls>
+			</>
 
 			<BlockStyles
 				version={ VERSION }

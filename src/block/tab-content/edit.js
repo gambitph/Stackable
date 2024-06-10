@@ -67,7 +67,6 @@ const Edit = props => {
 	const {
 		className,
 		clientId,
-		isSelected,
 		context,
 	} = props
 
@@ -106,20 +105,18 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
-					<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
-					<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-content" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+			<>
+				<InspectorTabs />
+				<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
+				<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-content" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }

@@ -133,7 +133,6 @@ const Edit = props => {
 		attributes,
 		setAttributes,
 		className,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -185,258 +184,256 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs hasLayoutPanel={ false } />
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							initialOpen={ true }
-							id="general"
-						>
+			<>
+				<InspectorTabs hasLayoutPanel={ false } />
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'General', i18n ) }
+						initialOpen={ true }
+						id="general"
+					>
+						<AlignButtonsControl
+							label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
+							attribute="listAlignment"
+							responsive="all"
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Full Width', i18n ) }
+							attribute="listFullWidth"
+							defaultValue={ true }
+							help={ __( 'More noticeable when using wide layouts or list item borders', i18n ) }
+						/>
+						{ ! listFullWidth && (
 							<AlignButtonsControl
-								label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
-								attribute="listAlignment"
+								label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+								attribute="contentAlign"
 								responsive="all"
+								justified={ false }
 							/>
-							<AdvancedToggleControl
-								label={ __( 'Full Width', i18n ) }
-								attribute="listFullWidth"
-								defaultValue={ true }
-								help={ __( 'More noticeable when using wide layouts or list item borders', i18n ) }
-							/>
-							{ ! listFullWidth && (
-								<AlignButtonsControl
-									label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
-									attribute="contentAlign"
-									responsive="all"
-									justified={ false }
-								/>
-							) }
+						) }
 
-							<AdvancedRangeControl
-								label={ __( 'Columns', i18n ) }
-								attribute="columns"
-								min="1"
-								sliderMax="4"
-								step="1"
-								placeholder="1"
-								responsive="all"
-							/>
+						<AdvancedRangeControl
+							label={ __( 'Columns', i18n ) }
+							attribute="columns"
+							min="1"
+							sliderMax="4"
+							step="1"
+							placeholder="1"
+							responsive="all"
+						/>
 
-							{ attributes.columns > 1 && (
-								<AdvancedSelectControl
-									label={ __( 'List Display Style', i18n ) }
-									options={ listDisplayOptions }
-									attribute="listDisplayStyle"
-								/>
-							) }
-
-							{ attributes.columns > 1 && (
-								<AdvancedRangeControl
-									label={ __( 'Column Gap', i18n ) }
-									attribute="columnGap"
-									min="0"
-									sliderMax="50"
-									responsive="all"
-									placeholder="16"
-								/>
-							) }
-
-							<AdvancedRangeControl
-								label={ __( 'Row Gap', i18n ) }
-								attribute="rowGap"
-								min="0"
-								sliderMax="50"
-								responsive="all"
-							/>
-
-							<AdvancedRangeControl
-								label={ __( 'Icon Gap', i18n ) }
-								attribute="iconGap"
-								min="0"
-								sliderMax="20"
-								responsive="all"
-								placeholder="8"
-							/>
-
-							<AdvancedRangeControl
-								label={ __( 'Indentation', i18n ) }
-								attribute="indentation"
-								min="0"
-								sliderMax="50"
-								responsive="all"
-								placeholder=""
-							/>
-
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
-
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'Icons & Numbers', i18n ) }
-							initialOpen={ false }
-							id="icon-and-markers"
-						>
+						{ attributes.columns > 1 && (
 							<AdvancedSelectControl
-								label={ __( 'List Type', i18n ) }
-								options={ listTypeOptions }
-								value={ ordered ? 'ordered' : 'unordered' }
-								onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
-								default="unordered"
+								label={ __( 'List Display Style', i18n ) }
+								options={ listDisplayOptions }
+								attribute="listDisplayStyle"
 							/>
+						) }
 
-							{ ! attributes.ordered && (
-								<IconControl
-									label={ __( 'Icon', i18n ) }
-									value={ attributes.icon }
-									onChange={ icon => {
-										setAttributes( { icon } )
-										// Reset custom individual icons.
-										resetCustomIcons()
-									} }
-									defaultValue={ DEFAULT_SVG }
-								/>
-							) }
-
-							{ attributes.ordered && (
-								<AdvancedSelectControl
-									label={ __( 'List Type', i18n ) }
-									attribute="listType"
-									options={ listStyleTypeOptions }
-								/>
-							) }
-
-							{ attributes.ordered && (
-								<AdvancedToggleControl
-									label={ __( 'With Period', i18n ) }
-									attribute="hasPeriod"
-									defaultValue={ true }
-								/>
-							) }
-
-							<ColorPaletteControl
-								label={ __( 'Color', i18n ) }
-								attribute="markerColor"
-								hover="all"
-							/>
-
+						{ attributes.columns > 1 && (
 							<AdvancedRangeControl
-								label={ sprintf( __( '%s Size', i18n ), ! attributes.ordered ? __( 'Icon', i18n ) : __( 'Number', i18n ) ) }
-								attribute="iconSize"
-								min={ 0 }
-								max={ 50 }
-								step={ 1 }
-								allowReset={ true }
+								label={ __( 'Column Gap', i18n ) }
+								attribute="columnGap"
+								min="0"
+								sliderMax="50"
 								responsive="all"
 								placeholder="16"
 							/>
+						) }
 
-							<AdvancedRangeControl
-								label={ __( 'Icon Opacity', i18n ) }
-								attribute="iconOpacity"
-								min={ 0 }
-								max={ 1 }
-								step={ 0.1 }
-								allowReset={ true }
-								placeholder="1.0"
-								hover="all"
-							/>
+						<AdvancedRangeControl
+							label={ __( 'Row Gap', i18n ) }
+							attribute="rowGap"
+							min="0"
+							sliderMax="50"
+							responsive="all"
+						/>
 
-							<AdvancedRangeControl
-								label={ __( 'Icon Rotation', i18n ) }
-								attribute="iconRotation"
-								min={ 0 }
-								max={ 360 }
-								allowReset={ true }
-								placeholder="0"
-							/>
+						<AdvancedRangeControl
+							label={ __( 'Icon Gap', i18n ) }
+							attribute="iconGap"
+							min="0"
+							sliderMax="20"
+							responsive="all"
+							placeholder="8"
+						/>
 
-							<AdvancedToolbarControl
-								label={ __( 'Icon Vertical Alignment', i18n ) }
-								controls="flex-vertical"
-								omit={ ICON_VERTICAL_ALIGN_OMIT }
-								attribute="iconVerticalAlignment"
-								fullwidth={ true }
-								responsive="all"
-								help={ __( 'This is more visible if you have long text in your list.', i18n ) }
-								placeholder="center"
-							/>
+						<AdvancedRangeControl
+							label={ __( 'Indentation', i18n ) }
+							attribute="indentation"
+							min="0"
+							sliderMax="50"
+							responsive="all"
+							placeholder=""
+						/>
 
-							<AdvancedRangeControl
-								label={ __( 'Icon Vertical Offset', i18n ) }
-								attribute="iconVerticalOffset"
-								min={ -1000 }
-								sliderMin={ -50 }
-								sliderMax={ 50 }
-								step={ 1 }
-								allowReset={ true }
-								responsive="all"
-								placeholder="0"
-							/>
-						</PanelAdvancedSettings>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
 
-						<PanelAdvancedSettings
-							title={ __( 'Icon List Item Borders', i18n ) }
-							initialOpen={ false }
-							id="icon-list-item-borders"
-						>
-							<AdvancedToolbarControl
-								label={ __( 'Borders', i18n ) }
-								controls={ BORDER_CONTROLS }
-								className="ugb-border-controls__border-type-toolbar"
-								attribute="listItemBorderStyle"
-								fullwidth={ true }
-								isSmall={ true }
-							/>
-
-							{ listItemBorderStyle &&
-								<AdvancedRangeControl
-									label={ __( 'Border Width', i18n ) }
-									attribute="listItemBorderWidth"
-									responsive="all"
-									min={ 0 }
-									max={ 99 }
-									step={ 1 }
-									sliderMax={ 5 }
-									defaultLocked={ true }
-									placeholder="1"
-								/>
-							}
-
-							{ listItemBorderStyle &&
-								<ColorPaletteControl
-									label={ __( 'Border Color', i18n ) }
-									attribute="listItemBorderColor"
-									value={ listItemBorderColor ? listItemBorderColor : '#00000066' }
-									default="#00000066"
-								/>
-							}
-
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
-
-					<Typography.InspectorControls
-						{ ...props }
-						isMultiline={ true }
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'Icons & Numbers', i18n ) }
 						initialOpen={ false }
-						hasTextTag={ false }
-						hasTextContent={ false }
-					/>
+						id="icon-and-markers"
+					>
+						<AdvancedSelectControl
+							label={ __( 'List Type', i18n ) }
+							options={ listTypeOptions }
+							value={ ordered ? 'ordered' : 'unordered' }
+							onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
+							default="unordered"
+						/>
 
-					<Alignment.InspectorControls
-						enableContentAlign={ false }
-					/>
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-list" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+						{ ! attributes.ordered && (
+							<IconControl
+								label={ __( 'Icon', i18n ) }
+								value={ attributes.icon }
+								onChange={ icon => {
+									setAttributes( { icon } )
+									// Reset custom individual icons.
+									resetCustomIcons()
+								} }
+								defaultValue={ DEFAULT_SVG }
+							/>
+						) }
+
+						{ attributes.ordered && (
+							<AdvancedSelectControl
+								label={ __( 'List Type', i18n ) }
+								attribute="listType"
+								options={ listStyleTypeOptions }
+							/>
+						) }
+
+						{ attributes.ordered && (
+							<AdvancedToggleControl
+								label={ __( 'With Period', i18n ) }
+								attribute="hasPeriod"
+								defaultValue={ true }
+							/>
+						) }
+
+						<ColorPaletteControl
+							label={ __( 'Color', i18n ) }
+							attribute="markerColor"
+							hover="all"
+						/>
+
+						<AdvancedRangeControl
+							label={ sprintf( __( '%s Size', i18n ), ! attributes.ordered ? __( 'Icon', i18n ) : __( 'Number', i18n ) ) }
+							attribute="iconSize"
+							min={ 0 }
+							max={ 50 }
+							step={ 1 }
+							allowReset={ true }
+							responsive="all"
+							placeholder="16"
+						/>
+
+						<AdvancedRangeControl
+							label={ __( 'Icon Opacity', i18n ) }
+							attribute="iconOpacity"
+							min={ 0 }
+							max={ 1 }
+							step={ 0.1 }
+							allowReset={ true }
+							placeholder="1.0"
+							hover="all"
+						/>
+
+						<AdvancedRangeControl
+							label={ __( 'Icon Rotation', i18n ) }
+							attribute="iconRotation"
+							min={ 0 }
+							max={ 360 }
+							allowReset={ true }
+							placeholder="0"
+						/>
+
+						<AdvancedToolbarControl
+							label={ __( 'Icon Vertical Alignment', i18n ) }
+							controls="flex-vertical"
+							omit={ ICON_VERTICAL_ALIGN_OMIT }
+							attribute="iconVerticalAlignment"
+							fullwidth={ true }
+							responsive="all"
+							help={ __( 'This is more visible if you have long text in your list.', i18n ) }
+							placeholder="center"
+						/>
+
+						<AdvancedRangeControl
+							label={ __( 'Icon Vertical Offset', i18n ) }
+							attribute="iconVerticalOffset"
+							min={ -1000 }
+							sliderMin={ -50 }
+							sliderMax={ 50 }
+							step={ 1 }
+							allowReset={ true }
+							responsive="all"
+							placeholder="0"
+						/>
+					</PanelAdvancedSettings>
+
+					<PanelAdvancedSettings
+						title={ __( 'Icon List Item Borders', i18n ) }
+						initialOpen={ false }
+						id="icon-list-item-borders"
+					>
+						<AdvancedToolbarControl
+							label={ __( 'Borders', i18n ) }
+							controls={ BORDER_CONTROLS }
+							className="ugb-border-controls__border-type-toolbar"
+							attribute="listItemBorderStyle"
+							fullwidth={ true }
+							isSmall={ true }
+						/>
+
+						{ listItemBorderStyle &&
+							<AdvancedRangeControl
+								label={ __( 'Border Width', i18n ) }
+								attribute="listItemBorderWidth"
+								responsive="all"
+								min={ 0 }
+								max={ 99 }
+								step={ 1 }
+								sliderMax={ 5 }
+								defaultLocked={ true }
+								placeholder="1"
+							/>
+						}
+
+						{ listItemBorderStyle &&
+							<ColorPaletteControl
+								label={ __( 'Border Color', i18n ) }
+								attribute="listItemBorderColor"
+								value={ listItemBorderColor ? listItemBorderColor : '#00000066' }
+								default="#00000066"
+							/>
+						}
+
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
+
+				<Typography.InspectorControls
+					{ ...props }
+					isMultiline={ true }
+					initialOpen={ false }
+					hasTextTag={ false }
+					hasTextContent={ false }
+				/>
+
+				<Alignment.InspectorControls
+					enableContentAlign={ false }
+				/>
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-list" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<IconListStyles
 				version={ VERSION }

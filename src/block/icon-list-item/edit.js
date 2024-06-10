@@ -51,7 +51,6 @@ const Edit = props => {
 	const {
 		attributes,
 		clientId,
-		isSelected,
 		onReplace,
 		mergeBlocks,
 		context,
@@ -109,26 +108,25 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
+			<>
+				<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
 
-					<Typography.InspectorControls
-						{ ...props }
-						hasTextTag={ false }
-						initialOpen={ true }
-						hasTextShadow={ true }
-					/>
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
+				<Typography.InspectorControls
+					{ ...props }
+					hasTextTag={ false }
+					initialOpen={ true }
+					hasTextShadow={ true }
+				/>
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
 
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-list-item" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-list-item" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
+
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
 				clientId={ props.clientId }

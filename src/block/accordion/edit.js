@@ -125,51 +125,49 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="general"
-							initialOpen={ true }
-						>
-							<AdvancedToggleControl
-								label={ __( 'Open at the start', i18n ) }
-								attribute="startOpen"
-							/>
-							<AdvancedToggleControl
-								label={ __( 'Close adjacent on open', i18n ) }
-								attribute="onlyOnePanelOpen"
-								helpTooltip={ {
-									video: 'accordion-adjacent-open',
-									title: __( 'Close adjacent on open', i18n ),
-									description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
-								} }
-							/>
-							<AdvancedToggleControl
-								label={ __( 'Enable FAQ Schema', i18n ) }
-								attribute="enableFAQ"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'General', i18n ) }
+						id="general"
+						initialOpen={ true }
+					>
+						<AdvancedToggleControl
+							label={ __( 'Open at the start', i18n ) }
+							attribute="startOpen"
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Close adjacent on open', i18n ) }
+							attribute="onlyOnePanelOpen"
+							helpTooltip={ {
+								video: 'accordion-adjacent-open',
+								title: __( 'Close adjacent on open', i18n ),
+								description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
+							} }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Enable FAQ Schema', i18n ) }
+							attribute="enableFAQ"
+						/>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls backgroundMediaAllowVideo={ false } />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+				<Alignment.InspectorControls />
+				<BlockDiv.InspectorControls backgroundMediaAllowVideo={ false } />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
 
-					<InspectorStyleControls>
-						<InspectorBottomTip />
-					</InspectorStyleControls>
-				</>
-			) }
+				<InspectorStyleControls>
+					<InspectorBottomTip />
+				</InspectorStyleControls>
+			</>
 
 			<BlockStyles
 				version={ VERSION }
