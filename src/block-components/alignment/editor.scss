@@ -79,8 +79,3 @@
 	}
 }
 
-.stk-row.stk--alignment-polyfill > :is(.stk-inner-blocks, .stk-block-content):not(.stk--column-flex) {
-	&:not(.stk--block-horizontal-flex) > .block-editor-inner-blocks > .block-editor-block-list__layout {
-		flex-direction: row;
-	}
-}
