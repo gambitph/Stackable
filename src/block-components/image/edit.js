@@ -167,10 +167,6 @@ const Controls = props => {
 					{ label: __( 'Classic Portrait 2:3', i18n ), value: '2/3' },
 					{ label: __( 'Tall 9:16', i18n ), value: '9/16' },
 				] }
-				helpTooltip={ {
-					title: __( 'Aspect Ratio', i18n ),
-					description: __( 'Sets the aspect ratio of the image', i18n ),
-				} }
 				responsive="all"
 			/>
 			{ props.hasWidth &&
