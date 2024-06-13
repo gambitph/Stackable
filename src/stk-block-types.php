@@ -367,7 +367,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Title', STACKABLE_I18N )
@@ -947,7 +948,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Paragraph', STACKABLE_I18N )

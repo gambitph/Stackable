@@ -4,7 +4,7 @@
 	"title": "Text",
 	"description": "Start with the building block of all page layouts.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId", "stackable/innerBlockOrientation", "repeaterValue" ],
+	"usesContext": [ "postId", "postType", "queryId", "stackable/innerBlockOrientation", "stackable/repeaterValue" ],
 	"keywords": [
 		"Paragraph"
 	],
