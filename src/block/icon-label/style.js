@@ -29,20 +29,20 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="save"
-				selector=".stk-block-icon"
+				selector=".stk-inner-blocks"
 				attrName="iconGap"
 				key="iconGap-save"
-				styleRule="flexBasis"
+				styleRule="gap"
 				format="%spx"
 				responsive="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="edit"
-				selector={ `.stk-inner-blocks [data-block][data-type="stackable/icon"]` }
+				selector=".stk-inner-blocks .block-editor-block-list__layout"
 				attrName="iconGap"
 				key="iconGap"
-				styleRule="flexBasis"
+				styleRule="gap"
 				format="%spx"
 				responsive="all"
 			/>

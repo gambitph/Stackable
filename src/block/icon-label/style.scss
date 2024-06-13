@@ -1,8 +1,13 @@
 .stk-block-icon-label {
 	// Default width of the icon width.
-	.stk-block-icon {
+	&:not(.stk-block-icon-label--v2) .stk-block-icon {
 		flex: 0 0 64px;
 	}
+
+	&.stk-block-icon-label--v2 .stk-inner-blocks {
+		gap: 28px;
+	}
+
 	// Remove margins and make sure the icon and text are both centered.
 	:is(.stk-block-icon, .stk-block-heading) {
 		--stk-block-margin-bottom: 0;

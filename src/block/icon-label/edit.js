@@ -65,6 +65,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-label',
+		'stk-block-icon-label--v2',
 		rowClass,
 	] )
 
@@ -92,7 +93,7 @@ const Edit = props => {
 								responsive="all"
 								min={ 0 }
 								sliderMax={ 300 }
-								placeholder="64"
+								placeholder="28"
 							/>
 						</PanelAdvancedSettings>
 
