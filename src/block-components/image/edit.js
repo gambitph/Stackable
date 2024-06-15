@@ -208,10 +208,11 @@ const Controls = props => {
 					// Set the width to auto if the aspect ratio is set and the width is currently empty
 					// to allow the aspect ratio to take effect with height changes.
 					onChange={ value => {
-						setAttributes( { imageHeight: value } )
+						const changes = { imageHeight: value }
 						if ( attributes.imageAspectRatio !== '' && attributes.imageWidth === '' ) {
-							setAttributes( { imageWidth: 'auto' } )
+							changes.imageWidth = 'auto'
 						}
+						setAttributes( changes )
 					} }
 				/>
 			}
