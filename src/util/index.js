@@ -227,9 +227,6 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false, deviceTy
 
 					return `${ mediaQuery } ${ newSelector } ${ paren }`
 				} )
-			} else if ( selector.includes( '{' ) ) {
-				// Ignore invalid CSS that affects the CSS of subsequent blocks.
-				return ''
 			}
 
 			const newSelector = prependCSSClass( selector, mainClass, uniqueID )
