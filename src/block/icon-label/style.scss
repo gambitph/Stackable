@@ -1,6 +1,7 @@
 .stk-block-icon-label {
 	// For old icon gap
 	&.stk-block-icon-label--use-flex-basis {
+		// Default width of the icon width.
 		.stk-block-icon {
 			flex: 0 0 64px;
 		}
@@ -9,7 +10,7 @@
 		}
 	}
 
-	// Default width of the icon width.
+	// used by iconGap2
 	.stk-inner-blocks {
 		gap: 28px;
 	}
