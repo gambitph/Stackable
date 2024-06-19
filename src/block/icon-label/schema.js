@@ -37,22 +37,13 @@ export const attributes = ( version = VERSION ) => {
 				stkResponsive: true,
 				default: '',
 			},
-			version: {
+			iconGap2: {
 				type: 'number',
-				source: 'attribute',
-				attribute: 'data-v',
-				default: undefined,
+				stkResponsive: true,
+				default: '',
 			},
 		},
 		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	} )
-
-	attrObject.addDefaultValues( {
-		attributes: {
-			version: 2,
-		},
-		versionAdded: '3.13.2',
 		versionDeprecated: '',
 	} )
 

@@ -6,33 +6,17 @@ import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor,
 } from '~stackable/block-components'
-import classnames from 'classnames/dedupe'
-import { addFilter } from '@wordpress/hooks'
-import { semverCompare } from '~stackable/util'
-
-addFilter( 'stackable.icon-label.save.blockClassNames', 'stackable/3.13.2', ( output, props ) => {
-	if ( semverCompare( props.version, '<=', '3.13.1' ) ) {
-		return classnames( output, {
-			'stk-block-icon-label--v2': false,
-		} )
-	}
-
-	return output
-} )
 
 const deprecated = [
 	{
 		attributes: attributes( '3.13.1' ),
 		save: withVersion( '3.13.1' )( Save ),
 		isEligible: attributes => {
-			const isNotV2 = attributes.version < 2 || typeof attributes.version === 'undefined'
-			return isNotV2
+			const hasIconGap = attributes.iconGap ? true : false
+			return hasIconGap
 		},
 		migrate: ( attributes, innerBlocks ) => {
-			const newAttributes = {
-				...attributes,
-				version: 2,
-			}
+			const newAttributes = { ...attributes }
 
 			const { iconGap } = attributes
 
@@ -43,7 +27,8 @@ const deprecated = [
 			const _iconGap = iconGap ? iconGap : 64
 
 			const newIconGap = _iconGap - _iconSize >= 0 ? _iconGap - _iconSize : 0
-			newAttributes.iconGap = newIconGap === 28 ? '' : newIconGap
+			newAttributes.iconGap2 = newIconGap === 28 ? '' : newIconGap
+			newAttributes.iconGap = ''
 
 			return newAttributes
 		},

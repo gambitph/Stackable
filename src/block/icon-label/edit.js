@@ -65,7 +65,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-label',
-		'stk-block-icon-label--v2',
 		rowClass,
 	] )
 
@@ -89,7 +88,7 @@ const Edit = props => {
 						>
 							<AdvancedRangeControl
 								label={ __( 'Icon Gap', i18n ) }
-								attribute="iconGap"
+								attribute="iconGap2"
 								responsive="all"
 								min={ 0 }
 								sliderMax={ 300 }

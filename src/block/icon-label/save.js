@@ -22,7 +22,6 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
-import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -33,13 +32,11 @@ export const Save = props => {
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const responsiveClass = getResponsiveClasses( attributes )
 
-	const blockClassNames = classnames( applyFilters( 'stackable.icon-label.save.blockClassNames', [
+	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-label',
-		'stk-block-icon-label--v2',
 		responsiveClass,
-	], props )
-	)
+	] )
 
 	const contentClassNames = classnames( [
 		rowClass,
@@ -53,7 +50,6 @@ export const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 			version={ props.version }
-			data-v={ props.attributes.version }
 		>
 			<IconLabelStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
