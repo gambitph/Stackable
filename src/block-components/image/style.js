@@ -40,7 +40,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
-				styleRule="aspect-ratio"
+				styleRule="aspectRatio"
 				attrName="imageAspectRatio"
 				key="imageAspectRatio"
 				responsive="all"
