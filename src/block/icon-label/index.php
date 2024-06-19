@@ -12,9 +12,10 @@ if ( ! function_exists( 'stackable_render_block_icon_label' ) ) {
 	function stackable_render_block_icon_label( $block_content, $block ) {
 		$attributes = $block[ 'attrs' ];
 
-		$hasOldIconGap = isset( $attributes[ 'iconGap' ] ) && ! isset( $attributes[ 'iconGap2' ] );
+		// check if the block uses the old icon gap attribute
+		$use_old_styles = ( isset( $attributes[ 'iconGap' ] ) || isset( $block[ 'innerBlocks' ][0]['attrs']['iconSize'] ) ) && ! isset( $attributes[ 'iconGap2' ] );
 
-		if ( $hasOldIconGap ) {
+		if ( $use_old_styles ) {
 			return preg_replace( '/stk-block-icon-label/i', 'stk-block-icon-label stk-block-icon-label--use-flex-basis', $block_content );
 		}
 
