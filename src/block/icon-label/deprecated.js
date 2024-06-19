@@ -11,9 +11,11 @@ const deprecated = [
 	{
 		attributes: attributes( '3.13.1' ),
 		save: withVersion( '3.13.1' )( Save ),
-		isEligible: attributes => {
+		isEligible: ( attributes, innerBlocks ) => {
+			const hasIconSize = innerBlocks[ 0 ].attributes.iconSize ? true : false
 			const hasIconGap = attributes.iconGap ? true : false
-			return hasIconGap
+			const hasIconGap2 = attributes.iconGap2 ? true : false
+			return hasIconGap || ( hasIconSize && ! hasIconGap2 )
 		},
 		migrate: ( attributes, innerBlocks ) => {
 			const newAttributes = { ...attributes }
