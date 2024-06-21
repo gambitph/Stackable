@@ -63,6 +63,23 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Add theme classes for compatibility detection.
 			add_action( 'body_class', array( $this, 'add_body_class_theme_compatibility' ) );
 			add_action( 'admin_body_class', array( $this, 'add_body_class_theme_compatibility' ) );
+
+			// Allow users to force load the Stackable CSS
+			add_action( 'wp_enqueue_scripts', array( $this, 'maybe_force_css_load' ) );
+		}
+
+		/**
+		 * Allow users to force load the Stackable CSS, this can be helpful if
+		 * somehow the page fails to detect Stackable blocks and doesn't load
+		 * the required stylesheets.
+		 *
+		 * @return void
+		 */
+		public function maybe_force_css_load() {
+			if ( ! $this->is_main_script_loaded && apply_filters( 'stackable_force_css_load', false ) ) {
+				$this->block_enqueue_frontend_assets();
+				$this->is_main_script_loaded = true;
+			}
 		}
 
 		/**
