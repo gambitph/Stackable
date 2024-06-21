@@ -32,6 +32,7 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	attrObject.add( {
 		attributes: {
+			// iconGap is deprecated but is kept for migration purposes
 			iconGap: {
 				type: 'number',
 				stkResponsive: true,

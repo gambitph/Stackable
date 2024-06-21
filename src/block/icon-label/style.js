@@ -26,27 +26,6 @@ const Styles = props => {
 
 	return (
 		<>
-			{ /* For the old icon gap */ }
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="save"
-				selector=".stk-block-icon"
-				attrName="iconGap"
-				key="iconGap-save"
-				styleRule="flexBasis"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector={ `.stk-inner-blocks [data-block][data-type="stackable/icon"]` }
-				attrName="iconGap"
-				key="iconGap"
-				styleRule="flexBasis"
-				format="%spx"
-				responsive="all"
-			/>
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="save"

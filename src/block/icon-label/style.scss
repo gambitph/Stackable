@@ -1,15 +1,4 @@
 .stk-block-icon-label {
-	// For old icon gap
-	&.stk-block-icon-label--use-flex-basis {
-		// Default width of the icon width.
-		.stk-block-icon {
-			flex: 0 0 64px;
-		}
-		.stk-inner-blocks {
-			gap: 0;
-		}
-	}
-
 	// used by iconGap2
 	.stk-inner-blocks {
 		gap: 28px;
@@ -35,5 +24,16 @@
 	.wp-block-stackable-heading.stk-block-heading,
 	.stk-block-heading {
 		width: inherit;
+	}
+}
+
+// Deprecated styles
+.stk-block-icon-label.stk-block-icon-label--use-flex-basis {
+	// Default width of the icon width.
+	.stk-block-icon {
+		flex: 0 0 64px;
+	}
+	.stk-inner-blocks {
+		gap: 0;
 	}
 }
