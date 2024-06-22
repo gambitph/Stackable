@@ -39,7 +39,20 @@ const Styles = props => {
 		<>
 			<BlockCss
 				{ ...propsToPass }
+				selector={ [
+					`${ selector }`,
+					`${ selector } .stk-img-resizer-wrapper`,
+				] }
+				renderIn="edit"
+				styleRule="aspectRatio"
+				attrName="imageAspectRatio"
+				key="imageAspectRatio"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
+				renderIn="save"
 				styleRule="aspectRatio"
 				attrName="imageAspectRatio"
 				key="imageAspectRatio"
