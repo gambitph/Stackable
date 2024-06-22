@@ -123,6 +123,7 @@ const Edit = props => {
 						hasBorderRadius={ false }
 						hasShape={ false }
 						hasShadow={ false }
+						hasAspectRatio={ ! [ 'horizontal', 'full', 'faded' ].includes( blockStyle ) }
 					/>
 					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
 					<BlockDiv.InspectorControls />
