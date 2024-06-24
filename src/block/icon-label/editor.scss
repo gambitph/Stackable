@@ -1,9 +1,9 @@
 .stk-block-icon-label [data-type="stackable/icon"] {
-	flex: 0 0 0;
+	flex: 0;
 }
 // Icon label can collapse in mobile in the editor.
 .stk-preview-device-mobile .stk-block-icon-label .block-editor-block-list__layout [data-type="stackable/icon"] {
-	flex: 0 0 0;
+	flex: 0;
 }
 .stk-preview-device-mobile .stk-block-icon-label .block-editor-block-list__layout [data-type="stackable/heading"] {
 	flex: 1 1 0;
