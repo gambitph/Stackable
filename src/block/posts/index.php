@@ -407,6 +407,14 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			}
 			// Remove the jetpack sharing button filter.
 			remove_filter( 'sharing_show', '__return_false' );
+
+			// Trim the excerpt if it's too long.
+			$exploded_excerpt = explode( ' ', $excerpt );
+			$trim_to_length = (int) $max_excerpt;
+			if ( count( $exploded_excerpt ) > $trim_to_length ) {
+				$excerpt = implode( ' ', array_slice( $exploded_excerpt, 0, $trim_to_length ) ) . '...';
+			}
+
 			return empty( $excerpt ) ? "" : $excerpt;
 		}
 
