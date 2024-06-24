@@ -27,7 +27,7 @@
 	}
 }
 
-// Deprecated styles
+// Deprecated styles: we changed how icon gap works. Before it was flex basis, now it's a gap
 .stk-block-icon-label.stk-block-icon-label--use-flex-basis {
 	// Default width of the icon width.
 	.stk-block-icon {
