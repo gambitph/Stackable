@@ -40,7 +40,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector={ [
-					`${ selector }`,
+					selector,
 					`${ selector } .stk-img-resizer-wrapper`,
 				] }
 				renderIn="edit"
