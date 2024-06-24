@@ -183,7 +183,7 @@ class StackableAccordion {
 			wrapper.classList.add( 'stk-block-accordion__wrapper' )
 			el.parentNode.insertBefore( wrapper, el )
 			wrapper.appendChild( el )
-			const svg = el.querySelector( '.stk--svg-wrapper:not(.stk--has-icon2)' )
+			const svg = el.querySelector( 'summary .stk--svg-wrapper:not(.stk--has-icon2)' )
 			if ( svg ) {
 				const rotate = el.open ? { from: 0, to: 180 } : { from: 180, to: 0 }
 				svg.anim = svg.animate( {
