@@ -38,6 +38,7 @@ export const attributes = ( version = VERSION ) => {
 				stkResponsive: true,
 				default: '',
 			},
+			// This replaces iconGap above, the old attribute changes the flex basis, now it's gap
 			iconGap2: {
 				type: 'number',
 				stkResponsive: true,
