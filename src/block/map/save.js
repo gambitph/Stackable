@@ -29,6 +29,7 @@ import { i18n, version as VERSION } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { RawHTML } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -90,7 +91,14 @@ export const Save = props => {
 					<div
 						data-map-options={ JSON.stringify( mapOptions ) }
 						data-marker-options={ JSON.stringify( markerOptions ) }
-						data-icon-options={ JSON.stringify( getIconOptions( attributes ) ) }
+						data-icon-options={ JSON.stringify(
+							applyFilters(
+								'stackable.map.icon-options',
+								getIconOptions( attributes ),
+								attributes,
+								props
+							)
+						) }
 						className="stk-block-map__canvas"
 					/>
 				)

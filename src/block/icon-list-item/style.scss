@@ -16,6 +16,12 @@
 		border-width: 1px;
 		border-color: rgba(0, 0, 0, 0.4);
 	}
+
+	// Apply the color to the SVG path on the defintion
+	svg.ugb-custom-icon :is(g,path,rect,polygon,ellipse) {
+		fill: var(--stk-icon-list-marker-color) !important;
+		color: var(--stk-icon-list-marker-color) !important;
+	}
 }
 
 .stk-block-icon-list-item__content {

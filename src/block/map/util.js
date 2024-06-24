@@ -55,9 +55,17 @@ export const getIconOptions = attributes => {
 		// If we can't use the generated SVG element for any reason we
 		// display the default icon.
 		return null
-	 }
+	}
 
-	svgEl.firstElementChild.setAttribute( 'fill', 'currentColor' )
+	// Check if svgEl has a fill attribute
+	if ( iconColor1 && svgEl.firstElementChild.getAttribute( 'fill' ) !== 'currentColor' ) {
+		// Apply the fill directly to the SVG shapes
+		const svgShapes = svgEl.querySelectorAll( 'g,path,rect,polygon,ellipse' )
+		svgShapes.forEach( svgShape => {
+			svgShape.setAttribute( 'style', `fill: ${ iconColor1 }` )
+		} )
+	}
+
 	const svgIconSize = iconSize ? parseInt( iconSize, 10 ) : DEFAULT_ICON_SIZE
 	svgEl.setAttribute( 'height', svgIconSize )
 	svgEl.setAttribute( 'width', svgIconSize )
