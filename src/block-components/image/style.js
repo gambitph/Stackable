@@ -69,6 +69,17 @@ const Styles = props => {
 				unitCallback={ widthUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableWidth }
+				valueCallback={ ( value, getAttribute ) => {
+					// If there's an aspect ratio and the other dimenion is not given, use auto
+					if ( ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				dependencies={ [
+					'imageAspectRatio',
+					'imageHeight',
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -81,6 +92,17 @@ const Styles = props => {
 				unitCallback={ widthUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableWidth }
+				valueCallback={ ( value, getAttribute ) => {
+					// If there's an aspect ratio and the other dimenion is not given, use auto
+					if ( ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				dependencies={ [
+					'imageAspectRatio',
+					'imageHeight',
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -93,6 +115,17 @@ const Styles = props => {
 				unitCallback={ heightUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableHeight }
+				valueCallback={ ( value, getAttribute ) => {
+					// If there's an aspect ratio and the other dimenion is not given, use auto
+					if ( ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				dependencies={ [
+					'imageAspectRatio',
+					'imageWidth',
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -105,6 +138,17 @@ const Styles = props => {
 				unitCallback={ heightUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableHeight }
+				valueCallback={ ( value, getAttribute ) => {
+					// If there's an aspect ratio and the other dimenion is not given, use auto
+					if ( ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				dependencies={ [
+					'imageAspectRatio',
+					'imageWidth',
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }

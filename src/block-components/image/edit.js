@@ -173,11 +173,7 @@ const Controls = props => {
 					// For blocks with fixed width like card block,
 					// set the height to auto to allow the aspect ratio to take effect.
 					onChange={ value => {
-						const changes = { imageAspectRatio: value }
-						if ( ! props.hasWidth && props.hasHeight ) {
-							changes.imageHeight = 'auto'
-						}
-						setAttributes( changes )
+						setAttributes( { imageAspectRatio: value } )
 					} }
 				/>
 			}
@@ -221,11 +217,7 @@ const Controls = props => {
 					// Set the width to auto if the aspect ratio is set and the width is currently empty
 					// to allow the aspect ratio to take effect with height changes.
 					onChange={ value => {
-						const changes = { imageHeight: value }
-						if ( attributes.imageAspectRatio !== '' && attributes.imageWidth === '' ) {
-							changes.imageWidth = 'auto'
-						}
-						setAttributes( changes )
+						setAttributes( { imageHeight: value } )
 					} }
 				/>
 			}
