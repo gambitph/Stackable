@@ -12,25 +12,43 @@ const deprecated = [
 		attributes: attributes( '3.13.1' ),
 		save: withVersion( '3.13.1' )( Save ),
 		isEligible: ( attributes, innerBlocks ) => {
-			const hasIconSize = innerBlocks[ 0 ].attributes.iconSize ? true : false
-			const hasIconGap = attributes.iconGap ? true : false
-			const hasIconGap2 = attributes.iconGap2 ? true : false
+			const iconBlockAttributes = innerBlocks[ 0 ].attributes
+			const hasIconSize = iconBlockAttributes.iconSize || iconBlockAttributes.iconSizeTablet || iconBlockAttributes.iconSizeMobile ? true : false
+			const hasIconGap = attributes.iconGap || attributes.iconGapTablet || attributes.iconGapMobile ? true : false
+			const hasIconGap2 = attributes.iconGap2 || attributes.iconGap2Tablet || attributes.iconGap2Mobile ? true : false
 			return hasIconGap || ( hasIconSize && ! hasIconGap2 )
 		},
 		migrate: ( attributes, innerBlocks ) => {
 			const newAttributes = { ...attributes }
 
-			const { iconGap } = attributes
+			const {
+				iconGap, iconGapTablet, iconGapMobile,
+			} = attributes
 
 			const iconBlockAttributes = innerBlocks[ 0 ].attributes
-			const { iconSize } = iconBlockAttributes
+			const {
+				iconSize, iconSizeTablet, iconSizeMobile,
+			} = iconBlockAttributes
 
 			const _iconSize = iconSize ? iconSize : 36
+			const _iconSizeTablet = iconSizeTablet ? iconSizeTablet : _iconSize
+			const _iconSizeMobile = iconSizeMobile ? iconSizeMobile : _iconSizeTablet
+
 			const _iconGap = iconGap ? iconGap : 64
+			const _iconGapTablet = iconGapTablet ? iconGapTablet : _iconGap
+			const _iconGapMobile = iconGapMobile ? iconGapMobile : _iconGapTablet
 
 			const newIconGap = _iconGap - _iconSize >= 0 ? _iconGap - _iconSize : 0
+			const newIconGapTablet = _iconGapTablet - _iconSizeTablet >= 0 ? _iconGapTablet - _iconSizeTablet : 0
+			const newIconGapMobile = _iconGapMobile - _iconSizeMobile >= 0 ? _iconGapMobile - _iconSizeMobile : 0
+
 			newAttributes.iconGap2 = newIconGap === 28 ? '' : newIconGap
+			newAttributes.iconGap2Tablet = newIconGapTablet === 28 ? '' : newIconGapTablet
+			newAttributes.iconGap2Mobile = newIconGapMobile === 28 ? '' : newIconGapMobile
+
 			newAttributes.iconGap = ''
+			newAttributes.iconGapTablet = ''
+			newAttributes.iconGapMobile = ''
 
 			return newAttributes
 		},

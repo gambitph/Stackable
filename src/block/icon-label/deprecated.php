@@ -17,10 +17,15 @@ if ( ! function_exists( 'stackable_render_block_icon_label' ) ) {
 			return $block_content;
 		}
 
+		$has_icon_gap = isset( $attributes[ 'iconGap' ] ) || isset( $attributes[ 'iconGapTablet' ] ) || isset( $attributes[ 'iconGapMobile' ] );
+		$has_icon_gap2 = isset( $attributes[ 'iconGap2' ] ) || isset( $attributes[ 'iconGap2Tablet' ] ) || isset( $attributes[ 'iconGap2Mobile' ] );
+
 		$icon_block_attrs = $block[ 'innerBlocks' ][0]['attrs'];
+		$has_icon_size = isset( $icon_block_attrs['iconSize'] ) || isset( $icon_block_attrs['iconSizeTablet'] ) || isset( $icon_block_attrs['iconSizeMobile'] );
+
 
 		// check if the block uses the old icon gap attribute
-		$use_old_styles = ( isset( $attributes[ 'iconGap' ] ) || isset( $icon_block_attrs['iconSize'] ) ) && ! isset( $attributes[ 'iconGap2' ] );
+		$use_old_styles = ( $has_icon_gap || $has_icon_size ) && ! $has_icon_gap2;
 
 		if ( $use_old_styles ) {
 			return preg_replace( '/stk-block-icon-label/i', 'stk-block-icon-label stk-block-icon-label--use-flex-basis', $block_content );
