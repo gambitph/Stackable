@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.2
 Tested up to: 6.5.4
 Requires PHP: 7.3
-Stable tag: 3.13.1
+Stable tag: 3.13.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -294,6 +294,22 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.13.2 =
+* New: Added new Aspect Ratio option to Image block and relevant blocks #3200
+* New: Added filter stackable_force_css_load - when returning true, Stackable css files will always be loaded in the frontend even if no blocks are present #3218
+* New: Accordion block - accordions show open when printing the webpage #3186
+* Fixed: Posts block - empty excerpts may show some excerpt markup #3185
+* Fixed: Posts block - excerpt length not being followed #3210
+* Fixed: Load more block - clicking rapidly can load the same posts #2280
+* Fixed: Accordion block - prevent highlighting text when toggling #3096
+* Fixed: Accordion block - some icons in the content rotate when opening the accordion #3211
+* Fixed: Table of Contents block - excluding headings can affect another TOC block in the same page #3197
+* Fixed: Inner column block - top and bottom margins looks different in Firefox #3193
+* Fixed: Some CSS validation errors #3087
+* Fixed: Some custom SVG icons may not display properly #3103
+* Fixed: Image blob shapes sometimes look different in Firefox #3042
+* Fixed: Nested selectors in Custom CSS now work properly #3164
 
 = 3.13.1 =
 * Fixed: (Hotfix update): Style codes can show on some instances
