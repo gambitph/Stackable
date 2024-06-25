@@ -88,7 +88,7 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			imageHeight: {
 				stkResponsive: true,
 				stkUnits: 'px',
-				type: 'string',
+				type: 'number',
 				default: '',
 			},
 			imageWidth: {
