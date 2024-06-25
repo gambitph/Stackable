@@ -327,6 +327,7 @@ const Edit = props => {
 						hasSelector={ false }
 						src={ focalPointPlaceholder }
 						hasToggle={ true }
+						hasAspectRatio={ ! [ 'list', 'horizontal', 'horizontal-2', 'portfolio', 'portfolio-2' ].includes( blockStyle ) }
 					/>
 					<Typography.InspectorControls
 						{ ...props }
