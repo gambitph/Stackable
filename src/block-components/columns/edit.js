@@ -27,7 +27,9 @@ import { range } from 'lodash'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { select, dispatch } from '@wordpress/data'
+import {
+	select, dispatch, useSelect,
+} from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useState } from '@wordpress/element'
 
@@ -36,6 +38,24 @@ export const Controls = props => {
 	const deviceType = useDeviceType()
 	const { clientId } = useBlockEditContext()
 	const { numInnerBlocks, innerBlocks } = useBlockContext()
+
+	const {
+		multiClientIds, multiInnerBlocks, hasMultiSelectedBlocks,
+	} = useSelect( select => {
+		const multiClientIds = select( 'core/block-editor' ).getMultiSelectedBlockClientIds()
+		const multiInnerBlocks = {}
+
+		multiClientIds.forEach( clientId => {
+			const { innerBlocks } = select( 'stackable/block-context' ).getBlockContext( clientId )
+			multiInnerBlocks[ clientId ] = innerBlocks
+		} )
+
+		return {
+			multiClientIds,
+			multiInnerBlocks,
+			hasMultiSelectedBlocks: multiClientIds.length > 1,
+		}
+	} )
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
 			columnArrangementTablet: attributes.columnArrangementTablet,
@@ -43,7 +63,18 @@ export const Controls = props => {
 			columnWrapDesktop: attributes.columnWrapDesktop,
 		}
 	} )
-	const setAttributes = useBlockSetAttributesContext()
+	const setMultiBlockAttributes = ( _clientId, attrs ) => {
+		dispatch( 'core/block-editor' ).updateBlockAttributes( multiClientIds, attrs ) // eslint-disable-line stackable/no-update-block-attributes
+	}
+	const setSingleBlockAttributes = useBlockSetAttributesContext()
+
+	const setAttributes = attrs => {
+		if ( multiClientIds.length ) {
+			multiClientIds.forEach( _clientId => setMultiBlockAttributes( _clientId, attrs ) )
+		} else {
+			setSingleBlockAttributes( attrs )
+		}
+	}
 
 	const columnWidths = []
 	const columnWidthsTablet = []
@@ -53,14 +84,14 @@ export const Controls = props => {
 
 	innerBlocks.forEach( ( { clientId } ) => {
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
-		columnWidths.push( attributes.columnWidth )
-		columnWidthsTablet.push( attributes.columnWidthTablet )
-		columnWidthsMobile.push( attributes.columnWidthMobile )
+		columnWidths.push( attributes?.columnWidth )
+		columnWidthsTablet.push( attributes?.columnWidthTablet )
+		columnWidthsMobile.push( attributes?.columnWidthMobile )
 
-		if ( attributes.columnWidthTablet ) {
+		if ( attributes?.columnWidthTablet ) {
 			hasTabletColumnWidths = true
 		}
-		if ( attributes.columnWidthMobile ) {
+		if ( attributes?.columnWidthMobile ) {
 			hasMobileColumnWidths = true
 		}
 	} )
@@ -91,13 +122,25 @@ export const Controls = props => {
 						const attributes = {}
 						const columnWidthName = getAttributeName( 'columnWidth', deviceType )
 						const columnAdjacentCount = getAttributeName( 'columnAdjacentCount', deviceType )
-						innerBlocks.forEach( ( block, i ) => {
-							clientIds.push( block.clientId )
-							attributes[ block.clientId ] = {
-								[ columnWidthName ]: columnWidths[ i ],
-								[ columnAdjacentCount ]: columnWidths.length,
-							}
-						} )
+						if ( hasMultiSelectedBlocks ) {
+							Object.values( multiInnerBlocks ).forEach( innerBlocks => {
+								innerBlocks.forEach( ( block, i ) => {
+									clientIds.push( block.clientId )
+									attributes[ block.clientId ] = {
+										[ columnWidthName ]: columnWidths[ i ],
+										[ columnAdjacentCount ]: columnWidths.length,
+									}
+								} )
+							} )
+						} else {
+							innerBlocks.forEach( ( block, i ) => {
+								clientIds.push( block.clientId )
+								attributes[ block.clientId ] = {
+									[ columnWidthName ]: columnWidths[ i ],
+									[ columnAdjacentCount ]: columnWidths.length,
+								}
+							} )
+						}
 						dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 						setColumnsUpdate( Math.random() )
 					} }
@@ -121,13 +164,25 @@ export const Controls = props => {
 						const attributes = {}
 						const columnWidthName = getAttributeName( 'columnWidth', deviceType )
 						const columnAdjacentCount = getAttributeName( 'columnAdjacentCount', deviceType )
-						innerBlocks.forEach( ( block, i ) => {
-							clientIds.push( block.clientId )
-							attributes[ block.clientId ] = {
-								[ columnWidthName ]: columnWidths[ i ],
-								[ columnAdjacentCount ]: columnRows.filter( n => n === columnRows[ i ] ).length,
-							}
-						} )
+						if ( hasMultiSelectedBlocks ) {
+							Object.values( multiInnerBlocks ).forEach( innerBlocks => {
+								innerBlocks.forEach( ( block, i ) => {
+									clientIds.push( block.clientId )
+									attributes[ block.clientId ] = {
+										[ columnWidthName ]: columnWidths[ i ],
+										[ columnAdjacentCount ]: columnRows.filter( n => n === columnRows[ i ] ).length,
+									}
+								} )
+							} )
+						} else {
+							innerBlocks.forEach( ( block, i ) => {
+								clientIds.push( block.clientId )
+								attributes[ block.clientId ] = {
+									[ columnWidthName ]: columnWidths[ i ],
+									[ columnAdjacentCount ]: columnRows.filter( n => n === columnRows[ i ] ).length,
+								}
+							} )
+						}
 						dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 						setColumnsUpdate( Math.random() )
 					} }
@@ -143,12 +198,23 @@ export const Controls = props => {
 					allowReset={ true }
 					onChange={ ( value, { oldIndex, newIndex } ) => {
 						if ( deviceType !== 'Tablet' && deviceType !== 'Mobile' ) {
-							dispatch( 'core/block-editor' ).moveBlockToPosition(
-								innerBlocks[ oldIndex ].clientId,
-								clientId,
-								clientId,
-								newIndex,
-							)
+							if ( hasMultiSelectedBlocks ) {
+								for ( const multiClientId in multiInnerBlocks ) {
+									dispatch( 'core/block-editor' ).moveBlockToPosition(
+										multiInnerBlocks[ multiClientId ][ oldIndex ].clientId,
+										multiClientId,
+										multiClientId,
+										newIndex,
+									)
+								}
+							} else {
+								dispatch( 'core/block-editor' ).moveBlockToPosition(
+									innerBlocks[ oldIndex ].clientId,
+									clientId,
+									clientId,
+									newIndex,
+								)
+							}
 						} else {
 							const attrName = getAttributeName( 'columnArrangement', deviceType )
 							setAttributes( { [ attrName ]: ( value || [] ).join( ',' ) } )
