@@ -30,6 +30,7 @@ const Styles = props => {
 		hoverSelectorCallback = null,
 		enableWidth = true,
 		enableHeight = true,
+		enableAspectRatio = true,
 		widthStyleRule = null,
 		widthUnitCallback = null,
 		heightUnitCallback = null,
@@ -48,6 +49,7 @@ const Styles = props => {
 				attrName="imageAspectRatio"
 				key="imageAspectRatio"
 				responsive="all"
+				enabledCallback={ () => enableAspectRatio }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -57,6 +59,7 @@ const Styles = props => {
 				attrName="imageAspectRatio"
 				key="imageAspectRatio"
 				responsive="all"
+				enabledCallback={ () => enableAspectRatio }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -71,7 +74,7 @@ const Styles = props => {
 				enabledCallback={ () => enableWidth }
 				valueCallback={ ( value, getAttribute ) => {
 					// If there's an aspect ratio and the other dimenion is not given, use auto
-					if ( ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
+					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
 						return 'auto'
 					}
 					return value
@@ -94,7 +97,7 @@ const Styles = props => {
 				enabledCallback={ () => enableWidth }
 				valueCallback={ ( value, getAttribute ) => {
 					// If there's an aspect ratio and the other dimenion is not given, use auto
-					if ( ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
+					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
 						return 'auto'
 					}
 					return value
@@ -117,13 +120,13 @@ const Styles = props => {
 				enabledCallback={ () => enableHeight }
 				valueCallback={ ( value, getAttribute ) => {
 					// If there's an aspect ratio and the other dimenion is not given, use auto
-					if ( ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
+					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
 						return 'auto'
 					}
 					return value
 				} }
 				valuePreCallback={ ( value, getAttribute ) => {
-					if ( value === '' && getAttribute( 'imageAspectRatio' ) && ! getAttribute( 'imageWidth' ) ) {
+					if ( enableAspectRatio && value === '' && getAttribute( 'imageAspectRatio' ) && ! getAttribute( 'imageWidth' ) ) {
 						return 'auto'
 					}
 					return value
@@ -146,13 +149,13 @@ const Styles = props => {
 				enabledCallback={ () => enableHeight }
 				valueCallback={ ( value, getAttribute ) => {
 					// If there's an aspect ratio and the other dimenion is not given, use auto
-					if ( ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
+					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
 						return 'auto'
 					}
 					return value
 				} }
 				valuePreCallback={ ( value, getAttribute ) => {
-					if ( value === '' && getAttribute( 'imageAspectRatio' ) && ! getAttribute( 'imageHeight' ) ) {
+					if ( enableAspectRatio && value === '' && getAttribute( 'imageAspectRatio' ) && ! getAttribute( 'imageHeight' ) ) {
 						return 'auto'
 					}
 					return value
