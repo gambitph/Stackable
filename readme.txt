@@ -310,6 +310,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Some custom SVG icons may not display properly #3103
 * Fixed: Image blob shapes sometimes look different in Firefox #3042
 * Fixed: Nested selectors in Custom CSS now work properly #3164
+* Fixed: Security improvements
 
 = 3.13.1 =
 * Fixed: (Hotfix update): Style codes can show on some instances
