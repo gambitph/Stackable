@@ -219,6 +219,31 @@ const pick = ( obj, keys ) => {
 	}, {} )
 }
 
+// Create an admin notice if there's an error fetching the settings.
+const SettingsNotice = () => {
+	const [ error, setError ] = useState( null )
+
+	useEffect( () => {
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().catch( error => {
+				setError( error )
+			} )
+		} )
+	}, [] )
+
+	if ( ! error ) {
+		return null
+	}
+
+	return (
+		<div className="notice notice-error">
+			<p>{ __( 'Error getting Stackable settings. We got the following error. Please contact your administrator.', i18n ) }</p>
+			<p><strong>{ error.responseJSON.message }</strong></p>
+		</div>
+	)
+}
+
 const EditorSettings = () => {
 	const [ settings, setSettings ] = useState( {} )
 	const [ isBusy, setIsBusy ] = useState( false )
@@ -676,6 +701,14 @@ domReady( () => {
 			<AdditionalOptions
 				showProNoticesOption={ showProNoticesOption }
 			/>
+		)
+	}
+
+	if ( document.querySelector( '.s-settings-notice' ) ) {
+		createRoot(
+			document.querySelector( '.s-settings-notice' )
+		).render(
+			<SettingsNotice />
 		)
 	}
 
