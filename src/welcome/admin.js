@@ -239,7 +239,7 @@ const SettingsNotice = () => {
 	return (
 		<div className="notice notice-error">
 			<p>{ __( 'Error getting Stackable settings. We got the following error. Please contact your administrator.', i18n ) }</p>
-			<p><strong>{ error.responseJSON.message }</strong></p>
+			{ error.responseJSON.message && <p><strong>{ error.responseJSON.message }</strong></p> }
 		</div>
 	)
 }
