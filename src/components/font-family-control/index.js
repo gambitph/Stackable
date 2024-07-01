@@ -14,7 +14,10 @@ import { loadGoogleFont } from '~stackable/util'
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo } from '@wordpress/element'
+import {
+	useMemo, useEffect, useState,
+} from '@wordpress/element'
+import apiFetch from '@wordpress/api-fetch'
 import AdvancedAutosuggestControl from '../advanced-autosuggest-control'
 
 const fontOptions = fonts.map( font => {
@@ -22,8 +25,26 @@ const fontOptions = fonts.map( font => {
 } )
 
 const FontFamilyControl = props => {
+	const [ themeFonts, setThemeFonts ] = useState( [] )
+
+	useEffect( () => {
+		apiFetch( {
+			path: `/stackable/v3/get_theme_fonts/`,
+			method: 'GET',
+		} ).then( font => {
+			if ( font ) {
+				setThemeFonts( font )
+			}
+		} )
+	}, [] )
+
 	const options = useMemo( () => {
 		return applyFilters( 'stackable.font-family-control.options', [
+			{
+				id: 'theme-fonts',
+				title: __( 'Theme Fonts', i18n ),
+				options: themeFonts || [],
+			},
 			{
 				id: 'system-fonts',
 				title: __( 'System Fonts', i18n ),
@@ -40,11 +61,11 @@ const FontFamilyControl = props => {
 				options: fontOptions,
 			},
 		] )
-	}, [] )
+	}, [ themeFonts ] )
 
 	return (
 		<AdvancedAutosuggestControl
-			options={ options }
+			options={ themeFonts.length ? options : options.filter( option => option.id !== 'theme-fonts' ) }
 			highlightValueOnFocus={ true }
 			{ ...props }
 			onChange={ fontFamily => {
