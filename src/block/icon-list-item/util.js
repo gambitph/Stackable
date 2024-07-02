@@ -4,7 +4,9 @@
  */
 import { useRefEffect } from '@wordpress/compose'
 import { useCallback, useRef } from '@wordpress/element'
-import { useSelect, useDispatch } from '@wordpress/data'
+import {
+	useSelect, useDispatch, dispatch,
+} from '@wordpress/data'
 import {
 	cloneBlock,
 	switchToBlockType,
@@ -146,4 +148,36 @@ export const useEnter = ( text, clientId ) => {
 		},
 		[ clientId ]
 	)
+}
+
+export const useOnPaste = ( clientId, parentClientId, attributes, setAttributes ) => {
+	const { insertBlocks } = useDispatch( blockEditorStore )
+	const { getBlockIndex } = useSelect( blockEditorStore )
+
+	const parser = new DOMParser()
+
+	return useCallback( event => {
+		event.preventDefault()
+		const content = event.clipboardData.getData( 'text/html' )
+		const dom = parser.parseFromString( content, 'text/html' )
+
+		const listItems = dom.querySelectorAll( 'li' )
+		const listItemsContent = Array.from( listItems ).map( item => item.innerHTML )
+
+		if ( ! attributes.text ) {
+			const firstItem = listItemsContent.shift()
+			setAttributes( { text: firstItem } )
+		}
+
+		const newBlocks = listItemsContent.map( text => {
+			const block = createBlock( 'stackable/icon-list-item', {
+				...attributes,
+				text,
+			} )
+
+			return block
+		} )
+		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+		insertBlocks( newBlocks, getBlockIndex( clientId ) + 1, parentClientId )
+	}, [ clientId, parentClientId, attributes, setAttributes ] )
 }
