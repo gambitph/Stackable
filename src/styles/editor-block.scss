@@ -64,8 +64,11 @@
 }
 // When full alignment, remove the sides.
 .is-root-container > [data-type^="stackable/"][data-align="full"] {
-	margin-left: -8px;
-	margin-right: -8px;
+	// Only remove the sides if no alignfull class that can be overwritten.
+	&:not(.alignfull) {
+		margin-left: -8px;
+		margin-right: -8px;
+	}
 	> .wp-block[data-align="full"] {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
