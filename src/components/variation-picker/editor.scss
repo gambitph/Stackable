@@ -1,15 +1,19 @@
 .stk-variation-picker {
+	.block-editor-block-variation-picker__variations > li {
+		margin: 8px 20px 0 0;
+	}
+
 	.is-premium {
 		pointer-events: none;
 		~ span {
 			color: #888;
 		}
+		svg {
+			fill: #d8d8d8 !important;
+		}
 	}
 	.block-editor-block-variation-picker__variation svg {
 		width: 48px;
 		height: 48px;
-		* {
-			stroke: currentColor;
-		}
 	}
 }

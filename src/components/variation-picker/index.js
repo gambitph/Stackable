@@ -47,10 +47,9 @@ const VariationPicker = props => {
 					{ variations.map( variation => (
 						<li key={ variation.name }>
 							<Button
-								variant="secondary"
+								variant="tertiary"
 								icon={ variation.pickerIcon || variation.icon }
 								iconSize={ 48 }
-								isSecondary
 								onClick={ () => onSelect( variation ) }
 								className={ classnames( 'block-editor-block-variation-picker__variation', {
 									'is-premium': variation.isPremium,
