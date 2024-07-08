@@ -12,6 +12,7 @@ import {
 	switchToBlockType,
 	createBlock,
 	getDefaultBlockName,
+	pasteHandler,
 } from '@wordpress/blocks'
 import { store as blockEditorStore } from '@wordpress/block-editor'
 import { ENTER } from '@wordpress/keycodes'
@@ -154,22 +155,30 @@ export const useOnPaste = ( clientId, parentClientId, attributes, setAttributes 
 	const { insertBlocks } = useDispatch( blockEditorStore )
 	const { getBlockIndex } = useSelect( blockEditorStore )
 
-	const parser = new DOMParser()
-
 	return useCallback( event => {
 		event.preventDefault()
-		const content = event.clipboardData.getData( 'text/html' )
-		const dom = parser.parseFromString( content, 'text/html' )
+		const html = event.clipboardData.getData( 'text/html' )
+		const plain = event.clipboardData.getData( 'text/plain' )
 
-		const listItems = dom.querySelectorAll( 'li' )
-		const listItemsContent = Array.from( listItems ).map( item => item.innerHTML )
+		// Convert first to core/list block.
+		const list = pasteHandler( {
+			HTML: html,
+			plainText: plain,
+			mode: 'BLOCKS',
+		} )
 
+		const items = list[ 0 ].innerBlocks
+
+		const content = items.map( item => item.attributes.content.toPlainText().replaceAll( '\n', '<br>' ) )
+
+		// If current icon list item has no text, use the first item as text.
 		if ( ! attributes.text ) {
-			const firstItem = listItemsContent.shift()
+			const firstItem = content.shift()
 			setAttributes( { text: firstItem } )
 		}
 
-		const newBlocks = listItemsContent.map( text => {
+		// create new icon list items
+		const newBlocks = content.map( text => {
 			const block = createBlock( 'stackable/icon-list-item', {
 				...attributes,
 				text,
