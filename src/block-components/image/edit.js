@@ -26,6 +26,7 @@ import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
+import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 
 /**
  * WordPress dependencies
@@ -97,6 +98,10 @@ const Controls = props => {
 
 		return 100
 	}, [ attributes.imageWidth, attributes.imageWidthUnit, attributes.imageHeight, attributes.imageHeightUnit ] )
+
+	// Custom handler for aspect ratio change to allow extra operations
+	// while being responsive
+	const [ _, aspectRatioChangeHandler ] = useControlHandlers( 'imageAspectRatio', 'all', false )
 
 	return (
 		<>
@@ -173,11 +178,10 @@ const Controls = props => {
 					// For blocks with fixed width like card block,
 					// set the height to auto to allow the aspect ratio to take effect.
 					onChange={ value => {
-						const values = { imageAspectRatio: value }
 						if ( value && props.hasHeight && !! attributes.imageHeight ) {
-							values.imageHeight = ''
+							setAttributes( { imageHeight: '' } )
 						}
-						setAttributes( values )
+						aspectRatioChangeHandler( value )
 					} }
 				/>
 			}
@@ -217,11 +221,6 @@ const Controls = props => {
 						//TODO: Add a working video
 						title: __( 'Image height', i18n ),
 						description: __( 'Adjusts the image height', i18n ),
-					} }
-					// Set the width to auto if the aspect ratio is set and the width is currently empty
-					// to allow the aspect ratio to take effect with height changes.
-					onChange={ value => {
-						setAttributes( { imageHeight: value } )
 					} }
 				/>
 			}
