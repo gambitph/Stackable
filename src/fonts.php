@@ -37,7 +37,7 @@ if ( ! class_exists( 'Stackable_Theme_Fonts' ) ) {
 
 		public function gather_theme_fonts() {
 			if ( ! method_exists( 'WP_Font_Face_Resolver', 'get_fonts_from_theme_json' ) ) {
-				return false;
+				return;
 			}
 
 			$theme_fonts = WP_Font_Face_Resolver::get_fonts_from_theme_json();
