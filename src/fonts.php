@@ -22,6 +22,72 @@ if ( ! function_exists( 'str_ends_with' ) ) {
     }
 }
 
+if ( ! class_exists( 'Stackable_Theme_Fonts' ) ) {
+	class Stackable_Theme_Fonts {
+
+		public static $theme_fonts = [];
+
+		function __construct() {
+			if ( is_frontend() ) {
+				add_action( 'init', array( $this, 'gather_theme_fonts' ) );
+			}
+
+			add_action( 'rest_api_init', array( $this, 'register_rest_fields' ) );
+		}
+
+		public function gather_theme_fonts() {
+			if ( ! method_exists( 'WP_Font_Face_Resolver', 'get_fonts_from_theme_json' ) ) {
+				return false;
+			}
+
+			$theme_fonts = WP_Font_Face_Resolver::get_fonts_from_theme_json();
+
+			foreach ( $theme_fonts as $key => $value ) {
+				self::$theme_fonts[] = $value[ 0 ][ 'font-family' ];
+			}
+		}
+
+		public static function is_theme_font( $font_name ) {
+			return in_array( strtolower( $font_name ), self::$theme_fonts );
+		}
+
+		public function register_rest_fields() {
+			// API endpoint for getting theme fonts
+			register_rest_route( 'stackable/v3', '/get_theme_fonts', array(
+				'methods' => 'GET',
+				'callback' => array( $this, 'get_theme_fonts' ),
+				'permission_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
+			) );
+		}
+
+		/**
+		 * REST Callback. Get all theme fonts.
+		 *
+		 * @return array
+		 */
+		public static function get_theme_fonts() {
+			if ( ! method_exists( 'WP_Font_Face_Resolver', 'get_fonts_from_theme_json' ) ) {
+				return false;
+			}
+
+			$theme_fonts = WP_Font_Face_Resolver::get_fonts_from_theme_json();
+
+			$response = array();
+			foreach ( $theme_fonts as $key => $value ) {
+				$response[] = $value[ 0 ][ 'font-family' ];
+			}
+
+			return new WP_REST_Response( $response, 200 );
+		}
+
+	}
+
+	new Stackable_Theme_Fonts();
+}
+
+
 if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
   class Stackable_Google_Fonts {
 
@@ -71,6 +137,10 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 
 		public static function register_font( $font_name ) {
 			if ( ! self::is_web_font( $font_name ) ) {
+				return;
+			}
+
+			if ( ! Stackable_Theme_Fonts::is_theme_font( $font_name ) ) {
 				return;
 			}
 

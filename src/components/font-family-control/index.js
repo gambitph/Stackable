@@ -14,37 +14,21 @@ import { loadGoogleFont } from '~stackable/util'
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import {
-	useMemo, useEffect, useState,
-} from '@wordpress/element'
-import apiFetch from '@wordpress/api-fetch'
+import { useMemo } from '@wordpress/element'
 import AdvancedAutosuggestControl from '../advanced-autosuggest-control'
+
+import { useThemeFonts } from '~stackable/hooks'
 
 const fontOptions = fonts.map( font => {
 	return { label: font.family, value: font.family }
 } )
 
 const FontFamilyControl = props => {
-	const [ themeFonts, setThemeFonts ] = useState( [] )
-
-	useEffect( () => {
-		apiFetch( {
-			path: `/stackable/v3/get_theme_fonts/`,
-			method: 'GET',
-		} ).then( font => {
-			if ( font ) {
-				setThemeFonts( font )
-			}
-		} )
-	}, [] )
-
+	const {
+		loadingThemeFont, themeFonts, themeFontOptions,
+	} = useThemeFonts()
 	const options = useMemo( () => {
-		return applyFilters( 'stackable.font-family-control.options', [
-			{
-				id: 'theme-fonts',
-				title: __( 'Theme Fonts', i18n ),
-				options: themeFonts || [],
-			},
+		const allFontOptions = [
 			{
 				id: 'system-fonts',
 				title: __( 'System Fonts', i18n ),
@@ -60,23 +44,34 @@ const FontFamilyControl = props => {
 				title: __( 'Google Fonts', i18n ),
 				options: fontOptions,
 			},
-		] )
-	}, [ themeFonts ] )
+		]
+		if ( themeFonts.length ) {
+			allFontOptions.unshift( {
+				id: 'theme-fonts',
+				title: __( 'Theme Fonts', i18n ),
+				options: themeFontOptions,
+			} )
+		}
+		return applyFilters( 'stackable.font-family-control.options', allFontOptions )
+	}, [ loadingThemeFont ] )
 
 	return (
 		<AdvancedAutosuggestControl
-			options={ themeFonts.length ? options : options.filter( option => option.id !== 'theme-fonts' ) }
+			options={ options }
 			highlightValueOnFocus={ true }
 			{ ...props }
 			onChange={ fontFamily => {
-				// Load font if it's a Google font.
-				fontOptions.some( font => {
-					if ( font.value === fontFamily ) {
-						loadGoogleFont( fontFamily )
-						return true
-					}
-					return false
-				} )
+				if ( ! themeFonts.includes( fontFamily ) ) {
+					// Load font if it's a Google font.
+					fontOptions.some( font => {
+						if ( font.value === fontFamily ) {
+							loadGoogleFont( fontFamily )
+							return true
+						}
+						return false
+					} )
+				}
+
 				props.onChange( fontFamily )
 			} }
 		/>
