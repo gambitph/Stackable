@@ -85,6 +85,9 @@ export const Controls = props => {
 	innerBlocks.forEach( ( { clientId } ) => {
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
 		if ( attributes ) {
+			// check if attributes exist because there might be a delay in updating the inner blocks
+			// e.g. a column block may not exist anymore but the inner blocks may still have its client id
+			// this fixes the block error when adjusting the number of columns from higher to lower in shared controls
 			columnWidths.push( attributes.columnWidth )
 			columnWidthsTablet.push( attributes.columnWidthTablet )
 			columnWidthsMobile.push( attributes.columnWidthMobile )
