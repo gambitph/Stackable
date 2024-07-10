@@ -84,15 +84,17 @@ export const Controls = props => {
 
 	innerBlocks.forEach( ( { clientId } ) => {
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
-		columnWidths.push( attributes?.columnWidth )
-		columnWidthsTablet.push( attributes?.columnWidthTablet )
-		columnWidthsMobile.push( attributes?.columnWidthMobile )
+		if ( attributes ) {
+			columnWidths.push( attributes.columnWidth )
+			columnWidthsTablet.push( attributes.columnWidthTablet )
+			columnWidthsMobile.push( attributes.columnWidthMobile )
 
-		if ( attributes?.columnWidthTablet ) {
-			hasTabletColumnWidths = true
-		}
-		if ( attributes?.columnWidthMobile ) {
-			hasMobileColumnWidths = true
+			if ( attributes.columnWidthTablet ) {
+				hasTabletColumnWidths = true
+			}
+			if ( attributes.columnWidthMobile ) {
+				hasMobileColumnWidths = true
+			}
 		}
 	} )
 
