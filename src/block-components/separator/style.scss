@@ -7,13 +7,13 @@
 		}
 
 		.stk-separator ~ *:not(.stk-separator, .stk-video-background) {
-			z-index: 5;
+			z-index: 3;
 			position: relative;
 		}
 	}
 	&.stk-has-bottom-separator:not(.stk-has-top-separator) {
-		~ *:not(.stk-separator, .stk-video-background) {
-			z-index: 5;
+		> *:not(.stk-separator, .stk-video-background) {
+			z-index: 3;
 			position: relative;
 		}
 	}
