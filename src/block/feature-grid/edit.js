@@ -68,7 +68,9 @@ const Edit = props => {
 		rowClass,
 		separatorClass,
 		columnTooltipClass,
-	] )
+	], {
+		'stk--column-wrap-desktop': props.attributes.columnWrapDesktop,
+	} )
 
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',

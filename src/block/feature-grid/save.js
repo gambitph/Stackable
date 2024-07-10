@@ -45,6 +45,9 @@ export const Save = props => {
 				'stk-block-columns', // We need to add the columns class to make fit all and column gap to work properly.
 				responsiveClass,
 				separatorClass,
+				{
+					'stk--column-wrap-desktop': attributes.columnWrapDesktop,
+				},
 			],
 		], props )
 	)

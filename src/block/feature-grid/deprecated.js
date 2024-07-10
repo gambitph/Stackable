@@ -20,6 +20,28 @@ import {
  */
 import { addFilter } from '@wordpress/hooks'
 
+// Version 3.13.3 Deprecations
+addFilter( 'stackable.feature-grid.save.blockClassNames', 'stackable/3.13.3', ( output, props ) => {
+	if ( compareVersions( props.version, '3.13.3' ) === 1 ) {
+		return output
+	}
+
+	const separatorClass = getSeparatorClasses( props.attributes )
+	const responsiveClass = getResponsiveClasses( props.attributes )
+
+	const classnames = [
+		props.className,
+		'stk-block-feature-grid',
+		responsiveClass,
+		separatorClass,
+	]
+
+	if ( props.attributes.columnWrapDesktop ) {
+		classnames.push( 'stk--column-wrap-desktop' )
+	}
+	return classnames
+} )
+
 // Version 3.1.0 Deprecations
 addFilter( 'stackable.feature-grid.save.blockClassNames', 'stackable/3.1.0', ( output, props ) => {
 	if ( compareVersions( props.version, '3.1.0' ) === 1 ) {
