@@ -25,19 +25,21 @@ if ( ! function_exists( 'str_ends_with' ) ) {
 if ( ! class_exists( 'Stackable_Theme_Fonts' ) ) {
 	class Stackable_Theme_Fonts {
 
-		public static $theme_fonts = [];
+		public static $theme_fonts = false;
 
 		function __construct() {
-			if ( is_frontend() ) {
-				add_action( 'init', array( $this, 'gather_theme_fonts' ) );
-			}
-
 			add_action( 'rest_api_init', array( $this, 'register_rest_fields' ) );
 		}
 
-		public function gather_theme_fonts() {
+
+		public static function gather_theme_fonts() {
+			if ( self::$theme_fonts !== false ) {
+				return self::$theme_fonts;
+			}
+			self::$theme_fonts = [];
+
 			if ( ! method_exists( 'WP_Font_Face_Resolver', 'get_fonts_from_theme_json' ) ) {
-				return false;
+				return self::$theme_fonts;
 			}
 
 			$theme_fonts = WP_Font_Face_Resolver::get_fonts_from_theme_json();
@@ -45,10 +47,12 @@ if ( ! class_exists( 'Stackable_Theme_Fonts' ) ) {
 			foreach ( $theme_fonts as $key => $value ) {
 				self::$theme_fonts[] = $value[ 0 ][ 'font-family' ];
 			}
+
+			return self::$theme_fonts;
 		}
 
 		public static function is_theme_font( $font_name ) {
-			return in_array( strtolower( $font_name ), self::$theme_fonts );
+			return in_array( strtolower( $font_name ), self::gather_theme_fonts() );
 		}
 
 		public function register_rest_fields() {
@@ -68,16 +72,7 @@ if ( ! class_exists( 'Stackable_Theme_Fonts' ) ) {
 		 * @return array
 		 */
 		public static function get_theme_fonts() {
-			if ( ! method_exists( 'WP_Font_Face_Resolver', 'get_fonts_from_theme_json' ) ) {
-				return false;
-			}
-
-			$theme_fonts = WP_Font_Face_Resolver::get_fonts_from_theme_json();
-
-			$response = array();
-			foreach ( $theme_fonts as $key => $value ) {
-				$response[] = $value[ 0 ][ 'font-family' ];
-			}
+			$response = self::gather_theme_fonts();
 
 			return new WP_REST_Response( $response, 200 );
 		}
