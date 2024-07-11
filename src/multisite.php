@@ -43,7 +43,7 @@ if ( ! function_exists( 'stackable_allow_safe_style_css' ) ) {
 	add_filter( 'safe_style_css', 'stackable_allow_safe_style_css' );
 }
 
-if ( is_multisite() && ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
+if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 
 	/**
 	 * Fix block saving for Non-Super-Admins (no unfiltered_html capability).

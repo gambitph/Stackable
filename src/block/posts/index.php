@@ -118,7 +118,7 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 				$new_template = str_replace( '!#excerpt!#', $excerpt, $new_template );
 			} else {
 				// If the excerpt is empty, remove the markup.
-				$new_template = preg_replace( '/<div class="stk-block-posts__excerpt">!#excerpt!#<\/div>/', '', $new_template );
+				$new_template = preg_replace( '/<div class="stk-block-posts__excerpt[^>]*>!#excerpt!#<\/div>/', '', $new_template );
 			}
 		}
 
@@ -407,6 +407,16 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			}
 			// Remove the jetpack sharing button filter.
 			remove_filter( 'sharing_show', '__return_false' );
+
+			// Trim the excerpt if it's too long.
+			if ( ! empty( $excerpt ) ) {
+				$exploded_excerpt = explode( ' ', $excerpt );
+				$trim_to_length = (int) $max_excerpt;
+				if ( count( $exploded_excerpt ) > $trim_to_length ) {
+					$excerpt = implode( ' ', array_slice( $exploded_excerpt, 0, $trim_to_length ) ) . '...';
+				}
+			}
+
 			return empty( $excerpt ) ? "" : $excerpt;
 		}
 

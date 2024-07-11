@@ -202,17 +202,26 @@ const Edit = props => {
 		const unsubscribe = wp.data.subscribe( debounce( () => {
 			const newPostContent = getEditedPostContent()
 			if ( ! isSelected && ! isEqual( postContent, newPostContent ) ) {
-				const editorHeadings = getUpdatedHeadings( getEditorDom, attributes ).map( ( heading, i ) => {
-					// Removed any blank customContent so a heading won't show up as blank.
-					if ( headings[ i ] && headings[ i ].customContent === '' && typeof headings[ i ].customContent !== 'undefined' ) {
-						delete headings[ i ].customContent
-					}
+				// Make sure to also filter excluded headings to avoid
+				// comparing heading with wrong index.
+				const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
+					n => attributes[ `includeH${ n }` ]
+				)
+				const editorHeadings = getUpdatedHeadings( getEditorDom, attributes )
+					.filter( heading =>
+						allowedLevels.includes( heading.tag )
+					)
+					.map( ( heading, i ) => {
+						// Removed any blank customContent so a heading won't show up as blank.
+						if ( headings[ i ] && headings[ i ].customContent === '' && typeof headings[ i ].customContent !== 'undefined' ) {
+							delete headings[ i ].customContent
+						}
 
-					return {
-						...headings[ i ],
-						...heading,
-					}
-				} )
+						return {
+							...headings[ i ],
+							...heading,
+						}
+					} )
 				setHeadings( editorHeadings )
 			}
 			postContent = newPostContent

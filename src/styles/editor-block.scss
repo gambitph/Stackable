@@ -147,7 +147,7 @@
  */
 .stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	display: flex;
-	flex-direction: row;
+	flex-direction: row !important;
 	flex-wrap: wrap;
 }
 .stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > div:not(.block-list-appender) {

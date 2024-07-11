@@ -30,6 +30,9 @@ class StackableAccordion {
 					el.doAnimate = false
 					const preHeight = el.dataset.preHeight
 
+					// Prevent text selection while animating
+					el.style.userSelect = 'none'
+
 					// When inside columns, flex prevents the accordion closing animation, this hack fixes it.
 					const doWrapHack = !! el.closest( '.stk-block-columns' )
 					let wrapper = null
@@ -49,6 +52,11 @@ class StackableAccordion {
 						el.contentEl.anim = el.contentEl.animate( {
 							maxHeight: [ `0px`, `${ height - preHeight }px` ],
 						}, ANIM_OPTS )
+					}
+
+					// When the animation is done, allow text selection again.
+					el.anim.onfinish = el.anim.oncancel = () => {
+						el.style.userSelect = 'auto'
 					}
 
 					if ( doWrapHack ) {
@@ -175,7 +183,7 @@ class StackableAccordion {
 			wrapper.classList.add( 'stk-block-accordion__wrapper' )
 			el.parentNode.insertBefore( wrapper, el )
 			wrapper.appendChild( el )
-			const svg = el.querySelector( '.stk--svg-wrapper:not(.stk--has-icon2)' )
+			const svg = el.querySelector( 'summary .stk--svg-wrapper:not(.stk--has-icon2)' )
 			if ( svg ) {
 				const rotate = el.open ? { from: 0, to: 180 } : { from: 180, to: 0 }
 				svg.anim = svg.animate( {
@@ -199,4 +207,24 @@ class StackableAccordion {
 }
 
 window.stackableAccordion = new StackableAccordion()
+
+// Open closed accordions when printing
+// and close them again after printing
+window?.matchMedia( 'print' ).addEventListener( 'change', event => {
+	if ( event.matches ) {
+		const els = document.querySelectorAll( 'details.stk-block-accordion:not([open])' )
+		for ( const el of els ) {
+			el.setAttribute( 'open', '' )
+			// Mark the elements so they can be closed again after printing
+			el.dataset.wasclosed = ''
+		}
+	} else {
+		const els = document.body.querySelectorAll( 'details.stk-block-accordion[data-wasclosed]' )
+		for ( const el of els ) {
+			el.removeAttribute( 'open' )
+			delete el.dataset.wasclosed
+		}
+	}
+} )
+
 domReady( window.stackableAccordion.init )
