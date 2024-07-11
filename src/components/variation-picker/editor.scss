@@ -12,8 +12,12 @@
 			fill: #d8d8d8 !important;
 		}
 	}
-	.block-editor-block-variation-picker__variation svg {
-		width: 48px;
-		height: 48px;
+	.block-editor-block-variation-picker__variation {
+		background: #fff !important;
+
+		svg {
+			width: 48px;
+			height: 48px;
+		}
 	}
 }
