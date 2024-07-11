@@ -135,13 +135,7 @@ const ShadowFilterControl = props => {
 
 	useEffect( () => {
 		if ( value ) {
-			let _value = value
-			let hexValue = ''
-			_value = _value.replace( /#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})([0-9a-fA-F]{2})?$/g, value => {
-				hexValue = value
-				return ''
-			} ).trim()
-
+			let _value = value.trim()
 			if ( _value.startsWith( 'inset' ) ) {
 				filters.inset = true
 				_value = _value.replace( /^inset\s*/, '' )
@@ -149,12 +143,27 @@ const ShadowFilterControl = props => {
 				filters.inset = false
 			}
 
-			const [ horizontalOffset, verticalOffset, blur, spread ] = _value.split( ' ' )
+			// Split string into 5 parts, the last part contains the rest of the string.
+			function splitStringIntoParts( str ) {
+				const parts = str.split( ' ' )
+				const result = []
+				for ( let i = 0; i < 4; i++ ) {
+					if ( parts.length ) {
+						result.push( parts.shift() )
+					} else {
+						result.push( '' )
+					}
+				}
+				result.push( parts.join( ' ' ) )
+				return result
+			}
+
+			const [ horizontalOffset, verticalOffset, blur, spread, color ] = splitStringIntoParts( _value )
 			filters.horizontalOffset = parseInt( horizontalOffset )
 			filters.verticalOffset = parseInt( verticalOffset )
 			filters.blur = parseInt( blur )
 			filters.shadowSpread = isNaN( parseInt( spread ) ) ? '' : parseInt( spread )
-			filters.shadowColor = hexValue
+			filters.shadowColor = color
 			setFilters( { ...filters } )
 		}
 	}, [ value ] )
