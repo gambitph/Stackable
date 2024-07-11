@@ -483,3 +483,38 @@ if ( ! function_exists( 'stackable_load_js_translations' ) ) {
 		wp_set_script_translations( 'stackable-strings', STACKABLE_I18N );
 	}
 }
+
+// Adds a special class to the body tag, to indicate we can now run
+// hover transitions and other effects.
+if ( ! function_exists( 'stackable_init_animations' ) ) {
+	function stackable_init_animations() {
+		echo '<script>requestAnimationFrame(() => document.body.classList.add( "stk--anim-init" ))</script>';
+	}
+}
+
+if ( ! function_exists( 'stackable_check_block_animation' ) ) {
+
+	function stackable_check_block_animation( $block_content, $block ) {
+		if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
+			return $block_content;
+		}
+
+		if ( strpos( $block_content, ':hover' ) !== false || // Hover effects
+			 strpos( $block_content, '--entrance-' ) !== false || // Entrance animations
+			 strpos( $block_content, 'stk-anim' ) !== false || // Scroll animations
+			 strpos( $block_content, '--stk-tran' ) !== false || // Transition duration
+			 strpos( $block_content, 'stk-entrance' ) !== false // Entrance class
+
+		) {
+			// Adds a special class to the body tag, to indicate we can now run animations.
+			add_action( 'wp_footer', 'stackable_init_animations' );
+			remove_filter( 'render_block', 'stackable_check_block_animation', 10, 2 );
+		}
+
+		return $block_content;
+	}
+
+	if ( is_frontend() ) {
+		add_filter( 'render_block', 'stackable_check_block_animation', 1, 2 );
+	}
+}
