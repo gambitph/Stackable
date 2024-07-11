@@ -185,6 +185,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<div class="s-body">
 						<?php stackable_welcome_notification() ?>
 						<?php do_action( 'stackable_settings_page' ) ?>
+						<article id="settings-notice">
+							<div class="s-settings-notice">
+						</article>
 						<article class="s-box" id="editor-settings">
 							<h2><?php _e( '🎛 Editor Settings', STACKABLE_I18N ) ?></h2>
 							<p class="s-settings-subtitle"><?php _e( 'You can customize some of the features and behavior of Stackable in the editor here.' , STACKABLE_I18N ) ?></em></p>
