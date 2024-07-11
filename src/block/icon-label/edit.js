@@ -88,11 +88,11 @@ const Edit = props => {
 						>
 							<AdvancedRangeControl
 								label={ __( 'Icon Gap', i18n ) }
-								attribute="iconGap"
+								attribute="iconGap2"
 								responsive="all"
 								min={ 0 }
 								sliderMax={ 300 }
-								placeholder="64"
+								placeholder="28"
 							/>
 						</PanelAdvancedSettings>
 
