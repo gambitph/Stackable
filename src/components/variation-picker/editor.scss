@@ -1,6 +1,12 @@
 .stk-variation-picker {
+	.block-editor-block-variation-picker__variations {
+		gap: 16px;
+	}
 	.block-editor-block-variation-picker__variations > li {
-		margin: 8px 20px 0 0;
+		margin: 0;
+	}
+	.stk-stackable-icon-gradient {
+		fill: revert !important;
 	}
 
 	.is-premium {
@@ -14,6 +20,7 @@
 	}
 	.block-editor-block-variation-picker__variation {
 		background: #fff !important;
+		height: 42px;
 
 		svg {
 			width: 48px;
