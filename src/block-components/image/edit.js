@@ -25,8 +25,9 @@ import {
 import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
+	useDeviceType,
 } from '~stackable/hooks'
-import { useControlHandlers } from '~stackable/components/base-control2/hooks'
+import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -59,6 +60,8 @@ const Controls = props => {
 			imageHeightUnit: attributes.imageHeightUnit,
 			imageWidth: attributes.imageWidth,
 			imageHeight: attributes.imageHeight,
+			imageHeightTablet: attributes[ getAttributeName( 'imageHeight', 'tablet' ) ],
+			imageHeightMobile: attributes[ getAttributeName( 'imageHeight', 'mobile' ) ],
 			imageHasLightbox: attributes.imageHasLightbox,
 			imageSize: attributes.imageSize,
 			imageAlt: attributes.imageAlt,
@@ -73,6 +76,7 @@ const Controls = props => {
 		}
 	} )
 	const setAttributes = useBlockSetAttributesContext()
+	const deviceType = useDeviceType()
 
 	// Get the image size urls.
 	const { imageData } = useSelect( select => {
@@ -98,10 +102,6 @@ const Controls = props => {
 
 		return 100
 	}, [ attributes.imageWidth, attributes.imageWidthUnit, attributes.imageHeight, attributes.imageHeightUnit ] )
-
-	// Custom handler for aspect ratio change to allow extra operations
-	// while being responsive
-	const [ _, aspectRatioChangeHandler ] = useControlHandlers( 'imageAspectRatio', 'all', false )
 
 	return (
 		<>
@@ -178,10 +178,14 @@ const Controls = props => {
 					// For blocks with fixed width like card block,
 					// set the height to auto to allow the aspect ratio to take effect.
 					onChange={ value => {
-						if ( value && props.hasHeight && !! attributes.imageHeight ) {
-							setAttributes( { imageHeight: '' } )
+						const attrImageAspectRatio = getAttributeName( 'imageAspectRatio', deviceType )
+						const attrImageHeight = getAttributeName( 'imageHeight', deviceType )
+						const values = { [ attrImageAspectRatio ]: value }
+
+						if ( value && props.hasHeight && !! attributes[ attrImageHeight ] ) {
+							values[ attrImageHeight ] = ''
 						}
-						aspectRatioChangeHandler( value )
+						setAttributes( values )
 					} }
 				/>
 			}
