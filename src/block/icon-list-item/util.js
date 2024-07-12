@@ -167,7 +167,8 @@ export const useOnPaste = ( clientId, parentClientId, attributes, setAttributes 
 			mode: 'BLOCKS',
 		} )
 
-		const items = list[ 0 ].innerBlocks
+		// If list[0] has inner blocks, it has been converted to core/list block, else list has core/paragraph elements.
+		const items = list[ 0 ].innerBlocks.length ? list[ 0 ].innerBlocks : list
 
 		const content = items.map( item => item.attributes.content.toPlainText().replaceAll( '\n', '<br>' ) )
 
