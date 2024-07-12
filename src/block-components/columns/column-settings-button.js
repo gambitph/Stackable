@@ -30,9 +30,18 @@ export const ColumnsControl = props => {
 	const {
 		multiClientIds, multiNumInnerBlocks, multiInnerBlocks, hasMultiSelectedBlocks,
 	} = useSelect( select => {
-		const multiClientIds = select( 'core/block-editor' ).getMultiSelectedBlockClientIds()
+		const multiBlocks = select( 'core/block-editor' ).getMultiSelectedBlocks()
+		let multiClientIds = []
 		const multiInnerBlocks = {}
 		const multiNumInnerBlocks = {}
+		if ( multiBlocks.length && multiBlocks[ 0 ].name === 'stackable/tabs' ) {
+			multiBlocks.forEach( block => {
+				const tabContent = block.innerBlocks[ 0 ].name === 'stackable/tab-content' ? block.innerBlocks[ 0 ] : block.innerBlocks[ 1 ]
+				multiClientIds.push( tabContent.clientId )
+			} )
+		} else {
+			multiClientIds = multiBlocks.map( block => block.clientId )
+		}
 
 		multiClientIds.forEach( clientId => {
 			const { numInnerBlocks, innerBlocks } = select( 'stackable/block-context' ).getBlockContext( clientId )
@@ -50,7 +59,7 @@ export const ColumnsControl = props => {
 	const [ isDuplicate, setIsDuplicate ] = useLocalStorage( 'stk__columns_new_duplicate', false )
 
 	const setColumns = numColumns => {
-		const _changeColumnsFunc = ( _clientId, _numColumns, _numInnerBlocks, _innerBlocks ) => {
+		const _changeColumnsFunc = ( _clientId, _numColumns, _numInnerBlocks, _innerBlocks, quietUpdate = false ) => {
 			const { insertBlock, removeBlocks } = dispatch( 'core/block-editor' )
 
 			// do nothing if input field is blank
@@ -59,6 +68,9 @@ export const ColumnsControl = props => {
 				// Remove the columns.
 			} else if ( _numColumns < _numInnerBlocks ) {
 				const columnClientIds = _innerBlocks.slice( numColumns ).map( ( { clientId } ) => clientId )
+				if ( quietUpdate ) {
+					dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				}
 				removeBlocks( columnClientIds, false )
 
 				// Add a blank column.
@@ -70,6 +82,9 @@ export const ColumnsControl = props => {
 					const block = getBlockFromExample( 'stackable/column', {
 						attributes: { ...newColumnAttributes },
 					} )
+					if ( quietUpdate ) {
+						dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+					}
 					insertBlock( block, _numInnerBlocks + i + 1, _clientId, false )
 				}
 
@@ -88,6 +103,9 @@ export const ColumnsControl = props => {
 
 				for ( let i = 0; i < numToAdd; i++ ) {
 					const block = getBlockFromExample( 'stackable/column', pick( newBlock, [ 'attributes', 'innerBlocks' ] ) )
+					if ( quietUpdate ) {
+						dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+					}
 					insertBlock( block, _numInnerBlocks + i + 1, _clientId, false )
 				}
 			}
@@ -95,10 +113,10 @@ export const ColumnsControl = props => {
 
 		const changeColumnsFunc = numColumns => {
 			if ( hasMultiSelectedBlocks ) {
-				multiClientIds.forEach( blockClientId =>
-					_changeColumnsFunc( blockClientId, numColumns, multiNumInnerBlocks[ blockClientId ], multiInnerBlocks[ blockClientId ] ) )
+				multiClientIds.forEach( ( blockClientId, index ) =>
+					_changeColumnsFunc( blockClientId, numColumns, multiNumInnerBlocks[ blockClientId ], multiInnerBlocks[ blockClientId ], index !== 0 ? true : false ) )
 			} else if ( ! hasMultiSelectedBlocks ) {
-				_changeColumnsFunc( clientId, numColumns, numInnerBlocks, innerBlocks )
+				_changeColumnsFunc( clientId, numColumns, numInnerBlocks, innerBlocks, false )
 			}
 		}
 

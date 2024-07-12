@@ -93,12 +93,19 @@ const Edit = props => {
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
-	const { innerBlocks, hasInnerBlocks } = useSelect(
+	const {
+		hasMultiSelectedBlocks, multiInnerBlocks, innerBlocks, hasInnerBlocks,
+	} = useSelect(
 		select => {
+			const selectedBlocks = select( 'core/block-editor' ).getMultiSelectedBlocks()
+			const multiInnerBlocks = selectedBlocks.map( block => block.innerBlocks )
 			const innerBlocks = select( 'core/block-editor' ).getBlock( clientId ).innerBlocks
 			return {
+				hasMultiSelectedBlocks: selectedBlocks.length > 1,
+				multiInnerBlocks,
 				innerBlocks,
 				hasInnerBlocks: innerBlocks.length > 0,
+
 			}
 		},
 		[ clientId ]
@@ -111,6 +118,32 @@ const Edit = props => {
 		tabContentBlock = innerBlocks[ 0 ].name === 'stackable/tab-content' ? innerBlocks[ 0 ] : innerBlocks[ 1 ]
 	}
 
+	const updateColumns = ( numColumns, tabLabelsBlockClientId ) => {
+		// Update the number of tab labels
+		const clientId = tabLabelsBlockClientId
+		const tabLabels = select( 'core/block-editor' ).getBlockAttributes( tabLabelsBlockClientId ).tabLabels
+
+		// If we added a new tab, then add a new tab label
+		if ( numColumns > tabLabels.length ) {
+			const newTabLabels = [ ...tabLabels ]
+			while ( newTabLabels.length < numColumns ) {
+				newTabLabels.push( { label: '', icon: '' } )
+			}
+			// Quietly update the tab labels
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
+				tabLabels: newTabLabels,
+			} )
+		} else if ( numColumns < tabLabels.length ) {
+			// If we removed a tab, then remove the last tab label
+			const newTabLabels = [ ...tabLabels ].slice( 0, numColumns )
+			// Quietly update the tab labels
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
+				tabLabels: newTabLabels,
+			} )
+		}
+	}
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-tabs',
@@ -144,29 +177,16 @@ const Edit = props => {
 								props.setTemplateLock( true )
 							}, 1 )
 
-							// Update the number of tab labels
-							const clientId = tabLabelsBlock.clientId
-							const tabLabels = select( 'core/block-editor' ).getBlockAttributes( tabLabelsBlock.clientId ).tabLabels
+							if ( hasMultiSelectedBlocks ) {
+								multiInnerBlocks.forEach( _innerBlocks => {
+									if ( _innerBlocks?.length ) {
+										const _tabLabelsBlock = _innerBlocks[ 0 ].name === 'stackable/tab-labels' ? _innerBlocks[ 0 ] : _innerBlocks[ 1 ]
 
-							// If we added a new tab, then add a new tab label
-							if ( numColumns > tabLabels.length ) {
-								const newTabLabels = [ ...tabLabels ]
-								while ( newTabLabels.length < numColumns ) {
-									newTabLabels.push( { label: '', icon: '' } )
-								}
-								// Quietly update the tab labels
-								dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-								dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
-									tabLabels: newTabLabels,
+										updateColumns( numColumns, _tabLabelsBlock.clientId )
+									}
 								} )
-							} else if ( numColumns < tabLabels.length ) {
-								// If we removed a tab, then remove the last tab label
-								const newTabLabels = [ ...tabLabels ].slice( 0, numColumns )
-								// Quietly update the tab labels
-								dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-								dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
-									tabLabels: newTabLabels,
-								} )
+							} else {
+								updateColumns( numColumns, tabLabelsBlock.clientId )
 							}
 						} }
 						newColumnAttributes={

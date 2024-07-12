@@ -145,7 +145,7 @@ const Edit = props => {
 							template={ props.attributes.templateLock ? undefined : TEMPLATE }
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ false }
-							templateLock={ templateLock ? 'insert' : false }
+							templateLock={ false }
 						/>
 					</div>
 				</Separator>
