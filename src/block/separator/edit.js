@@ -46,7 +46,6 @@ const Edit = props => {
 		clientId,
 		className,
 		attributes,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -70,52 +69,50 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs hasLayoutPanel={ false } />
+			<>
+				<InspectorTabs hasLayoutPanel={ false } />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="general"
-							initialOpen={ true }
-						>
-							<AdvancedRangeControl
-								label={ __( 'Height', i18n ) }
-								min={ 30 }
-								sliderMax={ 400 }
-								placeholder=""
-								attribute="separatorHeight"
-								responsive="all"
-							/>
-							<AdvancedToggleControl
-								label={ __( 'Flip Horizontally', i18n ) }
-								attribute="separatorFlipHorizontally"
-							/>
-							<AdvancedToggleControl
-								label={ __( 'Flip Vertically', i18n ) }
-								attribute="separatorFlipVertically"
-							/>
-						</PanelAdvancedSettings>
-						<PanelAdvancedSettings
-							title={ __( 'Separator', i18n ) }
-							id="separator"
-						>
-							<Separator.InspectorControls.SeparatorControls hasFlipVertically={ true } />
-						</PanelAdvancedSettings>
-						{ PremiumSeparatorControls && <PremiumSeparatorControls { ...props } /> }
-					</InspectorStyleControls>
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'General', i18n ) }
+						id="general"
+						initialOpen={ true }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Height', i18n ) }
+							min={ 30 }
+							sliderMax={ 400 }
+							placeholder=""
+							attribute="separatorHeight"
+							responsive="all"
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Flip Horizontally', i18n ) }
+							attribute="separatorFlipHorizontally"
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Flip Vertically', i18n ) }
+							attribute="separatorFlipVertically"
+						/>
+					</PanelAdvancedSettings>
+					<PanelAdvancedSettings
+						title={ __( 'Separator', i18n ) }
+						id="separator"
+					>
+						<Separator.InspectorControls.SeparatorControls hasFlipVertically={ true } />
+					</PanelAdvancedSettings>
+					{ PremiumSeparatorControls && <PremiumSeparatorControls { ...props } /> }
+				</InspectorStyleControls>
 
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-separator" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-separator" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<SeparatorStyles
 				version={ VERSION }

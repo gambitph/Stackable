@@ -59,7 +59,6 @@ const Edit = props => {
 		onReplace,
 		onRemove,
 		mergeBlocks,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -81,29 +80,27 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<Typography.InspectorControls
-						{ ...props }
-						hasTextTag={ false }
-						isMultiline={ false }
-						initialOpen={ true }
-						hasTextShadow={ true }
-					/>
+				<Typography.InspectorControls
+					{ ...props }
+					hasTextTag={ false }
+					isMultiline={ false }
+					initialOpen={ true }
+					hasTextShadow={ true }
+				/>
 
-					<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<SubtitleStyles
 				version={ VERSION }

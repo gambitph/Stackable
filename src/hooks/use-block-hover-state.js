@@ -115,6 +115,7 @@ register( createReduxStore( 'stackable/hover-state', {
 
 export const useBlockHoverState = () => {
 	const { clientId } = useBlockEditContext()
+	const clientIds = useSelect( select => select( 'core/block-editor' ).getMultiSelectedBlockClientIds() )
 
 	const {
 		hoverState,
@@ -142,7 +143,7 @@ export const useBlockHoverState = () => {
 	const collapsedClientId = getSelectedCollapsedBlock()
 
 	// return useMemo( () => {
-		const isBlockSelected = clientId === hoverStateClientId
+		const isBlockSelected = clientId === hoverStateClientId || clientIds.includes( clientId )
 		const isParentHoverBlock = clientId === parentHoverClientId
 		const isCollapsedBlock = clientId === collapsedClientId
 
@@ -198,6 +199,7 @@ export const useBlockHoverState = () => {
 // hook above. But we separate the logic for better performance.
 export const useBlockHoverClass = () => {
 	const { clientId } = useBlockEditContext()
+	const clientIds = useSelect( select => select( 'core/block-editor' ).getMultiSelectedBlockClientIds() )
 	const {
 		hoverState,
 		parentHoverChildrenClientIds,
@@ -220,7 +222,7 @@ export const useBlockHoverClass = () => {
 
 	// return useMemo( () => {
 
-		const isBlockSelected = clientId === hoverStateClientId
+		const isBlockSelected = clientId === hoverStateClientId || clientIds.includes( clientId )
 		const isParentHoverBlock = clientId === parentHoverClientId
 
 		// The hover state only applies to the currently selected block.

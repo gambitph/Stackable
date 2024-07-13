@@ -99,7 +99,6 @@ const Edit = props => {
 		className,
 		attributes,
 		clientId,
-		isSelected,
 		setAttributes,
 	} = props
 
@@ -151,67 +150,65 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<BlockDiv.InspectorControls />
+				<BlockDiv.InspectorControls />
 
-					<BlockControls>
-						<AlignmentToolbar
-							value={ attributes.contentAlign }
-							onChange={ contentAlign => setAttributes( { contentAlign } ) }
-							alignmentControls={ TOOLBAR_ALIGN_OPTIONS }
-						/>
-					</BlockControls>
-					<InspectorLayoutControls>
-						<AlignButtonsControl
-							label={ sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ) }
-							attribute="contentAlign"
-							responsive="all"
-							controls={ contentAlignControls }
-						/>
-						<AdvancedToolbarControl
-							label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
-							controls={ deviceType === 'Desktop' ? ALIGNMENT_CONTROLS_DESKTOP : ALIGNMENT_CONTROLS_TABLET_MOBILE }
-							attribute="buttonAlign"
-							responsive="all"
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Full Width Buttons', i18n ) }
-							attribute="buttonFullWidth"
-							defaultValue={ false }
-						/>
-						<FlexGapControls />
-						<AdvancedSelectControl
-							label={ __( 'Flex Wrap', i18n ) }
-							attribute="flexWrap"
-							options={ [
-								{
-									label: __( 'No Wrap', i18n ),
-									value: '',
-								},
-								{
-									label: __( 'Wrap', i18n ),
-									value: 'wrap',
-								},
-								{
-									label: __( 'Wrap Reverse', i18n ),
-									value: 'wrap-reverse',
-								},
-							] }
-							responsive="all"
-						/>
-					</InspectorLayoutControls>
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-button-group" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<BlockControls>
+					<AlignmentToolbar
+						value={ attributes.contentAlign }
+						onChange={ contentAlign => setAttributes( { contentAlign } ) }
+						alignmentControls={ TOOLBAR_ALIGN_OPTIONS }
+					/>
+				</BlockControls>
+				<InspectorLayoutControls>
+					<AlignButtonsControl
+						label={ sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ) }
+						attribute="contentAlign"
+						responsive="all"
+						controls={ contentAlignControls }
+					/>
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
+						controls={ deviceType === 'Desktop' ? ALIGNMENT_CONTROLS_DESKTOP : ALIGNMENT_CONTROLS_TABLET_MOBILE }
+						attribute="buttonAlign"
+						responsive="all"
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Full Width Buttons', i18n ) }
+						attribute="buttonFullWidth"
+						defaultValue={ false }
+					/>
+					<FlexGapControls />
+					<AdvancedSelectControl
+						label={ __( 'Flex Wrap', i18n ) }
+						attribute="flexWrap"
+						options={ [
+							{
+								label: __( 'No Wrap', i18n ),
+								value: '',
+							},
+							{
+								label: __( 'Wrap', i18n ),
+								value: 'wrap',
+							},
+							{
+								label: __( 'Wrap Reverse', i18n ),
+								value: 'wrap-reverse',
+							},
+						] }
+						responsive="all"
+					/>
+				</InspectorLayoutControls>
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-button-group" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }

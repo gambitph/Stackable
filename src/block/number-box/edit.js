@@ -49,7 +49,6 @@ const Edit = props => {
 		className,
 		attributes,
 		setAttributes,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -71,58 +70,56 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'Shape', i18n ) }
-							id="shape"
-							initialOpen={ true }
-							hasToggle={ true }
-							checked={ attributes.hasShape }
-							onChange={ hasShape => setAttributes( { hasShape } ) }
-						>
-							<AdvancedRangeControl
-								label={ __( 'Size', i18n ) }
-								attribute="shapeSize"
-								responsive="all"
-								min="0"
-								sliderMax="200"
-								placeholder="96"
-							/>
-							<BackgroundControls
-								attrNameTemplate="shape%s"
-								hasGradient={ false }
-								hasBackgroundImage={ false }
-								hasBackgroundGradientBlendMode={ false }
-							/>
-							<BorderControls
-								attrNameTemplate="shape%s"
-								borderSliderMax="100"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
-					<Typography.InspectorControls
-						{ ...props }
-						initialOpen={ false }
-						hasTextTag={ false }
-						sizePlaceholder="56"
-					/>
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'Shape', i18n ) }
+						id="shape"
+						initialOpen={ true }
+						hasToggle={ true }
+						checked={ attributes.hasShape }
+						onChange={ hasShape => setAttributes( { hasShape } ) }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Size', i18n ) }
+							attribute="shapeSize"
+							responsive="all"
+							min="0"
+							sliderMax="200"
+							placeholder="96"
+						/>
+						<BackgroundControls
+							attrNameTemplate="shape%s"
+							hasGradient={ false }
+							hasBackgroundImage={ false }
+							hasBackgroundGradientBlendMode={ false }
+						/>
+						<BorderControls
+							attrNameTemplate="shape%s"
+							borderSliderMax="100"
+						/>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
+				<Typography.InspectorControls
+					{ ...props }
+					initialOpen={ false }
+					hasTextTag={ false }
+					sizePlaceholder="56"
+				/>
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-number-box" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+				<Alignment.InspectorControls />
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-number-box" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
 
-				</>
-			) }
+			</>
 
 			<HeadingStyles
 				version={ VERSION }
