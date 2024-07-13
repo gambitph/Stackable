@@ -23,6 +23,7 @@ import {
 	PanelAdvancedSettings,
 	ResizerTooltip,
 	StyleControl,
+	getDynamicContent,
 } from '~stackable/components'
 import { useDeviceType } from '~stackable/hooks'
 import {
@@ -104,6 +105,7 @@ const Edit = props => {
 
 	const { stackable_google_maps_api_key: apiKey } = settings
 	const userCanManageApiKey = useMemo( () => currentUserHasCapability( 'manage_options' ), [] )
+	const mapAddress = address.startsWith( '!#stk_dynamic/' ) ? getDynamicContent( address ) : address
 
 	// This just forces the tooltip to update.
 	const [ , setResizingHeight ] = useState( '' )
@@ -210,6 +212,7 @@ const Edit = props => {
 	useEffect( () => {
 		if ( mapRef.current ) {
 			mapRef.current.setOptions( {
+				address,
 				center: location || DEFAULT_LOCATION,
 				zoom: zoom || DEFAULT_ZOOM,
 				fullscreenControl: showFullScreenButton,
@@ -243,6 +246,9 @@ const Edit = props => {
 	// Try geocoding the address.
 	const [ useGeocoding, setUseGeocoding ] = useState( true )
 	const geocodeAddress = useCallback( debounce( address => {
+		if ( address.startsWith( '!#stk_dynamic/' ) ) {
+			address = getDynamicContent( address )
+		}
 		if ( useGeocoding ) {
 			geocoderRef.current.geocode( {
 				address,
@@ -258,6 +264,12 @@ const Edit = props => {
 			} )
 		}
 	}, 400 ), [ geocoderRef.current, setAttributes, useGeocoding ] )
+
+	useEffect( () => {
+		setTimeout( () => {
+			geocodeAddress( mapAddress )
+		}, 8000 )
+	}, [ mapAddress ] )
 
 	return (
 		<>
@@ -291,6 +303,9 @@ const Edit = props => {
 										label={ __( 'Location', i18n ) }
 										attribute="address"
 										placeholder={ __( 'Enter an address or location', i18n ) }
+										help={ __( 'Type in a pair of latitude longitude coordinates.', i18n ) }
+										isDynamic={ true }
+										isFormatType={ false }
 									/>
 								</>
 							) : (
@@ -537,7 +552,7 @@ const Edit = props => {
 					) : (
 						<iframe
 							title={ __( 'Embedded content from Google Map Platform.', i18n ) }
-							src={ `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ zoom || DEFAULT_ZOOM }&ie=UTF8&output=embed` }
+							src={ `https://maps.google.com/maps?q=${ mapAddress || DEFAULT_ADDRESS }&t=&z=${ zoom || DEFAULT_ZOOM }&ie=UTF8&output=embed` }
 							frameBorder="0"
 						/>
 					) }

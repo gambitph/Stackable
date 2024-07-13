@@ -41,16 +41,50 @@ class StackableMap {
 			const markerOptions = JSON.parse( mapCanvas.dataset.markerOptions || 'false' )
 			const markerIconOptions = JSON.parse( mapCanvas.dataset.iconOptions || '{}' )
 
-			// eslint-disable-next-line no-undef
-			const map = new google.maps.Map( mapCanvas, mapOptions )
-			if ( markerOptions ) {
-				markerOptions.map = map
-				markerOptions.clickable = false
+			// Hello Jami, I implemented a way where it doesnt have to be coordinates only haha.
+			// But if you do not like it just: remove the if and other variables, move the block of code outside of the setTimeout,
+			// and uncomment the if which is the implementation you originally mentioned
 
-				// eslint-disable-next-line no-undef
-				const marker = new google.maps.Marker( markerOptions )
-				marker.setIcon( markerIconOptions )
+			// eslint-disable-next-line no-undef
+			const geocoder = new google.maps.Geocoder()
+
+			let duration = 0
+			// If coordinates is just a string, turn it into an object
+			if ( typeof mapOptions.center === 'string' ) {
+				duration = 500
+				geocoder.geocode( {
+					address: mapOptions.center,
+				}, ( results, status ) => {
+					if ( status === 'OK' ) {
+						mapOptions.center = {
+							lat: parseFloat( results[ 0 ].geometry.location.lat() ),
+							lng: parseFloat( results[ 0 ].geometry.location.lng() ),
+						}
+					}
+				} )
 			}
+
+			// if ( mapOptions.center.match( /^\s*[-\d.]+(.*?)[, ][-\d.]+/ ) ) { // Check if there's a number comma/space number.
+			// 	const [ , lat, , lng ] = mapOptions.center.match( /^\s*([-\d.]+)(.*?)([-\d.]+)/ )
+			// 	mapOptions.center = {
+			// 		lat: parseFloat( lat ),
+			// 		lng: parseFloat( lng ),
+			// 	}
+			// }
+
+			// Inside a setTimeout since geolocation speed may vary
+			setTimeout( () => {
+				// eslint-disable-next-line no-undef
+				const map = new google.maps.Map( mapCanvas, mapOptions )
+				if ( markerOptions ) {
+					markerOptions.map = map
+					markerOptions.clickable = false
+
+					// eslint-disable-next-line no-undef
+					const marker = new google.maps.Marker( markerOptions )
+					marker.setIcon( markerIconOptions )
+				}
+			}, duration )
 		} )
 	}
 }

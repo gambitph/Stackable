@@ -37,6 +37,23 @@
 	}
 }
 
+.stk-control__location-control {
+
+	.components-base-control {
+		width: 100%;
+	}
+
+	.stk-control__reset-button {
+		top: 28px;
+	}
+
+	.components-base-control__help {
+		text-align: justify;
+		hyphens: auto;
+	}
+
+}
+
 .stk-block-map__api-key-notice {
 	margin: 0 0 16px;
 }

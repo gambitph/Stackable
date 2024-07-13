@@ -51,7 +51,7 @@ export const Save = props => {
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-
+	let tempLocation = location
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-block-map',
@@ -61,9 +61,13 @@ export const Save = props => {
 		'stk--uses-api-key': usesApiKey,
 	} )
 
+	if ( address.startsWith( '!#stk_dynamic/' ) ) {
+		tempLocation = address
+	}
+
 	const styles = getMapStyles( attributes )
 	const mapOptions = {
-		center: location || DEFAULT_LOCATION,
+		center: tempLocation || DEFAULT_LOCATION,
 		zoom: zoom || DEFAULT_ZOOM,
 		styles: styles.length ? styles : undefined,
 		gestureHandling: isDraggable ? undefined : 'none',
