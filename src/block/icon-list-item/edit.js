@@ -6,6 +6,7 @@ import { getUseSvgDef } from '../icon-list/util'
 import {
 	convertToListItems,
 	useOnSplit,
+	useOnPaste,
 	useEnter,
 } from './util'
 
@@ -95,6 +96,7 @@ const Edit = props => {
 
 	const useEnterRef = useEnter( text, clientId )
 	const onSplit = useOnSplit( clientId, attributes )
+	const onPaste = useOnPaste( clientId, parentBlock?.clientId, attributes, setAttributes )
 
 	const onMerge = forward => {
 		mergeBlocks( forward )
@@ -168,6 +170,7 @@ const Edit = props => {
 						className={ textClassNames }
 						onSplit={ onSplit }
 						onMerge={ onMerge }
+						onPaste={ onPaste }
 						onReplace={ onReplace
 							? ( blocks, ...args ) => {
 								onReplace(
