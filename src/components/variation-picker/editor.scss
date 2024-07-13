@@ -1,15 +1,30 @@
 .stk-variation-picker {
+	.block-editor-block-variation-picker__variations {
+		gap: 16px;
+	}
+	.block-editor-block-variation-picker__variations > li {
+		margin: 0;
+	}
+	.stk-stackable-icon-gradient {
+		fill: revert !important;
+	}
+
 	.is-premium {
 		pointer-events: none;
 		~ span {
 			color: #888;
 		}
+		svg {
+			fill: #d8d8d8 !important;
+		}
 	}
-	.block-editor-block-variation-picker__variation svg {
-		width: 48px;
-		height: 48px;
-		* {
-			stroke: currentColor;
+	.block-editor-block-variation-picker__variation {
+		background: #fff !important;
+		height: 42px;
+
+		svg {
+			width: 48px;
+			height: 48px;
 		}
 	}
 }
