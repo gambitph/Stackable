@@ -12,9 +12,9 @@ import { useBlockAttributesContext } from '~stackable/hooks'
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
+import { Fragment, memo } from '@wordpress/element'
 
-const Styles = props => {
+const Styles = memo( props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -184,7 +184,7 @@ const Styles = props => {
 			} ) }
 		</>
 	)
-}
+} )
 
 export const Style = props => {
 	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )

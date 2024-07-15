@@ -11,9 +11,10 @@ import { compact } from 'lodash'
 /**
  * WordPress dependencies
  */
+import { memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
-export const SeparatorStyles = props => {
+export const SeparatorStyles = memo( props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -123,7 +124,7 @@ export const SeparatorStyles = props => {
 			/>
 		</>
 	)
-}
+} )
 
 const MarginBottomStyles = props => {
 	const propsToPass = {

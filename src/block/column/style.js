@@ -41,7 +41,7 @@ const callbacks = {
 	},
 }
 
-const ColumnStyles = props => {
+const ColumnStyles = memo( props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -143,7 +143,7 @@ const ColumnStyles = props => {
 			/>
 		</>
 	)
-}
+} )
 
 const BlockStyles = memo( props => {
 	return (

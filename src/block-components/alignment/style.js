@@ -3,7 +3,9 @@
  */
 import { BlockCss } from '~stackable/components'
 
-const AlignmentStyles = props => {
+import { memo } from '@wordpress/element'
+
+const AlignmentStyles = memo( props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -303,7 +305,7 @@ const AlignmentStyles = props => {
 			/>
 		</>
 	)
-}
+} )
 
 export const Style = props => {
 	return <AlignmentStyles { ...props } />

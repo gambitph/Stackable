@@ -21,7 +21,7 @@ const typographyOptions = {
 	hoverSelector: '.stk-block-timeline__date:hover',
 }
 
-const Styles = props => {
+const Styles = memo( props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -180,7 +180,7 @@ const Styles = props => {
 			/>
 		</>
 	)
-}
+} )
 
 const BlockStyles = memo( props => {
 	return (
