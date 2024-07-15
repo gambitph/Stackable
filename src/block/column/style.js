@@ -41,7 +41,7 @@ const callbacks = {
 	},
 }
 
-const ColumnStyles = memo( props => {
+const _ColumnStyles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -143,7 +143,10 @@ const ColumnStyles = memo( props => {
 			/>
 		</>
 	)
-} )
+}
+
+const ColumnStyles = memo( _ColumnStyles )
+ColumnStyles.Content = _ColumnStyles
 
 const BlockStyles = memo( props => {
 	return (
@@ -174,7 +177,7 @@ BlockStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
-			<ColumnStyles { ...props } />
+			<ColumnStyles.Content { ...props } />
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<Column.Style.Content { ...props } />

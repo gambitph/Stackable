@@ -24,7 +24,7 @@ import { memo } from '@wordpress/element'
 // 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 // }
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -58,6 +58,9 @@ const Styles = props => {
 		</>
 	)
 }
+
+const Styles = memo( _Styles )
+Styles.Content = _Styles
 
 const BlockStyles = memo( props => {
 	// const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
@@ -103,7 +106,7 @@ BlockStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
 			{ /* <Columns.Style.Content { ...props } /> */ }
-			<Styles { ...props } />
+			<Styles.Content { ...props } />
 			{ /* { ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> } */ }
 		</BlockCssCompiler>
 	)

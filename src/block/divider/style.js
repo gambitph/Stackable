@@ -22,7 +22,7 @@ import { blockStyles } from './block-styles'
  */
 import { memo } from '@wordpress/element'
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -140,6 +140,9 @@ const Styles = props => {
 	)
 }
 
+const Styles = memo( _Styles )
+Styles.Content = _Styles
+
 export const DividerStyles = memo( props => {
 	return (
 		<>
@@ -170,7 +173,7 @@ DividerStyles.Content = props => {
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
-			<Styles { ...props } />
+			<Styles.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

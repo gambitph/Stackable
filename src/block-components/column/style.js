@@ -5,7 +5,7 @@ import { __getValue } from '~stackable/util'
 import { BlockCss } from '~stackable/components'
 import { memo } from '@wordpress/element'
 
-const ColumnStyles = memo( props => {
+const _ColumnStyles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -101,12 +101,15 @@ const ColumnStyles = memo( props => {
 			/>
 		</>
 	)
-} )
+}
+
+const ColumnStyles = memo( _ColumnStyles )
+ColumnStyles.Content = _ColumnStyles
 
 export const Style = props => {
 	return <ColumnStyles { ...props } />
 }
 
 Style.Content = props => {
-	return <ColumnStyles { ...props } />
+	return <ColumnStyles.Content { ...props } />
 }

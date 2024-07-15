@@ -14,7 +14,7 @@ import { compact } from 'lodash'
 import { memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
-export const SeparatorStyles = memo( props => {
+export const _SeparatorStyles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -124,9 +124,12 @@ export const SeparatorStyles = memo( props => {
 			/>
 		</>
 	)
-} )
+}
 
-const MarginBottomStyles = props => {
+export const SeparatorStyles = memo( _SeparatorStyles )
+SeparatorStyles.Content = _SeparatorStyles
+
+const MarginBottomStyles = memo( props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -152,7 +155,7 @@ const MarginBottomStyles = props => {
 			/>
 		</>
 	)
-}
+} )
 
 export const Style = props => {
 	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles', null )
@@ -173,8 +176,8 @@ Style.Content = props => {
 
 	return (
 		<>
-			<SeparatorStyles { ...props } location="top" />
-			<SeparatorStyles { ...props } isInitiallyFlippedVertically={ false } location="bottom" />
+			<SeparatorStyles.Content { ...props } location="top" />
+			<SeparatorStyles.Content { ...props } isInitiallyFlippedVertically={ false } location="bottom" />
 			{ SeparatorLayerStyles && <SeparatorLayerStyles { ...props } location="top" /> }
 			{ SeparatorLayerStyles && <SeparatorLayerStyles { ...props } location="bottom" /> }
 		</>

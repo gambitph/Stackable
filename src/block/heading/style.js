@@ -17,7 +17,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  */
 import { memo } from '@wordpress/element'
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -135,6 +135,9 @@ const Styles = props => {
 	)
 }
 
+const Styles = memo( _Styles )
+Styles.Content = _Styles
+
 export const HeadingStyles = memo( props => {
 	return (
 		<>
@@ -167,7 +170,7 @@ HeadingStyles.Content = props => {
 			<Typography.Style.Content { ...props } selector=".stk-block-heading__text" />
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
-			<Styles { ...props } />
+			<Styles.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

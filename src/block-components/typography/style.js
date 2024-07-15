@@ -5,7 +5,7 @@ import { getFontFamily, clampInheritedStyle } from '~stackable/util'
 import { BlockCss } from '~stackable/components'
 import { memo } from '@wordpress/element'
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -192,8 +192,13 @@ const Styles = props => {
 	)
 }
 
-export const Style = memo( Styles )
+const Styles = memo( _Styles )
+Styles.Content = _Styles
+
+export const Style = props => {
+	return <Styles { ...props } />
+}
 
 Style.Content = props => {
-	return <Styles { ...props } />
+	return <Styles.Content { ...props } />
 }
