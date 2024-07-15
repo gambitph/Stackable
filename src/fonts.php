@@ -135,7 +135,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 				return;
 			}
 
-			if ( ! Stackable_Theme_Fonts::is_theme_font( $font_name ) ) {
+			if ( Stackable_Theme_Fonts::is_theme_font( $font_name ) ) {
 				return;
 			}
 
