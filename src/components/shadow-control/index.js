@@ -135,13 +135,7 @@ const ShadowFilterControl = props => {
 
 	useEffect( () => {
 		if ( value ) {
-			let _value = value
-			let hexValue = ''
-			_value = _value.replace( /#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})([0-9a-fA-F]{2})?$/g, value => {
-				hexValue = value
-				return ''
-			} ).trim()
-
+			let _value = value.trim()
 			if ( _value.startsWith( 'inset' ) ) {
 				filters.inset = true
 				_value = _value.replace( /^inset\s*/, '' )
@@ -149,15 +143,36 @@ const ShadowFilterControl = props => {
 				filters.inset = false
 			}
 
-			const [ horizontalOffset, verticalOffset, blur, spread ] = _value.split( ' ' )
-			filters.horizontalOffset = parseInt( horizontalOffset )
-			filters.verticalOffset = parseInt( verticalOffset )
-			filters.blur = parseInt( blur )
-			filters.shadowSpread = isNaN( parseInt( spread ) ) ? '' : parseInt( spread )
-			filters.shadowColor = hexValue
+			// Split string into 5 parts, the last part contains the rest of the string.
+			function splitStringIntoParts( str, splitTo = 5 ) {
+				const parts = str.split( ' ' )
+				const result = []
+				for ( let i = 0; i < splitTo - 1; i++ ) {
+					if ( parts.length ) {
+						result.push( parts.shift() )
+					} else {
+						result.push( '' )
+					}
+				}
+				result.push( parts.join( ' ' ) )
+				return result
+			}
+
+			const [ horizontalOffset, verticalOffset, blur, spread, color ] = splitStringIntoParts( _value, props.isFilter ? 4 : 5 )
+			filters.horizontalOffset = isNaN( parseInt( horizontalOffset ) ) ? 0 : parseInt( horizontalOffset )
+			filters.verticalOffset = isNaN( parseInt( verticalOffset ) ) ? 0 : parseInt( verticalOffset )
+			filters.blur = isNaN( parseInt( blur ) ) ? 0 : parseInt( blur )
+			filters.shadowSpread = isNaN( parseInt( spread ) ) ? 0 : parseInt( spread )
+			filters.shadowColor = color || ''
+
+			if ( props.isFilter ) {
+				filters.shadowSpread = ''
+				filters.shadowColor = spread
+			}
+
 			setFilters( { ...filters } )
 		}
-	}, [ value ] )
+	}, [ value, props.isFilter ] )
 
 	return (
 		<Popover
@@ -211,6 +226,7 @@ const ShadowFilterControl = props => {
 
 ShadowFilterControl.defaultProps = {
 	hasInset: true,
+	isFilter: false,
 }
 
 const ShadowControl = memo( props => {
@@ -293,6 +309,7 @@ const ShadowControl = memo( props => {
 					hover={ props.hover }
 					parentProps={ props }
 					hasInset={ props.hasInset }
+					isFilter={ props.isFilter }
 					onEscape={ () => setIsPopoverOpen( false ) }
 				/>
 			) }

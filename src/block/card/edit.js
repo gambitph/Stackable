@@ -68,7 +68,6 @@ const Edit = props => {
 	const {
 		clientId,
 		className, //isHovered,
-		isSelected,
 	} = props
 
 	const blockOrientation = getBlockOrientation( props.attributes )
@@ -109,39 +108,37 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<Image.InspectorControls
-						{ ...props }
-						initialOpen={ true }
-						hasWidth={ blockStyle === 'horizontal' }
-						hasHeight={ hasHeight }
-						widthUnits={ widthUnit }
-						heightUnits={ heightUnit }
-						hasBorderRadius={ false }
-						hasShape={ false }
-						hasShadow={ false }
-						hasAspectRatio={ ! [ 'horizontal', 'full', 'faded' ].includes( blockStyle ) }
-					/>
-					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
-					<BlockDiv.InspectorControls />
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
-					<BlockLink.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+				<Image.InspectorControls
+					{ ...props }
+					initialOpen={ true }
+					hasWidth={ blockStyle === 'horizontal' }
+					hasHeight={ hasHeight }
+					widthUnits={ widthUnit }
+					heightUnits={ heightUnit }
+					hasBorderRadius={ false }
+					hasShape={ false }
+					hasShadow={ false }
+					hasAspectRatio={ ! [ 'horizontal', 'full', 'faded' ].includes( blockStyle ) }
+				/>
+				<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+				<BlockDiv.InspectorControls />
+				<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
+				<BlockLink.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
 
-					<InspectorStyleControls>
-						<InspectorBottomTip />
-					</InspectorStyleControls>
-				</>
-			) }
+				<InspectorStyleControls>
+					<InspectorBottomTip />
+				</InspectorStyleControls>
+			</>
 
 			<CardStyles
 				version={ VERSION }

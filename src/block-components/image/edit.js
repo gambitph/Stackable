@@ -25,7 +25,9 @@ import {
 import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
+	useDeviceType,
 } from '~stackable/hooks'
+import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -58,6 +60,8 @@ const Controls = props => {
 			imageHeightUnit: attributes.imageHeightUnit,
 			imageWidth: attributes.imageWidth,
 			imageHeight: attributes.imageHeight,
+			imageHeightTablet: attributes[ getAttributeName( 'imageHeight', 'tablet' ) ],
+			imageHeightMobile: attributes[ getAttributeName( 'imageHeight', 'mobile' ) ],
 			imageHasLightbox: attributes.imageHasLightbox,
 			imageSize: attributes.imageSize,
 			imageAlt: attributes.imageAlt,
@@ -72,6 +76,7 @@ const Controls = props => {
 		}
 	} )
 	const setAttributes = useBlockSetAttributesContext()
+	const deviceType = useDeviceType()
 
 	// Get the image size urls.
 	const { imageData } = useSelect( select => {
@@ -173,9 +178,12 @@ const Controls = props => {
 					// For blocks with fixed width like card block,
 					// set the height to auto to allow the aspect ratio to take effect.
 					onChange={ value => {
-						const values = { imageAspectRatio: value }
-						if ( value && props.hasHeight && !! attributes.imageHeight ) {
-							values.imageHeight = ''
+						const attrImageAspectRatio = getAttributeName( 'imageAspectRatio', deviceType )
+						const attrImageHeight = getAttributeName( 'imageHeight', deviceType )
+						const values = { [ attrImageAspectRatio ]: value }
+
+						if ( value && props.hasHeight && !! attributes[ attrImageHeight ] ) {
+							values[ attrImageHeight ] = ''
 						}
 						setAttributes( values )
 					} }
@@ -217,11 +225,6 @@ const Controls = props => {
 						//TODO: Add a working video
 						title: __( 'Image height', i18n ),
 						description: __( 'Adjusts the image height', i18n ),
-					} }
-					// Set the width to auto if the aspect ratio is set and the width is currently empty
-					// to allow the aspect ratio to take effect with height changes.
-					onChange={ value => {
-						setAttributes( { imageHeight: value } )
 					} }
 				/>
 			}

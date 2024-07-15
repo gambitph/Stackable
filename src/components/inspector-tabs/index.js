@@ -14,60 +14,48 @@ import { useGlobalState } from '~stackable/util/global-state'
 import { __ } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
 
-const { Slot: PreInspectorTabSlot, Fill: PreInspectorTabFill } = createSlotFill( 'StackablePreInspectorTab' )
-const { Slot: BlockInspectorTabSlot, Fill: BlockInspectorTabFill } = createSlotFill( 'StackableBlockInspectorTab' )
-const { Slot: StyleInspectorTabSlot, Fill: StyleInspectorTabFill } = createSlotFill( 'StackableStyleInspectorTab' )
-const { Slot: AdvancedInspectorTabSlot, Fill: AdvancedInspectorTabFill } = createSlotFill( 'StackableAdvancedInspectorTab' )
 const { Slot: LayoutPanelSlot, Fill: LayoutPanelFill } = createSlotFill( 'StackableLayoutPanel' )
 
 const InspectorLayoutControls = ( { children } ) => {
-	const { isSelected, name } = useBlockEditContext()
-	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
-
-	if ( ! isSelected || activeTab !== 'layout' ) {
-		return null
-	}
-
-	return <LayoutPanelFill>{ children }</LayoutPanelFill>
+	return <InspectorControls>
+		<LayoutPanelFill>{ children }</LayoutPanelFill>
+	</InspectorControls>
 }
 
 const InspectorBlockControls = ( { children } ) => {
-	const { isSelected, name } = useBlockEditContext()
+	const { name } = useBlockEditContext()
 	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
 
-	if ( ! isSelected || activeTab !== 'layout' ) {
+	if ( activeTab !== 'layout' ) {
 		return null
 	}
 
-	return <BlockInspectorTabFill>{ children }</BlockInspectorTabFill>
+	return <InspectorControls>{ children }</InspectorControls>
 }
 
 const InspectorStyleControls = ( { children } ) => {
-	const { isSelected, name } = useBlockEditContext()
+	const { name } = useBlockEditContext()
 	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
 
-	if ( ! isSelected || activeTab !== 'style' ) {
+	if ( activeTab !== 'style' ) {
 		return null
 	}
 
-	return (
-		<StyleInspectorTabFill>{ children }</StyleInspectorTabFill>
-	)
+	return <InspectorControls>{ children }</InspectorControls>
 }
 
 const InspectorAdvancedControls = ( { children } ) => {
-	const { isSelected, name } = useBlockEditContext()
+	const { name } = useBlockEditContext()
 	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
 
-	if ( ! isSelected || activeTab !== 'advanced' ) {
+	if ( activeTab !== 'advanced' ) {
 		return null
 	}
 
-	return <AdvancedInspectorTabFill>{ children }</AdvancedInspectorTabFill>
+	return <InspectorControls>{ children }</InspectorControls>
 }
 
 export {
-	PreInspectorTabFill,
 	InspectorLayoutControls,
 	InspectorBlockControls,
 	InspectorStyleControls,
@@ -81,6 +69,14 @@ const InspectorTabs = props => {
 
 	return (
 		<>
+			<InspectorControls>
+				<PanelTabs
+					tabs={ props.tabs }
+					initialTab={ activeTab }
+					onClick={ setActiveTab }
+				/>
+			</InspectorControls>
+
 			{ /* Make sure the layout panel is the very first one */ }
 			<InspectorBlockControls>
 				{ props.hasLayoutPanel && (
@@ -94,20 +90,6 @@ const InspectorTabs = props => {
 				) }
 			</InspectorBlockControls>
 
-			<InspectorControls>
-				<PreInspectorTabSlot />
-
-				<PanelTabs
-					tabs={ props.tabs }
-					initialTab={ activeTab }
-					onClick={ setActiveTab }
-				/>
-
-				<BlockInspectorTabSlot />
-				<StyleInspectorTabSlot />
-				<AdvancedInspectorTabSlot />
-
-			</InspectorControls>
 		</>
 	)
 }

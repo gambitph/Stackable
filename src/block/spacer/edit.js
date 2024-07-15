@@ -91,36 +91,34 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
+			<>
+				<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="general"
-							initialOpen={ true }
-						>
-							<AdvancedRangeControl
-								label={ __( 'Height', i18n ) }
-								responsive="all"
-								attribute="height"
-								sliderMin="0"
-								sliderMax="500"
-								placeholder={ defaultMinHeight }
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
-					<BlockDiv.InspectorControls hasSizeSpacing={ false } />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-spacer" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'General', i18n ) }
+						id="general"
+						initialOpen={ true }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Height', i18n ) }
+							responsive="all"
+							attribute="height"
+							sliderMin="0"
+							sliderMax="500"
+							placeholder={ defaultMinHeight }
+						/>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
+				<BlockDiv.InspectorControls hasSizeSpacing={ false } />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-spacer" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<SpacerStyles
 				version={ VERSION }

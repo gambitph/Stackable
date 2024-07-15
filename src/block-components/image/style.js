@@ -73,7 +73,7 @@ const Styles = props => {
 				responsive="all"
 				enabledCallback={ () => enableWidth }
 				valueCallback={ ( value, getAttribute ) => {
-					// If there's an aspect ratio and the other dimenion is not given, use auto
+					// If there's an aspect ratio and the other dimension is not given, use auto
 					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
 						return 'auto'
 					}
@@ -96,7 +96,7 @@ const Styles = props => {
 				responsive="all"
 				enabledCallback={ () => enableWidth }
 				valueCallback={ ( value, getAttribute ) => {
-					// If there's an aspect ratio and the other dimenion is not given, use auto
+					// If there's an aspect ratio and the other dimension is not given, use auto
 					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
 						return 'auto'
 					}
@@ -119,7 +119,7 @@ const Styles = props => {
 				responsive="all"
 				enabledCallback={ () => enableHeight }
 				valueCallback={ ( value, getAttribute ) => {
-					// If there's an aspect ratio and the other dimenion is not given, use auto
+					// If there's an aspect ratio and the other dimension is not given, use auto
 					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
 						return 'auto'
 					}
@@ -148,7 +148,7 @@ const Styles = props => {
 				responsive="all"
 				enabledCallback={ () => enableHeight }
 				valueCallback={ ( value, getAttribute ) => {
-					// If there's an aspect ratio and the other dimenion is not given, use auto
+					// If there's an aspect ratio and the other dimension is not given, use auto
 					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
 						return 'auto'
 					}

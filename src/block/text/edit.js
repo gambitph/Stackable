@@ -65,7 +65,6 @@ const Edit = props => {
 		mergeBlocks,
 		attributes,
 		clientId,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -115,56 +114,54 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<Typography.InspectorControls
-						{ ...props }
-						hasTextTag={ false }
-						isMultiline={ true }
-						initialOpen={ true }
-						hasTextShadow={ true }
-					/>
-					<Alignment.InspectorControls
-						labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) }
-						hasContentJustify={ true }
-					/>
-					{ enableColumns && (
-						<InspectorLayoutControls>
-							<AdvancedRangeControl
-								label={ __( 'Columns', i18n ) }
-								allowReset={ true }
-								attribute="columns"
-								min="1"
-								sliderMax="3"
-								step="1"
-								placeholder="1"
-								responsive="all"
-							/>
+				<Typography.InspectorControls
+					{ ...props }
+					hasTextTag={ false }
+					isMultiline={ true }
+					initialOpen={ true }
+					hasTextShadow={ true }
+				/>
+				<Alignment.InspectorControls
+					labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) }
+					hasContentJustify={ true }
+				/>
+				{ enableColumns && (
+					<InspectorLayoutControls>
+						<AdvancedRangeControl
+							label={ __( 'Columns', i18n ) }
+							allowReset={ true }
+							attribute="columns"
+							min="1"
+							sliderMax="3"
+							step="1"
+							placeholder="1"
+							responsive="all"
+						/>
 
-							<AdvancedRangeControl
-								label={ __( 'Column Gap', i18n ) }
-								allowReset={ true }
-								attribute="columnGap"
-								min="0"
-								sliderMax="50"
-								responsive="all"
-							/>
-						</InspectorLayoutControls>
-					) }
+						<AdvancedRangeControl
+							label={ __( 'Column Gap', i18n ) }
+							allowReset={ true }
+							attribute="columnGap"
+							min="0"
+							sliderMax="50"
+							responsive="all"
+						/>
+					</InspectorLayoutControls>
+				) }
 
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
 
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<TextStyles
 				version={ VERSION }

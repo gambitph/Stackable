@@ -57,7 +57,6 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -82,30 +81,28 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs hasLayoutPanel={ false } />
+			<>
+				<InspectorTabs hasLayoutPanel={ false } />
 
-					<BlockDiv.InspectorControls />
-					<BlockLink.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-box" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+				<BlockDiv.InspectorControls />
+				<BlockLink.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-box" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
 
-					<ContainerDiv.InspectorControls
-						sizeSelector=".stk-block-content"
-						hasContentVerticalAlign={ true }
-					/>
+				<ContainerDiv.InspectorControls
+					sizeSelector=".stk-block-content"
+					hasContentVerticalAlign={ true }
+				/>
 
-					<InspectorStyleControls>
-						<InspectorBottomTip />
-					</InspectorStyleControls>
-				</>
-			) }
+				<InspectorStyleControls>
+					<InspectorBottomTip />
+				</InspectorStyleControls>
+			</>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
