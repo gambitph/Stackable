@@ -306,8 +306,8 @@ const Edit = props => {
 			isUpdating.current = true
 		}
 		if ( isUpdating.current ) {
-			updateMaxHeight()
 			setTimeout( () => {
+			  updateMaxHeight()
 			  isUpdating.current = false
 			}, 300 )
 		  }
