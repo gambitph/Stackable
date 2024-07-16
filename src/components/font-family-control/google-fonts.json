@@ -1180,6 +1180,17 @@
     ]
   },
   {
+    "family": "Anton SC",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Antonio",
     "variants": [
       "100",
@@ -1450,6 +1461,22 @@
   },
   {
     "family": "Arsenal",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Arsenal SC",
     "variants": [
       "regular",
       "italic",
@@ -2304,6 +2331,16 @@
     ]
   },
   {
+    "family": "Baskervville SC",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Battambang",
     "variants": [
       "100",
@@ -2383,6 +2420,25 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Beiruti",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -2916,6 +2972,29 @@
     ]
   },
   {
+    "family": "Bodoni Moda SC",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Bokor",
     "variants": [
       "regular"
@@ -2927,6 +3006,23 @@
   },
   {
     "family": "Bona Nova",
+    "variants": [
+      "regular",
+      "italic",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Bona Nova SC",
     "variants": [
       "regular",
       "italic",
@@ -5132,6 +5228,19 @@
     ]
   },
   {
+    "family": "Edu AU VIC WA NT Hand",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Edu NSW ACT Foundation",
     "variants": [
       "regular",
@@ -6275,6 +6384,23 @@
     ]
   },
   {
+    "family": "Fustat",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Fuzzy Bubbles",
     "variants": [
       "regular",
@@ -6305,6 +6431,17 @@
     ],
     "subsets": [
       "greek"
+    ]
+  },
+  {
+    "family": "Ga Maamli",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -8883,6 +9020,22 @@
     ]
   },
   {
+    "family": "Kalnia Glaze",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Kameron",
     "variants": [
       "regular",
@@ -10750,6 +10903,18 @@
     "subsets": [
       "latin",
       "telugu"
+    ]
+  },
+  {
+    "family": "Maname",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "sinhala",
+      "vietnamese"
     ]
   },
   {
@@ -16598,6 +16763,34 @@
     ]
   },
   {
+    "family": "Playwrite AR",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite AT",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite AU NSW",
     "variants": [
       "100",
@@ -16658,6 +16851,30 @@
     ]
   },
   {
+    "family": "Playwrite BE VLG",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite BE WAL",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite BR",
     "variants": [
       "100",
@@ -16682,7 +16899,43 @@
     ]
   },
   {
+    "family": "Playwrite CL",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite CO",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite CU",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite CZ",
     "variants": [
       "100",
       "200",
@@ -16731,6 +16984,30 @@
   },
   {
     "family": "Playwrite DE VA",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite DK Loopet",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite DK Uloopet",
     "variants": [
       "100",
       "200",
@@ -16816,6 +17093,42 @@
       "200italic",
       "300italic",
       "italic"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite HR",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite HR Lijeva",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite HU",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
     ],
     "subsets": [
       "latin"
@@ -16943,6 +17256,18 @@
   },
   {
     "family": "Playwrite NZ",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite PE",
     "variants": [
       "100",
       "200",
@@ -22268,6 +22593,27 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Wittgenstein",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
