@@ -100,21 +100,20 @@ const Edit = props => {
 
 	// Auto-generate anchors in Stackable headings.
 	const [ prevText, setPrevText ] = useState( props.attributes.text )
-	const isUpdating = useRef( false )
+	const updateTimeout = useRef( null )
 
 	useEffect( () => {
-		if ( ! isUpdating.current ) {
-			setTimeout( () => {
-				isUpdating.current = true
-				const cleanAnchorValue = kebabCase( props.attributes.anchor )
-				if ( cleanAnchorValue === kebabCase( prevText ) || ! props.attributes.anchor ) {
-					dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-					setAttributes( { anchor: kebabCase( props.attributes.text ) } )
-				}
-				setPrevText( props.attributes.text )
-				isUpdating.current = false
-			  }, 300 )
-		}
+		clearTimeout( updateTimeout.current )
+		const anchor = props.attributes.anchor
+		const text = props.attributes.text
+		updateTimeout.current = setTimeout( () => {
+			const cleanAnchorValue = kebabCase( anchor )
+			if ( cleanAnchorValue === kebabCase( prevText ) || ! anchor ) {
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				setAttributes( { anchor: kebabCase( text ) } )
+			}
+			setPrevText( text )
+		}, 300 )
 	}, [ props.attributes.anchor, props.attributes.text ] )
 
 	const onSplit = ( value, isOriginal ) => {
