@@ -518,5 +518,5 @@ export const Style = props => {
 }
 
 Style.Content = props => {
-	return <Styles { ...props } />
+	return <Styles.Content { ...props } />
 }

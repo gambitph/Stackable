@@ -172,7 +172,7 @@ export const Style = props => {
 }
 
 Style.Content = props => {
-	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles', null )
+	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles.content', null )
 
 	return (
 		<>

@@ -318,7 +318,7 @@ export const Style = props => {
 }
 
 Style.Content = props => {
-	const IndivIconStyles = applyFilters( 'stackable.block-component.icon.indiv-icon-style', null )
+	const IndivIconStyles = applyFilters( 'stackable.block-component.icon.indiv-icon-style.content', null )
 
 	return <>
 		<Styles.Content { ...props } />
