@@ -23,7 +23,7 @@ const figcaptionTypographyOptions = {
 	attrNameTemplate: 'figcaption%s',
 }
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -42,6 +42,9 @@ const Styles = props => {
 		</>
 	)
 }
+
+const Styles = memo( _Styles )
+Styles.Content = _Styles
 
 const BlockStyles = memo( props => {
 	return (
@@ -76,7 +79,7 @@ BlockStyles.Content = props => {
 			<Transform.Style.Content { ...props } />
 			<Image.Style.Content { ...props } />
 			<Typography.Style.Content { ...figcaptionTypographyOptions } { ...props } />
-			<Styles { ...props } />
+			<Styles.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

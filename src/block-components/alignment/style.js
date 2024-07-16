@@ -3,7 +3,9 @@
  */
 import { BlockCss } from '~stackable/components'
 
-const AlignmentStyles = props => {
+import { memo } from '@wordpress/element'
+
+const _AlignmentStyles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -208,7 +210,7 @@ const AlignmentStyles = props => {
 				styleRule="columnGap"
 				attrName="innerBlockColumnGap"
 				key="innerBlockColumnGapEdit"
-				format={ `%spx` }
+				format="%spx"
 				responsive="all"
 				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal' }
 				dependencies={ [
@@ -223,7 +225,7 @@ const AlignmentStyles = props => {
 				styleRule="columnGap"
 				attrName="innerBlockColumnGap"
 				key="innerBlockColumnGapSave"
-				format={ `%spx` }
+				format="%spx"
 				responsive="all"
 				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal' }
 				dependencies={ [
@@ -238,7 +240,7 @@ const AlignmentStyles = props => {
 				styleRule="rowGap"
 				attrName="innerBlockRowGap"
 				key="innerBlockRowGapEdit"
-				format={ `%spx` }
+				format="%spx"
 				responsive="all"
 				enabledCallback={ getAttribute => {
 					return getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ||
@@ -257,7 +259,7 @@ const AlignmentStyles = props => {
 				styleRule="rowGap"
 				attrName="innerBlockRowGap"
 				key="innerBlockRowGapSave"
-				format={ `%spx` }
+				format="%spx"
 				responsive="all"
 				enabledCallback={ getAttribute => {
 					return getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ||
@@ -305,10 +307,13 @@ const AlignmentStyles = props => {
 	)
 }
 
+const AlignmentStyles = memo( _AlignmentStyles )
+AlignmentStyles.Content = _AlignmentStyles
+
 export const Style = props => {
 	return <AlignmentStyles { ...props } />
 }
 
 Style.Content = props => {
-	return <AlignmentStyles { ...props } />
+	return <AlignmentStyles.Content { ...props } />
 }

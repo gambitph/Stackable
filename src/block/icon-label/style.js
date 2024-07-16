@@ -16,7 +16,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  */
 import { memo } from '@wordpress/element'
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -49,6 +49,9 @@ const Styles = props => {
 		</>
 	)
 }
+
+const Styles = memo( _Styles )
+Styles.Content = _Styles
 
 export const IconLabelStyles = memo( props => {
 	return (
@@ -83,7 +86,7 @@ IconLabelStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Styles { ...props } />
+			<Styles.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

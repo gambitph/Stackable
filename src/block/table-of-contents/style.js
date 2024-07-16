@@ -31,7 +31,7 @@ const titleTypographyOptions = {
 	attrNameTemplate: 'title%s',
 }
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -163,7 +163,7 @@ const Styles = props => {
 				attrName="scrollTopOffset"
 				key="scrollTopOffset"
 				responsive="all"
-				format={ '%spx' }
+				format="%spx"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -179,6 +179,9 @@ const Styles = props => {
 		</>
 	)
 }
+
+const Styles = memo( _Styles )
+Styles.Content = _Styles
 
 export const TableOfContentsStyles = memo( props => {
 	return (
@@ -215,7 +218,7 @@ TableOfContentsStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Styles { ...props } />
+			<Styles.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

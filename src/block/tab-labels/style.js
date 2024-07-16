@@ -49,7 +49,7 @@ const iconOptions = {
 	hoverSelector: '.stk-block-tabs__tab:hover',
 }
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -208,6 +208,9 @@ const Styles = props => {
 	)
 }
 
+const Styles = memo( _Styles )
+Styles.Content = _Styles
+
 export const TabStyles = memo( props => {
 	return (
 		<>
@@ -244,7 +247,7 @@ TabStyles.Content = props => {
 			<Icon.Style.Content { ...props } { ...iconOptions } hasIconGap={ false } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
-			<Styles { ...props } />
+			<Styles.Content { ...props } />
 			<Button.Style.Content { ...props } { ...buttonOptions } attrNameTemplate="tab%s" />
 			<Button.Style.Content { ...props } { ...activeButtonOptions } attrNameTemplate="activeTab%s" />
 		</BlockCssCompiler>

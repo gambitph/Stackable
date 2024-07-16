@@ -26,7 +26,7 @@ const typographyOptions = {
 	hoverSelector: '.stk-button:hover .stk-button__inner-text',
 }
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -51,6 +51,9 @@ const Styles = props => {
 		</>
 	)
 }
+
+const Styles = memo( _Styles )
+Styles.Content = _Styles
 
 export const ButtonStyles = memo( props => {
 	return (
@@ -83,7 +86,7 @@ ButtonStyles.Content = props => {
 			<Button.Style.Content { ...props } { ...buttonOptions } />
 			<Typography.Style.Content { ...props } { ...typographyOptions } />
 			<EffectsAnimations.Style.Content { ...props } />
-			<Styles { ...props } />
+			<Styles.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

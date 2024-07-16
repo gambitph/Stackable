@@ -22,7 +22,7 @@ const alignmentOptions = {
 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 }
 
-const Styles = props => {
+const _Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -138,6 +138,9 @@ const Styles = props => {
 	)
 }
 
+const Styles = memo( _Styles )
+Styles.Content = _Styles
+
 const BlockStyles = memo( props => {
 	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
 	const numColumns = ( columnArrangement || '' ).split( ',' ).length
@@ -178,8 +181,8 @@ BlockStyles.Content = props => {
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
-			<Styles { ...props } />
-			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } selector={ '.%s-horizontal-scroller' } /> }
+			<Styles.Content { ...props } />
+			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } selector=".%s-horizontal-scroller" /> }
 		</BlockCssCompiler>
 	)
 }
