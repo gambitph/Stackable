@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.2
-Tested up to: 6.5.4
+Requires at least: 6.3
+Tested up to: 6.6
 Requires PHP: 7.3
-Stable tag: 3.13.2
+Stable tag: 3.13.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,7 +235,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 6.2 or higher for this to work.
+You'll need WordPress version 6.3 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -294,6 +294,20 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.13.3 =
+* New: Enhanced WordPress 6.6 compatibility
+* New: You can now select multiple adjacent same-type blocks and adjust their inspector settings at the same time #2711
+* New: You can now pick a font family from the available ones in the Block Theme fonts or uploaded fonts #3195 #3244
+* New: Faster pattern rendering in the editor #3229 #3225
+* New: Added admin warning when settings page REST API fails #2882
+* Change: Icon Label block: reworked Icon Gap option, now properly measures gap between icon and text #3126
+* Fixed: Dynamic Content: using custom date format now works correctly #2570
+* Fixed: Aspect Ratio tablet & mobile settings now working properly #3232
+* Fixed: Hover transitions not smoothly transitioning #3207
+* Fixed: Shadow color support for theme colors #3176
+* Fixed: Bottom separator can sometimes not go behind the content #3061
+* Fixed: Team Member block: fixed cover layout issue #2985
 
 = 3.13.2 =
 * New: Added new Aspect Ratio option to Image block and relevant blocks #3200
