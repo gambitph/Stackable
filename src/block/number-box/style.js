@@ -20,7 +20,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  */
 import { memo } from '@wordpress/element'
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -55,9 +55,6 @@ const _Styles = props => {
 		</>
 	)
 }
-
-const Styles = memo( _Styles )
-Styles.Content = _Styles
 
 export const HeadingStyles = memo( props => {
 	const hasShape = useBlockAttributesContext( attributes => attributes.hasShape )
@@ -111,7 +108,7 @@ HeadingStyles.Content = props => {
 				attrNameTemplate="shape%s"
 				selector=".stk-block-number-box__text"
 			/>
-			<Styles.Content { ...props } />
+			<Styles { ...props } />
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />

@@ -98,7 +98,7 @@ const _imageOptions = {
 	dependencies: [ 'imageHoverStateInContainer', 'imageOverlayColorType' ],
 }
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -344,9 +344,6 @@ const _Styles = props => {
 	)
 }
 
-const Styles = memo( _Styles )
-Styles.Content = _Styles
-
 export const PostsStyles = memo( props => {
 	const blockStyle = useBlockStyle( variations )
 
@@ -425,7 +422,7 @@ PostsStyles.Content = props => {
 			<Typography.Style.Content { ...props } { ...metaTypographyOptions } />
 			<Typography.Style.Content { ...props } { ...readmoreTypographyOptions } />
 			<FlexGapStyles.Content { ...props } { ...flexGapOptions } />
-			<Styles.Content { ...props } blockStyle={ blockStyle?.name } />
+			<Styles { ...props } blockStyle={ blockStyle?.name } />
 		</BlockCssCompiler>
 	)
 }

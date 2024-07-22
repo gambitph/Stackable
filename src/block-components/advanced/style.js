@@ -2,9 +2,8 @@
  * External dependencies
  */
 import { BlockCss } from '~stackable/components'
-import { memo } from '@wordpress/element'
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -339,13 +338,10 @@ const _Styles = props => {
 	)
 }
 
-const Styles = memo( _Styles )
-Styles.Content = _Styles
-
 export const Style = props => {
 	return <Styles { ...props } />
 }
 
 Style.Content = props => {
-	return <Styles.Content { ...props } />
+	return <Styles { ...props } />
 }

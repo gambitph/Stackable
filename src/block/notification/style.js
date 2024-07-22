@@ -22,7 +22,7 @@ const containerDivOptions = {
 	sizeHorizontalAlignRule: 'margin',
 }
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -55,9 +55,6 @@ const _Styles = props => {
 		</>
 	)
 }
-
-const Styles = memo( _Styles )
-Styles.Content = _Styles
 
 export const ContainerStyles = memo( props => {
 	return (
@@ -92,7 +89,7 @@ ContainerStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
 			<MarginBottom.Style.Content { ...props } />
-			<Styles.Content { ...props } />
+			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
 }

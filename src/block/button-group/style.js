@@ -25,7 +25,7 @@ const flexGapOptionsSave = {
 	selector: '.stk-inner-blocks',
 }
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -238,9 +238,6 @@ const _Styles = props => {
 	)
 }
 
-const Styles = memo( _Styles )
-Styles.Content = _Styles
-
 export const ButtonGroupStyles = memo( props => {
 	return (
 		<>
@@ -274,7 +271,7 @@ ButtonGroupStyles.Content = props => {
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<FlexGapStyles.Content { ...props } { ...flexGapOptionsSave } />
-			<Styles.Content { ...props } />
+			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
 }

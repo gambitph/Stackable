@@ -52,7 +52,7 @@ SeparatorStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
-	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles.content', null )
+	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles', null )
 
 	return (
 		<BlockCssCompiler>
@@ -60,7 +60,7 @@ SeparatorStyles.Content = props => {
 			<Advanced.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<SeparatorStyles_.Content { ...props } { ...separatorOptions } location="" />
+			<SeparatorStyles_ { ...props } { ...separatorOptions } location="" />
 			{ SeparatorLayerStyles && (
 				<SeparatorLayerStyles
 					{ ...props }

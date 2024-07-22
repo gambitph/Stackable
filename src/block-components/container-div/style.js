@@ -6,9 +6,7 @@ import {
 } from '../helpers'
 import { useBlockAttributesContext } from '~stackable/hooks'
 
-import { memo } from '@wordpress/element'
-
-export const Style = memo( props => {
+export const Style = props => {
 	const {
 		backgroundSelector = '.%s-container',
 		borderSelector = '.%s-container',
@@ -52,7 +50,7 @@ export const Style = memo( props => {
 			/>
 		</>
 	)
-} )
+}
 
 Style.defaultProps = {
 	options: {},

@@ -37,7 +37,6 @@ import { pick, kebabCase } from 'lodash'
  */
 import { sprintf } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { memo } from '@wordpress/element'
 
 const BlockCss = props => {
 	const {
@@ -434,7 +433,7 @@ const BlockCss = props => {
 }
 
 // This is used for rendering styles for the editor.
-const BlockCssEdit = memo( props => {
+const BlockCssEdit = props => {
 	const {
 		clientId,
 	} = props
@@ -462,7 +461,7 @@ const BlockCssEdit = memo( props => {
 	output = applyFilters( 'stackable.block-styles.edit', output, getUniqueBlockClass( attributes.uniqueId ) )
 
 	return css ? <style>{ output }</style> : null
-} )
+}
 
 // Unify in a single component so it's easier to write block styles.
 const _BlockCss = props => {
@@ -472,7 +471,7 @@ const _BlockCss = props => {
 
 	// If no compileCssTo prop is provided, then we just print the styles directly.
 	if ( ! props.compileCssTo ) {
-		return <BlockCssEdit { ...props } />
+		return <BlockCssEdit { ...props } editorMode={ true } />
 	}
 	// Else, it means we need to compile all the css into the object passed to the compileCssTo prop.
 	// Call as a function so we just return the string quickly.

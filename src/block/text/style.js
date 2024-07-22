@@ -22,7 +22,7 @@ const typographyOptions = {
 	hoverSelector: '.stk-block-text__text:hover',
 }
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -52,9 +52,6 @@ const _Styles = props => {
 		</>
 	)
 }
-
-const Styles = memo( _Styles )
-Styles.Content = _Styles
 
 export const TextStyles = memo( props => {
 	return (
@@ -88,7 +85,7 @@ TextStyles.Content = props => {
 			<Typography.Style.Content { ...props } { ...typographyOptions } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
-			<Styles.Content { ...props } />
+			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
 }

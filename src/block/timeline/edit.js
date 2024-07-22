@@ -106,7 +106,7 @@ const Edit = props => {
 	const middleRef = useRef()
 	const branchRef = useRef()
 	const blockRef = useRef()
-	const isUpdating = useRef( false )
+	const updateTimeout = useRef( null )
 	const [ middleTopPosition, setMiddleTopPosition ] = useState( { dot: 0, branch: 0 } )
 	const [ fillHeight, setFillHeight ] = useState( { verticalLine: 0, middle: 0 } )
 	const [ verticalLineMaxHeight, setVerticalLineMaxHeight ] = useState( 0 )
@@ -260,7 +260,10 @@ const Edit = props => {
 
 	// update max height when device type & padding changes
 	useEffect( () => {
-		updateMaxHeight()
+		clearTimeout( updateTimeout.current )
+		updateTimeout.current = setTimeout( () => {
+			updateMaxHeight()
+		}, 300 )
 	}, [ deviceType,
 		timelinePosition,
 		props.attributes.timelineDotSize,
@@ -296,21 +299,22 @@ const Edit = props => {
 	// update blocks if position changes
 	useEffect( () => {
 		// set attribute for frontend
+		let isUpdating = false
 		if ( nextBlock && nextBlock.name === 'stackable/timeline' && props.attributes.timelineIsLast ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: false } )
-			isUpdating.current = true
+			isUpdating = true
 		} else if ( ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) && props.attributes.timelineIsLast ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: true } )
-			isUpdating.current = true
+			isUpdating = true
 		}
-		if ( isUpdating.current ) {
-			setTimeout( () => {
-			  updateMaxHeight()
-			  isUpdating.current = false
+		if ( isUpdating ) {
+			clearTimeout( updateTimeout.current )
+			updateTimeout.current = setTimeout( () => {
+				updateMaxHeight()
 			}, 300 )
-		  }
+		}
 	}, [ nextBlock ] )
 
 	useEffect( () => {

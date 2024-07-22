@@ -38,7 +38,7 @@ const messageTypographyOptions = {
 	attrNameTemplate: 'message%s',
 }
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -88,9 +88,6 @@ const _Styles = props => {
 	)
 }
 
-const Styles = memo( _Styles )
-Styles.Content = _Styles
-
 export const CountdownStyles = memo( props => {
 	return (
 		<>
@@ -131,7 +128,7 @@ CountdownStyles.Content = props => {
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
-			<Styles.Content { ...props } />
+			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
 }
