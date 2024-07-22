@@ -430,8 +430,8 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			$media_queries = self::MEDIA_QUERY_ORDER;
 
 			// This will also include other media queries that we do not support, but just add those at the end of our CSS.
-			foreach ( array_keys( $all_style_rules ) as $mediq_query ) {
-				if ( ! in_array( $mediq_query, $media_queries ) ) {
+			foreach ( array_keys( $all_style_rules ) as $media_query ) {
+				if ( ! in_array( $media_query, $media_queries ) ) {
 					$media_queries[] = $media_query;
 				}
 			}

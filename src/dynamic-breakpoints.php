@@ -31,16 +31,21 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_settings' ) );
 
-			if ( is_frontend() && $this->has_custom_breakpoints() ) {
-				// Add our filter that adjusts all CSS that we print out.
-				add_filter( 'stackable_frontend_css', array( $this, 'adjust_breakpoints' ) );
+			if ( is_frontend() ) {
+				// Add a filter for replacing shortcut media queries before the breakpoint adjustment.
+				add_filter( 'stackable_frontend_css', array( $this, 'replace_shortcut_media_queries' ), 9 );
 
-				// If there are adjusted breakpoints, enqueue our adjusted responsive css.
-				add_action( 'stackable_block_enqueue_frontend_assets', array( $this, 'enqueue_adjusted_responsive_css' ) );
+				if ( $this->has_custom_breakpoints() ) {
+					// Add our filter that adjusts all CSS that we print out.
+					add_filter( 'stackable_frontend_css', array( $this, 'adjust_breakpoints' ) );
 
-				// Adjust the styles outputted by Stackable blocks.
-				// 11 Priority, do this last because changing style can affect inline css optimization.
-				add_filter( 'render_block', array( $this, 'adjust_block_styles' ), 11, 2 );
+					// If there are adjusted breakpoints, enqueue our adjusted responsive css.
+					add_action( 'stackable_block_enqueue_frontend_assets', array( $this, 'enqueue_adjusted_responsive_css' ) );
+
+					// Adjust the styles outputted by Stackable blocks.
+					// 11 Priority, do this last because changing style can affect inline css optimization.
+					add_filter( 'render_block', array( $this, 'adjust_block_styles' ), 11, 2 );
+				}
 			}
 		}
 
@@ -118,6 +123,19 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		public function has_custom_breakpoints() {
 			$breakpoints = $this->get_dynamic_breakpoints();
 			return ! empty( $breakpoints['tablet'] ) || ! empty( $breakpoints['mobile'] );
+		}
+
+		/**
+		 * Replace shortcut media queries in the given CSS.
+		 *
+		 * @param String $css
+		 * @return String adjusted CSS
+		 */
+		public function replace_shortcut_media_queries( $css ) {
+			$css = str_replace( '@media tablet', '@media only screen and (max-width: 1024px)', $css );
+			$css = str_replace( '@media mobile', '@media only screen and (max-width: 768px)', $css );
+
+			return $css;
 		}
 
 		/**
