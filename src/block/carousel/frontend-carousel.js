@@ -52,6 +52,7 @@ class _StackableCarousel {
 
 		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
 
+		this.fixInnerColumnMargins()
 		this.unpauseAutoplay()
 	}
 
@@ -587,6 +588,17 @@ class _StackableCarousel {
 		}
 
 		this.hasTouched = false
+	}
+
+	// Adds a div wrapper for inner columns with left and right margins
+	fixInnerColumnMargins = () => {
+		const innerColumns = this.sliderEl.querySelectorAll( '.has-inner-column-margin' )
+		innerColumns.forEach( el => {
+			const wrapper = document.createElement( 'div' )
+			el.parentNode.insertBefore( wrapper, el )
+			wrapper.appendChild( el )
+			el.classList.remove( 'has-inner-column-margin' )
+		} )
 	}
 }
 

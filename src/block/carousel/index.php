@@ -69,3 +69,30 @@ if ( ! get_option( 'stackable_enable_carousel_lazy_loading' ) && get_option( 'st
 		add_filter( 'wp_img_tag_add_loading_attr', 'stackable_skip_loading_lazy_carousel_image', 10, 2 );
 	}
 }
+
+if ( ! function_exists( 'stackable_carousel_add_has_inner_column_margin_class' ) ) {
+	function stackable_carousel_add_has_inner_column_margin_class( $block_content, $block ) {
+		if ( empty( $block['innerBlocks'] ) ) {
+			return;
+		}
+
+		if ( ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
+			return $block_content;
+		}
+
+		$html_tag = new WP_HTML_Tag_Processor( $block_content );
+
+		foreach ( $block['innerBlocks'] as $inner_block ) {
+			if ( $inner_block['blockName'] == 'stackable/column' && ( isset( $inner_block['attrs']['blockMargin']['left'] ) || isset( $inner_block['attrs']['blockMargin']['right'] ) ) ) {
+				if ( $html_tag->next_tag( array( 'class_name' => 'stk-'.$inner_block['attrs']['uniqueId'] ) ) ) {
+					error_log( 'has-inner-column-margin' );
+					$html_tag->add_class( 'has-inner-column-margin' );
+				}
+			}
+		}
+
+		return $html_tag->get_updated_html();
+	}
+
+	add_filter( 'render_block_stackable/carousel', 'stackable_carousel_add_has_inner_column_margin_class', 10, 2 );
+}
