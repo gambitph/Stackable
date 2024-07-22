@@ -23120,6 +23120,21 @@
     ]
   },
   {
+    "family": "Zain",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "arabic",
+      "latin"
+    ]
+  },
+  {
     "family": "Zen Antique",
     "variants": [
       "regular"
