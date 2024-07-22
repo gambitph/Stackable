@@ -28,7 +28,7 @@ const typographyOptions = {
 	],
 }
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -224,9 +224,6 @@ const _Styles = props => {
 	)
 }
 
-const Styles = memo( _Styles )
-Styles.Content = _Styles
-
 export const IconListStyles = memo( props => {
 	const { columns, listDisplayStyle } = useBlockAttributesContext( attributes => ( {
 		columns: attributes.columns,
@@ -266,7 +263,7 @@ IconListStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Styles.Content { ...props } columns={ columns } listDisplayStyle={ listDisplayStyle } />
+			<Styles { ...props } columns={ columns } listDisplayStyle={ listDisplayStyle } />
 		</BlockCssCompiler>
 	)
 }

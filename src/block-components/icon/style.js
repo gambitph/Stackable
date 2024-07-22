@@ -7,9 +7,8 @@ import { BlockCss } from '~stackable/components'
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { memo } from '@wordpress/element'
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -305,9 +304,6 @@ const _Styles = props => {
 	)
 }
 
-const Styles = memo( _Styles )
-Styles.Content = _Styles
-
 export const Style = props => {
 	const IndivIconStyles = applyFilters( 'stackable.block-component.icon.indiv-icon-style', null )
 
@@ -318,10 +314,10 @@ export const Style = props => {
 }
 
 Style.Content = props => {
-	const IndivIconStyles = applyFilters( 'stackable.block-component.icon.indiv-icon-style.content', null )
+	const IndivIconStyles = applyFilters( 'stackable.block-component.icon.indiv-icon-style', null )
 
 	return <>
-		<Styles.Content { ...props } />
+		<Styles { ...props } />
 		{ IndivIconStyles && <IndivIconStyles { ...props } /> }
 	</>
 }

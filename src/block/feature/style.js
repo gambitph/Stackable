@@ -21,7 +21,7 @@ import { useBlockAttributesContext } from '~stackable/hooks'
 import { memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
-const _Styles = props => {
+const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -54,9 +54,6 @@ const _Styles = props => {
 		</>
 	)
 }
-
-const Styles = memo( _Styles )
-Styles.Content = _Styles
 
 const BlockStyles = memo( props => {
 	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
@@ -111,7 +108,7 @@ BlockStyles.Content = props => {
 				columnWrapDesktopSaveStyleRule="--stk-feature-flex-wrap"
 			/>
 			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
-			<Styles.Content { ...props } />
+			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
 }

@@ -106,7 +106,6 @@ const Edit = props => {
 	const middleRef = useRef()
 	const branchRef = useRef()
 	const blockRef = useRef()
-	const isUpdating = useRef( false )
 	const [ middleTopPosition, setMiddleTopPosition ] = useState( { dot: 0, branch: 0 } )
 	const [ fillHeight, setFillHeight ] = useState( { verticalLine: 0, middle: 0 } )
 	const [ verticalLineMaxHeight, setVerticalLineMaxHeight ] = useState( 0 )
@@ -299,18 +298,11 @@ const Edit = props => {
 		if ( nextBlock && nextBlock.name === 'stackable/timeline' && props.attributes.timelineIsLast ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: false } )
-			isUpdating.current = true
-		} else if ( ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) && props.attributes.timelineIsLast ) {
+		} else if ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: true } )
-			isUpdating.current = true
 		}
-		if ( isUpdating.current ) {
-			setTimeout( () => {
-			  updateMaxHeight()
-			  isUpdating.current = false
-			}, 300 )
-		  }
+		updateMaxHeight()
 	}, [ nextBlock ] )
 
 	useEffect( () => {

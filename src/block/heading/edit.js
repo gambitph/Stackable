@@ -46,9 +46,7 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import {
-	useEffect, useState, useRef,
-} from '@wordpress/element'
+import { useEffect, useState } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
 import { dispatch } from '@wordpress/data'
@@ -100,20 +98,14 @@ const Edit = props => {
 
 	// Auto-generate anchors in Stackable headings.
 	const [ prevText, setPrevText ] = useState( props.attributes.text )
-	const updateTimeout = useRef( null )
 
 	useEffect( () => {
-		clearTimeout( updateTimeout.current )
-		const anchor = props.attributes.anchor
-		const text = props.attributes.text
-		updateTimeout.current = setTimeout( () => {
-			const cleanAnchorValue = kebabCase( anchor )
-			if ( cleanAnchorValue === kebabCase( prevText ) || ! anchor ) {
-				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-				setAttributes( { anchor: kebabCase( text ) } )
-			}
-			setPrevText( text )
-		}, 300 )
+		const cleanAnchorValue = kebabCase( props.attributes.anchor )
+		if ( cleanAnchorValue === kebabCase( prevText ) || ! props.attributes.anchor ) {
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			setAttributes( { anchor: kebabCase( props.attributes.text ) } )
+		}
+		setPrevText( props.attributes.text )
 	}, [ props.attributes.anchor, props.attributes.text ] )
 
 	const onSplit = ( value, isOriginal ) => {
