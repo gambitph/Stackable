@@ -49,6 +49,7 @@ class _StackableCarousel {
 		this.fixChildrenAccessibility()
 		this.fixAccessibility( this.currentSlide )
 		this.setDotActive( this.currentSlide )
+		this.fixInlineScrollNavigation()
 
 		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
 
@@ -587,6 +588,51 @@ class _StackableCarousel {
 		}
 
 		this.hasTouched = false
+	}
+
+	// Pause autoplay while inline navigation is in progress
+	fixInlineScrollNavigation = () => {
+		// This option ensures that the intersection is triggered on the top
+		// of the target element, similar to how inline navigation works
+		const observerOptions = {
+			root: null,
+			rootMargin: '-90% 0px 0px 0px',
+			threshold: 0,
+		}
+		let scrollTimeout = null
+
+		// Observer to resume autoplay when the inline navigation is done
+		const io = new IntersectionObserver( ( entries, observer ) => {
+			entries.forEach( entry => {
+				if ( entry.isIntersecting ) {
+					clearTimeout( scrollTimeout )
+					observer.unobserve( entry.target )
+					this.unpauseAutoplay()
+				}
+			} )
+		}, observerOptions )
+
+		// Get all anchor elements with inline navigation
+		document.querySelectorAll( 'a[href^="#"]' ).forEach( el => {
+			// When the anchor element is clicked, pause the autoplay and
+			// attach an observer to the target element
+			el.addEventListener( 'click', () => {
+				const targetId = el.getAttribute( 'href' )
+				const targetElement = document.querySelector( targetId )
+
+				if ( targetElement ) {
+					this.pauseAutoplay()
+					io.observe( targetElement )
+					// Ensure autoplay is resumed even if the user manually override the inline navigation
+					// We use 1500ms as a safe timeout since major browsers have max duration of ~700ms
+					// Reference: https://stackoverflow.com/a/73906027
+					scrollTimeout = setTimeout( () => {
+						io.unobserve( targetElement )
+						this.unpauseAutoplay()
+					}, 1500 )
+				}
+			} )
+		} )
 	}
 }
 
