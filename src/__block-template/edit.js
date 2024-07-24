@@ -44,7 +44,6 @@ const Edit = props => {
 	const {
 		className,
 		clientId,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -65,33 +64,29 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<InspectorTabs />
 
-					<Typography.InspectorControls
-						{ ...props }
-						hasTextTag={ false }
-						isMultiline={ true }
-						initialOpen={ true }
-						hasTextShadow={ true }
-					/>
-					<Alignment.InspectorControls />
-					<InspectorLayoutControls>
-						{ /** Add Layout controls specific for this block here */ }
-					</InspectorLayoutControls>
+			<Typography.InspectorControls
+				{ ...props }
+				hasTextTag={ false }
+				isMultiline={ true }
+				initialOpen={ true }
+				hasTextShadow={ true }
+			/>
+			<Alignment.InspectorControls />
+			<InspectorLayoutControls>
+				{ /** Add Layout controls specific for this block here */ }
+			</InspectorLayoutControls>
 
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
 
 			<BlockStyles
 				version={ VERSION }
