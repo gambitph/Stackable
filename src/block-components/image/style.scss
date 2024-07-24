@@ -46,7 +46,7 @@
 			mask-repeat: no-repeat;
 			mask-size: contain;
 			mask-position: center;
-			border-radius: none;
+			border-radius: 0;
 		}
 	}
 	// Firefox doesn't stretch SVG masks via attributes, stretching is done here. Fixes #246.
@@ -55,6 +55,10 @@
 		&::after,
 		&::before {
 			mask-size: 100% 100%;
+		}
+		// Firefox doesn't automatically inherit the mask-size from the parent. Fixes #3042.
+		img {
+			mask-size: inherit !important;
 		}
 	}
 }

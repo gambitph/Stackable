@@ -89,7 +89,6 @@ const Edit = props => {
 	const {
 		className,
 		clientId,
-		isSelected,
 		setAttributes,
 	} = props
 
@@ -107,6 +106,7 @@ const Edit = props => {
 	const middleRef = useRef()
 	const branchRef = useRef()
 	const blockRef = useRef()
+	const updateTimeout = useRef( null )
 	const [ middleTopPosition, setMiddleTopPosition ] = useState( { dot: 0, branch: 0 } )
 	const [ fillHeight, setFillHeight ] = useState( { verticalLine: 0, middle: 0 } )
 	const [ verticalLineMaxHeight, setVerticalLineMaxHeight ] = useState( 0 )
@@ -260,7 +260,10 @@ const Edit = props => {
 
 	// update max height when device type & padding changes
 	useEffect( () => {
-		updateMaxHeight()
+		clearTimeout( updateTimeout.current )
+		updateTimeout.current = setTimeout( () => {
+			updateMaxHeight()
+		}, 300 )
 	}, [ deviceType,
 		timelinePosition,
 		props.attributes.timelineDotSize,
@@ -296,14 +299,22 @@ const Edit = props => {
 	// update blocks if position changes
 	useEffect( () => {
 		// set attribute for frontend
+		let isUpdating = false
 		if ( nextBlock && nextBlock.name === 'stackable/timeline' && props.attributes.timelineIsLast ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: false } )
-		} else if ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) {
+			isUpdating = true
+		} else if ( ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) && props.attributes.timelineIsLast ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: true } )
+			isUpdating = true
 		}
-		updateMaxHeight()
+		if ( isUpdating ) {
+			clearTimeout( updateTimeout.current )
+			updateTimeout.current = setTimeout( () => {
+				updateMaxHeight()
+			}, 300 )
+		}
 	}, [ nextBlock ] )
 
 	useEffect( () => {
@@ -317,124 +328,122 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<InspectorLayoutControls>
-						<AdvancedToolbarControl
-							label={ __( 'Content Position', i18n ) }
-							attribute="timelinePosition"
-							controls={ [
-								{ value: '', title: __( 'Left', i18n ) },
-								{ value: 'right', title: __( 'Right', i18n ) },
-							] }
-						/>
+				<InspectorLayoutControls>
+					<AdvancedToolbarControl
+						label={ __( 'Content Position', i18n ) }
+						attribute="timelinePosition"
+						controls={ [
+							{ value: '', title: __( 'Left', i18n ) },
+							{ value: 'right', title: __( 'Right', i18n ) },
+						] }
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Gap', i18n ), __( 'Timeline', i18n ) ) }
+						attribute="timelineGap"
+						sliderMax={ 100 }
+						min={ 0 }
+						responsive="all"
+						placeholder="16"
+					/>
+				</InspectorLayoutControls>
+
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'Timeline', i18n ) }
+						initialOpen={ true }
+						id="timeline"
+					>
 						<AdvancedRangeControl
-							label={ sprintf( __( '%s Gap', i18n ), __( 'Timeline', i18n ) ) }
-							attribute="timelineGap"
+							label={ __( 'Accent Anchor Position', i18n ) }
+							attribute="timelineAnchor"
 							sliderMax={ 100 }
 							min={ 0 }
+							placeholder="50"
 							responsive="all"
-							placeholder="16"
+							help={ __( 'Succeeding timeline blocks will also use this value.', i18n ) }
 						/>
-					</InspectorLayoutControls>
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'Timeline', i18n ) }
-							initialOpen={ true }
-							id="timeline"
-						>
-							<AdvancedRangeControl
-								label={ __( 'Accent Anchor Position', i18n ) }
-								attribute="timelineAnchor"
-								sliderMax={ 100 }
-								min={ 0 }
-								placeholder="50"
-								responsive="all"
-								help={ __( 'Succeeding timeline blocks will also use this value.', i18n ) }
-							/>
-
-							<ControlSeparator />
-
-							<AdvancedRangeControl
-								label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }
-								attribute="timelineDotSize"
-								sliderMax={ 100 }
-								sliderMin={ props.attributes.timelineThickness || 3 }
-								min={ 1 }
-								placeholder="11"
-							/>
-							<AdvancedRangeControl
-								label={ sprintf( __( '%s Border Radius', i18n ), __( 'Dot', i18n ) ) }
-								attribute="timelineDotBorderRadius"
-								sliderMax={ ( props.attributes.timelineDotSize || 11 ) / 2 }
-								min={ 0 }
-								placeholder=""
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Line Thickness', i18n ) }
-								attribute="timelineThickness"
-								sliderMax={ 20 }
-								min={ 1 }
-								placeholder="3"
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Horizontal Offset', i18n ) }
-								attribute="timelineOffset"
-								sliderMax={ 100 }
-								min={ 0 }
-								placeholder="40"
-							/>
-
-							<ControlSeparator />
-
-							<AdvancedToolbarControl
-								controls={ COLOR_TYPE_CONTROLS }
-								attribute="timelineAccentColorType"
-								isSmall={ true }
-							/>
-							<ColorPaletteControl
-								label={
-									props.attributes.timelineAccentColorType === 'gradient'
-										? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 1 )
-										: __( 'Timeline Accent Color', i18n )
-								}
-								attribute="timelineAccentColor"
-							/>
-							{ props.attributes.timelineAccentColorType === 'gradient' &&
-								<ColorPaletteControl
-									label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 2 ) }
-									attribute="timelineAccentColor2"
-								/>
-							}
-							<ColorPaletteControl
-								label={ __( 'Timeline Background Color', i18n ) }
-								attribute="timelineBackgroundColor"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
-
-					<Typography.InspectorControls
-						{ ...props }
-						hasTextTag={ false }
-						isMultiline={ true }
-						initialOpen={ false }
-						hasTextShadow={ true }
-					/>
-					<InspectorLayoutControls>
 						<ControlSeparator />
-					</InspectorLayoutControls>
-					<ContentAlign.InspectorControls />
-					<BlockDiv.InspectorControls hasContentVerticalAlign={ false } hasMinHeight={ false } />
-					<Advanced.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-timeline" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+
+						<AdvancedRangeControl
+							label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }
+							attribute="timelineDotSize"
+							sliderMax={ 100 }
+							sliderMin={ props.attributes.timelineThickness || 3 }
+							min={ 1 }
+							placeholder="11"
+						/>
+						<AdvancedRangeControl
+							label={ sprintf( __( '%s Border Radius', i18n ), __( 'Dot', i18n ) ) }
+							attribute="timelineDotBorderRadius"
+							sliderMax={ ( props.attributes.timelineDotSize || 11 ) / 2 }
+							min={ 0 }
+							placeholder=""
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Line Thickness', i18n ) }
+							attribute="timelineThickness"
+							sliderMax={ 20 }
+							min={ 1 }
+							placeholder="3"
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Horizontal Offset', i18n ) }
+							attribute="timelineOffset"
+							sliderMax={ 100 }
+							min={ 0 }
+							placeholder="40"
+						/>
+
+						<ControlSeparator />
+
+						<AdvancedToolbarControl
+							controls={ COLOR_TYPE_CONTROLS }
+							attribute="timelineAccentColorType"
+							isSmall={ true }
+						/>
+						<ColorPaletteControl
+							label={
+								props.attributes.timelineAccentColorType === 'gradient'
+									? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 1 )
+									: __( 'Timeline Accent Color', i18n )
+							}
+							attribute="timelineAccentColor"
+						/>
+						{ props.attributes.timelineAccentColorType === 'gradient' &&
+							<ColorPaletteControl
+								label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 2 ) }
+								attribute="timelineAccentColor2"
+							/>
+						}
+						<ColorPaletteControl
+							label={ __( 'Timeline Background Color', i18n ) }
+							attribute="timelineBackgroundColor"
+						/>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
+
+				<Typography.InspectorControls
+					{ ...props }
+					hasTextTag={ false }
+					isMultiline={ true }
+					initialOpen={ false }
+					hasTextShadow={ true }
+				/>
+				<InspectorLayoutControls>
+					<ControlSeparator />
+				</InspectorLayoutControls>
+				<ContentAlign.InspectorControls />
+				<BlockDiv.InspectorControls hasContentVerticalAlign={ false } hasMinHeight={ false } />
+				<Advanced.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-timeline" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }

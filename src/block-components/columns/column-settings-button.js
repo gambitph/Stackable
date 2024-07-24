@@ -7,7 +7,9 @@ import { __ } from '@wordpress/i18n'
 import { Button, Dashicon } from '@wordpress/components'
 import { getBlockFromExample } from '@wordpress/blocks'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { dispatch, select } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 import { useLocalStorage } from '~stackable/util'
 
 const PASSTHRU = ( func, numColumns ) => func( numColumns )
@@ -25,38 +27,73 @@ export const ColumnsControl = props => {
 	const {
 		numInnerBlocks, innerBlocks,
 	} = useBlockContext( rootClientId )
+	const {
+		multiClientIds, multiNumInnerBlocks, multiInnerBlocks, hasMultiSelectedBlocks,
+	} = useSelect( select => {
+		const multiBlocks = select( 'core/block-editor' ).getMultiSelectedBlocks()
+		let multiClientIds = []
+		const multiInnerBlocks = {}
+		const multiNumInnerBlocks = {}
+		if ( multiBlocks.length && multiBlocks[ 0 ].name === 'stackable/tabs' ) {
+			multiBlocks.forEach( block => {
+				const tabContent = block.innerBlocks[ 0 ].name === 'stackable/tab-content' ? block.innerBlocks[ 0 ] : block.innerBlocks[ 1 ]
+				multiClientIds.push( tabContent.clientId )
+			} )
+		} else {
+			multiClientIds = multiBlocks.map( block => block.clientId )
+		}
+
+		multiClientIds.forEach( clientId => {
+			const { numInnerBlocks, innerBlocks } = select( 'stackable/block-context' ).getBlockContext( clientId )
+			multiInnerBlocks[ clientId ] = innerBlocks
+			multiNumInnerBlocks[ clientId ] = numInnerBlocks
+		} )
+
+		return {
+			multiClientIds,
+			multiNumInnerBlocks,
+			multiInnerBlocks,
+			hasMultiSelectedBlocks: multiClientIds.length > 1,
+		}
+	} )
 	const [ isDuplicate, setIsDuplicate ] = useLocalStorage( 'stk__columns_new_duplicate', false )
 
 	const setColumns = numColumns => {
-		const changeColumnsFunc = numColumns => {
+		const _changeColumnsFunc = ( _clientId, _numColumns, _numInnerBlocks, _innerBlocks, quietUpdate = false ) => {
 			const { insertBlock, removeBlocks } = dispatch( 'core/block-editor' )
 
 			// do nothing if input field is blank
-			if ( numColumns === '' ) {
+			if ( _numColumns === '' ) {
 
 				// Remove the columns.
-			} else if ( numColumns < numInnerBlocks ) {
-				const columnClientIds = innerBlocks.slice( numColumns ).map( ( { clientId } ) => clientId )
+			} else if ( _numColumns < _numInnerBlocks ) {
+				const columnClientIds = _innerBlocks.slice( numColumns ).map( ( { clientId } ) => clientId )
+				if ( quietUpdate ) {
+					dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				}
 				removeBlocks( columnClientIds, false )
 
 				// Add a blank column.
-			} else if ( numColumns > numInnerBlocks && ! isDuplicate ) {
-				const numToAdd = numColumns - numInnerBlocks
+			} else if ( _numColumns > _numInnerBlocks && ! isDuplicate ) {
+				const numToAdd = _numColumns - _numInnerBlocks
 
 				// add more empty columns if necessary
 				for ( let i = 0; i < numToAdd; i++ ) {
 					const block = getBlockFromExample( 'stackable/column', {
 						attributes: { ...newColumnAttributes },
 					} )
-					insertBlock( block, numInnerBlocks + i + 1, clientId, false )
+					if ( quietUpdate ) {
+						dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+					}
+					insertBlock( block, _numInnerBlocks + i + 1, _clientId, false )
 				}
 
 				// Duplicate the last column.
-			} else if ( numColumns > numInnerBlocks ) {
-				const numToAdd = numColumns - numInnerBlocks
+			} else if ( _numColumns > _numInnerBlocks ) {
+				const numToAdd = _numColumns - _numInnerBlocks
 
 				// This is not guaranteed to have the latest attributes and values
-				const lastColumnBlock = last( innerBlocks )
+				const lastColumnBlock = last( _innerBlocks )
 
 				// Retrieve block details to get the latest attributes and values,
 				// If there's no block, then use a blank column.
@@ -66,8 +103,20 @@ export const ColumnsControl = props => {
 
 				for ( let i = 0; i < numToAdd; i++ ) {
 					const block = getBlockFromExample( 'stackable/column', pick( newBlock, [ 'attributes', 'innerBlocks' ] ) )
-					insertBlock( block, numInnerBlocks + i + 1, clientId, false )
+					if ( quietUpdate ) {
+						dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+					}
+					insertBlock( block, _numInnerBlocks + i + 1, _clientId, false )
 				}
+			}
+		}
+
+		const changeColumnsFunc = numColumns => {
+			if ( hasMultiSelectedBlocks ) {
+				multiClientIds.forEach( ( blockClientId, index ) =>
+					_changeColumnsFunc( blockClientId, numColumns, multiNumInnerBlocks[ blockClientId ], multiInnerBlocks[ blockClientId ], index !== 0 ? true : false ) )
+			} else if ( ! hasMultiSelectedBlocks ) {
+				_changeColumnsFunc( clientId, numColumns, numInnerBlocks, innerBlocks, false )
 			}
 		}
 

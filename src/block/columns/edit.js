@@ -55,7 +55,6 @@ const Edit = props => {
 	const {
 		className,
 		clientId,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -83,33 +82,32 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
 
-					<Columns.InspectorControls />
-					<InspectorLayoutControls>
-						<ControlSeparator />
-					</InspectorLayoutControls>
-					<ContentAlign.InspectorControls />
-					<Alignment.InspectorControls
-						hasContainerSize={ true }
-						containerSizePriority={ 1 }
-						hasContainerHeight={ false }
-						hasColumnJustify={ true }
-						hasRowAlignment={ true }
-					/>
-					<BlockDiv.InspectorControls />
-					<Separator.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+			<>
+				<InspectorTabs />
+
+				<Columns.InspectorControls />
+				<InspectorLayoutControls>
+					<ControlSeparator />
+				</InspectorLayoutControls>
+				<ContentAlign.InspectorControls />
+				<Alignment.InspectorControls
+					hasContainerSize={ true }
+					containerSizePriority={ 1 }
+					hasContainerHeight={ false }
+					hasColumnJustify={ true }
+					hasRowAlignment={ true }
+				/>
+				<BlockDiv.InspectorControls />
+				<Separator.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }

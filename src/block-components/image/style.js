@@ -30,14 +30,37 @@ const Styles = props => {
 		hoverSelectorCallback = null,
 		enableWidth = true,
 		enableHeight = true,
+		enableAspectRatio = true,
 		widthStyleRule = null,
 		widthUnitCallback = null,
 		heightUnitCallback = null,
 		dependencies = [],
 	} = props
-
 	return (
 		<>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [
+					selector,
+					`${ selector } .stk-img-resizer-wrapper`,
+				] }
+				renderIn="edit"
+				styleRule="aspectRatio"
+				attrName="imageAspectRatio"
+				key="imageAspectRatio"
+				responsive="all"
+				enabledCallback={ () => enableAspectRatio }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				renderIn="save"
+				styleRule="aspectRatio"
+				attrName="imageAspectRatio"
+				key="imageAspectRatio"
+				responsive="all"
+				enabledCallback={ () => enableAspectRatio }
+			/>
 			<BlockCss
 				{ ...propsToPass }
 				selector={ `${ selector }:not(.stk--is-resizing)` }
@@ -49,6 +72,17 @@ const Styles = props => {
 				unitCallback={ widthUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableWidth }
+				valueCallback={ ( value, getAttribute ) => {
+					// If there's an aspect ratio and the other dimension is not given, use auto
+					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				dependencies={ [
+					'imageAspectRatio',
+					'imageHeight',
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -61,6 +95,17 @@ const Styles = props => {
 				unitCallback={ widthUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableWidth }
+				valueCallback={ ( value, getAttribute ) => {
+					// If there's an aspect ratio and the other dimension is not given, use auto
+					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageHeight' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				dependencies={ [
+					'imageAspectRatio',
+					'imageHeight',
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -73,6 +118,23 @@ const Styles = props => {
 				unitCallback={ heightUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableHeight }
+				valueCallback={ ( value, getAttribute ) => {
+					// If there's an aspect ratio and the other dimension is not given, use auto
+					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				valuePreCallback={ ( value, getAttribute ) => {
+					if ( enableAspectRatio && value === '' && getAttribute( 'imageAspectRatio' ) && ! getAttribute( 'imageWidth' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				dependencies={ [
+					'imageAspectRatio',
+					'imageWidth',
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -85,6 +147,23 @@ const Styles = props => {
 				unitCallback={ heightUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableHeight }
+				valueCallback={ ( value, getAttribute ) => {
+					// If there's an aspect ratio and the other dimension is not given, use auto
+					if ( enableAspectRatio && ! value && getAttribute( 'imageAspectRatio' ) && getAttribute( 'imageWidth' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				valuePreCallback={ ( value, getAttribute ) => {
+					if ( enableAspectRatio && value === '' && getAttribute( 'imageAspectRatio' ) && ! getAttribute( 'imageHeight' ) ) {
+						return 'auto'
+					}
+					return value
+				} }
+				dependencies={ [
+					'imageAspectRatio',
+					'imageWidth',
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }

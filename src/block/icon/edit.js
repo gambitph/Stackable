@@ -46,7 +46,6 @@ const Edit = props => {
 		clientId,
 		className,
 		attributes,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -63,38 +62,36 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<Alignment.InspectorControls />
-					<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
-					<BlockDiv.InspectorControls />
-					<Link.InspectorControls hasToggle={ true } isAdvancedTab={ true } />
+				<Alignment.InspectorControls />
+				<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
+				<BlockDiv.InspectorControls />
+				<Link.InspectorControls hasToggle={ true } isAdvancedTab={ true } />
 
-					<InspectorAdvancedControls>
-						<PanelAdvancedSettings
-							title={ __( 'Accessibility', i18n ) }
-							id="accessibility"
-						>
-							<AdvancedTextControl
-								isDynamic={ false }
-								label={ __( 'Icon Label', i18n ) }
-								attribute="ariaLabel"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorAdvancedControls>
+				<InspectorAdvancedControls>
+					<PanelAdvancedSettings
+						title={ __( 'Accessibility', i18n ) }
+						id="accessibility"
+					>
+						<AdvancedTextControl
+							isDynamic={ false }
+							label={ __( 'Icon Label', i18n ) }
+							attribute="ariaLabel"
+						/>
+					</PanelAdvancedSettings>
+				</InspectorAdvancedControls>
 
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
 
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<IconStyles
 				version={ VERSION }

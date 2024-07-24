@@ -202,17 +202,26 @@ const Edit = props => {
 		const unsubscribe = wp.data.subscribe( debounce( () => {
 			const newPostContent = getEditedPostContent()
 			if ( ! isSelected && ! isEqual( postContent, newPostContent ) ) {
-				const editorHeadings = getUpdatedHeadings( getEditorDom, attributes ).map( ( heading, i ) => {
-					// Removed any blank customContent so a heading won't show up as blank.
-					if ( headings[ i ] && headings[ i ].customContent === '' && typeof headings[ i ].customContent !== 'undefined' ) {
-						delete headings[ i ].customContent
-					}
+				// Make sure to also filter excluded headings to avoid
+				// comparing heading with wrong index.
+				const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
+					n => attributes[ `includeH${ n }` ]
+				)
+				const editorHeadings = getUpdatedHeadings( getEditorDom, attributes )
+					.filter( heading =>
+						allowedLevels.includes( heading.tag )
+					)
+					.map( ( heading, i ) => {
+						// Removed any blank customContent so a heading won't show up as blank.
+						if ( headings[ i ] && headings[ i ].customContent === '' && typeof headings[ i ].customContent !== 'undefined' ) {
+							delete headings[ i ].customContent
+						}
 
-					return {
-						...headings[ i ],
-						...heading,
-					}
-				} )
+						return {
+							...headings[ i ],
+							...heading,
+						}
+					} )
 				setHeadings( editorHeadings )
 			}
 			postContent = newPostContent
@@ -390,119 +399,117 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs hasLayoutPanel={ false } />
+			<>
+				<InspectorTabs hasLayoutPanel={ false } />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							initialOpen={ true }
-							id="general"
-						>
-							<HeadingsControls />
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'General', i18n ) }
+						initialOpen={ true }
+						id="general"
+					>
+						<HeadingsControls />
 
-							<AdvancedSelectControl
-								label={ __( 'List Type', i18n ) }
-								attribute="listType"
-								options={ listTypeOptions }
-							/>
+						<AdvancedSelectControl
+							label={ __( 'List Type', i18n ) }
+							attribute="listType"
+							options={ listTypeOptions }
+						/>
 
-							<AdvancedRangeControl
-								label={ __( 'Columns', i18n ) }
-								attribute="columns"
-								min="1"
-								sliderMax="3"
-								step="1"
-								placeholder="1"
-								responsive="all"
-							/>
+						<AdvancedRangeControl
+							label={ __( 'Columns', i18n ) }
+							attribute="columns"
+							min="1"
+							sliderMax="3"
+							step="1"
+							placeholder="1"
+							responsive="all"
+						/>
 
-							<AdvancedRangeControl
-								label={ __( 'Column Gap', i18n ) }
-								attribute="columnGap"
-								min="0"
-								placeholder="32"
-								sliderMax="50"
-								responsive="all"
-							/>
+						<AdvancedRangeControl
+							label={ __( 'Column Gap', i18n ) }
+							attribute="columnGap"
+							min="0"
+							placeholder="32"
+							sliderMax="50"
+							responsive="all"
+						/>
 
-							<AdvancedRangeControl
-								label={ __( 'Row Gap', i18n ) }
-								attribute="rowGap"
-								min="0"
-								sliderMax="50"
-								responsive="all"
-							/>
+						<AdvancedRangeControl
+							label={ __( 'Row Gap', i18n ) }
+							attribute="rowGap"
+							min="0"
+							sliderMax="50"
+							responsive="all"
+						/>
 
-							<AdvancedRangeControl
-								label={ __( 'Icon Gap', i18n ) }
-								attribute="iconGap"
-								min="0"
-								sliderMax="20"
-								responsive="all"
-							/>
+						<AdvancedRangeControl
+							label={ __( 'Icon Gap', i18n ) }
+							attribute="iconGap"
+							min="0"
+							sliderMax="20"
+							responsive="all"
+						/>
 
-							<AdvancedRangeControl
-								label={ __( 'Indentation', i18n ) }
-								attribute="indentation"
-								min="0"
-								sliderMax="50"
-								responsive="all"
-								placeholder=""
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
+						<AdvancedRangeControl
+							label={ __( 'Indentation', i18n ) }
+							attribute="indentation"
+							min="0"
+							sliderMax="50"
+							responsive="all"
+							placeholder=""
+						/>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'Scrolling', i18n ) }
-							initialOpen={ false }
-							id="scrolling"
-						>
-							<AdvancedToggleControl
-								label={ __( 'Use smooth scroll', i18n ) }
-								attribute="isSmoothScroll"
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Scroll Top Offset ', i18n ) }
-								attribute="scrollTopOffset"
-								min={ 0 }
-								max={ 200 }
-								step={ 1 }
-								responsive="all"
-								placeholder="0"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
-
-					<Typography.InspectorControls
-						{ ...props }
-						isMultiline={ true }
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'Scrolling', i18n ) }
 						initialOpen={ false }
-						hasTextTag={ false }
-						hasTextContent={ false }
-					/>
+						id="scrolling"
+					>
+						<AdvancedToggleControl
+							label={ __( 'Use smooth scroll', i18n ) }
+							attribute="isSmoothScroll"
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Scroll Top Offset ', i18n ) }
+							attribute="scrollTopOffset"
+							min={ 0 }
+							max={ 200 }
+							step={ 1 }
+							responsive="all"
+							placeholder="0"
+						/>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
 
-					<Typography.InspectorControls
-						{ ...props }
-						label={ __( 'Title', i18n ) }
-						attrNameTemplate="title%s"
-						initialOpen={ false }
-						hasToggle={ true }
-						hasTextTag={ false }
-					/>
+				<Typography.InspectorControls
+					{ ...props }
+					isMultiline={ true }
+					initialOpen={ false }
+					hasTextTag={ false }
+					hasTextContent={ false }
+				/>
 
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-table-of-contents" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<Typography.InspectorControls
+					{ ...props }
+					label={ __( 'Title', i18n ) }
+					attrNameTemplate="title%s"
+					initialOpen={ false }
+					hasToggle={ true }
+					hasTextTag={ false }
+				/>
+
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-table-of-contents" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<TableOfContentsStyles
 				version={ VERSION }

@@ -59,7 +59,6 @@ const Edit = props => {
 		className,
 		attributes,
 		setAttributes,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -88,76 +87,74 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<ContentAlign.InspectorControls />
-					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+				<ContentAlign.InspectorControls />
+				<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="general"
-							initialOpen={ true }
-						>
-							<AdvancedSelectControl
-								label={ __( 'Notification Type', i18n ) }
-								attribute="notificationType"
-								options={ [
-									{
-										label: __( 'Success', i18n ),
-										value: '',
-									},
-									{
-										label: __( 'Error', i18n ),
-										value: 'error',
-									},
-									{
-										label: __( 'Warning', i18n ),
-										value: 'warning',
-									},
-									{
-										label: __( 'Information', i18n ),
-										value: 'info',
-									},
-								] }
-							/>
-						</PanelAdvancedSettings>
-						<PanelAdvancedSettings
-							title={ __( 'Dismissible', i18n ) }
-							id="dismissible"
-							hasToggle={ true }
-							checked={ props.attributes.isDismissible }
-							onChange={ value => setAttributes( { isDismissible: value } ) }
-						>
-							<AdvancedRangeControl
-								label={ __( 'Icon Size', i18n ) }
-								attribute="dismissibleSize"
-								min="0"
-								sliderMax="50"
-								step="1"
-								placeholder="16"
-							/>
-							<ColorPaletteControl
-								label={ __( 'Icon Color', i18n ) }
-								attribute="dismissibleColor"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'General', i18n ) }
+						id="general"
+						initialOpen={ true }
+					>
+						<AdvancedSelectControl
+							label={ __( 'Notification Type', i18n ) }
+							attribute="notificationType"
+							options={ [
+								{
+									label: __( 'Success', i18n ),
+									value: '',
+								},
+								{
+									label: __( 'Error', i18n ),
+									value: 'error',
+								},
+								{
+									label: __( 'Warning', i18n ),
+									value: 'warning',
+								},
+								{
+									label: __( 'Information', i18n ),
+									value: 'info',
+								},
+							] }
+						/>
+					</PanelAdvancedSettings>
+					<PanelAdvancedSettings
+						title={ __( 'Dismissible', i18n ) }
+						id="dismissible"
+						hasToggle={ true }
+						checked={ props.attributes.isDismissible }
+						onChange={ value => setAttributes( { isDismissible: value } ) }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Icon Size', i18n ) }
+							attribute="dismissibleSize"
+							min="0"
+							sliderMax="50"
+							step="1"
+							placeholder="16"
+						/>
+						<ColorPaletteControl
+							label={ __( 'Icon Color', i18n ) }
+							attribute="dismissibleColor"
+						/>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
 
-					<BlockDiv.InspectorControls />
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
-					<BlockLink.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<BlockDiv.InspectorControls />
+				<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+				<BlockLink.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<InspectorStyleControls>
 				<InspectorBottomTip />

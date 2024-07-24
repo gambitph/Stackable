@@ -28,8 +28,9 @@ body.stk--is-neve-theme {
 
 // Kadence theme
 // Kadence adds negative inline margins that screws up our blocks, make the selector more specific.
-body.stk--is-kadence-theme {
-	:is(.entry-content, .site-content) .stk-block > .stk-inner-blocks:is(.alignwide, :not(.alignwide)) {
+body.stk--is-kadence-theme :is(.entry-content, .site-content) .stk-block > .stk-inner-blocks {
+	&.alignwide,
+	&:not(.alignwide) {
 		margin-left: auto;
 		margin-right: auto;
 	}

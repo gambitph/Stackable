@@ -29,6 +29,11 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				attribute: 'alt',
 				default: '',
 			},
+			imageAspectRatio: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
 			imageSize: {
 				type: 'string',
 				default: 'full',

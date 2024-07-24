@@ -68,8 +68,19 @@ class StackableVideoPopup {
 	init = () => {
 		const els = document.querySelectorAll( '.stk-block-video-popup' )
 
+		// Sanitize caption.
+		const sanitizeCaption = el => {
+			const caption = el.getAttribute( 'data-caption' )
+			if ( caption ) {
+				el.setAttribute( 'data-caption', caption.replace( /<[^>]+>/g, '' ).replace( /[^\w. ]/gi, function( c ) {
+					return '&#' + c.charCodeAt( 0 ) + ';'
+				} ) )
+			}
+		}
+
 		const openVideo = el => {
 			if ( BigPicture ) {
+				sanitizeCaption( el )
 				const args = {
 					el,
 					noLoader: true,

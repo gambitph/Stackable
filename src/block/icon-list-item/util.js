@@ -4,12 +4,15 @@
  */
 import { useRefEffect } from '@wordpress/compose'
 import { useCallback, useRef } from '@wordpress/element'
-import { useSelect, useDispatch } from '@wordpress/data'
+import {
+	useSelect, useDispatch, dispatch,
+} from '@wordpress/data'
 import {
 	cloneBlock,
 	switchToBlockType,
 	createBlock,
 	getDefaultBlockName,
+	pasteHandler,
 } from '@wordpress/blocks'
 import { store as blockEditorStore } from '@wordpress/block-editor'
 import { ENTER } from '@wordpress/keycodes'
@@ -69,40 +72,6 @@ export const useOnSplit = ( clientId, attributes ) => {
 
 		return newBlock
 	}, [ clientId, attributes ] )
-}
-
-export const useCopy = clientId => {
-	const {
-		getBlockRootClientId, getBlockName, getBlockAttributes,
-	} =
-		useSelect( blockEditorStore )
-
-	return useRefEffect( node => {
-		function onCopy( event ) {
-			// The event propagates through all nested lists, so don't override
-			// when copying nested list items.
-			if ( event.clipboardData.getData( '__unstableWrapperBlockName' ) ) {
-				return
-			}
-
-			const rootClientId = getBlockRootClientId( clientId )
-			event.clipboardData.setData(
-				'__unstableWrapperBlockName',
-				getBlockName( rootClientId )
-			)
-			event.clipboardData.setData(
-				'__unstableWrapperBlockAttributes',
-				JSON.stringify( getBlockAttributes( rootClientId ) )
-			)
-		}
-
-		node.addEventListener( 'copy', onCopy )
-		node.addEventListener( 'cut', onCopy )
-		return () => {
-			node.removeEventListener( 'copy', onCopy )
-			node.removeEventListener( 'cut', onCopy )
-		}
-	}, [] )
 }
 
 export const useEnter = ( text, clientId ) => {
@@ -180,4 +149,45 @@ export const useEnter = ( text, clientId ) => {
 		},
 		[ clientId ]
 	)
+}
+
+export const useOnPaste = ( clientId, parentClientId, attributes, setAttributes ) => {
+	const { insertBlocks } = useDispatch( blockEditorStore )
+	const { getBlockIndex } = useSelect( blockEditorStore )
+
+	return useCallback( event => {
+		event.preventDefault()
+		const html = event.clipboardData.getData( 'text/html' )
+		const plain = event.clipboardData.getData( 'text/plain' )
+
+		// Convert first to core/list block.
+		const list = pasteHandler( {
+			HTML: html,
+			plainText: plain,
+			mode: 'BLOCKS',
+		} )
+
+		// If list[0] has inner blocks, it has been converted to core/list block, else list has core/paragraph elements.
+		const items = list[ 0 ].innerBlocks.length ? list[ 0 ].innerBlocks : list
+
+		const content = items.map( item => item.attributes.content.toPlainText().replaceAll( '\n', '<br>' ) )
+
+		// If current icon list item has no text, use the first item as text.
+		if ( ! attributes.text ) {
+			const firstItem = content.shift()
+			setAttributes( { text: firstItem } )
+		}
+
+		// create new icon list items
+		const newBlocks = content.map( text => {
+			const block = createBlock( 'stackable/icon-list-item', {
+				...attributes,
+				text,
+			} )
+
+			return block
+		} )
+		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+		insertBlocks( newBlocks, getBlockIndex( clientId ) + 1, parentClientId )
+	}, [ clientId, parentClientId, attributes, setAttributes ] )
 }

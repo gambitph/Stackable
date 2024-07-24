@@ -48,7 +48,6 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -75,36 +74,34 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<Alignment.InspectorControls />
-					<Image.InspectorControls
-						{ ...props }
-						initialOpen={ true }
-						heightUnits={ heightUnit }
-						hasLightbox
-					/>
-					{ enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-					<Typography.InspectorControls
-						label={ __( 'Caption', i18n ) }
-						attrNameTemplate="figcaption%s"
-						hasToggle={ true }
-						hasTextTag={ false }
-						hasTextContent={ true }
-						initialOpen={ false }
-					/>
-				</>
-			) }
+				<Alignment.InspectorControls />
+				<Image.InspectorControls
+					{ ...props }
+					initialOpen={ true }
+					heightUnits={ heightUnit }
+					hasLightbox
+				/>
+				{ enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+				<Typography.InspectorControls
+					label={ __( 'Caption', i18n ) }
+					attrNameTemplate="figcaption%s"
+					hasToggle={ true }
+					hasTextTag={ false }
+					hasTextContent={ true }
+					initialOpen={ false }
+				/>
+			</>
 
 			<BlockStyles
 				version={ VERSION }

@@ -17,13 +17,18 @@ import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
 import AdvancedAutosuggestControl from '../advanced-autosuggest-control'
 
+import { useThemeFonts } from '~stackable/hooks'
+
 const fontOptions = fonts.map( font => {
 	return { label: font.family, value: font.family }
 } )
 
 const FontFamilyControl = props => {
+	const {
+		loadingThemeFont, themeFonts, themeFontOptions,
+	} = useThemeFonts()
 	const options = useMemo( () => {
-		return applyFilters( 'stackable.font-family-control.options', [
+		const allFontOptions = [
 			{
 				id: 'system-fonts',
 				title: __( 'System Fonts', i18n ),
@@ -39,8 +44,16 @@ const FontFamilyControl = props => {
 				title: __( 'Google Fonts', i18n ),
 				options: fontOptions,
 			},
-		] )
-	}, [] )
+		]
+		if ( themeFonts.length ) {
+			allFontOptions.unshift( {
+				id: 'theme-fonts',
+				title: __( 'Theme Fonts', i18n ),
+				options: themeFontOptions,
+			} )
+		}
+		return applyFilters( 'stackable.font-family-control.options', allFontOptions )
+	}, [ loadingThemeFont ] )
 
 	return (
 		<AdvancedAutosuggestControl
@@ -48,14 +61,17 @@ const FontFamilyControl = props => {
 			highlightValueOnFocus={ true }
 			{ ...props }
 			onChange={ fontFamily => {
-				// Load font if it's a Google font.
-				fontOptions.some( font => {
-					if ( font.value === fontFamily ) {
-						loadGoogleFont( fontFamily )
-						return true
-					}
-					return false
-				} )
+				if ( ! themeFonts.includes( fontFamily ) ) {
+					// Load font if it's a Google font.
+					fontOptions.some( font => {
+						if ( font.value === fontFamily ) {
+							loadGoogleFont( fontFamily )
+							return true
+						}
+						return false
+					} )
+				}
+
 				props.onChange( fontFamily )
 			} }
 		/>

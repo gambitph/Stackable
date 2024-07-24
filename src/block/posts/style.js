@@ -360,6 +360,7 @@ export const PostsStyles = memo( props => {
 				{ ...props }
 				{ ..._imageOptions }
 				enableHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
+				enableAspectRatio={ ! [ 'list', 'horizontal', 'horizontal-2', 'portfolio', 'portfolio-2', 'vertical-card-2' ].includes( blockStyle ) }
 			/>
 			<Typography.Style { ...props } { ...titleTypographyOptionsEditor } />
 			<Typography.Style { ...props } { ...categoryTypographyOptions } />
@@ -402,6 +403,7 @@ PostsStyles.Content = props => {
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle?.name ),
 		enableWidth: enableWidth(),
 		...( [ 'list' ].includes( blockStyle?.name ) && props.attributes.imageHasLink ? { selector: `${ itemSelector } .stk-block-posts__image-link`, widthStyleRule: 'flexBasis' } : {} ),
+		enableAspectRatio: ! [ 'list', 'horizontal', 'horizontal-2', 'portfolio', 'portfolio-2', 'vertical-card-2' ].includes( blockStyle?.name ),
 	}
 
 	return (

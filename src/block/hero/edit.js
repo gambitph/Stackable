@@ -52,7 +52,6 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
-		isSelected,
 		attributes,
 	} = props
 
@@ -82,28 +81,26 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<ContentAlign.InspectorControls />
-					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
-					<BlockDiv.InspectorControls />
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
-					<Separator.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-hero" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+				<ContentAlign.InspectorControls />
+				<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+				<BlockDiv.InspectorControls />
+				<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+				<Separator.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-hero" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
 
-					<InspectorStyleControls>
-						<InspectorBottomTip />
-					</InspectorStyleControls>
-				</>
-			) }
+				<InspectorStyleControls>
+					<InspectorBottomTip />
+				</InspectorStyleControls>
+			</>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }

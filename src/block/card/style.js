@@ -53,6 +53,7 @@ export const CardStyles = memo( props => {
 					}
 					return unit
 				} }
+				enableAspectRatio={ ! [ 'horizontal', 'full', 'faded' ].includes( blockStyle.name ) }
 				selector=".stk-block-card__image"
 			/>
 		</>
@@ -82,6 +83,7 @@ CardStyles.Content = props => {
 			<Image.Style.Content
 				{ ...props }
 				enableWidth={ blockStyle.name === 'horizontal' }
+				enableAspectRatio={ ! [ 'horizontal', 'full', 'faded' ].includes( blockStyle.name ) }
 				selector=".stk-block-card__image"
 			/>
 		</BlockCssCompiler>

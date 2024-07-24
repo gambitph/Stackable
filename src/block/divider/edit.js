@@ -44,7 +44,6 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -60,45 +59,43 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<BlockStyle.InspectorControls styles={ blockStyles } >
-						<ColorPaletteControl
-							label={ __( 'Color', i18n ) }
-							attribute="color"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Width', i18n ) + ' (%)' }
-							responsive="all"
-							attribute="width"
-							min={ 1 }
-							max={ 100 }
-							placeholder=""
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Height / Size', i18n ) }
-							responsive="all"
-							attribute="height"
-							min={ 1 }
-							sliderMax={ 100 }
-							placeholder=""
-						/>
-					</BlockStyle.InspectorControls>
+				<BlockStyle.InspectorControls styles={ blockStyles } >
+					<ColorPaletteControl
+						label={ __( 'Color', i18n ) }
+						attribute="color"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Width', i18n ) + ' (%)' }
+						responsive="all"
+						attribute="width"
+						min={ 1 }
+						max={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Height / Size', i18n ) }
+						responsive="all"
+						attribute="height"
+						min={ 1 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+				</BlockStyle.InspectorControls>
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
+				<Alignment.InspectorControls />
+				<BlockDiv.InspectorControls />
 
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-divider" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-				</>
-			) }
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-divider" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
+			</>
 
 			<DividerStyles
 				version={ VERSION }

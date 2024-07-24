@@ -61,7 +61,6 @@ const Edit = props => {
 		className,
 		attributes,
 		setAttributes,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -92,80 +91,78 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs hasLayoutPanel={ false } />
+			<>
+				<InspectorTabs hasLayoutPanel={ false } />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="general"
-							initialOpen={ true }
-						>
-							<ImageControl2
-								isDynamic={ false }
-								label={ __( 'Popup Option #1: Upload Video', i18n ) }
-								help={ __( 'Use .mp4 format for videos', i18n ) }
-								onRemove={ () => setAttributes( {
-									videoLink: '',
-									videoId: '',
-								} ) }
-								onChange={ media => {
-									setAttributes( {
-										videoLink: media.url,
-										videoId: media.url,
-									} )
-								} }
-								imageId={ urlIsVideo( attributes.videoLink ) ? attributes.videoId : '' }
-								imageURL={ urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
-								allowedTypes={ [ 'video' ] }
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'General', i18n ) }
+						id="general"
+						initialOpen={ true }
+					>
+						<ImageControl2
+							isDynamic={ false }
+							label={ __( 'Popup Option #1: Upload Video', i18n ) }
+							help={ __( 'Use .mp4 format for videos', i18n ) }
+							onRemove={ () => setAttributes( {
+								videoLink: '',
+								videoId: '',
+							} ) }
+							onChange={ media => {
+								setAttributes( {
+									videoLink: media.url,
+									videoId: media.url,
+								} )
+							} }
+							imageId={ urlIsVideo( attributes.videoLink ) ? attributes.videoId : '' }
+							imageURL={ urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
+							allowedTypes={ [ 'video' ] }
+						/>
+						<AdvancedTextControl
+							label={ __( 'Popup Option #2: Video URL', i18n ) }
+							help={ __( 'Paste a Youtube / Vimeo URL', i18n ) }
+							isDynamic={ true }
+							isFormatType={ false }
+							placeholder="https://"
+							value={ ! urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
+							onChange={ videoLink => setAttributes( {
+								videoLink,
+								videoId: getVideoProviderFromURL( videoLink ).id,
+							} ) }
+						/>
+						{ isVideoFile( attributes.videoLink ) && <>
+							<AdvancedToggleControl
+								label={ __( 'Allow fullscreen', i18n ) }
+								attribute="videoFullscreen"
+								defaultValue={ true }
 							/>
-							<AdvancedTextControl
-								label={ __( 'Popup Option #2: Video URL', i18n ) }
-								help={ __( 'Paste a Youtube / Vimeo URL', i18n ) }
-								isDynamic={ true }
-								isFormatType={ false }
-								placeholder="https://"
-								value={ ! urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
-								onChange={ videoLink => setAttributes( {
-									videoLink,
-									videoId: getVideoProviderFromURL( videoLink ).id,
-								} ) }
+							<AdvancedToggleControl
+								label={ __( 'Allow download video', i18n ) }
+								attribute="videoDownload"
+								defaultValue={ true }
 							/>
-							{ isVideoFile( attributes.videoLink ) && <>
-								<AdvancedToggleControl
-									label={ __( 'Allow fullscreen', i18n ) }
-									attribute="videoFullscreen"
-									defaultValue={ true }
-								/>
-								<AdvancedToggleControl
-									label={ __( 'Allow download video', i18n ) }
-									attribute="videoDownload"
-									defaultValue={ true }
-								/>
-								<AdvancedToggleControl
-									label={ __( 'Loop video', i18n ) }
-									attribute="videoLoop"
-									defaultValue={ false }
-								/>
-							</> }
-						</PanelAdvancedSettings>
+							<AdvancedToggleControl
+								label={ __( 'Loop video', i18n ) }
+								attribute="videoLoop"
+								defaultValue={ false }
+							/>
+						</> }
+					</PanelAdvancedSettings>
 
-					</InspectorStyleControls>
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-video-popup" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+				</InspectorStyleControls>
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-video-popup" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
 
-					<InspectorStyleControls>
-						<InspectorBottomTip />
-					</InspectorStyleControls>
-				</>
-			) }
+				<InspectorStyleControls>
+					<InspectorBottomTip />
+				</InspectorStyleControls>
+			</>
 
 			<IconLabelStyles
 				version={ VERSION }

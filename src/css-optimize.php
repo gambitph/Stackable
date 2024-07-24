@@ -430,8 +430,8 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			$media_queries = self::MEDIA_QUERY_ORDER;
 
 			// This will also include other media queries that we do not support, but just add those at the end of our CSS.
-			foreach ( array_keys( $all_style_rules ) as $mediq_query ) {
-				if ( ! in_array( $mediq_query, $media_queries ) ) {
+			foreach ( array_keys( $all_style_rules ) as $media_query ) {
+				if ( ! in_array( $media_query, $media_queries ) ) {
 					$media_queries[] = $media_query;
 				}
 			}
@@ -462,7 +462,17 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 					// Optimize selectors by combining similar ones.
 					$selector_arr = self::combine_selectors( $selector_arr );
 
-					$css .= implode( ',', $selector_arr ) . $style_rules;
+					$combined_css = implode( ',', $selector_arr ) . $style_rules;
+
+					// Prevent invalid CSS in affecting the rest of the CSS
+					// by closing any open curly braces.
+					$open_curly_brace = substr_count( $combined_css , '{' );
+					$close_curly_brace = substr_count( $combined_css , '}' );
+					if ( $open_curly_brace > $close_curly_brace ) {
+						$combined_css .= str_repeat( '}', $open_curly_brace - $close_curly_brace );
+					}
+
+					$css .= $combined_css;
 				}
 
 				if ( ! empty( $media_query ) ) {

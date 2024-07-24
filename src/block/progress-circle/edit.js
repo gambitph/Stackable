@@ -42,7 +42,6 @@ const Edit = props => {
 		clientId,
 		className,
 		attributes,
-		isSelected,
 	} = props
 
 	useGeneratedCss( attributes )
@@ -82,34 +81,32 @@ const Edit = props => {
 
 	return (
 		<>
-			{ isSelected && (
-				<>
-					<InspectorTabs />
+			<>
+				<InspectorTabs />
 
-					<Alignment.InspectorControls />
+				<Alignment.InspectorControls />
 
-					<ProgressBar.InspectorControls isCircle />
-					<Typography.InspectorControls
-						{ ...props }
-						initialOpen={ false }
-						hasTextTag={ false }
-						hasTextContent={ false }
-						hasTextShadow
-						hasToggle
-						label={ __( 'Label', i18n ) }
-					/>
+				<ProgressBar.InspectorControls isCircle />
+				<Typography.InspectorControls
+					{ ...props }
+					initialOpen={ false }
+					hasTextTag={ false }
+					hasTextContent={ false }
+					hasTextShadow
+					hasToggle
+					label={ __( 'Label', i18n ) }
+				/>
 
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+				<BlockDiv.InspectorControls />
+				<Advanced.InspectorControls />
+				<Transform.InspectorControls />
+				<EffectsAnimations.InspectorControls />
+				<CustomAttributes.InspectorControls />
+				<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
+				<Responsive.InspectorControls />
+				<ConditionalDisplay.InspectorControls />
 
-				</>
-			) }
+			</>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }

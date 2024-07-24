@@ -20,7 +20,7 @@ export const BlockHoverState = () => {
 		selectedParentHoverBlock,
 		hoverStateClientId,
 	} = useSelect( select => {
-		const selectedClientId = select( 'core/block-editor' ).getSelectedBlockClientId()
+		const selectedClientId = select( 'core/block-editor' ).getSelectedBlockClientId() || select( 'core/block-editor' ).getFirstMultiSelectedBlockClientId()
 		return {
 			getEditorDom: select( 'stackable/editor-dom' ).getEditorDom,
 			selectedClientId,
