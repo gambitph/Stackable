@@ -35,7 +35,7 @@ import { getAttributeName } from '~stackable/util'
 import { useSelect } from '@wordpress/data'
 import { _x, __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo } from '@wordpress/element'
+import { useMemo, useState } from '@wordpress/element'
 
 // Note: image drop shadows do not accept negative spread.
 const IMAGE_SHADOWS = [
@@ -102,6 +102,8 @@ const Controls = props => {
 
 		return 100
 	}, [ attributes.imageWidth, attributes.imageWidthUnit, attributes.imageHeight, attributes.imageHeightUnit ] )
+
+	const [ defaultWidth, setDefaultWidth ] = useState( 100 )
 
 	return (
 		<>
@@ -199,13 +201,23 @@ const Controls = props => {
 					sliderMax={ props.widthMax }
 					step={ props.widthStep }
 					initialPosition={ 100 }
+					default={ defaultWidth }
 					allowReset={ true }
-					placeholder="250" // TODO: This should be referenced somewher instead of just a static number
+					placeholder={ defaultWidth } // TODO: This should be referenced somewher instead of just a static number
 					responsive="all"
 					helpTooltip={ {
 						//TODO: Add a working video
 						title: __( 'Image width', i18n ),
 						description: __( 'Adjusts the image width', i18n ),
+					} }
+					onChangeUnit={ unit => {
+						const attrImageWidthUnit = getAttributeName( 'imageWidthUnit', deviceType )
+						setAttributes( { [ attrImageWidthUnit ]: unit } )
+						if ( unit === 'px' ) {
+							setDefaultWidth( 250 )
+						} else {
+							setDefaultWidth( 100 )
+						}
 					} }
 				/>
 			}
@@ -496,6 +508,7 @@ Edit.defaultProps = {
 	widthMin: [ 0, 0, 0 ],
 	widthMax: [ 1000, 100, 100 ],
 	widthStep: [ 1, 1, 1 ],
+	defaultWidth: [ 250, 100, 100 ],
 
 	hasHeight: true,
 	heightUnits: [ 'px', '%', 'vh' ],
