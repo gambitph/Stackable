@@ -203,7 +203,7 @@ const Controls = props => {
 					initialPosition={ 100 }
 					default={ defaultWidth }
 					allowReset={ true }
-					placeholder={ defaultWidth } // TODO: This should be referenced somewher instead of just a static number
+					placeholder={ defaultWidth }
 					responsive="all"
 					helpTooltip={ {
 						//TODO: Add a working video
@@ -213,8 +213,13 @@ const Controls = props => {
 					onChangeUnit={ unit => {
 						const attrImageWidthUnit = getAttributeName( 'imageWidthUnit', deviceType )
 						setAttributes( { [ attrImageWidthUnit ]: unit } )
+						// Set the default width based on the unit.
 						if ( unit === 'px' ) {
-							setDefaultWidth( 250 )
+							if ( imageData.media_details?.width ) {
+								setDefaultWidth( imageData.media_details.width )
+							} else {
+								setDefaultWidth( 250 )
+							}
 						} else {
 							setDefaultWidth( 100 )
 						}
