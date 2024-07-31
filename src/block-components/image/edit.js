@@ -35,7 +35,7 @@ import { getAttributeName } from '~stackable/util'
 import { useSelect } from '@wordpress/data'
 import { _x, __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo, useState } from '@wordpress/element'
+import { useMemo } from '@wordpress/element'
 
 // Note: image drop shadows do not accept negative spread.
 const IMAGE_SHADOWS = [
@@ -57,6 +57,8 @@ const Controls = props => {
 			imageId: attributes.imageId,
 			imageAspectRatio: attributes.imageAspectRatio,
 			imageWidthUnit: attributes.imageWidthUnit,
+			imageWidthUnitTablet: attributes.imageWidthUnitTablet,
+			imageWidthUnitMobile: attributes.imageWidthUnitMobile,
 			imageHeightUnit: attributes.imageHeightUnit,
 			imageWidth: attributes.imageWidth,
 			imageHeight: attributes.imageHeight,
@@ -103,7 +105,17 @@ const Controls = props => {
 		return 100
 	}, [ attributes.imageWidth, attributes.imageWidthUnit, attributes.imageHeight, attributes.imageHeightUnit ] )
 
-	const [ defaultWidth, setDefaultWidth ] = useState( 100 )
+	const defaultWidth = useMemo( () => {
+		const attrImageWidthUnit = getAttributeName( 'imageWidthUnit', deviceType )
+		const unit = attributes[ attrImageWidthUnit ]
+		if ( unit === 'px' ) {
+			if ( imageData.media_details?.width ) {
+				return imageData.media_details.width
+			}
+			return 250
+		}
+		return 100
+	}, [ deviceType, attributes.imageWidthUnit, attributes.imageWidthUnitTablet, attributes.imageWidthUnitMobile, imageData ] )
 
 	return (
 		<>
@@ -209,20 +221,6 @@ const Controls = props => {
 						//TODO: Add a working video
 						title: __( 'Image width', i18n ),
 						description: __( 'Adjusts the image width', i18n ),
-					} }
-					onChangeUnit={ unit => {
-						const attrImageWidthUnit = getAttributeName( 'imageWidthUnit', deviceType )
-						setAttributes( { [ attrImageWidthUnit ]: unit } )
-						// Set the default width based on the unit.
-						if ( unit === 'px' ) {
-							if ( imageData.media_details?.width ) {
-								setDefaultWidth( imageData.media_details.width )
-							} else {
-								setDefaultWidth( 250 )
-							}
-						} else {
-							setDefaultWidth( 100 )
-						}
 					} }
 				/>
 			}
