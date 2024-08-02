@@ -44,9 +44,9 @@ class _StackableCarousel {
 		this.liveregion.setAttribute( 'class', 'liveregion stk--hidden' )
 		this.wrapper.appendChild( this.liveregion )
 
+		this.fixChildrenAccessibility() // This needs to be first before infinte scrolling clones slides.
 		this.initProperties()
 		this.addEventListeners()
-		this.fixChildrenAccessibility()
 		this.fixAccessibility( this.currentSlide )
 		this.setDotActive( this.currentSlide )
 
