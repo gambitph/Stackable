@@ -2,7 +2,7 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.3
-Tested up to: 6.6
+Tested up to: 6.6.1
 Requires PHP: 7.3
 Stable tag: 3.13.4
 License: GPLv3
@@ -297,6 +297,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 3.13.4 =
 * Fixed: Improved WordPress 6.6 compatibility and performance #357 #3258
+* Fixed: Text block performance #3271
+* Fixed: Carousel Block: Aria role errors when using infinite scrolling #3269
 * Fixed: Media query shortcuts not working in Custom CSS #3214
 * Fixed: Posts Block: Date now follows current website language setting #3241
 
