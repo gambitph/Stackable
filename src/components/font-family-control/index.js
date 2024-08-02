@@ -17,7 +17,7 @@ import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
 import AdvancedAutosuggestControl from '../advanced-autosuggest-control'
 
-import { useThemeFonts } from '~stackable/hooks'
+import { select } from '@wordpress/data'
 
 const fontOptions = fonts.map( font => {
 	return { label: font.family, value: font.family }
@@ -26,7 +26,8 @@ const fontOptions = fonts.map( font => {
 const FontFamilyControl = props => {
 	const {
 		loadingThemeFont, themeFonts, themeFontOptions,
-	} = useThemeFonts()
+	} = select( 'stackable/theme-fonts' ).getThemeFonts()
+
 	const options = useMemo( () => {
 		const allFontOptions = [
 			{

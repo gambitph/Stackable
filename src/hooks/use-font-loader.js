@@ -2,10 +2,10 @@ import { useEffect } from '@wordpress/element'
 import { doAction } from '@wordpress/hooks'
 import { loadGoogleFont } from '~stackable/util'
 
-import { useThemeFonts } from './use-theme-fonts'
+import { select } from '@wordpress/data'
 
 export const useFontLoader = fontFamilyValue => {
-	const { loadingThemeFont, themeFonts } = useThemeFonts()
+	const { loadingThemeFont, themeFonts } = select( 'stackable/theme-fonts' ).getThemeFonts()
 	useEffect( () => {
 		if ( ! loadingThemeFont ) {
 			if ( ! themeFonts.includes( fontFamilyValue ) ) {
