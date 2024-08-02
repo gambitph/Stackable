@@ -13,6 +13,7 @@ import { BlockHoverState } from './block-hover-state'
 import { ContentAlign } from './content-align'
 import { EditorDom } from './get-editor-dom'
 import { ClientTree } from './get-client-id-tree'
+import { StackableThemeFonts } from './get-theme-fonts'
 
 /**
  * WordPress dependencies
@@ -31,6 +32,7 @@ registerPlugin( 'stackable-block-hover-state', { render: BlockHoverState } )
 registerPlugin( 'stackable-content-align', { render: ContentAlign } )
 registerPlugin( 'stackable-editor-dom', { render: EditorDom } )
 registerPlugin( 'stackable-client-tree', { render: ClientTree } )
+registerPlugin( 'stackable-theme-fonts', { render: StackableThemeFonts } )
 
 if ( devMode ) {
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )
