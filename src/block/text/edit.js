@@ -40,7 +40,6 @@ import { createBlockCompleter } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import { createBlock } from '@wordpress/blocks'
 import { sprintf, __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
@@ -63,7 +62,6 @@ const Edit = props => {
 		onReplace,
 		onRemove,
 		mergeBlocks,
-		attributes,
 		clientId,
 	} = props
 
@@ -91,26 +89,6 @@ const Edit = props => {
 	const placeholder = applyFilters( 'stackable.text.edit.placeholder', __( 'Type / to choose a block', i18n ), {
 		parentBlock, isFirstBlock, isLastBlock,
 	} )
-
-	const onSplit = ( value, isOriginal ) => {
-		// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js
-		let newAttributes
-
-		if ( isOriginal || value ) {
-			newAttributes = {
-				...attributes,
-				text: value,
-			}
-		}
-
-		const block = createBlock( 'stackable/text', newAttributes )
-
-		if ( isOriginal ) {
-			block.clientId = props.clientId
-		}
-
-		return block
-	}
 
 	return (
 		<>
@@ -183,7 +161,6 @@ const Edit = props => {
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }
 					onReplace={ onReplace }
-					onSplit={ onSplit }
 				/>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
