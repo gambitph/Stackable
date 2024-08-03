@@ -22,6 +22,7 @@ import { useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
+import { setDefaultBlockName } from '@wordpress/blocks'
 
 const GlobalSettingsLoader = () => {
 	const deviceType = useDeviceType()
@@ -64,4 +65,9 @@ domReady( () => {
 	document?.body?.appendChild( globalColorWrapper )
 	createRoot( globalTypographyWrapper ).render( <GlobalTypographyStyles /> )
 	createRoot( globalColorWrapper ).render( <GlobalColorStyles /> )
+
+	// Set the default block to stackable/text
+	setTimeout( () => {
+		setDefaultBlockName( 'stackable/text' )
+	} )
 } )
