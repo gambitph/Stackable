@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
+import { throttle } from 'lodash'
 
 // Function to check if the user is on an iOS device
 function isiOS() {
@@ -592,47 +593,33 @@ class _StackableCarousel {
 
 	// Pause autoplay while inline navigation is in progress
 	fixInlineScrollNavigation = () => {
-		// This option ensures that the intersection is triggered on the top
-		// of the target element, similar to how inline navigation works
-		const observerOptions = {
-			root: null,
-			rootMargin: '-90% 0px 0px 0px',
-			threshold: 0,
+		let listenerTimeout = null
+		let fallbackTimeout = null
+
+		const handleEndScroll = () => {
+			clearTimeout( fallbackTimeout )
+			this.unpauseAutoplay()
+			document.removeEventListener( 'scroll', scrollListener )
 		}
-		let scrollTimeout = null
 
-		// Observer to resume autoplay when the inline navigation is done
-		const io = new IntersectionObserver( ( entries, observer ) => {
-			entries.forEach( entry => {
-				if ( entry.isIntersecting ) {
-					clearTimeout( scrollTimeout )
-					observer.unobserve( entry.target )
-					this.unpauseAutoplay()
-				}
-			} )
-		}, observerOptions )
+		// After 100ms of non-scrolling, then the navigation scroll is done, restart the autoplay
+		const scrollListener = throttle( () => {
+			clearTimeout( listenerTimeout )
+			listenerTimeout = setTimeout( handleEndScroll, 100 )
+		}, 80 )
 
-		// Get all anchor elements with inline navigation
-		document.querySelectorAll( 'a[href^="#"]' ).forEach( el => {
-			// When the anchor element is clicked, pause the autoplay and
-			// attach an observer to the target element
-			el.addEventListener( 'click', () => {
-				const targetId = el.getAttribute( 'href' )
-				const targetElement = document.querySelector( targetId )
-
-				if ( targetElement ) {
-					this.pauseAutoplay()
-					io.observe( targetElement )
-					// Ensure autoplay is resumed even if the user manually override the inline navigation
-					// We use 1500ms as a safe timeout since major browsers have max duration of ~700ms
-					// Reference: https://stackoverflow.com/a/73906027
-					scrollTimeout = setTimeout( () => {
-						io.unobserve( targetElement )
-						this.unpauseAutoplay()
-					}, 1500 )
-				}
-			} )
-		} )
+		// Listen to any scroll navigation clicks, including dynamically added
+		document.addEventListener( 'click', e => {
+			// Check if we're inside an anchor link
+			// eslint-disable-next-line @wordpress/no-global-event-listener
+			if ( e.target.closest( '[href^="#"]' ) ) {
+				this.pauseAutoplay()
+				document.addEventListener( 'scroll', scrollListener, { passive: true } )
+				// Fallback to autoplay is resumed even if the user manually override
+				// the inline navigation or by clicking the link again
+				fallbackTimeout = setTimeout( handleEndScroll, 1000 )
+			}
+		}, { passive: true } )
 	}
 }
 
