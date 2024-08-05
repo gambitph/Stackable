@@ -50,7 +50,6 @@ import {
 	useEffect, useState, useRef,
 } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
-import { createBlock } from '@wordpress/blocks'
 import { dispatch } from '@wordpress/data'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
@@ -115,25 +114,6 @@ const Edit = props => {
 			setPrevText( text )
 		}, 300 )
 	}, [ props.attributes.anchor, props.attributes.text ] )
-
-	const onSplit = ( value, isOriginal ) => {
-		let block
-
-		if ( isOriginal || value ) {
-			block = createBlock( 'stackable/heading', {
-				...attributes,
-				text: value,
-			} )
-		} else {
-			block = createBlock( 'stackable/text' )
-		}
-
-		if ( isOriginal ) {
-			block.clientId = clientId
-		}
-
-		return block
-	}
 
 	return (
 		<>
@@ -276,7 +256,6 @@ const Edit = props => {
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }
 					onReplace={ onReplace }
-					onSplit={ onSplit }
 				/>
 				{ props.attributes.showBottomLine && <div className="stk-block-heading__bottom-line" /> }
 			</BlockDiv>

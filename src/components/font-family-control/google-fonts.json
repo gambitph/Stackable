@@ -3143,7 +3143,6 @@
       "800"
     ],
     "subsets": [
-      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -3364,7 +3363,7 @@
       "regular"
     ],
     "subsets": [
-      "chinese-traditional",
+      "chinese-hongkong",
       "cyrillic",
       "latin",
       "latin-ext",
@@ -4022,7 +4021,7 @@
       "regular"
     ],
     "subsets": [
-      "chinese-traditional",
+      "chinese-hongkong",
       "cyrillic",
       "latin",
       "latin-ext",
@@ -8294,7 +8293,16 @@
       "600",
       "700",
       "800",
-      "900"
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "cyrillic",
@@ -9666,7 +9674,7 @@
       "700"
     ],
     "subsets": [
-      "chinese-traditional",
+      "chinese-hongkong",
       "cyrillic",
       "cyrillic-ext",
       "greek",
@@ -9685,7 +9693,7 @@
       "700"
     ],
     "subsets": [
-      "chinese-traditional",
+      "chinese-hongkong",
       "cyrillic",
       "cyrillic-ext",
       "greek",
@@ -16520,6 +16528,7 @@
       "cyrillic",
       "cyrillic-ext",
       "latin",
+      "latin-ext",
       "vietnamese"
     ]
   },
@@ -19582,6 +19591,17 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Sankofa Display",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
