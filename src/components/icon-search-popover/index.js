@@ -59,10 +59,14 @@ export const cleanSvgString = svgString => {
 		.replace( /(<\/svg>)([\s\S]*)/g, '$1' )
 
 	// Remove defs
-	newSvg = newSvg.replace( /<defs[\s\S]*?<\/defs>/gm, '' )
+	if ( newSvg.indexOf( '<defs' ) !== -1 ) {
+		newSvg = newSvg.replace( /<defs[\s\S]*?<\/defs>/gm, '' )
+	}
 
 	// Remove comments
-	newSvg = newSvg.replace( /<!--[\s\S]*?-->/gm, '' )
+	if ( newSvg.indexOf( '<!--' ) !== -1 ) {
+		newSvg = newSvg.replace( /<!--[\s\S]*?-->/gm, '' )
+	}
 
 	// Remove simple grouping so that we can color SVGs.
 	for ( let i = 0; i < 2; i++ ) {
