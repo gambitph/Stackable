@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
-import { throttle } from 'lodash'
 
 // Function to check if the user is on an iOS device
 function isiOS() {
@@ -594,19 +593,17 @@ class _StackableCarousel {
 	// Pause autoplay while inline navigation is in progress
 	fixInlineScrollNavigation = () => {
 		let listenerTimeout = null
-		let fallbackTimeout = null
 
 		const handleEndScroll = () => {
-			clearTimeout( fallbackTimeout )
 			this.unpauseAutoplay()
 			document.removeEventListener( 'scroll', scrollListener )
 		}
 
 		// After 100ms of non-scrolling, then the navigation scroll is done, restart the autoplay
-		const scrollListener = throttle( () => {
+		const scrollListener = () => {
 			clearTimeout( listenerTimeout )
 			listenerTimeout = setTimeout( handleEndScroll, 100 )
-		}, 80 )
+		}
 
 		// Listen to any scroll navigation clicks, including dynamically added
 		document.addEventListener( 'click', e => {
@@ -615,9 +612,8 @@ class _StackableCarousel {
 			if ( e.target.closest( '[href^="#"]' ) ) {
 				this.pauseAutoplay()
 				document.addEventListener( 'scroll', scrollListener, { passive: true } )
-				// Fallback to autoplay is resumed even if the user manually override
-				// the inline navigation or by clicking the link again
-				fallbackTimeout = setTimeout( handleEndScroll, 1000 )
+				clearTimeout( listenerTimeout )
+				listenerTimeout = setTimeout( handleEndScroll, 1000 )
 			}
 		}, { passive: true } )
 	}
