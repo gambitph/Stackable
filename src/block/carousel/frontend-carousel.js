@@ -599,10 +599,10 @@ class _StackableCarousel {
 			document.removeEventListener( 'scroll', scrollListener )
 		}
 
-		// After 100ms of non-scrolling, then the navigation scroll is done, restart the autoplay
+		// After 200ms of non-scrolling, then the navigation scroll is done, restart the autoplay
 		const scrollListener = () => {
 			clearTimeout( listenerTimeout )
-			listenerTimeout = setTimeout( handleEndScroll, 100 )
+			listenerTimeout = setTimeout( handleEndScroll, 200 )
 		}
 
 		// Listen to any scroll navigation clicks, including dynamically added
@@ -613,7 +613,7 @@ class _StackableCarousel {
 				this.pauseAutoplay()
 				document.addEventListener( 'scroll', scrollListener, { passive: true } )
 				clearTimeout( listenerTimeout )
-				listenerTimeout = setTimeout( handleEndScroll, 1000 )
+				listenerTimeout = setTimeout( handleEndScroll, 200 )
 			}
 		}, { passive: true } )
 	}
