@@ -58,11 +58,13 @@ export const cleanSvgString = svgString => {
 	let newSvg = svgString.replace( /(^[\s\S]*?)(<svg)/gm, '$2' )
 		.replace( /(<\/svg>)([\s\S]*)/g, '$1' )
 
-	if ( newSvg.indexOf( '<!--' ) !== -1 ) {
-		// Remove defs
+	// Remove defs
+	if ( newSvg.indexOf( '<defs' ) !== -1 ) {
 		newSvg = newSvg.replace( /<defs[\s\S]*?<\/defs>/gm, '' )
+	}
 
-		// Remove comments
+	// Remove comments
+	if ( newSvg.indexOf( '<!--' ) !== -1 ) {
 		newSvg = newSvg.replace( /<!--[\s\S]*?-->/gm, '' )
 	}
 
