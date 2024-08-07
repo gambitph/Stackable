@@ -49,6 +49,7 @@ class _StackableCarousel {
 		this.addEventListeners()
 		this.fixAccessibility( this.currentSlide )
 		this.setDotActive( this.currentSlide )
+		this.fixInlineScrollNavigation()
 
 		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
 
@@ -587,6 +588,34 @@ class _StackableCarousel {
 		}
 
 		this.hasTouched = false
+	}
+
+	// Pause autoplay while inline navigation is in progress
+	fixInlineScrollNavigation = () => {
+		let listenerTimeout = null
+
+		const handleEndScroll = () => {
+			this.unpauseAutoplay()
+			document.removeEventListener( 'scroll', scrollListener )
+		}
+
+		// After 200ms of non-scrolling, then the navigation scroll is done, restart the autoplay
+		const scrollListener = () => {
+			clearTimeout( listenerTimeout )
+			listenerTimeout = setTimeout( handleEndScroll, 200 )
+		}
+
+		// Listen to any scroll navigation clicks, including dynamically added
+		document.addEventListener( 'click', e => {
+			// Check if we're inside an anchor link
+			// eslint-disable-next-line @wordpress/no-global-event-listener
+			if ( e.target.closest( '[href^="#"]' ) ) {
+				this.pauseAutoplay()
+				document.addEventListener( 'scroll', scrollListener, { passive: true } )
+				clearTimeout( listenerTimeout )
+				listenerTimeout = setTimeout( handleEndScroll, 200 )
+			}
+		}, { passive: true } )
 	}
 }
 
