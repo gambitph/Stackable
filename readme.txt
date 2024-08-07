@@ -295,6 +295,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.13.5 =
+* Fixed: Otter Blocks compatibility #3276
+* Fixed: Carousel block: Same-page navigation now works properly #3098
+* Fixed: Some custom SVGs can interfere with othr uploaded custom SVGs #3265
+
 = 3.13.4 =
 * Fixed: Improved WordPress 6.6 compatibility and performance #357 #3258
 * Fixed: Text block performance #3271
