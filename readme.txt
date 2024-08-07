@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.3
 Tested up to: 6.6.1
 Requires PHP: 7.3
-Stable tag: 3.13.4
+Stable tag: 3.13.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
