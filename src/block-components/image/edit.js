@@ -57,6 +57,8 @@ const Controls = props => {
 			imageId: attributes.imageId,
 			imageAspectRatio: attributes.imageAspectRatio,
 			imageWidthUnit: attributes.imageWidthUnit,
+			imageWidthUnitTablet: attributes.imageWidthUnitTablet,
+			imageWidthUnitMobile: attributes.imageWidthUnitMobile,
 			imageHeightUnit: attributes.imageHeightUnit,
 			imageWidth: attributes.imageWidth,
 			imageHeight: attributes.imageHeight,
@@ -102,6 +104,18 @@ const Controls = props => {
 
 		return 100
 	}, [ attributes.imageWidth, attributes.imageWidthUnit, attributes.imageHeight, attributes.imageHeightUnit ] )
+
+	const defaultWidth = useMemo( () => {
+		const attrImageWidthUnit = getAttributeName( 'imageWidthUnit', deviceType )
+		const unit = attributes[ attrImageWidthUnit ]
+		if ( unit === 'px' ) {
+			if ( imageData.media_details?.width ) {
+				return imageData.media_details.width
+			}
+			return 250
+		}
+		return 100
+	}, [ deviceType, attributes.imageWidthUnit, attributes.imageWidthUnitTablet, attributes.imageWidthUnitMobile, imageData ] )
 
 	return (
 		<>
@@ -199,8 +213,9 @@ const Controls = props => {
 					sliderMax={ props.widthMax }
 					step={ props.widthStep }
 					initialPosition={ 100 }
+					default={ defaultWidth }
 					allowReset={ true }
-					placeholder="250" // TODO: This should be referenced somewher instead of just a static number
+					placeholder={ defaultWidth }
 					responsive="all"
 					helpTooltip={ {
 						//TODO: Add a working video
@@ -496,6 +511,7 @@ Edit.defaultProps = {
 	widthMin: [ 0, 0, 0 ],
 	widthMax: [ 1000, 100, 100 ],
 	widthStep: [ 1, 1, 1 ],
+	defaultWidth: [ 250, 100, 100 ],
 
 	hasHeight: true,
 	heightUnits: [ 'px', '%', 'vh' ],
