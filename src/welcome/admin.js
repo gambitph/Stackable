@@ -413,6 +413,20 @@ const EditorSettings = () => {
 			} }
 			help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
 		/>
+		<AdminToggleSetting
+			label={ __( 'Stackable Text as Default Block', i18n ) }
+			value={ settings.stackable_text_default_block }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_text_default_block: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_text_default_block: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'If this is enabled, the default block when adding a new block will be the Stackable Text block.', i18n ) }
+		/>
 		{ isBusy &&
 			<div className="s-absolute-spinner">
 				<Spinner />
