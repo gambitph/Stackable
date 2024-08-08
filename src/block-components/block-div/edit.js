@@ -57,6 +57,7 @@ export const Edit = props => {
 							visualGuide={ {
 								highlight: 'padding',
 							} }
+							{ ...props.sizeControlSpacingProps }
 						/>
 					</PanelAdvancedSettings>
 				) }
