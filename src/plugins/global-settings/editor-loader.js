@@ -14,6 +14,7 @@ import './block-defaults'
  */
 import { useDeviceType } from '~stackable/hooks'
 import { createRoot } from '~stackable/util'
+import { settings } from 'stackable'
 
 /** WordPress dependencies
  */
@@ -22,6 +23,7 @@ import { useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
+import { setDefaultBlockName } from '@wordpress/blocks'
 
 const GlobalSettingsLoader = () => {
 	const deviceType = useDeviceType()
@@ -64,4 +66,11 @@ domReady( () => {
 	document?.body?.appendChild( globalColorWrapper )
 	createRoot( globalTypographyWrapper ).render( <GlobalTypographyStyles /> )
 	createRoot( globalColorWrapper ).render( <GlobalColorStyles /> )
+
+	// Set the default block to stackable/text
+	if ( settings.stackable_text_default_block ) {
+		setTimeout( () => {
+			setDefaultBlockName( 'stackable/text' )
+		} )
+	}
 } )
