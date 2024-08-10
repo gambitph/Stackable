@@ -157,7 +157,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			
 			register_setting(
 				'stackable_editor_settings',
-				'stackable_text_default_block',
+				'stackable_enable_text_default_block',
 				array(
 					'type' => 'boolean',
 					'description' => __( 'If this is enabled, the default block when adding a new block will be the Stackable Text block.', STACKABLE_I18N ),
@@ -186,7 +186,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
 			$settings['stackable_enable_carousel_lazy_loading'] = get_option( 'stackable_enable_carousel_lazy_loading' );
-			$settings['stackable_text_default_block'] = get_option( 'stackable_text_default_block' );
+			$settings['stackable_enable_text_default_block'] = get_option( 'stackable_enable_text_default_block' );
 			return $settings;
 		}
 
