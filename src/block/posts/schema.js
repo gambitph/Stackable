@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n'
 const postsAttributes = {
 	// General.
 	stkQueryId: {
-		type: 'number',
+		type: 'string',
 	},
 	columns: {
 		type: 'number',

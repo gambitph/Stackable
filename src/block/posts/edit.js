@@ -152,6 +152,7 @@ const Edit = props => {
 	const defaultContentOrder = activeVariation?.attributes?.contentOrder || DEFAULT_ORDER
 
 	setAttributes( { stkQueryId: uniqueId } )
+
 	return (
 		<>
 			<>
