@@ -18,8 +18,8 @@
 }
 
 :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-	&:not(.is-style-link) {
-		.stk-button {
+	&:not(.is-style-link, .wp-element-button) {
+		.stk-button:not(.wp-element-button, .wp-block-button__link) {
 			background: cssvar(button-background-color);
 			padding: cssvar(button-padding);
 

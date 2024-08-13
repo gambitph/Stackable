@@ -7,7 +7,9 @@ import BlockStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION, i18n } from 'stackable'
+import {
+	version as VERSION, i18n, settings,
+} from 'stackable'
 import { InspectorTabs, AlignButtonsControl } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -54,8 +56,8 @@ const Edit = props => {
 
 	const figcaptionClassnames = classnames(
 		getTypographyClasses( props.attributes, 'figcaption%s' ),
-		'stk-img-figcaption'
-
+		'stk-img-figcaption',
+		{ 'wp-element-caption': settings.stackable_inherit_caption_styles_from_theme },
 	)
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )

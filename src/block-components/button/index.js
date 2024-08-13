@@ -3,6 +3,7 @@
  */
 import classnames from 'classnames'
 import { useBlockAttributesContext } from '~stackable/hooks'
+import { settings } from 'stackable'
 
 /**
  * Internal dependencies
@@ -33,7 +34,11 @@ export const Button = props => {
 
 	return (
 		<Link
-			className={ classnames( [ className, getButtonClasses( attributes ) ] ) }
+			className={ classnames( [
+				className,
+				getButtonClasses( attributes ),
+				{ 'wp-block-button__link wp-element-button': settings.stackable_inherit_button_styles_from_theme }, //Check if body contains stk--is-kadence-theme
+			] ) }
 			linkProps={ buttonProps }
 			linkTrigger={ linkTrigger }
 		>

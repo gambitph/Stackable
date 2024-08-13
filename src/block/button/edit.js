@@ -2,7 +2,9 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION, i18n } from 'stackable'
+import {
+	version as VERSION, i18n, settings,
+} from 'stackable'
 import { InspectorTabs } from '~stackable/components'
 import {
 	getTypographyClasses,
@@ -67,6 +69,10 @@ const Edit = props => {
 		// Only in the editor.
 		{
 			[ `is-style-${ blockStyle }` ]: blockStyle,
+		},
+		// Kadence theme's css selector for their buttons are different compared to other themes
+		{
+			'wp-block-button': settings.stackable_inherit_button_styles_from_theme && document.body.classList.contains( 'stk--is-kadence-theme' ),
 		},
 	] )
 

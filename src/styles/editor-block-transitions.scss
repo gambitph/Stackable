@@ -10,7 +10,7 @@
 	.stk-block-heading__bottom-line,
 	.stk-block-posts__item-hide, // For posts transitions
 	.stk-block-posts__title > a, // For posts title
-	.stk-button, // Buttons
+	.stk-button:not(.wp-block-button__link), // Buttons
 	.stk-button__inner-text, // Button text
 	.stk-block li, // For icon list texts
 	.stk-block p,
