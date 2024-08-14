@@ -304,7 +304,7 @@ const Edit = props => {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: false } )
 			isUpdating = true
-		} else if ( ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) && props.attributes.timelineIsLast ) {
+		} else if ( ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) && ! props.attributes.timelineIsLast ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: true } )
 			isUpdating = true
