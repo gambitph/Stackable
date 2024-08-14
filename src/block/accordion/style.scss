@@ -78,7 +78,6 @@
 	// Make sure the contents of the accordion
 	.stk-block-accordion__content {
 		overflow: hidden;
-		transform: translateY(0);
 		opacity: 1;
 		height: 100%;
 		> * > * { // Prevent blocks inside from overlapping because of the small height when transitioning.
