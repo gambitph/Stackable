@@ -10,7 +10,10 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCss, BlockCssCompiler } from '~stackable/components'
+import {
+	BlockCss, BlockCssCompiler,
+	BlockStyleGenerator,
+} from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -49,6 +52,7 @@ const ColumnStyles = props => {
 		versionDeprecated: '',
 	}
 
+	console.log( 'attributes changed (old method)' )
 	return (
 		<>
 			<BlockCss
@@ -145,10 +149,99 @@ const ColumnStyles = props => {
 	)
 }
 
-const BlockStyles = memo( props => {
+export const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
+} )
+
+blockStyles.addBlockStyles( 'columnSpacing', [ {
+	selector: '.%s-container',
+	styleRule: 'marginTop',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-top',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginTop.valuePreCallback,
+},
+{
+	selector: '.%s-container',
+	styleRule: 'marginRight',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-right',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginRight.valuePreCallback,
+},
+{
+	selector: '.%s-container',
+	styleRule: 'marginBottom',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-bottom',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginBottom.valuePreCallback,
+},
+{
+	selector: '.%s-container',
+	styleRule: 'marginLeft',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-left',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginLeft.valuePreCallback,
+},
+
+// The styles below are used purely for the block highligher feature
+// where the edges of the element where the padding will be applied
+// is highlighted.
+
+{
+	renderIn: 'edit',
+	selector: '.%s-container',
+	styleRule: '--column-spacing-top',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-top-edit-for-highlight',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginTop.valuePreCallback,
+},
+{
+	renderIn: 'edit',
+	selector: '.%s-container',
+	styleRule: '--column-spacing-right',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-right-edit-for-highlight',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginRight.valuePreCallback,
+},
+{
+	renderIn: 'edit',
+	selector: '.%s-container',
+	styleRule: '--column-spacing-bottom',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-bottom-edit-for-highlight',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginBottom.valuePreCallback,
+},
+{
+	renderIn: 'edit',
+	selector: '.%s-container',
+	styleRule: '--column-spacing-left',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-left-edit-for-highlight',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginLeft.valuePreCallback,
+} ] )
+
+Advanced.Style.addStyles( blockStyles )
+
+const _BlockStyles = memo( props => {
 	return (
 		<>
-			<ColumnStyles { ...props } />
+			{ /* <ColumnStyles { ...props } /> */ }
 			<Alignment.Style
 				{ ...props }
 				columnAlignSelectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
@@ -156,25 +249,25 @@ const BlockStyles = memo( props => {
 			<BlockDiv.Style { ...props } />
 			<Column.Style { ...props } />
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
-			<Advanced.Style { ...props } />
+			{ /* <Advanced.Style { ...props } /> */ }
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 		</>
 	)
 } )
 
-BlockStyles.defaultProps = {
+_BlockStyles.defaultProps = {
 	version: '',
 }
 
-BlockStyles.Content = props => {
+_BlockStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
 	return (
 		<BlockCssCompiler>
-			<ColumnStyles { ...props } />
+			{ /* <ColumnStyles { ...props } /> */ }
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<Column.Style.Content { ...props } />
@@ -186,9 +279,9 @@ BlockStyles.Content = props => {
 	)
 }
 
-BlockStyles.Content.defaultProps = {
+_BlockStyles.Content.defaultProps = {
 	version: '',
 	attributes: {},
 }
 
-export default BlockStyles
+export default _BlockStyles

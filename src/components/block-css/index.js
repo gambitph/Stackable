@@ -37,6 +37,8 @@ import { pick, kebabCase } from 'lodash'
  */
 import { sprintf } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+export { BlockStyleGenerator } from './block-style-generator-class'
+export { useBlockCssGenerator } from './use-block-style-generator'
 
 const BlockCss = props => {
 	const {
@@ -432,6 +434,8 @@ const BlockCss = props => {
 	return css || null
 }
 
+export const BlockCssFunc = BlockCss
+
 // This is used for rendering styles for the editor.
 const BlockCssEdit = props => {
 	const {
@@ -471,10 +475,12 @@ const _BlockCss = props => {
 
 	// If no compileCssTo prop is provided, then we just print the styles directly.
 	if ( ! props.compileCssTo ) {
+		// console.error( `BlockCss component is deprecated, use the useBlockCssGenerator hook in your block's edit component instead` ) // eslint-disable-line no-console
 		return <BlockCssEdit { ...props } editorMode={ true } />
 	}
 	// Else, it means we need to compile all the css into the object passed to the compileCssTo prop.
 	// Call as a function so we just return the string quickly.
+	// console.error( `BlockCss component is deprecated, remove this from the block's save render method` ) // eslint-disable-line no-console
 	return BlockCss( {
 		...props,
 		editorMode: false,

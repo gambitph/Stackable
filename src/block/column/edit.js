@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import { blockStyles } from './style'
 
 /**
  * External dependencies
@@ -13,6 +13,7 @@ import {
 	FourRangeControl,
 	InspectorLayoutControls,
 	InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -24,7 +25,6 @@ import {
 	Column,
 	getColumnClasses,
 	BlockDiv,
-	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -56,10 +56,7 @@ const Edit = props => {
 	const {
 		className,
 		isHovered,
-		clientId,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
@@ -85,6 +82,17 @@ const Edit = props => {
 		`stk-${ props.attributes.uniqueId }-inner-blocks`,
 		{ 'stk--align-last-block-to-bottom': props.attributes.alignLastBlockToBottom },
 	] )
+
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
 
 	return (
 		<>
@@ -136,11 +144,12 @@ const Edit = props => {
 				<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 			</>
 
-			<BlockStyles
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
+			{ /* <_BlockStyles
 				version={ VERSION }
 				blockState={ props.blockState }
 				clientId={ clientId }
-			/>
+			/> */ }
 			<CustomCSS mainBlockClass="stk-block-column" />
 
 			<Column isHovered={ isHovered } showHandle={ isHovered } context={ props.context }>
