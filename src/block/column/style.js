@@ -52,7 +52,6 @@ const ColumnStyles = props => {
 		versionDeprecated: '',
 	}
 
-	console.log( 'attributes changed (old method)' )
 	return (
 		<>
 			<BlockCss
@@ -236,16 +235,19 @@ blockStyles.addBlockStyles( 'columnSpacing', [ {
 	valuePreCallback: callbacks.marginLeft.valuePreCallback,
 } ] )
 
+Alignment.Style.addStyles( blockStyles, {
+	columnAlignSelectorEditCallback: ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]`,
+} )
 Advanced.Style.addStyles( blockStyles )
 
 const _BlockStyles = memo( props => {
 	return (
 		<>
 			{ /* <ColumnStyles { ...props } /> */ }
-			<Alignment.Style
+			{ /* <Alignment.Style
 				{ ...props }
 				columnAlignSelectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-			/>
+			/> */ }
 			<BlockDiv.Style { ...props } />
 			<Column.Style { ...props } />
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />

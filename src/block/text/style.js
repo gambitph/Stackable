@@ -77,6 +77,8 @@ blockStyles.addBlockStyles( 'columnGap', [ {
 	format: '%spx',
 } ] )
 
+Alignment.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
 Typography.Style.addStyles( blockStyles, {
 	selector: '.stk-block-text__text',
 	hoverSelector: '.stk-block-text__text:hover',
@@ -85,9 +87,9 @@ Typography.Style.addStyles( blockStyles, {
 export const TextStyles = memo( props => {
 	return (
 		<>
-			<Alignment.Style { ...props } />
+			{ /* <Alignment.Style { ...props } /> */ }
 			<BlockDiv.Style { ...props } />
-			<Advanced.Style { ...props } />
+			{ /* <Advanced.Style { ...props } /> */ }
 			<Transform.Style { ...props } />
 			{ /* <Typography.Style { ...props } { ...typographyOptions } /> */ }
 			{ /* <Styles { ...props } /> */ }
@@ -107,9 +109,9 @@ TextStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } />
+			{ /* <Alignment.Style.Content { ...props } /> */ }
 			<BlockDiv.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
+			{ /* <Advanced.Style.Content { ...props } /> */ }
 			<Transform.Style.Content { ...props } />
 			{ /* <Typography.Style.Content { ...props } { ...typographyOptions } /> */ }
 			<EffectsAnimations.Style.Content { ...props } />
