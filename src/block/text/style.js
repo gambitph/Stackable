@@ -10,17 +10,19 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCss, BlockCssCompiler } from '~stackable/components'
+import {
+	BlockCss, BlockCssCompiler, BlockStyleGenerator,
+} from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
 
-const typographyOptions = {
-	selector: '.stk-block-text__text',
-	hoverSelector: '.stk-block-text__text:hover',
-}
+// const typographyOptions = {
+// 	selector: '.stk-block-text__text',
+// 	hoverSelector: '.stk-block-text__text:hover',
+// }
 
 const Styles = props => {
 	const propsToPass = {
@@ -53,6 +55,33 @@ const Styles = props => {
 	)
 }
 
+export const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
+} )
+
+blockStyles.addBlockStyles( 'columns', [ {
+	selector: '',
+	styleRule: 'columnCount',
+	attrName: 'columns',
+	key: 'columns',
+	responsive: 'all',
+} ] )
+
+blockStyles.addBlockStyles( 'columnGap', [ {
+	selector: '',
+	styleRule: 'columnGap',
+	attrName: 'columnGap',
+	key: 'columnGap',
+	responsive: 'all',
+	format: '%spx',
+} ] )
+
+Typography.Style.addStyles( blockStyles, {
+	selector: '.stk-block-text__text',
+	hoverSelector: '.stk-block-text__text:hover',
+} )
+
 export const TextStyles = memo( props => {
 	return (
 		<>
@@ -60,8 +89,8 @@ export const TextStyles = memo( props => {
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
-			<Typography.Style { ...props } { ...typographyOptions } />
-			<Styles { ...props } />
+			{ /* <Typography.Style { ...props } { ...typographyOptions } /> */ }
+			{ /* <Styles { ...props } /> */ }
 			<EffectsAnimations.Style { ...props } />
 		</>
 	)
@@ -82,7 +111,7 @@ TextStyles.Content = props => {
 			<BlockDiv.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Typography.Style.Content { ...props } { ...typographyOptions } />
+			{ /* <Typography.Style.Content { ...props } { ...typographyOptions } /> */ }
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
 			<Styles { ...props } />
