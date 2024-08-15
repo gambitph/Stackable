@@ -1,6 +1,6 @@
 import { useQueryLoopInstanceId } from '~stackable/util'
-import { dispatch } from '@wordpress/data'
-import { useMemo } from '@wordpress/element'
+import { useMemo, useRef } from '@wordpress/element'
+import { useRafEffect } from '~stackable/hooks'
 
 export const useBlockCssGenerator = props => {
 	const {
@@ -9,30 +9,23 @@ export const useBlockCssGenerator = props => {
 		clientId,
 		context,
 		attributes,
-		setAttributes,
 		blockState,
 	} = props
 
+	// Keep the filtered block styles that we will update.
+	const blockStyleDefsRef = useRef( [] )
+
 	// Generate the CSS styles.
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
-	// TODO: Check whether to use useMemo or useRafMemo here
-	return useMemo( () => {
+
+	const editCss = useMemo( () => {
 		// Gather only the attributes that have values and all their
 		// corresponding block style definitions.
 		const attrNamesWithValues = blockStyles.getAttributesWithValues( attributes )
-		const blockStyleDefs = blockStyles.getBlockStyles( attrNamesWithValues )
-
-		// Generate the styles that are to be saved with the actual block.
-		const savedCss = blockStyles.generateBlockStylesForSave( attributes, blockStyleDefs, {
-			version,
-		} )
-
-		// Quietly save the styles.
-		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-		setAttributes( { generatedCss: savedCss } )
+		blockStyleDefsRef.current = blockStyles.getBlockStyles( attrNamesWithValues )
 
 		// These are the styles to be displayed in the editor.
-		return blockStyles.generateBlockStylesForEditor( attributes, blockStyleDefs, {
+		const css = blockStyles.generateBlockStylesForEditor( attributes, blockStyleDefsRef.current, {
 			version,
 			blockState,
 			uniqueId: attributes.uniqueId,
@@ -40,5 +33,21 @@ export const useBlockCssGenerator = props => {
 			clientId,
 			context, // This is used for dynamic content.
 		} )
-	}, [ attributes, version, blockState, clientId, attributes.uniqueId, instanceId, context, setAttributes ] )
+		return css
+	}, [ attributes, version, blockState, clientId, attributes.uniqueId, instanceId, context ] )
+
+	useRafEffect( () => {
+		// Generate the styles that are to be saved with the actual block.
+		const saveCss = blockStyles.generateBlockStylesForSave( attributes, blockStyleDefsRef.current, {
+			version,
+		} )
+
+		// Quietly save the styles. We cannot use setAttributes here because it
+		// will cause the block and this hook to rerender.
+		// dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+		// setAttributes( { generatedCss: saveCss } )
+		attributes.generatedCss = saveCss
+	}, [ attributes, blockStyleDefsRef.current, version ] )
+
+	return editCss
 }
