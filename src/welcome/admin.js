@@ -425,7 +425,7 @@ const EditorSettings = () => {
 					stackable_enable_text_default_block: value, // eslint-disable-line camelcase
 				} )
 			} }
-			help={ __( 'If this is enabled, the default block when adding a new block will be the Stackable Text block.', i18n ) }
+			help={ __( 'If enabled, Stackable Text blocks will be added by default instead of the native Paragraph Block.', i18n ) }
 		/>
 		{ isBusy &&
 			<div className="s-absolute-spinner">
