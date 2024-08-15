@@ -1,6 +1,6 @@
-import { useRafMemo } from '~stackable/hooks'
 import { useQueryLoopInstanceId } from '~stackable/util'
 import { dispatch } from '@wordpress/data'
+import { useMemo } from '@wordpress/element'
 
 export const useBlockCssGenerator = props => {
 	const {
@@ -15,7 +15,8 @@ export const useBlockCssGenerator = props => {
 
 	// Generate the CSS styles.
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
-	return useRafMemo( () => {
+	// TODO: Check whether to use useMemo or useRafMemo here
+	return useMemo( () => {
 		// Gather only the attributes that have values and all their
 		// corresponding block style definitions.
 		const attrNamesWithValues = blockStyles.getAttributesWithValues( attributes )
