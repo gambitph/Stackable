@@ -25,7 +25,6 @@ export class BlockStyleGenerator {
 	constructor( commonProps ) {
 		this.commonProps = commonProps
 		this._blockStyles = {} // This holds all the blockStyles, keys are the attrName
-		this._saveCache = {}
 	}
 
 	addBlockStylesOldWay( blockStyles ) {
