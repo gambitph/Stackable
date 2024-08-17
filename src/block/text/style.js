@@ -11,9 +11,6 @@ import {
 } from '~stackable/block-components'
 import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
 const blockStyles = new BlockStyleGenerator( {
 	versionAdded: '3.0.0',
 	versionDeprecated: '',

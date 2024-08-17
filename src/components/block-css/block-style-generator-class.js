@@ -25,6 +25,7 @@ export class BlockStyleGenerator {
 	constructor( commonProps ) {
 		this.commonProps = commonProps
 		this._blockStyles = {} // This holds all the blockStyles, keys are the attrName
+		this._dynamicBlockStyles = [] // Holds functions that fill be called when generating blocks styles.
 	}
 
 	addBlockStylesOldWay( blockStyles ) {
@@ -64,6 +65,10 @@ export class BlockStyleGenerator {
 	 * @return {undefined}
 	 */
 	addBlockStyle( _attrName, blockStyle ) {
+		if ( ! _attrName ) {
+			console.error( 'BlockStyleGenerator: No attribute name provided.' ) // eslint-disable-line no-console
+		}
+
 		// If an attribute name template is provided, use it to format the attrName
 		const attrName = blockStyle.attrNameTemplate ? getAttrName( blockStyle.attrNameTemplate, _attrName ) : _attrName
 
@@ -73,6 +78,19 @@ export class BlockStyleGenerator {
 		}
 
 		this._blockStyles[ attrName ].push( blockStyle )
+	}
+
+	/**
+	 * Normally, block styles are added with `addBlockStyle`. However, when you
+	 * need to generate a block style that need to use a value from an
+	 * attribute, you don't have access to the attributes yet. But if you use
+	 * this function, then you can add the blockStyle dynamically - although
+	 * this is a less performant way to add block styles.
+	 *
+	 * @param {Function} fn function that's called when generating block styles
+	 */
+	addBlockStyleConditionally( fn ) {
+		this._dynamicBlockStyles.push( fn )
 	}
 
 	/**
@@ -132,9 +150,35 @@ export class BlockStyleGenerator {
 	}
 
 	generateBlockStylesForEditor( attributes, blockStyles, args ) {
-		// const attrNamesWithValues = this.getAttributesWithValues( attributes )
-		// const blockStyles = this.getBlockStyles( attrNamesWithValues )
 		const generatedCss = []
+
+		// Call block styles that are added conditionally
+		this._dynamicBlockStyles.forEach( fn => {
+			const _BlockCssFunc = blockStyle => {
+				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
+					return
+				}
+
+				const css = BlockCssFunc( {
+					...this.commonProps,
+					...blockStyle,
+					version: args.version || this.commonProps.version,
+					versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
+					blockState: args.blockState,
+					clientId: args.clientId,
+					uniqueId: args.uniqueId,
+					instanceId: args.instanceId,
+					attributes,
+					editorMode: true,
+				} )
+				if ( css ) {
+					generatedCss.push( css )
+				}
+			}
+			fn( attributes, _BlockCssFunc )
+		} )
+
+		// Generate block styles based on the attributes that have values
 		Object.keys( blockStyles ).forEach( attrName => {
 			blockStyles[ attrName ].forEach( blockStyle => {
 				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
@@ -167,12 +211,34 @@ export class BlockStyleGenerator {
 	}
 
 	generateBlockStylesForSave( attributes, blockStyles, args ) {
-		// const attrNamesWithValues = this.getAttributesWithValues( attributes )
-		// const blockStyles = this.getBlockStyles( attrNamesWithValues )
-
 		// We initialize a single css object, all styles will be saved in this.
 		const cssCompiler = new CssSaveCompiler()
 
+		// Call block styles that are added conditionally
+		this._dynamicBlockStyles.forEach( fn => {
+			const _BlockCssFunc = blockStyle => {
+				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
+					return
+				}
+
+				return BlockCssFunc( {
+					...this.commonProps,
+					...blockStyle,
+					version: args.version || this.commonProps.version,
+					versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
+					// blockState: args.blockState,
+					// clientId: args.clientId,
+					uniqueId: attributes.uniqueId,
+					// instanceId: args.instanceId,
+					attributes,
+					editorMode: false,
+					compileCssTo: cssCompiler,
+				} )
+			}
+			fn( attributes, _BlockCssFunc )
+		} )
+
+		// Generate block styles based on the attributes that have values
 		Object.keys( blockStyles ).forEach( attrName => {
 			blockStyles[ attrName ].forEach( blockStyle => {
 				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {

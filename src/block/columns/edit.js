@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -14,10 +14,10 @@ import {
 	GroupPlaceholder,
 	InspectorLayoutControls,
 	InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
 	Alignment,
@@ -54,10 +54,7 @@ const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 const Edit = props => {
 	const {
 		className,
-		clientId,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
@@ -79,6 +76,17 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-block-content',
 	], getContentAlignmentClasses( props.attributes ) )
+
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
 
 	return (
 		<>
@@ -116,11 +124,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				enableVariationPicker={ true }
 			>
-				<BlockStyles
-					version={ VERSION }
-					blockState={ props.blockState }
-					clientId={ clientId }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
