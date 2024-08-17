@@ -101,3 +101,40 @@ Style.Content = props => {
 	)
 }
 
+Style.addStyles = ( blockStyleGenerator, props = {} ) => {
+	const {
+		backgroundSelector = '.%s-container',
+		borderSelector = '.%s-container',
+		sizeSelector = '.%s-container',
+		sizeVerticalAlignRule = null,
+		sizeHorizontalAlignRule = 'margin',
+		wrapperSelector = '',
+		sizeVerticalAlignSelector = '',
+		// sizeVerticalAlignSelectorEdit = '',
+	} = props
+
+	BackgroundStyle.addStyles( blockStyleGenerator, {
+		...props,
+		renderCondition: 'hasContainer',
+		attrNameTemplate: 'container%s',
+		selector: backgroundSelector,
+	} )
+	BorderStyle.addStyles( blockStyleGenerator, {
+		...props,
+		renderCondition: 'hasContainer',
+		attrNameTemplate: 'container%s',
+		selector: borderSelector,
+		hoverSelector: `${ borderSelector }:hover`,
+	} )
+	SizeStyle.addStyles( blockStyleGenerator, {
+		...props,
+		attrNameTemplate: 'container%s',
+		selector: sizeSelector,
+		verticalAlignRule: sizeVerticalAlignRule,
+		verticalAlignSelector: sizeVerticalAlignSelector,
+		// verticalAlignSelectorEdit: sizeVerticalAlignSelectorEdit,
+		horizontalAlignRule: sizeHorizontalAlignRule,
+		wrapperSelector,
+		// hasPaddings: hasContainer,
+	} )
+}

@@ -28,3 +28,19 @@ Style.Content = props => {
 		</>
 	)
 }
+
+Style.addStyles = ( blockStyleGenerator, props = {} ) => {
+	BackgroundStyle.addStyles( blockStyleGenerator, {
+		...props,
+		renderCondition: 'hasBackground',
+		attrNameTemplate: 'block%s',
+	} )
+	BorderStyle.addStyles( blockStyleGenerator, {
+		...props,
+		attrNameTemplate: 'block%s',
+	} )
+	SizeStyle.addStyles( blockStyleGenerator, {
+		...props,
+		attrNameTemplate: 'block%s',
+	} )
+}

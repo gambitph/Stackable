@@ -14,7 +14,7 @@
  * In the block edit component, the function `generateBlockStyles` should be
  * called to generate the css string for the block.
  */
-import { getUniqueBlockClass } from '~stackable/util'
+import { getAttrName, getUniqueBlockClass } from '~stackable/util'
 import { getDynamicContentEdit } from '../dynamic-content-control'
 import { applyFilters } from '@wordpress/hooks'
 import { BlockCssFunc } from '.'
@@ -34,16 +34,45 @@ export class BlockStyleGenerator {
 		}
 	}
 
+	/**
+	 * Used to add block styles to the block style generator. The attribute name
+	 * is important because it is used for looking which styles are generated
+	 * from a set of attributes.
+	 *
+	 * @param {string} attrName The attribute name to add block styles to
+	 * @param {Array} blockStyles Properties needed to generate the block
+	 * styles
+	 * @return {undefined}
+	 */
 	addBlockStyles( attrName, blockStyles ) {
+		if ( ! Array.isArray( blockStyles ) ) {
+			this.addBlockStyle( attrName, blockStyles )
+		} else {
+			blockStyles.forEach( blockStyle => {
+				this.addBlockStyle( attrName, blockStyle )
+			} )
+		}
+	}
+
+	/**
+	 * Used to add one block style to the block style generator. The attribute
+	 * name is important because it is used for looking which styles are
+	 * generated from a set of attributes.
+	 *
+	 * @param {string} _attrName The attribute name to add block styles to
+	 * @param {Object} blockStyle Properties needed to generate the block styles
+	 * @return {undefined}
+	 */
+	addBlockStyle( _attrName, blockStyle ) {
+		// If an attribute name template is provided, use it to format the attrName
+		const attrName = blockStyle.attrNameTemplate ? getAttrName( blockStyle.attrNameTemplate, _attrName ) : _attrName
+
 		if ( ! this._blockStyles[ attrName ] ) {
-			this._blockStyles[ attrName ] = Array.isArray( blockStyles ) ? blockStyles : [ blockStyles ]
+			this._blockStyles[ attrName ] = [ blockStyle ]
 			return
 		}
-		if ( ! Array.isArray( blockStyles ) ) {
-			this._blockStyles[ attrName ].push( blockStyles )
-		} else {
-			this._blockStyles[ attrName ] = this._blockStyles[ attrName ].concat( blockStyles )
-		}
+
+		this._blockStyles[ attrName ].push( blockStyle )
 	}
 
 	/**
@@ -84,13 +113,34 @@ export class BlockStyleGenerator {
 		return Object.keys( pickBy( attributes, test ) )
 	}
 
+	/**
+	 * Checks the `renderCondition` property in blockStyle if it matches the
+	 * condition to render this, if present.
+	 *
+	 * @param {Object} blockStyle The block style object
+	 * @param {Object} attributes The block attributes
+	 */
+	styleShouldRender( blockStyle, attributes ) {
+		if ( blockStyle.renderCondition ) {
+			if ( typeof blockStyle.renderCondition === 'function' ) {
+				return blockStyle.renderCondition( attributes )
+			}
+			// renderCondition is an attribute name.
+			return !! attributes[ blockStyle.renderCondition ]
+		}
+		return true
+	}
+
 	generateBlockStylesForEditor( attributes, blockStyles, args ) {
 		// const attrNamesWithValues = this.getAttributesWithValues( attributes )
 		// const blockStyles = this.getBlockStyles( attrNamesWithValues )
-
 		const generatedCss = []
 		Object.keys( blockStyles ).forEach( attrName => {
 			blockStyles[ attrName ].forEach( blockStyle => {
+				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
+					return
+				}
+
 				const css = BlockCssFunc( {
 					...this.commonProps,
 					...blockStyle,
@@ -100,7 +150,6 @@ export class BlockStyleGenerator {
 					clientId: args.clientId,
 					uniqueId: args.uniqueId,
 					instanceId: args.instanceId,
-					attrName,
 					attributes,
 					editorMode: true,
 				} )
@@ -126,6 +175,10 @@ export class BlockStyleGenerator {
 
 		Object.keys( blockStyles ).forEach( attrName => {
 			blockStyles[ attrName ].forEach( blockStyle => {
+				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
+					return
+				}
+
 				BlockCssFunc( {
 					...this.commonProps,
 					...blockStyle,
@@ -135,7 +188,6 @@ export class BlockStyleGenerator {
 					// clientId: args.clientId,
 					uniqueId: attributes.uniqueId,
 					// instanceId: args.instanceId,
-					attrName,
 					attributes,
 					editorMode: false,
 					compileCssTo: cssCompiler,

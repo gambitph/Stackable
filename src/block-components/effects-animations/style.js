@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, doAction } from '@wordpress/hooks'
 
 export const Style = props => {
 	const EffectStyles = applyFilters( 'stackable.block-component.effects-animations.style', null )
@@ -11,4 +11,8 @@ export const Style = props => {
 Style.Content = props => {
 	const EffectStyles = applyFilters( 'stackable.block-component.effects-animations.style.content', null )
 	return EffectStyles && <EffectStyles { ...props } />
+}
+
+Style.addStyles = ( blockStyleGenerator, props = {} ) => {
+	doAction( 'stackable.block-component.effects-animations.style.addStyles', blockStyleGenerator, props )
 }

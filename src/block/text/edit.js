@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { blockStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -151,11 +151,6 @@ const Edit = props => {
 			</>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			{ /* <TextStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/> */ }
 			<CustomCSS mainBlockClass="stk-block-text" />
 
 			<BlockDiv
