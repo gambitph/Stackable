@@ -68,9 +68,9 @@ import { Placeholder, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
-import { useMemo } from '@wordpress/element'
+import { useMemo, useEffect } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
-import { compose } from '@wordpress/compose'
+import { compose, useInstanceId } from '@wordpress/compose'
 
 const ALLOWED_INNER_BLOCKS = [
 	'stackable/load-more',
@@ -98,6 +98,7 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const {
+		stkQueryId,
 		imageSize,
 		type = 'post',
 		orderBy = 'date',
@@ -116,6 +117,8 @@ const Edit = props => {
 	const {
 		posts, isRequesting, hasPosts,
 	} = usePostsQuery( attributes )
+
+	const instanceId = useInstanceId( Edit )
 
 	const wrapperClassNames = classnames(
 		'stk-inner-blocks',
@@ -148,10 +151,17 @@ const Edit = props => {
 		return generateRenderPostItem( attributes, { isHovered: props.isHovered } )
 	}, [ attributes, props.isHovered ] )
 
+	useEffect( () => {
+		// Set a unique instance ID for the posts block.
+		// This is used to give unique identifier to our
+		// queries.
+		if ( stkQueryId !== instanceId ) {
+			setAttributes( { stkQueryId: instanceId } )
+		}
+	}, [ stkQueryId, instanceId ] )
+
 	const activeVariation = getActiveBlockVariation( name, attributes )
 	const defaultContentOrder = activeVariation?.attributes?.contentOrder || DEFAULT_ORDER
-
-	setAttributes( { stkQueryId: uniqueId } )
 
 	return (
 		<>
