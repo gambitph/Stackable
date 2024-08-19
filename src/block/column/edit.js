@@ -15,7 +15,6 @@ import {
 	InspectorTabs,
 	useBlockCssGenerator,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -47,23 +46,40 @@ import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
 
 const Edit = props => {
 	const {
-		hasInnerBlocks, isOnlyBlock, parentBlock,
-	} = useBlockContext()
-
-	const {
+		clientId,
 		className,
 		isHovered,
 	} = props
 
+	const {
+		hasInnerBlocks, isOnlyBlock, useZeroColumnSpacing,
+	} = useSelect(
+		select => {
+			const {
+				getBlockOrder, getBlockRootClientId, getBlockName,
+			} =
+				select( 'core/block-editor' )
+
+			const rootClientId = getBlockRootClientId( clientId )
+			const parentBlockName = getBlockName( rootClientId )
+
+			return {
+				hasInnerBlocks: getBlockOrder( clientId ).length > 0,
+				rootClientId,
+				isOnlyBlock: getBlockOrder( rootClientId ).length === 1,
+				useZeroColumnSpacing: ! [ 'stackable/timeline' ].includes( parentBlockName ),
+			}
+		},
+		[ clientId ]
+	)
+
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-
-	const nonZeroColumnSpacingBlocks = [ 'stackable/timeline' ]
-	const useZeroColumnSpacing = parentBlock ? ! nonZeroColumnSpacingBlocks.includes( parentBlock.name ) : false
 
 	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, props )
 
@@ -161,7 +177,7 @@ const Edit = props => {
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							templateLock={ props.attributes.templateLock || false }
 							orientation={ blockOrientation }
-							renderAppender={ ! hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : InnerBlocks.DefaultBlockAppender }
+							renderAppender={ hasInnerBlocks ? undefined : InnerBlocks.ButtonBlockAppender }
 						/>
 					</ContainerDiv>
 				</BlockDiv>
