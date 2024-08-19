@@ -2,20 +2,20 @@
  * This defines all styles related to making the hover states of blocks animate smoothly.
  */
 // Hover transitions.
-body.stk--anim-init {
-	:is(
+.stk--anim-init {
+	:where(
 	.stk-block,
 	.stk-container,
 	.stk-container-padding,
-	.stk-img-wrapper, // Images.
-	.stk-img-wrapper img, // Images.
+	.stk-img-wrapper, /* Images */
+	.stk-img-wrapper img, /* Images */
 	.stk-block-heading__top-line,
 	.stk-block-heading__bottom-line,
-	.stk-block-posts__item-hide, // For posts transitions
-	.stk-block-posts__title > a, // For posts title
-	.stk-button, // Buttons
-	.stk-button__inner-text, // Button text
-	.stk-block li, // For icon list texts
+	.stk-block-posts__item-hide, /* For posts transitions */
+	.stk-block-posts__title > a, /* For posts title */
+	.stk-button, /* Buttons */
+	.stk-button__inner-text, /* Button text */
+	.stk-block li, /* For icon list texts */
 	.stk-block p,
 	.stk-block h1,
 	.stk-block h2,
@@ -24,7 +24,7 @@ body.stk--anim-init {
 	.stk-block h5,
 	.stk-block h6,
 	.stk-block [class*="__text"]), // Text inside blocks.
-	// These are outside :is() since pseudo elements won't compile correctly.
+	// These are outside :where() since pseudo elements won't compile correctly.
 	.stk--has-background-overlay::before, // Image background overlays
 	.stk-block .stk-button::before, // For button animations
 	.stk-block .stk-button::after, // For button animations
