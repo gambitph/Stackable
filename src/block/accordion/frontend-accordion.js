@@ -156,6 +156,10 @@ class StackableAccordion {
 				if ( el.getAttribute( 'id' ) ) {
 					elsAnchors[ el.getAttribute( 'id' ) ] = el
 				}
+
+				if ( el.contentEl.querySelector( '.stk-block-timeline' ) ) {
+					el.contentEl.classList.add( 'has-stk-block-timeline' )
+				}
 				el._StackableHasInitAccordion = true
 			}
 		} )
