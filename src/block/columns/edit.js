@@ -35,7 +35,6 @@ import {
 	getContentAlignmentClasses,
 	Columns,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -48,19 +47,31 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 	} = props
 
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { hasInnerBlocks } = useBlockContext()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
+
+	const { hasInnerBlocks } = useSelect(
+		select => {
+			const { getBlockOrder } = select( 'core/block-editor' )
+
+			return {
+				hasInnerBlocks: getBlockOrder( clientId ).length > 0,
+			}
+		},
+		[ clientId ]
+	)
 
 	const blockClassNames = classnames( applyFilters( 'stackable.columns.edit.blockClassNames',
 		[
@@ -153,8 +164,17 @@ const Edit = props => {
 // Load the polyfill for columns block :has() selector for Firefox
 const userAgent = navigator?.userAgent
 if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
-	addFilter( 'stackable.columns.edit.blockClassNames', 'stackable/columns-has-single-block-polyfill', classes => {
-		const { numInnerBlocks } = useBlockContext()
+	addFilter( 'stackable.columns.edit.blockClassNames', 'stackable/columns-has-single-block-polyfill', ( classes, props ) => {
+		const { numInnerBlocks } = useSelect(
+			select => {
+				const { getBlockOrder } = select( 'core/block-editor' )
+
+				return {
+					numInnerBlocks: getBlockOrder( props.clientId ).length,
+				}
+			},
+			[ props.clientId ]
+		)
 
 		if ( numInnerBlocks === 1 ) {
 			classes.push( 'stk-block-columns--has-single-block-polyfill' )

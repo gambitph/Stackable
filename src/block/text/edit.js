@@ -29,7 +29,6 @@ import {
 	InspectorLayoutControls,
 	useBlockCssGenerator,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -43,6 +42,7 @@ import { createBlockCompleter } from '~stackable/util'
 import { sprintf, __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
+import { useSelect } from '@wordpress/data'
 
 /**
  * Add `autocompleters` support for stackable/text
@@ -62,14 +62,32 @@ const Edit = props => {
 		onReplace,
 		onRemove,
 		mergeBlocks,
-		// clientId,
+		clientId,
 	} = props
 
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+
 	const {
 		parentBlock, isFirstBlock, isLastBlock,
-	} = useBlockContext()
+	} = useSelect(
+		select => {
+			const {
+				getBlockOrder, getBlockRootClientId, getBlock,
+			} =
+				select( 'core/block-editor' )
+
+			const rootClientId = getBlockRootClientId( clientId )
+			const parentInnerBlocks = getBlockOrder( rootClientId )
+
+			return {
+				parentBlock: getBlock( rootClientId ),
+				isFirstBlock: parentInnerBlocks.indexOf( clientId ) === 0,
+				isLastBlock: parentInnerBlocks.indexOf( clientId ) === parentInnerBlocks.length - 1,
+			}
+		},
+		[ clientId ]
+	)
 
 	const enableColumns = applyFilters( 'stackable.text.edit.enable-column', true, parentBlock )
 
