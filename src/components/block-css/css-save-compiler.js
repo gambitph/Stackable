@@ -3,7 +3,7 @@
  * components.  Mainly used for the save function of blocks.
  */
 
-import { minifyCSS } from '~stackable/util'
+// import { minifyCSS } from '~stackable/util'
 import { getMediaQuery } from './util'
 
 const DEVICES = [ 'desktop', 'desktopOnly', 'desktopTablet', 'tabletOnly', 'tablet', 'mobile' ]
@@ -62,7 +62,8 @@ class CssSaveCompiler {
 			allCss.push( css )
 		} )
 
-		return minifyCSS( allCss.join( '' ) )
+		// return minifyCSS( allCss.join( '' ) )
+		return allCss.join( '' )
 	}
 }
 
