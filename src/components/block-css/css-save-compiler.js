@@ -31,7 +31,7 @@ class CssSaveCompiler {
 
 	// Compile all this.styles into a single string.
 	compile() {
-		let allCss = ''
+		const allCss = []
 
 		// Follow this order so we can put the media queries that override for smaller screens last.
 		DEVICES.forEach( device => {
@@ -59,10 +59,10 @@ class CssSaveCompiler {
 				css = `${ mediaQuery }{${ css }}`
 			}
 
-			allCss += css
+			allCss.push( css )
 		} )
 
-		return minifyCSS( allCss )
+		return minifyCSS( allCss.join( '' ) )
 	}
 }
 
