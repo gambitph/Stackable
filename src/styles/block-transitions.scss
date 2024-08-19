@@ -32,16 +32,16 @@
 	.stk-img-wrapper::before, // Image block hover ovelay.
 	.stk-block li::marker, // For icon list marker
 	.stk-block-tabs__tab { // Tabs block
-		transition: all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), flex 0s, max-width 0s, visibility 0s; // Don't include flex & max-width since column widths would animate.
+		transition: var(--stk-transition-default, all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), flex 0s, max-width 0s, visibility 0s);
 		border-width: 1px;
 		border-style: none;
 	}
 	.stk--svg-wrapper :is(.stk--shape-icon, .stk--inner-svg, .stk--inner-svg *) {
-		transition: all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95);
+		transition: var(--stk-transition-default, all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95));
 	}
 	// Icons can have a delay in transitions. It's more apparent when transitioning fill, removing it seems to fix this.
 	.stk--svg-wrapper .stk--inner-svg svg:last-child {
-		transition: all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), fill 0s;
+		transition: var(--stk-transition-default, all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), fill 0s);
 	}
 }
 
