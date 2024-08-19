@@ -1,6 +1,5 @@
 import { i18n } from 'stackable'
 import { last, pick } from 'lodash'
-import { useBlockContext } from '~stackable/hooks'
 import { AdvancedRangeControl, Tooltip } from '~stackable/components'
 
 import { __ } from '@wordpress/i18n'
@@ -24,9 +23,23 @@ export const ColumnsControl = props => {
 	} = props
 	const { clientId: _clientId } = useBlockEditContext()
 	const clientId = rootClientId || _clientId
+
 	const {
 		numInnerBlocks, innerBlocks,
-	} = useBlockContext( rootClientId )
+	} = useSelect(
+		select => {
+			const { getBlockOrder } = select( 'core/block-editor' )
+
+			const innerBlocks = getBlockOrder( rootClientId )
+
+			return {
+				innerBlocks,
+				numInnerBlocks: innerBlocks.length,
+			}
+		},
+		[ rootClientId ]
+	)
+
 	const {
 		multiClientIds, multiNumInnerBlocks, multiInnerBlocks, hasMultiSelectedBlocks,
 	} = useSelect( select => {

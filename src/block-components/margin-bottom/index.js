@@ -5,9 +5,7 @@ import { addAttributes } from './attributes'
 import { Style } from './style'
 import { ResizableBottomMargin } from '~stackable/components'
 import { getUniqueBlockClass } from '~stackable/util'
-import {
-	useBlockAttributesContext, useBlockContext, useBlockContextContext,
-} from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockContextContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -15,7 +13,7 @@ import {
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
-import { select } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 
 export const MarginBottom = memo( props => {
 	const { clientId } = useBlockEditContext()
@@ -32,7 +30,36 @@ export const MarginBottom = memo( props => {
 		}
 	} )
 
-	const { isLastBlock, parentBlock } = useBlockContext( clientId )
+	const {
+		isLastBlock,
+		parentBlock,
+		isGroupBlock,
+		isRowLayout,
+	} = useSelect(
+		select => {
+			const {
+				getBlockOrder, getBlockRootClientId, getBlock,
+			} = select( 'core/block-editor' )
+
+			const rootClientId = getBlockRootClientId( clientId )
+			const parentBlock = getBlock( rootClientId )
+			const parentInnerBlocks = getBlockOrder( rootClientId )
+
+			const isGroupBlock = parentBlock?.name === 'core/group'
+			let isRowLayout = false
+			if ( isGroupBlock ) {
+				isRowLayout = parentBlock.attributes.layout?.type === 'flex' && parentBlock.attributes.layout?.flexWrap === 'nowrap'
+			}
+
+			return {
+				parentBlock,
+				isLastBlock: parentInnerBlocks[ parentInnerBlocks.length - 1 ] === clientId,
+				isGroupBlock,
+				isRowLayout,
+			}
+		},
+		[ clientId ]
+	)
 
 	// Check if the parent block (like a Column block) is displaying blocks
 	// horizontally, we don't want to show the margin bottom draggable
@@ -44,20 +71,16 @@ export const MarginBottom = memo( props => {
 		return null
 	}
 
-	// Don't show the margin bottom draggable indicator if this is in a row block.
-	const isGroupBlock = parentBlock && parentBlock.name === 'core/group'
-	let isRowLayout = false
-	if ( isGroupBlock ) {
-		const attributes = select( 'core/block-editor' ).getBlockAttributes( parentBlock.clientId )
-		isRowLayout = attributes.layout?.type === 'flex' && attributes.layout?.flexWrap === 'nowrap'
-	}
-
 	if ( isGroupBlock && isRowLayout ) {
 		return null
 	}
 
+	if ( isLastBlock || ! attributes.uniqueId ) {
+		return null
+	}
+
 	const enable = applyFilters( 'stackable.edit.margin-bottom.enable-handlers', true, parentBlock )
-	if ( isLastBlock || ! enable || ! attributes.uniqueId ) {
+	if ( ! enable ) {
 		return null
 	}
 

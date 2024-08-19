@@ -1,13 +1,25 @@
 import { addAttributes } from './attributes'
 
-import { useBlockAttributesContext, useBlockContext } from '~stackable/hooks'
-
+import { useBlockAttributesContext } from '~stackable/hooks'
+import { useBlockEditContext } from '@wordpress/block-editor'
 import { Fragment, useEffect } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 export * from './use-row'
 
 export const Row = props => {
-	const { numInnerBlocks } = useBlockContext()
+	const { clientId } = useBlockEditContext()
+	const { numInnerBlocks } = useSelect(
+		select => {
+			const { getBlockOrder } = select( 'core/block-editor' )
+
+			return {
+				numInnerBlocks: getBlockOrder( clientId ).length,
+			}
+		},
+		[ clientId ]
+	)
+
 	const attributes = useBlockAttributesContext()
 
 	useEffect( () => {

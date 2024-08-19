@@ -15,7 +15,6 @@ import { i18n } from 'stackable'
 import {
 	useAttributeEditHandlers,
 	useBlockAttributesContext,
-	useBlockContext,
 } from '~stackable/hooks'
 
 /**
@@ -30,6 +29,8 @@ import { BorderControls as _BorderControls } from '../helpers/borders'
 import { Link as _Link } from '../link'
 import { Icon as _Icon } from '../icon'
 import { applyFilters } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 export const Icon = props => (
 	<_Icon.InspectorControls
@@ -289,7 +290,18 @@ export const Edit = props => {
 		...propsToPass
 	} = props
 
-	const { parentBlock } = useBlockContext()
+	const { clientId } = useBlockEditContext()
+	const { parentBlock } = useSelect(
+		select => {
+			const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+			const rootClientId = getBlockRootClientId( clientId )
+
+			return {
+				parentBlock: getBlock( rootClientId ),
+			}
+		},
+		[ clientId ]
+	)
 
 	const enableLink = applyFilters( 'stackable.edit.button.enable-link', true, parentBlock )
 

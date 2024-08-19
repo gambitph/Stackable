@@ -9,11 +9,7 @@ import ArrowDownSvg from './images/arrow-down.svg'
 /**
  * External dependencies
  */
-import {
-	useBlockContext,
-	useDeviceType,
-	useWithShift,
-} from '~stackable/hooks'
+import { useDeviceType, useWithShift } from '~stackable/hooks'
 import { clamp, isEqual } from 'lodash'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
@@ -45,12 +41,38 @@ const formatLabel = value => {
 
 const ResizableColumn = props => {
 	const { clientId } = useBlockEditContext()
-	const blockContext = useBlockContext()
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
 	const {
-		isFirstBlock, isLastBlock, isOnlyBlock, adjacentBlocks, blockIndex, parentBlock,
-	} = blockContext
+		isFirstBlock,
+		isLastBlock,
+		isOnlyBlock,
+		adjacentBlocks,
+		blockIndex,
+		parentBlock,
+	} = useSelect(
+		select => {
+			const {
+				getBlockOrder, getBlockRootClientId, getBlock,
+			} =
+				select( 'core/block-editor' )
+
+			const rootClientId = getBlockRootClientId( clientId )
+			const parentBlock = getBlock( rootClientId )
+			const parentInnerBlocks = getBlockOrder( rootClientId )
+			const blockIndex = parentInnerBlocks.indexOf( clientId )
+
+			return {
+				isFirstBlock: blockIndex === 0,
+				isLastBlock: blockIndex === parentInnerBlocks.length - 1,
+				isOnlyBlock: parentInnerBlocks.length === 1,
+				adjacentBlocks: parentInnerBlocks,
+				blockIndex,
+				parentBlock,
+			}
+		},
+		[ clientId ]
+	)
 
 	// Block context is provided from the parent Columns block.
 	const allowResize = ! props.context[ 'stackable/innerBlockOrientation' ]
@@ -492,7 +514,11 @@ const ResizableColumn = props => {
 		>
 			{ allowResize && <ResizableTooltip
 				isVisible={ ! isOnlyBlock }
-				blockContext={ blockContext }
+				adjacentBlocks={ adjacentBlocks }
+				isOnlyBlock={ isOnlyBlock }
+				blockIndex={ blockIndex }
+				isLastBlock={ isLastBlock }
+				isFirstBlock={ isFirstBlock }
 				value={ isDesktop ? props.columnWidth
 					: isTablet ? ( props.columnWidthTablet || props.columnWidth )
 						: props.columnWidthMobile }
@@ -512,7 +538,7 @@ const ResizableColumn = props => {
 const ResizableTooltip = memo( props => {
 	const {
 		adjacentBlocks, isOnlyBlock, blockIndex, isLastBlock, isFirstBlock,
-	} = props.blockContext
+	} = props
 
 	const deviceType = useDeviceType()
 	const [ isEditWidth, setIsEditWidth ] = useState( false )
@@ -662,7 +688,6 @@ const noop = () => {}
 
 ResizableTooltip.defaultProps = {
 	isVisible: true,
-	blockContext: noobj,
 	value: '',
 	onChange: noop,
 	tooltipProps: noobj,

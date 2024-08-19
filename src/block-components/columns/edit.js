@@ -19,7 +19,7 @@ import {
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
 import {
-	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext, useDeviceType,
+	useBlockAttributesContext, useBlockSetAttributesContext, useDeviceType,
 } from '~stackable/hooks'
 import { range } from 'lodash'
 
@@ -37,7 +37,21 @@ export const Controls = props => {
 	const [ , setColumnsUpdate ] = useState( 0 )
 	const deviceType = useDeviceType()
 	const { clientId } = useBlockEditContext()
-	const { numInnerBlocks, innerBlocks } = useBlockContext()
+	const {
+		numInnerBlocks, innerBlocks,
+	} = useSelect(
+		select => {
+			const { getBlockOrder } = select( 'core/block-editor' )
+
+			const innerBlocks = getBlockOrder( clientId )
+
+			return {
+				innerBlocks,
+				numInnerBlocks: innerBlocks.length,
+			}
+		},
+		[ clientId ]
+	)
 
 	const {
 		multiClientIds, multiInnerBlocks, hasMultiSelectedBlocks,
