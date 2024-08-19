@@ -131,7 +131,7 @@ const Edit = props => {
 				/>
 				<CustomCSS mainBlockClass="stk-block-tab-content" />
 
-				{ ! hasInnerBlocks && <GroupPlaceholder /> }
+				{ ! hasInnerBlocks && <GroupPlaceholder attributes={ TEMPLATE[0][1] } /> }
 				<Separator>
 					<div
 						className={ contentClassNames }
