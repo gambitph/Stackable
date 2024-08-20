@@ -23,21 +23,18 @@ export const ColumnsControl = props => {
 	} = props
 	const { clientId: _clientId } = useBlockEditContext()
 	const clientId = rootClientId || _clientId
-
 	const {
 		numInnerBlocks, innerBlocks,
 	} = useSelect(
 		select => {
-			const { getBlockOrder } = select( 'core/block-editor' )
-
-			const innerBlocks = getBlockOrder( rootClientId )
-
+			const { getBlock } = select( 'core/block-editor' )
+			const { innerBlocks } = getBlock( clientId )
 			return {
 				innerBlocks,
 				numInnerBlocks: innerBlocks.length,
 			}
 		},
-		[ rootClientId ]
+		[ clientId ]
 	)
 
 	const {
