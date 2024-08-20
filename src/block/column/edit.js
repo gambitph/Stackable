@@ -47,6 +47,11 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
+import { memo } from '@wordpress/element'
+
+const ButtonBlockAppender = memo( props => {
+	return <InnerBlocks.ButtonBlockAppender { ...props } />
+} )
 
 const Edit = props => {
 	const {
@@ -177,7 +182,7 @@ const Edit = props => {
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							templateLock={ props.attributes.templateLock || false }
 							orientation={ blockOrientation }
-							renderAppender={ hasInnerBlocks ? undefined : InnerBlocks.ButtonBlockAppender }
+							renderAppender={ hasInnerBlocks ? undefined : ButtonBlockAppender }
 						/>
 					</ContainerDiv>
 				</BlockDiv>
