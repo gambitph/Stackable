@@ -11,10 +11,11 @@ export const Row = props => {
 	const { clientId } = useBlockEditContext()
 	const { numInnerBlocks } = useSelect(
 		select => {
-			const { getBlockOrder } = select( 'core/block-editor' )
+			const { getBlockRootClientId, getBlockOrder } = select( 'core/block-editor' )
+			const rootClientId = getBlockRootClientId( clientId )
 
 			return {
-				numInnerBlocks: getBlockOrder( clientId ).length,
+				numInnerBlocks: getBlockOrder( rootClientId ).length,
 			}
 		},
 		[ clientId ]

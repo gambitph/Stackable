@@ -59,8 +59,9 @@ const ResizableColumn = props => {
 
 			const rootClientId = getBlockRootClientId( clientId )
 			const parentBlock = getBlock( rootClientId )
-			const parentInnerBlocks = getBlockOrder( rootClientId )
-			const blockIndex = parentInnerBlocks.indexOf( clientId )
+			const parentInnerBlocks = parentBlock.innerBlocks
+			const blockOrder = getBlockOrder( rootClientId )
+			const blockIndex = blockOrder.indexOf( clientId )
 
 			return {
 				isFirstBlock: blockIndex === 0,
