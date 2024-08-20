@@ -10,10 +10,13 @@ const DEVICES = [ 'desktop', 'desktopOnly', 'desktopTablet', 'tabletOnly', 'tabl
 
 class CssSaveCompiler {
 	constructor() {
-		this.styles = {}
+		this.styles = null
 	}
 
 	addStyle( selector, rule, value = undefined, device = 'desktop' ) {
+		if ( ! this.styles ) {
+			this.styles = {}
+		}
 		// Add the style in this.styles
 		if ( ! this.styles[ device ] ) {
 			this.styles[ device ] = {}
@@ -31,11 +34,14 @@ class CssSaveCompiler {
 
 	// Compile all this.styles into a single string.
 	compile() {
+		if ( ! this.styles ) {
+			return ''
+		}
+
 		const allCss = []
 
 		// Follow this order so we can put the media queries that override for smaller screens last.
 		DEVICES.forEach( device => {
-			// console.log( this.styles, device )
 			if ( ! this.styles[ device ] ) {
 				return
 			}
