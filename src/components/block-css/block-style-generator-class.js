@@ -19,7 +19,6 @@ import { getDynamicContentEdit } from '../dynamic-content-control'
 import { applyFilters } from '@wordpress/hooks'
 import { BlockCssFunc } from '.'
 import { pickBy } from 'lodash'
-import CssSaveCompiler from './css-save-compiler'
 
 export class BlockStyleGenerator {
 	constructor( commonProps ) {
@@ -210,10 +209,19 @@ export class BlockStyleGenerator {
 		return output
 	}
 
-	generateBlockStylesForSave( attributes, blockStyles, args ) {
-		// We initialize a single css object, all styles will be saved in this.
-		const cssCompiler = new CssSaveCompiler()
-
+	/**
+	 * Compiles the blockStyles based on the attributes given. Make sure to pass
+	 * the same CssSaveCompiler instance for the same block for a more optimized
+	 * way of compiling.
+	 *
+	 * @param {CssSaveCompiler} cssCompiler An instance of CssSaveCompiler
+	 * @param {Object} attributes
+	 * @param {Array} blockStyles
+	 * @param {Object} args
+	 *
+	 * @return {string} Compiled css
+	 */
+	generateBlockStylesForSave( cssCompiler, attributes, blockStyles, args ) {
 		// Call block styles that are added conditionally
 		this._dynamicBlockStyles.forEach( fn => {
 			const _BlockCssFunc = blockStyle => {

@@ -11,6 +11,8 @@ const DEVICES = [ 'desktop', 'desktopOnly', 'desktopTablet', 'tabletOnly', 'tabl
 class CssSaveCompiler {
 	constructor() {
 		this.styles = null
+		this.isDirty = false
+		this.previousCss = ''
 	}
 
 	addStyle( selector, rule, value = undefined, device = 'desktop' ) {
@@ -27,8 +29,10 @@ class CssSaveCompiler {
 		if ( typeof value === 'undefined' ) {
 			// TODO: not sure if we need to do this because we might accidentally delete something that wants to add a style.
 			// delete this.styles[ device ][ selector ][ rule ]
-		} else {
+		} else if ( this.styles[ device ][ selector ][ rule ] !== value ) {
+			// Only update if the value changed
 			this.styles[ device ][ selector ][ rule ] = value
+			this.isDirty = true // Make sure our next compile will return a new result.
 		}
 	}
 
@@ -36,6 +40,11 @@ class CssSaveCompiler {
 	compile() {
 		if ( ! this.styles ) {
 			return ''
+		}
+
+		// If nothing was added, then just return the previous results
+		if ( ! this.isDirty ) {
+			return this.previousCss
 		}
 
 		const allCss = []
@@ -68,8 +77,10 @@ class CssSaveCompiler {
 			allCss.push( css )
 		} )
 
+		// Let's not minify to make it faster
 		// return minifyCSS( allCss.join( '' ) )
-		return allCss.join( '' )
+		this.isDirty = false
+		return this.previousCss = allCss.join( '' )
 	}
 }
 

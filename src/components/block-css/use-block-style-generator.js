@@ -1,6 +1,7 @@
 import { useQueryLoopInstanceId } from '~stackable/util'
 import { useMemo, useRef } from '@wordpress/element'
 import { useRafEffect } from '~stackable/hooks'
+import CssSaveCompiler from './css-save-compiler'
 
 export const useBlockCssGenerator = props => {
 	const {
@@ -17,6 +18,11 @@ export const useBlockCssGenerator = props => {
 
 	// Generate the CSS styles.
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
+
+	// We initialize a single css compiler object so that if the attributes
+	// aren't changed then the styles won't be recomputed, all styles will be
+	// saved in this.
+	const cssCompiler = useRef()
 
 	const editCss = useMemo( () => {
 		// Gather only the attributes that have values and all their
@@ -37,10 +43,19 @@ export const useBlockCssGenerator = props => {
 	}, [ attributes, version, blockState, clientId, attributes.uniqueId, instanceId, context ] )
 
 	useRafEffect( () => {
+		if ( ! cssCompiler.current ) {
+			cssCompiler.current = new CssSaveCompiler()
+		}
+
 		// Generate the styles that are to be saved with the actual block.
-		const saveCss = blockStyles.generateBlockStylesForSave( attributes, blockStyleDefsRef.current, {
-			version,
-		} )
+		const saveCss = blockStyles.generateBlockStylesForSave(
+			cssCompiler.current,
+			attributes,
+			blockStyleDefsRef.current,
+			{
+				version,
+			}
+		)
 
 		// Quietly save the styles. We cannot use setAttributes here because it
 		// will cause the block and this hook to rerender.
