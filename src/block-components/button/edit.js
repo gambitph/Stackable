@@ -12,10 +12,7 @@ import {
 	AdvancedSelectControl,
 } from '~stackable/components'
 import { i18n } from 'stackable'
-import {
-	useAttributeEditHandlers,
-	useBlockAttributesContext,
-} from '~stackable/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -31,6 +28,7 @@ import { Icon as _Icon } from '../icon'
 import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { getAttributeNameFunc } from '~stackable/util'
 
 export const Icon = props => (
 	<_Icon.InspectorControls
@@ -111,9 +109,7 @@ export const ColorsControls = props => {
 		attrNameTemplate = 'button%s',
 	} = props
 
-	const {
-		getAttrName,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const getAttrName = getAttributeNameFunc( attrNameTemplate )
 
 	const buttonBackgroundColorType = useBlockAttributesContext( attributes => {
 		return attributes[ getAttrName( 'backgroundColorType' ) ]
@@ -182,9 +178,7 @@ const SizeControls = props => {
 		attrNameTemplate = 'button%s',
 	} = props
 
-	const {
-		getAttrName,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const getAttrName = getAttributeNameFunc( attrNameTemplate )
 
 	return ( <>
 		{ props.hasFullWidth && (
