@@ -61,22 +61,23 @@ const Edit = props => {
 	} = props
 
 	const {
-		hasInnerBlocks, isOnlyBlock, useZeroColumnSpacing,
+		hasInnerBlocks, isOnlyBlock, useZeroColumnSpacing, parentBlock,
 	} = useSelect(
 		select => {
 			const {
-				getBlockOrder, getBlockRootClientId, getBlockName,
+				getBlockOrder, getBlockRootClientId, getBlock,
 			} =
 				select( 'core/block-editor' )
 
 			const rootClientId = getBlockRootClientId( clientId )
-			const parentBlockName = getBlockName( rootClientId )
+			const parentBlock = getBlock( rootClientId )
 
 			return {
 				hasInnerBlocks: getBlockOrder( clientId ).length > 0,
 				rootClientId,
 				isOnlyBlock: getBlockOrder( rootClientId ).length === 1,
-				useZeroColumnSpacing: ! [ 'stackable/timeline' ].includes( parentBlockName ),
+				parentBlock,
+				useZeroColumnSpacing: ! [ 'stackable/timeline' ].includes( parentBlock.name ),
 			}
 		},
 		[ clientId ]
@@ -168,7 +169,16 @@ const Edit = props => {
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-column" />
 
-			<Column isHovered={ isHovered } showHandle={ isHovered } context={ props.context }>
+			<Column
+				clientId={ clientId }
+				parentBlock={ parentBlock }
+				isHovered={ isHovered }
+				showHandle={ isHovered }
+				context={ props.context }
+				columnWidth={ props.attributes.columnWidth }
+				columnWidthTablet={ props.attributes.columnWidthTablet }
+				columnWidthMobile={ props.attributes.columnWidthMobile }
+			>
 				<Linking show={ isHovered } />
 				<BlockDiv
 					blockHoverClass={ props.blockHoverClass }
