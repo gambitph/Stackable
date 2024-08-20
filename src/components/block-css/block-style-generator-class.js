@@ -24,7 +24,8 @@ export class BlockStyleGenerator {
 	constructor( commonProps ) {
 		this.commonProps = commonProps
 		this._blockStyles = {} // This holds all the blockStyles, keys are the attrName
-		this._dynamicBlockStyles = [] // Holds functions that fill be called when generating blocks styles.
+		this._dynamicBlockStyles = [] // Holds functions that will be called when generating blocks styles.
+		this._blockStyleNamesWithValuePreCallbacks = [] // This holds all block style keys that have valuePreCallbacks, becuase these will need to be run even if the attribute is blank.
 	}
 
 	addBlockStylesOldWay( blockStyles ) {
@@ -71,6 +72,11 @@ export class BlockStyleGenerator {
 		// If an attribute name template is provided, use it to format the attrName
 		const attrName = blockStyle.attrNameTemplate ? getAttrName( blockStyle.attrNameTemplate, _attrName ) : _attrName
 
+		// Remember the block styles that have valuePreCallbacks
+		if ( blockStyle.valuePreCallback ) {
+			this._blockStyleNamesWithValuePreCallbacks.push( attrName )
+		}
+
 		if ( ! this._blockStyles[ attrName ] ) {
 			this._blockStyles[ attrName ] = [ blockStyle ]
 			return
@@ -113,7 +119,7 @@ export class BlockStyleGenerator {
 			return this._blockStyles
 		}
 
-		return attrNames.reduce( ( blockStyles, attrName ) => {
+		const blockStyles = attrNames.reduce( ( blockStyles, attrName ) => {
 			if ( ! blockStyles[ attrName ] && this._blockStyles[ attrName ] ) {
 				blockStyles[ attrName ] = this._blockStyles[ attrName ]
 			}
@@ -123,6 +129,15 @@ export class BlockStyleGenerator {
 			}
 			return blockStyles
 		}, {} )
+
+		// Alays include block styles that have valuePreCallbacks.
+		this._blockStyleNamesWithValuePreCallbacks.forEach( attrName => {
+			if ( ! blockStyles[ attrName ] ) {
+				blockStyles[ attrName ] = this._blockStyles[ attrName ]
+			}
+		} )
+
+		return blockStyles
 	}
 
 	getAttributesWithValues( attributes ) {
