@@ -39,6 +39,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 const Edit = props => {
 	const {
@@ -57,7 +58,7 @@ const Edit = props => {
 	// Generate the CSS styles for the block.
 	const blockCss = useBlockCssGenerator( {
 		attributes: props.attributes,
-		dividerStyles,
+		blockStyles: dividerStyles,
 		clientId: props.clientId,
 		context: props.context,
 		setAttributes: props.setAttributes,
@@ -67,44 +68,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<BlockStyle.InspectorControls styles={ blockStyles } >
-					<ColorPaletteControl
-						label={ __( 'Color', i18n ) }
-						attribute="color"
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Width', i18n ) + ' (%)' }
-						responsive="all"
-						attribute="width"
-						min={ 1 }
-						max={ 100 }
-						placeholder=""
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Height / Size', i18n ) }
-						responsive="all"
-						attribute="height"
-						min={ 1 }
-						sliderMax={ 100 }
-						placeholder=""
-					/>
-				</BlockStyle.InspectorControls>
-
-				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls />
-
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-divider" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
+			<InspectorControls />
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-divider" />
 
@@ -127,6 +91,47 @@ const Edit = props => {
 	)
 }
 
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<BlockStyle.InspectorControls styles={ blockStyles } >
+				<ColorPaletteControl
+					label={ __( 'Color', i18n ) }
+					attribute="color"
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Width', i18n ) + ' (%)' }
+					responsive="all"
+					attribute="width"
+					min={ 1 }
+					max={ 100 }
+					placeholder=""
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Height / Size', i18n ) }
+					responsive="all"
+					attribute="height"
+					min={ 1 }
+					sliderMax={ 100 }
+					placeholder=""
+				/>
+			</BlockStyle.InspectorControls>
+
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-divider" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,

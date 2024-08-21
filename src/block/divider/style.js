@@ -84,7 +84,10 @@ dividerStyles.addBlockStyles( 'height', [ {
 	key: 'height-dot-width',
 	responsive: 'all',
 	format: '%spx',
-	enabledCallback: getAttribute => getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name in [ 'asterisks', 'dots' ],
+	enabledCallback: getAttribute => {
+		const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+		return [ 'dots', 'asterisks' ].includes( blockStyle )
+	},
 	dependencies: [ 'className' ],
 } ] )
 
@@ -126,6 +129,6 @@ Alignment.Style.addStyles( dividerStyles )
 BlockDiv.Style.addStyles( dividerStyles )
 Advanced.Style.addStyles( dividerStyles )
 Transform.Style.addStyles( dividerStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
+EffectsAnimations.Style.addStyles( dividerStyles )
 
 export default dividerStyles
