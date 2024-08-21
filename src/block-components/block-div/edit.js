@@ -25,8 +25,9 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
-export const Edit = props => {
+export const Edit = memo( props => {
 	const {
 		hasSizeSpacing,
 		initialOpen,
@@ -87,7 +88,7 @@ export const Edit = props => {
 			</InspectorStyleControls>
 		</>
 	)
-}
+} )
 
 Edit.defaultProps = {
 	hasSizeSpacing: true,

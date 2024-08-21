@@ -9,6 +9,7 @@ import classnames from 'classnames/dedupe'
 import { Div } from '~stackable/components'
 import { useVariationPicker } from '~stackable/hooks'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
+import { memo } from '@wordpress/element'
 
 import { useBlockProps } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
@@ -19,7 +20,7 @@ import { version as VERSION } from 'stackable'
 export { useUniqueId }
 export { deprecateBlockBackgroundColorOpacity, deprecateBlockShadowColor } from './deprecated'
 
-export const BlockDiv = props => {
+export const BlockDiv = memo( props => {
 	const {
 		className,
 		applyCustomAttributes,
@@ -96,7 +97,7 @@ export const BlockDiv = props => {
 		{ props.children }
 		{ firefoxHasPolyfill( clientId, attributes ) }
 	</Div>
-}
+} )
 
 BlockDiv.defaultProps = {
 	className: '',
