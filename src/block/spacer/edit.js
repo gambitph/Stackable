@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { SpacerStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -11,7 +11,6 @@ import { i18n, version as VERSION } from 'stackable'
 import {
 	Advanced,
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	CustomAttributes,
@@ -22,6 +21,7 @@ import {
 import { useDeviceType } from '~stackable/hooks'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, ResizerTooltip,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
 import {
@@ -53,15 +53,12 @@ const TABS = [ 'style', 'advanced' ]
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
 		setAttributes,
 		isHovered,
 		isSelected,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const deviceType = useDeviceType()
 	const blockClassNames = classnames( [
@@ -88,6 +85,17 @@ const Edit = props => {
 
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 	const resizableRef = useRef()
+
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
 
 	return (
 		<>
@@ -120,11 +128,7 @@ const Edit = props => {
 				<ConditionalDisplay.InspectorControls />
 			</>
 
-			<SpacerStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-spacer" />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
