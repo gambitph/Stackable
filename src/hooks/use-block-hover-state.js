@@ -193,8 +193,11 @@ export const useBlockHoverState = () => {
 		}
 
 		return {
-			hoverState: select( 'stackable/hover-state' ).getHoverState(),
-			hoverStateClientId: select( 'stackable/hover-state' ).getSelectedBlock(),
+			currentHoverState,
+			blockHoverClass,
+			hasParentHoverState,
+			hasCollapsedState,
+			isCollapsedBlock,
 		}
 	}, [ clientId, clientIds ] )
 
