@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { DividerStyles } from './style'
+import dividerStyles from './style'
 import { blockStyles } from './block-styles'
 
 /**
@@ -10,7 +10,6 @@ k*/
 import {
 	BlockStyle,
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -28,6 +27,7 @@ import {
 	InspectorTabs,
 	AdvancedRangeControl,
 	ColorPaletteControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import { useBlockStyle } from '~stackable/hooks'
 import {
@@ -42,11 +42,8 @@ import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( blockStyles )
@@ -56,6 +53,17 @@ const Edit = props => {
 		'stk-block-divider',
 		blockAlignmentClass,
 	] )
+
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		dividerStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
 
 	return (
 		<>
@@ -97,11 +105,7 @@ const Edit = props => {
 				<ConditionalDisplay.InspectorControls />
 			</>
 
-			<DividerStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-divider" />
 
 			<BlockDiv
