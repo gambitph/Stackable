@@ -1,14 +1,13 @@
 /**
  * Internal dependencies
  */
-import { HeadingStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
  */
 import {
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -33,6 +32,7 @@ import {
 	ColorPaletteControl,
 	AdvancedRangeControl,
 	AlignButtonsControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import { createBlockCompleter } from '~stackable/util'
@@ -69,14 +69,11 @@ const Edit = props => {
 	const {
 		className,
 		onReplace,
-		clientId,
 		setAttributes,
 		onRemove,
 		mergeBlocks,
 		attributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const { parentBlock } = useBlockContext()
 	const textClasses = getTypographyClasses( props.attributes )
@@ -114,6 +111,16 @@ const Edit = props => {
 			setPrevText( text )
 		}, 300 )
 	}, [ props.attributes.anchor, props.attributes.text ] )
+
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
 
 	return (
 		<>
@@ -235,11 +242,7 @@ const Edit = props => {
 				<ConditionalDisplay.InspectorControls />
 			</>
 
-			<HeadingStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-heading" />
 
 			<BlockDiv
