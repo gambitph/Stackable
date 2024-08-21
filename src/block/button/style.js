@@ -10,85 +10,34 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCss, BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
-
-const buttonOptions = {
-	selector: '.stk-button',
-}
-
-const typographyOptions = {
-	selector: '.stk-button__inner-text',
-	hoverSelector: '.stk-button:hover .stk-button__inner-text',
-}
-
-const Styles = props => {
-	const propsToPass = {
-		...props,
-		version: props.version,
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	}
-
-	return (
-		<>
-			<BlockCss
-				{ ...propsToPass }
-				// This makes the block fullwidth inside the editor.
-				renderIn="edit"
-				selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
-				styleRule="width"
-				attrName="buttonFullWidth"
-				key="buttonFullWidth"
-				valueCallback={ value => {
-					return value ? '100%' : undefined
-				} }
-			/>
-		</>
-	)
-}
-
-export const ButtonStyles = memo( props => {
-	return (
-		<>
-			<BlockDiv.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<Button.Style { ...props } { ...buttonOptions } />
-			<Typography.Style { ...props } { ...typographyOptions } />
-			<EffectsAnimations.Style { ...props } />
-			<Styles { ...props } />
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-ButtonStyles.defaultProps = {
-	version: '',
-}
+blockStyles.addBlockStyles( 'buttonFullWidth', [ {
+	renderIn: 'edit',
+	selectorCallback: ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]`,
+	styleRule: 'width',
+	attrName: 'buttonFullWidth',
+	key: 'buttonFullWidth',
+	valueCallback: value => {
+		return value ? '100%' : undefined
+	},
+} ] )
 
-ButtonStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
+BlockDiv.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
+Transform.Style.addStyles( blockStyles )
+Button.Style.addStyles( blockStyles, {
+	selector: '.stk-button',
+} )
+Typography.Style.addStyles( blockStyles, {
+	selector: '.stk-button__inner-text',
+	hoverSelector: '.stk-button:hover .stk-button__inner-text',
+} )
+EffectsAnimations.Style.addStyles( blockStyles )
 
-	return (
-		<BlockCssCompiler>
-			<BlockDiv.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<Button.Style.Content { ...props } { ...buttonOptions } />
-			<Typography.Style.Content { ...props } { ...typographyOptions } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<Styles { ...props } />
-		</BlockCssCompiler>
-	)
-}
-
-ButtonStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
+export default blockStyles

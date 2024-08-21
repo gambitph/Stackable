@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { ButtonGroupStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -17,10 +17,10 @@ import {
 	AlignButtonsControl,
 	advancedToolbarControlControls,
 	AdvancedToolbarControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
 	getAlignmentClasses,
@@ -48,6 +48,7 @@ import {
 	AlignmentToolbar, BlockControls, InnerBlocks,
 } from '@wordpress/block-editor'
 import { sprintf, __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button', 'stackable/icon-button' ]
 
@@ -98,11 +99,8 @@ const Edit = props => {
 	const {
 		className,
 		attributes,
-		clientId,
 		setAttributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const {
 		collapseOn = '',
@@ -148,67 +146,25 @@ const Edit = props => {
 		}
 	}
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<BlockDiv.InspectorControls />
-
-				<BlockControls>
-					<AlignmentToolbar
-						value={ attributes.contentAlign }
-						onChange={ contentAlign => setAttributes( { contentAlign } ) }
-						alignmentControls={ TOOLBAR_ALIGN_OPTIONS }
-					/>
-				</BlockControls>
-				<InspectorLayoutControls>
-					<AlignButtonsControl
-						label={ sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ) }
-						attribute="contentAlign"
-						responsive="all"
-						controls={ contentAlignControls }
-					/>
-					<AdvancedToolbarControl
-						label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
-						controls={ deviceType === 'Desktop' ? ALIGNMENT_CONTROLS_DESKTOP : ALIGNMENT_CONTROLS_TABLET_MOBILE }
-						attribute="buttonAlign"
-						responsive="all"
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Full Width Buttons', i18n ) }
-						attribute="buttonFullWidth"
-						defaultValue={ false }
-					/>
-					<FlexGapControls />
-					<AdvancedSelectControl
-						label={ __( 'Flex Wrap', i18n ) }
-						attribute="flexWrap"
-						options={ [
-							{
-								label: __( 'No Wrap', i18n ),
-								value: '',
-							},
-							{
-								label: __( 'Wrap', i18n ),
-								value: 'wrap',
-							},
-							{
-								label: __( 'Wrap Reverse', i18n ),
-								value: 'wrap-reverse',
-							},
-						] }
-						responsive="all"
-					/>
-				</InspectorLayoutControls>
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-button-group" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			<InspectorControls
+				contentAlign={ attributes.contentAlign }
+				setAttributes={ setAttributes }
+				contentAlignControls={ contentAlignControls }
+				deviceType={ deviceType }
+			/>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -216,11 +172,7 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
-				<ButtonGroupStyles
-					version={ VERSION }
-					blockState={ props.blockState }
-					clientId={ clientId }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-button-group" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder blockName="stackable/button" /> }
@@ -239,6 +191,70 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<BlockDiv.InspectorControls />
+
+			<BlockControls>
+				<AlignmentToolbar
+					value={ props.contentAlign }
+					onChange={ contentAlign => props.setAttributes( { contentAlign } ) }
+					alignmentControls={ TOOLBAR_ALIGN_OPTIONS }
+				/>
+			</BlockControls>
+			<InspectorLayoutControls>
+				<AlignButtonsControl
+					label={ sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ) }
+					attribute="contentAlign"
+					responsive="all"
+					controls={ props.contentAlignControls }
+				/>
+				<AdvancedToolbarControl
+					label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
+					controls={ props.deviceType === 'Desktop' ? ALIGNMENT_CONTROLS_DESKTOP : ALIGNMENT_CONTROLS_TABLET_MOBILE }
+					attribute="buttonAlign"
+					responsive="all"
+				/>
+				<AdvancedToggleControl
+					label={ __( 'Full Width Buttons', i18n ) }
+					attribute="buttonFullWidth"
+					defaultValue={ false }
+				/>
+				<FlexGapControls />
+				<AdvancedSelectControl
+					label={ __( 'Flex Wrap', i18n ) }
+					attribute="flexWrap"
+					options={ [
+						{
+							label: __( 'No Wrap', i18n ),
+							value: '',
+						},
+						{
+							label: __( 'Wrap', i18n ),
+							value: 'wrap',
+						},
+						{
+							label: __( 'Wrap Reverse', i18n ),
+							value: 'wrap-reverse',
+						},
+					] }
+					responsive="all"
+				/>
+			</InspectorLayoutControls>
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-button-group" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

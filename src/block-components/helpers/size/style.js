@@ -290,7 +290,8 @@ SizeStyle.addStyles = ( blockStyleGenerator, props = {} ) => {
 		attrNameTemplate = '%s',
 		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
-		// verticalAlignSelectorEdit = '',
+		verticalAlignSelectorEdit = '',
+		verticalAlignSelectorSave = '',
 		verticalAlignSelector = '',
 		hasPaddings = true, // Disallow the padding styles
 		wrapperSelector = '', // The outer wrapper element that where the outer flex alignments, widths and margins are applied to.
@@ -308,15 +309,43 @@ SizeStyle.addStyles = ( blockStyleGenerator, props = {} ) => {
 		hasUnits: 'px',
 	} ] )
 
-	blockStyleGenerator.addBlockStyles( 'verticalAlign', [ {
-		...propsToPass,
-		selector: verticalAlignSelector || selector,
-		styleRule: verticalAlignRule || 'alignItems',
-		attrName: 'verticalAlign',
-		key: 'verticalAlign-save',
-		attrNameTemplate,
-		responsive: 'all',
-	} ] )
+	if ( verticalAlignSelectorEdit ) {
+		blockStyleGenerator.addBlockStyles( 'verticalAlign', [ {
+			...propsToPass,
+			renderIn: 'edit',
+			selector: verticalAlignSelectorEdit,
+			styleRule: verticalAlignRule || 'alignItems',
+			attrName: 'verticalAlign',
+			key: 'verticalAlign-edit',
+			attrNameTemplate,
+			responsive: 'all',
+		} ] )
+	}
+
+	if ( verticalAlignSelectorSave ) {
+		blockStyleGenerator.addBlockStyles( 'verticalAlign', [ {
+			...propsToPass,
+			renderIn: 'save',
+			selector: verticalAlignSelectorSave,
+			styleRule: verticalAlignRule || 'alignItems',
+			attrName: 'verticalAlign',
+			key: 'verticalAlign-save',
+			attrNameTemplate,
+			responsive: 'all',
+		} ] )
+	}
+
+	if ( ! verticalAlignSelectorEdit && ! verticalAlignSelectorSave ) {
+		blockStyleGenerator.addBlockStyles( 'verticalAlign', [ {
+			...propsToPass,
+			selector: verticalAlignSelector || selector,
+			styleRule: verticalAlignRule || 'alignItems',
+			attrName: 'verticalAlign',
+			key: 'verticalAlign',
+			attrNameTemplate,
+			responsive: 'all',
+		} ] )
+	}
 
 	blockStyleGenerator.addBlockStyles( 'width', [ {
 		...propsToPass,
