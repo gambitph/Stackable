@@ -118,31 +118,32 @@ export const useBlockHoverState = () => {
 	const clientIds = useSelect( select => select( 'core/block-editor' ).getMultiSelectedBlockClientIds() )
 
 	const {
-		hoverState,
-		hoverStateClientId,
+		currentHoverState,
+		blockHoverClass,
+		hasParentHoverState,
+		hasCollapsedState,
+		isCollapsedBlock,
 	} = useSelect( select => {
-		return {
-			hoverState: select( 'stackable/hover-state' ).getHoverState(),
-			hoverStateClientId: select( 'stackable/hover-state' ).getSelectedBlock(),
-		}
-	}, [] )
+		const hoverState = select( 'stackable/hover-state' ).getHoverState()
+		const hoverStateClientId = select( 'stackable/hover-state' ).getSelectedBlock()
 
-	const {
-		getSelectedParentHoverBlock,
-		getSelectedParentHoverBlockChildren,
-		getSelectedHoverChildren,
-		getHasParentHoverState,
-		getHasCollapsedState,
-		getSelectedCollapsedBlock,
-		getSelectedCollapsedBlockChildren,
-	} = useSelect( 'stackable/hover-state' )
+		const {
+			getSelectedParentHoverBlock,
+			getSelectedParentHoverBlockChildren,
+			getSelectedHoverChildren,
+			getHasParentHoverState,
+			getHasCollapsedState,
+			getSelectedCollapsedBlock,
+			getSelectedCollapsedBlockChildren,
+		} = select( 'stackable/hover-state' )
 
-	const hasParentHoverState = getHasParentHoverState()
-	const parentHoverClientId = getSelectedParentHoverBlock()
-	const hasCollapsedState = getHasCollapsedState()
-	const collapsedClientId = getSelectedCollapsedBlock()
 
-	// return useMemo( () => {
+		const hasParentHoverState = getHasParentHoverState()
+		const parentHoverClientId = getSelectedParentHoverBlock()
+		const hasCollapsedState = getHasCollapsedState()
+		const collapsedClientId = getSelectedCollapsedBlock()
+
+		// return useMemo( () => {
 		const isBlockSelected = clientId === hoverStateClientId || clientIds.includes( clientId )
 		const isParentHoverBlock = clientId === parentHoverClientId
 		const isCollapsedBlock = clientId === collapsedClientId
@@ -191,8 +192,13 @@ export const useBlockHoverState = () => {
 			}
 		}
 
-		return [ currentHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
-	// }, [ hoverState, clientId, hoverStateClientId, hasParentHoverState, parentHoverClientId, hasCollapsedState, collapsedClientId ] )
+		return {
+			hoverState: select( 'stackable/hover-state' ).getHoverState(),
+			hoverStateClientId: select( 'stackable/hover-state' ).getSelectedBlock(),
+		}
+	}, [ clientId, clientIds ] )
+
+	return [ currentHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
 }
 
 // This just returns the `blockHoverClass` value from the useBlockHoverState
