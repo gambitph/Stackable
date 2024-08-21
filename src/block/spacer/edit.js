@@ -35,7 +35,7 @@ import { ResizableBox } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import {
-	useState, useRef, useMemo,
+	useState, useRef, useMemo, memo,
 } from '@wordpress/element'
 
 const getSnapYBetween = ( value, snapDiff = 50 ) => {
@@ -99,35 +99,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						id="general"
-						initialOpen={ true }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Height', i18n ) }
-							responsive="all"
-							attribute="height"
-							sliderMin="0"
-							sliderMax="500"
-							placeholder={ defaultMinHeight }
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-				<BlockDiv.InspectorControls hasSizeSpacing={ false } />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-spacer" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
+			<InspectorControls defaultMinHeight={ defaultMinHeight } />
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-spacer" />
 			<BlockDiv
@@ -186,6 +158,39 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Height', i18n ) }
+						responsive="all"
+						attribute="height"
+						sliderMin="0"
+						sliderMax="500"
+						placeholder={ props.defaultMinHeight }
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+			<BlockDiv.InspectorControls hasSizeSpacing={ false } />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-spacer" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,
