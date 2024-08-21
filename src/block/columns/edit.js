@@ -48,6 +48,7 @@ import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
+import { memo } from '@wordpress/element'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -102,32 +103,7 @@ const Edit = props => {
 	return (
 		<>
 
-			<>
-				<InspectorTabs />
-
-				<Columns.InspectorControls />
-				<InspectorLayoutControls>
-					<ControlSeparator />
-				</InspectorLayoutControls>
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls
-					hasContainerSize={ true }
-					containerSizePriority={ 1 }
-					hasContainerHeight={ false }
-					hasColumnJustify={ true }
-					hasRowAlignment={ true }
-				/>
-				<BlockDiv.InspectorControls />
-				<Separator.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
+			<ColumnsInspector />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
 				clientId={ props.clientId }
@@ -183,6 +159,38 @@ if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
 		return classes
 	} )
 }
+
+// Inspector controls for the block, it's important that we only pass only the
+// props used by controls to prevent rerenders of all the inspector controls.
+const ColumnsInspector = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Columns.InspectorControls />
+			<InspectorLayoutControls>
+				<ControlSeparator />
+			</InspectorLayoutControls>
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls
+				hasContainerSize={ true }
+				containerSizePriority={ 1 }
+				hasContainerHeight={ false }
+				hasColumnJustify={ true }
+				hasRowAlignment={ true }
+			/>
+			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

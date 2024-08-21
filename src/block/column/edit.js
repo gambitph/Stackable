@@ -118,54 +118,12 @@ const Edit = props => {
 
 	return (
 		<>
-
-			<>
-				<InspectorTabs />
-
-				<InspectorLayoutControls>
-					<FourRangeControl
-						label={ __( 'Column Spacing', i18n ) }
-						attribute="columnSpacing"
-						responsive="all"
-						units={ [ 'px', 'em', 'vw' ] }
-						defaultLocked={ true }
-						min={ [ 0, 0 ] }
-						sliderMax={ [ 200, 30 ] }
-						placeholder={ isOnlyBlock && useZeroColumnSpacing ? '0' : '12' }
-						helpTooltip={ {
-							video: 'inner-block-padding',
-							description: __( 'Sets the paddings between the column content and the border.', i18n ),
-						} }
-						visualGuide={ {
-							selector: '.stk-%s-container',
-							highlight: 'column-spacing',
-							defaultValue: '12px',
-						} }
-					/>
-				</InspectorLayoutControls>
-
-				<Alignment.InspectorControls hasContainerSize={ true } hasColumnAlignment={ true } />
-				<BlockDiv.InspectorControls />
-				<BlockLink.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-column" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorLayoutControls>
-					<AdvancedToggleControl
-						label={ __( 'Align Last Block to Bottom', i18n ) }
-						checked={ props.attributes.alignLastBlockToBottom }
-						onChange={ alignLastBlockToBottom => props.setAttributes( { alignLastBlockToBottom } ) }
-					/>
-				</InspectorLayoutControls>
-
-				<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
-			</>
-
+			<ColumnInspector
+				isOnlyBlock={ isOnlyBlock }
+				useZeroColumnSpacing={ useZeroColumnSpacing }
+				alignLastBlockToBottom={ props.attributes.alignLastBlockToBottom }
+				setAttributes={ props.setAttributes }
+			/>
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-column" />
 
@@ -200,6 +158,59 @@ const Edit = props => {
 		</>
 	)
 }
+
+// Inspector controls for the block, it's important that we only pass only the
+// props used by controls to prevent rerenders of all the inspector controls.
+const ColumnInspector = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<InspectorLayoutControls>
+				<FourRangeControl
+					label={ __( 'Column Spacing', i18n ) }
+					attribute="columnSpacing"
+					responsive="all"
+					units={ [ 'px', 'em', 'vw' ] }
+					defaultLocked={ true }
+					min={ [ 0, 0 ] }
+					sliderMax={ [ 200, 30 ] }
+					placeholder={ props.isOnlyBlock && props.useZeroColumnSpacing ? '0' : '12' }
+					helpTooltip={ {
+						video: 'inner-block-padding',
+						description: __( 'Sets the paddings between the column content and the border.', i18n ),
+					} }
+					visualGuide={ {
+						selector: '.stk-%s-container',
+						highlight: 'column-spacing',
+						defaultValue: '12px',
+					} }
+				/>
+			</InspectorLayoutControls>
+
+			<Alignment.InspectorControls hasContainerSize={ true } hasColumnAlignment={ true } />
+			<BlockDiv.InspectorControls />
+			<BlockLink.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-column" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorLayoutControls>
+				<AdvancedToggleControl
+					label={ __( 'Align Last Block to Bottom', i18n ) }
+					checked={ props.alignLastBlockToBottom }
+					onChange={ alignLastBlockToBottom => props.setAttributes( { alignLastBlockToBottom } ) }
+				/>
+			</InspectorLayoutControls>
+
+			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,
