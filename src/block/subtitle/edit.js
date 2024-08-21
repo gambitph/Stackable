@@ -1,14 +1,13 @@
 /**
  * Internal dependencies
  */
-import { SubtitleStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
 k*/
 import {
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -24,7 +23,7 @@ import {
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
-import { InspectorTabs } from '~stackable/components'
+import { InspectorTabs, useBlockCssGenerator } from '~stackable/components'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -54,14 +53,11 @@ addFilter( 'editor.Autocomplete.completers', 'stackable/subtitle', ( filteredCom
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		onReplace,
 		onRemove,
 		mergeBlocks,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -77,6 +73,17 @@ const Edit = props => {
 		textClasses,
 		blockAlignmentClass,
 	] )
+
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
 
 	return (
 		<>
@@ -102,11 +109,7 @@ const Edit = props => {
 				<ConditionalDisplay.InspectorControls />
 			</>
 
-			<SubtitleStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-subtitle" />
 
 			<BlockDiv
