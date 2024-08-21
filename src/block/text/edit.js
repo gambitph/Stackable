@@ -120,7 +120,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<TextInspector
+			<InspectorControls
 				enableColumns={ enableColumns }
 				blockState={ props.blockState }
 			/>
@@ -150,7 +150,7 @@ const Edit = props => {
 
 // Inspector controls for the block, it's important that we only pass only the
 // props used by controls to prevent rerenders of all the inspector controls.
-const TextInspector = memo( props => {
+const InspectorControls = memo( props => {
 	return (
 		<>
 			<InspectorTabs />

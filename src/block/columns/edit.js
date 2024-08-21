@@ -103,7 +103,7 @@ const Edit = props => {
 	return (
 		<>
 
-			<ColumnsInspector />
+			<InspectorControls />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
 				clientId={ props.clientId }
@@ -162,7 +162,7 @@ if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
 
 // Inspector controls for the block, it's important that we only pass only the
 // props used by controls to prevent rerenders of all the inspector controls.
-const ColumnsInspector = memo( () => {
+const InspectorControls = memo( () => {
 	return (
 		<>
 			<InspectorTabs />

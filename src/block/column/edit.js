@@ -118,7 +118,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<ColumnInspector
+			<InspectorControls
 				isOnlyBlock={ isOnlyBlock }
 				useZeroColumnSpacing={ useZeroColumnSpacing }
 				alignLastBlockToBottom={ props.attributes.alignLastBlockToBottom }
@@ -161,7 +161,7 @@ const Edit = props => {
 
 // Inspector controls for the block, it's important that we only pass only the
 // props used by controls to prevent rerenders of all the inspector controls.
-const ColumnInspector = memo( props => {
+const InspectorControls = memo( props => {
 	return (
 		<>
 			<InspectorTabs />
