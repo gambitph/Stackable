@@ -43,6 +43,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 import { useSetActiveTabContext } from '../tabs/with-active-tab'
 import {
 	useSelect,
@@ -105,18 +106,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-				<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
-				<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-content" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			<InspectorControls />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -177,6 +167,23 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+			<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
+			<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-content" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+})
 
 export default compose(
 	withBlockWrapper,

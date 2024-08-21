@@ -36,6 +36,7 @@ import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+import { memo } from '@wordpress/element'
 
 const TEMPLATE = [
 	[ 'stackable/text', {
@@ -85,23 +86,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-expand" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorBlockControls>
-					<InspectorBottomTip />
-				</InspectorBlockControls>
-			</>
+			<InspectorControls />
 
 			<BlockStyles
 				version={ VERSION }
@@ -130,6 +115,28 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-expand" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorBlockControls>
+				<InspectorBottomTip />
+			</InspectorBlockControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

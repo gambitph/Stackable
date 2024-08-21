@@ -45,6 +45,7 @@ import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+import { memo } from '@wordpress/element'
 
 export const defaultIcon = '<svg data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>'
 
@@ -54,6 +55,14 @@ const TEMPLATE = [
 	} ],
 	[ 'stackable/image', { enableHandles: false } ],
 ]
+
+const isVideoFile = link => {
+	if ( ! link ) {
+		return false
+	}
+	const regexp = /(?:^.*\.(mp4|avi|wmv|mov|flv|mkv|webm|vob|ogv|m4v|3gp|3g2|mpeg|mpg|m2v|m4v|svi|3gpp|3gpp2|mxf|roq|nsv|flv|f4v|f4p|f4a|f4b)$)/im
+	return regexp.test( link )
+}
 
 const Edit = props => {
 	const {
@@ -81,88 +90,14 @@ const Edit = props => {
 		'stk-hover-parent',
 	] )
 
-	const isVideoFile = link => {
-		if ( ! link ) {
-			return false
-		}
-		const regexp = /(?:^.*\.(mp4|avi|wmv|mov|flv|mkv|webm|vob|ogv|m4v|3gp|3g2|mpeg|mpg|m2v|m4v|svi|3gpp|3gpp2|mxf|roq|nsv|flv|f4v|f4p|f4a|f4b)$)/im
-		return regexp.test( link )
-	}
-
 	return (
 		<>
-			<>
-				<InspectorTabs hasLayoutPanel={ false } />
+			<InspectorControls
+				setAttributes={ setAttributes }
+				videoLink={ attributes.videoLink }
+				videoId={ attributes.videoId }
 
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						id="general"
-						initialOpen={ true }
-					>
-						<ImageControl2
-							isDynamic={ false }
-							label={ __( 'Popup Option #1: Upload Video', i18n ) }
-							help={ __( 'Use .mp4 format for videos', i18n ) }
-							onRemove={ () => setAttributes( {
-								videoLink: '',
-								videoId: '',
-							} ) }
-							onChange={ media => {
-								setAttributes( {
-									videoLink: media.url,
-									videoId: media.url,
-								} )
-							} }
-							imageId={ urlIsVideo( attributes.videoLink ) ? attributes.videoId : '' }
-							imageURL={ urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
-							allowedTypes={ [ 'video' ] }
-						/>
-						<AdvancedTextControl
-							label={ __( 'Popup Option #2: Video URL', i18n ) }
-							help={ __( 'Paste a Youtube / Vimeo URL', i18n ) }
-							isDynamic={ true }
-							isFormatType={ false }
-							placeholder="https://"
-							value={ ! urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
-							onChange={ videoLink => setAttributes( {
-								videoLink,
-								videoId: getVideoProviderFromURL( videoLink ).id,
-							} ) }
-						/>
-						{ isVideoFile( attributes.videoLink ) && <>
-							<AdvancedToggleControl
-								label={ __( 'Allow fullscreen', i18n ) }
-								attribute="videoFullscreen"
-								defaultValue={ true }
-							/>
-							<AdvancedToggleControl
-								label={ __( 'Allow download video', i18n ) }
-								attribute="videoDownload"
-								defaultValue={ true }
-							/>
-							<AdvancedToggleControl
-								label={ __( 'Loop video', i18n ) }
-								attribute="videoLoop"
-								defaultValue={ false }
-							/>
-						</> }
-					</PanelAdvancedSettings>
-
-				</InspectorStyleControls>
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-video-popup" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
+			/>
 
 			<IconLabelStyles
 				version={ VERSION }
@@ -188,6 +123,83 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs hasLayoutPanel={ false } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<ImageControl2
+						isDynamic={ false }
+						label={ __( 'Popup Option #1: Upload Video', i18n ) }
+						help={ __( 'Use .mp4 format for videos', i18n ) }
+						onRemove={ () => props.setAttributes( {
+							videoLink: '',
+							videoId: '',
+						} ) }
+						onChange={ media => {
+							props.setAttributes( {
+								videoLink: media.url,
+								videoId: media.url,
+							} )
+						} }
+						imageId={ urlIsVideo( props.videoLink ) ? props.videoId : '' }
+						imageURL={ urlIsVideo( props.videoLink ) ? props.videoLink : '' }
+						allowedTypes={ [ 'video' ] }
+					/>
+					<AdvancedTextControl
+						label={ __( 'Popup Option #2: Video URL', i18n ) }
+						help={ __( 'Paste a Youtube / Vimeo URL', i18n ) }
+						isDynamic={ true }
+						isFormatType={ false }
+						placeholder="https://"
+						value={ ! urlIsVideo( props.videoLink ) ? props.videoLink : '' }
+						onChange={ videoLink => props.setAttributes( {
+							videoLink,
+							videoId: getVideoProviderFromURL( videoLink ).id,
+						} ) }
+					/>
+					{ isVideoFile( props.videoLink ) && <>
+						<AdvancedToggleControl
+							label={ __( 'Allow fullscreen', i18n ) }
+							attribute="videoFullscreen"
+							defaultValue={ true }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Allow download video', i18n ) }
+							attribute="videoDownload"
+							defaultValue={ true }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Loop video', i18n ) }
+							attribute="videoLoop"
+							defaultValue={ false }
+						/>
+					</> }
+				</PanelAdvancedSettings>
+
+			</InspectorStyleControls>
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-video-popup" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

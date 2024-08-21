@@ -42,7 +42,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
+import { Fragment, memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
@@ -82,22 +82,7 @@ const Edit = props => {
 	return (
 		<Fragment>
 
-			<InspectorTabs />
-
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<BlockLink.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<InspectorBlockControls>
-				<InspectorBottomTip />
-			</InspectorBlockControls>
+			<InspectorControls />
 
 			<ImageBoxStyles
 				version={ VERSION }
@@ -126,6 +111,29 @@ const Edit = props => {
 		</Fragment>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<BlockLink.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorBlockControls>
+				<InspectorBottomTip />
+			</InspectorBlockControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

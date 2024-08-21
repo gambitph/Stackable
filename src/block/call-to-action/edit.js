@@ -46,6 +46,7 @@ import {
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
@@ -80,28 +81,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
-				<BlockDiv.InspectorControls />
-				<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
-				<BlockLink.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<Separator.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-call-to-action" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
-
+			<InspectorControls />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
 				clientId={ props.clientId }
@@ -130,6 +110,32 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+			<BlockLink.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<Separator.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-call-to-action" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

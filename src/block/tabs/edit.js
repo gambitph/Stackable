@@ -52,6 +52,7 @@ import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
 import { __, sprintf } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 const TEMPLATE = [
 	[ 'stackable/tab-labels', {
@@ -164,106 +165,14 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-				<InspectorLayoutControls>
-					<ColumnsControl
-						label={ __( 'Tabs', i18n ) }
-						rootClientId={ tabContentBlock?.clientId }
-						onChangeCallback={ ( changeColumnsFunc, numColumns ) => {
-							props.setTemplateLock( false )
-							setTimeout( () => {
-								changeColumnsFunc( numColumns )
-								props.setTemplateLock( true )
-							}, 1 )
-
-							if ( hasMultiSelectedBlocks ) {
-								multiInnerBlocks.forEach( _innerBlocks => {
-									if ( _innerBlocks?.length ) {
-										const _tabLabelsBlock = _innerBlocks[ 0 ].name === 'stackable/tab-labels' ? _innerBlocks[ 0 ] : _innerBlocks[ 1 ]
-
-										updateColumns( numColumns, _tabLabelsBlock.clientId )
-									}
-								} )
-							} else {
-								updateColumns( numColumns, tabLabelsBlock.clientId )
-							}
-						} }
-						newColumnAttributes={
-							{
-								customAttributes: [ [ 'role', 'tabpanel' ] ],
-							}
-						}
-					/>
-					<AdvancedSelectControl
-						label={ __( 'Initial Tab Open', i18n ) }
-						attribute="initialTabOpen"
-						options={ tabContentBlock?.innerBlocks?.map( ( block, index ) => {
-							return {
-								value: index === 0 ? '' : index + 1,
-								label: index + 1,
-							}
-						} ) }
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Equal tab height', i18n ) }
-						attribute="equalTabHeight"
-						defaultValue={ false }
-					/>
-					<ControlSeparator />
-					<AdvancedToolbarControl
-						label={ __( 'Tab Orientation', i18n ) }
-						controls={ [
-							{
-								value: '',
-								title: __( 'Horizontal', i18n ),
-							},
-							{
-								value: 'vertical',
-								title: __( 'Vertical', i18n ),
-							},
-						] }
-						attribute="tabOrientation"
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Tab Panel Offset', i18n ) }
-						min={ 0 }
-						sliderMax={ 100 }
-						placeholder="16"
-						attribute="tabPanelOffset"
-						responsive="all"
-					/>
-					<AdvancedToolbarControl
-						label={ __( 'Tab Panel Effect', i18n ) }
-						controls={ [
-							{
-								value: '',
-								title: __( 'Fade', i18n ),
-							},
-							{
-								value: 'immediate',
-								title: __( 'Immediate', i18n ),
-							},
-						] }
-						attribute="tabPanelEffect"
-					/>
-				</InspectorLayoutControls>
-
-				{ /* <Columns.InspectorControls /> */ }
-				<InspectorLayoutControls>
-					<ControlSeparator />
-				</InspectorLayoutControls>
-				<ContentAlign.InspectorControls />
-				{ /* <Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } /> */ }
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-tabs" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			<InspectorControls
+				tabContentBlock={ tabContentBlock }
+				hasMultiSelectedBlocks={ hasMultiSelectedBlocks }
+				multiInnerBlocks={ multiInnerBlocks }
+				tabLabelsBlock={ tabLabelsBlock }
+				updateColumns={ updateColumns }
+				setTemplateLock={ props.setTemplateLock }
+			/>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -298,6 +207,111 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+			<InspectorLayoutControls>
+				<ColumnsControl
+					label={ __( 'Tabs', i18n ) }
+					rootClientId={ props.tabContentBlock?.clientId }
+					onChangeCallback={ ( changeColumnsFunc, numColumns ) => {
+						props.setTemplateLock( false )
+						setTimeout( () => {
+							changeColumnsFunc( numColumns )
+							props.setTemplateLock( true )
+						}, 1 )
+
+						if ( props.hasMultiSelectedBlocks ) {
+							props.multiInnerBlocks.forEach( _innerBlocks => {
+								if ( _innerBlocks?.length ) {
+									const _tabLabelsBlock = _innerBlocks[ 0 ].name === 'stackable/tab-labels' ? _innerBlocks[ 0 ] : _innerBlocks[ 1 ]
+
+									props.updateColumns( numColumns, _tabLabelsBlock.clientId )
+								}
+							} )
+						} else {
+							props.updateColumns( numColumns, props.tabLabelsBlock.clientId )
+						}
+					} }
+					newColumnAttributes={
+						{
+							customAttributes: [ [ 'role', 'tabpanel' ] ],
+						}
+					}
+				/>
+				<AdvancedSelectControl
+					label={ __( 'Initial Tab Open', i18n ) }
+					attribute="initialTabOpen"
+					options={ props.tabContentBlock?.innerBlocks?.map( ( block, index ) => {
+						return {
+							value: index === 0 ? '' : index + 1,
+							label: index + 1,
+						}
+					} ) }
+				/>
+				<AdvancedToggleControl
+					label={ __( 'Equal tab height', i18n ) }
+					attribute="equalTabHeight"
+					defaultValue={ false }
+				/>
+				<ControlSeparator />
+				<AdvancedToolbarControl
+					label={ __( 'Tab Orientation', i18n ) }
+					controls={ [
+						{
+							value: '',
+							title: __( 'Horizontal', i18n ),
+						},
+						{
+							value: 'vertical',
+							title: __( 'Vertical', i18n ),
+						},
+					] }
+					attribute="tabOrientation"
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Tab Panel Offset', i18n ) }
+					min={ 0 }
+					sliderMax={ 100 }
+					placeholder="16"
+					attribute="tabPanelOffset"
+					responsive="all"
+				/>
+				<AdvancedToolbarControl
+					label={ __( 'Tab Panel Effect', i18n ) }
+					controls={ [
+						{
+							value: '',
+							title: __( 'Fade', i18n ),
+						},
+						{
+							value: 'immediate',
+							title: __( 'Immediate', i18n ),
+						},
+					] }
+					attribute="tabPanelEffect"
+				/>
+			</InspectorLayoutControls>
+
+			{ /* <Columns.InspectorControls /> */ }
+			<InspectorLayoutControls>
+				<ControlSeparator />
+			</InspectorLayoutControls>
+			<ContentAlign.InspectorControls />
+			{ /* <Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } /> */ }
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-tabs" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

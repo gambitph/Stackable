@@ -53,7 +53,7 @@ import {
 } from '@wordpress/components'
 import { useSelect, dispatch } from '@wordpress/data'
 import {
-	useEffect, useState, useCallback,
+	useEffect, useState, useCallback, memo,
 } from '@wordpress/element'
 import {
 	__, _x, sprintf,
@@ -399,117 +399,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs hasLayoutPanel={ false } />
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						initialOpen={ true }
-						id="general"
-					>
-						<HeadingsControls />
-
-						<AdvancedSelectControl
-							label={ __( 'List Type', i18n ) }
-							attribute="listType"
-							options={ listTypeOptions }
-						/>
-
-						<AdvancedRangeControl
-							label={ __( 'Columns', i18n ) }
-							attribute="columns"
-							min="1"
-							sliderMax="3"
-							step="1"
-							placeholder="1"
-							responsive="all"
-						/>
-
-						<AdvancedRangeControl
-							label={ __( 'Column Gap', i18n ) }
-							attribute="columnGap"
-							min="0"
-							placeholder="32"
-							sliderMax="50"
-							responsive="all"
-						/>
-
-						<AdvancedRangeControl
-							label={ __( 'Row Gap', i18n ) }
-							attribute="rowGap"
-							min="0"
-							sliderMax="50"
-							responsive="all"
-						/>
-
-						<AdvancedRangeControl
-							label={ __( 'Icon Gap', i18n ) }
-							attribute="iconGap"
-							min="0"
-							sliderMax="20"
-							responsive="all"
-						/>
-
-						<AdvancedRangeControl
-							label={ __( 'Indentation', i18n ) }
-							attribute="indentation"
-							min="0"
-							sliderMax="50"
-							responsive="all"
-							placeholder=""
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'Scrolling', i18n ) }
-						initialOpen={ false }
-						id="scrolling"
-					>
-						<AdvancedToggleControl
-							label={ __( 'Use smooth scroll', i18n ) }
-							attribute="isSmoothScroll"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Scroll Top Offset ', i18n ) }
-							attribute="scrollTopOffset"
-							min={ 0 }
-							max={ 200 }
-							step={ 1 }
-							responsive="all"
-							placeholder="0"
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<Typography.InspectorControls
-					{ ...props }
-					isMultiline={ true }
-					initialOpen={ false }
-					hasTextTag={ false }
-					hasTextContent={ false }
-				/>
-
-				<Typography.InspectorControls
-					{ ...props }
-					label={ __( 'Title', i18n ) }
-					attrNameTemplate="title%s"
-					initialOpen={ false }
-					hasToggle={ true }
-					hasTextTag={ false }
-				/>
-
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-table-of-contents" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			<InspectorControls blockState={ props.blockState } />
 
 			<TableOfContentsStyles
 				version={ VERSION }
@@ -548,6 +438,122 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs hasLayoutPanel={ false } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					initialOpen={ true }
+					id="general"
+				>
+					<HeadingsControls />
+
+					<AdvancedSelectControl
+						label={ __( 'List Type', i18n ) }
+						attribute="listType"
+						options={ listTypeOptions }
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Columns', i18n ) }
+						attribute="columns"
+						min="1"
+						sliderMax="3"
+						step="1"
+						placeholder="1"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Column Gap', i18n ) }
+						attribute="columnGap"
+						min="0"
+						placeholder="32"
+						sliderMax="50"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Row Gap', i18n ) }
+						attribute="rowGap"
+						min="0"
+						sliderMax="50"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Icon Gap', i18n ) }
+						attribute="iconGap"
+						min="0"
+						sliderMax="20"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Indentation', i18n ) }
+						attribute="indentation"
+						min="0"
+						sliderMax="50"
+						responsive="all"
+						placeholder=""
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Scrolling', i18n ) }
+					initialOpen={ false }
+					id="scrolling"
+				>
+					<AdvancedToggleControl
+						label={ __( 'Use smooth scroll', i18n ) }
+						attribute="isSmoothScroll"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Scroll Top Offset ', i18n ) }
+						attribute="scrollTopOffset"
+						min={ 0 }
+						max={ 200 }
+						step={ 1 }
+						responsive="all"
+						placeholder="0"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<Typography.InspectorControls
+				{ ...props }
+				isMultiline={ true }
+				initialOpen={ false }
+				hasTextTag={ false }
+				hasTextContent={ false }
+			/>
+
+			<Typography.InspectorControls
+				{ ...props }
+				label={ __( 'Title', i18n ) }
+				attrNameTemplate="title%s"
+				initialOpen={ false }
+				hasToggle={ true }
+				hasTextTag={ false }
+			/>
+
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-table-of-contents" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

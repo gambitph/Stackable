@@ -38,7 +38,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
@@ -75,39 +75,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs hasLayoutPanel={ false } />
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						id="general"
-						initialOpen={ true }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Icon Gap', i18n ) }
-							attribute="iconGap2"
-							responsive="all"
-							min={ 0 }
-							sliderMax={ 300 }
-							placeholder="28"
-						/>
-					</PanelAdvancedSettings>
-
-				</InspectorStyleControls>
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
+			<InspectorControls />
 
 			<IconLabelStyles
 				version={ VERSION }
@@ -136,6 +104,44 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs hasLayoutPanel={ false } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Icon Gap', i18n ) }
+						attribute="iconGap2"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 300 }
+						placeholder="28"
+					/>
+				</PanelAdvancedSettings>
+
+			</InspectorStyleControls>
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

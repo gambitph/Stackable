@@ -44,7 +44,7 @@ import { useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 import { compose, createHigherOrderComponent } from '@wordpress/compose'
 import { dispatch } from '@wordpress/data'
-import { useEffect } from '@wordpress/element'
+import { useEffect, memo } from '@wordpress/element'
 
 const TABS = [ 'style', 'advanced' ]
 
@@ -110,24 +110,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
-
-				<Typography.InspectorControls
-					{ ...props }
-					hasTextTag={ false }
-					initialOpen={ true }
-					hasTextShadow={ true }
-				/>
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-list-item" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			<InspectorControls blockState={ props.blockState } />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -184,6 +167,29 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
+
+			<Typography.InspectorControls
+				{ ...props }
+				hasTextTag={ false }
+				initialOpen={ true }
+				hasTextShadow={ true }
+			/>
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-list-item" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

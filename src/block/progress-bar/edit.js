@@ -36,6 +36,7 @@ import classnames from 'classnames'
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 const Edit = props => {
 	const {
@@ -77,31 +78,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<Alignment.InspectorControls />
-				<ProgressBar.InspectorControls />
-				<Typography.InspectorControls
-					{ ...props }
-					initialOpen={ false }
-					hasTextTag={ false }
-					hasTextContent={ false }
-					hasTextShadow
-					hasToggle
-					label={ __( 'Label', i18n ) }
-				/>
-
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-bar" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-			</>
+			<InspectorControls blockState={ props.blockState } />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -145,6 +122,36 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<ProgressBar.InspectorControls />
+			<Typography.InspectorControls
+				{ ...props }
+				initialOpen={ false }
+				hasTextTag={ false }
+				hasTextContent={ false }
+				hasTextShadow
+				hasToggle
+				label={ __( 'Label', i18n ) }
+			/>
+
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-bar" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

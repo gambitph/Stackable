@@ -43,6 +43,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
@@ -76,27 +77,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<Columns.InspectorControls hasColumnsControl={ false } />
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls />
-				<ContainerDiv.InspectorControls hasContentVerticalAlign={ true } />
-				<Separator.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-feature" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
+			<InspectorControls />
 
 			<BlockStyles
 				version={ VERSION }
@@ -127,6 +108,32 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Columns.InspectorControls hasColumnsControl={ false } />
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls hasContentVerticalAlign={ true } />
+			<Separator.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

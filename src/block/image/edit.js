@@ -41,6 +41,7 @@ import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters, addFilter } from '@wordpress/hooks'
+import { memo } from '@wordpress/element'
 
 const heightUnit = [ 'px', 'vh', '%' ]
 
@@ -74,34 +75,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<Alignment.InspectorControls />
-				<Image.InspectorControls
-					{ ...props }
-					initialOpen={ true }
-					heightUnits={ heightUnit }
-					hasLightbox
-				/>
-				{ enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-				<Typography.InspectorControls
-					label={ __( 'Caption', i18n ) }
-					attrNameTemplate="figcaption%s"
-					hasToggle={ true }
-					hasTextTag={ false }
-					hasTextContent={ true }
-					initialOpen={ false }
-				/>
-			</>
+			<InspectorControls enableLink={ enableLink } />
 
 			<BlockStyles
 				version={ VERSION }
@@ -134,6 +108,39 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<Image.InspectorControls
+				// { ...props }
+				initialOpen={ true }
+				heightUnits={ heightUnit }
+				hasLightbox
+			/>
+			{ props.enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+			<Typography.InspectorControls
+				label={ __( 'Caption', i18n ) }
+				attrNameTemplate="figcaption%s"
+				hasToggle={ true }
+				hasTextTag={ false }
+				hasTextContent={ true }
+				initialOpen={ false }
+			/>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

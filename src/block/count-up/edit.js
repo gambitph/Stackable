@@ -36,6 +36,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo }	from '@wordpress/element'
 
 const Edit = props => {
 	const {
@@ -60,43 +61,8 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'Counter', i18n ) }
-						id="count-up"
-						initialOpen={ true }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Duration (ms)', i18n ) }
-							attribute="duration"
-							min={ 100 }
-							sliderMax={ 5000 }
-							step={ 100 }
-							placeholder="1000"
-						>
 
-						</AdvancedRangeControl>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-				<Typography.InspectorControls
-					{ ...props }
-					hasTextTag={ false }
-					hasTextShadow={ true }
-					initialOpen={ false }
-				/>
-				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-count-up" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
+			<InspectorControls blockState={ props.blockState } />
 			<HeadingStyles
 				version={ VERSION }
 				blockState={ props.blockState }
@@ -120,6 +86,47 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Counter', i18n ) }
+					id="count-up"
+					initialOpen={ true }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Duration (ms)', i18n ) }
+						attribute="duration"
+						min={ 100 }
+						sliderMax={ 5000 }
+						step={ 100 }
+						placeholder="1000"
+					>
+
+					</AdvancedRangeControl>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+			<Typography.InspectorControls
+				{ ...props }
+				hasTextTag={ false }
+				hasTextShadow={ true }
+				initialOpen={ false }
+			/>
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-count-up" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

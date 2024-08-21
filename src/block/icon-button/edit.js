@@ -25,6 +25,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 /**
  * Internal dependencies
@@ -50,34 +51,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs hasLayoutPanel={ false } />
-
-				<BlockStyle.InspectorControls styles={ blockStyles }>
-					<Button.InspectorControls.HoverEffects />
-				</BlockStyle.InspectorControls>
-				<Button.InspectorControls.Link />
-				<Button.InspectorControls.Colors
-					hasTextColor={ false }
-					hasIconColor={ true }
-				/>
-				<Button.InspectorControls.Icon hasColor={ false } defaultValue={ defaultIcon } />
-				<Button.InspectorControls.Size hasWidth={ true } />
-				<Button.InspectorControls.Borders
-					borderSelector=".stk-button"
-					placeholder="24"
-				/>
-
-				<BlockDiv.InspectorControls initialOpen="spacing" />
-
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-button" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			<InspectorControls />
 
 			<IconButtonStyles
 				version={ VERSION }
@@ -104,6 +78,40 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs hasLayoutPanel={ false } />
+
+			<BlockStyle.InspectorControls styles={ blockStyles }>
+				<Button.InspectorControls.HoverEffects />
+			</BlockStyle.InspectorControls>
+			<Button.InspectorControls.Link />
+			<Button.InspectorControls.Colors
+				hasTextColor={ false }
+				hasIconColor={ true }
+			/>
+			<Button.InspectorControls.Icon hasColor={ false } defaultValue={ defaultIcon } />
+			<Button.InspectorControls.Size hasWidth={ true } />
+			<Button.InspectorControls.Borders
+				borderSelector=".stk-button"
+				placeholder="24"
+			/>
+
+			<BlockDiv.InspectorControls initialOpen="spacing" />
+
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-button" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+
+	)
+} )
 
 export default compose(
 	withBlockWrapper,

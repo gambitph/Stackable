@@ -55,7 +55,7 @@ import {
  * WordPress dependencies
  */
 import {
-	useState, useRef, useEffect,
+	useState, useRef, useEffect, memo,
 } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { __, sprintf } from '@wordpress/i18n'
@@ -254,396 +254,25 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<InspectorLayoutControls>
-					<ColumnsControl
-						label={ __( 'Slides', i18n ) }
-						sliderMax={ 10 }
-					/>
-					<AdvancedToolbarControl
-						label={ __( 'Carousel Type', i18n ) }
-						controls={ [
-							{
-								value: '',
-								title: __( 'Slide', i18n ),
-							},
-							{
-								value: 'fade',
-								title: __( 'Fade', i18n ),
-							},
-						] }
-						attribute="carouselType"
-					/>
-					{ carouselType === 'slide' &&
-						<AdvancedToggleControl
-							label={ __( 'Infinite Scrolling', i18n ) }
-							checked={ attributes.infiniteScroll }
-							onChange={ infiniteScroll => setAttributes( { infiniteScroll } ) }
-							defaultValue={ false }
-							help={ __( 'Only visible in the frontend.', i18n ) }
-						/>
-					}
-					{ carouselType === 'slide' && (
-						<>
-							<AdvancedRangeControl
-								label={ __( 'Slides to Show', i18n ) }
-								sliderMax={ 4 }
-								min={ 1 }
-								attribute="slidesToShow"
-								placeholder="1"
-								responsive="all"
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Slide Gap', i18n ) }
-								sliderMax={ 100 }
-								min={ 0 }
-								attribute="slideColumnGap"
-								placeholder="30"
-								responsive="all"
-							/>
-						</>
-					) }
-					{ carouselType === 'fade' && (
-						<AdvancedRangeControl
-							label={ __( 'Fade duration', i18n ) }
-							attribute="fadeDuration"
-							sliderMax={ 2 }
-							min={ 0 }
-							step={ 0.1 }
-							placeholder="0.3"
-						/>
-					) }
-					<ControlSeparator />
-
-					<AdvancedToggleControl
-						label={ __( 'Autoplay', i18n ) }
-						checked={ attributes.autoplay }
-						onChange={ autoplay => setAttributes( { autoplay } ) }
-						defaultValue={ true }
-					/>
-					{ attributes.autoplay && (
-						<AdvancedRangeControl
-							label={ __( 'Speed (ms)', i18n ) }
-							attribute="autoplaySpeed"
-							sliderMax={ 6000 }
-							sliderMin={ 1000 }
-							min={ 0 }
-							step={ 100 }
-							placeholder="4000"
-						/>
-					) }
-					<ControlSeparator />
-				</InspectorLayoutControls>
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'Arrows', i18n ) }
-						id="arrows"
-						hasToggle={ true }
-						checked={ attributes.showArrows }
-						onChange={ showArrows => setAttributes( { showArrows } ) }
-					>
-						<IconControl
-							label={ __( 'Previous Slide Icon', i18n ) }
-							value={ attributes.arrowIconPrev || defaultIcon.prev }
-							defaultValue={ defaultIcon.prev }
-							onChange={ arrowIconPrev => {
-								if ( arrowIconPrev === defaultIcon.prev ) {
-									setAttributes( { arrowIconPrev: '' } )
-								} else {
-									setAttributes( { arrowIconPrev } )
-								}
-								 } }
-						/>
-						<IconControl
-							label={ __( 'Next Slide Icon', i18n ) }
-							value={ attributes.arrowIconNext || defaultIcon.next }
-							defaultValue={ defaultIcon.next }
-							onChange={ arrowIconNext => {
-								if ( arrowIconNext === defaultIcon.next ) {
-									setAttributes( { arrowIconNext: '' } )
-								} else {
-									setAttributes( { arrowIconNext } )
-								}
-								 } }
-						/>
-						<AdvancedToolbarControl
-							label={ __( 'Arrow Position', i18n ) }
-							attribute="arrowPosition"
-							controls={ [
-								{ value: '', title: __( 'Inside', i18n ) },
-								{ value: 'outside', title: __( 'Outside', i18n ) },
-							] }
-							onChange={ arrowPosition => {
-								setAttributes( {
-									arrowPosition,
-									arrowJustify: '',
-									arrowAlign: '',
-								} )
-							} }
-						/>
-						<AdvancedToolbarControl
-							label={ sprintf( __( '%s Justify', i18n ), __( 'Button', i18n ) ) }
-							attribute="arrowJustify"
-							controls="flex-horizontal-alt"
-							placeholder="space-between"
-							disabled={ attributes.arrowPosition === 'outside' && [ '', 'center' ].includes( attributes.arrowAlign ) ? [ 'flex-start', 'center', 'flex-end' ] : [] }
-						/>
-						<AdvancedToolbarControl
-							label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
-							attribute="arrowAlign"
-							controls="vertical"
-							placeholder="center"
-							disabled={ attributes.arrowPosition === 'outside' && [ 'flex-start', 'center', 'flex-end' ].includes( attributes.arrowJustify ) ? [ 'center' ] : [] }
-							onChange={ arrowAlign => {
-								if ( ! arrowAlign && attributes.arrowPosition === 'outside' ) {
-									setAttributes( {
-										arrowAlign,
-										arrowJustify: '',
-									} )
-								} else {
-									setAttributes( { arrowAlign } )
-								}
-							} }
-						/>
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Offset', i18n ), __( 'Button', i18n ) ) }
-							attribute="arrowButtonOffset"
-							sliderMin={ attributes.arrowPosition === 'outside' ? 0 : -100 }
-							sliderMax={ 100 }
-							responsive="all"
-							placeholder="12"
-						/>
-						{ [ 'flex-start', 'center', 'flex-end' ].includes( attributes.arrowJustify ) &&
-							<AdvancedRangeControl
-								label={ __( 'Button Gap', i18n ) }
-								attribute="arrowButtonGap"
-								min={ 0 }
-								sliderMax={ 100 }
-								responsive="all"
-								placeholder="12"
-							/>
-						}
-						<ControlSeparator />
-						<ColorPaletteControl
-							label={ sprintf( __( '%s Color', i18n ), __( 'Button', i18n ) ) }
-							attribute="arrowButtonColor"
-							hover="all"
-						/>
-						<ColorPaletteControl
-							label={ sprintf( __( '%s Color', i18n ), __( 'Icon', i18n ) ) }
-							attribute="arrowIconColor"
-							hover="all"
-						/>
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Width', i18n ), __( 'Button', i18n ) ) }
-							attribute="arrowWidth"
-							units={ [ 'px', '%' ] }
-							sliderMax={ [ 200, 100 ] }
-							min={ [ 0, 0 ] }
-							responsive="all"
-							placeholder="40"
-						/>
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Height', i18n ), __( 'Button', i18n ) ) }
-							attribute="arrowHeight"
-							units={ [ 'px', '%' ] }
-							sliderMax={ [ 200, 100 ] }
-							min={ [ 0, 0 ] }
-							responsive="all"
-							placeholder="40"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Border Radius', i18n ) }
-							attribute="arrowBorderRadius"
-							sliderMax={ Math.max( attributes.arrowHeight, attributes.arrowWidth, 40 ) }
-							min={ 0 }
-							placeholder="40"
-						/>
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Size', i18n ), __( 'Icon', i18n ) ) }
-							attribute="arrowIconSize"
-							sliderMax={ 100 }
-							min={ 0 }
-							responsive="all"
-							placeholder="16"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Opacity', i18n ) }
-							attribute="arrowOpacity"
-							hover="all"
-							min={ 0 }
-							max={ 1 }
-							step={ 0.01 }
-							placeholder="0.9"
-						/>
-						<AdvancedToggleControl
-							label={ sprintf(
-								// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
-								__( 'Show %s on mobile', i18n ),
-								// Translators: lower caps "arrows" is the name of the setting.
-								__( 'arrows', i18n )
-							) }
-							checked={ attributes.showArrowsOnMobile }
-							onChange={ showArrowsOnMobile => setAttributes( { showArrowsOnMobile } ) }
-							defaultValue={ true }
-						/>
-					</PanelAdvancedSettings>
-
-					<PanelAdvancedSettings
-						title={ __( 'Dots', i18n ) }
-						id="dots"
-						hasToggle={ true }
-						checked={ attributes.showDots }
-						onChange={ showDots => setAttributes( { showDots } ) }
-					>
-
-						<AdvancedToolbarControl
-							label={ sprintf( __( '%s Justify', i18n ), __( 'Dots', i18n ) ) }
-							attribute="dotsJustify"
-							controls="horizontal"
-							placeholder="center"
-						/>
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Offset', i18n ), __( 'Dots', i18n ) ) }
-							attribute="dotsOffset"
-							sliderMin={ -100 }
-							sliderMax={ 100 }
-							responsive="all"
-							placeholder="12"
-						/>
-						<ControlSeparator />
-						<AdvancedToolbarControl
-							label={ __( 'Dot Style', i18n ) }
-							attribute="dotsStyle"
-							controls={ [
-								{ value: '', title: __( 'Solid', i18n ) },
-								{ value: 'outline', title: __( 'Outline', i18n ) },
-							] }
-							isSmall
-						/>
-						<ColorPaletteControl
-							label={ sprintf( __( '%s Color', i18n ), __( 'Dot', i18n ) ) }
-							attribute="dotsColor"
-							hover="all"
-						/>
-						<ColorPaletteControl
-							label={ sprintf( __( '%s Color', i18n ), __( 'Active Dot', i18n ) ) }
-							attribute="dotsActiveColor"
-						/>
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }
-							attribute="dotsSize"
-							sliderMin={ 1 }
-							sliderMax={ 40 }
-							placeholder="8"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Border Radius', i18n ) }
-							attribute="dotsBorderRadius"
-							sliderMax={ attributes.dotsSize || 8 }
-							min={ 0 }
-							placeholder={ attributes.dotsSize || '8' }
-						/>
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Gap', i18n ), __( 'Dots', i18n ) ) }
-							attribute="dotsGap"
-							sliderMin={ 0 }
-							sliderMax={ 40 }
-							placeholder="16"
-							help={ ( attributes.dotsSize || 8 ) + ( attributes.dotsGap || 16 ) < 24 ? sprintf( __( 'To improve accessibility, the clickable area of the dots will not go below %s.', i18n ), '24px' ) : undefined }
-						/>
-						<ControlSeparator />
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Width', i18n ), __( 'Active Dot', i18n ) ) }
-							attribute="dotsActiveWidth"
-							sliderMin={ 1 }
-							sliderMax={ 40 }
-							placeholder="30"
-						/>
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Height', i18n ), __( 'Active Dot', i18n ) ) }
-							attribute="dotsActiveHeight"
-							sliderMin={ 1 }
-							sliderMax={ 40 }
-							placeholder={ attributes.dotsSize || '8' }
-						/>
-
-						<AdvancedToggleControl
-							label={ sprintf(
-								// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
-								__( 'Show %s on mobile', i18n ),
-								// Translators: lower caps "dots" is the name of the setting.
-								__( 'dots', i18n )
-							) }
-							checked={ attributes.showDotsOnMobile }
-							onChange={ showDotsOnMobile => setAttributes( { showDotsOnMobile } ) }
-							defaultValue={ true }
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls />
-				<Separator.InspectorControls />
-				<Advanced.InspectorControls />
-
-				<InspectorAdvancedControls>
-					<PanelAdvancedSettings
-						title={ __( 'Accessibility', i18n ) }
-						id="accessibility"
-					>
-						<AdvancedTextControl
-							label={ sprintf(
-								// Translators: %s is the name of the setting. e.g. "Previous Slide".
-								__( '%s label', i18n ),
-								__( 'Previous slide', i18n )
-							) }
-							attribute="ariaLabelPrev"
-							placeholder="Previous slide"
-						/>
-						<AdvancedTextControl
-							label={ sprintf(
-								// Translators: %s is the name of the setting. e.g. "Previous Slide".
-								__( '%s label', i18n ),
-								__( 'Next slide', i18n )
-							) }
-							attribute="ariaLabelNext"
-							placeholder="Next slide"
-						/>
-						<AdvancedTextControl
-							label={ sprintf(
-								// Translators: %s is the name of the setting. e.g. "Previous Slide".
-								__( '%s label', i18n ),
-								__( 'Slide', i18n )
-							) }
-							attribute="ariaLabelSlide"
-							placeholder="Slide %%d"
-							help={ __( 'Use %%d to show the slide number.', i18n ) }
-						/>
-						<AdvancedTextControl
-							label={ sprintf(
-								// Translators: %s is the name of the setting. e.g. "Previous Slide".
-								__( '%s label', i18n ),
-								// Translators: This is for the "Slide 1 of 3" option label.
-								__( 'Slide N of N', i18n )
-							) }
-							attribute="ariaLabelSlideOf"
-							placeholder="Slide %%d of %%d"
-							help={ __( 'Use two %%d to show the slide number and the total slides. e.g. Slide 1 of 3.', i18n ) }
-						/>
-					</PanelAdvancedSettings>
-				</InspectorAdvancedControls>
-
-				<Transform.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-carousel" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			<InspectorControls
+				carouselType={ carouselType }
+				setAttributes={ setAttributes }
+				infiniteScroll={ attributes.infiniteScroll }
+				autoplay={ attributes.autoplay }
+				showArrows={ attributes.showArrows }
+				arrowIconPrev={ attributes.arrowIconPrev }
+				arrowIconNext={ attributes.arrowIconNext }
+				arrowPosition={ attributes.arrowPosition }
+				arrowJustify={ attributes.arrowJustify }
+				arrowHeight={ attributes.arrowHeight }
+				arrowWidth={ attributes.arrowWidth }
+				showArrowsOnMobile={ attributes.showArrowsOnMobile }
+				showDots={ attributes.showDots }
+				dotsSize={ attributes.dotsSize }
+				dotsGap={ attributes.dotsGap }
+				showDotsOnMobile={ attributes.showDotsOnMobile }
+				defaultIcon={ defaultIcon }
+			/>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -749,6 +378,401 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<InspectorLayoutControls>
+				<ColumnsControl
+					label={ __( 'Slides', i18n ) }
+					sliderMax={ 10 }
+				/>
+				<AdvancedToolbarControl
+					label={ __( 'Carousel Type', i18n ) }
+					controls={ [
+						{
+							value: '',
+							title: __( 'Slide', i18n ),
+						},
+						{
+							value: 'fade',
+							title: __( 'Fade', i18n ),
+						},
+					] }
+					attribute="carouselType"
+				/>
+				{ props.carouselType === 'slide' &&
+					<AdvancedToggleControl
+						label={ __( 'Infinite Scrolling', i18n ) }
+						checked={ props.infiniteScroll }
+						onChange={ infiniteScroll => props.setAttributes( { infiniteScroll } ) }
+						defaultValue={ false }
+						help={ __( 'Only visible in the frontend.', i18n ) }
+					/>
+				}
+				{ props.carouselType === 'slide' && (
+					<>
+						<AdvancedRangeControl
+							label={ __( 'Slides to Show', i18n ) }
+							sliderMax={ 4 }
+							min={ 1 }
+							attribute="slidesToShow"
+							placeholder="1"
+							responsive="all"
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Slide Gap', i18n ) }
+							sliderMax={ 100 }
+							min={ 0 }
+							attribute="slideColumnGap"
+							placeholder="30"
+							responsive="all"
+						/>
+					</>
+				) }
+				{ props.carouselType === 'fade' && (
+					<AdvancedRangeControl
+						label={ __( 'Fade duration', i18n ) }
+						attribute="fadeDuration"
+						sliderMax={ 2 }
+						min={ 0 }
+						step={ 0.1 }
+						placeholder="0.3"
+					/>
+				) }
+				<ControlSeparator />
+
+				<AdvancedToggleControl
+					label={ __( 'Autoplay', i18n ) }
+					checked={ props.autoplay }
+					onChange={ autoplay => props.setAttributes( { autoplay } ) }
+					defaultValue={ true }
+				/>
+				{ props.autoplay && (
+					<AdvancedRangeControl
+						label={ __( 'Speed (ms)', i18n ) }
+						attribute="autoplaySpeed"
+						sliderMax={ 6000 }
+						sliderMin={ 1000 }
+						min={ 0 }
+						step={ 100 }
+						placeholder="4000"
+					/>
+				) }
+				<ControlSeparator />
+			</InspectorLayoutControls>
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Arrows', i18n ) }
+					id="arrows"
+					hasToggle={ true }
+					checked={ props.showArrows }
+					onChange={ showArrows => props.setAttributes( { showArrows } ) }
+				>
+					<IconControl
+						label={ __( 'Previous Slide Icon', i18n ) }
+						value={ props.arrowIconPrev || props.defaultIcon.prev }
+						defaultValue={ props.defaultIcon.prev }
+						onChange={ arrowIconPrev => {
+							if ( arrowIconPrev === props.defaultIcon.prev ) {
+								props.setAttributes( { arrowIconPrev: '' } )
+							} else {
+								props.setAttributes( { arrowIconPrev } )
+							}
+								 } }
+					/>
+					<IconControl
+						label={ __( 'Next Slide Icon', i18n ) }
+						value={ props.arrowIconNext || props.defaultIcon.next }
+						defaultValue={ props.defaultIcon.next }
+						onChange={ arrowIconNext => {
+							if ( arrowIconNext === props.defaultIcon.next ) {
+								props.setAttributes( { arrowIconNext: '' } )
+							} else {
+								props.setAttributes( { arrowIconNext } )
+							}
+								 } }
+					/>
+					<AdvancedToolbarControl
+						label={ __( 'Arrow Position', i18n ) }
+						attribute="arrowPosition"
+						controls={ [
+							{ value: '', title: __( 'Inside', i18n ) },
+							{ value: 'outside', title: __( 'Outside', i18n ) },
+						] }
+						onChange={ arrowPosition => {
+							props.setAttributes( {
+								arrowPosition,
+								arrowJustify: '',
+								arrowAlign: '',
+							} )
+						} }
+					/>
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Justify', i18n ), __( 'Button', i18n ) ) }
+						attribute="arrowJustify"
+						controls="flex-horizontal-alt"
+						placeholder="space-between"
+						disabled={ props.arrowPosition === 'outside' && [ '', 'center' ].includes( props.arrowAlign ) ? [ 'flex-start', 'center', 'flex-end' ] : [] }
+					/>
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
+						attribute="arrowAlign"
+						controls="vertical"
+						placeholder="center"
+						disabled={ props.arrowPosition === 'outside' && [ 'flex-start', 'center', 'flex-end' ].includes( props.arrowJustify ) ? [ 'center' ] : [] }
+						onChange={ arrowAlign => {
+							if ( ! arrowAlign && props.arrowPosition === 'outside' ) {
+								props.setAttributes( {
+									arrowAlign,
+									arrowJustify: '',
+								} )
+							} else {
+								props.setAttributes( { arrowAlign } )
+							}
+						} }
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Offset', i18n ), __( 'Button', i18n ) ) }
+						attribute="arrowButtonOffset"
+						sliderMin={ props.arrowPosition === 'outside' ? 0 : -100 }
+						sliderMax={ 100 }
+						responsive="all"
+						placeholder="12"
+					/>
+					{ [ 'flex-start', 'center', 'flex-end' ].includes( props.arrowJustify ) &&
+						<AdvancedRangeControl
+							label={ __( 'Button Gap', i18n ) }
+							attribute="arrowButtonGap"
+							min={ 0 }
+							sliderMax={ 100 }
+							responsive="all"
+							placeholder="12"
+						/>
+					}
+					<ControlSeparator />
+					<ColorPaletteControl
+						label={ sprintf( __( '%s Color', i18n ), __( 'Button', i18n ) ) }
+						attribute="arrowButtonColor"
+						hover="all"
+					/>
+					<ColorPaletteControl
+						label={ sprintf( __( '%s Color', i18n ), __( 'Icon', i18n ) ) }
+						attribute="arrowIconColor"
+						hover="all"
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Width', i18n ), __( 'Button', i18n ) ) }
+						attribute="arrowWidth"
+						units={ [ 'px', '%' ] }
+						sliderMax={ [ 200, 100 ] }
+						min={ [ 0, 0 ] }
+						responsive="all"
+						placeholder="40"
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Height', i18n ), __( 'Button', i18n ) ) }
+						attribute="arrowHeight"
+						units={ [ 'px', '%' ] }
+						sliderMax={ [ 200, 100 ] }
+						min={ [ 0, 0 ] }
+						responsive="all"
+						placeholder="40"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Border Radius', i18n ) }
+						attribute="arrowBorderRadius"
+						sliderMax={ Math.max( props.arrowHeight, props.arrowWidth, 40 ) }
+						min={ 0 }
+						placeholder="40"
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Size', i18n ), __( 'Icon', i18n ) ) }
+						attribute="arrowIconSize"
+						sliderMax={ 100 }
+						min={ 0 }
+						responsive="all"
+						placeholder="16"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Opacity', i18n ) }
+						attribute="arrowOpacity"
+						hover="all"
+						min={ 0 }
+						max={ 1 }
+						step={ 0.01 }
+						placeholder="0.9"
+					/>
+					<AdvancedToggleControl
+						label={ sprintf(
+							// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
+							__( 'Show %s on mobile', i18n ),
+							// Translators: lower caps "arrows" is the name of the setting.
+							__( 'arrows', i18n )
+						) }
+						checked={ props.showArrowsOnMobile }
+						onChange={ showArrowsOnMobile => props.setAttributes( { showArrowsOnMobile } ) }
+						defaultValue={ true }
+					/>
+				</PanelAdvancedSettings>
+
+				<PanelAdvancedSettings
+					title={ __( 'Dots', i18n ) }
+					id="dots"
+					hasToggle={ true }
+					checked={ props.showDots }
+					onChange={ showDots => props.setAttributes( { showDots } ) }
+				>
+
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Justify', i18n ), __( 'Dots', i18n ) ) }
+						attribute="dotsJustify"
+						controls="horizontal"
+						placeholder="center"
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Offset', i18n ), __( 'Dots', i18n ) ) }
+						attribute="dotsOffset"
+						sliderMin={ -100 }
+						sliderMax={ 100 }
+						responsive="all"
+						placeholder="12"
+					/>
+					<ControlSeparator />
+					<AdvancedToolbarControl
+						label={ __( 'Dot Style', i18n ) }
+						attribute="dotsStyle"
+						controls={ [
+							{ value: '', title: __( 'Solid', i18n ) },
+							{ value: 'outline', title: __( 'Outline', i18n ) },
+						] }
+						isSmall
+					/>
+					<ColorPaletteControl
+						label={ sprintf( __( '%s Color', i18n ), __( 'Dot', i18n ) ) }
+						attribute="dotsColor"
+						hover="all"
+					/>
+					<ColorPaletteControl
+						label={ sprintf( __( '%s Color', i18n ), __( 'Active Dot', i18n ) ) }
+						attribute="dotsActiveColor"
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }
+						attribute="dotsSize"
+						sliderMin={ 1 }
+						sliderMax={ 40 }
+						placeholder="8"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Border Radius', i18n ) }
+						attribute="dotsBorderRadius"
+						sliderMax={ props.dotsSize || 8 }
+						min={ 0 }
+						placeholder={ props.dotsSize || '8' }
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Gap', i18n ), __( 'Dots', i18n ) ) }
+						attribute="dotsGap"
+						sliderMin={ 0 }
+						sliderMax={ 40 }
+						placeholder="16"
+						help={ ( props.dotsSize || 8 ) + ( props.dotsGap || 16 ) < 24 ? sprintf( __( 'To improve accessibility, the clickable area of the dots will not go below %s.', i18n ), '24px' ) : undefined }
+					/>
+					<ControlSeparator />
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Width', i18n ), __( 'Active Dot', i18n ) ) }
+						attribute="dotsActiveWidth"
+						sliderMin={ 1 }
+						sliderMax={ 40 }
+						placeholder="30"
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Height', i18n ), __( 'Active Dot', i18n ) ) }
+						attribute="dotsActiveHeight"
+						sliderMin={ 1 }
+						sliderMax={ 40 }
+						placeholder={ props.dotsSize || '8' }
+					/>
+
+					<AdvancedToggleControl
+						label={ sprintf(
+							// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
+							__( 'Show %s on mobile', i18n ),
+							// Translators: lower caps "dots" is the name of the setting.
+							__( 'dots', i18n )
+						) }
+						checked={ props.showDotsOnMobile }
+						onChange={ showDotsOnMobile => props.setAttributes( { showDotsOnMobile } ) }
+						defaultValue={ true }
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
+			<Advanced.InspectorControls />
+
+			<InspectorAdvancedControls>
+				<PanelAdvancedSettings
+					title={ __( 'Accessibility', i18n ) }
+					id="accessibility"
+				>
+					<AdvancedTextControl
+						label={ sprintf(
+							// Translators: %s is the name of the setting. e.g. "Previous Slide".
+							__( '%s label', i18n ),
+							__( 'Previous slide', i18n )
+						) }
+						attribute="ariaLabelPrev"
+						placeholder="Previous slide"
+					/>
+					<AdvancedTextControl
+						label={ sprintf(
+							// Translators: %s is the name of the setting. e.g. "Previous Slide".
+							__( '%s label', i18n ),
+							__( 'Next slide', i18n )
+						) }
+						attribute="ariaLabelNext"
+						placeholder="Next slide"
+					/>
+					<AdvancedTextControl
+						label={ sprintf(
+							// Translators: %s is the name of the setting. e.g. "Previous Slide".
+							__( '%s label', i18n ),
+							__( 'Slide', i18n )
+						) }
+						attribute="ariaLabelSlide"
+						placeholder="Slide %%d"
+						help={ __( 'Use %%d to show the slide number.', i18n ) }
+					/>
+					<AdvancedTextControl
+						label={ sprintf(
+							// Translators: %s is the name of the setting. e.g. "Previous Slide".
+							__( '%s label', i18n ),
+							// Translators: This is for the "Slide 1 of 3" option label.
+							__( 'Slide N of N', i18n )
+						) }
+						attribute="ariaLabelSlideOf"
+						placeholder="Slide %%d of %%d"
+						help={ __( 'Use two %%d to show the slide number and the total slides. e.g. Slide 1 of 3.', i18n ) }
+					/>
+				</PanelAdvancedSettings>
+			</InspectorAdvancedControls>
+
+			<Transform.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-carousel" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

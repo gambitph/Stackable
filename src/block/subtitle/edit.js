@@ -38,6 +38,7 @@ import { compose } from '@wordpress/compose'
 import { createBlock } from '@wordpress/blocks'
 import { addFilter } from '@wordpress/hooks'
 import { sprintf, __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 /**
  * Add `autocompleters` support for stackable/subtitle
@@ -87,27 +88,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<Typography.InspectorControls
-					{ ...props }
-					hasTextTag={ false }
-					isMultiline={ false }
-					initialOpen={ true }
-					hasTextShadow={ true }
-				/>
-
-				<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			<InspectorControls blockState={ props.blockState } />
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-subtitle" />
@@ -150,6 +131,32 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Typography.InspectorControls
+				{ ...props }
+				hasTextTag={ false }
+				isMultiline={ false }
+				initialOpen={ true }
+				hasTextShadow={ true }
+			/>
+
+			<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,
