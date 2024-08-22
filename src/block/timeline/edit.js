@@ -493,14 +493,14 @@ const InspectorControls = memo( props => {
 						label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }
 						attribute="timelineDotSize"
 						sliderMax={ 100 }
-						sliderMin={ props.attributes.timelineThickness || 3 }
+						sliderMin={ props.timelineThickness || 3 }
 						min={ 1 }
 						placeholder="11"
 					/>
 					<AdvancedRangeControl
 						label={ sprintf( __( '%s Border Radius', i18n ), __( 'Dot', i18n ) ) }
 						attribute="timelineDotBorderRadius"
-						sliderMax={ ( props.attributes.timelineDotSize || 11 ) / 2 }
+						sliderMax={ ( props.timelineDotSize || 11 ) / 2 }
 						min={ 0 }
 						placeholder=""
 					/>
@@ -528,13 +528,13 @@ const InspectorControls = memo( props => {
 					/>
 					<ColorPaletteControl
 						label={
-							props.attributes.timelineAccentColorType === 'gradient'
+							props.timelineAccentColorType === 'gradient'
 								? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 1 )
 								: __( 'Timeline Accent Color', i18n )
 						}
 						attribute="timelineAccentColor"
 					/>
-					{ props.attributes.timelineAccentColorType === 'gradient' &&
+					{ props.timelineAccentColorType === 'gradient' &&
 						<ColorPaletteControl
 							label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 2 ) }
 							attribute="timelineAccentColor2"

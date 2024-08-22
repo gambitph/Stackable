@@ -46,6 +46,11 @@ const StackableRangeControl = memo( props => {
 		...propsToPass
 	} = props
 
+	// This fixes the block error for dynamic AdvancedRangeControls if props.value is NaN
+	const _getValue = () => {
+		return props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ? '' : props.value
+	}
+
 	// We have an internal state for the value so that the user can freely type
 	// any number in the number field without any validation and then we can
 	// just set the proper value on the onChange prop.
@@ -57,9 +62,11 @@ const StackableRangeControl = memo( props => {
 	// const _debouncedOnChange = useCallback( debounce( props.onChange, 100 ), [ props.onChange ] )
 
 	// Update the internal value state if the prop changes.
-	const [ prevValue, setPrevValue ] = useState( props.value )
-	if ( props.value !== prevValue ) {
-		setPrevValue( props.value )
+	const [ prevValue, setPrevValue ] = useState( _getValue() )
+	// use _getValue() instead of props.value because NaN !== NaN will always return true and will cause a lot of re-renders and an infinite loop.
+	if ( _getValue() !== prevValue ) {
+		const _val = _getValue()
+		setPrevValue( _val )
 		// Invalid values entered inside the number control will be omitted.
 		if ( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ) {
 			setValue( '' )
