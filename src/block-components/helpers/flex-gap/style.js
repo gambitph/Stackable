@@ -56,82 +56,52 @@ FlexGapStyles.addStyles = ( blockStyleGenerator, props = {} ) => {
 		versionDeprecated: '',
 	}
 	const {
-		flexGapOptionsEdit = null,
-		flexGapOptionsSave = null,
 		selector,
+		editSelector = '',
+		saveSelector = '',
 		enableColumnGap = true,
 	} = props
 
-	if ( ! flexGapOptionsEdit && ! flexGapOptionsSave ) {
-		blockStyleGenerator.addBlockStyles( 'columnGap', [ {
-			...propsToPass,
-			selector,
-			styleRule: 'columnGap',
-			attrName: 'columnGap',
-			key: 'columnGap',
-			format: '%spx',
-			responsive: 'all',
-			enabledCallback: () => enableColumnGap,
-		} ] )
+	blockStyleGenerator.addBlockStyles( 'columnGap', [ {
+		...propsToPass,
 
-		blockStyleGenerator.addBlockStyles( 'rowGap', [ {
-			...propsToPass,
-			selector,
-			styleRule: 'rowGap',
-			attrName: 'rowGap',
-			key: 'rowGap',
-			format: '%spx',
-			responsive: 'all',
-		} ] )
-	}
+		renderIn: 'edit',
+		selector: editSelector || selector,
+		styleRule: 'columnGap',
+		attrName: 'columnGap',
+		key: 'columnGap',
+		format: '%spx',
+		responsive: 'all',
+		enabledCallback: () => enableColumnGap,
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selector: saveSelector || selector,
+		styleRule: 'columnGap',
+		attrName: 'columnGap',
+		key: 'columnGap',
+		format: '%spx',
+		responsive: 'all',
+		enabledCallback: () => enableColumnGap,
+	} ] )
 
-	if ( flexGapOptionsEdit ) {
-		blockStyleGenerator.addBlockStyles( 'columnGap', [ {
-			...propsToPass,
-			renderIn: 'edit',
-			selector,
-			styleRule: 'columnGap',
-			attrName: 'columnGap',
-			key: 'columnGap',
-			format: '%spx',
-			responsive: 'all',
-			enabledCallback: () => enableColumnGap,
-		} ] )
-
-		blockStyleGenerator.addBlockStyles( 'rowGap', [ {
-			...propsToPass,
-			renderIn: 'edit',
-			selector,
-			styleRule: 'rowGap',
-			attrName: 'rowGap',
-			key: 'rowGap',
-			format: '%spx',
-			responsive: 'all',
-		} ] )
-	}
-
-	if ( flexGapOptionsSave ) {
-		blockStyleGenerator.addBlockStyles( 'columnGap', [ {
-			...propsToPass,
-			renderIn: 'save',
-			selector,
-			styleRule: 'columnGap',
-			attrName: 'columnGap',
-			key: 'columnGap',
-			format: '%spx',
-			responsive: 'all',
-			enabledCallback: () => enableColumnGap,
-		} ] )
-
-		blockStyleGenerator.addBlockStyles( 'rowGap', [ {
-			...propsToPass,
-			renderIn: 'save',
-			selector,
-			styleRule: 'rowGap',
-			attrName: 'rowGap',
-			key: 'rowGap',
-			format: '%spx',
-			responsive: 'all',
-		} ] )
-	}
+	blockStyleGenerator.addBlockStyles( 'rowGap', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selector: editSelector || selector,
+		styleRule: 'rowGap',
+		attrName: 'rowGap',
+		key: 'rowGap',
+		format: '%spx',
+		responsive: 'all',
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selector: saveSelector || selector,
+		styleRule: 'rowGap',
+		attrName: 'rowGap',
+		key: 'rowGap',
+		format: '%spx',
+		responsive: 'all',
+	} ] )
 }

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { PostsStyles } from './style'
+import blockStyles from './style'
 import { generateRenderPostItem, CONTENTS } from './util'
 import variations from './variations'
 
@@ -27,6 +27,7 @@ import {
 	InspectorStyleControls,
 	ControlSeparator,
 	ProControlButton,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	useBlockStyle,
@@ -42,7 +43,6 @@ import {
 import {
 	getAlignmentClasses,
 	BlockDiv,
-	useGeneratedCss,
 	Image,
 	Alignment,
 	Advanced,
@@ -96,8 +96,6 @@ const Edit = props => {
 		className,
 		setAttributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const {
 		stkQueryId,
@@ -165,6 +163,17 @@ const Edit = props => {
 	const activeVariation = getActiveBlockVariation( name, attributes )
 	const defaultContentOrder = activeVariation?.attributes?.contentOrder || DEFAULT_ORDER
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls
@@ -183,11 +192,7 @@ const Edit = props => {
 				focalPointPlaceholder={ focalPointPlaceholder }
 			/>
 
-			<PostsStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-posts" />
 
 			{ ( isRequesting || ! hasPosts ) ? (

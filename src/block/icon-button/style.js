@@ -9,53 +9,22 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
+} )
 
-const buttonOptions = {
+BlockDiv.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
+Transform.Style.addStyles( blockStyles )
+Button.Style.addStyles( blockStyles, {
 	selector: '.stk-button',
 	hoverSelector: '.stk-button:hover',
 	textSelector: '.stk-button__inner-text',
 	textHoverSelector: '.stk-button:hover .stk-button__inner-text',
-}
-
-export const IconButtonStyles = memo( props => {
-	return (
-		<>
-			<BlockDiv.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<Button.Style { ...props } { ...buttonOptions } />
-			<EffectsAnimations.Style { ...props } />
-		</>
-	)
 } )
+EffectsAnimations.Style.addStyles( blockStyles )
 
-IconButtonStyles.defaultProps = {
-	version: '',
-}
-
-IconButtonStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
-
-	return (
-		<BlockCssCompiler>
-			<BlockDiv.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<Button.Style.Content { ...props } { ...buttonOptions } />
-			<EffectsAnimations.Style.Content { ...props } />
-		</BlockCssCompiler>
-	)
-}
-
-IconButtonStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
+export default blockStyles

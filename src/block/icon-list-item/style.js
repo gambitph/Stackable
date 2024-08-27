@@ -5,56 +5,23 @@ import {
 	Advanced,
 	Typography,
 	Alignment,
-	MarginBottom,
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
-
-const typographyOptions = {
-	selector: '.stk-block-icon-list-item__text',
-	hoverSelector: '.stk-block-icon-list-item__text:hover',
-}
-
-export const TextStyles = memo( props => {
-	return (
-		<>
-			<Alignment.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<Typography.Style { ...props } { ...typographyOptions } />
-			<EffectsAnimations.Style { ...props } />
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-TextStyles.defaultProps = {
-	version: '',
-}
+Alignment.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
+Transform.Style.addStyles( blockStyles )
+Typography.Style.addStyles( blockStyles, {
+	selector: '.stk-block-icon-list-item__text',
+	hoverSelector: '.stk-block-icon-list-item__text:hover',
+} )
+EffectsAnimations.Style.addStyles( blockStyles )
 
-TextStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
-
-	return (
-		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<Typography.Style.Content { ...props } { ...typographyOptions } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<MarginBottom.Style.Content { ...props } />
-		</BlockCssCompiler>
-	)
-}
-
-TextStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
+export default blockStyles

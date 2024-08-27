@@ -11,57 +11,24 @@ import {
 	Separator,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
-
-const containerDivOptions = {
-	sizeSelector: '.stk-block-hero__content',
-	sizeHorizontalAlignRule: 'margin',
-}
-
-export const ContainerStyles = memo( props => {
-	return (
-		<>
-			<Alignment.Style { ...props } />
-			<BlockDiv.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<EffectsAnimations.Style { ...props } />
-			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
-			<MarginBottom.Style { ...props } />
-			<Separator.Style { ...props } />
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-ContainerStyles.defaultProps = {
-	veersion: '',
-}
+Alignment.Style.addStyles( blockStyles )
+BlockDiv.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
+Transform.Style.addStyles( blockStyles )
+EffectsAnimations.Style.addStyles( blockStyles )
+ContainerDiv.Style.addStyles( blockStyles, {
+	sizeSelector: '.stk-block-hero__content',
+	sizeHorizontalAlignRule: 'margin',
+} )
 
-ContainerStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
+MarginBottom.Style.addStyles( blockStyles )
+Separator.Style.addStyles( blockStyles )
 
-	return (
-		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
-			<MarginBottom.Style.Content { ...props } />
-			<Separator.Style.Content { ...props } />
-		</BlockCssCompiler>
-	)
-}
-
-ContainerStyles.Content.defaultProps = {
-	veersion: '',
-	attributes: {},
-}
+export default blockStyles

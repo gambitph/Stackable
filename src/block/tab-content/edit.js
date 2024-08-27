@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -13,11 +13,11 @@ import {
 	GroupPlaceholder,
 	InspectorTabs,
 	AdvancedToggleControl,
-	InspectorLayoutControls
+	InspectorLayoutControls,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	getRowClasses,
 	Alignment,
 	getAlignmentClasses,
@@ -71,8 +71,6 @@ const Edit = props => {
 		context,
 	} = props
 
-	useGeneratedCss( props.attributes )
-
 	const [ activeTab, , templateLock ] = useSetActiveTabContext()
 
 	const rowClass = getRowClasses( props.attributes )
@@ -104,6 +102,17 @@ const Edit = props => {
 		'stk-block-content',
 	], getContentAlignmentClasses( props.attributes ) )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls />
@@ -114,11 +123,7 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
-				<BlockStyles
-					version={ VERSION }
-					blockState={ props.blockState }
-					clientId={ clientId }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-tab-content" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder attributes={ TEMPLATE[0][1] } /> }

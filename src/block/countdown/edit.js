@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { CountdownStyles } from './style'
+import blockStyles from './style'
 import { CountdownNumber } from './countdown-number'
 import { Divider } from './divider'
 import { timezones as TIMEZONE_OPTIONS } from './timezones'
@@ -12,7 +12,6 @@ import { timezones as TIMEZONE_OPTIONS } from './timezones'
 import {
 	BlockDiv,
 	ContainerDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -29,6 +28,7 @@ import classnames from 'classnames'
 import {
 	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
 	AdvancedRangeControl, AdvancedToggleControl, AdvancedTextControl, AlignButtonsControl, ControlSeparator, InspectorLayoutControls,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	 withBlockAttributeContext,
@@ -84,10 +84,7 @@ const Edit = props => {
 		className,
 		setAttributes,
 		attributes,
-		clientId,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const digitTextClasses = getTypographyClasses( attributes, 'digit%s' )
 
@@ -158,20 +155,26 @@ const Edit = props => {
 		messageTextClasses,
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
 	return (
 		<>
 			<InspectorControls
 				setAttributes={ setAttributes }
 				countdownType={ attributes.countdownType }
 				date={ attributes.date }
-				actoinOnExpiration={ attributes.actionOnExpiration }
+				actionOnExpiration={ attributes.actionOnExpiration }
 			/>
 
-			<CountdownStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-countdown" />
 
 			<BlockDiv

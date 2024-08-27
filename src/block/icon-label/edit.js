@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { IconLabelStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -14,10 +14,10 @@ import {
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
 	InspectorBottomTip,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
 	getAlignmentClasses,
@@ -56,8 +56,6 @@ const Edit = props => {
 		clientId,
 	} = props
 
-	useGeneratedCss( props.attributes )
-
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -73,15 +71,22 @@ const Edit = props => {
 		'stk-block-content',
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls />
 
-			<IconLabelStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-icon-label" />
 
 			<BlockDiv

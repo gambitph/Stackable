@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { TextStyles } from './style'
+import blockStyles from './style'
 import { getUseSvgDef } from '../icon-list/util'
 import {
 	convertToListItems,
@@ -15,7 +15,6 @@ import {
  */
 import {
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -30,7 +29,7 @@ import {
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
-import { InspectorTabs } from '~stackable/components'
+import { InspectorTabs, useBlockCssGenerator } from '~stackable/components'
 import {
 	withBlockAttributeContext,
 	withQueryLoopContext,
@@ -58,8 +57,6 @@ const Edit = props => {
 		className,
 		setAttributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const { icon, text } = attributes
 	const textClasses = getTypographyClasses( props.attributes )
@@ -108,6 +105,17 @@ const Edit = props => {
 		}
 	}
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls blockState={ props.blockState } />
@@ -121,11 +129,8 @@ const Edit = props => {
 				renderHtmlTag={ false }
 				tabIndex={ -1 } // We need this since navigating up/down selects the wrapper.
 			>
-				<TextStyles
-					version={ VERSION }
-					blockState={ props.blockState }
-					clientId={ clientId }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
+
 				<CustomCSS mainBlockClass="stk-block-icon-list-item" />
 				<div className="stk-block-icon-list-item__content">
 					{ ! ordered && icon &&

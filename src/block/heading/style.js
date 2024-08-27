@@ -57,9 +57,7 @@ blockStyles.addBlockStyles( 'topLineAlign', [ {
 	key: 'topLineAlign-left',
 	responsive: 'all',
 	valueCallback: value => value === 'center' || value === 'right' ? 'auto' : '0',
-} ] )
-
-blockStyles.addBlockStyles( 'topLineAlign', [ {
+}, {
 	selector: '.stk-block-heading__top-line',
 	styleRule: 'marginRight',
 	attrName: 'topLineAlign',
@@ -109,9 +107,7 @@ blockStyles.addBlockStyles( 'bottomLineAlign', [ {
 	key: 'bottomLineAlign',
 	responsive: 'all',
 	valueCallback: value => value === 'center' || value === 'right' ? 'auto' : 0,
-} ] )
-
-blockStyles.addBlockStyles( 'bottomLineAlign', [ {
+}, {
 	selector: '.stk-block-heading__bottom-line',
 	styleRule: 'marginRight',
 	attrName: 'bottomLineAlign',

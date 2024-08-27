@@ -6,7 +6,6 @@ import {
 	Advanced,
 	Typography,
 	Alignment,
-	MarginBottom,
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
@@ -14,45 +13,21 @@ import {
 /**
  * WordPress dependencies
  */
-import { memo } from '@wordpress/element'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-export const HeadingStyles = memo( props => {
-	return (
-		<>
-			<Alignment.Style { ...props } />
-			<BlockDiv.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<Typography.Style { ...props } selector=".stk-block-count-up__text" />
-			<EffectsAnimations.Style { ...props } />
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-HeadingStyles.defaultProps = {
-	version: '',
-}
+Alignment.Style.addStyles( blockStyles )
+BlockDiv.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
+Transform.Style.addStyles( blockStyles )
+Typography.Style.addStyles( blockStyles, {
+	selector: '.stk-block-count-up__text',
+	hoverSelector: '.stk-block-count-up__text:hover',
+} )
+EffectsAnimations.Style.addStyles( blockStyles )
 
-HeadingStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
-
-	return (
-		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<Typography.Style.Content { ...props } selector=".stk-block-count-up__text" />
-			<EffectsAnimations.Style.Content { ...props } />
-			<MarginBottom.Style.Content { ...props } />
-		</BlockCssCompiler>
-	)
-}
-
-HeadingStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
+export default blockStyles

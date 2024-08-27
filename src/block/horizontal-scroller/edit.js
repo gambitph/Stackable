@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -19,12 +19,12 @@ import {
 	ColorPaletteControl,
 	InspectorLayoutControls,
 	ControlSeparator,
+	useBlockCssGenerator,
 } from '~stackable/components'
 
 import {
 	BlockDiv,
 	ColumnsControl,
-	useGeneratedCss,
 	MarginBottom,
 	Alignment,
 	getAlignmentClasses,
@@ -61,7 +61,6 @@ const TEMPLATE = [
 const Edit = props => {
 	 const {
 		 className,
-		 clientId,
 		 setAttributes,
 	 } = props
 
@@ -69,8 +68,6 @@ const Edit = props => {
 		showScrollbar,
 		scrollbarHeight,
 	 } = props.attributes
-
-	 useGeneratedCss( props.attributes )
 
 	 const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	 const { hasInnerBlocks } = useBlockContext()
@@ -90,6 +87,17 @@ const Edit = props => {
 		'stk--with-scrollbar': showScrollbar,
 	 } )
 
+	 // Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	 return (
 		 <>
 			<InspectorControls
@@ -104,11 +112,7 @@ const Edit = props => {
 				 attributes={ props.attributes }
 				 className={ blockClassNames }
 			 >
-				 <BlockStyles
-					 version={ VERSION }
-					 blockState={ props.blockState }
-					 clientId={ clientId }
-				 />
+				 { blockCss && <style key="block-css">{ blockCss }</style> }
 				 <CustomCSS mainBlockClass="stk-block-horizontal-scroller" />
 
 				 { ! hasInnerBlocks && <GroupPlaceholder /> }

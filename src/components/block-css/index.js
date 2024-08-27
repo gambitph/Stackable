@@ -156,7 +156,7 @@ const BlockCss = props => {
 
 		// Allow others to override the unit.
 		if ( unitCallback ) {
-			unit = unitCallback( unit, device, state )
+			unit = unitCallback( unit, device, state, getAttribute )
 		}
 
 		// Allow unspecified tablet & mobile values to be clamped based on the desktop value.

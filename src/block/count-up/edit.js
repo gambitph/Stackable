@@ -1,14 +1,13 @@
 /**
  * Internal dependencies
  */
-import { HeadingStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
  */
 import {
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -25,7 +24,7 @@ import {
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
-	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
+	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -40,11 +39,8 @@ import { memo }	from '@wordpress/element'
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -59,15 +55,22 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 
 			<InspectorControls blockState={ props.blockState } />
-			<HeadingStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-count-up" />
 
 			<BlockDiv

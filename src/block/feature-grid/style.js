@@ -11,58 +11,22 @@ import {
 	Transform,
 	Columns,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
-
-const alignmentOptions = {
-	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
-}
-
-const BlockStyles = memo( props => {
-	return (
-		<>
-			<Alignment.Style { ...props } { ...alignmentOptions } />
-			<BlockDiv.Style { ...props } />
-			<Column.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<EffectsAnimations.Style { ...props } />
-			<Separator.Style { ...props } />
-			<Columns.Style { ...props } />
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-BlockStyles.defaultProps = {
-	version: '',
-}
+Alignment.Style.addStyles( blockStyles, {
+	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+} )
+BlockDiv.Style.addStyles( blockStyles )
+Column.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
+Transform.Style.addStyles( blockStyles )
+EffectsAnimations.Style.addStyles( blockStyles )
+Separator.Style.addStyles( blockStyles )
+Columns.Style.addStyles( blockStyles )
 
-BlockStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
-
-	return (
-		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } { ...alignmentOptions } />
-			<BlockDiv.Style.Content { ...props } />
-			<Column.Style.Content { ...props } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<Separator.Style.Content { ...props } />
-			<Columns.Style.Content { ...props } />
-		</BlockCssCompiler>
-	)
-}
-
-BlockStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
-
-export default BlockStyles
+export default blockStyles

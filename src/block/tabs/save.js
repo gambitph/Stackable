@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import BlockStyles from './style'
-
-/**
  * External dependencies
  */
 import { withVersion } from '~stackable/higher-order'
@@ -67,7 +62,7 @@ export const Save = props => {
 			version={ props.version }
 			data-initial-tab={ props.attributes.initialTabOpen || '1' }
 		>
-			<BlockStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<Separator.Content attributes={ attributes }>
 				<div className={ contentClassNames }>

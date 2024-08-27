@@ -156,7 +156,7 @@ const Styles = props => {
 
 	return (
 		<>
-			{ <BlockCss
+			<BlockCss
 				{ ...propsToPass }
 				selectorCallback={ getAttribute => getAttribute( 'dividerType' ) === ':' ? '.stk-block-countdown__divider-colon' : '.stk-block-countdown__divider-line' }
 				styleRuleCallback={ getAttribute => getAttribute( 'dividerType' ) === ':' ? 'color' : 'backgroundColor' }
@@ -164,7 +164,7 @@ const Styles = props => {
 				key="dividerColor"
 				responsive="all"
 				dependencies={ [ 'dividerType' ] }
-			/> }
+			/>
 			<BlockCss
 				{ ...propsToPass }
 				selector=".stk-block-countdown__divider-line"
@@ -210,3 +210,51 @@ Divider.addAttributes = addAttributes
 
 Divider.Style = Style
 
+Divider.Style.addStyles = ( blockStyleGenerator, props = {} ) => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
+
+	blockStyleGenerator.addBlockStyles( 'dividerColor', [ {
+		...propsToPass,
+		selectorCallback: getAttribute => getAttribute( 'dividerType' ) === ':' ? '.stk-block-countdown__divider-colon' : '.stk-block-countdown__divider-line',
+		styleRuleCallback: getAttribute => getAttribute( 'dividerType' ) === ':' ? 'color' : 'backgroundColor',
+		attrName: 'dividerColor',
+		key: 'dividerColor',
+		responsive: 'all',
+		dependencies: [ 'dividerType' ],
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'dividerSizeLine', [ {
+		...propsToPass,
+		selector: '.stk-block-countdown__divider-line',
+		styleRule: 'height',
+		attrName: 'dividerSizeLine',
+		key: 'dividerSizeLine',
+		hasUnits: '%',
+		responsive: 'all',
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'dividerSizeColon', [ {
+		...propsToPass,
+		selector: '.stk-block-countdown__divider-colon',
+		styleRule: 'fontSize',
+		attrName: 'dividerSizeColon',
+		key: 'dividerSizeColon',
+		hasUnits: 'px',
+		responsive: 'all',
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'dividerTopOffset', [ {
+		...propsToPass,
+		selector: '.stk-block-countdown__divider-colon',
+		styleRule: 'top',
+		attrName: 'dividerTopOffset',
+		key: 'dividerTopOffset',
+		hasUnits: 'px',
+		responsive: 'all',
+	} ] )
+}

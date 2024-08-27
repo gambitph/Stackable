@@ -10,56 +10,24 @@ import {
 	ProgressBar,
 	Typography,
 } from '~stackable/block-components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
-import { BlockCssCompiler } from '~stackable/components'
-
-const typographyOptions = {
-	selector: '.stk-progress-circle__inner-text',
-}
-
-const ProgressCircleStyles = memo( props => {
-	return (
-		<>
-			<Alignment.Style { ...props } />
-			<BlockDiv.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<EffectsAnimations.Style { ...props } />
-			<ProgressBar.Style { ...props } isCircle={ true } />
-			<Typography.Style { ...props } { ...typographyOptions } />
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-ProgressCircleStyles.defaultProps = {
-	version: '',
-}
+Alignment.Style.addStyles( blockStyles )
+BlockDiv.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
+Transform.Style.addStyles( blockStyles )
+EffectsAnimations.Style.addStyles( blockStyles )
+ProgressBar.Style.addStyles( blockStyles, {
+	isCircle: true,
+} )
+Typography.Style.addStyles( blockStyles, {
+	selector: '.stk-progress-circle__inner-text',
+	hoverSelector: '.stk-progress-circle__inner-text:hover',
+} )
 
-ProgressCircleStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
-
-	return (
-		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<ProgressBar.Style.Content { ...props } isCircle={ true } />
-			<Typography.Style.Content { ...props } { ...typographyOptions } />
-		</BlockCssCompiler>
-	)
-}
-
-ProgressCircleStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
-
-export default ProgressCircleStyles
+export default blockStyles

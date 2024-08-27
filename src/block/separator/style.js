@@ -8,71 +8,34 @@ import {
 	Transform,
 	SeparatorStyles as SeparatorStyles_,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
-const separatorOptions = {
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
+} )
+
+BlockDiv.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
+EffectsAnimations.Style.addStyles( blockStyles )
+Transform.Style.addStyles( blockStyles )
+SeparatorStyles_.Style.addStyles( blockStyles, {
 	selector: '',
 	enableFlipVertically: true,
 	isInitiallyFlippedVertically: false,
 	wrapperSelector: '.stk-block-separator__inner',
-}
-
-export const SeparatorStyles = memo( props => {
-	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles', null )
-
-	return (
-		<>
-			<BlockDiv.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<EffectsAnimations.Style { ...props } />
-			<Transform.Style { ...props } />
-			<SeparatorStyles_ { ...props } { ...separatorOptions } location="" />
-			{ SeparatorLayerStyles && (
-				<SeparatorLayerStyles
-					{ ...props }
-					{ ...separatorOptions }
-					location=""
-				/>
-			) }
-		</>
-	)
+	location: '',
 } )
-
-SeparatorStyles.defaultProps = {
-	version: '',
-}
-
-SeparatorStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
-	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles', null )
-
-	return (
-		<BlockCssCompiler>
-			<BlockDiv.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<SeparatorStyles_ { ...props } { ...separatorOptions } location="" />
-			{ SeparatorLayerStyles && (
-				<SeparatorLayerStyles
-					{ ...props }
-					{ ...separatorOptions }
-					location=""
-				/>
-			) }
-		</BlockCssCompiler>
-	)
-}
-
-SeparatorStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
+applyFilters( 'stackable.block-component.separator.layer-styles.addStyles', blockStyles, {
+	selector: '',
+	enableFlipVertically: true,
+	isInitiallyFlippedVertically: false,
+	wrapperSelector: '.stk-block-separator__inner',
+	location: '',
+} )
+export default blockStyles

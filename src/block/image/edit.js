@@ -1,18 +1,19 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
-import { InspectorTabs, AlignButtonsControl } from '~stackable/components'
+import {
+	InspectorTabs, AlignButtonsControl, useBlockCssGenerator,
+} from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Image,
 	Advanced,
 	CustomCSS,
@@ -51,8 +52,6 @@ const Edit = props => {
 		className,
 	} = props
 
-	useGeneratedCss( props.attributes )
-
 	const figcaptionClassnames = classnames(
 		getTypographyClasses( props.attributes, 'figcaption%s' ),
 		'stk-img-figcaption'
@@ -73,15 +72,22 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls enableLink={ enableLink } />
 
-			<BlockStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-image" />
 
 			<BlockDiv

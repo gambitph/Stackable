@@ -3,10 +3,9 @@
  */
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
-import { InspectorTabs } from '~stackable/components'
+import { InspectorTabs, useBlockCssGenerator } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Advanced, CustomCSS,
 	Responsive,
 	Button,
@@ -31,16 +30,13 @@ import { memo } from '@wordpress/element'
  * Internal dependencies
  */
 import { defaultIcon } from './schema'
-import { IconButtonStyles } from './style'
+import iconButtonStyles from './style'
 import { blockStyles } from './block-styles'
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
@@ -49,15 +45,22 @@ const Edit = props => {
 		'stk-block-icon-button',
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles: iconButtonStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls />
 
-			<IconButtonStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-icon-button" />
 
 			<BlockDiv

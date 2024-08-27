@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { TabStyles } from './style'
+import tabBlockStyles from './style'
 import { useSetActiveTabContext } from '../tabs/with-active-tab'
 import { defaultIcon } from './schema'
 import { blockStyles as _blockStyles } from './block-styles'
@@ -15,7 +15,6 @@ import SVGIconBottom from './images/icon-bottom.svg'
  */
 import {
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -46,6 +45,7 @@ import {
 	ColorPaletteControl,
 	BlockStyles,
 	RichText,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext,
@@ -106,8 +106,6 @@ const Edit = props => {
 		setAttributes,
 		context,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const [ activeTab, setActiveTab, , setTemplateLock ] = useSetActiveTabContext()
 	const textClasses = getTypographyClasses( props.attributes )
@@ -310,6 +308,17 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles: tabBlockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls
@@ -335,11 +344,7 @@ const Edit = props => {
 				} }
 			/>
 
-			<TabStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-tab-labels" />
 
 			<BlockDiv

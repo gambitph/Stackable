@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { IconLabelStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -16,10 +16,10 @@ import {
 	AdvancedTextControl,
 	InspectorBottomTip,
 	AdvancedToggleControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
 	getAlignmentClasses,
@@ -66,13 +66,10 @@ const isVideoFile = link => {
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
 		setAttributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -90,6 +87,17 @@ const Edit = props => {
 		'stk-hover-parent',
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls
@@ -99,11 +107,7 @@ const Edit = props => {
 
 			/>
 
-			<IconLabelStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-video-popup" />
 
 			<BlockDiv

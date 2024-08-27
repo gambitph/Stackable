@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { IconListStyles } from './style'
+import blockStyles from './style'
 
 /***
  * External dependencies
@@ -19,6 +19,7 @@ import {
 	AdvancedToolbarControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -26,7 +27,6 @@ import {
 import {
 	Typography,
 	BlockDiv,
-	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -130,13 +130,10 @@ const ICON_VERTICAL_ALIGN_OMIT = [ 'stretch' ]
 
 const Edit = props => {
 	const {
-		clientId,
 		attributes,
 		setAttributes,
 		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const {
 		ordered,
@@ -183,6 +180,17 @@ const Edit = props => {
 		__experimentalCaptureToolbars: true,
 	} )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls
@@ -197,11 +205,7 @@ const Edit = props => {
 				resetCustomIcons={ resetCustomIcons }
 			/>
 
-			<IconListStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-icon-list" />
 
 			<BlockDiv

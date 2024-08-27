@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { CardStyles } from './style'
+import blockStyles from './style'
 import variations from './variations'
 
 /**
@@ -14,6 +14,7 @@ import {
 	InspectorBottomTip,
 	InspectorStyleControls,
 	InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	useBlockContext, useBlockStyle, useDeviceType,
@@ -25,7 +26,6 @@ import {
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Image,
 	getAlignmentClasses,
 	Alignment,
@@ -64,10 +64,7 @@ const Edit = props => {
 		hasContainer,
 	} = props.attributes
 
-	useGeneratedCss( props.attributes )
-
 	const {
-		clientId,
 		className, //isHovered,
 	} = props
 
@@ -107,6 +104,17 @@ const Edit = props => {
 	const imageWidthUnit = props.attributes.imageWidthUnit || 'px'
 	const imageHeightUnit = props.attributes.imageHeightUnit || 'px'
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls
@@ -114,11 +122,7 @@ const Edit = props => {
 				hasHeight={ hasHeight }
 			/>
 
-			<CardStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-card" />
 
 			<BlockDiv

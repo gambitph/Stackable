@@ -1,14 +1,13 @@
 /**
  * Internal dependencies
  */
-import { HeadingStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
  */
 import {
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -31,6 +30,7 @@ import {
 	InspectorStyleControls,
 	InspectorTabs,
 	PanelAdvancedSettings,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -45,13 +45,10 @@ import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
 		setAttributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -68,6 +65,17 @@ const Edit = props => {
 		textClasses,
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 
@@ -77,11 +85,7 @@ const Edit = props => {
 				hasShape={ attributes.hasShape }
 			/>
 
-			<HeadingStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-number-box" />
 
 			<BlockDiv

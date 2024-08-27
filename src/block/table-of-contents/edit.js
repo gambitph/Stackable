@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { TableOfContentsStyles } from './style'
+import blockStyles from './style'
 import { generateAnchor } from './autogenerate-anchors'
 import TableOfContentsList from './table-of-contents-list'
 import { getUpdatedHeadings, linearToNestedHeadingList } from './util'
@@ -22,6 +22,7 @@ import {
 	AdvancedToggleControl,
 	AdvancedSelectControl,
 	RichText,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -29,7 +30,6 @@ import {
 import {
 	Typography,
 	BlockDiv,
-	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -141,7 +141,6 @@ const Notice = ( { autoGenerateAnchors } ) => {
 
 const Edit = props => {
 	const {
-		clientId,
 		attributes,
 		setAttributes,
 		className,
@@ -281,8 +280,6 @@ const Edit = props => {
 		}
 	}, 301 ), [ headings ] )
 
-	useGeneratedCss( props.attributes )
-
 	const { listType } = attributes
 	const tagName = isEmpty( listType ) || listType === 'unordered' || listType === 'none' ? 'ul' : 'ol'
 
@@ -385,6 +382,17 @@ const Edit = props => {
 		setForceUpdateHeadings( forceUpdateHeadings + 1 )
 	}, [ headings ] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	// When generating an example block preview, just show a list of headings.
 	// @see example.js
 	if ( props.attributes.example ) {
@@ -401,11 +409,7 @@ const Edit = props => {
 		<>
 			<InspectorControls blockState={ props.blockState } />
 
-			<TableOfContentsStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
 			<BlockDiv

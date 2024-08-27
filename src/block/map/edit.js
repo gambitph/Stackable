@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 import mapStyleOptions from './map-styles'
 import LocationControl from './location-control'
 import {
@@ -23,11 +23,11 @@ import {
 	PanelAdvancedSettings,
 	ResizerTooltip,
 	StyleControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import { useDeviceType } from '~stackable/hooks'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Icon,
@@ -77,7 +77,6 @@ const Edit = props => {
 		isHovered,
 		isSelected,
 		setAttributes,
-		clientId,
 	} = props
 
 	const {
@@ -113,8 +112,6 @@ const Edit = props => {
 	useEffect( () => {
 		initMapLibrary( apiKey, initMap )
 	}, [] )
-
-	useGeneratedCss( attributes )
 
 	// Always keep note whether this block uses the Google API Key.
 	useEffect( () => {
@@ -259,6 +256,17 @@ const Edit = props => {
 		}
 	}, 400 ), [ geocoderRef.current, setAttributes, useGeocoding ] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls
@@ -272,11 +280,7 @@ const Edit = props => {
 				icon={ icon }
 			/>
 
-			<BlockStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-map" />
 
 			<BlockDiv

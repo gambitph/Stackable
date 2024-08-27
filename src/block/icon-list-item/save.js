@@ -1,8 +1,3 @@
-/**
- * Internal dependencies
- */
-import { TextStyles } from './style'
-
 import {
 	BlockDiv,
 	CustomCSS,
@@ -53,7 +48,7 @@ export const Save = props => {
 			blockTag="li"
 			renderHtmlTag={ false }
 		>
-			<TextStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<div className="stk-block-icon-list-item__content">
 				{ ! attributes.ordered && attributes.icon &&

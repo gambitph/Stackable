@@ -9,53 +9,21 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
-
-const iconStyleOptions = {
-	selector: '.stk--svg-wrapper',
-	hoverSelector: '.stk--svg-wrapper:hover',
-}
-
-export const IconStyles = memo( props => {
-	return (
-		<>
-			<Alignment.Style { ...props } />
-			<BlockDiv.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<EffectsAnimations.Style { ...props } />
-			<Icon.Style { ...props } { ...iconStyleOptions } />
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-IconStyles.defaultProps = {
-	version: '',
-}
+Alignment.Style.addStyles( blockStyles )
+BlockDiv.Style.addStyles( blockStyles )
+Advanced.Style.addStyles( blockStyles )
+Transform.Style.addStyles( blockStyles )
+EffectsAnimations.Style.addStyles( blockStyles )
+Icon.Style.addStyles( blockStyles, {
+	selector: '.stk--svg-wrapper',
+	hoverSelector: '.stk--svg-wrapper:hover',
+} )
 
-IconStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
-
-	return (
-		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<Icon.Style.Content { ...props } { ...iconStyleOptions } />
-		</BlockCssCompiler>
-	)
-}
-
-IconStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
+export default blockStyles

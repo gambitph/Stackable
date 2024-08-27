@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { SeparatorStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -15,13 +15,13 @@ import {
 	Separator2,
 	AdvancedRangeControl,
 	AdvancedToggleControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -43,12 +43,9 @@ import { applyFilters } from '@wordpress/hooks'
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const PremiumSeparatorControls = useMemo( () => applyFilters( 'stackable.block.separator.edit.after', null ), [] )
 
@@ -67,15 +64,22 @@ const Edit = props => {
 		'stk-block-separator__inner',
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 			<InspectorControls PremiumSeparatorControls={ PremiumSeparatorControls } />
 
-			<SeparatorStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-separator" />
 
 			<BlockDiv

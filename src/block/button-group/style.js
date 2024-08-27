@@ -12,14 +12,6 @@ import {
 } from '~stackable/block-components'
 import { BlockStyleGenerator } from '~stackable/components'
 
-const flexGapOptionsEdit = {
-	selector: '.block-editor-block-list__layout',
-}
-
-const flexGapOptionsSave = {
-	selector: '.stk-inner-blocks',
-}
-
 const blockStyles = new BlockStyleGenerator( {
 	versionAdded: '3.0.0',
 	versionDeprecated: '',
@@ -32,9 +24,7 @@ blockStyles.addBlockStyles( 'flexWrap', [ {
 	attrName: 'flexWrap',
 	key: 'flexWrap-save',
 	responsive: 'all',
-} ] )
-
-blockStyles.addBlockStyles( 'flexWrap', [ {
+}, {
 	renderIn: 'edit',
 	selector: '.stk-button-group .block-editor-block-list__layout',
 	styleRule: 'flexWrap',
@@ -60,14 +50,11 @@ blockStyles.addBlockStyles( 'buttonAlign', [ {
 	valuePreCallback: value => {
 		if ( value === 'vertical' ) {
 			return 'column'
-		} else if ( value === 'horizontal' ) {
-			return 'row'
 		}
-		return value
-	},
-} ] )
 
-blockStyles.addBlockStyles( 'buttonAlign', [ {
+		return 'row'
+	},
+}, {
 	renderIn: 'edit',
 	selector: '.stk-button-group .block-editor-block-list__layout',
 	styleRule: 'flexDirection',
@@ -82,14 +69,10 @@ blockStyles.addBlockStyles( 'buttonAlign', [ {
 		}
 		return value
 	},
-} ] )
-
-{
+}, {
 // If the buttons are set to vertical, we also need to reset the flex
 // basis or else full-width buttons (set per button block) will overlap
 // each other vertically.
-}
-blockStyles.addBlockStyles( 'buttonAlign', [ {
 	renderIn: 'save',
 	selector: '.stk-block',
 	styleRule: 'flexBasis',
@@ -101,9 +84,7 @@ blockStyles.addBlockStyles( 'buttonAlign', [ {
 			: value === 'horizontal' ? 0
 				: undefined
 	},
-} ] )
-
-blockStyles.addBlockStyles( 'buttonAlign', [ {
+}, {
 	renderIn: 'save',
 	selector: '.stk-button-group',
 	styleRule: 'alignItems',
@@ -131,9 +112,7 @@ blockStyles.addBlockStyles( 'buttonAlign', [ {
 		return value
 	},
 	dependencies: [ 'contentAlign', 'buttonFullWidth' ],
-} ] )
-
-blockStyles.addBlockStyles( 'buttonAlign', [ {
+}, {
 	renderIn: 'edit',
 	selector: '.stk-button-group .block-editor-block-list__layout',
 	styleRule: 'alignItems',
@@ -179,9 +158,7 @@ blockStyles.addBlockStyles( 'buttonFullWidth', [ {
 		return value ? ( '1 0 ' + basis ) : undefined
 	},
 	dependencies: [ 'flexWrap' ],
-} ] )
-
-blockStyles.addBlockStyles( 'buttonFullWidth', [ {
+}, {
 	renderIn: 'edit',
 	selector: `.stk-block-button, .stk-block-icon-button, [data-type^="stackable/"]`,
 	styleRule: 'flex',
@@ -209,9 +186,7 @@ blockStyles.addBlockStyles( 'flexWrap', [ {
 	valueCallback: value => {
 		return value ? 'auto' : undefined
 	},
-} ] )
-
-blockStyles.addBlockStyles( 'flexWrap', [ {
+}, {
 	renderIn: 'save',
 	selector: '.stk-button-group .stk-block-button',
 	styleRule: 'width',
@@ -233,8 +208,8 @@ Advanced.Style.addStyles( blockStyles )
 Transform.Style.addStyles( blockStyles )
 EffectsAnimations.Style.addStyles( blockStyles )
 FlexGapStyles.addStyles( blockStyles, {
-	flexGapOptionsEdit,
-	flexGapOptionsSave,
+	editSelector: '.block-editor-block-list__layout',
+	saveSelector: '.stk-inner-blocks',
 } )
 
 export default blockStyles
