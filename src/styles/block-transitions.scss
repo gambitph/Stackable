@@ -32,7 +32,7 @@ body.stk--anim-init {
 	.stk-img-wrapper::before, // Image block hover ovelay.
 	.stk-block li::marker, // For icon list marker
 	.stk-block-tabs__tab { // Tabs block
-		transition: var(--stk-transition-default, all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), flex 0s, max-width 0s, visibility 0s);
+		transition: var(--stk-transition-default, all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), flex 0s, max-width 0s, visibility 0s); // Don't include flex & max-width since column widths would animate.
 		border-width: 1px;
 		border-style: none;
 	}
