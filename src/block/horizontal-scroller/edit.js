@@ -88,7 +88,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	 ], getContentAlignmentClasses( props.attributes, instanceId, 'horizontal-scroller' ), {
+	 ], getContentAlignmentClasses( props.attributes, 'horizontal-scroller', instanceId ), {
 		'stk--with-scrollbar': showScrollbar,
 	 } )
 

@@ -4,7 +4,7 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 
-export const getContentAlignmentClasses = ( attributes, instanceId, blockName = 'column' ) => {
+export const getContentAlignmentClasses = ( attributes, blockName = 'column', instanceId = '' ) => {
 	let instanceIdString = ''
 	if ( instanceId ) {
 		instanceIdString = `${ instanceId }-`
