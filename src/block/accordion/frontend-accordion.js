@@ -156,7 +156,6 @@ class StackableAccordion {
 				if ( el.getAttribute( 'id' ) ) {
 					elsAnchors[ el.getAttribute( 'id' ) ] = el
 				}
-
 				el._StackableHasInitAccordion = true
 			}
 		} )
