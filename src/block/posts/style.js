@@ -26,6 +26,13 @@ const blockStyles = new BlockStyleGenerator( {
 	versionDeprecated: '',
 } )
 
+const itemSelector = ' .%s-container'
+const hoverSelectorCallback = append => getAttribute =>
+	getAttribute( 'hoverStateInContainer' )
+		? `${ itemSelector }:hover ${ append }`
+		: `${ itemSelector } ${ append }:hover`
+const dependencies = [ 'hoverStateInContainer' ]
+
 blockStyles.addBlockStyles( 'columns', [ {
 	selector: '',
 	styleRule: '--stk-columns',
@@ -250,14 +257,6 @@ blockStyles.addBlockStyles( 'imageWidth', [ {
 	],
 } ] )
 
-const itemSelector = ' .%s-container'
-
-const hoverSelectorCallback = append => getAttribute =>
-	getAttribute( 'hoverStateInContainer' )
-		? `${ itemSelector }:hover ${ append }`
-		: `${ itemSelector } ${ append }:hover`
-const dependencies = [ 'hoverStateInContainer' ]
-
 Alignment.Style.addStyles( blockStyles )
 BlockDiv.Style.addStyles( blockStyles )
 Column.Style.addStyles( blockStyles )
@@ -305,7 +304,7 @@ Image.Style.addStyles( blockStyles, {
 		}
 		return '.stk-img-wrapper'
 	},
-	styleRuleCallback: getAttribute => {
+	widthStyleRuleCallback: getAttribute => {
 		const className = getAttribute( 'className' )
 		const blockStyle = getBlockStyle( variations, className )
 		const imageHasLink = getAttribute( 'imageHasLink' )
@@ -313,7 +312,7 @@ Image.Style.addStyles( blockStyles, {
 		if ( [ 'list' ].includes( blockStyle?.name ) && imageHasLink ) {
 			return 'flexBasis'
 		}
-		return null
+		return 'width'
 	},
 
 } )

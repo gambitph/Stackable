@@ -125,7 +125,7 @@ export const SeparatorStyles = props => {
 	)
 }
 
-const addSeparatorStyles = ( blockStyleGenerator, props ) => {
+SeparatorStyles.addSeparatorStyles = ( blockStyleGenerator, props ) => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -312,11 +312,11 @@ Style.Content = props => {
 }
 
 Style.addStyles = ( blockStyleGenerator, props = {} ) => {
-	addSeparatorStyles( blockStyleGenerator, {
+	SeparatorStyles.addSeparatorStyles( blockStyleGenerator, {
 		...props,
 		location: 'top',
 	} )
-	addSeparatorStyles( blockStyleGenerator, {
+	SeparatorStyles.addSeparatorStyles( blockStyleGenerator, {
 		...props,
 		isInitiallyFlippedVertically: false,
 		location: 'bottom',

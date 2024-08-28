@@ -24,7 +24,7 @@ BlockDiv.Style.addStyles( blockStyles )
 Advanced.Style.addStyles( blockStyles )
 EffectsAnimations.Style.addStyles( blockStyles )
 Transform.Style.addStyles( blockStyles )
-SeparatorStyles_.Style.addStyles( blockStyles, {
+SeparatorStyles_.addSeparatorStyles( blockStyles, {
 	selector: '',
 	enableFlipVertically: true,
 	isInitiallyFlippedVertically: false,
