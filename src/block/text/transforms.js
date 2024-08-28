@@ -11,6 +11,7 @@ import { settings } from 'stackable'
 
 const transforms = {
 	from: [
+		// When pasting, ensure that the default text block setting is followed
 		{
 			type: 'raw',
 			isMatch: node =>
