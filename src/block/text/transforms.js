@@ -7,9 +7,22 @@ import { createBlock, createBlocksFromInnerBlocksTemplate } from '@wordpress/blo
  * Internal dependencies
  */
 import { TEMPLATE as ICON_LABEL_TEMPLATE } from '../icon-label/edit'
+import { settings } from 'stackable'
 
 const transforms = {
 	from: [
+		{
+			type: 'raw',
+			isMatch: node =>
+				node.nodeName === 'P' &&
+				settings.stackable_enable_text_default_block,
+			transform: node => {
+				return createBlock( 'stackable/text', {
+					text: node.textContent.trim(),
+				} )
+			},
+			priority: 11,
+		},
 		{
 			type: 'block',
 			isMultiBlock: true,
