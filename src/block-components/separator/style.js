@@ -11,7 +11,7 @@ import { compact } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, doAction } from '@wordpress/hooks'
 
 export const SeparatorStyles = props => {
 	const propsToPass = {
@@ -322,11 +322,11 @@ Style.addStyles = ( blockStyleGenerator, props = {} ) => {
 		location: 'bottom',
 	} )
 	addMarginBottomStyles( blockStyleGenerator, props )
-	applyFilters( 'stackable.block-component.separator.layer-styles.addStyles', blockStyleGenerator, {
+	doAction( 'stackable.block-component.separator.layer-styles.addStyles', blockStyleGenerator, {
 		...props,
 		location: 'top',
 	} )
-	applyFilters( 'stackable.block-component.separator.layer-styles.addStyles', blockStyleGenerator, {
+	doAction( 'stackable.block-component.separator.layer-styles.addStyles', blockStyleGenerator, {
 		...props,
 		location: 'bottom',
 	} )
