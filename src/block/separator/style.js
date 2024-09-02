@@ -13,7 +13,7 @@ import { BlockStyleGenerator } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { doAction } from '@wordpress/hooks'
 
 const blockStyles = new BlockStyleGenerator( {
 	versionAdded: '3.0.0',
@@ -31,7 +31,7 @@ SeparatorStyles_.addSeparatorStyles( blockStyles, {
 	wrapperSelector: '.stk-block-separator__inner',
 	location: '',
 } )
-applyFilters( 'stackable.block-component.separator.layer-styles.addStyles', blockStyles, {
+doAction( 'stackable.block-component.separator.layer-styles.addStyles', blockStyles, {
 	selector: '',
 	enableFlipVertically: true,
 	isInitiallyFlippedVertically: false,
