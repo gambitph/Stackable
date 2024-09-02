@@ -40,6 +40,16 @@ blockStyles.addBlockStyles( 'rowGap', [ {
 	responsive: 'all',
 } ] )
 
+blockStyles.addBlockStyles( 'columnWrapDesktop', [ {
+	renderIn: 'save',
+	styleRule: '--stk-feature-flex-wrap',
+	attrName: 'columnWrapDesktop',
+	key: 'columnWrapDesktop-save',
+	valueCallback: value => {
+		return value ? 'wrap' : 'nowrap'
+	},
+} ] )
+
 Alignment.Style.addStyles( blockStyles )
 BlockDiv.Style.addStyles( blockStyles )
 ContainerDiv.Style.addStyles( blockStyles )
