@@ -32,6 +32,7 @@ import AdminSelectSetting from '~stackable/components/admin-select-setting'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 import { GettingStarted } from './getting-started'
+import { BLOCK_STATE } from '~stackable/util/blocks'
 
 const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 export const getAllBlocks = () => applyFilters( 'stackable.settings.blocks', FREE_BLOCKS )
@@ -92,16 +93,18 @@ const BlockList = () => {
 	)
 }
 
+// Toggle the block states between enabled, disabled and hidden.
+// Enabled blocks are not stored in the settings object.
 const BlockToggler = () => {
 	const DERIVED_BLOCKS = getAllBlocks()
 	const [ isSaving, setIsSaving ] = useState( false )
-	const [ disabledBlocks, setDisabledBlocks ] = useState( [] )
+	const [ disabledBlocks, setDisabledBlocks ] = useState( {} )
 
 	useEffect( () => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setDisabledBlocks( response.stackable_disabled_blocks )
+				setDisabledBlocks( response.stackable_disabled_blocks ?? {} )
 			} )
 		} )
 	}, [] )
@@ -112,35 +115,45 @@ const BlockToggler = () => {
 		model.save().then( () => setIsSaving( false ) )
 	}
 
-	const enableAllBlocks = type => () => {
-		let newDisabledBlocks = [ ...disabledBlocks ]
-		DERIVED_BLOCKS[ type ].forEach( block => {
-			newDisabledBlocks = newDisabledBlocks.filter( blockName => blockName !== block.name )
-		} )
-		setDisabledBlocks( newDisabledBlocks )
-		save( newDisabledBlocks, type )
-	}
+	// TODO: Implement enable, disable and hide all blocks
 
-	const disableAllBlocks = type => () => {
-		const newDisabledBlocks = [ ...disabledBlocks ]
-		DERIVED_BLOCKS[ type ].forEach( block => {
-			if ( ! newDisabledBlocks.includes( block.name ) ) {
-				newDisabledBlocks.push( block.name )
-			}
-		} )
-		setDisabledBlocks( newDisabledBlocks )
-		save( newDisabledBlocks, type )
-	}
+	// const enableAllBlocks = type => () => {
+	// 	let newDisabledBlocks = { ...disabledBlocks }
+	// 	DERIVED_BLOCKS[ type ].forEach( block => {
+	// 		newDisabledBlocks = newDisabledBlocks.filter( blockName => blockName !== block.name )
+	// 	} )
 
-	const toggleBlock = useCallback( ( name, type ) => {
-		let newDisabledBlocks = null
-		if ( disabledBlocks.includes( name ) ) {
-			newDisabledBlocks = disabledBlocks.filter( block => block !== name )
+	// 	console.log(DERIVED_BLOCKS[ type ] )
+
+	// 	Object.entries(disabledBlocks).forEach( ([key, value]) => {
+	// 		if (key in DERIVED_BLOCKS[ type ]) {
+	// 			delete disabledBlocks[key]
+	// 		}
+	// 	} )
+
+	// 	setDisabledBlocks( disabledBlocks )
+	// 	save( newDisabledBlocks, type )
+	// }
+
+	// const disableAllBlocks = type => () => {
+	// 	const newDisabledBlocks = [ ...disabledBlocks ]
+	// 	DERIVED_BLOCKS[ type ].forEach( block => {
+	// 		if ( ! newDisabledBlocks.includes( block.name ) ) {
+	// 			newDisabledBlocks.push( block.name )
+	// 		}
+	// 	} )
+	// 	setDisabledBlocks( newDisabledBlocks )
+	// 	save( newDisabledBlocks, type )
+	// }
+
+	const toggleBlock = useCallback( ( name, type, value ) => {
+		const valueInt = Number( value )
+		let newDisabledBlocks = { ...disabledBlocks }
+
+		if ( valueInt === BLOCK_STATE.ENABLED ) {
+			delete newDisabledBlocks[ name ]
 		} else {
-			newDisabledBlocks = [
-				...disabledBlocks,
-				name,
-			]
+			newDisabledBlocks = { ...disabledBlocks, [ name ]: valueInt }
 		}
 		setDisabledBlocks( newDisabledBlocks )
 		save( newDisabledBlocks, type )
@@ -163,13 +176,14 @@ const BlockToggler = () => {
 						</h3>
 						<div className="s-settings-header">
 							{ isSaving === id && <Spinner /> }
+							{ /*
 							<button onClick={ enableAllBlocks( id ) } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>
 							<button onClick={ disableAllBlocks( id ) } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
+							*/ }
 						</div>
 						<div className="s-settings-grid">
 							{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
-								const isDisabled = disabledBlocks.includes( block.name )
-
+								const blockState = disabledBlocks[ block.name ] ?? BLOCK_STATE.ENABLED
 								const demoLink = block[ 'stk-demo' ] && (
 									<a
 										href={ block[ 'stk-demo' ] }
@@ -187,16 +201,28 @@ const BlockToggler = () => {
 								</>
 
 								return (
-									<AdminToggleSetting
-										key={ i }
+									<AdminSelectSetting
 										label={ title }
-										value={ ! isDisabled }
-										onChange={ () => {
-											toggleBlock( block.name, id )
+										value={ blockState }
+										key={ i }
+										options={ [
+											{
+												name: 'Enabled',
+												value: BLOCK_STATE.ENABLED,
+											},
+											{
+												name: 'Disabled',
+												value: BLOCK_STATE.DISABLED,
+											},
+											{
+												name: 'Hidden',
+												value: BLOCK_STATE.HIDDEN,
+											},
+										] }
+										onChange={ value => {
+											toggleBlock( block.name, id, value )
 										} }
 										size="small"
-										disabled={ __( 'Disabled', i18n ) }
-										enabled={ __( 'Enabled', i18n ) }
 									/>
 								)
 							} ) }

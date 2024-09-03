@@ -33,16 +33,19 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			register_setting(
 				'stackable_editor_settings',
 				'stackable_disabled_blocks',
+				// Use an object to store the block names as keys and the value that represents if disabled or hidden.
+				// Enabled blocks are not stored in the object to save memory.
 				array(
-					'type' => 'array',
+					'type' => 'object',
 					'description' => __( 'Blocks that should be hidden in the block editor', STACKABLE_I18N ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
-							'items' => array(
-								'type' => 'string',
-							)
-						)
+							'type' => 'object',
+							'additionalProperties' => array(
+								'type' => 'number',
+							),
+						),
 					),
 					'default' => array(),
 				)
