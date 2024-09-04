@@ -13,6 +13,7 @@ class CssSaveCompiler {
 		this.styles = null
 		this.isDirty = false
 		this.previousCss = ''
+		this.addedStyles = {}
 	}
 
 	addStyle( selector, rule, value = undefined, device = 'desktop' ) {
@@ -34,6 +35,22 @@ class CssSaveCompiler {
 			this.styles[ device ][ selector ][ rule ] = value
 			this.isDirty = true // Make sure our next compile will return a new result.
 		}
+
+		this.addedStyles[ `${ device }|${ selector }|${ rule }` ] = true
+	}
+
+	removeStyle( selector, rule, device = 'desktop' ) {
+		if ( this.styles && this.styles[ device ] && this.styles[ device ][ selector ] && this.styles[ device ][ selector ][ rule ] ) {
+			delete this.styles[ device ][ selector ][ rule ]
+			this.isDirty = true
+		}
+	}
+
+	checkUnremovedStyles() {
+		const hasUnremovedStyles = Object.values( this.addedStyles ).some( val => val === false )
+		if ( hasUnremovedStyles ) {
+			this.isDirty = true
+		}
 	}
 
 	// Compile all this.styles into a single string.
@@ -41,6 +58,7 @@ class CssSaveCompiler {
 		if ( ! this.styles ) {
 			return ''
 		}
+		this.checkUnremovedStyles()
 
 		// If nothing was added, then just return the previous results
 		if ( ! this.isDirty ) {
@@ -62,15 +80,23 @@ class CssSaveCompiler {
 				let selectorCss = ''
 				const rules = Object.keys( this.styles[ device ][ selector ] )
 				rules.forEach( rule => {
-					const value = this.styles[ device ][ selector ][ rule ]
-					selectorCss += `${ rule }:${ value };`
+					// If the style was not added, then delete it from this.styles
+					if ( this.addedStyles[ `${ device }|${ selector }|${ rule }` ] === false ) {
+						delete this.styles[ device ][ selector ][ rule ]
+					} else {
+						const value = this.styles[ device ][ selector ][ rule ]
+						selectorCss += `${ rule }:${ value };`
+						// Reset the flag
+						this.addedStyles[ `${ device }|${ selector }|${ rule }` ] = false
+					}
 				} )
-
-				css += `${ selector }{${ selectorCss }}`
+				if ( selectorCss ) {
+					css += `${ selector }{${ selectorCss }}`
+				}
 			} )
 
 			const mediaQuery = getMediaQuery( device )
-			if ( mediaQuery ) {
+			if ( mediaQuery && css ) {
 				css = `${ mediaQuery }{${ css }}`
 			}
 
