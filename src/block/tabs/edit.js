@@ -15,7 +15,6 @@ import {
 	AdvancedSelectControl,
 	AdvancedToolbarControl,
 	ControlSeparator,
-	GroupPlaceholder,
 	InspectorLayoutControls,
 	InspectorTabs,
 	useBlockCssGenerator,
@@ -192,7 +191,6 @@ const Edit = props => {
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-tabs" />
 
-				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Separator>
 					<div
 						className={ contentClassNames }
