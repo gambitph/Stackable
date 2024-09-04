@@ -264,6 +264,7 @@ const EditorSettings = () => {
 					'stackable_auto_collapse_panels',
 					'stackable_enable_block_linking',
 					'stackable_enable_carousel_lazy_loading',
+					'stackable_enable_text_default_block',
 				] ) )
 			} )
 		} )
