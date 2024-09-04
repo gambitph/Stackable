@@ -83,6 +83,7 @@ class CssSaveCompiler {
 					// If the style was not added, then delete it from this.styles
 					if ( this.addedStyles[ `${ device }|${ selector }|${ rule }` ] === false ) {
 						delete this.styles[ device ][ selector ][ rule ]
+						delete this.addedStyles[ `${ device }|${ selector }|${ rule }` ]
 					} else {
 						const value = this.styles[ device ][ selector ][ rule ]
 						selectorCss += `${ rule }:${ value };`
