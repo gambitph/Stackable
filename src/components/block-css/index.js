@@ -264,8 +264,7 @@ const BlockCss = props => {
 	}
 
 	// Skip everything if all values are null.
-	if ( props.editorMode &&
-		typeof valueDesktop === 'undefined' &&
+	if ( typeof valueDesktop === 'undefined' &&
 		typeof valueDesktopHover === 'undefined' &&
 		typeof valueDesktopParentHover === 'undefined' &&
 		typeof valueDesktopCollapsed === 'undefined' &&
@@ -382,22 +381,6 @@ const BlockCss = props => {
 		collapsedSelector = prependCSSClass( collapsedSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
 	}
 
-	if ( ! props.editorMode &&
-		typeof valueDesktop === 'undefined' &&
-		typeof valueDesktopHover === 'undefined' &&
-		typeof valueDesktopParentHover === 'undefined' &&
-		typeof valueDesktopCollapsed === 'undefined' &&
-		typeof valueTablet === 'undefined' &&
-		typeof valueTabletHover === 'undefined' &&
-		typeof valueTabletParentHover === 'undefined' &&
-		typeof valueTabletCollapsed === 'undefined' &&
-		typeof valueMobile === 'undefined' &&
-		typeof valueMobileHover === 'undefined' &&
-		typeof valueMobileParentHover === 'undefined' &&
-		typeof valueMobileCollapsed === 'undefined' ) {
-		compileCssTo.removeStyle( selector, styleRule, desktopQuery )
-		return null
-	}
 	let css = ''
 
 	// If rendering for the ditor, output the css, if saving, compile css to an object.

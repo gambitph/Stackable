@@ -11,9 +11,6 @@ const DEVICES = [ 'desktop', 'desktopOnly', 'desktopTablet', 'tabletOnly', 'tabl
 class CssSaveCompiler {
 	constructor() {
 		this.styles = null
-		this.isDirty = false
-		this.previousCss = ''
-		this.addedStyles = {}
 	}
 
 	addStyle( selector, rule, value = undefined, device = 'desktop' ) {
@@ -33,23 +30,6 @@ class CssSaveCompiler {
 		} else if ( this.styles[ device ][ selector ][ rule ] !== value ) {
 			// Only update if the value changed
 			this.styles[ device ][ selector ][ rule ] = value
-			this.isDirty = true // Make sure our next compile will return a new result.
-		}
-
-		this.addedStyles[ `${ device }|${ selector }|${ rule }` ] = true
-	}
-
-	removeStyle( selector, rule, device = 'desktop' ) {
-		if ( this.styles && this.styles[ device ] && this.styles[ device ][ selector ] && this.styles[ device ][ selector ][ rule ] ) {
-			delete this.styles[ device ][ selector ][ rule ]
-			this.isDirty = true
-		}
-	}
-
-	checkUnremovedStyles() {
-		const hasUnremovedStyles = Object.values( this.addedStyles ).some( val => val === false )
-		if ( hasUnremovedStyles ) {
-			this.isDirty = true
 		}
 	}
 
@@ -57,12 +37,6 @@ class CssSaveCompiler {
 	compile() {
 		if ( ! this.styles ) {
 			return ''
-		}
-		this.checkUnremovedStyles()
-
-		// If nothing was added, then just return the previous results
-		if ( ! this.isDirty ) {
-			return this.previousCss
 		}
 
 		const allCss = []
@@ -81,15 +55,15 @@ class CssSaveCompiler {
 				const rules = Object.keys( this.styles[ device ][ selector ] )
 				rules.forEach( rule => {
 					// If the style was not added, then delete it from this.styles
-					if ( this.addedStyles[ `${ device }|${ selector }|${ rule }` ] === false ) {
-						delete this.styles[ device ][ selector ][ rule ]
-						delete this.addedStyles[ `${ device }|${ selector }|${ rule }` ]
-					} else {
-						const value = this.styles[ device ][ selector ][ rule ]
-						selectorCss += `${ rule }:${ value };`
-						// Reset the flag
-						this.addedStyles[ `${ device }|${ selector }|${ rule }` ] = false
-					}
+					// if ( this.addedStyles[ `${ device }|${ selector }|${ rule }` ] === false ) {
+					// 	delete this.styles[ device ][ selector ][ rule ]
+					// 	delete this.addedStyles[ `${ device }|${ selector }|${ rule }` ]
+					// } else {
+					const value = this.styles[ device ][ selector ][ rule ]
+					selectorCss += `${ rule }:${ value };`
+					// Reset the flag
+					// this.addedStyles[ `${ device }|${ selector }|${ rule }` ] = false
+					// }
 				} )
 				if ( selectorCss ) {
 					css += `${ selector }{${ selectorCss }}`
@@ -106,8 +80,7 @@ class CssSaveCompiler {
 
 		// Let's not minify to make it faster
 		// return minifyCSS( allCss.join( '' ) )
-		this.isDirty = false
-		return this.previousCss = allCss.join( '' )
+		return allCss.join( '' )
 	}
 }
 

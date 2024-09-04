@@ -19,12 +19,17 @@ export const useBlockCssGenerator = props => {
 	// Generate the CSS styles.
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
 
-	// We initialize a single css compiler object so that if the attributes
-	// aren't changed then the styles won't be recomputed, all styles will be
-	// saved in this.
-	const cssCompiler = useRef()
+	// Keep the old text attribute for comparison to prevent block style generation when only the text attribute has changed.
+	const oldText = useRef( attributes.text )
+
+	// Keep the generated CSS for editor and return it when only the text attribute has changed.
+	const oldCss = useRef( null )
 
 	const editCss = useMemo( () => {
+		if ( oldText.current !== attributes.text ) {
+			oldText.current = attributes.text
+			return oldCss.current
+		}
 		// Gather only the attributes that have values and all their
 		// corresponding block style definitions.
 		const attrNamesWithValues = blockStyles.getAttributesWithValues( attributes )
@@ -39,17 +44,21 @@ export const useBlockCssGenerator = props => {
 			clientId,
 			context, // This is used for dynamic content.
 		} )
+		oldCss.current = css
 		return css
 	}, [ attributes, version, blockState, clientId, attributes.uniqueId, instanceId, context ] )
 
 	useRafEffect( () => {
-		if ( ! cssCompiler.current ) {
-			cssCompiler.current = new CssSaveCompiler()
+		if ( oldText.current !== attributes.text ) {
+			oldText.current = attributes.text
+			return
 		}
+
+		const cssCompiler = new CssSaveCompiler()
 
 		// Generate the styles that are to be saved with the actual block.
 		const saveCss = blockStyles.generateBlockStylesForSave(
-			cssCompiler.current,
+			cssCompiler,
 			attributes,
 			blockStyleDefsRef.current,
 			{
@@ -62,7 +71,7 @@ export const useBlockCssGenerator = props => {
 		// dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 		// setAttributes( { generatedCss: saveCss } )
 		attributes.generatedCss = saveCss
-	}, [ attributes, blockStyleDefsRef.current, version ] )
+	}, [ attributes, version ] )
 
 	return editCss
 }
