@@ -52,15 +52,18 @@ export const addCustomIconClass = ( svgString, customClass = 'ugb-custom-icon' )
  * Cleans up the SVG, removes the <?xml> tag and comments
  *
  * @param {string} svgString The SVG in string form
+ * @param {string} instanceId The instance ID to append to the IDs
  */
-export const cleanSvgString = svgString => {
+export const cleanSvgString = ( svgString, instanceId ) => {
 	// Get the SVG only
 	let newSvg = svgString.replace( /(^[\s\S]*?)(<svg)/gm, '$2' )
 		.replace( /(<\/svg>)([\s\S]*)/g, '$1' )
 
-	// Remove defs
-	if ( newSvg.indexOf( '<defs' ) !== -1 ) {
-		newSvg = newSvg.replace( /<defs[\s\S]*?<\/defs>/gm, '' )
+	// Add the instanceId as a suffix to all IDS and references to them.
+	if ( instanceId !== undefined ) {
+		newSvg = newSvg.replace( /id="([^"]*)"/g, `id="$1-${ instanceId }"` )
+		newSvg = newSvg.replace( /url\(#([^)]*)\)/g, `url(#$1-${ instanceId })` )
+		newSvg = newSvg.replace( /href="#([^"]*)"/g, `href="#$1-${ instanceId }"` )
 	}
 
 	// Remove comments
@@ -145,11 +148,12 @@ const IconSearchPopover = props => {
 				return
 			}
 
-			// Read the SVG,
+			// Read the SVG
 			const fr = new FileReader()
 			fr.onload = function( e ) {
 				setIsDropping( false )
-				const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
+				// Only add suffix for uploaded custom icons.
+				const svgString = cleanSvgString( addCustomIconClass( e.target.result ), props.iconInstanceId )
 				props.onChange( svgString )
 				props.onClose()
 			}

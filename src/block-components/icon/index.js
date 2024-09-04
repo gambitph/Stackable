@@ -23,6 +23,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	useMemo, useState, useRef, useEffect, renderToString,
 } from '@wordpress/element'
+import { useInstanceId } from '@wordpress/compose'
 
 const LinearGradient = ( {
 	id,
@@ -69,6 +70,9 @@ export const Icon = props => {
 	const { isSelected } = useBlockEditContext()
 	const [ isOpen, setIsOpen ] = useState( false )
 	const popoverEl = useRef( null )
+
+	// Add the instanceId as prefix to the ID attributes of custom SVGs to ensure uniqueness.
+	const instanceId = useInstanceId( Icon )
 
 	// When the block is unselected, make sure that the popover is closed.
 	useEffect( () => {
@@ -177,6 +181,7 @@ export const Icon = props => {
 						}
 						setIsOpen( false )
 					} }
+					iconInstanceId={ instanceId }
 				/>
 			) }
 			{ getAttribute( 'icon2' ) && (
