@@ -71,7 +71,7 @@ export const Icon = props => {
 	const [ isOpen, setIsOpen ] = useState( false )
 	const popoverEl = useRef( null )
 
-	// Add the instanceId as prefix to the ID attributes of custom SVGs to ensure uniqueness.
+	// Add the instanceId as suffix to the ID attributes of custom SVGs to ensure uniqueness.
 	const instanceId = useInstanceId( Icon )
 
 	// When the block is unselected, make sure that the popover is closed.
