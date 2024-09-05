@@ -114,7 +114,10 @@ export class BlockStyleGenerator {
 	 */
 	getBlockStyles( attrNames ) {
 		if ( ! attrNames ) {
-			return this._blockStyles
+			return this._orderedStyles.reduce( ( blockStyles, blockStyle, index ) => {
+				blockStyles[ index ] = blockStyle
+				return blockStyles
+			}, {} )
 		}
 
 		// Since, JavaScript objects are ordered by default, use object with block style indices as keys
