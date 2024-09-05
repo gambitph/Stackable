@@ -29,13 +29,6 @@ export class BlockStyleGenerator {
 		this._orderedStyles = [] // This holds all the blockStyles added in order
 	}
 
-	addBlockStylesOldWay( blockStyles ) {
-		const attrName = blockStyles.attrName
-		if ( ! this._blockStyles[ attrName ] ) {
-			this._blockStyles[ attrName ] = [ blockStyles ]
-		}
-	}
-
 	/**
 	 * Used to add block styles to the block style generator. The attribute name
 	 * is important because it is used for looking which styles are generated
