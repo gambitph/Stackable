@@ -98,7 +98,9 @@ export class BlockStyleGenerator {
 	 * @param {Function} fn function that's called when generating block styles
 	 */
 	addBlockStyleConditionally( fn ) {
-		this._dynamicBlockStyles.push( fn )
+		this._orderedStyles.push( fn )
+		const blockStyleIndex = this._orderedStyles.length - 1
+		this._dynamicBlockStyles.push( blockStyleIndex )
 	}
 
 	/**
@@ -153,6 +155,13 @@ export class BlockStyleGenerator {
 			}
 		} )
 
+		// Add dynamic block styles
+		this._dynamicBlockStyles.forEach( index => {
+			if ( ! orderdBlockStyles[ index ] ) {
+				orderdBlockStyles[ index ] = this._orderedStyles[ index ]
+			}
+		} )
+
 		return orderdBlockStyles
 	}
 
@@ -182,34 +191,35 @@ export class BlockStyleGenerator {
 	generateBlockStylesForEditor( attributes, blockStyles, args ) {
 		const generatedCss = []
 
-		// Call block styles that are added conditionally
-		this._dynamicBlockStyles.forEach( fn => {
-			const _BlockCssFunc = blockStyle => {
-				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
-					return
-				}
-
-				const css = BlockCssFunc( {
-					...this.commonProps,
-					...blockStyle,
-					version: args.version || this.commonProps.version,
-					versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
-					blockState: args.blockState,
-					clientId: args.clientId,
-					uniqueId: args.uniqueId,
-					instanceId: args.instanceId,
-					attributes,
-					editorMode: true,
-				} )
-				if ( css ) {
-					generatedCss.push( css )
-				}
-			}
-			fn( attributes, _BlockCssFunc )
-		} )
-
 		// Generate block styles based on the attributes that have values
 		Object.values( blockStyles ).forEach( blockStyle => {
+			// Call block styles that are added conditionally
+			if ( typeof blockStyle === 'function' ) {
+				const fn = blockStyle
+				const _BlockCssFunc = _blockStyle => {
+					if ( ! this.styleShouldRender( _blockStyle, attributes ) ) {
+						return
+					}
+					const css = BlockCssFunc( {
+						...this.commonProps,
+						..._blockStyle,
+						version: args.version || this.commonProps.version,
+						versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
+						blockState: args.blockState,
+						clientId: args.clientId,
+						uniqueId: args.uniqueId,
+						instanceId: args.instanceId,
+						attributes,
+						editorMode: true,
+					} )
+					if ( css ) {
+						generatedCss.push( css )
+					}
+				}
+				fn( attributes, _BlockCssFunc )
+				return
+			}
+
 			if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
 				return
 			}
@@ -251,32 +261,34 @@ export class BlockStyleGenerator {
 	 * @return {string} Compiled css
 	 */
 	generateBlockStylesForSave( cssCompiler, attributes, blockStyles, args ) {
-		// Call block styles that are added conditionally
-		this._dynamicBlockStyles.forEach( fn => {
-			const _BlockCssFunc = blockStyle => {
-				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
-					return
-				}
-
-				return BlockCssFunc( {
-					...this.commonProps,
-					...blockStyle,
-					version: args.version || this.commonProps.version,
-					versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
-					// blockState: args.blockState,
-					// clientId: args.clientId,
-					uniqueId: attributes.uniqueId,
-					// instanceId: args.instanceId,
-					attributes,
-					editorMode: false,
-					compileCssTo: cssCompiler,
-				} )
-			}
-			fn( attributes, _BlockCssFunc )
-		} )
-
 		// Generate block styles based on the attributes that have values
 		Object.values( blockStyles ).forEach( blockStyle => {
+			// Call block styles that are added conditionally
+			if ( typeof blockStyle === 'function' ) {
+				const fn = blockStyle
+				const _BlockCssFunc = blockStyle => {
+					if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
+						return
+					}
+
+					return BlockCssFunc( {
+						...this.commonProps,
+						...blockStyle,
+						version: args.version || this.commonProps.version,
+						versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
+						// blockState: args.blockState,
+						// clientId: args.clientId,
+						uniqueId: attributes.uniqueId,
+						// instanceId: args.instanceId,
+						attributes,
+						editorMode: false,
+						compileCssTo: cssCompiler,
+					} )
+				}
+				fn( attributes, _BlockCssFunc )
+				return
+			}
+
 			if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
 				return
 			}
