@@ -155,7 +155,7 @@ const Edit = props => {
 		// Set a unique instance ID for the posts block.
 		// This is used to give unique identifier to our
 		// queries.
-		if ( ! stkQueryId ) {
+		if ( stkQueryId !== instanceId ) {
 			setAttributes( { stkQueryId: instanceId } )
 		}
 	}, [ stkQueryId, instanceId ] )
