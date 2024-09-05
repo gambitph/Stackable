@@ -165,8 +165,6 @@ export class BlockStyleGenerator {
 
 	generateBlockStylesForEditor( attributes, blockStyles, args ) {
 		const generatedCss = []
-		const tabletGeneratedCss = []
-		const mobileGeneratedCss = []
 
 		// Call block styles that are added conditionally
 		this._dynamicBlockStyles.forEach( fn => {
@@ -215,17 +213,12 @@ export class BlockStyleGenerator {
 				} )
 
 				// This ensures smaller screensizes override the larger screensize background images
-				if ( css && attrName.indexOf( 'BackgroundMedia' ) !== -1 && blockStyle?.responsive?.[ 0 ] === 'mobile' ) {
-					mobileGeneratedCss.push( css )
-				} else if ( css && attrName.indexOf( 'BackgroundMedia' ) !== -1 && blockStyle?.responsive?.[ 0 ] === 'tablet' ) {
-					tabletGeneratedCss.push( css )
-				} else if ( css ) {
+				if ( css ) {
 					generatedCss.push( css )
 				}
 			} )
 		} )
-		const allGeneratedCss = [ ...generatedCss, ...tabletGeneratedCss, ...mobileGeneratedCss ]
-		let output = allGeneratedCss.join( '' )
+		let output = generatedCss.join( '' )
 		output = getDynamicContentEdit( output, args.clientId, args.context )
 		output = applyFilters( 'stackable.block-styles.edit', output, getUniqueBlockClass( attributes.uniqueId ) )
 		return output
