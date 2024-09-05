@@ -14,6 +14,7 @@ import { ContentAlign } from './content-align'
 import { EditorDom } from './get-editor-dom'
 import { ClientTree } from './get-client-id-tree'
 import { StackableThemeFonts } from './get-theme-fonts'
+import { TextDefaultBlock } from './text-default-block'
 
 /**
  * WordPress dependencies
@@ -41,5 +42,8 @@ if ( devMode ) {
 fetchSettings().then( response => {
 	if ( response.stackable_enable_block_linking ) {
 		registerPlugin( 'stackable-block-linking', { render: BlockLinking } )
+	}
+	if ( response.stackable_enable_text_default_block ) {
+		registerPlugin( 'stackable-text-default-block', { render: TextDefaultBlock } )
 	}
 } )
