@@ -41,6 +41,7 @@ import {
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
+import { useQueryLoopInstanceId } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -74,11 +75,13 @@ const Edit = props => {
 			columnTooltipClass,
 		], props ) )
 
+	const instanceId = useQueryLoopInstanceId( props.attributes.uniqueId )
+
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	], getContentAlignmentClasses( props.attributes ) )
+	], getContentAlignmentClasses( props.attributes, 'column', instanceId ) )
 
 	return (
 		<>
