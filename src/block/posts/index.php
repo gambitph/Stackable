@@ -413,7 +413,11 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				$exploded_excerpt = explode( ' ', $excerpt );
 				$trim_to_length = (int) $max_excerpt;
 				if ( count( $exploded_excerpt ) > $trim_to_length ) {
-					$excerpt = implode( ' ', array_slice( $exploded_excerpt, 0, $trim_to_length ) ) . '...';
+					$excerpt = wp_trim_words( $excerpt, $trim_to_length, '' );
+					// If last word does not contain '…' or '...', add it
+					if ( substr( $excerpt, -1 ) !== '…' && substr( $excerpt, -3 ) !== '...' && substr( $excerpt, -3 ) !== '…' ) {
+						$excerpt .= '...';
+					}
 				}
 			}
 
