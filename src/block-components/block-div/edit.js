@@ -58,6 +58,7 @@ export const Edit = memo( props => {
 							visualGuide={ {
 								highlight: 'padding',
 							} }
+							{ ...props.sizeControlSpacingProps }
 						/>
 					</PanelAdvancedSettings>
 				) }

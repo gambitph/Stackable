@@ -91,7 +91,9 @@ export const useSavedDefaultBlockStyle = blockProps => {
 			} )
 
 			// Create and apply the innerBlocks.
-			if ( blockData.innerBlocks?.length ) {
+			// Do not do this for icon lists because it causes an error on transform.
+			// The icon list inner blocks are created by the icon list block itself. See src/blocks/icon-list/transforms.js
+			if ( blockData.innerBlocks?.length && name !== 'stackable/icon-list' ) {
 				const innerBlocks = createBlocksFromInnerBlocksTemplate( blockData.innerBlocks )
 				// We need to add unique Ids to prevent the default styles from getting applied.
 				recursivelyAddUniqueIdToInnerBlocks( innerBlocks )

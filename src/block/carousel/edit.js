@@ -384,6 +384,9 @@ const Edit = props => {
 }
 
 const InspectorControls = memo( props => {
+	const sizeControlSpacingProps = {
+		enableMargin: false,
+	}
 	return (
 		<>
 			<InspectorTabs />
@@ -718,7 +721,7 @@ const InspectorControls = memo( props => {
 
 			<ContentAlign.InspectorControls />
 			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
+			<BlockDiv.InspectorControls sizeControlSpacingProps={ sizeControlSpacingProps } />
 			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 
