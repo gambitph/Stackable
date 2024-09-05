@@ -17,6 +17,12 @@ class StackableHorizontalScroller {
 			// get all links, because we will need to disable them during drag
 			const children = el.querySelectorAll( '.stk-block-link, a' )
 
+			// Get all images and set draggable to false
+			const images = el.querySelectorAll( 'img' )
+			images.forEach( image => {
+				image.draggable = false
+			} )
+
 			// prevents redirecting to the inner column link
 			const onClickHandler = function( e ) {
 				e.preventDefault()
