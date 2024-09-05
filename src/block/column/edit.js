@@ -150,7 +150,7 @@ const Edit = props => {
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							templateLock={ props.attributes.templateLock || false }
 							orientation={ blockOrientation }
-							renderAppender={ hasInnerBlocks ? undefined : ButtonBlockAppender }
+							renderAppender={ hasInnerBlocks ? false : ButtonBlockAppender }
 						/>
 					</ContainerDiv>
 				</BlockDiv>
