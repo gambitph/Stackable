@@ -23,9 +23,10 @@ import { pickBy } from 'lodash'
 export class BlockStyleGenerator {
 	constructor( commonProps ) {
 		this.commonProps = commonProps
-		this._blockStyles = {} // This holds all the blockStyles, keys are the attrName
+		this._blockStyles = {} // This holds all the blockStyles indices, keys are the attrName
 		this._dynamicBlockStyles = [] // Holds functions that will be called when generating blocks styles.
 		this._blockStyleNamesWithValuePreCallbacks = [] // This holds all block style keys that have valuePreCallbacks, becuase these will need to be run even if the attribute is blank.
+		this._orderedStyles = [] // This holds all the blockStyles added in order
 	}
 
 	addBlockStylesOldWay( blockStyles ) {
@@ -77,12 +78,14 @@ export class BlockStyleGenerator {
 			this._blockStyleNamesWithValuePreCallbacks.push( attrName )
 		}
 
+		this._orderedStyles.push( blockStyle )
+		const blockStyleIndex = this._orderedStyles.length - 1
+
 		if ( ! this._blockStyles[ attrName ] ) {
-			this._blockStyles[ attrName ] = [ blockStyle ]
+			this._blockStyles[ attrName ] = [ blockStyleIndex ]
 			return
 		}
-
-		this._blockStyles[ attrName ].push( blockStyle )
+		this._blockStyles[ attrName ].push( blockStyleIndex )
 	}
 
 	/**
@@ -112,20 +115,30 @@ export class BlockStyleGenerator {
 	 * Gets all the block styles for the given attribute names
 	 *
 	 * @param {Array} attrNames Array of attribute names
-	 * @return {Object} Object of blockStyles, keys are the attrName
+	 * @return {Object} Object of blockStyles, keys are the indices
 	 */
 	getBlockStyles( attrNames ) {
 		if ( ! attrNames ) {
 			return this._blockStyles
 		}
 
+		// Since, JavaScript objects are ordered by default, use object with block style indices as keys
+		// to maintain the order since attrNames may not follow the correct order.
+		const orderdBlockStyles = {}
 		const blockStyles = attrNames.reduce( ( blockStyles, attrName ) => {
 			if ( ! blockStyles[ attrName ] && this._blockStyles[ attrName ] ) {
-				blockStyles[ attrName ] = this._blockStyles[ attrName ]
+				blockStyles[ attrName ] = true
+				// iterate over the block style indices, and add them to the array
+				this._blockStyles[ attrName ].forEach( index => {
+					orderdBlockStyles[ index ] = this._orderedStyles[ index ]
+				} )
 			}
 			const rootAttrName = this.getRootAttrName( attrName )
 			if ( ! blockStyles[ rootAttrName ] && this._blockStyles[ rootAttrName ] ) {
-				blockStyles[ rootAttrName ] = this._blockStyles[ rootAttrName ]
+				blockStyles[ rootAttrName ] = true
+				this._blockStyles[ rootAttrName ].forEach( index => {
+					orderdBlockStyles[ index ] = this._orderedStyles[ index ]
+				} )
 			}
 			return blockStyles
 		}, {} )
@@ -133,11 +146,14 @@ export class BlockStyleGenerator {
 		// Alays include block styles that have valuePreCallbacks.
 		this._blockStyleNamesWithValuePreCallbacks.forEach( attrName => {
 			if ( ! blockStyles[ attrName ] ) {
-				blockStyles[ attrName ] = this._blockStyles[ attrName ]
+				blockStyles[ attrName ] = true
+				this._blockStyles[ attrName ].forEach( index => {
+					orderdBlockStyles[ index ] = this._orderedStyles[ index ]
+				} )
 			}
 		} )
 
-		return blockStyles
+		return orderdBlockStyles
 	}
 
 	getAttributesWithValues( attributes ) {
@@ -193,31 +209,29 @@ export class BlockStyleGenerator {
 		} )
 
 		// Generate block styles based on the attributes that have values
-		Object.keys( blockStyles ).forEach( attrName => {
-			blockStyles[ attrName ].forEach( blockStyle => {
-				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
-					return
-				}
+		Object.values( blockStyles ).forEach( blockStyle => {
+			if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
+				return
+			}
 
-				const css = BlockCssFunc( {
-					...this.commonProps,
-					...blockStyle,
-					version: args.version || this.commonProps.version,
-					versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
-					blockState: args.blockState,
-					clientId: args.clientId,
-					uniqueId: args.uniqueId,
-					instanceId: args.instanceId,
-					attributes,
-					editorMode: true,
-				} )
-
-				// This ensures smaller screensizes override the larger screensize background images
-				if ( css ) {
-					generatedCss.push( css )
-				}
+			const css = BlockCssFunc( {
+				...this.commonProps,
+				...blockStyle,
+				version: args.version || this.commonProps.version,
+				versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
+				blockState: args.blockState,
+				clientId: args.clientId,
+				uniqueId: args.uniqueId,
+				instanceId: args.instanceId,
+				attributes,
+				editorMode: true,
 			} )
+
+			if ( css ) {
+				generatedCss.push( css )
+			}
 		} )
+
 		let output = generatedCss.join( '' )
 		output = getDynamicContentEdit( output, args.clientId, args.context )
 		output = applyFilters( 'stackable.block-styles.edit', output, getUniqueBlockClass( attributes.uniqueId ) )
@@ -262,25 +276,23 @@ export class BlockStyleGenerator {
 		} )
 
 		// Generate block styles based on the attributes that have values
-		Object.keys( blockStyles ).forEach( attrName => {
-			blockStyles[ attrName ].forEach( blockStyle => {
-				if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
-					return
-				}
+		Object.values( blockStyles ).forEach( blockStyle => {
+			if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
+				return
+			}
 
-				BlockCssFunc( {
-					...this.commonProps,
-					...blockStyle,
-					version: args.version || this.commonProps.version,
-					versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
-					// blockState: args.blockState,
-					// clientId: args.clientId,
-					uniqueId: attributes.uniqueId,
-					// instanceId: args.instanceId,
-					attributes,
-					editorMode: false,
-					compileCssTo: cssCompiler,
-				} )
+			BlockCssFunc( {
+				...this.commonProps,
+				...blockStyle,
+				version: args.version || this.commonProps.version,
+				versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
+				// blockState: args.blockState,
+				// clientId: args.clientId,
+				uniqueId: attributes.uniqueId,
+				// instanceId: args.instanceId,
+				attributes,
+				editorMode: false,
+				compileCssTo: cssCompiler,
 			} )
 		} )
 
