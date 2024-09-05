@@ -266,14 +266,14 @@ export class BlockStyleGenerator {
 			// Call block styles that are added conditionally
 			if ( typeof blockStyle === 'function' ) {
 				const fn = blockStyle
-				const _BlockCssFunc = blockStyle => {
-					if ( ! this.styleShouldRender( blockStyle, attributes ) ) {
+				const _BlockCssFunc = _blockStyle => {
+					if ( ! this.styleShouldRender( _blockStyle, attributes ) ) {
 						return
 					}
 
 					return BlockCssFunc( {
 						...this.commonProps,
-						...blockStyle,
+						..._blockStyle,
 						version: args.version || this.commonProps.version,
 						versionDeprecated: args.versionDeprecated || this.commonProps.versionDeprecated,
 						// blockState: args.blockState,
