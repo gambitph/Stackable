@@ -252,6 +252,9 @@ const Edit = props => {
 		}
 	}, [ maxSlides, activeSlide ] )
 
+	const sizeControlSpacingProps = {
+		enableMargin: false,
+	}
 	return (
 		<>
 			<>
@@ -587,7 +590,7 @@ const Edit = props => {
 
 				<ContentAlign.InspectorControls />
 				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls />
+				<BlockDiv.InspectorControls sizeControlSpacingProps={ sizeControlSpacingProps } />
 				<Separator.InspectorControls />
 				<Advanced.InspectorControls />
 
