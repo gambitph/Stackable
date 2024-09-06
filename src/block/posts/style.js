@@ -15,7 +15,7 @@ import {
 	EffectsAnimations,
 	Image,
 	Typography,
-	FlexGapStyles,
+	addFlexGapStyles,
 	Transform,
 } from '~stackable/block-components'
 import { getBlockStyle } from '~stackable/hooks'
@@ -257,18 +257,18 @@ blockStyles.addBlockStyles( 'imageWidth', [ {
 	],
 } ] )
 
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Column.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
-ContainerDiv.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Column.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+ContainerDiv.addStyles( blockStyles, {
 	backgroundSelector: itemSelector,
 	borderSelector: itemSelector,
 	sizeSelector: itemSelector,
 } )
-Image.Style.addStyles( blockStyles, {
+Image.addStyles( blockStyles, {
 	dependencies: [ 'imageHoverStateInContainer', 'imageOverlayColorType' ],
 	enableHeightCallback: getAttribute => {
 		const className = getAttribute( 'className' )
@@ -317,7 +317,7 @@ Image.Style.addStyles( blockStyles, {
 
 } )
 
-Typography.Style.addStyles( blockStyles, {
+Typography.addStyles( blockStyles, {
 	editSelector: '.stk-block-posts__title',
 	saveSelector: `.stk-block-posts__title a`,
 	editHoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__title' ),
@@ -326,7 +326,7 @@ Typography.Style.addStyles( blockStyles, {
 	dependencies,
 } )
 
-Typography.Style.addStyles( blockStyles, {
+Typography.addStyles( blockStyles, {
 	selectorCallback: getAttribute => `.stk-block-posts__category a${ getAttribute( 'highlighted' )
 		? ' .stk-button__inner-text'
 		: '' }`,
@@ -340,28 +340,28 @@ Typography.Style.addStyles( blockStyles, {
 	dependencies: [ 'Highlighted', 'hoverStateInContainer', ...dependencies ],
 } )
 
-Typography.Style.addStyles( blockStyles, {
+Typography.addStyles( blockStyles, {
 	selector: `.stk-block-posts__excerpt p`,
 	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__excerpt p' ),
 	attrNameTemplate: 'excerpt%s',
 	dependencies,
 } )
 
-Typography.Style.addStyles( blockStyles, {
+Typography.addStyles( blockStyles, {
 	selector: `.stk-block-posts__meta`,
 	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__meta' ),
 	attrNameTemplate: 'meta%s',
 	dependencies,
 } )
 
-Typography.Style.addStyles( blockStyles, {
+Typography.addStyles( blockStyles, {
 	selector: `.stk-block-posts__readmore`,
 	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__readmore' ),
 	attrNameTemplate: 'readmore%s',
 	dependencies,
 } )
 
-FlexGapStyles.addStyles( blockStyles, {
+addFlexGapStyles( blockStyles, {
 	selector: '.stk-block-posts__items',
 	enableColumnGap: false,
 } )

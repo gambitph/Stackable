@@ -7,7 +7,7 @@ import {
 	BlockDiv,
 	EffectsAnimations,
 	MarginBottom,
-	FlexGapStyles,
+	addFlexGapStyles,
 	Transform,
 } from '~stackable/block-components'
 import { BlockStyleGenerator } from '~stackable/components'
@@ -198,16 +198,16 @@ blockStyles.addBlockStyles( 'flexWrap', [ {
 	},
 } ] )
 
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles, {
 	verticalAlignSelectorEdit: '.stk-button-group > .block-editor-inner-blocks > .block-editor-block-list__layout',
 	verticalAlignSelectorSave: '.stk-button-group',
 } )
-MarginBottom.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
-FlexGapStyles.addStyles( blockStyles, {
+MarginBottom.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+addFlexGapStyles( blockStyles, {
 	editSelector: '.block-editor-block-list__layout',
 	saveSelector: '.stk-inner-blocks',
 } )

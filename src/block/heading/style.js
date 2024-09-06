@@ -116,14 +116,14 @@ blockStyles.addBlockStyles( 'bottomLineAlign', [ {
 	valueCallback: value => value === 'center' || value === 'left' ? 'auto' : 0,
 } ] )
 
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Typography.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
 	selector: '.stk-block-heading__text',
 	hoverSelector: '.stk-block-heading__text:hover',
 } )
-EffectsAnimations.Style.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

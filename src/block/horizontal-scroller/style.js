@@ -121,19 +121,13 @@ blockStyles.addBlockStyles( 'scrollbarThumbRadius', [ {
 	dependencies: [ 'showScrollbar' ],
 } ] )
 
-Alignment.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles, {
 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 } )
-BlockDiv.Style.addStyles( blockStyles )
-MarginBottom.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
-
-// const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
-// const numColumns = ( columnArrangement || '' ).split( ',' ).length
-
-// const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
-// { ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
+BlockDiv.addStyles( blockStyles )
+MarginBottom.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

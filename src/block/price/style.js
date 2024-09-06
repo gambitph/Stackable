@@ -17,11 +17,11 @@ const blockStyles = new BlockStyleGenerator( {
 	versionDeprecated: '',
 } )
 
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Column.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Column.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

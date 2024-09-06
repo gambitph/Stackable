@@ -141,8 +141,8 @@ blockStyles.addBlockStyles( 'fontSize', [ {
 	format: '%spx',
 } ] )
 
-Alignment.Style.addStyles( blockStyles )
-Typography.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
 	selector: [
 		'li',
 		'ul li a',
@@ -154,15 +154,15 @@ Typography.Style.addStyles( blockStyles, {
 		'.%s:hover ol li a',
 	],
 } )
-Typography.Style.addStyles( blockStyles, {
+Typography.addStyles( blockStyles, {
 	selector: '.stk-table-of-contents__title',
 	hoverSelector: '.stk-table-of-contents__title:hover',
 	attrNameTemplate: 'title%s',
 } )
-MarginBottom.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
+MarginBottom.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

@@ -24,9 +24,9 @@ blockStyles.addBlockStyles( 'height', [ {
 	responsive: 'all',
 } ] )
 
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

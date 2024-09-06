@@ -6,7 +6,6 @@ import {
 	 useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import {
-	BlockCss,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedToolbarControl,
@@ -146,71 +145,7 @@ Divider.Content = props => {
 	)
 }
 
-const Styles = props => {
-	const propsToPass = {
-		...props,
-		version: props.version,
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	}
-
-	return (
-		<>
-			<BlockCss
-				{ ...propsToPass }
-				selectorCallback={ getAttribute => getAttribute( 'dividerType' ) === ':' ? '.stk-block-countdown__divider-colon' : '.stk-block-countdown__divider-line' }
-				styleRuleCallback={ getAttribute => getAttribute( 'dividerType' ) === ':' ? 'color' : 'backgroundColor' }
-				attrName="dividerColor"
-				key="dividerColor"
-				responsive="all"
-				dependencies={ [ 'dividerType' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-countdown__divider-line"
-				styleRule="height"
-				attrName="dividerSizeLine"
-				key="dividerSizeLine"
-				hasUnits="%"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-countdown__divider-colon"
-				styleRule="fontSize"
-				attrName="dividerSizeColon"
-				key="dividerSizeColon"
-				hasUnits="px"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-countdown__divider-colon"
-				styleRule="top"
-				attrName="dividerTopOffset"
-				key="dividerTopOffset"
-				hasUnits="px"
-				responsive="all"
-			/>
-		</>
-	)
-}
-
-const Style = props => {
-	return <Styles { ...props } />
-}
-
-Style.Content = props => {
-	return <Styles { ...props } />
-}
-
-Divider.InspectorControls = Edit
-
-Divider.addAttributes = addAttributes
-
-Divider.Style = Style
-
-Divider.Style.addStyles = ( blockStyleGenerator, props = {} ) => {
+const addStyles = ( blockStyleGenerator, props = {} ) => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -258,3 +193,9 @@ Divider.Style.addStyles = ( blockStyleGenerator, props = {} ) => {
 		responsive: 'all',
 	} ] )
 }
+
+Divider.InspectorControls = Edit
+
+Divider.addAttributes = addAttributes
+
+Divider.addStyles = addStyles

@@ -16,15 +16,15 @@ const blockStyles = new BlockStyleGenerator( {
 	versionDeprecated: '',
 } )
 
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Button.Style.addStyles( blockStyles, {
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Button.addStyles( blockStyles, {
 	selector: '.stk-button',
 	hoverSelector: '.stk-button:hover',
 	textSelector: '.stk-button__inner-text',
 	textHoverSelector: '.stk-button:hover .stk-button__inner-text',
 } )
-EffectsAnimations.Style.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

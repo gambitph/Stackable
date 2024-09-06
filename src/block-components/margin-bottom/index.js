@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { addAttributes } from './attributes'
-import { Style } from './style'
+import { addStyles } from './style'
 import { ResizableBottomMargin } from '~stackable/components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useBlockAttributesContext, useBlockContextContext } from '~stackable/hooks'
@@ -96,4 +96,4 @@ export const MarginBottom = memo( props => {
 
 MarginBottom.addAttributes = addAttributes
 
-MarginBottom.Style = Style
+MarginBottom.addStyles = addStyles

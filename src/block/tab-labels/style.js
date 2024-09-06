@@ -153,22 +153,22 @@ blockStyles.addBlockStyles( 'fixedIconPosition', [ {
 	],
 } ] )
 
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Typography.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
 	selector: '.stk-block-tab-labels__text',
 	hoverSelector: '.stk-block-tabs__tab:hover .stk-block-tab-labels__text',
 	attrNameTemplate: 'tab%s',
 } )
-Icon.Style.addStyles( blockStyles, {
+Icon.addStyles( blockStyles, {
 	selector: '.stk-block-tabs__tab',
 	hoverSelector: '.stk-block-tabs__tab:hover',
 	hasIconGap: false,
 } )
-EffectsAnimations.Style.addStyles( blockStyles )
-Button.Style.addStyles( blockStyles, {
+EffectsAnimations.addStyles( blockStyles )
+Button.addStyles( blockStyles, {
 	selector: '.stk-block-tabs__tab',
 	hoverSelector: '.stk-block-tabs__tab:not(.stk-block-tabs__tab--active):hover',
 	backgroundSelector: '.stk-block-tabs__tab',
@@ -176,7 +176,7 @@ Button.Style.addStyles( blockStyles, {
 	borderHoverSelector: '.stk-block-tabs__tab:not(.stk-block-tabs__tab--active):hover',
 	attrNameTemplate: 'tab%s',
 } )
-Button.Style.addStyles( blockStyles, {
+Button.addStyles( blockStyles, {
 	selector: '.stk-block-tabs__tab.stk-block-tabs__tab--active',
 	hoverSelector: '.stk-block-tabs__tab.stk-block-tabs__tab--active:hover',
 	backgroundSelector: '.stk-block-tabs__tab.stk-block-tabs__tab--active',

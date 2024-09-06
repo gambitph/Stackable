@@ -28,16 +28,16 @@ blockStyles.addBlockStyles( 'buttonFullWidth', [ {
 	},
 } ] )
 
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Button.Style.addStyles( blockStyles, {
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Button.addStyles( blockStyles, {
 	selector: '.stk-button',
 } )
-Typography.Style.addStyles( blockStyles, {
+Typography.addStyles( blockStyles, {
 	selector: '.stk-button__inner-text',
 	hoverSelector: '.stk-button:hover .stk-button__inner-text',
 } )
-EffectsAnimations.Style.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

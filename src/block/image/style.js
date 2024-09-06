@@ -23,16 +23,16 @@ blockStyles.addBlockStyles( 'figcaptionAlignment', [ {
 	attrName: 'figcaptionAlignment',
 } ] )
 
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Typography.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
 	selector: '.stk-img-figcaption',
 	hoverSelector: '.stk-img-figcaption:hover',
 	attrNameTemplate: 'figcaption%s',
 } )
-EffectsAnimations.Style.addStyles( blockStyles )
-Image.Style.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+Image.addStyles( blockStyles )
 
 export default blockStyles

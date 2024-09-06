@@ -125,10 +125,10 @@ dividerStyles.addBlockStyles( 'width', [ {
 	dependencies: [ 'className' ],
 } ] )
 
-Alignment.Style.addStyles( dividerStyles )
-BlockDiv.Style.addStyles( dividerStyles )
-Advanced.Style.addStyles( dividerStyles )
-Transform.Style.addStyles( dividerStyles )
-EffectsAnimations.Style.addStyles( dividerStyles )
+Alignment.addStyles( dividerStyles )
+BlockDiv.addStyles( dividerStyles )
+Advanced.addStyles( dividerStyles )
+Transform.addStyles( dividerStyles )
+EffectsAnimations.addStyles( dividerStyles )
 
 export default dividerStyles

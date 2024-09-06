@@ -50,22 +50,16 @@ blockStyles.addBlockStyles( 'columnWrapDesktop', [ {
 	},
 } ] )
 
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-ContainerDiv.Style.addStyles( blockStyles )
-Column.Style.addStyles( blockStyles )
-Columns.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+ContainerDiv.addStyles( blockStyles )
+Column.addStyles( blockStyles )
+Columns.addStyles( blockStyles, {
 	hasRowGap: false,
 } )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
-Separator.Style.addStyles( blockStyles )
-
-// const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
-// const numColumns = ( columnArrangement || '' ).split( ',' ).length
-
-// const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
-// { ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+Separator.addStyles( blockStyles )
 
 export default blockStyles

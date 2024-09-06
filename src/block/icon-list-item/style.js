@@ -15,13 +15,13 @@ const blockStyles = new BlockStyleGenerator( {
 	versionDeprecated: '',
 } )
 
-Alignment.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Typography.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
 	selector: '.stk-block-icon-list-item__text',
 	hoverSelector: '.stk-block-icon-list-item__text:hover',
 } )
-EffectsAnimations.Style.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

@@ -114,12 +114,12 @@ blockStyles.addBlockStyles( 'columnSpacing', [ {
 	valuePreCallback: callbacks.marginLeft.valuePreCallback,
 } ] )
 
-Alignment.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles, {
 	columnAlignSelectorEditCallback: ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]`,
 } )
-BlockDiv.Style.addStyles( blockStyles )
-Column.Style.addStyles( blockStyles )
-ContainerDiv.Style.addStyles( blockStyles, {
+BlockDiv.addStyles( blockStyles )
+Column.addStyles( blockStyles )
+ContainerDiv.addStyles( blockStyles, {
 	sizeSelector: '.%s-container',
 	sizeHorizontalAlignRule: 'margin',
 	sizeVerticalAlignRule: 'justifyContent',
@@ -127,8 +127,8 @@ ContainerDiv.Style.addStyles( blockStyles, {
 	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout',
 	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks',
 } )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

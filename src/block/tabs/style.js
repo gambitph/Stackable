@@ -37,11 +37,11 @@ blockStyles.addBlockStyles( 'equalTabHeight', [ {
 	responsive: 'all',
 } ] )
 
-BlockDiv.Style.addStyles( blockStyles )
-MarginBottom.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
-Separator.Style.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+MarginBottom.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+Separator.addStyles( blockStyles )
 
 export default blockStyles

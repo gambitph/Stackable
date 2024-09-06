@@ -6,7 +6,7 @@ import {
 	BlockDiv,
 	EffectsAnimations,
 	Transform,
-	SeparatorStyles as SeparatorStyles_,
+	addSeparatorStyles,
 } from '~stackable/block-components'
 import { BlockStyleGenerator } from '~stackable/components'
 
@@ -20,11 +20,11 @@ const blockStyles = new BlockStyleGenerator( {
 	versionDeprecated: '',
 } )
 
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-SeparatorStyles_.addSeparatorStyles( blockStyles, {
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+addSeparatorStyles( blockStyles, {
 	selector: '',
 	enableFlipVertically: true,
 	isInitiallyFlippedVertically: false,

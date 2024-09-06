@@ -53,27 +53,27 @@ blockStyles.addBlockStyles( 'labelMarginTop', [ {
 	hasUnits: 'px',
 } ] )
 
-Divider.Style.addStyles( blockStyles )
-ContainerDiv.Style.addStyles( blockStyles )
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Typography.Style.addStyles( blockStyles, {
+Divider.addStyles( blockStyles )
+ContainerDiv.addStyles( blockStyles )
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
 	selector: '.stk-block-countdown__digit',
 	hoverSelector: '.stk-block-countdown__digit:hover',
 	attrNameTemplate: 'digit%s',
 } )
-Typography.Style.addStyles( blockStyles, {
+Typography.addStyles( blockStyles, {
 	selector: '.stk-block-countdown__label',
 	hoverSelector: '.stk-block-countdown__label:hover',
 	attrNameTemplate: 'label%s',
 } )
-Typography.Style.addStyles( blockStyles, {
+Typography.addStyles( blockStyles, {
 	selector: '.stk-block-countdown__message',
 	hoverSelector: '.stk-block-countdown__message:hover',
 	attrNameTemplate: 'message%s',
 } )
-EffectsAnimations.Style.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

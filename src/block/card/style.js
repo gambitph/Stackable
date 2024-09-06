@@ -23,18 +23,18 @@ const blockStyles = new BlockStyleGenerator( {
 	versionDeprecated: '',
 } )
 
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Column.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
-ContainerDiv.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Column.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+ContainerDiv.addStyles( blockStyles, {
 	sizeSelector: '.stk-block-card__content',
 	sizeHorizontalAlignRule: 'margin',
 	wrapperSelector: '.%s-container',
 } )
-Image.Style.addStyles( blockStyles, {
+Image.addStyles( blockStyles, {
 	enableWidthCallback: getAttribute => {
 		const className = getAttribute( 'className' )
 		const blockStyle = getBlockStyle( variations, className )

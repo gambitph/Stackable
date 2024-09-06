@@ -156,14 +156,14 @@ blockStyles.addBlockStyles( 'blockPadding', [ {
 	dependencies: [ 'blockPadding' ],
 } ] )
 
-BlockDiv.Style.addStyles( blockStyles )
-MarginBottom.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Typography.Style.addStyles( blockStyles, {
+BlockDiv.addStyles( blockStyles )
+MarginBottom.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
 	selector: '.stk-block-timeline__date',
 	hoverSelector: '.stk-block-timeline__date:hover',
 } )
-EffectsAnimations.Style.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

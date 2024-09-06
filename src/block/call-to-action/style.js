@@ -18,16 +18,16 @@ const blockStyles = new BlockStyleGenerator( {
 	versionDeprecated: '',
 } )
 
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
-ContainerDiv.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+ContainerDiv.addStyles( blockStyles, {
 	sizeSelector: '.stk-block-call-to-action__content',
 	sizeHorizontalAlignRule: 'margin',
 } )
-MarginBottom.Style.addStyles( blockStyles )
-Separator.Style.addStyles( blockStyles )
+MarginBottom.addStyles( blockStyles )
+Separator.addStyles( blockStyles )
 
 export default blockStyles

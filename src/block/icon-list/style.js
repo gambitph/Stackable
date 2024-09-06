@@ -207,8 +207,8 @@ blockStyles.addBlockStyles( 'listItemBorderColor', [ {
 	key: 'listItemBorderColor',
 } ] )
 
-Alignment.Style.addStyles( blockStyles )
-Typography.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
 	selector: [
 		'ul li',
 		'ol li',
@@ -218,10 +218,10 @@ Typography.Style.addStyles( blockStyles, {
 		'.%s:hover ol li',
 	],
 } )
-MarginBottom.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
+MarginBottom.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

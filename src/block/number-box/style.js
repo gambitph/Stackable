@@ -7,8 +7,8 @@ import {
 	Typography,
 	Alignment,
 	EffectsAnimations,
-	BackgroundStyle,
-	BorderStyle,
+	addBackgroundStyles,
+	addBorderStyles,
 	Transform,
 } from '~stackable/block-components'
 import { BlockStyleGenerator } from '~stackable/components'
@@ -38,24 +38,24 @@ blockStyles.addBlockStyles( 'shapeSize', [ {
 	dependencies: [ 'hasShape' ],
 } ] )
 
-BackgroundStyle.addStyles( blockStyles, {
+addBackgroundStyles( blockStyles, {
 	attrNameTemplate: 'shape%s',
 	selector: '.stk-block-number-box__text',
 	renderCondition: 'hasShape',
 } )
-BorderStyle.addStyles( blockStyles, {
+addBorderStyles( blockStyles, {
 	attrNameTemplate: 'shape%s',
 	selector: '.stk-block-number-box__text',
 	renderCondition: 'hasShape',
 } )
-Alignment.Style.addStyles( blockStyles )
-BlockDiv.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-Typography.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
 	selector: '.stk-block-number-box__text',
 	hoverSelector: '.stk-block-number-box__text:hover',
 } )
-EffectsAnimations.Style.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
 export default blockStyles

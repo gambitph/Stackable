@@ -1,7 +1,7 @@
 import './deprecated'
 import { addAttributes } from './attributes'
 import { createUniqueClass, useUniqueId } from './use-unique-id'
-import { Style } from './style'
+import { addStyles } from './style'
 import { Edit } from './edit'
 import { firefoxHasPolyfill } from './firefox-has-polyfill'
 
@@ -175,4 +175,4 @@ BlockDiv.InspectorControls = Edit
 
 BlockDiv.addAttributes = addAttributes
 
-BlockDiv.Style = Style
+BlockDiv.addStyles = addStyles

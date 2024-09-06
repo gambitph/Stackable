@@ -18,15 +18,15 @@ const blockStyles = new BlockStyleGenerator( {
 	versionDeprecated: '',
 } )
 
-Alignment.Style.addStyles( blockStyles, {
+Alignment.addStyles( blockStyles, {
 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 } )
-BlockDiv.Style.addStyles( blockStyles )
-Column.Style.addStyles( blockStyles )
-Advanced.Style.addStyles( blockStyles )
-Transform.Style.addStyles( blockStyles )
-EffectsAnimations.Style.addStyles( blockStyles )
-Separator.Style.addStyles( blockStyles )
-Columns.Style.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Column.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+Separator.addStyles( blockStyles )
+Columns.addStyles( blockStyles )
 
 export default blockStyles
