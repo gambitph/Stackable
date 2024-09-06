@@ -557,7 +557,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',

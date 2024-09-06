@@ -165,7 +165,9 @@ export const hasDynamicContent = ( value = '' ) => {
 	return value.includes( '!#stk_dynamic' ) || value.includes( 'data-stk-dynamic' )
 }
 
-export const getDynamicContent = ( value = '', queryLoopContext = null ) => {
+/*
+// Unused
+export const ____getDynamicContent = ( value = '', queryLoopContext = null ) => {
 	if ( ! select( 'stackable/dynamic-content' ) ) {
 		return value
 	}
@@ -215,6 +217,7 @@ export const getDynamicContent = ( value = '', queryLoopContext = null ) => {
 
 	return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue )
 }
+*/
 
 export const useQueryLoopContext = () => {
 	return useContext( QueryLoopContext )
@@ -229,14 +232,43 @@ export const useQueryLoopContext = () => {
  * const value = useDynamicContent( 'Post Title: !#stk_dynamic/current-page/post-title!#' )
  * // returns `Post Title: The actual post title`
  * ```
+ * @param context
  * @param {string} value
  */
 export const useDynamicContent = ( value = '' ) => {
 	const { clientId } = useBlockEditContext()
-	const blockDetails = select( 'core/block-editor' ).getBlock( clientId )
-	const queryLoopContext = useContext( QueryLoopContext )
-	blockDetails.context = queryLoopContext
+	// We need to create a new object here.
+	const blockDetails = {
+		...select( 'core/block-editor' ).getBlock( clientId ),
+		context: useContext( QueryLoopContext ),
+	}
+	// const queryLoopContext =
+	// blockDetails.context = { ...context }
 
+	return useSelect( select => {
+		if ( ! value || ! isString( value ) ) {
+			return value
+		}
+
+		if ( ! value.includes( '!#stk_dynamic' ) && ! value.includes( 'data-stk-dynamic' ) ) {
+			return value
+		}
+
+		if ( ! select( 'stackable/dynamic-content' ) ) {
+			return value
+		}
+
+		const parsedContent = select( 'stackable/dynamic-content' ).parseDynamicContents( value, blockDetails )
+		return parsedContent
+	}, [ value, blockDetails.context?.postId, blockDetails.context?.[ 'stackable/repeaterValue' ] ] )
+
+	return value + '-' + blockDetails.context?.postId
+
+	// TODO: Below is the old method, there was a lot going on here. Instead of
+	// passing the context, we tried inserting the current post id and then
+	// parsing that. but now we're passing the context, so no need for this. But
+	// keep this for now because we need to know if our new method works for any
+	// currently saved blocks that use dynamic data.
 	return useSelect( select => {
 		if ( ! value || ! isString( value ) ) {
 			return value
@@ -301,7 +333,6 @@ export const useDynamicContent = ( value = '' ) => {
 				return '!#stk_dynamic/' + splitFieldString.join( '/' ) + '!#'
 			} )
 		}
-
 		// Get the correct value for the dynamic content.
 		let parsedContent = select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue, blockDetails )
 
@@ -333,7 +364,7 @@ export const useDynamicContent = ( value = '' ) => {
 		}
 
 		return parsedContent
-	}, [ value, queryLoopContext?.postId ] )
+	}, [ value, queryLoopContext?.postId, queryLoopContext?.[ 'stackable/repeaterValue' ] ] )
 }
 
 /**
@@ -399,6 +430,11 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 const dynamicContent = <SVGDatabaseIcon />
 
 export const DynamicContentButton = memo( props => {
+	const { clientId } = useBlockEditContext()
+	const queryLoopContext = useContext( QueryLoopContext )
+	const block = select( 'core/block-editor' ).getBlock( clientId )
+	block.context = queryLoopContext
+
 	if ( ! isPro && ! showProNotice ) {
 		return null
 	}
@@ -430,6 +466,7 @@ export const DynamicContentButton = memo( props => {
 							onChange={ props.onChange }
 							activeAttribute={ props.activeAttribute }
 							type={ props.type }
+							blockDetails={ block }
 						/>
 					) }
 
