@@ -242,8 +242,6 @@ export const useDynamicContent = ( value = '' ) => {
 		...select( 'core/block-editor' ).getBlock( clientId ),
 		context: useContext( QueryLoopContext ),
 	}
-	// const queryLoopContext =
-	// blockDetails.context = { ...context }
 
 	return useSelect( select => {
 		if ( ! value || ! isString( value ) ) {

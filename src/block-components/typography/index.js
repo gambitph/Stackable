@@ -20,6 +20,7 @@ import { useDynamicContent } from '~stackable/components/dynamic-content-control
 /**
  * WordPress dependencies
  */
+import { Spinner } from '@wordpress/components'
 import { RichText } from '@wordpress/block-editor'
 import {
 	useEffect,
@@ -92,6 +93,9 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 	}, [ debouncedText, onChange ] ) // Don't include `value` in the dependency list because it will cause a double triggering of the `onChange`.
 
 	const dynamicContentText = useDynamicContent( debouncedText )
+	if ( dynamicContentText.includes( 'data-stk-dynamic=' ) && dynamicContentText.includes( '></span>' ) ) {
+		return <Spinner />
+	}
 
 	if ( ! editable ) {
 		return <TagName className={ className }>{ dynamicContentText }</TagName>
