@@ -290,6 +290,11 @@ const EditorSettings = () => {
 					'stackable_auto_collapse_panels',
 					'stackable_enable_block_linking',
 					'stackable_enable_carousel_lazy_loading',
+					'stackable_enable_text_highlight',
+					'stackable_enable_dynamic_content',
+					'stackable_enable_copy_paste_styles',
+					'stackable_enable_reset_layout',
+					'stackable_enable_save_as_default_block',
 				] ) )
 			} )
 		} )
@@ -439,6 +444,77 @@ const EditorSettings = () => {
 			} }
 			help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
 		/>
+		<AdminToggleSetting
+			label={ __( 'Toolbar Text Highlight', i18n ) }
+			value={ settings.stackable_enable_text_highlight }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_text_highlight: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_text_highlight: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Adds a toolbar button for highlighting text', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Toolbar Dynamic Content', i18n ) }
+			value={ settings.stackable_enable_dynamic_content }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_dynamic_content: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_dynamic_content: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Adds a toolbar button for inserting dynamic content', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Copy & Paste Styles', i18n ) }
+			value={ settings.stackable_enable_copy_paste_styles }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_copy_paste_styles: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_copy_paste_styles: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Adds a toolbar button for copying and pasting block styles', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Reset Layout', i18n ) }
+			value={ settings.stackable_enable_reset_layout }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_reset_layout: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_reset_layout: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Adds a toolbar button for resetting the layout of a stackble block back to the original', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Save as Default Block', i18n ) }
+			value={ settings.stackable_enable_save_as_default_block }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_save_as_default_block: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_save_as_default_block: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Adds a toolbar button for saving a block as the default block', i18n ) }
+		/>
+
 		{ isBusy &&
 			<div className="s-absolute-spinner">
 				<Spinner />

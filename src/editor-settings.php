@@ -157,6 +157,66 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'default' => true,
 				)
 			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_text_highlight',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for highlighting text', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_dynamic_content',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for inserting dynamic content', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_copy_paste_styles',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for copying and pasting block styles', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_reset_layout',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for resetting the layout of a block', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_save_as_default_block',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for saving the current block variation as the default block', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
 		}
 
 		public function sanitize_array_setting( $input ) {
@@ -177,6 +237,11 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
 			$settings['stackable_enable_carousel_lazy_loading'] = get_option( 'stackable_enable_carousel_lazy_loading' );
+			$settings['stackable_enable_text_highlight'] = get_option( 'stackable_enable_text_highlight' );
+			$settings['stackable_enable_dynamic_content'] = get_option( 'stackable_enable_dynamic_content' );
+			$settings['stackable_enable_copy_paste_styles'] = get_option( 'stackable_enable_copy_paste_styles' );
+			$settings['stackable_enable_reset_layout'] = get_option( 'stackable_enable_reset_layout' );
+			$settings['stackable_enable_save_as_default_block'] = get_option( 'stackable_enable_save_as_default_block' );
 			return $settings;
 		}
 
