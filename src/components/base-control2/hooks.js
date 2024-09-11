@@ -8,7 +8,7 @@ import {
 	get, set, cloneDeep,
 } from 'lodash'
 
-export const useControlHandlers = ( _attribute, responsive = false, hover = false, valueCallback = null, changeCallback = null ) => {
+export const useControlHandlers = ( _attribute = '', responsive = false, hover = false, valueCallback = null, changeCallback = null ) => {
 	// If there's a '.' it means the attribute value is an object, and we want
 	// to change a single property inside that object.
 	const willUpdateObjectProperty = _attribute.includes( '.' )

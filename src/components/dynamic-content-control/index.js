@@ -13,7 +13,7 @@ import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-contex
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	Button,
@@ -120,11 +120,16 @@ export const useDynamicContentControlProps = props => {
 	const isPressed = isPopoverOpen || activeAttributes.length
 	const activeAttribute = first( activeAttributes ) || ''
 
-	const onChange = ( newValue, editorQueryString, frontendQueryString ) => {
+	const onChange = ( newValue, editorQueryString, frontendQueryString, format = '' ) => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
-		const willChangeValue = props.isFormatType
+		let willChangeValue = props.isFormatType
 			? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
 			: `!#stk_dynamic/${ frontendQueryString }!#`
+
+		// If `format` is set, then we will use it to format the value.
+		if ( format ) {
+			willChangeValue = sprintf( format, willChangeValue )
+		}
 
 		props.onChange( willChangeValue )
 		setDebouncedValue( willChangeValue )
@@ -465,6 +470,8 @@ export const DynamicContentButton = memo( props => {
 							activeAttribute={ props.activeAttribute }
 							type={ props.type }
 							blockDetails={ block }
+							value={ props.value }
+							hasFormat={ !! props.value?.includes( 'class="stk-dynamic-content"' ) }
 						/>
 					) }
 
