@@ -55,7 +55,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'parent' => [
 					'stackable/button-group'
@@ -77,7 +78,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Link', STACKABLE_I18N )

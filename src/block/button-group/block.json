@@ -4,7 +4,7 @@
 	"title": "Button Group",
 	"description": "Add a customizable button.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/repeaterValue" ],
 	"keywords": [
 		"Link"
 	],
