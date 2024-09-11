@@ -150,7 +150,6 @@ const IconSearchPopover = props => {
 			const fr = new FileReader()
 			fr.onload = function( e ) {
 				setIsDropping( false )
-				// Only add suffix for uploaded custom icons.
 				const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
 				props.onChange( svgString )
 				props.onClose()
