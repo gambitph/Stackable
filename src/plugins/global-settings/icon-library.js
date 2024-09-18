@@ -21,7 +21,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/icon-library', outp
 				id="icon-library-settings"
 				isPremiumPanel={ ! isPro }
 			>
-				{ ! isPro && <ProControl type="transforms" /> }
+				{ ! isPro && <ProControl type="icon-library" /> }
 				{ isPro &&
 						applyFilters( 'stackable.global-settings.inspector.icon-library.control', null )
 				}

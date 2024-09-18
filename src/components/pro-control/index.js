@@ -109,6 +109,11 @@ const LABELS = {
 			<li>{ __( 'Hide the current post - great for synced patterns', i18n ) }</li>
 		</ul>,
 	},
+	'icon-library': {
+		description: <ul>
+			<li>{ __( 'Icon Library', i18n ) }</li>
+		</ul>,
+	},
 }
 
 const ProControl = props => {
