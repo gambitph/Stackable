@@ -652,7 +652,8 @@
       "800"
     ],
     "subsets": [
-      "arabic"
+      "arabic",
+      "latin"
     ]
   },
   {
@@ -1218,7 +1219,6 @@
       "700"
     ],
     "subsets": [
-      "cyrillic-ext",
       "latin",
       "latin-ext",
       "thai",
@@ -3286,6 +3286,17 @@
   },
   {
     "family": "Bungee Spice",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Bungee Tint",
     "variants": [
       "regular"
     ],
@@ -11182,6 +11193,16 @@
     ]
   },
   {
+    "family": "Matemasie",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Material Icons",
     "variants": [
       "regular"
@@ -11661,6 +11682,24 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Moderustic",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
       "latin",
       "latin-ext"
     ]
@@ -12358,6 +12397,16 @@
       "italic",
       "700",
       "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "New Amsterdam",
+    "variants": [
+      "regular"
     ],
     "subsets": [
       "latin",
@@ -19434,6 +19483,23 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "SUSE",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
