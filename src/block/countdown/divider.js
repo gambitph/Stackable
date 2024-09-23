@@ -6,7 +6,6 @@ import {
 	 useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import {
-	BlockCss,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedToolbarControl,
@@ -146,7 +145,7 @@ Divider.Content = props => {
 	)
 }
 
-const Styles = props => {
+const addStyles = ( blockStyleGenerator, props = {} ) => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -154,59 +153,49 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 
-	return (
-		<>
-			{ <BlockCss
-				{ ...propsToPass }
-				selectorCallback={ getAttribute => getAttribute( 'dividerType' ) === ':' ? '.stk-block-countdown__divider-colon' : '.stk-block-countdown__divider-line' }
-				styleRuleCallback={ getAttribute => getAttribute( 'dividerType' ) === ':' ? 'color' : 'backgroundColor' }
-				attrName="dividerColor"
-				key="dividerColor"
-				responsive="all"
-				dependencies={ [ 'dividerType' ] }
-			/> }
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-countdown__divider-line"
-				styleRule="height"
-				attrName="dividerSizeLine"
-				key="dividerSizeLine"
-				hasUnits="%"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-countdown__divider-colon"
-				styleRule="fontSize"
-				attrName="dividerSizeColon"
-				key="dividerSizeColon"
-				hasUnits="px"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-countdown__divider-colon"
-				styleRule="top"
-				attrName="dividerTopOffset"
-				key="dividerTopOffset"
-				hasUnits="px"
-				responsive="all"
-			/>
-		</>
-	)
-}
+	blockStyleGenerator.addBlockStyles( 'dividerColor', [ {
+		...propsToPass,
+		selectorCallback: getAttribute => getAttribute( 'dividerType' ) === ':' ? '.stk-block-countdown__divider-colon' : '.stk-block-countdown__divider-line',
+		styleRuleCallback: getAttribute => getAttribute( 'dividerType' ) === ':' ? 'color' : 'backgroundColor',
+		attrName: 'dividerColor',
+		key: 'dividerColor',
+		responsive: 'all',
+		dependencies: [ 'dividerType' ],
+	} ] )
 
-const Style = props => {
-	return <Styles { ...props } />
-}
+	blockStyleGenerator.addBlockStyles( 'dividerSizeLine', [ {
+		...propsToPass,
+		selector: '.stk-block-countdown__divider-line',
+		styleRule: 'height',
+		attrName: 'dividerSizeLine',
+		key: 'dividerSizeLine',
+		hasUnits: '%',
+		responsive: 'all',
+	} ] )
 
-Style.Content = props => {
-	return <Styles { ...props } />
+	blockStyleGenerator.addBlockStyles( 'dividerSizeColon', [ {
+		...propsToPass,
+		selector: '.stk-block-countdown__divider-colon',
+		styleRule: 'fontSize',
+		attrName: 'dividerSizeColon',
+		key: 'dividerSizeColon',
+		hasUnits: 'px',
+		responsive: 'all',
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'dividerTopOffset', [ {
+		...propsToPass,
+		selector: '.stk-block-countdown__divider-colon',
+		styleRule: 'top',
+		attrName: 'dividerTopOffset',
+		key: 'dividerTopOffset',
+		hasUnits: 'px',
+		responsive: 'all',
+	} ] )
 }
 
 Divider.InspectorControls = Edit
 
 Divider.addAttributes = addAttributes
 
-Divider.Style = Style
-
+Divider.addStyles = addStyles

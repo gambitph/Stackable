@@ -20,6 +20,8 @@ export const settings = {
 	supports: {
 		anchor: true,
 		__experimentalSelector: 'li',
+		reusable: false,
+		stkSaveBlockStyle: false,
 	},
 	example,
 	edit,

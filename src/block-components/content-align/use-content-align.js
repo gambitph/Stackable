@@ -4,10 +4,15 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 
-export const getContentAlignmentClasses = ( attributes, blockName = 'column' ) => {
+export const getContentAlignmentClasses = ( attributes, blockName = 'column', instanceId = '' ) => {
+	let instanceIdString = ''
+	if ( instanceId ) {
+		instanceIdString = `${ instanceId }-`
+	}
+
 	return classnames(
 		'stk-content-align',
-		`stk-${ attributes.uniqueId }-${ blockName }`,
+		`stk-${ attributes.uniqueId }-${ instanceIdString }${ blockName }`,
 		applyFilters( 'stackable.block-components.content-align.getContentAlignmentClasses', {
 			'stk--flex': attributes.columnJustify,
 			alignwide: attributes.innerBlockContentAlign === 'alignwide', // This will align the columns inside.

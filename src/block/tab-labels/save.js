@@ -1,8 +1,3 @@
-/**
- * Internal dependencies
- */
-import { TabStyles } from './style'
-
 import {
 	BlockDiv,
 	CustomCSS,
@@ -53,7 +48,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<TabStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<div
 				className="stk-block-tab-labels__wrapper"

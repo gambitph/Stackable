@@ -1,6 +1,6 @@
 /** Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 import variations from './variations'
 
 /**
@@ -11,10 +11,10 @@ import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import {
 	ColumnInnerBlocks, InspectorBottomTip, InspectorStyleControls, InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -41,16 +41,14 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
+import { memo } from '@wordpress/element'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -72,34 +70,22 @@ const Edit = props => {
 	const lastBlockName = last( innerBlocks )?.name
 	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
+			<InspectorControls />
 
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
-				<BlockDiv.InspectorControls />
-				<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
-				<BlockLink.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
-
-			<BlockStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />
 
 			<BlockDiv
@@ -121,6 +107,31 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+			<BlockLink.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,
