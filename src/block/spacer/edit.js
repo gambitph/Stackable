@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { SpacerStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -11,7 +11,6 @@ import { i18n, version as VERSION } from 'stackable'
 import {
 	Advanced,
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	CustomAttributes,
@@ -22,6 +21,7 @@ import {
 import { useDeviceType } from '~stackable/hooks'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, ResizerTooltip,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
 import {
@@ -35,7 +35,7 @@ import { ResizableBox } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import {
-	useState, useRef, useMemo,
+	useState, useRef, useMemo, memo,
 } from '@wordpress/element'
 
 const getSnapYBetween = ( value, snapDiff = 50 ) => {
@@ -53,15 +53,12 @@ const TABS = [ 'style', 'advanced' ]
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
 		setAttributes,
 		isHovered,
 		isSelected,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const deviceType = useDeviceType()
 	const blockClassNames = classnames( [
@@ -89,42 +86,21 @@ const Edit = props => {
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 	const resizableRef = useRef()
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						id="general"
-						initialOpen={ true }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Height', i18n ) }
-							responsive="all"
-							attribute="height"
-							sliderMin="0"
-							sliderMax="500"
-							placeholder={ defaultMinHeight }
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-				<BlockDiv.InspectorControls hasSizeSpacing={ false } />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-spacer" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
-			<SpacerStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			<InspectorControls defaultMinHeight={ defaultMinHeight } />
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-spacer" />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -182,6 +158,39 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Height', i18n ) }
+						responsive="all"
+						attribute="height"
+						sliderMin="0"
+						sliderMax="500"
+						placeholder={ props.defaultMinHeight }
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+			<BlockDiv.InspectorControls hasSizeSpacing={ false } />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-spacer" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

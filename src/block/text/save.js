@@ -1,8 +1,6 @@
 /**
  * Internal dependencies
  */
-import { TextStyles } from './style'
-
 import {
 	BlockDiv,
 	CustomCSS,
@@ -48,7 +46,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<TextStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<Typography.Content
 				attributes={ attributes }

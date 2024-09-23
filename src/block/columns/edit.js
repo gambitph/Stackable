@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -14,10 +14,10 @@ import {
 	GroupPlaceholder,
 	InspectorLayoutControls,
 	InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
 	Alignment,
@@ -35,7 +35,6 @@ import {
 	getContentAlignmentClasses,
 	Columns,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -49,22 +48,32 @@ import { useQueryLoopInstanceId } from '~stackable/util'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
+import { memo } from '@wordpress/element'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
 const Edit = props => {
 	const {
-		className,
 		clientId,
+		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { hasInnerBlocks } = useBlockContext()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
+
+	const { hasInnerBlocks } = useSelect(
+		select => {
+			const { getBlockOrder } = select( 'core/block-editor' )
+
+			return {
+				hasInnerBlocks: getBlockOrder( clientId ).length > 0,
+			}
+		},
+		[ clientId ]
+	)
 
 	const blockClassNames = classnames( applyFilters( 'stackable.columns.edit.blockClassNames',
 		[
@@ -83,35 +92,21 @@ const Edit = props => {
 		'stk-block-content',
 	], getContentAlignmentClasses( props.attributes, 'column', instanceId ) )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
 
-			<>
-				<InspectorTabs />
-
-				<Columns.InspectorControls />
-				<InspectorLayoutControls>
-					<ControlSeparator />
-				</InspectorLayoutControls>
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls
-					hasContainerSize={ true }
-					containerSizePriority={ 1 }
-					hasContainerHeight={ false }
-					hasColumnJustify={ true }
-					hasRowAlignment={ true }
-				/>
-				<BlockDiv.InspectorControls />
-				<Separator.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
+			<InspectorControls />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
 				clientId={ props.clientId }
@@ -119,11 +114,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				enableVariationPicker={ true }
 			>
-				<BlockStyles
-					version={ VERSION }
-					blockState={ props.blockState }
-					clientId={ clientId }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
@@ -152,8 +143,17 @@ const Edit = props => {
 // Load the polyfill for columns block :has() selector for Firefox
 const userAgent = navigator?.userAgent
 if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
-	addFilter( 'stackable.columns.edit.blockClassNames', 'stackable/columns-has-single-block-polyfill', classes => {
-		const { numInnerBlocks } = useBlockContext()
+	addFilter( 'stackable.columns.edit.blockClassNames', 'stackable/columns-has-single-block-polyfill', ( classes, props ) => {
+		const { numInnerBlocks } = useSelect(
+			select => {
+				const { getBlockOrder } = select( 'core/block-editor' )
+
+				return {
+					numInnerBlocks: getBlockOrder( props.clientId ).length,
+				}
+			},
+			[ props.clientId ]
+		)
 
 		if ( numInnerBlocks === 1 ) {
 			classes.push( 'stk-block-columns--has-single-block-polyfill' )
@@ -162,6 +162,38 @@ if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
 		return classes
 	} )
 }
+
+// Inspector controls for the block, it's important that we only pass only the
+// props used by controls to prevent rerenders of all the inspector controls.
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Columns.InspectorControls />
+			<InspectorLayoutControls>
+				<ControlSeparator />
+			</InspectorLayoutControls>
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls
+				hasContainerSize={ true }
+				containerSizePriority={ 1 }
+				hasContainerHeight={ false }
+				hasColumnJustify={ true }
+				hasRowAlignment={ true }
+			/>
+			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

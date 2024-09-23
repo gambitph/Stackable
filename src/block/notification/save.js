@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { ContainerStyles } from './style'
 import SVGCloseIcon from './images/close-icon.svg'
 
 /**
@@ -66,7 +65,7 @@ export const Save = props => {
 			version={ props.version }
 			data-v={ props.attributes.version }
 		>
-			<ContainerStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<ContainerDiv.Content
 				className={ contentClassNames }

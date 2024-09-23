@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { PostsStyles } from './style'
+import blockStyles from './style'
 import { generateRenderPostItem, CONTENTS } from './util'
 import variations from './variations'
 
@@ -27,6 +27,7 @@ import {
 	InspectorStyleControls,
 	ControlSeparator,
 	ProControlButton,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	useBlockStyle,
@@ -42,7 +43,6 @@ import {
 import {
 	getAlignmentClasses,
 	BlockDiv,
-	useGeneratedCss,
 	Image,
 	Alignment,
 	Advanced,
@@ -68,7 +68,9 @@ import { Placeholder, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
-import { useMemo, useEffect } from '@wordpress/element'
+import {
+	useMemo, useEffect, memo,
+} from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { compose, useInstanceId } from '@wordpress/compose'
 
@@ -94,8 +96,6 @@ const Edit = props => {
 		className,
 		setAttributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const {
 		stkQueryId,
@@ -163,230 +163,36 @@ const Edit = props => {
 	const activeVariation = getActiveBlockVariation( name, attributes )
 	const defaultContentOrder = activeVariation?.attributes?.contentOrder || DEFAULT_ORDER
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<InspectorLayoutControls>
-					<AdvancedRangeControl
-						label={ __( 'Columns', i18n ) }
-						attribute="columns"
-						responsive="all"
-						min={ 1 }
-						sliderMax={ 4 }
-						placeholder="2"
-					/>
-					<FlexGapControls />
-					<ControlSeparator />
-					<SortControl
-						label={ __( 'Content Arrangement', i18n ) }
-						axis="y"
-						values={ contentOrderOptions }
-						num={ contentOrderOptions.length }
-						allowReset={ ! isEqual( contentOrder, defaultContentOrder ) }
-						onChange={ order => {
-							if ( order ) {
-								setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
-							} else {
-								setAttributes( { contentOrder: defaultContentOrder } )
-							}
-						} }
-						helpTooltip={ {
-							video: 'posts-content-order',
-							description: __( 'Sets the order of the items displayed (category, title, meta, excerpt, read more button, image) for each post', i18n ),
-						} }
-					/>
-					<ControlSeparator />
-				</InspectorLayoutControls>
-
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls />
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'Query', i18n ) }
-						id="query"
-						initialOpen={ true }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Number of items', i18n ) }
-							min={ 1 }
-							max={ 100 }
-							allowReset={ true }
-							attribute="numberOfItems"
-							placeholder="6"
-							default={ 6 }
-						/>
-						<AdvancedSelectControl
-							label={ __( 'Order by', i18n ) }
-							options={ [
-								{ label: __( 'Newest to Oldest', i18n ), value: 'date,desc' },
-								{ label: __( 'Oldest to Newest', i18n ), value: 'date,asc' },
-								{ label: __( 'A → Z', i18n ), value: 'title,asc' },
-								{ label: __( 'Z → A', i18n ), value: 'title,desc' },
-								{ label: __( 'Last Modified to Oldest', i18n ), value: 'modified,desc' },
-								{ label: __( 'Oldest Modified to Last', i18n ), value: 'modified,asc' },
-								{ label: __( 'Menu Order', i18n ), value: 'menu_order,asc' },
-								{ label: __( 'Random', i18n ), value: 'rand,desc' },
-							] }
-							value={ `${ orderBy },${ order }` }
-							onChange={ value => {
-								const [ orderBy, order ] = value.split( ',' )
-								setAttributes( {
-									orderBy,
-									order,
-								} )
-							} }
-							default="date,desc"
-						/>
-						<TaxonomyControl
-							allowReset={ true }
-							postType={ type }
-							onChangePostType={ type => setAttributes( { type } ) }
-							taxonomyType={ taxonomyType }
-							onChangeTaxonomyType={ taxonomyType => setAttributes( { taxonomyType } ) }
-							taxonomy={ taxonomy }
-							onChangeTaxonomy={ taxonomy => setAttributes( { taxonomy } ) }
-							taxonomyFilterType={ taxonomyFilterType }
-							onChangeTaxonomyFilterType={ taxonomyFilterType => setAttributes( { taxonomyFilterType } ) }
-							stkVersion="3"
-						/>
-						{ showProNotice && <ProControlButton type="posts" /> }
-						{ applyFilters( 'stackable.posts.edit.inspector.style.query', null ) }
-					</PanelAdvancedSettings>
-					<PanelAdvancedSettings
-						title={ __( 'Spacing', i18n ) }
-						id="spacing"
-					>
-						<AdvancedRangeControl
-							label={ __( 'Featured Image', i18n ) }
-							attribute="imageSpacing"
-							responsive="all"
-							min={ 0 }
-							sliderMax={ 100 }
-							placeholder=""
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							attribute="titleSpacing"
-							responsive="all"
-							min={ 0 }
-							sliderMax={ 100 }
-							placeholder=""
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Category', i18n ) }
-							attribute="categorySpacing"
-							responsive="all"
-							min={ 0 }
-							sliderMax={ 100 }
-							placeholder=""
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Excerpt', i18n ) }
-							attribute="excerptSpacing"
-							responsive="all"
-							min={ 0 }
-							sliderMax={ 100 }
-							placeholder=""
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Meta', i18n ) }
-							attribute="metaSpacing"
-							responsive="all"
-							min={ 0 }
-							sliderMax={ 100 }
-							placeholder=""
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Read More Link', i18n ) }
-							attribute="readmoreSpacing"
-							responsive="all"
-							min={ 0 }
-							sliderMax={ 100 }
-							placeholder=""
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<BlockDiv.InspectorControls />
-				<ContainerDiv.InspectorControls hasContentVerticalAlign={ true } />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<Image.InspectorControls
-					{ ...props }
-					label={ __( 'Featured Image', i18n ) }
-					hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
-					hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
-					hasShape={ false }
-					hasWidth={ [ 'list', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
-					hasAlt={ false }
-					hasSelector={ false }
-					src={ focalPointPlaceholder }
-					hasToggle={ true }
-					hasAspectRatio={ ! [ 'list', 'horizontal', 'horizontal-2', 'portfolio', 'portfolio-2', 'vertical-card-2' ].includes( blockStyle ) }
-				/>
-				<Typography.InspectorControls
-					{ ...props }
-					label={ __( 'Title', i18n ) }
-					hasToggle={ true }
-					attrNameTemplate="title%s"
-					hasTextContent={ false }
-					hasAlign={ true }
-					initialOpen={ false }
-				/>
-				<Typography.InspectorControls
-					{ ...props }
-					label={ __( 'Category', i18n ) }
-					hasToggle={ true }
-					attrNameTemplate="category%s"
-					hasTextContent={ false }
-					hasAlign={ true }
-					hasTextTag={ false }
-					initialOpen={ false }
-				/>
-				<Typography.InspectorControls
-					{ ...props }
-					label={ __( 'Excerpt', i18n ) }
-					hasToggle={ true }
-					attrNameTemplate="excerpt%s"
-					hasTextTag={ false }
-					hasTextContent={ false }
-					hasAlign={ true }
-					initialOpen={ false }
-				/>
-				<Typography.InspectorControls
-					{ ...props }
-					label={ __( 'Meta', i18n ) }
-					hasToggle={ true }
-					attrNameTemplate="meta%s"
-					hasTextTag={ false }
-					hasTextContent={ false }
-					hasAlign={ true }
-					initialOpen={ false }
-				/>
-				<Typography.InspectorControls
-					{ ...props }
-					label={ __( 'Read More Link', i18n ) }
-					attrNameTemplate="readmore%s"
-					hasTextTag={ false }
-					hasToggle={ true }
-					hasAlign={ true }
-					initialOpen={ false }
-				/>
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-posts" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
-			<PostsStyles
-				version={ VERSION }
+			<InspectorControls
+				setAttributes={ setAttributes }
 				blockState={ props.blockState }
-				clientId={ clientId }
+				contentOrderOptions={ contentOrderOptions }
+				contentOrder={ contentOrder }
+				DefaultContentOrder={ defaultContentOrder }
+				orderBy={ orderBy }
+				order={ order }
+				type={ type }
+				taxonomyType={ taxonomyType }
+				taxonomy={ taxonomy }
+				taxonomyFilterType={ taxonomyFilterType }
+				blockStyle={ blockStyle }
+				focalPointPlaceholder={ focalPointPlaceholder }
 			/>
+
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-posts" />
 
 			{ ( isRequesting || ! hasPosts ) ? (
@@ -424,6 +230,227 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<InspectorLayoutControls>
+				<AdvancedRangeControl
+					label={ __( 'Columns', i18n ) }
+					attribute="columns"
+					responsive="all"
+					min={ 1 }
+					sliderMax={ 4 }
+					placeholder="2"
+				/>
+				<FlexGapControls />
+				<ControlSeparator />
+				<SortControl
+					label={ __( 'Content Arrangement', i18n ) }
+					axis="y"
+					values={ props.contentOrderOptions }
+					num={ props.contentOrderOptions.length }
+					allowReset={ ! isEqual( props.contentOrder, props.defaultContentOrder ) }
+					onChange={ order => {
+						if ( order ) {
+							props.setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
+						} else {
+							props.setAttributes( { contentOrder: props.defaultContentOrder } )
+						}
+					} }
+					helpTooltip={ {
+						video: 'posts-content-order',
+						description: __( 'Sets the order of the items displayed (category, title, meta, excerpt, read more button, image) for each post', i18n ),
+					} }
+				/>
+				<ControlSeparator />
+			</InspectorLayoutControls>
+
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Query', i18n ) }
+					id="query"
+					initialOpen={ true }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Number of items', i18n ) }
+						min={ 1 }
+						max={ 100 }
+						allowReset={ true }
+						attribute="numberOfItems"
+						placeholder="6"
+						default={ 6 }
+					/>
+					<AdvancedSelectControl
+						label={ __( 'Order by', i18n ) }
+						options={ [
+							{ label: __( 'Newest to Oldest', i18n ), value: 'date,desc' },
+							{ label: __( 'Oldest to Newest', i18n ), value: 'date,asc' },
+							{ label: __( 'A → Z', i18n ), value: 'title,asc' },
+							{ label: __( 'Z → A', i18n ), value: 'title,desc' },
+							{ label: __( 'Last Modified to Oldest', i18n ), value: 'modified,desc' },
+							{ label: __( 'Oldest Modified to Last', i18n ), value: 'modified,asc' },
+							{ label: __( 'Menu Order', i18n ), value: 'menu_order,asc' },
+							{ label: __( 'Random', i18n ), value: 'rand,desc' },
+						] }
+						value={ `${ props.orderBy },${ props.order }` }
+						onChange={ value => {
+							const [ orderBy, order ] = value.split( ',' )
+							props.setAttributes( {
+								orderBy,
+								order,
+							} )
+						} }
+						default="date,desc"
+					/>
+					<TaxonomyControl
+						allowReset={ true }
+						postType={ props.type }
+						onChangePostType={ type => props.setAttributes( { type } ) }
+						taxonomyType={ props.taxonomyType }
+						onChangeTaxonomyType={ taxonomyType => props.setAttributes( { taxonomyType } ) }
+						taxonomy={ props.taxonomy }
+						onChangeTaxonomy={ taxonomy => props.setAttributes( { taxonomy } ) }
+						taxonomyFilterType={ props.taxonomyFilterType }
+						onChangeTaxonomyFilterType={ taxonomyFilterType => props.setAttributes( { taxonomyFilterType } ) }
+						stkVersion="3"
+					/>
+					{ showProNotice && <ProControlButton type="posts" /> }
+					{ applyFilters( 'stackable.posts.edit.inspector.style.query', null ) }
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Spacing', i18n ) }
+					id="spacing"
+				>
+					<AdvancedRangeControl
+						label={ __( 'Featured Image', i18n ) }
+						attribute="imageSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Title', i18n ) }
+						attribute="titleSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Category', i18n ) }
+						attribute="categorySpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Excerpt', i18n ) }
+						attribute="excerptSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Meta', i18n ) }
+						attribute="metaSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Read More Link', i18n ) }
+						attribute="readmoreSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls hasContentVerticalAlign={ true } />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<Image.InspectorControls
+				{ ...props }
+				label={ __( 'Featured Image', i18n ) }
+				hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( props.blockStyle ) }
+				hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( props.blockStyle ) }
+				hasShape={ false }
+				hasWidth={ [ 'list', 'horizontal', 'horizontal-2' ].includes( props.blockStyle ) }
+				hasAlt={ false }
+				hasSelector={ false }
+				src={ props.focalPointPlaceholder }
+				hasToggle={ true }
+				hasAspectRatio={ ! [ 'list', 'horizontal', 'horizontal-2', 'portfolio', 'portfolio-2', 'vertical-card-2' ].includes( props.blockStyle ) }
+			/>
+			<Typography.InspectorControls
+				{ ...props }
+				label={ __( 'Title', i18n ) }
+				hasToggle={ true }
+				attrNameTemplate="title%s"
+				hasTextContent={ false }
+				hasAlign={ true }
+				initialOpen={ false }
+			/>
+			<Typography.InspectorControls
+				{ ...props }
+				label={ __( 'Category', i18n ) }
+				hasToggle={ true }
+				attrNameTemplate="category%s"
+				hasTextContent={ false }
+				hasAlign={ true }
+				hasTextTag={ false }
+				initialOpen={ false }
+			/>
+			<Typography.InspectorControls
+				{ ...props }
+				label={ __( 'Excerpt', i18n ) }
+				hasToggle={ true }
+				attrNameTemplate="excerpt%s"
+				hasTextTag={ false }
+				hasTextContent={ false }
+				hasAlign={ true }
+				initialOpen={ false }
+			/>
+			<Typography.InspectorControls
+				{ ...props }
+				label={ __( 'Meta', i18n ) }
+				hasToggle={ true }
+				attrNameTemplate="meta%s"
+				hasTextTag={ false }
+				hasTextContent={ false }
+				hasAlign={ true }
+				initialOpen={ false }
+			/>
+			<Typography.InspectorControls
+				{ ...props }
+				label={ __( 'Read More Link', i18n ) }
+				attrNameTemplate="readmore%s"
+				hasTextTag={ false }
+				hasToggle={ true }
+				hasAlign={ true }
+				initialOpen={ false }
+			/>
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-posts" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

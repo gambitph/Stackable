@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { TeamMemberStyles } from './style'
+import blockStyles from './style'
 import variations from './variations'
 
 /**
@@ -14,10 +14,10 @@ import {
 	InspectorBottomTip,
 	InspectorStyleControls,
 	InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	ContainerDiv,
 	ConditionalDisplay,
 	Alignment,
@@ -46,17 +46,15 @@ import {
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -77,28 +75,20 @@ const Edit = props => {
 	const lastBlockName = last( innerBlocks )?.name
 	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
-				<BlockDiv.InspectorControls />
-				<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
-				<BlockLink.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-team-member" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
+			<InspectorControls />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -107,11 +97,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				enableVariationPicker={ true }
 			>
-				<TeamMemberStyles
-					version={ VERSION }
-					blockState={ props.blockState }
-					clientId={ clientId }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-team-member" />
 
 				<ContainerDiv className={ contentClassNames }>
@@ -126,6 +112,31 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+			<BlockLink.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-team-member" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

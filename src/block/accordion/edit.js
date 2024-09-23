@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -16,10 +16,10 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	InspectorAdvancedControls,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -50,7 +50,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
-import { useState, useEffect } from '@wordpress/element'
+import { useState, useEffect, memo } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { findLast } from 'lodash'
 
@@ -61,10 +61,7 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
-		isSelected,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const [ isOpen, setIsOpen ] = useState( props.attributes.startOpen )
 	const { hasInnerBlocks } = useBlockContext()
@@ -123,57 +120,22 @@ const Edit = props => {
 		'stk--is-open': isOpen, // This opens the accordion in the editor.
 	} )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
+			<InspectorControls />
 
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						id="general"
-						initialOpen={ true }
-					>
-						<AdvancedToggleControl
-							label={ __( 'Open at the start', i18n ) }
-							attribute="startOpen"
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Close adjacent on open', i18n ) }
-							attribute="onlyOnePanelOpen"
-							helpTooltip={ {
-								video: 'accordion-adjacent-open',
-								title: __( 'Close adjacent on open', i18n ),
-								description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
-							} }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Enable FAQ Schema', i18n ) }
-							attribute="enableFAQ"
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls backgroundMediaAllowVideo={ false } />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
-
-			<BlockStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-accordion" />
 
 			<BlockDiv
@@ -193,6 +155,54 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedToggleControl
+						label={ __( 'Open at the start', i18n ) }
+						attribute="startOpen"
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Close adjacent on open', i18n ) }
+						attribute="onlyOnePanelOpen"
+						helpTooltip={ {
+							video: 'accordion-adjacent-open',
+							title: __( 'Close adjacent on open', i18n ),
+							description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
+						} }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Enable FAQ Schema', i18n ) }
+						attribute="enableFAQ"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls backgroundMediaAllowVideo={ false } />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

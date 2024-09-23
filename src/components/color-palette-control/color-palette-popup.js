@@ -13,8 +13,9 @@ import {
 	ColorPicker,
 	GradientPicker,
 } from '@wordpress/components'
+import { memo } from '@wordpress/element'
 
-export const ColorPalettePopup = props => {
+export const ColorPalettePopup = memo( props => {
 	const {
 		onChange,
 		preOnChange,
@@ -81,7 +82,7 @@ export const ColorPalettePopup = props => {
 			}
 		</>
 	)
-}
+} )
 
 const NOOP = () => {}
 const PASSTHRU = v => v

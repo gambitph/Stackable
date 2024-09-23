@@ -15,13 +15,9 @@ import {
  */
 import { compose } from '@wordpress/compose'
 
-/**
- * Internal dependencies
- */
-import { SpacerStyles } from './style'
-
 export const Save = props => {
 	const {
+		attributes,
 		...propsToPass
 	} = props
 
@@ -40,7 +36,7 @@ export const Save = props => {
 			attributes={ props.attributes }
 			version={ props.version }
 		>
-			<SpacerStyles.Content { ...propsToPass } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ props.attributes } />
 		</BlockDiv.Content>
 	)
