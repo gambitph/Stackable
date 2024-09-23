@@ -144,7 +144,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 // Convert hex colors to global colors in Stackable blocks.
 addFilter( 'stackable.color-palette-control.change', 'stackable/global-colors', ( value, colorObject ) => {
 	if ( colorObject && colorObject.slug.includes( 'stk-global-color' ) ) {
-		return `var(--${ colorObject.slug }, ${ colorObject.color })`
+		return `var(--${ colorObject.slug })`
 	}
 
 	return value
