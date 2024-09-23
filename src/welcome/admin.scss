@@ -8,6 +8,11 @@
 	--stk-welcome-light-border: #d0d5dd;
 }
 
+// Make scroll smooth with inline navigation.
+html {
+	scroll-behavior: smooth;
+}
+
 // Clear out the margins of the admin page.
 
 body[class*="page_stackable"],
@@ -18,6 +23,10 @@ body[class*="page_stk-"] {
 	#wpbody-content > .wrap:not(#fs_connect) { // stylelint-disable-line selector-id-pattern
 		margin: 0;
 		padding: 0 50px;
+
+		&.wrap-settings {
+			padding: 0;
+		}
 	}
 }
 
@@ -30,6 +39,10 @@ body[class*="page_stk-"] {
 	margin-bottom: 40px;
 	border-bottom: 1px solid var(--stk-welcome-light-border);
 	font-weight: 300;
+
+	&.s-header-settings {
+		margin: 0;
+	}
 
 	.s-header {
 		padding: 0px;
@@ -397,6 +410,9 @@ body.toplevel_page_stk-custom-fields {
 				color: #f34957;
 			}
 		}
+		&.s-box-hidden {
+			display: none;
+		}
 	}
 	.s-absolute-spinner {
 		position: absolute;
@@ -476,10 +492,77 @@ body.toplevel_page_stk-custom-fields {
 			margin-bottom: 0 !important;
 		}
 	}
-	.s-body-container-grid {
-		display: grid;
-		grid-template-columns: 1fr 350px;
-		grid-gap: 30px;
+	.s-sidenav {
+		height: 80%;
+		width: 250px;
+		left: 0;
+		position: absolute;
+		background-color: #fff;
+		padding-top: 30px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		.s-sidenav-item {
+			color: #444;
+			font-size: 14px;
+			padding: 15px 20px;
+			text-decoration: none;
+			display: block;
+			position: relative;
+			transition: background-color 0.3s ease;
+			cursor: pointer;
+			&:hover {
+				color: var(--stk-welcome-primary) !important;
+			}
+			&.s-active {
+				font-weight: 600;
+				color: var(--stk-welcome-primary) !important;
+				transition: color 0.3s ease;
+				&::after {
+					content: "";
+					position: absolute;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					width: 2px;
+					background-color: var(--stk-welcome-primary);
+					transition: width 0.3s ease;
+				}
+			}
+			&.s-sidenav-item-highlight {
+				font-weight: bold;
+			}
+		}
+		// This is a button, render this in the bottom of the side bar
+		// The side bar is a flex container, so this will be at the bottom.
+		.s-save-changes {
+			background: linear-gradient(135deg, #b300be, #f00069);
+			transition: all 0.1s ease-in-out;
+			text-decoration: none;
+			border: none;
+			color: #fff;
+			padding: 12px 20px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-size: 14px;
+			cursor: pointer;
+			box-sizing: border-box !important;
+			display: inline-block;
+			margin: 120px 20px 0;
+			&:hover {
+				opacity: 0.85;
+				box-shadow: none !important;
+			}
+		}
+	}
+	.s-sidenav-fixed {
+		position: fixed;
+		height: 100%;
+		top: 32px;
+		left: 160px;
+	}
+	.s-body-container-with-sidenav {
+		margin-left: 250px;
 	}
 	.s-side {
 		h2,
