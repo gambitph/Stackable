@@ -37,7 +37,6 @@ import {
 	Transform,
 	getContentAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -51,6 +50,7 @@ import { useQueryLoopInstanceId } from '~stackable/util'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = [
@@ -71,7 +71,12 @@ const Edit = props => {
 	 } = props.attributes
 
 	 const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	 const { hasInnerBlocks } = useBlockContext()
+	 const { hasInnerBlocks } = useSelect( select => {
+		const { getBlockOrder } = select( 'core/block-editor' )
+		return {
+			hasInnerBlocks: getBlockOrder( props.clientId ).length > 0,
+		}
+	}, [ props.clientId ] )
 	 const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	 const blockClassNames = classnames( [

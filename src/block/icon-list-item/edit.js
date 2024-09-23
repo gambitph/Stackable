@@ -35,14 +35,13 @@ import {
 	withQueryLoopContext,
 	withBlockWrapperIsHovered,
 } from '~stackable/higher-order'
-import { useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import { compose, createHigherOrderComponent } from '@wordpress/compose'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import { useEffect, memo } from '@wordpress/element'
 
 const TABS = [ 'style', 'advanced' ]
@@ -61,7 +60,13 @@ const Edit = props => {
 	const { icon, text } = attributes
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { parentBlock } = useBlockContext()
+	const { parentBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+		return {
+			parentBlock: getBlock( parentClientId ),
+		}
+	}, [ clientId ] )
 
 	const {
 		'stackable/ordered': ordered,

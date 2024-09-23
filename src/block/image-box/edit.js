@@ -16,7 +16,6 @@ import {
 	InspectorTabs,
 	useBlockCssGenerator,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -45,11 +44,19 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { Fragment, memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
 
 export const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
-	const { hasInnerBlocks, innerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useSelect( select => {
+		const { getBlock } = select( 'core/block-editor' )
+		const innerBlocks = getBlock( props.clientId ).innerBlocks
+		return {
+			hasInnerBlocks: innerBlocks.length > 0,
+			innerBlocks,
+		}
+	}, [ props.clientId ] )
 
 	const {
 		className,
