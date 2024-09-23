@@ -12,11 +12,7 @@ import {
 	AdvancedSelectControl,
 } from '~stackable/components'
 import { i18n } from 'stackable'
-import {
-	useAttributeEditHandlers,
-	useBlockAttributesContext,
-	useBlockContext,
-} from '~stackable/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -30,6 +26,9 @@ import { BorderControls as _BorderControls } from '../helpers/borders'
 import { Link as _Link } from '../link'
 import { Icon as _Icon } from '../icon'
 import { applyFilters } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { getAttributeNameFunc } from '~stackable/util'
 
 export const Icon = props => (
 	<_Icon.InspectorControls
@@ -110,9 +109,7 @@ export const ColorsControls = props => {
 		attrNameTemplate = 'button%s',
 	} = props
 
-	const {
-		getAttrName,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const getAttrName = getAttributeNameFunc( attrNameTemplate )
 
 	const buttonBackgroundColorType = useBlockAttributesContext( attributes => {
 		return attributes[ getAttrName( 'backgroundColorType' ) ]
@@ -181,9 +178,7 @@ const SizeControls = props => {
 		attrNameTemplate = 'button%s',
 	} = props
 
-	const {
-		getAttrName,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const getAttrName = getAttributeNameFunc( attrNameTemplate )
 
 	return ( <>
 		{ props.hasFullWidth && (
@@ -289,7 +284,18 @@ export const Edit = props => {
 		...propsToPass
 	} = props
 
-	const { parentBlock } = useBlockContext()
+	const { clientId } = useBlockEditContext()
+	const { parentBlock } = useSelect(
+		select => {
+			const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+			const rootClientId = getBlockRootClientId( clientId )
+
+			return {
+				parentBlock: getBlock( rootClientId ),
+			}
+		},
+		[ clientId ]
+	)
 
 	const enableLink = applyFilters( 'stackable.edit.button.enable-link', true, parentBlock )
 

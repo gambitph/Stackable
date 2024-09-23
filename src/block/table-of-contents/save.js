@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { TableOfContentsStyles } from './style'
 import TableOfContentsList from './table-of-contents-list'
 import { linearToNestedHeadingList } from './util'
 import {
@@ -70,7 +69,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<TableOfContentsStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			{ attributes.titleShow && <Typography.Content
 				className={ titleClassNames }

@@ -10,21 +10,7 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCss, BlockCssCompiler } from '~stackable/components'
-
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
-
-const containerDivOptions = {
-	sizeSelector: '.%s-container',
-	sizeHorizontalAlignRule: 'margin',
-	sizeVerticalAlignRule: 'justifyContent',
-	sizeVerticalAlignSelector: '.%s-inner-blocks',
-	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout',
-	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks',
-}
+import { BlockStyleGenerator } from '~stackable/components'
 
 const callbacks = {
 	marginTop: {
@@ -41,154 +27,108 @@ const callbacks = {
 	},
 }
 
-const ColumnStyles = props => {
-	const propsToPass = {
-		...props,
-		version: props.version,
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	}
-
-	return (
-		<>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-container"
-				styleRule="marginTop"
-				attrName="columnSpacing"
-				key="columnSpacing-top"
-				responsive="all"
-				hasUnits="px"
-				valuePreCallback={ callbacks.marginTop.valuePreCallback }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-container"
-				styleRule="marginRight"
-				attrName="columnSpacing"
-				key="columnSpacing-right"
-				responsive="all"
-				hasUnits="px"
-				valuePreCallback={ callbacks.marginRight.valuePreCallback }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-container"
-				styleRule="marginBottom"
-				attrName="columnSpacing"
-				key="columnSpacing-bottom"
-				responsive="all"
-				hasUnits="px"
-				valuePreCallback={ callbacks.marginBottom.valuePreCallback }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-container"
-				styleRule="marginLeft"
-				attrName="columnSpacing"
-				key="columnSpacing-left"
-				responsive="all"
-				hasUnits="px"
-				valuePreCallback={ callbacks.marginLeft.valuePreCallback }
-			/>
-
-			{
-			// The styles below are used purely for the block highligher feature
-			// where the edges of the element where the padding will be applied
-			// is highlighted.
-			}
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector=".%s-container"
-				styleRule="--column-spacing-top"
-				attrName="columnSpacing"
-				key="columnSpacing-top-edit-for-highlight"
-				responsive="all"
-				hasUnits="px"
-				valuePreCallback={ callbacks.marginTop.valuePreCallback }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector=".%s-container"
-				styleRule="--column-spacing-right"
-				attrName="columnSpacing"
-				key="columnSpacing-right-edit-for-highlight"
-				responsive="all"
-				hasUnits="px"
-				valuePreCallback={ callbacks.marginRight.valuePreCallback }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector=".%s-container"
-				styleRule="--column-spacing-bottom"
-				attrName="columnSpacing"
-				key="columnSpacing-bottom-edit-for-highlight"
-				responsive="all"
-				hasUnits="px"
-				valuePreCallback={ callbacks.marginBottom.valuePreCallback }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector=".%s-container"
-				styleRule="--column-spacing-left"
-				attrName="columnSpacing"
-				key="columnSpacing-left-edit-for-highlight"
-				responsive="all"
-				hasUnits="px"
-				valuePreCallback={ callbacks.marginLeft.valuePreCallback }
-			/>
-		</>
-	)
-}
-
-const BlockStyles = memo( props => {
-	return (
-		<>
-			<ColumnStyles { ...props } />
-			<Alignment.Style
-				{ ...props }
-				columnAlignSelectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-			/>
-			<BlockDiv.Style { ...props } />
-			<Column.Style { ...props } />
-			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<EffectsAnimations.Style { ...props } />
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-BlockStyles.defaultProps = {
-	version: '',
-}
+blockStyles.addBlockStyles( 'columnSpacing', [ {
+	selector: '.%s-container',
+	styleRule: 'marginTop',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-top',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginTop.valuePreCallback,
+},
+{
+	selector: '.%s-container',
+	styleRule: 'marginRight',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-right',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginRight.valuePreCallback,
+},
+{
+	selector: '.%s-container',
+	styleRule: 'marginBottom',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-bottom',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginBottom.valuePreCallback,
+},
+{
+	selector: '.%s-container',
+	styleRule: 'marginLeft',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-left',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginLeft.valuePreCallback,
+},
 
-BlockStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
+// The styles below are used purely for the block highligher feature
+// where the edges of the element where the padding will be applied
+// is highlighted.
 
-	return (
-		<BlockCssCompiler>
-			<ColumnStyles { ...props } />
-			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } />
-			<Column.Style.Content { ...props } />
-			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-		</BlockCssCompiler>
-	)
-}
+{
+	renderIn: 'edit',
+	selector: '.%s-container',
+	styleRule: '--column-spacing-top',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-top-edit-for-highlight',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginTop.valuePreCallback,
+},
+{
+	renderIn: 'edit',
+	selector: '.%s-container',
+	styleRule: '--column-spacing-right',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-right-edit-for-highlight',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginRight.valuePreCallback,
+},
+{
+	renderIn: 'edit',
+	selector: '.%s-container',
+	styleRule: '--column-spacing-bottom',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-bottom-edit-for-highlight',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginBottom.valuePreCallback,
+},
+{
+	renderIn: 'edit',
+	selector: '.%s-container',
+	styleRule: '--column-spacing-left',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing-left-edit-for-highlight',
+	responsive: 'all',
+	hasUnits: 'px',
+	valuePreCallback: callbacks.marginLeft.valuePreCallback,
+} ] )
 
-BlockStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
+Alignment.addStyles( blockStyles, {
+	columnAlignSelectorEditCallback: ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]`,
+} )
+BlockDiv.addStyles( blockStyles )
+Column.addStyles( blockStyles )
+ContainerDiv.addStyles( blockStyles, {
+	sizeSelector: '.%s-container',
+	sizeHorizontalAlignRule: 'margin',
+	sizeVerticalAlignRule: 'justifyContent',
+	sizeVerticalAlignSelector: '.%s-inner-blocks',
+	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout',
+	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks',
+} )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
 
-export default BlockStyles
+export default blockStyles

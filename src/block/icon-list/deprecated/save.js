@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { IconListStyles } from '../style'
+import { IconListStyles } from './style'
 
 /**
  * External dependencies

@@ -8,13 +8,13 @@ import { Separator2 } from '~stackable/components'
 /**
  * Internal dependencies
  */
-import { Style, SeparatorStyles } from './style'
+import { addStyles, addSeparatorStyles } from './style'
 import { Edit } from './edit'
 import {
 	addAttributes, createSeparatorAttributes, createSeparatorLayerAttributes,
 } from './attributes'
 export {
-	createSeparatorAttributes, createSeparatorLayerAttributes, SeparatorStyles,
+	createSeparatorAttributes, createSeparatorLayerAttributes, addSeparatorStyles,
 }
 
 /**
@@ -111,4 +111,4 @@ Separator.InspectorControls = Edit
 
 Separator.addAttributes = addAttributes
 
-Separator.Style = Style
+Separator.addStyles = addStyles

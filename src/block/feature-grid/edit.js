@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 import variations from './variations'
 
 /**
@@ -11,10 +11,10 @@ import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
 import {
 	ColumnInnerBlocks, ControlSeparator, InspectorBottomTip, InspectorLayoutControls, InspectorStyleControls, InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -42,17 +42,15 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 const ALLOWED_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const { hasInnerBlocks } = useBlockContext()
 	const rowClass = getRowClasses( props.attributes )
@@ -77,37 +75,22 @@ const Edit = props => {
 		'stk-block-content',
 	], getContentAlignmentClasses( props.attributes ) )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
+			<InspectorControls />
 
-				<Columns.InspectorControls />
-				<InspectorLayoutControls>
-					<ControlSeparator />
-				</InspectorLayoutControls>
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } />
-				<BlockDiv.InspectorControls />
-				<Separator.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
-
-			<BlockStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-feature-grid" />
 
 			<BlockDiv
@@ -134,6 +117,34 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Columns.InspectorControls />
+			<InspectorLayoutControls>
+				<ControlSeparator />
+			</InspectorLayoutControls>
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } />
+			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,
