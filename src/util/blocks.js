@@ -37,9 +37,9 @@ import { __ } from '@wordpress/i18n'
  * Enum for disabling and hiding blocks.
  */
 export const BLOCK_STATE = Object.freeze( {
-	ENABLED: 0,
-	DISABLED: 1,
-	HIDDEN: 2,
+	ENABLED: 1,
+	DISABLED: 2,
+	HIDDEN: 3,
 } )
 
 /**
