@@ -18,7 +18,7 @@ const VariationPicker = props => {
 	const {
 		icon = layout,
 		label = __( 'Choose variation' ), // Dev note: no text domain here since this will use WP's translation.
-		instructions = __( 'Select a variation to start with.' ), // Dev note: no text domain here since this will use WP's translation.
+		instructions = __( 'Select a variation to start with.', i18n ),
 		variations,
 		onSelect,
 		allowSkip,
