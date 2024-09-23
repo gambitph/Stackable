@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { addAttributes } from './attributes'
-import { Style } from './style'
+import { addStyles } from './style'
 import { useImage } from './use-image'
 import { Edit } from './edit'
 import Image_ from './image'
@@ -176,4 +176,4 @@ Image.InspectorControls = Edit
 
 Image.addAttributes = addAttributes
 
-Image.Style = Style
+Image.addStyles = addStyles

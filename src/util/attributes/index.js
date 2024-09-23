@@ -192,6 +192,14 @@ export const getAttributeName = ( attrName, deviceType = 'desktop', hoverState =
 	return `${ attrName }${ deviceAttrName }${ hoverAttrName }`
 }
 
+// This can be used instead of using a hook to prevent rerenderes:
+// const { getAttrName } = useAttributeEditHandlers( attrNameTemplate )
+// Now:
+// const getAttrName = getAttrNameFunc( attrNameTemplate )
+export const getAttributeNameFunc = attrNameTemplate => ( attrName, device = 'desktop', state = 'normal' ) => {
+	return getAttributeName( getAttrNameFunction( attrNameTemplate )( attrName ), device, state )
+}
+
 /**
  * Checks whether an attribute is empty or is considered as an unset block
  * attribute. Handles top, left, right and bottom default attribute.

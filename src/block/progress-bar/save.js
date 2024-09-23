@@ -1,4 +1,3 @@
-import ProgressBarStyles from './style'
 import { DEFAULT_PROGRESS } from './schema'
 
 import {
@@ -66,7 +65,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<ProgressBarStyles.Content { ...props } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ containerClassNames }>
 				<div

@@ -370,6 +370,107 @@ export const useDynamicContent = ( value = '' ) => {
 	}, [ value, queryLoopContext?.postId, queryLoopContext?.[ 'stackable/repeaterValue' ] ] )
 }
 
+// This is the same as with the useDynamicContent hook, but it's a function
+// instead of a hook.
+export const getDynamicContentEdit = ( value, clientId, context ) => {
+	if ( ! value || ! isString( value ) ) {
+		return value
+	}
+
+	if ( ! value.includes( '!#stk_dynamic' ) && ! value.includes( 'data-stk-dynamic' ) ) {
+		return value
+	}
+
+	if ( ! select( 'stackable/dynamic-content' ) ) {
+		return value
+	}
+
+	let currentPostId = select( 'core/editor' )?.getCurrentPostId() || -1
+
+	// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
+	if ( currentPostId && context?.postId !== currentPostId ) {
+		currentPostId = context.postId?.toString() || -1
+	}
+
+	// If we're being used in the site editor, then check if we need to change the display value to match the given post Id.
+	if ( currentPostId === -1 && select( 'core/edit-site' ) ) {
+		currentPostId = select( 'core/edit-site' ).getEditedPostContext()?.postId || -1
+	}
+
+	let tempValue = value
+
+	if ( currentPostId !== -1 ) {
+		// Replace all post IDS or else we will just get the value of the current post.
+		tempValue = tempValue?.replace( /<span[^\>]+data-stk-dynamic=[^\>]*>(.*?)<\/span>/g, value => {
+			const dataFieldString = value.match( /data-stk-dynamic="([^\"]*)"/ )[ 1 ]
+			const splitFieldString = dataFieldString.split( '/' )
+			if ( ! dataFieldString.startsWith( 'current-page' ) ) {
+				return value
+			}
+
+			if ( splitFieldString.length > 2 && splitFieldString[ 2 ].startsWith( '?' ) ) {
+				splitFieldString.splice( 2, 0, currentPostId )
+			} else if ( splitFieldString.length === 2 ) {
+				splitFieldString.push( currentPostId )
+			}
+
+			return value.replace(
+				/data-stk-dynamic="[^\"]*"/g,
+				'data-stk-dynamic="' + splitFieldString.join( '/' ) + '"'
+			)
+		} )
+
+		tempValue = tempValue?.replace( /!#stk_dynamic(.*)\!#/g, value => {
+			const dataFieldString = value.replace( /\!#/g, '' ).replace( 'stk_dynamic/', '' )
+			const splitFieldString = dataFieldString.split( '/' )
+			if ( ! dataFieldString.startsWith( 'current-page' ) ) {
+				return value
+			}
+
+			if ( splitFieldString.length > 2 ) {
+				splitFieldString.splice( 2, 0, currentPostId )
+			} else if ( splitFieldString.length === 2 ) {
+				splitFieldString.push( currentPostId )
+			}
+
+			return '!#stk_dynamic/' + splitFieldString.join( '/' ) + '!#'
+		} )
+	}
+
+	// Get the correct value for the dynamic content.
+	const blockDetails = select( 'core/block-editor' ).getBlock( clientId )
+	let parsedContent = select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue, blockDetails )
+
+	/**
+	 * If we are using the current-page, then we need to remove the post ID from the data-stk-dynamic.
+	 */
+	if ( currentPostId !== -1 ) {
+		parsedContent = parsedContent?.replace( /<span[^\>]+data-stk-dynamic=[^\>]*>(.*?)<\/span>/g, value => {
+			const dataFieldString = value.match( /data-stk-dynamic="([^\"]*)"/ )[ 1 ]
+			const splitFieldString = dataFieldString.split( '/' )
+			if ( dataFieldString.startsWith( 'current-page' ) && last( splitFieldString ).match( /^\d+$/ ) ) {
+				splitFieldString.pop()
+				return value.replace(
+					/data-stk-dynamic="[^\"]*"/g,
+					'data-stk-dynamic="' + splitFieldString.join( '/' ) + '"'
+				)
+			}
+			return value
+		} )
+
+		parsedContent = parsedContent?.replace( /!#stk_dynamic(.*)\!#/g, value => {
+			const dataFieldString = value.replace( /\!#/g, '' ).replace( 'stk_dynamic/', '' )
+			const splitFieldString = dataFieldString.split( '/' )
+			if ( dataFieldString.startsWith( 'current-page' ) && last( splitFieldString ).match( /^\d+$/ ) ) {
+				return '!#stk_dynamic/' + splitFieldString.join( '/' ) + '!#'
+			}
+			return value
+		} )
+	}
+
+	return parsedContent
+}
+
 /**
  * Custom hook for parsing all dynamic content inside of a text
  * and changing it to its Field Title.

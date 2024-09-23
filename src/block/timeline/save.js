@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import BlockStyles from './style'
-
-/**
  * External dependencies
  */
 import { withVersion } from '~stackable/higher-order'
@@ -73,7 +68,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<BlockStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			{ /* <Separator.Content attributes={ attributes }> */ }
 			<div className={ contentClassNames }>

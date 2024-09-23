@@ -3,7 +3,7 @@
  */
 import { Edit } from './edit'
 import { addAttributes } from './attributes'
-import { Style } from './style'
+import { addStyles } from './style'
 export { getTypographyClasses } from './get-typography-classes'
 
 /**
@@ -175,5 +175,5 @@ Typography.InspectorControls = Edit
 
 Typography.addAttributes = addAttributes
 
-Typography.Style = Style
+Typography.addStyles = addStyles
 
