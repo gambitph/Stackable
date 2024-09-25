@@ -572,7 +572,8 @@ export const DynamicContentButton = memo( props => {
 							type={ props.type }
 							blockDetails={ block }
 							value={ props.value }
-							hasFormat={ !! props.value?.includes( 'class="stk-dynamic-content"' ) }
+							hasFormat={ props.hasFormat || !! props.value?.includes( 'class="stk-dynamic-content"' ) }
+							rawValue={ props.rawValue }
 						/>
 					) }
 

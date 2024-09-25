@@ -6,9 +6,8 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import {
-	__experimentalLinkControl as _LinkControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
-} from '@wordpress/block-editor'
+// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+import { __experimentalLinkControl as _LinkControl } from '@wordpress/block-editor'
 import { BaseControl as _BaseControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
@@ -45,6 +44,8 @@ const LinkControl = props => {
 			<DynamicContentControl
 				type={ [ 'link', 'image-url' ] }
 				enable={ isDynamic }
+				hasFormat={ true }
+				rawValue={ value }
 				{ ...dynamicContentProps }
 			>
 				<div className="stk-link-control__input">
