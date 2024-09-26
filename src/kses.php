@@ -26,6 +26,11 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
  * @return array Modified HTML tags & attributes.
  */
 function stackable_allow_wp_kses_allowed_html( $tags, $context ) {
+	// Only allow these tags if the user can edit posts.
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		return $tags;
+	}
+
     $tags['style'] = array(
         'id' => true,
         'class' => true,
