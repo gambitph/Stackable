@@ -83,6 +83,9 @@ function stackable_allow_wp_kses_allowed_html( $tags, $context ) {
     $tags['clippath'] = array();
     $tags['filter'] = array();
     $tags['g'] = array();
+	$tags['use'] = array(
+		'xlink:href' => true,
+	);
     $tags['text'] = array(
         'font-size' => true,
         'font-family' => true,
