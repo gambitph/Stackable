@@ -5238,6 +5238,32 @@
     ]
   },
   {
+    "family": "Edu AU VIC WA NT Dots",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Edu AU VIC WA NT Guides",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Edu AU VIC WA NT Hand",
     "variants": [
       "regular",
