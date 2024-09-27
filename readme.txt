@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.3
 Tested up to: 6.6.1
 Requires PHP: 7.3
-Stable tag: 3.13.6
+Stable tag: 3.13.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -294,6 +294,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.13.7 =
+* Fixed: Stylesheets can sometimes not load in the frontend
+* Fixed: SVG error when using custom SVGs with a use tag #3323
+* Fixed: Carousel block: column alignment stops working for nested columns #3327
+* Fixed: Global colors: color not copied over when pasting in another site #3329
+* Fixed: Only do kses fixes when the user can edit posts
 
 = 3.13.6 =
 * New: Drastically improved performance of the Block Editor #3261
