@@ -11,13 +11,12 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	useEffect, useState, Fragment, useCallback,
+	useEffect, useState, Fragment, useCallback, useRef, useMemo, lazy, Suspense,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
 import { loadPromise, models } from '@wordpress/api'
 import { applyFilters } from '@wordpress/hooks'
-import { dispatch } from '@wordpress/data'
 
 /**
  * External dependencies
@@ -25,6 +24,7 @@ import { dispatch } from '@wordpress/data'
 import {
 	i18n,
 	showProNoticesOption,
+	isPro,
 } from 'stackable'
 import classnames from 'classnames'
 import { importBlocks } from '~stackable/util/admin'
@@ -35,9 +35,6 @@ import AdminTextSetting from '~stackable/components/admin-text-setting'
 import AdvancedToolbarControl from '~stackable/components/advanced-toolbar-control'
 import { GettingStarted } from './getting-started'
 import { BLOCK_STATE } from '~stackable/util/blocks'
-import { registerSettingsStore } from './store'
-
-registerSettingsStore()
 
 const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 
@@ -137,87 +134,86 @@ const SettingsNotice = () => {
 	)
 }
 
-const SaveChangeButton = () => {
-	return (
-		<button
-			className="s-save-changes"
-			onClick={ () => {
-				dispatch( 'stackable/settings' ).saveSettings()
-			} }
-		>
-			{ __( 'Save Changes', i18n ) }
-		</button>
-	)
-}
-
-const Sidenav = () => {
-	const tabList = [
+const Sidenav = ( {
+	currentTab,
+	onTabChange,
+	handleSettingsSave,
+} ) => {
+	const tabList = useMemo( () => [
 		{ id: 'editor-settings', label: __( 'Editor Settings', i18n ) },
 		{ id: 'responsiveness', label: __( 'Responsiveness', i18n ) },
-		{ id: 'blocks', label: __( 'Block', i18n ) },
+		{ id: 'blocks', label: __( 'Blocks', i18n ) },
 		{ id: 'optimizations', label: __( 'Optimization', i18n ) },
 		{ id: 'global-settings', label: __( 'Global Settings', i18n ) },
 		{ id: 'role-manager', label: __( 'Role Manager', i18n ) },
 		{ id: 'custom-fields-settings', label: __( 'Custom Fields', i18n ) },
 		{ id: 'integrations', label: __( 'Integration', i18n ) },
 		{ id: 'other-settings', label: __( 'Miscellaneous ', i18n ) },
-	]
-	const [ activeId, setActiveId ] = useState( 'editor-settings' )
+	], [] )
 
-	const handleTabClick = id => {
-		const previousComponent = document.querySelector( `#${ activeId }` )
-		if ( previousComponent ) {
-			previousComponent.classList.add( 's-box-hidden' )
-		}
-		const selectedComponent = document.querySelector( `#${ id }` )
-		if ( selectedComponent ) {
-			selectedComponent.classList.remove( 's-box-hidden' )
-		}
-		setActiveId( id )
-	}
+	const sidenavRef = useRef( null )
 
 	useEffect( () => {
 		const handleScroll = () => {
 			const header = document.querySelector( '.s-header-settings' )
-			const sidenav = document.querySelector( '.s-sidenav' )
 
 			if ( header ) {
 				// If the header is scrolled out of view, make the sidebar fixed
 				if ( header.getBoundingClientRect().bottom <= 32 ) {
-					sidenav.classList.add( 's-sidenav-fixed' )
+					sidenavRef.current.classList.add( 's-sidenav-fixed' )
 				} else {
-					sidenav.classList.remove( 's-sidenav-fixed' )
+					sidenavRef.current.classList.remove( 's-sidenav-fixed' )
 				}
 			}
 		}
 		window.addEventListener( 'scroll', handleScroll )
-		return () => {
-			window.removeEventListener( 'scroll', handleScroll )
-		}
+		return () => window.removeEventListener( 'scroll', handleScroll )
 	}, [] )
 
 	return (
 		<>
-			<div>
-				{ tabList.map( ( { id, label } ) => {
-					return ( <button
-						key={ id }
-						className={ `s-sidenav-item ${ activeId === id ? 's-active' : '' }` }
-						onClick={ () => handleTabClick( id ) }
-						role="tab"
-					>
-						{ label }
-					</button>
-					)
-				} ) }
-			</div>
-			<SaveChangeButton />
+			<nav className="s-sidenav" ref={ sidenavRef }>
+				<div>
+					{ tabList.map( ( { id, label } ) => {
+						return ( <button
+							key={ id }
+							className={ `s-sidenav-item ${ currentTab === id ? 's-active' : '' }` }
+							onClick={ () => onTabChange( id ) }
+							onKeyDown={ () => onTabChange( id ) }
+							role="tab"
+							tabIndex={ 0 }
+						>
+							{ label }
+						</button>
+						)
+					} ) }
+				</div>
+				<button
+					className="s-save-changes"
+					onClick={ handleSettingsSave }
+				>
+					{ __( 'Save Changes', i18n ) }
+				</button>
+			</nav>
 		</>
 	)
 }
 
-const EditorSettings = () => {
+// Main settings component
+const Settings = () => {
 	const [ settings, setSettings ] = useState( {} )
+	const [ unsavedChanges, setUnsavedChanges ] = useState( {} )
+	const [ currentTab, setCurrentTab ] = useState( 'editor-settings' )
+
+	const handleSettingsChange = useCallback( newSettings => {
+		setSettings( prev => ( { ...prev, ...newSettings } ) )
+		setUnsavedChanges( prev => ( { ...prev, ...newSettings } ) )
+	}, [] )
+
+	const handleSettingsSave = useCallback( () => {
+		// TODO: Save settings
+		setUnsavedChanges( {} )
+	}, [ unsavedChanges ] )
 
 	useEffect( () => {
 		loadPromise.then( () => {
@@ -234,22 +230,39 @@ const EditorSettings = () => {
 					'stackable_enable_reset_layout',
 					'stackable_enable_save_as_default_block',
 					'stackable_auto_collapse_panels',
+					'stackable_dynamic_breakpoints',
+					'stackable_disabled_blocks',
 				] ) )
 			} )
 		} )
 	}, [] )
+
+	return <>
+		<Sidenav currentTab={ currentTab } onTabChange={ setCurrentTab } handleSettingsSave={ handleSettingsSave } />
+		<article className="s-box" id={ currentTab }>
+			{ currentTab === 'editor-settings' && <EditorSettings { ...{ settings, handleSettingsChange } } /> }
+			{ currentTab === 'responsiveness' && <Responsiveness { ...{ settings, handleSettingsChange } } /> }
+			{ currentTab === 'blocks' && <Blocks { ...{ settings, handleSettingsChange } } /> }
+			{ currentTab === 'optimizations' && <Optimizations { ...{ settings, handleSettingsChange } } /> }
+			{ currentTab === 'global-settings' && <GlobalSettings { ...{ settings, handleSettingsChange } } /> }
+			{ currentTab === 'role-manager' && <RoleManager /> }
+			{ currentTab === 'custom-fields-settings' && <CustomFields /> }
+			{ currentTab === 'integrations' && <Integrations { ...{ settings, handleSettingsChange } } /> }
+			{ currentTab === 'other-settings' && <AdditionalOptions showProNoticesOption={ showProNoticesOption } /> }
+		</article>
+	</>
+}
+
+const EditorSettings = ( { settings, handleSettingsChange } ) => {
 	return <>
 		<h2>{ __( 'Blocks', i18n ) }</h2>
+		<p className="s-settings-subtitle">{ __( 'You can customize the default width of your blocks here.', i18n ) }</p>
 		<AdminTextSetting
 			label={ __( 'Nested Block Width', i18n ) }
 			value={ settings.stackable_block_default_width }
 			type="text"
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_block_default_width: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_block_default_width: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_block_default_width: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
 		/>
@@ -258,24 +271,18 @@ const EditorSettings = () => {
 			value={ settings.stackable_block_wide_width }
 			type="text"
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_block_wide_width: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_block_wide_width: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_block_wide_width: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
 		/>
+
 		<h2>{ __( 'Editor', i18n ) }</h2>
+		<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
 		<AdminToggleSetting
 			label={ __( 'Design Library', i18n ) }
 			value={ settings.stackable_enable_design_library }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_enable_design_library: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_enable_design_library: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_enable_design_library: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
 		/>
@@ -283,11 +290,7 @@ const EditorSettings = () => {
 			label={ __( 'Block Linking (Beta)', i18n ) }
 			value={ settings.stackable_enable_block_linking }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_enable_block_linking: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
 			} }
 			help={
 				<>
@@ -297,16 +300,14 @@ const EditorSettings = () => {
 				</>
 			}
 		/>
+
 		<h2>{ __( 'Toolbar', i18n ) }</h2>
+		<p className="s-settings-subtitle">{ __( 'You can disable some toolbar features here.', i18n ) }	</p>
 		<AdminToggleSetting
 			label={ __( 'Toolbar Text Highlight', i18n ) }
 			value={ settings.stackable_enable_text_highlight }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_enable_text_highlight: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_enable_text_highlight: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_enable_text_highlight: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'Adds a toolbar button for highlighting text', i18n ) }
 		/>
@@ -314,11 +315,7 @@ const EditorSettings = () => {
 			label={ __( 'Toolbar Dynamic Content', i18n ) }
 			value={ settings.stackable_enable_dynamic_content }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_enable_dynamic_content: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_enable_dynamic_content: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_enable_dynamic_content: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'Adds a toolbar button for inserting dynamic content', i18n ) }
 		/>
@@ -326,11 +323,7 @@ const EditorSettings = () => {
 			label={ __( 'Copy & Paste Styles', i18n ) }
 			value={ settings.stackable_enable_copy_paste_styles }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_enable_copy_paste_styles: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_enable_copy_paste_styles: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_enable_copy_paste_styles: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'Adds a toolbar button for copying and pasting block styles', i18n ) }
 		/>
@@ -338,11 +331,7 @@ const EditorSettings = () => {
 			label={ __( 'Reset Layout', i18n ) }
 			value={ settings.stackable_enable_reset_layout }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_enable_reset_layout: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_enable_reset_layout: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_enable_reset_layout: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'Adds a toolbar button for resetting the layout of a stackble block back to the original', i18n ) }
 		/>
@@ -350,98 +339,69 @@ const EditorSettings = () => {
 			label={ __( 'Save as Default Block', i18n ) }
 			value={ settings.stackable_enable_save_as_default_block }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_enable_save_as_default_block: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_enable_save_as_default_block: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_enable_save_as_default_block: value } ) // eslint-disable-line
 			} }
 			help={ __( 'Adds a toolbar button for saving a block as the default block', i18n ) }
 		/>
-		<h2>{ __( 'Blocks', i18n ) }</h2>
+
+		<h2>{ __( 'Inspector', i18n ) }</h2>
+		<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the inspector here.' ) }</p>
 		<AdminToggleSetting
 			label={ __( 'Auto-Collapse Panels', i18n ) }
 			value={ settings.stackable_auto_collapse_panels }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_auto_collapse_panels: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', i18n ) }
 		/>
 	</>
 }
 
-const Responsiveness = () => {
-	const [ tabletBreakpoint, setTabletBreakpoint ] = useState( '' )
-	const [ mobileBreakpoint, setMobileBreakpoint ] = useState( '' )
-	const [ isReady, setIsReady ] = useState( false )
-
-	useEffect( () => {
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				const breakpoints = response.stackable_dynamic_breakpoints
-				if ( breakpoints ) {
-					setTabletBreakpoint( breakpoints.tablet || '' )
-					setMobileBreakpoint( breakpoints.mobile || '' )
-				}
-				setIsReady( true )
-			} )
-		} )
-	}, [] )
-
-	useEffect( () => {
-		if ( isReady ) {
-			dispatch( 'stackable/settings' ).updateSettings( {
-				stackable_dynamic_breakpoints: { tablet: tabletBreakpoint, mobile: mobileBreakpoint }, // eslint-disable-line camelcase
-			} )
-		}
-	}, [ tabletBreakpoint, mobileBreakpoint, isReady ] )
-
-	return <Fragment>
-		<div>
-			<AdminTextSetting
-				label={ __( 'Tablet Breakpoint', i18n ) }
-				type="number"
-				value={ tabletBreakpoint }
-				onChange={ value => setTabletBreakpoint( value ) }
-				placeholder="1024"
-			> px</AdminTextSetting>
-			<AdminTextSetting
-				label={ __( 'Mobile Breakpoint', i18n ) }
-				type="number"
-				value={ mobileBreakpoint }
-				onChange={ value => setMobileBreakpoint( value ) }
-				placeholder="768"
-			> px</AdminTextSetting>
-		</div>
-	</Fragment>
+const Responsiveness = ( { settings, handleSettingsChange } ) => {
+	return <>
+		<h2>{ __( 'Dynamic Breakpoints', i18n ) }</h2>
+		<p className="s-settings-subtitle">
+			{ __( 'Blocks can be styles differently for tablet and mobile screens, and some styles adjust to make them fit better in smaller screens. You can change the widths when tablet and mobile views are triggered. ', i18n ) }
+			<a href="https://docs.wpstackable.com/article/464-how-to-use-dynamic-breakpoints?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">
+				{ __( 'Learn more', i18n ) }
+			</a>
+		</p>
+		<AdminTextSetting
+			label={ __( 'Tablet Breakpoint', i18n ) }
+			type="number"
+			value={ settings.stackable_dynamic_breakpoints.tablet || '' } // eslint-disable-line camelcase
+			onChange={ value => {
+				handleSettingsChange( {
+					stackable_dynamic_breakpoints: { // eslint-disable-line camelcase
+						tablet: value,
+						mobile: settings.stackable_dynamic_breakpoints.mobile || '', // eslint-disable-line camelcase
+					},
+				} )
+			} }
+			placeholder="1024"
+		> px</AdminTextSetting>
+		<AdminTextSetting
+			label={ __( 'Mobile Breakpoint', i18n ) }
+			type="number"
+			value={ settings.stackable_dynamic_breakpoints.mobile || '' } // eslint-disable-line camelcase
+			onChange={ value => {
+				handleSettingsChange( {
+					stackable_dynamic_breakpoints: { // eslint-disable-line camelcase
+						tablet: settings.stackable_dynamic_breakpoints.tablet || '', // eslint-disable-line camelcase
+						mobile: value,
+					},
+				} )
+			} }
+			placeholder="768"
+		> px</AdminTextSetting>
+	</>
 }
 
 // Toggle the block states between enabled, disabled and hidden.
 // Enabled blocks are not stored in the settings object.
-const Blocks = () => {
+const Blocks = ( { settings, handleSettingsChange } ) => {
 	const DERIVED_BLOCKS = getAllBlocks()
-	const [ isSaving, setIsSaving ] = useState( false )
-	const [ disabledBlocks, setDisabledBlocks ] = useState( {} )
-
-	useEffect( () => {
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setDisabledBlocks( response.stackable_disabled_blocks ?? {} )
-			} )
-		} )
-	}, [] )
-
-	const save = ( disabledBlocks, type ) => {
-		setIsSaving( type )
-		dispatch( 'stackable/settings' ).updateSettings( { stackable_disabled_blocks: disabledBlocks } ) // eslint-disable-line camelcase
-			.then( () => setIsSaving( false ) )
-	}
+	const disabledBlocks = settings.stackable_disabled_blocks ?? {} // eslint-disable-line camelcase
 
 	// TODO: Implement enable, disable and hide all blocks
 
@@ -474,7 +434,7 @@ const Blocks = () => {
 	// 	save( newDisabledBlocks, type )
 	// }
 
-	const toggleBlock = useCallback( ( name, type, value ) => {
+	const toggleBlock = ( name, type, value ) => {
 		const valueInt = Number( value )
 		let newDisabledBlocks = { ...disabledBlocks }
 
@@ -483,12 +443,12 @@ const Blocks = () => {
 		} else {
 			newDisabledBlocks = { ...disabledBlocks, [ name ]: valueInt }
 		}
-		setDisabledBlocks( newDisabledBlocks )
-		save( newDisabledBlocks, type )
-	}, [ setDisabledBlocks, disabledBlocks ] )
-
+		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+	}
 	return (
 		<>
+			<h2>{ __( 'Blocks', i18n ) }</h2>
+			<p className="s-settings-subtitle">{ __( 'You can enable, hide and disable Stackable blocks. Hiding the blocks hides them from the editor. Disabling the blocks prevent them from being loaded for faster performance.', i18n ) }</p>
 			{ BLOCK_CATEROGIES.map( ( {
 				id, label, Icon,
 			} ) => {
@@ -503,7 +463,6 @@ const Blocks = () => {
 							<span>{ label }</span>
 						</h3>
 						<div className="s-settings-header">
-							{ isSaving === id && <Spinner /> }
 							{ /*
 							<button onClick={ enableAllBlocks( id ) } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>
 							<button onClick={ disableAllBlocks( id ) } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
@@ -566,31 +525,14 @@ const Blocks = () => {
 	)
 }
 
-const Optimizations = () => {
-	const [ settings, setSettings ] = useState( {} )
-
-	useEffect( () => {
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setSettings( pick( response, [
-					'stackable_optimize_inline_css',
-					'stackable_enable_carousel_lazy_loading',
-				] ) )
-			} )
-		} )
-	}, [] )
-
+const Optimizations = ( { settings, handleSettingsChange } ) => {
 	return <>
+		<h2>{ __( 'Optimizations', i18n ) }</h2>
 		<AdminToggleSetting
 			label={ __( 'Optimize Inline CSS', i18n ) }
 			value={ settings.stackable_optimize_inline_css }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_optimize_inline_css: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_optimize_inline_css: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_optimize_inline_css: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
 		/>
@@ -598,75 +540,104 @@ const Optimizations = () => {
 			label={ __( 'Lazy Load Images within Carousels', i18n ) }
 			value={ settings.stackable_enable_carousel_lazy_loading }
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_enable_carousel_lazy_loading: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
 			} }
 			help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
 		/>
 	</>
 }
 
-const GlobalSettings = () => {
-	const [ forceTypography, setForceTypography ] = useState( false )
-
-	useEffect( () => {
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setForceTypography( !! response.stackable_global_force_typography )
-			} )
-		} )
-	}, [] )
-
-	const updateForceTypography = value => {
-		dispatch( 'stackable/settings' ).updateSettings( { stackable_global_force_typography: value } ) // eslint-disable-line camelcase
-		setForceTypography( value )
-	}
-
-	return <Fragment>
+const GlobalSettings = ( { settings, handleSettingsChange } ) => {
+	return <>
 		<AdminToggleSetting
 			label={ __( 'Force Typography Styles', i18n ) }
-			value={ forceTypography }
-			onChange={ updateForceTypography }
+			value={ settings.stackable_global_force_typography }
+			onChange={ value => {
+				handleSettingsChange( { stackable_global_force_typography: value } ) // eslint-disable-line camelcase
+			} }
 			disabled={ __( 'Not forced', i18n ) }
 			enabled={ __( 'Force styles', i18n ) }
 		/>
-	</Fragment>
+	</>
 }
 
-const Integrations = () => {
-	const [ settings, setSettings ] = useState( {} )
+const EditorModeSettings = lazy( () => import( '../../pro__premium_only/src/welcome/editor-mode' ) )
 
-	useEffect( () => {
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				const picked = pick( response, [
-					'stackable_google_maps_api_key',
-					'stackable_icons_fa_free_version',
-				] )
-				if ( ! picked.stackable_icons_fa_free_version ) {
-					picked.stackable_icons_fa_free_version = '6.5.1' // eslint-disable-line camelcase
-				}
-				setSettings( picked )
-			} )
-		} )
-	}, [] )
-
+const RoleManager = () => {
 	return <>
+		<h2>{ __( '📰 Role Manager', i18n ) }</h2>
+		<p className="s-settings-subtitle">
+			{ __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks. ', i18n ) }
+			<a
+				target="_docs"
+				href={ ! isPro
+					? 'https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard'
+					: 'https://docs.wpstackable.com/article/360-role-manager-and-content-editing-mode?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard'
+				}
+			>
+				{ __( 'Learn more', i18n ) }
+			</a>
+		</p>
+		{ isPro
+			? <Suspense fallback={ <Spinner /> }>
+				<div className="s-editing-mode-settings">
+					<EditorModeSettings />
+				</div>
+			</Suspense>
+			: <p className="s-settings-pro">
+				{ __( 'This is only available in Stackable Premium.', i18n ) }
+				<a href="https://wpstackable.com/premium/?utm_source=wp-settings-role-manager&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium">
+					{ __( 'Go Premium', i18n ) }
+				</a>
+			</p>
+		}
+	</>
+}
+
+const CustomFieldsEnableSettings = lazy( () => import( '../../pro__premium_only/src/welcome/custom-fields-toggle' ) )
+const CustomFieldsManagerSettings = lazy( () => import( '../../pro__premium_only/src/welcome/custom-fields-roles' ) )
+
+const CustomFields = () => {
+	return <>
+		<div className="s-custom-fields-settings-header">
+			<h2>{ __( '📋 Custom Fields', i18n ) }</h2>
+			<Suspense fallback={ <Spinner /> }>
+				<div className="s-custom-fields-enable">
+					<CustomFieldsEnableSettings />
+				</div>
+			</Suspense>
+		</div>
+		<p className="s-settings-subtitle">
+			{ __( 'Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. ', i18n ) }
+			<a href="https://docs.wpstackable.com/article/463-how-to-use-stackable-custom-fields/?utm_source=wp-settings-custom-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">
+				{ __( 'Learn more', i18n ) }
+			</a>
+		</p>
+		{ isPro
+			? <Suspense fallback={ <Spinner /> }>
+				<div className="s-custom-fields-manager">
+					<CustomFieldsManagerSettings />
+				</div>
+			</Suspense>
+			: <p className="s-settings-pro">
+				{ __( 'This is only available in Stackable Premium.', i18n ) }
+				<a href="https://wpstackable.com/premium/?utm_source=wp-settings-custom-fields&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium">
+					{ __( 'Go Premium', i18n ) }
+				</a>
+			</p>
+		}
+	</>
+}
+
+const Integrations = ( { settings, handleSettingsChange } ) => {
+	return <>
+		<h2>{ __( 'Integrations', i18n ) }</h2>
 		<AdminTextSetting
 			label={ __( 'Google Maps API Key', i18n ) }
 			value={ settings.stackable_google_maps_api_key }
 			type="text"
 			onChange={ value => {
-				setSettings( {
-					...settings,
-					stackable_google_maps_api_key: value, // eslint-disable-line camelcase
-				} )
-				dispatch( 'stackable/settings' ).updateSettings( { stackable_google_maps_api_key: value } ) // eslint-disable-line camelcase
+				handleSettingsChange( { stackable_google_maps_api_key: value } ) // eslint-disable-line camelcase
 			} }
 			help={
 				<>
@@ -704,11 +675,7 @@ const Integrations = () => {
 					},
 				] }
 				onChange={ value => {
-					setSettings( {
-						...settings,
-						stackable_icons_fa_free_version: value, // eslint-disable-line camelcase
-					} )
-					dispatch( 'stackable/settings' ).updateSettings( { stackable_icons_fa_free_version: value } ) // eslint-disable-line camelcase
+					handleSettingsChange( { stackable_icons_fa_free_version: value } ) // eslint-disable-line camelcase
 				} }
 			/>
 		</div>
@@ -748,6 +715,7 @@ const AdditionalOptions = props => {
 
 	return (
 		<div>
+			<h2>{ __( '🔩 Other Settings', i18n ) }</h2>
 			{ props.showProNoticesOption &&
 				<CheckboxControl
 					label={ __( 'Show "Go premium" notices', i18n ) }
@@ -831,6 +799,14 @@ AdditionalOptions.defaultProps = {
 
 // Load all the options into the UI.
 domReady( () => {
+	if ( document.querySelector( '.s-getting-started__body' ) ) {
+		createRoot(
+			document.querySelector( '.s-getting-started__body' )
+		).render(
+			<GettingStarted />
+		)
+	}
+
 	// This is for the getting started block list.
 	if ( document.querySelector( '.s-getting-started__block-list' ) ) {
 		createRoot(
@@ -856,69 +832,11 @@ domReady( () => {
 		)
 	}
 
-	if ( document.querySelector( '.s-editor-settings' ) ) {
+	if ( document.querySelector( '.s-content' ) ) {
 		createRoot(
-			document.querySelector( '.s-editor-settings' )
+			document.querySelector( '.s-content' )
 		).render(
-			<EditorSettings />
-		)
-	}
-
-	if ( document.querySelector( '.s-responsiveness' ) ) {
-		createRoot(
-			document.querySelector( '.s-responsiveness' )
-		).render(
-			<Responsiveness />
-		)
-	}
-
-	if ( document.querySelector( '.s-blocks' ) ) {
-		createRoot(
-			document.querySelector( '.s-blocks' )
-		).render(
-			<Blocks />
-		)
-	}
-
-	if ( document.querySelector( '.s-optimizations' ) ) {
-		createRoot(
-			document.querySelector( '.s-optimizations' )
-		).render(
-			<Optimizations />
-		)
-	}
-
-	if ( document.querySelector( '.s-global-settings' ) ) {
-		createRoot(
-			document.querySelector( '.s-global-settings' )
-		).render(
-			<GlobalSettings />
-		)
-	}
-
-	if ( document.querySelector( '.s-integrations' ) ) {
-		createRoot(
-			document.querySelector( '.s-integrations' )
-		).render(
-			<Integrations />
-		)
-	}
-
-	if ( document.querySelector( '.s-other-options-wrapper' ) ) {
-		createRoot(
-			document.querySelector( '.s-other-options-wrapper' )
-		).render(
-			<AdditionalOptions
-				showProNoticesOption={ showProNoticesOption }
-			/>
-		)
-	}
-
-	if ( document.querySelector( '.s-getting-started__body' ) ) {
-		createRoot(
-			document.querySelector( '.s-getting-started__body' )
-		).render(
-			<GettingStarted />
+			<Settings />
 		)
 	}
 } )
