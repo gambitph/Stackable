@@ -185,73 +185,10 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<div class="s-body" id="settings-body">
 						<?php stackable_welcome_notification() ?>
 						<?php do_action( 'stackable_settings_page' ) ?>
-						<nav class="s-sidenav"></nav>
 						<article id="settings-notice">
 							<div class="s-settings-notice"></div>
 						</article>
-						<article class="s-box" id="editor-settings">
-							<h2><?php _e( '🎛 Editor Settings', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php _e( 'You can customize some of the features and behavior of Stackable in the editor here.' ,  ) ?></em></p>
-							<div class="s-editor-settings"></div>
-						</article>
-						<article class="s-box s-box-hidden" id="responsiveness">
-							<h2><?php _e( '📱 Responsiveness', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php printf( __( 'Blocks can be styles differently for tablet and mobile screens, and some styles adjust to make them fit better in smaller screens. You can change the widths when tablet and mobile views are triggered. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/464-how-to-use-dynamic-breakpoints?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
-							<div class="s-responsiveness"></div>
-						</article>
-						<article class="s-box s-box-hidden" id="blocks">
-							<h2><?php _e( '🎛 Blocks', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php _e( 'You can enable, hide and disable Stackable blocks. Hiding the blocks hides them from the editor. Disabling the blocks prevent them from being loaded for faster performance.', STACKABLE_I18N  ) ?></em></p>
-							<p class="s-settings-subtitle"><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , STACKABLE_I18N ) ?> <em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , STACKABLE_I18N ) ?></em></p>
-							<div class="s-blocks"></div>
-						</article>
-						<article class="s-box s-box-hidden" id="optimizations">
-							<h2><?php _e( '📱 Optimizations', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php _e( '' ,  ) ?></em></p>
-							<div class="s-optimizations"></div>
-						</article>
-						<article class="s-box s-box-hidden" id="global-settings">
-							<h2><?php _e( '🌏 Global Settings', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php printf( __( 'Each WordPress theme is unique, so if your global settings are not working correctly with your theme, here are a few options you can tweak to make them work. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/361-how-to-use-global-settings?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
-							<div class="s-global-settings"></div>
-						</article>
-						<!-- <article class="s-box s-box-hidden <?php echo apply_filters( 'stackable_fa_settings_class', '' ) ?>" id="icon-settings">
-							<h2><?php _e( '🧰 Icon Library Settings', STACKABLE_I18N ) ?></h2>
-							<div class="s-icon-settings"></div>
-							<div class="s-icon-settings-fa-version"></div>
-							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-pro"><?php _e( 'Font Awesome Pro Integration is available is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-icons&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
-							<?php endif; ?>
-						</article> -->
-						<article class="s-box s-box-hidden" id="role-manager">
-							<h2><?php _e( '📰 Role Manager', STACKABLE_I18N ) ?></h2>
-							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-subtitle"><?php echo __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks.' , STACKABLE_I18N ) . ' <a href="https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">' . __( 'Learn more', STACKABLE_I18N ) . '</a>' ?></em></p>
-							<?php endif; ?>
-							<?php if ( sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-subtitle"><?php echo __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks.' , STACKABLE_I18N ) . ' <a href="https://docs.wpstackable.com/article/360-role-manager-and-content-editing-mode?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">' . __( 'Learn more', STACKABLE_I18N ) . '</a>' ?></em></p>
-							<?php endif; ?>
-							<div class="s-editing-mode-settings"></div>
-							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-role-manager&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
-							<?php endif; ?>
-						</article>
-						<article class="s-box s-box-hidden" id="custom-fields-settings">
-							<div class="s-custom-fields-settings-header">
-								<h2><?php _e( '📋 Custom Fields', STACKABLE_I18N ) ?></h2>
-								<div class="s-custom-fields-enable"></div>
-							</div>
-							<p class="s-settings-subtitle"><?php printf( __( 'Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/463-how-to-use-stackable-custom-fields/?utm_source=wp-settings-custom-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
-							<div class="s-custom-fields-manager"></div>
-							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-custom-fields&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
-							<?php endif; ?>
-						</article>
-						<article class="s-box s-box-hidden" id="integrations">
-							<h2><?php _e( '📱 Integrations', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php _e( 'Configure the integrations here' ,  ) ?></em></p>
-							<div class="s-integrations"></div>
-						</article>
+						<div class="s-content" id="settings-content"></div>
 						<?php do_action( 'stackable_settings_page_mid' ); ?>
 						<!-- We put all the other options here. -->
 						<article class="s-box s-box-hidden" id="other-settings">
@@ -298,6 +235,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<p><a href="http://eepurl.com/dJY9xI" class="s-button" target="_new" title="<?php esc_attr_e( 'Subscribe', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe', STACKABLE_I18N ) ?></a></p>
 						</aside>
 					</div> -->
+
+
+
 				</section>
 			</div>
 			<?php
