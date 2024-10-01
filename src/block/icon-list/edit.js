@@ -215,7 +215,7 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ ! ordered && <IconSvgDef icon={ icon } uniqueId={ attributes.uniqueId } /> }
-				<ParentTagName { ...innerBlocksProps } >
+				<ParentTagName className={ tagNameClassNames } >
 					{ wrapList &&
 						<TagName className="stk-block-icon-list__group">
 							{ innerBlocksProps.children }
