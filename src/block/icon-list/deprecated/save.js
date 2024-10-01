@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { IconListStyles } from './style'
-
-/**
  * External dependencies
  */
 import classnames from 'classnames'
@@ -44,7 +39,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<IconListStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<Typography.Content
 				tagName={ tagName }
