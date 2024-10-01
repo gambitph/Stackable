@@ -61,7 +61,7 @@ export const Controls = props => {
 		const multiInnerBlocks = {}
 
 		multiClientIds.forEach( clientId => {
-			const { innerBlocks } = select( 'stackable/block-context' ).getBlockContext( clientId )
+			const innerBlocks = select( 'core/block-editor' ).getBlock( clientId )?.innerBlocks
 			multiInnerBlocks[ clientId ] = innerBlocks
 		} )
 

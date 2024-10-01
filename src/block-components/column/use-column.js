@@ -10,7 +10,8 @@ export const useColumn = () => {
 	const { clientId } = useBlockEditContext()
 
 	const onChangeDesktop = widths => {
-		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const parentBlockId = select( 'core/block-editor' ).getBlockRootClientId( clientId )
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockId )
 		const adjacentBlocks = parentBlock?.innerBlocks || []
 
 		if ( adjacentBlocks.length ) {
@@ -36,7 +37,8 @@ export const useColumn = () => {
 			[ clientId ]: { columnWidth: width },
 		}
 
-		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const parentBlockId = select( 'core/block-editor' ).getBlockRootClientId( clientId )
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockId )
 		const adjacentBlocks = parentBlock?.innerBlocks || []
 
 		if ( adjacentBlocks.length ) {
@@ -63,7 +65,8 @@ export const useColumn = () => {
 			[ clientId ]: { columnWidthTablet: width },
 		}
 
-		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const parentBlockId = select( 'core/block-editor' ).getBlockRootClientId( clientId )
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockId )
 		const adjacentBlocks = parentBlock?.innerBlocks || []
 
 		if ( adjacentBlocks.length ) {
@@ -89,7 +92,8 @@ export const useColumn = () => {
 			[ clientId ]: { columnWidthMobile: width },
 		}
 
-		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const parentBlockId = select( 'core/block-editor' ).getBlockRootClientId( clientId )
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockId )
 		const adjacentBlocks = parentBlock?.innerBlocks || []
 
 		if ( adjacentBlocks.length ) {
@@ -110,7 +114,8 @@ export const useColumn = () => {
 	}
 
 	const onResetDesktop = () => {
-		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const parentBlockId = select( 'core/block-editor' ).getBlockRootClientId( clientId )
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockId )
 		const adjacentBlocks = parentBlock?.innerBlocks || []
 
 		if ( adjacentBlocks.length ) {
@@ -120,7 +125,8 @@ export const useColumn = () => {
 	}
 
 	const onResetTabletMobile = () => {
-		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const parentBlockId = select( 'core/block-editor' ).getBlockRootClientId( clientId )
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockId )
 		const adjacentBlocks = parentBlock?.innerBlocks || []
 
 		if ( adjacentBlocks.length ) {
