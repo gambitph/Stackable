@@ -228,6 +228,7 @@ const Settings = () => {
 	}, [] )
 
 	const handleSettingsSave = useCallback( () => {
+		console.log( settings ) // eslint-disable-line no-console
 		if ( Object.keys( unsavedChanges ).length === 0 ) {
 			return
 		}
@@ -243,7 +244,7 @@ const Settings = () => {
 			}
 		} )
 		setUnsavedChanges( {} )
-	}, [ unsavedChanges ] )
+	}, [ unsavedChanges, settings ] )
 
 	useEffect( () => {
 		loadPromise.then( () => {
@@ -262,8 +263,8 @@ const Settings = () => {
 			{ currentTab === 'blocks' && <Blocks { ...{ settings, handleSettingsChange } } /> }
 			{ currentTab === 'optimizations' && <Optimizations { ...{ settings, handleSettingsChange } } /> }
 			{ currentTab === 'global-settings' && <GlobalSettings { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'role-manager' && <RoleManager /> }
-			{ currentTab === 'custom-fields-settings' && <CustomFields /> }
+			{ currentTab === 'role-manager' && <RoleManager { ...{ settings, handleSettingsChange } } /> }
+			{ currentTab === 'custom-fields-settings' && <CustomFields { ...{ settings, handleSettingsChange } } /> }
 			{ currentTab === 'integrations' && <Integrations { ...{ settings, handleSettingsChange } } /> }
 			{ currentTab === 'other-settings' && <AdditionalOptions showProNoticesOption={ showProNoticesOption } /> }
 		</article>
@@ -580,7 +581,7 @@ const GlobalSettings = ( { settings, handleSettingsChange } ) => {
 
 const EditorModeSettings = lazy( () => import( '../../pro__premium_only/src/welcome/editor-mode' ) )
 
-const RoleManager = () => {
+const RoleManager = ( { settings, handleSettingsChange } ) => {
 	return <>
 		<h2>{ __( '📰 Role Manager', i18n ) }</h2>
 		<p className="s-settings-subtitle">
@@ -598,7 +599,7 @@ const RoleManager = () => {
 		{ isPro
 			? <Suspense fallback={ <Spinner /> }>
 				<div className="s-editing-mode-settings">
-					<EditorModeSettings />
+					<EditorModeSettings { ...{ settings, handleSettingsChange } } />
 				</div>
 			</Suspense>
 			: <p className="s-settings-pro">
@@ -614,13 +615,13 @@ const RoleManager = () => {
 const CustomFieldsEnableSettings = lazy( () => import( '../../pro__premium_only/src/welcome/custom-fields-toggle' ) )
 const CustomFieldsManagerSettings = lazy( () => import( '../../pro__premium_only/src/welcome/custom-fields-roles' ) )
 
-const CustomFields = () => {
+const CustomFields = ( { settings, handleSettingsChange } ) => {
 	return <>
 		<div className="s-custom-fields-settings-header">
 			<h2>{ __( '📋 Custom Fields', i18n ) }</h2>
 			<Suspense fallback={ <Spinner /> }>
 				<div className="s-custom-fields-enable">
-					<CustomFieldsEnableSettings />
+					<CustomFieldsEnableSettings { ...{ settings, handleSettingsChange } } />
 				</div>
 			</Suspense>
 		</div>
@@ -633,7 +634,7 @@ const CustomFields = () => {
 		{ isPro
 			? <Suspense fallback={ <Spinner /> }>
 				<div className="s-custom-fields-manager">
-					<CustomFieldsManagerSettings />
+					<CustomFieldsManagerSettings { ...{ settings, handleSettingsChange } } />
 				</div>
 			</Suspense>
 			: <p className="s-settings-pro">
