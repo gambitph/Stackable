@@ -35,7 +35,7 @@ import {
 	getContentAlignmentClasses,
 	Typography,
 } from '~stackable/block-components'
-import { useBlockContext, useDeviceType } from '~stackable/hooks'
+import { useDeviceType } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -52,7 +52,7 @@ import {
 } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { addFilter } from '@wordpress/hooks'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import {
 	useEffect, useRef, useState, memo,
 } from '@wordpress/element'
@@ -96,9 +96,30 @@ const Edit = props => {
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const typographyClass = getTypographyClasses( props.attributes )
+
 	const {
 		hasInnerBlocks, nextBlock, previousBlock, adjacentBlocks, blockIndex,
-	} = useBlockContext()
+	} = useSelect( select => {
+		const {
+			getBlockRootClientId, getBlocks, getBlockIndex,
+		} = select( 'core/block-editor' )
+
+		const parentClientId = getBlockRootClientId( clientId )
+		const adjacentBlocks = getBlocks( parentClientId )
+		const blockIndex = getBlockIndex( clientId )
+		const hasInnerBlocks = adjacentBlocks[ blockIndex ]?.innerBlocks?.length > 0
+		const nextBlock = blockIndex < adjacentBlocks.length - 1 ? adjacentBlocks[ blockIndex + 1 ] : undefined
+		const previousBlock = blockIndex > 0 ? adjacentBlocks[ blockIndex - 1 ] : undefined
+
+		return {
+			hasInnerBlocks,
+			nextBlock,
+			previousBlock,
+			adjacentBlocks,
+			blockIndex,
+		}
+	}, [ clientId ] )
+
 	const deviceType = useDeviceType()
 
 	const middleRef = useRef()
@@ -302,7 +323,7 @@ const Edit = props => {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: false } )
 			isUpdating = true
-		} else if ( ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) && props.attributes.timelineIsLast ) {
+		} else if ( ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) && ! props.attributes.timelineIsLast ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: true } )
 			isUpdating = true
