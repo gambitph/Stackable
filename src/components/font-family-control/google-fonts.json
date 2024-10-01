@@ -178,6 +178,25 @@
     ]
   },
   {
+    "family": "Afacad Flux",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Agbalumo",
     "variants": [
       "regular"
@@ -10279,6 +10298,8 @@
       "900italic"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -20330,6 +20351,18 @@
   },
   {
     "family": "Sixtyfour",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Sixtyfour Convergence",
     "variants": [
       "regular"
     ],
