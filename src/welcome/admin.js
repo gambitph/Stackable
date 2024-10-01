@@ -11,7 +11,7 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	useEffect, useState, Fragment, useCallback, useRef, useMemo, lazy, Suspense,
+	useEffect, useState, useCallback, useRef, useMemo, lazy, Suspense,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
@@ -63,14 +63,14 @@ export const BLOCK_CATEROGIES = [
 
 // Implement pick without using lodash, because themes and plugins might remove
 // lodash from the admin.
-const pick = ( obj, keys ) => {
-	return keys.reduce( ( acc, key ) => {
-		if ( obj && obj.hasOwnProperty( key ) ) {
-			acc[ key ] = obj[ key ]
-		}
-		return acc
-	}, {} )
-}
+// const pick = ( obj, keys ) => {
+// 	return keys.reduce( ( acc, key ) => {
+// 		if ( obj && obj.hasOwnProperty( key ) ) {
+// 			acc[ key ] = obj[ key ]
+// 		}
+// 		return acc
+// 	}, {} )
+// }
 
 const BlockList = () => {
 	const DERIVED_BLOCKS = getAllBlocks()
@@ -108,7 +108,7 @@ const BlockList = () => {
 }
 
 // Create an admin notice if there's an error fetching the settings.
-const SettingsNotice = () => {
+const RestSettingsNotice = () => {
 	const [ error, setError ] = useState( null )
 
 	useEffect( () => {
@@ -130,6 +130,23 @@ const SettingsNotice = () => {
 			{ error.responseJSON &&
 				<p><strong>{ error.responseJSON.data.status } ({ error.responseJSON.code }).</strong> { error.responseJSON.message } </p>
 			}
+		</div>
+	)
+}
+
+const SaveSettingsNotice = ( ) => {
+	const [ isDismissed, setIsDismissed ] = useState( false )
+
+	if ( isDismissed ) {
+		return null
+	}
+
+	return (
+		<div className="notice notice-success is-dismissible" >
+			<p>{ __( 'Settings saved.', i18n ) }</p>
+			<button type="button" className="notice-dismiss" onClick={ () => setIsDismissed( true ) }>
+				<span className="screen-reader-text">Dismiss this notice.</span>
+			</button>
 		</div>
 	)
 }
@@ -211,7 +228,20 @@ const Settings = () => {
 	}, [] )
 
 	const handleSettingsSave = useCallback( () => {
-		// TODO: Save settings
+		if ( Object.keys( unsavedChanges ).length === 0 ) {
+			return
+		}
+		const model = new models.Settings( unsavedChanges )
+		model.save().then( () => {
+			if ( document.querySelector( '.s-save-settings-notice' ) ) {
+				createRoot(
+					document.querySelector( '.s-save-settings-notice' )
+				).render(
+					<SaveSettingsNotice />
+				)
+				window.scrollTo( { top: 0, behavior: 'smooth' } )
+			}
+		} )
 		setUnsavedChanges( {} )
 	}, [ unsavedChanges ] )
 
@@ -219,20 +249,7 @@ const Settings = () => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setSettings( pick( response, [
-					'stackable_block_default_width',
-					'stackable_block_wide_width',
-					'stackable_enable_design_library',
-					'stackable_enable_block_linking',
-					'stackable_enable_text_highlight',
-					'stackable_enable_dynamic_content',
-					'stackable_enable_copy_paste_styles',
-					'stackable_enable_reset_layout',
-					'stackable_enable_save_as_default_block',
-					'stackable_auto_collapse_panels',
-					'stackable_dynamic_breakpoints',
-					'stackable_disabled_blocks',
-				] ) )
+				setSettings( response )
 			} )
 		} )
 	}, [] )
@@ -824,11 +841,11 @@ domReady( () => {
 		)
 	}
 
-	if ( document.querySelector( '.s-settings-notice' ) ) {
+	if ( document.querySelector( '.s-rest-settings-notice' ) ) {
 		createRoot(
-			document.querySelector( '.s-settings-notice' )
+			document.querySelector( '.s-rest-settings-notice' )
 		).render(
-			<SettingsNotice />
+			<RestSettingsNotice />
 		)
 	}
 

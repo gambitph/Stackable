@@ -181,13 +181,15 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php echo $this->print_tabs() ?>
 				</div>
 				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
+				<section id="settings-notice">
+					<div class="s-rest-settings-notice"></div>
+					<div class="s-save-settings-notice"></div>
+				</section>
 				<section class="s-body-container s-body-container-with-sidenav">
 					<div class="s-body" id="settings-body">
 						<?php stackable_welcome_notification() ?>
 						<?php do_action( 'stackable_settings_page' ) ?>
-						<article id="settings-notice">
-							<div class="s-settings-notice"></div>
-						</article>
+						
 						<div class="s-content" id="settings-content"></div>
 						<?php do_action( 'stackable_settings_page_mid' ); ?>
 						<!-- We put all the other options here. -->
