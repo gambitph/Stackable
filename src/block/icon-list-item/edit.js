@@ -42,7 +42,9 @@ import {
 import { __ } from '@wordpress/i18n'
 import { compose, createHigherOrderComponent } from '@wordpress/compose'
 import { dispatch, useSelect } from '@wordpress/data'
-import { useEffect, memo } from '@wordpress/element'
+import {
+	useEffect, useRef, memo,
+} from '@wordpress/element'
 
 const TABS = [ 'style', 'advanced' ]
 
@@ -73,15 +75,28 @@ const Edit = props => {
 		'stackable/uniqueId': parentUniqueId,
 	} = context
 
+	const updateOrderedTimeout = useRef()
+	const updateUniqueIdTimeout = useRef()
+
 	// Set the attributes so they can be used in Save.
 	useEffect( () => {
-		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-		setAttributes( { ordered } )
+		clearTimeout( updateOrderedTimeout.current )
+		if ( ordered !== props.attributes.ordered ) {
+			updateOrderedTimeout.current = setTimeout( () => {
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				setAttributes( { ordered } )
+			}, 300 )
+		}
 	}, [ ordered ] )
 
 	useEffect( () => {
-		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-		setAttributes( { parentUniqueId } )
+		clearTimeout( updateUniqueIdTimeout.current )
+		if ( parentUniqueId !== props.attributes.parentUniqueId ) {
+			updateUniqueIdTimeout.current = setTimeout( () => {
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				setAttributes( { parentUniqueId } )
+			}, 300 )
+		}
 	}, [ parentUniqueId ] )
 
 	const blockClassNames = classnames( [
