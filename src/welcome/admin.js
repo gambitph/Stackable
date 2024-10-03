@@ -567,6 +567,7 @@ const Optimizations = ( { settings, handleSettingsChange } ) => {
 
 const GlobalSettings = ( { settings, handleSettingsChange } ) => {
 	return <>
+		<h2>{ __( 'Global Settings', i18n ) }</h2>
 		<AdminToggleSetting
 			label={ __( 'Force Typography Styles', i18n ) }
 			value={ settings.stackable_global_force_typography }
@@ -603,7 +604,7 @@ const RoleManager = ( { settings, handleSettingsChange } ) => {
 				</div>
 			</Suspense>
 			: <p className="s-settings-pro">
-				{ __( 'This is only available in Stackable Premium.', i18n ) }
+				{ __( 'This is only available in Stackable Premium. ', i18n ) }
 				<a href="https://wpstackable.com/premium/?utm_source=wp-settings-role-manager&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium">
 					{ __( 'Go Premium', i18n ) }
 				</a>
@@ -619,11 +620,13 @@ const CustomFields = ( { settings, handleSettingsChange } ) => {
 	return <>
 		<div className="s-custom-fields-settings-header">
 			<h2>{ __( '📋 Custom Fields', i18n ) }</h2>
-			<Suspense fallback={ <Spinner /> }>
-				<div className="s-custom-fields-enable">
-					<CustomFieldsEnableSettings { ...{ settings, handleSettingsChange } } />
-				</div>
-			</Suspense>
+			{ isPro &&
+				<Suspense fallback={ <Spinner /> }>
+					<div className="s-custom-fields-enable">
+						<CustomFieldsEnableSettings { ...{ settings, handleSettingsChange } } />
+					</div>
+				</Suspense>
+			}
 		</div>
 		<p className="s-settings-subtitle">
 			{ __( 'Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. ', i18n ) }
@@ -638,7 +641,7 @@ const CustomFields = ( { settings, handleSettingsChange } ) => {
 				</div>
 			</Suspense>
 			: <p className="s-settings-pro">
-				{ __( 'This is only available in Stackable Premium.', i18n ) }
+				{ __( 'This is only available in Stackable Premium. ', i18n ) }
 				<a href="https://wpstackable.com/premium/?utm_source=wp-settings-custom-fields&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium">
 					{ __( 'Go Premium', i18n ) }
 				</a>
