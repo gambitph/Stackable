@@ -8,10 +8,14 @@
 		"postId",
 		"postType",
 		"queryId",
-		"stackable/innerBlockOrientation"
+		"stackable/innerBlockOrientation",
+		"stackable/repeaterValue"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"keywords": [ "location", "address" ],
+	"keywords": [
+		"location",
+		"address"
+	],
 	"stk-type": "special",
 	"stk-demo": "https://wpstackable.com/map-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }

@@ -4,7 +4,13 @@
 	"title": "Progress Bar",
 	"description": "Visualize a progress value or percentage in a bar.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"stackable/innerBlockOrientation",
+		"stackable/repeaterValue"
+	],
 	"keywords": [
 		"percentage status"
 	],
