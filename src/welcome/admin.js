@@ -294,14 +294,14 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 				} }
 				help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
 			/>
-      <AdminToggleSetting
-        label={ __( 'Stackable Text as Default Block', i18n ) }
-        value={ settings.stackable_enable_text_default_block }
-        onChange={ value => {
+			<AdminToggleSetting
+				label={ __( 'Stackable Text as Default Block', i18n ) }
+				value={ settings.stackable_enable_text_default_block }
+				onChange={ value => {
 					handleSettingsChange( { stackable_enable_text_default_block: value } ) // eslint-disable-line camelcase
 				} }
-        help={ __( 'If enabled, Stackable Text blocks will be added by default instead of the native Paragraph Block.', i18n ) }
-		  />
+				help={ __( 'If enabled, Stackable Text blocks will be added by default instead of the native Paragraph Block.', i18n ) }
+			/>
 
 			<h2>{ __( 'Editor', i18n ) }</h2>
 			<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
