@@ -1,8 +1,3 @@
-/**
- * Internal dependencies
- */
-import { IconStyles } from './style'
-
 import classnames from 'classnames'
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
@@ -42,7 +37,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<IconStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			{ /** Don't add an `a` tag if linkUrl is not defined. **/ }
 			{ attributes.linkUrl ? (

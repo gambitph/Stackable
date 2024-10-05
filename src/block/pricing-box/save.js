@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import BlockStyles from './style'
-
-/**
  * External dependencies
  */
 import classnames from 'classnames/dedupe'
@@ -61,7 +56,7 @@ export const Save = props => {
 			version={ props.version }
 			data-v={ props.attributes.version }
 		>
-			<BlockStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<ContainerDiv.Content
 				className={ contentClassNames }

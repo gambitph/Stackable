@@ -22,6 +22,10 @@
 	&.stk--is-slide[data-slides-to-show="1"] {
 		--gap: 0px;
 	}
+	.stk-block-carousel__slider > .stk-block-column {
+		// Reset column order of carousel inner columns in case carousel is in columns block.
+		order: initial;
+	}
 }
 .stk-block-carousel__slider {
 	display: flex;

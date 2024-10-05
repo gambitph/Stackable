@@ -227,6 +227,16 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
+			
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_text_default_block',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'If this is enabled, the default block when adding a new block will be the Stackable Text block.', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => false,
 				)
 			);
 		}
@@ -255,6 +265,8 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_enable_copy_paste_styles'] = get_option( 'stackable_enable_copy_paste_styles' );
 			$settings['stackable_enable_reset_layout'] = get_option( 'stackable_enable_reset_layout' );
 			$settings['stackable_enable_save_as_default_block'] = get_option( 'stackable_enable_save_as_default_block' );
+			$settings['stackable_enable_text_default_block'] = get_option( 'stackable_enable_text_default_block' );
+      
 			return $settings;
 		}
 

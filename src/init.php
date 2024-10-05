@@ -40,7 +40,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Checks if a Stackable block is rendered in the frontend, then loads our scripts.
-			if ( is_frontend() ) {
+			if ( ! is_admin() ) {
 				add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
 				add_action( 'template_redirect', array( $this, 'load_frontend_scripts_conditionally_head' ) );
 			}

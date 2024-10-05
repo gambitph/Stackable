@@ -31,6 +31,12 @@ const variations = [
 		'stk-type': 'essential',
 		'stk-demo': 'https://wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 		isDefault: true,
+		innerBlocks: [
+			[
+				'stackable/button',
+				{},
+			],
+		],
 		example: buttonExample,
 	},
 	{

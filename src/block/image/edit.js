@@ -1,18 +1,19 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
-import { InspectorTabs, AlignButtonsControl } from '~stackable/components'
+import {
+	InspectorTabs, AlignButtonsControl, useBlockCssGenerator,
+} from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Image,
 	Advanced,
 	CustomCSS,
@@ -41,6 +42,7 @@ import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters, addFilter } from '@wordpress/hooks'
+import { memo } from '@wordpress/element'
 
 const heightUnit = [ 'px', 'vh', '%' ]
 
@@ -49,8 +51,6 @@ const Edit = props => {
 		clientId,
 		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const figcaptionClassnames = classnames(
 		getTypographyClasses( props.attributes, 'figcaption%s' ),
@@ -72,42 +72,22 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
+			<InspectorControls enableLink={ enableLink } />
 
-				<Alignment.InspectorControls />
-				<Image.InspectorControls
-					{ ...props }
-					initialOpen={ true }
-					heightUnits={ heightUnit }
-					hasLightbox
-				/>
-				{ enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-				<Typography.InspectorControls
-					label={ __( 'Caption', i18n ) }
-					attrNameTemplate="figcaption%s"
-					hasToggle={ true }
-					hasTextTag={ false }
-					hasTextContent={ true }
-					initialOpen={ false }
-				/>
-			</>
-
-			<BlockStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-image" />
 
 			<BlockDiv
@@ -134,6 +114,39 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<Image.InspectorControls
+				// { ...props }
+				initialOpen={ true }
+				heightUnits={ heightUnit }
+				hasLightbox
+			/>
+			{ props.enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+			<Typography.InspectorControls
+				label={ __( 'Caption', i18n ) }
+				attrNameTemplate="figcaption%s"
+				hasToggle={ true }
+				hasTextTag={ false }
+				hasTextContent={ true }
+				initialOpen={ false }
+			/>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,
