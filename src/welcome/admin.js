@@ -306,6 +306,14 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 				help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
 			/>
 			<AdminToggleSetting
+				label={ __( 'Stackable Settings', i18n ) }
+				value={ settings.stackable_enable_global_settings }
+				onChange={ value => {
+					handleSettingsChange( { stackable_enable_global_settings: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Adds a button on the top of the editor which gives access to Stackable settings.', i18n ) }
+			/>
+			<AdminToggleSetting
 				label={ __( 'Block Linking (Beta)', i18n ) }
 				value={ settings.stackable_enable_block_linking }
 				onChange={ value => {
