@@ -228,7 +228,7 @@ const Settings = () => {
 	}, [] )
 
 	const handleSettingsSave = useCallback( () => {
-		console.log( settings ) // eslint-disable-line no-console
+		console.log( unsavedChanges ) // eslint-disable-line no-console
 		if ( Object.keys( unsavedChanges ).length === 0 ) {
 			return
 		}
@@ -266,153 +266,165 @@ const Settings = () => {
 			{ currentTab === 'role-manager' && <RoleManager { ...{ settings, handleSettingsChange } } /> }
 			{ currentTab === 'custom-fields-settings' && <CustomFields { ...{ settings, handleSettingsChange } } /> }
 			{ currentTab === 'integrations' && <Integrations { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'other-settings' && <AdditionalOptions showProNoticesOption={ showProNoticesOption } /> }
+			{ currentTab === 'other-settings' && <AdditionalOptions { ...{ settings, handleSettingsChange } } /> }
 		</article>
 	</>
 }
 
 const EditorSettings = ( { settings, handleSettingsChange } ) => {
-	return <>
-		<h2>{ __( 'Blocks', i18n ) }</h2>
-		<p className="s-settings-subtitle">{ __( 'You can customize the default width of your blocks here.', i18n ) }</p>
-		<AdminTextSetting
-			label={ __( 'Nested Block Width', i18n ) }
-			value={ settings.stackable_block_default_width }
-			type="text"
-			onChange={ value => {
-				handleSettingsChange( { stackable_block_default_width: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
-		/>
-		<AdminTextSetting
-			label={ __( 'Nested Wide Block Width', i18n ) }
-			value={ settings.stackable_block_wide_width }
-			type="text"
-			onChange={ value => {
-				handleSettingsChange( { stackable_block_wide_width: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
-		/>
+	return (
+		<div className="s-editor-settings">
+			<h2>{ __( 'Blocks', i18n ) }</h2>
+			<p className="s-settings-subtitle">{ __( 'You can customize the default width of your blocks here.', i18n ) }</p>
+			<AdminTextSetting
+				label={ __( 'Nested Block Width', i18n ) }
+				value={ settings.stackable_block_default_width }
+				type="text"
+				onChange={ value => {
+					handleSettingsChange( { stackable_block_default_width: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
+			/>
+			<AdminTextSetting
+				label={ __( 'Nested Wide Block Width', i18n ) }
+				value={ settings.stackable_block_wide_width }
+				type="text"
+				onChange={ value => {
+					handleSettingsChange( { stackable_block_wide_width: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
+			/>
 
-		<h2>{ __( 'Editor', i18n ) }</h2>
-		<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
-		<AdminToggleSetting
-			label={ __( 'Design Library', i18n ) }
-			value={ settings.stackable_enable_design_library }
-			onChange={ value => {
-				handleSettingsChange( { stackable_enable_design_library: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
-		/>
-		<AdminToggleSetting
-			label={ __( 'Block Linking (Beta)', i18n ) }
-			value={ settings.stackable_enable_block_linking }
-			onChange={ value => {
-				handleSettingsChange( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
-			} }
-			help={
-				<>
-					{ __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', i18n ) }
-					&nbsp;
-					<a target="_docs" href="https://docs.wpstackable.com/article/452-how-to-use-block-linking">{ __( 'Learn more', i18n ) }</a>
-				</>
-			}
-		/>
+			<h2>{ __( 'Editor', i18n ) }</h2>
+			<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
+			<AdminToggleSetting
+				label={ __( 'Design Library', i18n ) }
+				value={ settings.stackable_enable_design_library }
+				onChange={ value => {
+					handleSettingsChange( { stackable_enable_design_library: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
+			/>
+			<AdminToggleSetting
+				label={ __( 'Block Linking (Beta)', i18n ) }
+				value={ settings.stackable_enable_block_linking }
+				onChange={ value => {
+					handleSettingsChange( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
+				} }
+				help={
+					<>
+						{ __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', i18n ) }
+						&nbsp;
+						<a target="_docs" href="https://docs.wpstackable.com/article/452-how-to-use-block-linking">{ __( 'Learn more', i18n ) }</a>
+					</>
+				}
+			/>
 
-		<h2>{ __( 'Toolbar', i18n ) }</h2>
-		<p className="s-settings-subtitle">{ __( 'You can disable some toolbar features here.', i18n ) }	</p>
-		<AdminToggleSetting
-			label={ __( 'Toolbar Text Highlight', i18n ) }
-			value={ settings.stackable_enable_text_highlight }
-			onChange={ value => {
-				handleSettingsChange( { stackable_enable_text_highlight: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'Adds a toolbar button for highlighting text', i18n ) }
-		/>
-		<AdminToggleSetting
-			label={ __( 'Toolbar Dynamic Content', i18n ) }
-			value={ settings.stackable_enable_dynamic_content }
-			onChange={ value => {
-				handleSettingsChange( { stackable_enable_dynamic_content: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'Adds a toolbar button for inserting dynamic content', i18n ) }
-		/>
-		<AdminToggleSetting
-			label={ __( 'Copy & Paste Styles', i18n ) }
-			value={ settings.stackable_enable_copy_paste_styles }
-			onChange={ value => {
-				handleSettingsChange( { stackable_enable_copy_paste_styles: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'Adds a toolbar button for copying and pasting block styles', i18n ) }
-		/>
-		<AdminToggleSetting
-			label={ __( 'Reset Layout', i18n ) }
-			value={ settings.stackable_enable_reset_layout }
-			onChange={ value => {
-				handleSettingsChange( { stackable_enable_reset_layout: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'Adds a toolbar button for resetting the layout of a stackble block back to the original', i18n ) }
-		/>
-		<AdminToggleSetting
-			label={ __( 'Save as Default Block', i18n ) }
-			value={ settings.stackable_enable_save_as_default_block }
-			onChange={ value => {
-				handleSettingsChange( { stackable_enable_save_as_default_block: value } ) // eslint-disable-line
-			} }
-			help={ __( 'Adds a toolbar button for saving a block as the default block', i18n ) }
-		/>
+			<h2>{ __( 'Toolbar', i18n ) }</h2>
+			<p className="s-settings-subtitle">{ __( 'You can disable some toolbar features here.', i18n ) }	</p>
+			<AdminToggleSetting
+				label={ __( 'Toolbar Text Highlight', i18n ) }
+				value={ settings.stackable_enable_text_highlight }
+				onChange={ value => {
+					handleSettingsChange( { stackable_enable_text_highlight: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Adds a toolbar button for highlighting text', i18n ) }
+			/>
+			<AdminToggleSetting
+				label={ __( 'Toolbar Dynamic Content', i18n ) }
+				value={ settings.stackable_enable_dynamic_content }
+				onChange={ value => {
+					handleSettingsChange( { stackable_enable_dynamic_content: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Adds a toolbar button for inserting dynamic content', i18n ) }
+			/>
+			<AdminToggleSetting
+				label={ __( 'Copy & Paste Styles', i18n ) }
+				value={ settings.stackable_enable_copy_paste_styles }
+				onChange={ value => {
+					handleSettingsChange( { stackable_enable_copy_paste_styles: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Adds a toolbar button for copying and pasting block styles', i18n ) }
+			/>
+			<AdminToggleSetting
+				label={ __( 'Reset Layout', i18n ) }
+				value={ settings.stackable_enable_reset_layout }
+				onChange={ value => {
+					handleSettingsChange( { stackable_enable_reset_layout: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Adds a toolbar button for resetting the layout of a stackble block back to the original', i18n ) }
+			/>
+			<AdminToggleSetting
+				label={ __( 'Save as Default Block', i18n ) }
+				value={ settings.stackable_enable_save_as_default_block }
+				onChange={ value => {
+					handleSettingsChange( { stackable_enable_save_as_default_block: value } ) // eslint-disable-line
+				} }
+				help={ __( 'Adds a toolbar button for saving a block as the default block', i18n ) }
+			/>
 
-		<h2>{ __( 'Inspector', i18n ) }</h2>
-		<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the inspector here.' ) }</p>
-		<AdminToggleSetting
-			label={ __( 'Auto-Collapse Panels', i18n ) }
-			value={ settings.stackable_auto_collapse_panels }
-			onChange={ value => {
-				handleSettingsChange( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', i18n ) }
-		/>
-	</>
+			<h2>{ __( 'Inspector', i18n ) }</h2>
+			<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the inspector here.' ) }</p>
+			<AdminToggleSetting
+				label={ __( 'Don\'t show help video tooltips', i18n ) }
+				value={ settings.stackable_help_tooltip_disabled === '1' }
+				onChange={ value => {
+					handleSettingsChange( { stackable_help_tooltip_disabled: value ? '1' : '' } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Disables the help video tooltips that appear in the inspector.', i18n ) }
+			/>
+			<AdminToggleSetting
+				label={ __( 'Auto-Collapse Panels', i18n ) }
+				value={ settings.stackable_auto_collapse_panels }
+				onChange={ value => {
+					handleSettingsChange( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', i18n ) }
+			/>
+		</div>
+	)
 }
 
 const Responsiveness = ( { settings, handleSettingsChange } ) => {
-	return <>
-		<h2>{ __( 'Dynamic Breakpoints', i18n ) }</h2>
-		<p className="s-settings-subtitle">
-			{ __( 'Blocks can be styles differently for tablet and mobile screens, and some styles adjust to make them fit better in smaller screens. You can change the widths when tablet and mobile views are triggered. ', i18n ) }
-			<a href="https://docs.wpstackable.com/article/464-how-to-use-dynamic-breakpoints?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">
-				{ __( 'Learn more', i18n ) }
-			</a>
-		</p>
-		<AdminTextSetting
-			label={ __( 'Tablet Breakpoint', i18n ) }
-			type="number"
-			value={ settings.stackable_dynamic_breakpoints.tablet || '' } // eslint-disable-line camelcase
-			onChange={ value => {
-				handleSettingsChange( {
-					stackable_dynamic_breakpoints: { // eslint-disable-line camelcase
-						tablet: value,
-						mobile: settings.stackable_dynamic_breakpoints.mobile || '', // eslint-disable-line camelcase
-					},
-				} )
-			} }
-			placeholder="1024"
-		> px</AdminTextSetting>
-		<AdminTextSetting
-			label={ __( 'Mobile Breakpoint', i18n ) }
-			type="number"
-			value={ settings.stackable_dynamic_breakpoints.mobile || '' } // eslint-disable-line camelcase
-			onChange={ value => {
-				handleSettingsChange( {
-					stackable_dynamic_breakpoints: { // eslint-disable-line camelcase
-						tablet: settings.stackable_dynamic_breakpoints.tablet || '', // eslint-disable-line camelcase
-						mobile: value,
-					},
-				} )
-			} }
-			placeholder="768"
-		> px</AdminTextSetting>
-	</>
+	return (
+		<div className="s-responsiveness">
+			<h2>{ __( 'Dynamic Breakpoints', i18n ) }</h2>
+			<p className="s-settings-subtitle">
+				{ __( 'Blocks can be styles differently for tablet and mobile screens, and some styles adjust to make them fit better in smaller screens. You can change the widths when tablet and mobile views are triggered. ', i18n ) }
+				<a href="https://docs.wpstackable.com/article/464-how-to-use-dynamic-breakpoints?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">
+					{ __( 'Learn more', i18n ) }
+				</a>
+			</p>
+			<AdminTextSetting
+				label={ __( 'Tablet Breakpoint', i18n ) }
+				type="number"
+				value={ settings.stackable_dynamic_breakpoints.tablet || '' } // eslint-disable-line camelcase
+				onChange={ value => {
+					handleSettingsChange( {
+						stackable_dynamic_breakpoints: { // eslint-disable-line camelcase
+							tablet: value,
+							mobile: settings.stackable_dynamic_breakpoints.mobile || '', // eslint-disable-line camelcase
+						},
+					} )
+				} }
+				placeholder="1024"
+			> px</AdminTextSetting>
+			<AdminTextSetting
+				label={ __( 'Mobile Breakpoint', i18n ) }
+				type="number"
+				value={ settings.stackable_dynamic_breakpoints.mobile || '' } // eslint-disable-line camelcase
+				onChange={ value => {
+					handleSettingsChange( {
+						stackable_dynamic_breakpoints: { // eslint-disable-line camelcase
+							tablet: settings.stackable_dynamic_breakpoints.tablet || '', // eslint-disable-line camelcase
+							mobile: value,
+						},
+					} )
+				} }
+				placeholder="768"
+			> px</AdminTextSetting>
+		</div>
+	)
 }
 
 // Toggle the block states between enabled, disabled and hidden.
@@ -464,7 +476,7 @@ const Blocks = ( { settings, handleSettingsChange } ) => {
 		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
 	}
 	return (
-		<>
+		<div className="s-blocks">
 			<h2>{ __( 'Blocks', i18n ) }</h2>
 			<p className="s-settings-subtitle">{ __( 'You can enable, hide and disable Stackable blocks. Hiding the blocks hides them from the editor. Disabling the blocks prevent them from being loaded for faster performance.', i18n ) }</p>
 			{ BLOCK_CATEROGIES.map( ( {
@@ -539,30 +551,32 @@ const Blocks = ( { settings, handleSettingsChange } ) => {
 					</div>
 				)
 			} ) }
-		</>
+		</div>
 	)
 }
 
 const Optimizations = ( { settings, handleSettingsChange } ) => {
-	return <>
-		<h2>{ __( 'Optimizations', i18n ) }</h2>
-		<AdminToggleSetting
-			label={ __( 'Optimize Inline CSS', i18n ) }
-			value={ settings.stackable_optimize_inline_css }
-			onChange={ value => {
-				handleSettingsChange( { stackable_optimize_inline_css: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
-		/>
-		<AdminToggleSetting
-			label={ __( 'Lazy Load Images within Carousels', i18n ) }
-			value={ settings.stackable_enable_carousel_lazy_loading }
-			onChange={ value => {
-				handleSettingsChange( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
-			} }
-			help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
-		/>
-	</>
+	return (
+		<div className="s-optimizations">
+			<h2>{ __( 'Optimizations', i18n ) }</h2>
+			<AdminToggleSetting
+				label={ __( 'Optimize Inline CSS', i18n ) }
+				value={ settings.stackable_optimize_inline_css }
+				onChange={ value => {
+					handleSettingsChange( { stackable_optimize_inline_css: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
+			/>
+			<AdminToggleSetting
+				label={ __( 'Lazy Load Images within Carousels', i18n ) }
+				value={ settings.stackable_enable_carousel_lazy_loading }
+				onChange={ value => {
+					handleSettingsChange( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
+				} }
+				help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
+			/>
+		</div>
+	)
 }
 
 const GlobalSettings = ( { settings, handleSettingsChange } ) => {
@@ -650,118 +664,107 @@ const CustomFields = ( { settings, handleSettingsChange } ) => {
 	</>
 }
 
+const IconSettings = lazy( () => import( '../../pro__premium_only/src/welcome/icons.js' ) )
+
 const Integrations = ( { settings, handleSettingsChange } ) => {
-	return <>
-		<h2>{ __( 'Integrations', i18n ) }</h2>
-		<AdminTextSetting
-			label={ __( 'Google Maps API Key', i18n ) }
-			value={ settings.stackable_google_maps_api_key }
-			type="text"
-			onChange={ value => {
-				handleSettingsChange( { stackable_google_maps_api_key: value } ) // eslint-disable-line camelcase
-			} }
-			help={
-				<>
-					{ __(
-						'Adding a Google API Key enables additional features of the Stackable Map Block.',
-						i18n
-					) }
-						&nbsp;
-					<a href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#api-key" target="_blank" rel="noreferrer">{ __( 'Learn more', i18n ) }</a>
-				</>
-				 }
-		/>
-		<div className="s-icon-settings-fa-pro-version">
-			<label className="ugb-admin-setting__label-wrapper" htmlFor="s-icon-settings-fa-pro-version">
-				<span className="ugb-admin-setting__label"> { __( 'FontAwesome Icon Library Version', i18n ) }</span>
-				<div className="ugb-admin-setting__field">
-					<p>
-						{ __( 'You are using the version set in your Font Awesome Pro Kit.', i18n ) }
-					</p>
-				</div>
-			</label>
-		</div>
-		<div className="s-icon-settings-fa-free-version">
-			<AdminSelectSetting
-				label={ __( 'FontAwesome Icon Library Version', i18n ) }
-				value={ settings.stackable_icons_fa_free_version }
-				options={ [
-					{
-						name: '6.5.1',
-						value: '6.5.1',
-					},
-					{
-						name: '5.15.4',
-						value: '5.15.4',
-					},
-				] }
+	return (
+		<div className="s-integrations">
+			<h2>{ __( 'Integrations', i18n ) }</h2>
+			<AdminTextSetting
+				label={ __( 'Google Maps API Key', i18n ) }
+				value={ settings.stackable_google_maps_api_key }
+				type="text"
 				onChange={ value => {
-					handleSettingsChange( { stackable_icons_fa_free_version: value } ) // eslint-disable-line camelcase
+					handleSettingsChange( { stackable_google_maps_api_key: value } ) // eslint-disable-line camelcase
 				} }
+				help={
+					<>
+						{ __(
+							'Adding a Google API Key enables additional features of the Stackable Map Block.',
+							i18n
+						) }
+							&nbsp;
+						<a href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#api-key" target="_blank" rel="noreferrer">{ __( 'Learn more', i18n ) }</a>
+					</>
+				}
 			/>
+			{ isPro
+				? <Suspense fallback={ <Spinner /> }>
+					<div className="s-icon-settings">
+						<IconSettings { ...{ settings, handleSettingsChange } } />
+					</div>
+				</Suspense>
+				: <>
+					<div className="s-settings-field s-icon-kit-settings-field">
+						<label className="s-text-field" htmlFor="s-icon-kit-field">
+							<span className="s-settings-field__title">{ __( 'FontAwesome Pro Kit', i18n ) }</span>
+						</label>
+					</div>
+					<div>
+						<p className="s-settings-pro">
+							<span className="s-settings-field__title">{ __( 'FontAwesome Pro Kit', i18n ) }</span>
+							{ __( 'This is only available in Stackable Premium. ', i18n ) }
+							<a href="https://wpstackable.com/premium/?utm_source=wp-settings-integrations&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium">
+								{ __( 'Go Premium', i18n ) }
+							</a>
+						</p>
+					</div>
+				</>
+			}
+			<div className="s-icon-settings-fa-version">
+				<div className="s-icon-settings-fa-pro-version">
+					<label className="ugb-admin-setting__label-wrapper" htmlFor="s-icon-settings-fa-pro-version">
+						<span className="ugb-admin-setting__label"> { __( 'FontAwesome Icon Library Version', i18n ) }</span>
+						<div className="ugb-admin-setting__field">
+							<p>
+								{ __( 'You are using the version set in your Font Awesome Pro Kit.', i18n ) }
+							</p>
+						</div>
+					</label>
+				</div>
+				<div className="s-icon-settings-fa-free-version">
+					<AdminSelectSetting
+						label={ __( 'FontAwesome Icon Library Version', i18n ) }
+						value={ settings.stackable_icons_fa_free_version }
+						options={ [
+							{
+								name: '6.5.1',
+								value: '6.5.1',
+							},
+							{
+								name: '5.15.4',
+								value: '5.15.4',
+							},
+						] }
+						onChange={ value => {
+							handleSettingsChange( { stackable_icons_fa_free_version: value } ) // eslint-disable-line camelcase
+						} }
+					/>
+				</div>
+			</div>
 		</div>
-	</>
+	)
 }
 
-const AdditionalOptions = props => {
-	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
-	const [ generateNativeGlobalColors, setGenerateNativeGlobalColors ] = useState( false )
-	const [ v2EditorBackwardCompatibility, setV2EditorBackwardCompatibility ] = useState( false )
-	const [ v2EditorBackwardCompatibilityUsage, setV2EditorBackwardCompatibilityUsage ] = useState( false )
-	const [ v2FrontendBackwardCompatibility, setV2FrontendBackwardCompatibility ] = useState( false )
-	const [ showPremiumNotices, setShowPremiumNotices ] = useState( false )
-	const [ isBusy, setIsBusy ] = useState( false )
-
-	useEffect( () => {
-		setIsBusy( true )
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setHelpTooltipsDisabled( response.stackable_help_tooltip_disabled === '1' )
-				setGenerateNativeGlobalColors( !! response.stackable_global_colors_native_compatibility )
-				setV2EditorBackwardCompatibility( response.stackable_v2_editor_compatibility === '1' )
-				setV2EditorBackwardCompatibilityUsage( response.stackable_v2_editor_compatibility_usage === '1' )
-				setV2FrontendBackwardCompatibility( response.stackable_v2_frontend_compatibility === '1' )
-				setShowPremiumNotices( response.stackable_show_pro_notices === '1' )
-				setIsBusy( false )
-			} )
-		} )
-	}, [] )
-
-	const updateSetting = settings => {
-		setIsBusy( true )
-		const model = new models.Settings( settings )
-		model.save().then( () => setIsBusy( false ) )
-	}
-
+const AdditionalOptions = ( { settings, handleSettingsChange } ) => {
 	return (
-		<div>
-			<h2>{ __( '🔩 Other Settings', i18n ) }</h2>
-			{ props.showProNoticesOption &&
+		<div className="s-other-options-wrapper">
+			<h2>{ __( '🔩 Miscellaneous', i18n ) }</h2>
+			{ showProNoticesOption &&
 				<CheckboxControl
 					label={ __( 'Show "Go premium" notices', i18n ) }
-					checked={ showPremiumNotices }
+					checked={ settings.stackable_show_pro_notices === '1' }
 					onChange={ checked => {
-						updateSetting( { stackable_show_pro_notices: checked ? '1' : '' } ) // eslint-disable-line camelcase
-						setShowPremiumNotices( checked )
+						handleSettingsChange( { stackable_show_pro_notices: checked ? '1' : '' } ) // eslint-disable-line camelcase
 					} }
 				/>
 			}
 			<CheckboxControl
-				label={ __( 'Don\'t show help video tooltips', i18n ) }
-				checked={ helpTooltipsDisabled }
-				onChange={ checked => {
-					updateSetting( { stackable_help_tooltip_disabled: checked ? '1' : '' } ) // eslint-disable-line camelcase
-					setHelpTooltipsDisabled( checked )
-				} }
-			/>
-			<CheckboxControl
 				label={ __( 'Generate Global Colors for native blocks', i18n ) }
 				help={ __( `When enabled, extra frontend CSS is generated to support Stackable global colors used in native blocks. If you don't use Stackable global colors in native blocks, simply toggle this OFF. Please note that Stackable global colors are no longer available for native blocks. To ensure your styles always look perfect, our auto-detect feature will activate this option whenever needed.`, i18n ) }
-				checked={ generateNativeGlobalColors }
+				checked={ !! settings.stackable_global_colors_native_compatibility }
 				onChange={ checked => {
-					updateSetting( { stackable_global_colors_native_compatibility: checked } ) // eslint-disable-line camelcase
-					setGenerateNativeGlobalColors( checked )
+					handleSettingsChange( { stackable_global_colors_native_compatibility: checked } ) // eslint-disable-line camelcase
 				} }
 			/>
 			<h3>{ __( '🏠 Migration Settings', i18n ) }</h3>
@@ -772,44 +775,36 @@ const AdditionalOptions = props => {
 			</p>
 			<CheckboxControl
 				label={ __( 'Load version 2 blocks in the editor', i18n ) }
-				checked={ v2EditorBackwardCompatibility }
+				checked={ settings.stackable_v2_editor_compatibility === '1' } // eslint-disable-line camelcase
 				onChange={ checked => {
-					const settings = { stackable_v2_editor_compatibility: checked ? '1' : '' } // eslint-disable-line camelcase
 					if ( checked ) {
-						settings.stackable_v2_editor_compatibility_usage = '' // eslint-disable-line camelcase
-						setV2EditorBackwardCompatibilityUsage( false )
+						handleSettingsChange( { stackable_v2_editor_compatibility_usage: '' } ) // eslint-disable-line camelcase
 					}
-					updateSetting( settings )
-					setV2EditorBackwardCompatibility( checked )
+					handleSettingsChange( { stackable_v2_editor_compatibility: checked ? '1' : '' } ) // eslint-disable-line camelcase
 				} }
 			/>
 			<CheckboxControl
 				label={ __( 'Load version 2 blocks in the editor only when the page was using version 2 blocks', i18n ) }
-				checked={ v2EditorBackwardCompatibilityUsage }
+				checked={ settings.stackable_v2_editor_compatibility_usage === '1' } // eslint-disable-line camelcase
 				onChange={ checked => {
-					const settings = { stackable_v2_editor_compatibility_usage: checked ? '1' : '' } // eslint-disable-line camelcase
 					if ( checked ) {
-						settings.stackable_v2_editor_compatibility = '' // eslint-disable-line camelcase
-						setV2EditorBackwardCompatibility( false )
+						handleSettingsChange( { stackable_v2_editor_compatibility: '' } ) // eslint-disable-line camelcase
 					}
-					updateSetting( settings )
-					setV2EditorBackwardCompatibilityUsage( checked )
+					handleSettingsChange( { stackable_v2_editor_compatibility_usage: checked ? '1' : '' } ) // eslint-disable-line camelcase
 				} }
 			/>
 			<CheckboxControl
-				disabled={ v2EditorBackwardCompatibility || v2EditorBackwardCompatibilityUsage }
+				disabled={ settings.stackable_v2_editor_compatibility === '1' || settings.stackable_v2_editor_compatibility_usage === '1' }
 				label={ __( 'Load version 2 frontend block stylesheet and scripts for backward compatibility', i18n ) }
-				checked={ v2EditorBackwardCompatibility || v2EditorBackwardCompatibilityUsage || v2FrontendBackwardCompatibility }
+				checked={
+					settings.stackable_v2_editor_compatibility	=== '1' ||
+					settings.stackable_v2_editor_compatibility_usage === '1' ||
+					settings.stackable_v2_frontend_compatibility === '1'
+				}
 				onChange={ checked => {
-					updateSetting( { stackable_v2_frontend_compatibility: checked ? '1' : '' } ) // eslint-disable-line camelcase
-					setV2FrontendBackwardCompatibility( checked )
+					handleSettingsChange( { stackable_v2_frontend_compatibility: checked ? '1' : '' } ) // eslint-disable-line camelcase
 				} }
 			/>
-			{ isBusy &&
-				<div className="ugb--saving-wrapper">
-					<Spinner />
-				</div>
-			}
 		</div>
 	)
 }
