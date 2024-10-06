@@ -227,6 +227,8 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
+				)
+			);
 			
 			register_setting(
 				'stackable_editor_settings',
