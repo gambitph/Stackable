@@ -281,6 +281,35 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					'default' => '',
 				)
 			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_icon_library',
+				array(
+					'type' => 'array',
+					'description' => __( 'Stackable Icon Library', STACKABLE_I18N ),
+					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
+					'show_in_rest' => array(
+						'schema' => array(
+							'items' => array(
+								'type' => 'object',
+								'properties' => array(
+									'name' => array(
+										'type' => 'string',
+									),
+									'key' => array(
+										'type' => 'string',
+									),
+									'icon' => array(
+										'type' => 'string',
+									),
+								)
+							)
+						)
+					),
+					'default' => '',
+				)
+			);
 		}
 
 		/**

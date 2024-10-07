@@ -21,6 +21,7 @@ import {
 } from '@wordpress/data'
 import { models } from '@wordpress/api'
 import { __, sprintf } from '@wordpress/i18n'
+import { ColorIndicator, ColorPicker } from '@wordpress/components'
 
 let saveTimeout = null
 
@@ -126,6 +127,24 @@ const ColorPickers = props => {
 		setIsSorting( false )
 	  }
 
+	  const ItemPreview = ( { item } ) => {
+		return <ColorIndicator
+			className="stk-color-indicator block-editor-panel-color-gradient-settings__color-indicator"
+			colorValue={ item.color }
+		/>
+	  }
+
+	  const ItemPicker = ( { item, onChange } ) => {
+		return <ColorPicker
+			onChange={ value => onChange( {
+				...item,
+				color: value,
+			} ) }
+			color={ item.color }
+			enableAlpha={ true }
+		/>
+	  }
+
 	return (
 		<SortablePicker
 			ref={ ref }
@@ -135,6 +154,8 @@ const ColorPickers = props => {
 			onDeleteItem={ onColorDelete }
 			handleAddItem={ handleAddIcon }
 			onSortEnd={ onSortEnd }
+			ItemPreview={ ItemPreview }
+			ItemPicker={ ItemPicker }
 			{ ...props }
 		/>
 	)

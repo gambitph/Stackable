@@ -11,9 +11,7 @@ import {
  * WordPress dependencies
  */
 import {
-	ColorPicker,
 	BaseControl,
-	ColorIndicator,
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalHStack as HStack,
 	Dashicon,
@@ -21,7 +19,6 @@ import {
 } from '@wordpress/components'
 import { useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
 
 const popoverProps = {
 	placement: 'left-start',
@@ -42,7 +39,6 @@ const DRAG_KEYCODES = {
 const SortablePicker = props => {
 	const {
 		items,
-		itemType,
 		dropdownOnAdd = false,
 		onChangeItem,
 		onDeleteItem,
@@ -99,7 +95,8 @@ const SortablePicker = props => {
 							item={ item }
 							onDelete={ () => onDeleteItem( item ) }
 							onChange={ item => onChangeItem( item ) }
-							itemType={ itemType }
+							ItemPreview={ props.ItemPreview }
+							ItemPicker={ props.ItemPicker }
 						/> ) ) }
 				</SortableContainer>
 			</div>
@@ -132,7 +129,9 @@ const LabeledItemIndicator = props => {
 		item,
 		onDelete,
 		onChange,
-		itemType,
+		ItemPreview = null,
+		ItemPicker = null,
+
 	} = props
 
 	const [ isFocused, setIsFocused ] = useState( false )
@@ -155,12 +154,7 @@ const LabeledItemIndicator = props => {
 							isPressed={ isOpen }
 						>
 							<HStack justify="flex-start">
-								{ itemType === 'color' &&
-									<ColorIndicator
-										className="stk-color-indicator block-editor-panel-color-gradient-settings__color-indicator"
-										colorValue={ item.color }
-									/> }
-								{ itemType === 'icon' && <p> Icon </p> }
+								<ItemPreview item={ item } />
 								<input
 									className="components-input-control__input"
 									value={ item.name }
@@ -196,20 +190,7 @@ const LabeledItemIndicator = props => {
 				} }
 				renderContent={ () => (
 					<div className="stk-color-palette-control__popover-content">
-						{ itemType === 'color' &&
-							<ColorPicker
-								onChange={ value => onChange( {
-									...item,
-									color: value,
-								} ) }
-								color={ item.color }
-								enableAlpha={ true }
-							/>
-						}
-						{ itemType === 'icon' && <>
-							<p>hello</p>
-							{ applyFilters( 'stackable.global-settings.inspector.icon-library.icon-picker', null ) }
-						</> }
+						<ItemPicker item={ item } onChange={ onChange } />
 					</div>
 				) }
 			/>
