@@ -1,9 +1,4 @@
-/**
- * External dependencies
- */
-import { BlockCss } from '~stackable/components'
-
-const Styles = props => {
+export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	const propsToPass = {
 		...props,
 		version: props.version,
@@ -14,25 +9,13 @@ const Styles = props => {
 		selector = '',
 	} = props
 
-	return (
-		<>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ selector }
-				styleRule="marginBottom"
-				attrName="blockMarginBottom"
-				key="blockMarginBottom"
-				responsive="all"
-				format="%spx"
-			/>
-		</>
-	)
-}
-
-export const Style = props => {
-	return <Styles { ...props } />
-}
-
-Style.Content = props => {
-	return <Styles { ...props } />
+	blockStyleGenerator.addBlockStyles( 'blockMarginBottom', [ {
+		...propsToPass,
+		selector,
+		styleRule: 'marginBottom',
+		attrName: 'blockMarginBottom',
+		key: 'blockMarginBottom',
+		responsive: 'all',
+		format: '%spx',
+	} ] )
 }

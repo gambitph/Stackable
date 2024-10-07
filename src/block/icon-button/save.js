@@ -17,11 +17,6 @@ import {
  */
 import { compose } from '@wordpress/compose'
 
-/**
- * Internal dependencies
- */
-import { IconButtonStyles } from './style'
-
 export const Save = props => {
 	const {
 		className,
@@ -44,7 +39,7 @@ export const Save = props => {
 			applyCustomAttributes={ false }
 			version={ props.version }
 		>
-			<IconButtonStyles.Content { ...propsToPass } />
+			{ props.attributes.generatedCss && <style>{ props.attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ props.attributes } />
 			<Button.Content
 				{ ...propsToPass }

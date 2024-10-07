@@ -178,6 +178,25 @@
     ]
   },
   {
+    "family": "Afacad Flux",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Agbalumo",
     "variants": [
       "regular"
@@ -652,7 +671,8 @@
       "800"
     ],
     "subsets": [
-      "arabic"
+      "arabic",
+      "latin"
     ]
   },
   {
@@ -1218,7 +1238,6 @@
       "700"
     ],
     "subsets": [
-      "cyrillic-ext",
       "latin",
       "latin-ext",
       "thai",
@@ -3296,6 +3315,17 @@
     ]
   },
   {
+    "family": "Bungee Tint",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Butcherman",
     "variants": [
       "regular"
@@ -5222,6 +5252,32 @@
       "devanagari",
       "greek",
       "greek-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Edu AU VIC WA NT Dots",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Edu AU VIC WA NT Guides",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]
@@ -10242,6 +10298,8 @@
       "900italic"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -11182,6 +11240,16 @@
     ]
   },
   {
+    "family": "Matemasie",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Material Icons",
     "variants": [
       "regular"
@@ -11661,6 +11729,24 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Moderustic",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
       "latin",
       "latin-ext"
     ]
@@ -12358,6 +12444,16 @@
       "italic",
       "700",
       "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "New Amsterdam",
+    "variants": [
+      "regular"
     ],
     "subsets": [
       "latin",
@@ -19437,6 +19533,23 @@
     ]
   },
   {
+    "family": "SUSE",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Sacramento",
     "variants": [
       "regular"
@@ -20238,6 +20351,18 @@
   },
   {
     "family": "Sixtyfour",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Sixtyfour Convergence",
     "variants": [
       "regular"
     ],

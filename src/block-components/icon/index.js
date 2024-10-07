@@ -14,7 +14,7 @@ import { IconSearchPopover, SvgIcon } from '~stackable/components'
  */
 import { Edit } from './edit'
 import { addAttributes } from './attributes'
-import { Style } from './style'
+import { addStyles } from './style'
 
 /**
  * WordPress dependencies
@@ -255,5 +255,5 @@ Icon.InspectorControls = Edit
 
 Icon.addAttributes = addAttributes
 
-Icon.Style = Style
+Icon.addStyles = addStyles
 

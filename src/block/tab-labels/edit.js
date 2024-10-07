@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { TabStyles } from './style'
+import tabBlockStyles from './style'
 import { useSetActiveTabContext } from '../tabs/with-active-tab'
 import { defaultIcon } from './schema'
 import { blockStyles as _blockStyles } from './block-styles'
@@ -15,7 +15,6 @@ import SVGIconBottom from './images/icon-bottom.svg'
  */
 import {
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -46,6 +45,7 @@ import {
 	ColorPaletteControl,
 	BlockStyles,
 	RichText,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext,
@@ -60,7 +60,7 @@ import { cloneDeep, kebabCase } from 'lodash'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	useRef, useCallback, createRef, useState, useEffect,
+	useRef, useCallback, createRef, useState, useEffect, memo,
 } from '@wordpress/element'
 import { dispatch, useSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
@@ -106,8 +106,6 @@ const Edit = props => {
 		setAttributes,
 		context,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const [ activeTab, setActiveTab, , setTemplateLock ] = useSetActiveTabContext()
 	const textClasses = getTypographyClasses( props.attributes )
@@ -310,353 +308,43 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles: tabBlockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<BlockControls>
-					<ToolbarGroup>
-						<ToolbarButton
-							label={ __( 'Move left', i18n ) }
-							icon="arrow-left-alt2"
-							disabled={ activeTab === 1 }
-							onClick={ moveActiveTabLeft }
-						/>
-						<ToolbarButton
-							label={ __( 'Move right', i18n ) }
-							icon="arrow-right-alt2"
-							disabled={ activeTab === props.attributes.tabLabels.length }
-							onClick={ moveActiveTabRight }
-						/>
-					</ToolbarGroup>
-				</BlockControls>
-
-				<BlockControls>
-					<ToolbarGroup>
-						<ToolbarButton
-							label={ __( 'Add tab', i18n ) }
-							icon="plus-alt2"
-							onClick={ () => addNewTab( activeTab ) }
-						/>
-						<ToolbarButton
-							label={ __( 'Duplicate tab', i18n ) }
-							icon="admin-page"
-							onClick={ () => duplicateTab( activeTab ) }
-						/>
-						<ToolbarButton
-							label={ __( 'Delete tab', i18n ) }
-							icon="trash"
-							disabled={ props.attributes.tabLabels.length === 1 }
-							onClick={ () => {
-								// Prompt first if the user really wants to delete the tab
-								if ( confirm( __( 'Are you sure you want to delete this tab?', i18n ) ) ) { // eslint-disable-line no-alert
-									deleteActiveTab()
-								}
-							} }
-						/>
-					</ToolbarGroup>
-				</BlockControls>
-
-				<InspectorLayoutControls>
-					{ context[ 'stackable/tabOrientation' ] !== 'vertical' && <>
-						<AdvancedToggleControl
-							label={ __( 'Full Width', i18n ) }
-							attribute="fullWidth"
-							defaultValue={ false }
-							onChange={ fullWidth => {
-								const newAttributes = { fullWidth }
-
-								// For ceneterd pills, we have block margin
-								// left/right set to auto, so the full width
-								// option would look like it's not working,
-								// change the margins too.
-								const activeStyle = getBlockStyle( blockStyles, props.attributes.className )
-								if ( activeStyle.name === 'centered-pills' ) {
-									props.attributes.blockMargin = {
-										top: props.attributes.blockMargin?.top || '',
-										bottom: props.attributes.blockMargin?.bottom || '',
-									}
-									if ( fullWidth ) {
-										const right = props.attributes.blockMargin?.right || ''
-										const left = props.attributes.blockMargin?.left || ''
-										props.attributes.blockMargin.right = right === 'auto' ? '' : right
-										props.attributes.blockMargin.left = left === 'auto' ? '' : left
-									} else {
-										const right = props.attributes.blockMargin?.right || 'auto'
-										const left = props.attributes.blockMargin?.left || 'auto'
-										props.attributes.blockMargin.right = right === '' ? 'auto' : right
-										props.attributes.blockMargin.left = left === '' ? 'auto' : left
-									}
-								}
-
-								setAttributes( newAttributes )
-							} }
-						/>
-					</> }
-
-					{ ( ( props.attributes.iconPosition === '' || props.attributes.iconPosition === 'right' ) && props.attributes.showIcon ) && // Check if icon position is left or right
-							( ( context[ 'stackable/tabOrientation' ] !== 'vertical' && props.attributes.fullWidth ) || context[ 'stackable/tabOrientation' ] === 'vertical' ) && // Show if its in horizontal position and fullWidth OR show on vertical position
-								<AdvancedToggleControl
-									label={ __( 'Fixed Icon Position', i18n ) }
-									attribute="fixedIconPosition"
-									defaultValue={ false }
-								/>
-					}
-
-					{ props.attributes.showIcon &&
-						<AdvancedToolbarControl
-							label={ __( 'Icon Position', i18n ) }
-							controls={ ICON_ALIGN_OPTIONS }
-							attribute="iconPosition"
-						/>
-					}
-
-					{ context[ 'stackable/tabOrientation' ] !== 'vertical' && <>
-						{ ! props.attributes.fullWidth && (
-							<AdvancedToolbarControl
-								label={ __( 'Tab Alignment', i18n ) }
-								attribute="tabAlignment"
-								controls="horizontal"
-								// default="flex-start"
-								responsive="all"
-								// value={ props.attributes.tabAlignment |' }
-							/>
-						) }
-					</> }
-
-					{ ( props.attributes.fullWidth || context[ 'stackable/tabOrientation' ] === 'vertical' || props.attributes.iconPosition === 'top' || props.attributes.iconPosition === 'bottom' ) && <>
-						<AlignButtonsControl
-							label={ __( 'Text Alignment', i18n ) }
-							attribute="contentAlign"
-							responsive="all"
-						/>
-					</> }
-
-					{ context[ 'stackable/tabOrientation' ] !== 'vertical' && <>
-						<AdvancedRangeControl
-							label={ __( 'Column Gap', i18n ) }
-							attribute="columnGap"
-							min={ 0 }
-							sliderMax={ 50 }
-							placeholder="12"
-							responsive="all"
-						/>
-					</> }
-
-					<AdvancedRangeControl
-						label={ __( 'Row Gap', i18n ) }
-						attribute="rowGap"
-						min={ 0 }
-						sliderMax={ 50 }
-						placeholder="8"
-						responsive="all"
-					/>
-
-					{ props.attributes.showIcon &&
-						<AdvancedRangeControl
-							label={ __( 'Icon Gap', i18n ) }
-							attribute="iconGap"
-							min={ 0 }
-							sliderMax={ 50 }
-							placeholder="8"
-						/>
-					}
-
-					<AdvancedToggleControl
-						label={ __( 'Scrollable Tabs on Mobile', i18n ) }
-						attribute="scrollableOnMobile"
-						defaultValue={ true }
-
-					/>
-
-				</InspectorLayoutControls>
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'Tab', i18n ) }
-						initialOpen={ true }
-						id="tab"
-					>
-						<BlockStyles styles={ blockStyles } context={ context } />
-						<ControlSeparator />
-
-						<Button.InspectorControls.Colors.Controls
-							// We add our own text color and icon color
-							hasTextColor={ false }
-							hasIconColor={ false }
-							attrNameTemplate="tab%s"
-						/>
-						<ColorPaletteControl
-							label={ __( 'Text Color', i18n ) }
-							attribute="tabTextColor1"
-							hover="all"
-						/>
-						{ props.attributes.showIcon &&
-							<ColorPaletteControl
-								label={ __( 'Icon Color', i18n ) }
-								// We need this name because the Button Block Component uses this.
-								attribute="tabIconColor1"
-								hover="all"
-							/>
-						}
-						<ControlSeparator />
-						<Button.InspectorControls.Size.Controls
-							attrNameTemplate="tab%s"
-						/>
-						<ControlSeparator />
-						<Button.InspectorControls.Borders.Controls
-							attrNameTemplate="tab%s"
-						/>
-					</PanelAdvancedSettings>
-
-					<PanelAdvancedSettings
-						title={ __( 'Tab Active State', i18n ) }
-						id="tab-active-state"
-					>
-						<Button.InspectorControls.Colors.Controls
-							hasTextColor={ false }
-							hasIconColor={ false }
-							attrNameTemplate="activeTab%s"
-						/>
-						<ColorPaletteControl
-							label={ __( 'Text Color', i18n ) }
-							attribute="activeTabTextColor"
-							hover="all"
-						/>
-						{ props.attributes.showIcon &&
-							<ColorPaletteControl
-								label={ __( 'Icon Color', i18n ) }
-								// We need this name because the Button Block Component uses this.
-								attribute="activeTabIconColor1"
-								hover="all"
-							/>
-						}
-						<ControlSeparator />
-						<Button.InspectorControls.Borders.Controls
-							attrNameTemplate="activeTab%s"
-							hasBorderType={ false }
-							borderTypeValue={ props.attributes.tabBorderType } // Change this to the value of the border type control
-							hasBorderRadius={ false }
-						/>
-					</PanelAdvancedSettings>
-
-					<PanelAdvancedSettings
-						title={ __( 'Typography', i18n ) }
-						initialOpen={ false }
-						id="typography"
-					>
-						<Typography.InspectorControls.Controls
-							attrNameTemplate="tab%s"
-							{ ...props }
-							hasTextContent={ false }
-							hasTextTag={ false }
-							isMultiline={ true }
-							initialOpen={ true }
-							hasTextShadow={ true }
-							hasGradient={ false }
-							hasInset={ false }
-						/>
-					</PanelAdvancedSettings>
-
-					<PanelAdvancedSettings
-						title={ __( 'Icon', i18n ) }
-						initialOpen={ false }
-						hasToggle={ true }
-						checked={ props.attributes.showIcon }
-						onChange={ showIcon => setAttributes( { showIcon } ) }
-						id="icon"
-					>
-						<Icon.InspectorControls
-							attrNameTemplate="tab%s"
-							wrapInPanels={ false }
-							hasGradient={ false }
-							hasShape={ false }
-							hasBackgroundShape={ false }
-							hasIconGap={ true }
-							hasIconPosition={ false }
-							defaultValue={ defaultIcon }
-							iconControlHelp={ __( 'Change icons individually by clicking on each tab\'s icon.', i18n ) }
-							iconGapPlaceholder="8"
-							onChangeIcon={ icon => {
-								// Reset all tab label icons.
-								const newTabLabels = cloneDeep( props.attributes.tabLabels ).map(
-									tab => ( {
-										...tab,
-										icon: '',
-									} )
-								)
-								setAttributes( {
-									icon,
-									tabLabels: newTabLabels,
-								} )
-							} }
-						>
-							<AdvancedToolbarControl
-								label={ __( 'Icon Position', i18n ) }
-								controls={ ICON_ALIGN_OPTIONS }
-								attribute="iconPosition"
-							/>
-						</Icon.InspectorControls>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<BlockDiv.InspectorControls />
-
-				<InspectorAdvancedControls>
-					<PanelAdvancedSettings
-						title={ __( 'Tab Anchors', i18n ) }
-						id="tabAnchors"
-					>
-						<GutBaseControl help={ __( "Assign unique anchor names to each tab so you'll be able to link directly and open each one.", i18n ) } />
-						{ tabLabels.map( ( tab, index ) => (
-							<AdvancedTextControl
-								label={ sprintf(
-									// Translators: %s is the tab label.
-									__( '%s Anchor', i18n ),
-									// eslint-disable-next-line @wordpress/i18n-no-variables
-									__( tab.label, i18n )
-								) }
-								value={ tabLabels[ index ].anchor }
-								placeholder={ __( 'Tab Anchor', i18n ) }
-								key={ `tab-anchors-${ index }` }
-								onChange={ value => {
-									const updatedLabels = cloneDeep( tabLabels )
-									updatedLabels[ index ].anchor = value
-									setTabLabels( updatedLabels )
-
-									if ( ! value ) {
-										setAttributes( { tabLabels: updatedLabels } )
-									}
-								} }
-								onBlur={ () => {
-									const updatedLabels = tabLabels
-									if ( updatedLabels[ index ].anchor ) {
-										updatedLabels[ index ].anchor = kebabCase( updatedLabels[ index ].anchor )
-										setAttributes( { tabLabels: updatedLabels } )
-									}
-								} }
-							/>
-						) ) }
-
-					</PanelAdvancedSettings>
-				</InspectorAdvancedControls>
-
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-labels" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
-			<TabStyles
-				version={ VERSION }
+			<InspectorControls
+				activeTab={ activeTab }
+				moveActiveTabLeft={ moveActiveTabLeft }
+				moveActiveTabRight={ moveActiveTabRight }
+				addNewTab={ addNewTab }
+				deleteActiveTab={ deleteActiveTab }
+				duplicateTab={ duplicateTab }
+				tabLabels={ tabLabels }
+				setTabLabels={ setTabLabels }
+				context={ context }
+				blockStyles={ blockStyles }
+				setAttributes={ setAttributes }
 				blockState={ props.blockState }
-				clientId={ clientId }
+				attributes={ {
+					tabLabels: props.attributes.tabLabels,
+					className: props.attributes.className,
+					blockMargin: props.attributes.blockMargin,
+					iconPosition: props.attributes.iconPosition,
+					showIcon: props.attributes.showIcon,
+					fullWidth: props.attributes.fullWidth,
+				} }
 			/>
+
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-tab-labels" />
 
 			<BlockDiv
@@ -731,6 +419,350 @@ const useGetRef = () => {
 	  [ refs ]
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						label={ __( 'Move left', i18n ) }
+						icon="arrow-left-alt2"
+						disabled={ props.activeTab === 1 }
+						onClick={ props.moveActiveTabLeft }
+					/>
+					<ToolbarButton
+						label={ __( 'Move right', i18n ) }
+						icon="arrow-right-alt2"
+						disabled={ props.activeTab === props.attributes.tabLabels.length }
+						onClick={ props.moveActiveTabRight }
+					/>
+				</ToolbarGroup>
+			</BlockControls>
+
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						label={ __( 'Add tab', i18n ) }
+						icon="plus-alt2"
+						onClick={ () => props.addNewTab( props.activeTab ) }
+					/>
+					<ToolbarButton
+						label={ __( 'Duplicate tab', i18n ) }
+						icon="admin-page"
+						onClick={ () => props.duplicateTab( props.activeTab ) }
+					/>
+					<ToolbarButton
+						label={ __( 'Delete tab', i18n ) }
+						icon="trash"
+						disabled={ props.attributes.tabLabels.length === 1 }
+						onClick={ () => {
+							// Prompt first if the user really wants to delete the tab
+							if ( confirm( __( 'Are you sure you want to delete this tab?', i18n ) ) ) { // eslint-disable-line no-alert
+								props.deleteActiveTab()
+							}
+						} }
+					/>
+				</ToolbarGroup>
+			</BlockControls>
+
+			<InspectorLayoutControls>
+				{ props.context[ 'stackable/tabOrientation' ] !== 'vertical' && <>
+					<AdvancedToggleControl
+						label={ __( 'Full Width', i18n ) }
+						attribute="fullWidth"
+						defaultValue={ false }
+						onChange={ fullWidth => {
+							const newAttributes = { fullWidth }
+
+							// For ceneterd pills, we have block margin
+							// left/right set to auto, so the full width
+							// option would look like it's not working,
+							// change the margins too.
+							const activeStyle = getBlockStyle( props.blockStyles, props.attributes.className )
+							if ( activeStyle.name === 'centered-pills' ) {
+								props.attributes.blockMargin = {
+									top: props.attributes.blockMargin?.top || '',
+									bottom: props.attributes.blockMargin?.bottom || '',
+								}
+								if ( fullWidth ) {
+									const right = props.attributes.blockMargin?.right || ''
+									const left = props.attributes.blockMargin?.left || ''
+									props.attributes.blockMargin.right = right === 'auto' ? '' : right
+									props.attributes.blockMargin.left = left === 'auto' ? '' : left
+								} else {
+									const right = props.attributes.blockMargin?.right || 'auto'
+									const left = props.attributes.blockMargin?.left || 'auto'
+									props.attributes.blockMargin.right = right === '' ? 'auto' : right
+									props.attributes.blockMargin.left = left === '' ? 'auto' : left
+								}
+							}
+
+							props.setAttributes( newAttributes )
+						} }
+					/>
+				</> }
+
+				{ ( ( props.attributes.iconPosition === '' || props.attributes.iconPosition === 'right' ) && props.attributes.showIcon ) && // Check if icon position is left or right
+							( ( props.context[ 'stackable/tabOrientation' ] !== 'vertical' && props.attributes.fullWidth ) || props.context[ 'stackable/tabOrientation' ] === 'vertical' ) && // Show if its in horizontal position and fullWidth OR show on vertical position
+								<AdvancedToggleControl
+									label={ __( 'Fixed Icon Position', i18n ) }
+									attribute="fixedIconPosition"
+									defaultValue={ false }
+								/>
+				}
+
+				{ props.attributes.showIcon &&
+					<AdvancedToolbarControl
+						label={ __( 'Icon Position', i18n ) }
+						controls={ ICON_ALIGN_OPTIONS }
+						attribute="iconPosition"
+					/>
+				}
+
+				{ props.context[ 'stackable/tabOrientation' ] !== 'vertical' && <>
+					{ ! props.attributes.fullWidth && (
+						<AdvancedToolbarControl
+							label={ __( 'Tab Alignment', i18n ) }
+							attribute="tabAlignment"
+							controls="horizontal"
+							// default="flex-start"
+							responsive="all"
+							// value={ props.attributes.tabAlignment |' }
+						/>
+					) }
+				</> }
+
+				{ ( props.attributes.fullWidth || props.context[ 'stackable/tabOrientation' ] === 'vertical' || props.attributes.iconPosition === 'top' || props.attributes.iconPosition === 'bottom' ) && <>
+					<AlignButtonsControl
+						label={ __( 'Text Alignment', i18n ) }
+						attribute="contentAlign"
+						responsive="all"
+					/>
+				</> }
+
+				{ props.context[ 'stackable/tabOrientation' ] !== 'vertical' && <>
+					<AdvancedRangeControl
+						label={ __( 'Column Gap', i18n ) }
+						attribute="columnGap"
+						min={ 0 }
+						sliderMax={ 50 }
+						placeholder="12"
+						responsive="all"
+					/>
+				</> }
+
+				<AdvancedRangeControl
+					label={ __( 'Row Gap', i18n ) }
+					attribute="rowGap"
+					min={ 0 }
+					sliderMax={ 50 }
+					placeholder="8"
+					responsive="all"
+				/>
+
+				{ props.attributes.showIcon &&
+					<AdvancedRangeControl
+						label={ __( 'Icon Gap', i18n ) }
+						attribute="iconGap"
+						min={ 0 }
+						sliderMax={ 50 }
+						placeholder="8"
+					/>
+				}
+
+				<AdvancedToggleControl
+					label={ __( 'Scrollable Tabs on Mobile', i18n ) }
+					attribute="scrollableOnMobile"
+					defaultValue={ true }
+
+				/>
+
+			</InspectorLayoutControls>
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Tab', i18n ) }
+					initialOpen={ true }
+					id="tab"
+				>
+					<BlockStyles styles={ props.blockStyles } context={ props.context } />
+					<ControlSeparator />
+
+					<Button.InspectorControls.Colors.Controls
+						// We add our own text color and icon color
+						hasTextColor={ false }
+						hasIconColor={ false }
+						attrNameTemplate="tab%s"
+					/>
+					<ColorPaletteControl
+						label={ __( 'Text Color', i18n ) }
+						attribute="tabTextColor1"
+						hover="all"
+					/>
+					{ props.attributes.showIcon &&
+						<ColorPaletteControl
+							label={ __( 'Icon Color', i18n ) }
+							// We need this name because the Button Block Component uses this.
+							attribute="tabIconColor1"
+							hover="all"
+						/>
+					}
+					<ControlSeparator />
+					<Button.InspectorControls.Size.Controls
+						attrNameTemplate="tab%s"
+					/>
+					<ControlSeparator />
+					<Button.InspectorControls.Borders.Controls
+						attrNameTemplate="tab%s"
+					/>
+				</PanelAdvancedSettings>
+
+				<PanelAdvancedSettings
+					title={ __( 'Tab Active State', i18n ) }
+					id="tab-active-state"
+				>
+					<Button.InspectorControls.Colors.Controls
+						hasTextColor={ false }
+						hasIconColor={ false }
+						attrNameTemplate="activeTab%s"
+					/>
+					<ColorPaletteControl
+						label={ __( 'Text Color', i18n ) }
+						attribute="activeTabTextColor"
+						hover="all"
+					/>
+					{ props.attributes.showIcon &&
+						<ColorPaletteControl
+							label={ __( 'Icon Color', i18n ) }
+							// We need this name because the Button Block Component uses this.
+							attribute="activeTabIconColor1"
+							hover="all"
+						/>
+					}
+					<ControlSeparator />
+					<Button.InspectorControls.Borders.Controls
+						attrNameTemplate="activeTab%s"
+						hasBorderType={ false }
+						borderTypeValue={ props.attributes.tabBorderType } // Change this to the value of the border type control
+						hasBorderRadius={ false }
+					/>
+				</PanelAdvancedSettings>
+
+				<PanelAdvancedSettings
+					title={ __( 'Typography', i18n ) }
+					initialOpen={ false }
+					id="typography"
+				>
+					<Typography.InspectorControls.Controls
+						attrNameTemplate="tab%s"
+						{ ...props }
+						hasTextContent={ false }
+						hasTextTag={ false }
+						isMultiline={ true }
+						initialOpen={ true }
+						hasTextShadow={ true }
+						hasGradient={ false }
+						hasInset={ false }
+					/>
+				</PanelAdvancedSettings>
+
+				<PanelAdvancedSettings
+					title={ __( 'Icon', i18n ) }
+					initialOpen={ false }
+					hasToggle={ true }
+					checked={ props.attributes.showIcon }
+					onChange={ showIcon => props.setAttributes( { showIcon } ) }
+					id="icon"
+				>
+					<Icon.InspectorControls
+						attrNameTemplate="tab%s"
+						wrapInPanels={ false }
+						hasGradient={ false }
+						hasShape={ false }
+						hasBackgroundShape={ false }
+						hasIconGap={ true }
+						hasIconPosition={ false }
+						defaultValue={ defaultIcon }
+						iconControlHelp={ __( 'Change icons individually by clicking on each tab\'s icon.', i18n ) }
+						iconGapPlaceholder="8"
+						onChangeIcon={ icon => {
+							// Reset all tab label icons.
+							const newTabLabels = cloneDeep( props.attributes.tabLabels ).map(
+								tab => ( {
+									...tab,
+									icon: '',
+								} )
+							)
+							props.setAttributes( {
+								icon,
+								tabLabels: newTabLabels,
+							} )
+						} }
+					>
+						<AdvancedToolbarControl
+							label={ __( 'Icon Position', i18n ) }
+							controls={ ICON_ALIGN_OPTIONS }
+							attribute="iconPosition"
+						/>
+					</Icon.InspectorControls>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<BlockDiv.InspectorControls />
+
+			<InspectorAdvancedControls>
+				<PanelAdvancedSettings
+					title={ __( 'Tab Anchors', i18n ) }
+					id="tabAnchors"
+				>
+					<GutBaseControl help={ __( "Assign unique anchor names to each tab so you'll be able to link directly and open each one.", i18n ) } />
+					{ props.tabLabels.map( ( tab, index ) => (
+						<AdvancedTextControl
+							label={ sprintf(
+								// Translators: %s is the tab label.
+								__( '%s Anchor', i18n ),
+								// eslint-disable-next-line @wordpress/i18n-no-variables
+								__( tab.label, i18n )
+							) }
+							value={ props.tabLabels[ index ].anchor }
+							placeholder={ __( 'Tab Anchor', i18n ) }
+							key={ `tab-anchors-${ index }` }
+							onChange={ value => {
+								const updatedLabels = cloneDeep( props.tabLabels )
+								updatedLabels[ index ].anchor = value
+								props.setTabLabels( updatedLabels )
+
+								if ( ! value ) {
+									props.setAttributes( { tabLabels: updatedLabels } )
+								}
+							} }
+							onBlur={ () => {
+								const updatedLabels = props.tabLabels
+								if ( updatedLabels[ index ].anchor ) {
+									updatedLabels[ index ].anchor = kebabCase( updatedLabels[ index ].anchor )
+									props.setAttributes( { tabLabels: updatedLabels } )
+								}
+							} }
+						/>
+					) ) }
+
+				</PanelAdvancedSettings>
+			</InspectorAdvancedControls>
+
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-labels" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapper,

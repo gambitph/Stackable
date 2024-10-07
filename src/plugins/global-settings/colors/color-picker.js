@@ -4,7 +4,6 @@
 import {
 	getRgb,
 	createColor,
-	updateFallbackBlockAttributes,
 	convertGlobalColorBlockAttributesToStatic,
 } from './util'
 
@@ -42,8 +41,9 @@ const ColorPickers = props => {
 	 * @param {Array} newColors colors passed.
 	 */
 	const updateColors = newColors => {
+		// NOTE: Removed this because it is slow to update all blocks.
 		// Update the blocks in our page.
-		updateFallbackBlockAttributes( newColors )
+		// updateFallbackBlockAttributes( newColors )
 
 		// Save settings.
 		clearTimeout( saveTimeout )

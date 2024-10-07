@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { ContainerStyles } from './style'
+import blockStyles from './style'
 import SVGCloseIcon from './images/close-icon.svg'
 import variations from './variations'
 
@@ -19,10 +19,10 @@ import {
 	PanelAdvancedSettings,
 	AdvancedSelectControl,
 	InspectorBottomTip,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	ContainerDiv,
 	ConditionalDisplay,
 	Alignment,
@@ -50,18 +50,16 @@ import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+import { memo } from '@wordpress/element'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
 		setAttributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -85,80 +83,20 @@ const Edit = props => {
 	const lastBlockName = last( innerBlocks )?.name
 	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<ContentAlign.InspectorControls />
-				<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						id="general"
-						initialOpen={ true }
-					>
-						<AdvancedSelectControl
-							label={ __( 'Notification Type', i18n ) }
-							attribute="notificationType"
-							options={ [
-								{
-									label: __( 'Success', i18n ),
-									value: '',
-								},
-								{
-									label: __( 'Error', i18n ),
-									value: 'error',
-								},
-								{
-									label: __( 'Warning', i18n ),
-									value: 'warning',
-								},
-								{
-									label: __( 'Information', i18n ),
-									value: 'info',
-								},
-							] }
-						/>
-					</PanelAdvancedSettings>
-					<PanelAdvancedSettings
-						title={ __( 'Dismissible', i18n ) }
-						id="dismissible"
-						hasToggle={ true }
-						checked={ props.attributes.isDismissible }
-						onChange={ value => setAttributes( { isDismissible: value } ) }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Icon Size', i18n ) }
-							attribute="dismissibleSize"
-							min="0"
-							sliderMax="50"
-							step="1"
-							placeholder="16"
-						/>
-						<ColorPaletteControl
-							label={ __( 'Icon Color', i18n ) }
-							attribute="dismissibleColor"
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<BlockDiv.InspectorControls />
-				<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
-				<BlockLink.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
+			<InspectorControls setAttributes={ setAttributes } isDismissible={ attributes.isDismissible } />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -167,11 +105,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				enableVariationPicker={ true }
 			>
-				<ContainerStyles
-					version={ VERSION }
-					clientId={ clientId }
-					blockState={ props.blockState }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-notification" />
 
 				<ContainerDiv className={ contentClassNames }>
@@ -198,6 +132,84 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<ContentAlign.InspectorControls />
+			<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedSelectControl
+						label={ __( 'Notification Type', i18n ) }
+						attribute="notificationType"
+						options={ [
+							{
+								label: __( 'Success', i18n ),
+								value: '',
+							},
+							{
+								label: __( 'Error', i18n ),
+								value: 'error',
+							},
+							{
+								label: __( 'Warning', i18n ),
+								value: 'warning',
+							},
+							{
+								label: __( 'Information', i18n ),
+								value: 'info',
+							},
+						] }
+					/>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Dismissible', i18n ) }
+					id="dismissible"
+					hasToggle={ true }
+					checked={ props.isDismissible }
+					onChange={ value => props.setAttributes( { isDismissible: value } ) }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Icon Size', i18n ) }
+						attribute="dismissibleSize"
+						min="0"
+						sliderMax="50"
+						step="1"
+						placeholder="16"
+					/>
+					<ColorPaletteControl
+						label={ __( 'Icon Color', i18n ) }
+						attribute="dismissibleColor"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+			<BlockLink.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

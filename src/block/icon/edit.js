@@ -1,6 +1,6 @@
 /** Internal dependencies
  */
-import { IconStyles } from './style'
+import blockStyles from './style'
 /**
  * External dependencies
  */
@@ -12,13 +12,13 @@ import {
 	InspectorAdvancedControls,
 	PanelAdvancedSettings,
 	AdvancedTextControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Icon,
 	getAlignmentClasses,
 	Advanced,
@@ -40,15 +40,13 @@ import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { defaultIcon } from './schema'
+import { memo } from '@wordpress/element'
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -60,44 +58,24 @@ const Edit = props => {
 
 	const derivedIcon = applyFilters( 'stackable.block-component.icon.default', defaultIcon )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<Alignment.InspectorControls />
-				<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
-				<BlockDiv.InspectorControls />
-				<Link.InspectorControls hasToggle={ true } isAdvancedTab={ true } />
-
-				<InspectorAdvancedControls>
-					<PanelAdvancedSettings
-						title={ __( 'Accessibility', i18n ) }
-						id="accessibility"
-					>
-						<AdvancedTextControl
-							isDynamic={ false }
-							label={ __( 'Icon Label', i18n ) }
-							attribute="ariaLabel"
-						/>
-					</PanelAdvancedSettings>
-				</InspectorAdvancedControls>
-
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
-			<IconStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
+			<InspectorControls
+				derivedIcon={ derivedIcon }
 			/>
+
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-icon" />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -113,6 +91,41 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ props.derivedIcon } />
+			<BlockDiv.InspectorControls />
+			<Link.InspectorControls hasToggle={ true } isAdvancedTab={ true } />
+
+			<InspectorAdvancedControls>
+				<PanelAdvancedSettings
+					title={ __( 'Accessibility', i18n ) }
+					id="accessibility"
+				>
+					<AdvancedTextControl
+						isDynamic={ false }
+						label={ __( 'Icon Label', i18n ) }
+						attribute="ariaLabel"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorAdvancedControls>
+
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

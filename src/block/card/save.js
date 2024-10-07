@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { CardStyles } from './style'
-
-/**
  * External dependencies
  */
 import classnames from 'classnames/dedupe'
@@ -72,7 +67,7 @@ export const Save = props => {
 			version={ props.version }
 			data-v={ props.attributes.version }
 		>
-			<CardStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			{ attributes.uniqueId && <ContainerDiv.Content
 				className={ contentClassNames }
