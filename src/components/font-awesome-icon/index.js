@@ -80,7 +80,10 @@ const addSVGAttributes = ( svgHTML, attributesToAdd = {}, attributesToRemove = [
 }
 
 const FontAwesomeIcon = memo( props => {
-	const { svgAttrsToAdd = { width: '32', height: '32' }, svgAttrsToRemove = [ 'id', 'data-name' ] } = props
+	const { 
+		svgAttrsToAdd = { width: '32', height: '32' },
+		svgAttrsToRemove = [ 'id', 'data-name' ],
+	} = props
 	const [ forceUpdateCount, setForceUpdateCount ] = useState( 0 )
 	const forceUpdate = () => {
 		setForceUpdateCount( forceUpdateCount + 1 )
