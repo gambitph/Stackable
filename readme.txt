@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.3
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Requires PHP: 7.3
-Stable tag: 3.13.7
+Stable tag: 3.13.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -294,6 +294,18 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.13.9 =
+* Fixed: Text blocks: text gradient color doesn't show for misspelled words #3305
+* Fixed: Button block: adding a button block now places the cursor inside the button ##3324
+* Fixed: Conditional display: inspector options do not re-render when changing values #3342
+* Fixed: Optimized CSS: mobile styles can overwrite tablet styles sometimes (to fix, please re-save the page) #3345
+
+= 3.13.8 =
+* Fixed: Possible editor freezing when using deprecated icon lists inside patterns #3332
+* Fixed: Timeline block: last timeline doesn't cut off in mobile view (part 2 of fix) #3292
+* Fixed: Icon List block: can produce an error when migrating from an old version #3334
+* Fixed: Prevent possible PHP error when calling kses too early
 
 = 3.13.7 =
 * Fixed: Stylesheets can sometimes not load in the frontend

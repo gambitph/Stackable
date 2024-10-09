@@ -26,6 +26,11 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 	 * @return array Modified HTML tags & attributes.
 	 */
 	function stackable_allow_wp_kses_allowed_html( $tags, $context ) {
+		// For some reason, there are server setups that can call this too early and wp_get_current_user() is not yet defined.
+		if ( ! function_exists( 'wp_get_current_user' ) || ! function_exists( 'current_user_can' ) ) {
+			return $tags;
+		}
+
 		// Only allow these tags if the user can edit posts.
 		if ( ! current_user_can( 'edit_posts' ) ) {
 			return $tags;
