@@ -33,7 +33,7 @@ export const Save = props => {
 		className,
 		'stk-block-heading',
 		responsiveClass,
-		'stk-block-heading--v2',
+		'stk-block-heading--v3',
 	], props ) )
 
 	const textClassNames = classnames( [
