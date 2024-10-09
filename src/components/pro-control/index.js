@@ -110,8 +110,11 @@ const LABELS = {
 		</ul>,
 	},
 	'icon-library': {
+		title: __( 'Unlock Your Icon Library', i18n ),
 		description: <ul>
-			<li>{ __( 'Icon Library', i18n ) }</li>
+			<li>{ __( 'Add your custom SVG icons', i18n ) }</li>
+			<li>{ __( 'Easily access your custom icons in the icon picker', i18n ) }</li>
+			<li>{ __( 'Organize your custom icons in your library', i18n ) }</li>
 		</ul>,
 	},
 }
