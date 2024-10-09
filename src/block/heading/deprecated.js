@@ -19,6 +19,21 @@ import {
  */
 import { addFilter } from '@wordpress/hooks'
 
+// Version 3.13.9 Deprecations
+addFilter( 'stackable.heading.save.blockClassNames', 'stackable/3.13.9', ( output, props ) => {
+	if ( compareVersions( props.version, '3.13.9' ) >= 0 ) { // Current version is greater than or equal to 3.13.9
+		return output
+	}
+
+	const responsiveClass = getResponsiveClasses( props.attributes )
+	return [
+		props.className,
+		'stk-block-heading',
+		responsiveClass,
+		'stk-block-heading--v2',
+	]
+} )
+
 // Version 3.6.1 Deprecations
 addFilter( 'stackable.heading.save.blockClassNames', 'stackable/3.6.1', ( output, props ) => {
 	if ( compareVersions( props.version, '3.6.1' ) === 1 ) { // Current version is greater than 3.6.1

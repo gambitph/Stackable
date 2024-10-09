@@ -10,3 +10,10 @@
 		margin: 0 !important;
 	}
 }
+
+.stk-block-heading--v3 {
+	.stk-block-heading__text:not(.stk-block-heading--use-theme-margins) {
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+	}
+}
