@@ -182,16 +182,15 @@ const Edit = props => {
 				<CustomCSS mainBlockClass="stk-block-button-group" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder blockName="stackable/button" /> }
-				{ hasInnerBlocks &&
-					<div className={ contentClassNames }>
-						<InnerBlocks
-							orientation="horizontal"
-							allowedBlocks={ ALLOWED_INNER_BLOCKS }
-							template={ TEMPLATE }
-							templateInsertUpdatesSelection={ true }
-						/>
-					</div>
-				}
+				<div className={ contentClassNames }>
+					<InnerBlocks
+						orientation="horizontal"
+						allowedBlocks={ ALLOWED_INNER_BLOCKS }
+						template={ TEMPLATE }
+						templateInsertUpdatesSelection={ true }
+						renderAppender={ hasInnerBlocks ? undefined : false }
+					/>
+				</div>
 			</BlockDiv>
 			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>
