@@ -34,7 +34,6 @@ import {
 	AlignButtonsControl,
 	useBlockCssGenerator,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
 import { createBlockCompleter } from '~stackable/util'
 import {
 	withBlockAttributeContext,
@@ -50,7 +49,7 @@ import {
 	useEffect, useState, useRef, memo,
 } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 /**
@@ -75,7 +74,13 @@ const Edit = props => {
 		attributes,
 	} = props
 
-	const { parentBlock } = useBlockContext()
+	const { parentBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( props.clientId )
+		return {
+			parentBlock: getBlock( parentClientId ),
+		}
+	}, [ props.clientId ] )
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockClassNames = classnames( [

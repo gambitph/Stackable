@@ -11,7 +11,6 @@ import { version as VERSION, i18n } from 'stackable'
 import {
 	InspectorTabs, AlignButtonsControl, useBlockCssGenerator,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	BlockDiv,
 	Image,
@@ -43,6 +42,7 @@ import { compose } from '@wordpress/compose'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 const heightUnit = [ 'px', 'vh', '%' ]
 
@@ -59,7 +59,13 @@ const Edit = props => {
 	)
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { parentBlock } = useBlockContext( clientId )
+	const { parentBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+		return {
+			parentBlock: getBlock( parentClientId ),
+		}
+	}, [ clientId ] )
 
 	// Allow special or layout blocks to disable the link for the image block,
 	// e.g. image box doesn't need the image to have a link since it has it's

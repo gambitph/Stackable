@@ -389,4 +389,3 @@ export const mergeStyles = ( styles, important = true ) => {
 
 Style.addAttributes = addAttributes
 
-export * from './use-generated-css'

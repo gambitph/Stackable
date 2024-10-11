@@ -10,7 +10,7 @@ import Image_ from './image'
 /**
  * External dependencies
  */
-import { useBlockAttributesContext, useBlockContext } from '~stackable/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 import { pickBy } from 'lodash'
 
 /**
@@ -18,6 +18,7 @@ import { pickBy } from 'lodash'
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
 
 export { deprecationImageOverlayOpacity } from './deprecated'
 
@@ -28,7 +29,7 @@ export const Image = props => {
 		...propsToPass
 	} = props
 
-	const { isSelected } = useBlockEditContext()
+	const { isSelected, clientId } = useBlockEditContext()
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
 			imageOverlayColorType: attributes.imageOverlayColorType,
@@ -64,7 +65,13 @@ export const Image = props => {
 			figcaptionShow: attributes.figcaptionShow,
 		}
 	} )
-	const { parentBlock } = useBlockContext()
+	const { parentBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+		return {
+			parentBlock: getBlock( parentClientId ),
+		}
+	}, [ clientId ] )
 
 	const { setImage } = useImage()
 
