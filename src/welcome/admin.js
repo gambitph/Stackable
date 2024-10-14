@@ -134,7 +134,7 @@ const RestSettingsNotice = () => {
 	)
 }
 
-const SaveSettingsNotice = ( ) => {
+const SaveSettingsNotice = () => {
 	const [ isDismissed, setIsDismissed ] = useState( false )
 
 	if ( isDismissed ) {
@@ -151,21 +151,105 @@ const SaveSettingsNotice = ( ) => {
 	)
 }
 
+// TODO: Proper tab nesting
+// Implement other highlight without admin base
 const Sidenav = ( {
 	currentTab,
-	onTabChange,
+	handleTabChange,
 	handleSettingsSave,
+	currentSearch,
 } ) => {
 	const tabList = useMemo( () => [
-		{ id: 'editor-settings', label: __( 'Editor Settings', i18n ) },
-		{ id: 'responsiveness', label: __( 'Responsiveness', i18n ) },
-		{ id: 'blocks', label: __( 'Blocks', i18n ) },
-		{ id: 'optimizations', label: __( 'Optimization', i18n ) },
-		{ id: 'global-settings', label: __( 'Global Settings', i18n ) },
-		{ id: 'role-manager', label: __( 'Role Manager', i18n ) },
-		{ id: 'custom-fields-settings', label: __( 'Custom Fields', i18n ) },
-		{ id: 'integrations', label: __( 'Integration', i18n ) },
-		{ id: 'other-settings', label: __( 'Miscellaneous ', i18n ) },
+		{
+			id: 'editor-settings',
+			label: __( 'Editor Settings', i18n ),
+			settings: [
+				'Nested Block Width',
+				'Nested Wide Block Width',
+				'Design Library',
+				'Block Linking (Beta)',
+				'Toolbar Text Highlight',
+				'Toolbar Dynamic Content',
+				'Copy & Paste Styles',
+				'Reset Layout',
+				'Save as Default Block',
+				'Dont show help video tooltips',
+				'Auto-Collapse Panels',
+			],
+		},
+		{
+			id: 'responsiveness',
+			label: __( 'Responsiveness', i18n ),
+			settings: [
+				'Tablet Breakpoint',
+				'Mobile Breakpoint',
+			],
+		},
+		{
+			id: 'blocks',
+			label: __( 'Blocks', i18n ),
+			settings: [],
+		},
+		{
+			id: 'optimizations',
+			label: __( 'Optimization', i18n ),
+			settings: [
+				'Optimize Inline CSS',
+				'Lazy Load Images within Carousels',
+			],
+		},
+		{
+			id: 'global-settings',
+			label: __( 'Global Settings', i18n ),
+			settings: [
+				'Force Typography Styles',
+			],
+		},
+		{
+			id: 'role-manager',
+			label: __( 'Role Manager', i18n ),
+			settings: [
+				'Role Manager',
+				'Administrator',
+				'Editor',
+				'Author',
+				'Contributor',
+				'Subscriber',
+			],
+		},
+		{
+			id: 'custom-fields-settings',
+			label: __( 'Custom Fields', i18n ),
+			settings: [
+				'Custom Fields',
+				'Administrator',
+				'Editor',
+				'Author',
+				'Contributor',
+				'Subscriber',
+			],
+		},
+		{
+			id: 'integrations',
+			label: __( 'Integration', i18n ),
+			settings: [
+				'Google Maps API Key',
+				'FontAwesome Pro Kit',
+				'FontAwesome Icon Library Version',
+			],
+		},
+		{
+			id: 'other-settings',
+			label: __( 'Miscellaneous ', i18n ),
+			settings: [
+				'Migration',
+				'Show Go premium notices',
+				'Generate Global Colors for native blocks',
+				'Load version 2 blocks in the editor',
+				'Load version 2 blocks in the editor only when the page was using version 2 blocks',
+				'Load version 2 frontend block stylesheet and scripts for backward compatibility',
+			],
+		},
 	], [] )
 
 	const sidenavRef = useRef( null )
@@ -191,12 +275,23 @@ const Sidenav = ( {
 		<>
 			<nav className="s-sidenav" ref={ sidenavRef }>
 				<div>
-					{ tabList.map( ( { id, label } ) => {
+					{ tabList.map( ( {
+						id,
+						label,
+						settings,
+					} ) => {
+						const isSearched = currentSearch &&
+							settings.some( setting => setting.toLowerCase().includes( currentSearch ) )
+						const classes = classnames( [
+							's-sidenav-item',
+							{ 's-sidenav-item-highlight': isSearched },
+							{ 's-active': currentTab === id },
+						] )
 						return ( <button
 							key={ id }
-							className={ `s-sidenav-item ${ currentTab === id ? 's-active' : '' }` }
-							onClick={ () => onTabChange( id ) }
-							onKeyDown={ () => onTabChange( id ) }
+							className={ classes }
+							onClick={ () => handleTabChange( id ) }
+							onKeyDown={ () => handleTabChange( id ) }
 							role="tab"
 							tabIndex={ 0 }
 						>
@@ -216,11 +311,29 @@ const Sidenav = ( {
 	)
 }
 
+const Searchbar = ( { currentSearch, handleSearchChange } ) => {
+	const handleSearch = e => {
+		handleSearchChange( ( e.target.value.toLowerCase(), i18n ) )
+	}
+	return (
+		<div className="s-search-setting">
+			<input
+				className="s-search-setting__input"
+				type="search"
+				placeholder={ __( 'Search settings', i18n ) }
+				value={ currentSearch }
+				onChange={ handleSearch }
+			/>
+		</div>
+	)
+}
+
 // Main settings component
 const Settings = () => {
 	const [ settings, setSettings ] = useState( {} )
 	const [ unsavedChanges, setUnsavedChanges ] = useState( {} )
 	const [ currentTab, setCurrentTab ] = useState( 'editor-settings' )
+	const [ currentSearch, setCurrentSearch ] = useState( '' )
 
 	const handleSettingsChange = useCallback( newSettings => {
 		setSettings( prev => ( { ...prev, ...newSettings } ) )
@@ -255,29 +368,48 @@ const Settings = () => {
 		} )
 	}, [] )
 
+	const props = {
+		settings,
+		handleSettingsChange,
+		currentSearch,
+	}
+
 	return <>
-		<Sidenav currentTab={ currentTab } onTabChange={ setCurrentTab } handleSettingsSave={ handleSettingsSave } />
+		<Sidenav
+			currentTab={ currentTab }
+			handleTabChange={ setCurrentTab }
+			handleSettingsSave={ handleSettingsSave }
+			currentSearch={ currentSearch }
+		/>
 		<article className="s-box" id={ currentTab }>
-			{ currentTab === 'editor-settings' && <EditorSettings { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'responsiveness' && <Responsiveness { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'blocks' && <Blocks { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'optimizations' && <Optimizations { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'global-settings' && <GlobalSettings { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'role-manager' && <RoleManager { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'custom-fields-settings' && <CustomFields { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'integrations' && <Integrations { ...{ settings, handleSettingsChange } } /> }
-			{ currentTab === 'other-settings' && <AdditionalOptions { ...{ settings, handleSettingsChange } } /> }
+			<Searchbar currentSearch={ currentSearch } handleSearchChange={ setCurrentSearch } />
+			{ currentTab === 'editor-settings' && <EditorSettings { ...props } /> }
+			{ currentTab === 'responsiveness' && <Responsiveness { ...props } /> }
+			{ currentTab === 'blocks' && <Blocks { ...props } /> }
+			{ currentTab === 'optimizations' && <Optimizations { ...props } /> }
+			{ currentTab === 'global-settings' && <GlobalSettings { ...props } /> }
+			{ currentTab === 'role-manager' && <RoleManager { ...props } /> }
+			{ currentTab === 'custom-fields-settings' && <CustomFields { ...props } /> }
+			{ currentTab === 'integrations' && <Integrations { ...props } /> }
+			{ currentTab === 'other-settings' && <AdditionalOptions { ...props } /> }
 		</article>
 	</>
 }
 
-const EditorSettings = ( { settings, handleSettingsChange } ) => {
+const EditorSettings = props => {
+	const {
+		settings,
+		handleSettingsChange,
+		currentSearch,
+	} = props
+
 	return (
 		<div className="s-editor-settings">
 			<h2>{ __( 'Blocks', i18n ) }</h2>
 			<p className="s-settings-subtitle">{ __( 'You can customize the behavior of some blocks here.', i18n ) }</p>
 			<AdminTextSetting
 				label={ __( 'Nested Block Width', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_block_default_width }
 				type="text"
 				onChange={ value => {
@@ -287,6 +419,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminTextSetting
 				label={ __( 'Nested Wide Block Width', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_block_wide_width }
 				type="text"
 				onChange={ value => {
@@ -296,6 +429,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminToggleSetting
 				label={ __( 'Stackable Text as Default Block', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_text_default_block }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_text_default_block: value } ) // eslint-disable-line camelcase
@@ -307,6 +441,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
 			<AdminToggleSetting
 				label={ __( 'Design Library', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_design_library }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_design_library: value } ) // eslint-disable-line camelcase
@@ -315,6 +450,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminToggleSetting
 				label={ __( 'Stackable Settings', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_global_settings }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_global_settings: value } ) // eslint-disable-line camelcase
@@ -323,6 +459,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminToggleSetting
 				label={ __( 'Block Linking (Beta)', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_block_linking }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
@@ -340,6 +477,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			<p className="s-settings-subtitle">{ __( 'You can disable some toolbar features here.', i18n ) }	</p>
 			<AdminToggleSetting
 				label={ __( 'Toolbar Text Highlight', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_text_highlight }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_text_highlight: value } ) // eslint-disable-line camelcase
@@ -348,6 +486,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminToggleSetting
 				label={ __( 'Toolbar Dynamic Content', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_dynamic_content }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_dynamic_content: value } ) // eslint-disable-line camelcase
@@ -356,6 +495,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminToggleSetting
 				label={ __( 'Copy & Paste Styles', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_copy_paste_styles }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_copy_paste_styles: value } ) // eslint-disable-line camelcase
@@ -364,6 +504,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminToggleSetting
 				label={ __( 'Reset Layout', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_reset_layout }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_reset_layout: value } ) // eslint-disable-line camelcase
@@ -372,6 +513,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminToggleSetting
 				label={ __( 'Save as Default Block', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_save_as_default_block }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_save_as_default_block: value } ) // eslint-disable-line
@@ -383,6 +525,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the inspector here.' ) }</p>
 			<AdminToggleSetting
 				label={ __( 'Don\'t show help video tooltips', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_help_tooltip_disabled === '1' }
 				onChange={ value => {
 					handleSettingsChange( { stackable_help_tooltip_disabled: value ? '1' : '' } ) // eslint-disable-line camelcase
@@ -391,6 +534,7 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminToggleSetting
 				label={ __( 'Auto-Collapse Panels', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_auto_collapse_panels }
 				onChange={ value => {
 					handleSettingsChange( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
@@ -401,7 +545,13 @@ const EditorSettings = ( { settings, handleSettingsChange } ) => {
 	)
 }
 
-const Responsiveness = ( { settings, handleSettingsChange } ) => {
+const Responsiveness = props => {
+	const {
+		settings,
+		handleSettingsChange,
+		currentSearch,
+	} = props
+
 	return (
 		<div className="s-responsiveness">
 			<h2>{ __( 'Dynamic Breakpoints', i18n ) }</h2>
@@ -413,6 +563,7 @@ const Responsiveness = ( { settings, handleSettingsChange } ) => {
 			</p>
 			<AdminTextSetting
 				label={ __( 'Tablet Breakpoint', i18n ) }
+				searchTerm={ currentSearch }
 				type="number"
 				value={ settings.stackable_dynamic_breakpoints.tablet || '' } // eslint-disable-line camelcase
 				onChange={ value => {
@@ -427,6 +578,7 @@ const Responsiveness = ( { settings, handleSettingsChange } ) => {
 			> px</AdminTextSetting>
 			<AdminTextSetting
 				label={ __( 'Mobile Breakpoint', i18n ) }
+				searchTerm={ currentSearch }
 				type="number"
 				value={ settings.stackable_dynamic_breakpoints.mobile || '' } // eslint-disable-line camelcase
 				onChange={ value => {
@@ -571,12 +723,19 @@ const Blocks = ( { settings, handleSettingsChange } ) => {
 	)
 }
 
-const Optimizations = ( { settings, handleSettingsChange } ) => {
+const Optimizations = props => {
+	const {
+		settings,
+		handleSettingsChange,
+		currentSearch,
+	} = props
+
 	return (
 		<div className="s-optimizations">
 			<h2>{ __( 'Optimizations', i18n ) }</h2>
 			<AdminToggleSetting
 				label={ __( 'Optimize Inline CSS', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_optimize_inline_css }
 				onChange={ value => {
 					handleSettingsChange( { stackable_optimize_inline_css: value } ) // eslint-disable-line camelcase
@@ -585,6 +744,7 @@ const Optimizations = ( { settings, handleSettingsChange } ) => {
 			/>
 			<AdminToggleSetting
 				label={ __( 'Lazy Load Images within Carousels', i18n ) }
+				searchTerm={ currentSearch }
 				value={ settings.stackable_enable_carousel_lazy_loading }
 				onChange={ value => {
 					handleSettingsChange( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
@@ -595,14 +755,15 @@ const Optimizations = ( { settings, handleSettingsChange } ) => {
 	)
 }
 
-const GlobalSettings = ( { settings, handleSettingsChange } ) => {
+const GlobalSettings = props => {
 	return <>
 		<h2>{ __( 'Global Settings', i18n ) }</h2>
 		<AdminToggleSetting
 			label={ __( 'Force Typography Styles', i18n ) }
-			value={ settings.stackable_global_force_typography }
+			searchTerm={ props.currentSearch }
+			value={ props.settings.stackable_global_force_typography }
 			onChange={ value => {
-				handleSettingsChange( { stackable_global_force_typography: value } ) // eslint-disable-line camelcase
+				props.handleSettingsChange( { stackable_global_force_typography: value } ) // eslint-disable-line camelcase
 			} }
 			disabled={ __( 'Not forced', i18n ) }
 			enabled={ __( 'Force styles', i18n ) }
@@ -612,7 +773,7 @@ const GlobalSettings = ( { settings, handleSettingsChange } ) => {
 
 const EditorModeSettings = lazy( () => import( '../../pro__premium_only/src/welcome/editor-mode' ) )
 
-const RoleManager = ( { settings, handleSettingsChange } ) => {
+const RoleManager = props => {
 	return <>
 		<h2>{ __( '📰 Role Manager', i18n ) }</h2>
 		<p className="s-settings-subtitle">
@@ -630,7 +791,7 @@ const RoleManager = ( { settings, handleSettingsChange } ) => {
 		{ isPro
 			? <Suspense fallback={ <Spinner /> }>
 				<div className="s-editing-mode-settings">
-					<EditorModeSettings { ...{ settings, handleSettingsChange } } />
+					<EditorModeSettings { ...props } />
 				</div>
 			</Suspense>
 			: <p className="s-settings-pro">
@@ -646,14 +807,14 @@ const RoleManager = ( { settings, handleSettingsChange } ) => {
 const CustomFieldsEnableSettings = lazy( () => import( '../../pro__premium_only/src/welcome/custom-fields-toggle' ) )
 const CustomFieldsManagerSettings = lazy( () => import( '../../pro__premium_only/src/welcome/custom-fields-roles' ) )
 
-const CustomFields = ( { settings, handleSettingsChange } ) => {
+const CustomFields = props => {
 	return <>
 		<div className="s-custom-fields-settings-header">
 			<h2>{ __( '📋 Custom Fields', i18n ) }</h2>
 			{ isPro &&
 				<Suspense fallback={ <Spinner /> }>
 					<div className="s-custom-fields-enable">
-						<CustomFieldsEnableSettings { ...{ settings, handleSettingsChange } } />
+						<CustomFieldsEnableSettings { ...props } />
 					</div>
 				</Suspense>
 			}
@@ -667,7 +828,7 @@ const CustomFields = ( { settings, handleSettingsChange } ) => {
 		{ isPro
 			? <Suspense fallback={ <Spinner /> }>
 				<div className="s-custom-fields-manager">
-					<CustomFieldsManagerSettings { ...{ settings, handleSettingsChange } } />
+					<CustomFieldsManagerSettings { ...props } />
 				</div>
 			</Suspense>
 			: <p className="s-settings-pro">
@@ -682,16 +843,17 @@ const CustomFields = ( { settings, handleSettingsChange } ) => {
 
 const IconSettings = lazy( () => import( '../../pro__premium_only/src/welcome/icons.js' ) )
 
-const Integrations = ( { settings, handleSettingsChange } ) => {
+const Integrations = props => {
 	return (
 		<div className="s-integrations">
 			<h2>{ __( 'Integrations', i18n ) }</h2>
 			<AdminTextSetting
 				label={ __( 'Google Maps API Key', i18n ) }
-				value={ settings.stackable_google_maps_api_key }
+				searchTerm={ props.currentSearch }
+				value={ props.settings.stackable_google_maps_api_key }
 				type="text"
 				onChange={ value => {
-					handleSettingsChange( { stackable_google_maps_api_key: value } ) // eslint-disable-line camelcase
+					props.handleSettingsChange( { stackable_google_maps_api_key: value } ) // eslint-disable-line camelcase
 				} }
 				help={
 					<>
@@ -707,7 +869,7 @@ const Integrations = ( { settings, handleSettingsChange } ) => {
 			{ isPro
 				? <Suspense fallback={ <Spinner /> }>
 					<div className="s-icon-settings">
-						<IconSettings { ...{ settings, handleSettingsChange } } />
+						<IconSettings { ...props } />
 					</div>
 				</Suspense>
 				: <>
@@ -741,7 +903,8 @@ const Integrations = ( { settings, handleSettingsChange } ) => {
 				<div className="s-icon-settings-fa-free-version">
 					<AdminSelectSetting
 						label={ __( 'FontAwesome Icon Library Version', i18n ) }
-						value={ settings.stackable_icons_fa_free_version }
+						searchTerm={ props.currentSearch }
+						value={ props.settings.stackable_icons_fa_free_version }
 						options={ [
 							{
 								name: '6.5.1',
@@ -753,7 +916,7 @@ const Integrations = ( { settings, handleSettingsChange } ) => {
 							},
 						] }
 						onChange={ value => {
-							handleSettingsChange( { stackable_icons_fa_free_version: value } ) // eslint-disable-line camelcase
+							props.handleSettingsChange( { stackable_icons_fa_free_version: value } ) // eslint-disable-line camelcase
 						} }
 					/>
 				</div>
@@ -762,13 +925,28 @@ const Integrations = ( { settings, handleSettingsChange } ) => {
 	)
 }
 
-const AdditionalOptions = ( { settings, handleSettingsChange } ) => {
+const AdditionalOptions = props => {
+	const {
+		settings,
+		handleSettingsChange,
+		currentSearch,
+	} = props
+
+	const searchClassname = label => {
+		return currentSearch && (
+			label.toLowerCase().includes( currentSearch )
+				? 'components-base-control--highlight'
+				: 'components-base-control--not-highlight'
+		)
+	}
+
 	return (
 		<div className="s-other-options-wrapper">
 			<h2>{ __( '🔩 Miscellaneous', i18n ) }</h2>
 			{ showProNoticesOption &&
 				<CheckboxControl
 					label={ __( 'Show "Go premium" notices', i18n ) }
+					className={ searchClassname( 'Show Go premium notices' ) }
 					checked={ settings.stackable_show_pro_notices === '1' }
 					onChange={ checked => {
 						handleSettingsChange( { stackable_show_pro_notices: checked ? '1' : '' } ) // eslint-disable-line camelcase
@@ -777,6 +955,7 @@ const AdditionalOptions = ( { settings, handleSettingsChange } ) => {
 			}
 			<CheckboxControl
 				label={ __( 'Generate Global Colors for native blocks', i18n ) }
+				className={ searchClassname( 'Generate Global Colors for native blocks' ) }
 				help={ __( `When enabled, extra frontend CSS is generated to support Stackable global colors used in native blocks. If you don't use Stackable global colors in native blocks, simply toggle this OFF. Please note that Stackable global colors are no longer available for native blocks. To ensure your styles always look perfect, our auto-detect feature will activate this option whenever needed.`, i18n ) }
 				checked={ !! settings.stackable_global_colors_native_compatibility }
 				onChange={ checked => {
@@ -791,6 +970,7 @@ const AdditionalOptions = ( { settings, handleSettingsChange } ) => {
 			</p>
 			<CheckboxControl
 				label={ __( 'Load version 2 blocks in the editor', i18n ) }
+				className={ searchClassname( 'Load version 2 blocks in the editor' ) }
 				checked={ settings.stackable_v2_editor_compatibility === '1' } // eslint-disable-line camelcase
 				onChange={ checked => {
 					if ( checked ) {
@@ -801,6 +981,7 @@ const AdditionalOptions = ( { settings, handleSettingsChange } ) => {
 			/>
 			<CheckboxControl
 				label={ __( 'Load version 2 blocks in the editor only when the page was using version 2 blocks', i18n ) }
+				className={ searchClassname( 'Load version 2 blocks in the editor only when the page was using version 2 blocks' ) }
 				checked={ settings.stackable_v2_editor_compatibility_usage === '1' } // eslint-disable-line camelcase
 				onChange={ checked => {
 					if ( checked ) {
@@ -812,6 +993,7 @@ const AdditionalOptions = ( { settings, handleSettingsChange } ) => {
 			<CheckboxControl
 				disabled={ settings.stackable_v2_editor_compatibility === '1' || settings.stackable_v2_editor_compatibility_usage === '1' }
 				label={ __( 'Load version 2 frontend block stylesheet and scripts for backward compatibility', i18n ) }
+				className={ searchClassname( 'Load version 2 frontend block stylesheet and scripts for backward compatibility' ) }
 				checked={
 					settings.stackable_v2_editor_compatibility	=== '1' ||
 					settings.stackable_v2_editor_compatibility_usage === '1' ||
