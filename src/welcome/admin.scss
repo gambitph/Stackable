@@ -538,7 +538,6 @@ body.toplevel_page_stk-custom-fields {
 			}
 			&.s-sidenav-item-highlight {
 				font-weight: bold;
-				text-decoration: underline;
 			}
 		}
 		// This is a button, render this in the bottom of the side bar
@@ -572,6 +571,33 @@ body.toplevel_page_stk-custom-fields {
 			margin: 120px 20px 0;
 		}
 	}
+	.s-search-setting {
+		display: flex;
+		justify-content: end;
+		.s-search-setting__input {
+			margin: 0;
+			padding: 0.5em 1em;
+			width: 250px;
+		}
+	}
+	.ugb-admin-setting--highlight {
+		.ugb-admin-setting__label {
+			color: #333;
+		}
+	}
+	.components-base-control--highlight {
+		label {
+			color: #333;
+		}
+	}
+	.ugb-admin-setting--not-highlight {
+		display: none;
+	}
+
+	.components-base-control--not-highlight {
+		display: none;
+	}
+
 	.s-side {
 		h2,
 		h3 {
