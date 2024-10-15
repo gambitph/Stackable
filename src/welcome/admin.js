@@ -32,7 +32,7 @@ import { createRoot } from '~stackable/util/element'
 import AdminSelectSetting from '~stackable/components/admin-select-setting'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
-import AdvancedToolbarControl from '~stackable/components/advanced-toolbar-control'
+import AdminToolbarSetting from '~stackable/components/admin-toolbar-setting'
 import { GettingStarted } from './getting-started'
 import { BLOCK_STATE } from '~stackable/util/blocks'
 
@@ -313,7 +313,7 @@ const Sidenav = ( {
 
 const Searchbar = ( { currentSearch, handleSearchChange } ) => {
 	const handleSearch = e => {
-		handleSearchChange( ( e.target.value.toLowerCase(), i18n ) )
+		handleSearchChange( e.target.value.toLowerCase() )
 	}
 	return (
 		<div className="s-search-setting">
@@ -686,33 +686,33 @@ const Blocks = ( { settings, handleSettingsChange } ) => {
 								</>
 
 								return (
-									<>
-										{ title }
-										<AdvancedToolbarControl
-											key={ i }
-											value={ blockState }
-											isToggleOnly={ true }
-											default={ BLOCK_STATE.ENABLED }
-											controls={ [
-												{
-													value: BLOCK_STATE.ENABLED,
-													title: __( 'Enabled', i18n ),
-												},
-												{
-													value: BLOCK_STATE.HIDDEN,
-													title: __( 'Hidden', i18n ),
-												},
-												{
-													value: BLOCK_STATE.DISABLED,
-													title: __( 'Disabled', i18n ),
-												},
-											] }
-											onChange={ value => {
-												toggleBlock( block.name, id, value )
-											} }
-											isSmall={ true }
-										/>
-									</>
+									<AdminToolbarSetting
+										key={ i }
+										label={ title }
+										value={ blockState }
+										default={ BLOCK_STATE.ENABLED }
+										controls={ [
+											{
+												value: BLOCK_STATE.ENABLED,
+												title: __( 'Enabled', i18n ),
+												selectedColor: '#1b7800',
+											},
+											{
+												value: BLOCK_STATE.HIDDEN,
+												title: __( 'Hidden', i18n ),
+												selectedColor: '#7dba6c',
+											},
+											{
+												value: BLOCK_STATE.DISABLED,
+												title: __( 'Disabled', i18n ),
+												selectedColor: '#979e95',
+											},
+										] }
+										onChange={ value => {
+											toggleBlock( block.name, id, value )
+										} }
+										isSmall={ true }
+									/>
 								)
 							} ) }
 						</div>
