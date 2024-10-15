@@ -34,6 +34,15 @@ import { BlockIcon } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
 /**
+ * Enum for disabling and hiding blocks.
+ */
+export const BLOCK_STATE = Object.freeze( {
+	ENABLED: 1,
+	DISABLED: 2,
+	HIDDEN: 3,
+} )
+
+/**
  * Converts the registered block name into a block name string that can be used in hook names or ids.
  *
  * @param {string} name The block name

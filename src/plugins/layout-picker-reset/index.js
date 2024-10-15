@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { i18n, isContentOnlyMode } from 'stackable'
+import {
+	i18n, isContentOnlyMode, settings,
+} from 'stackable'
 // import { Button } from '~stackable/components'
 
 /**
@@ -55,7 +57,7 @@ if ( ! isContentOnlyMode ) {
 			return (
 				<>
 					<BlockEdit { ...props } />
-					{ hasVariations && hasLayoutReset && (
+					{ settings.stackable_enable_reset_layout && hasVariations && hasLayoutReset && (
 						<LayoutPickerButton disabled={ disabled } clientId={ props.clientId } />
 					) }
 				</>

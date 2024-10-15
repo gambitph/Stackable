@@ -8,7 +8,11 @@ import './block-defaults'
  * External dependencies
  */
 import { SVGStackableIcon } from '~stackable/icons'
-import { i18n, isContentOnlyMode } from 'stackable'
+import {
+	i18n,
+	isContentOnlyMode,
+	settings,
+} from 'stackable'
 
 /** WordPress dependencies
  */
@@ -59,7 +63,7 @@ const GlobalSettings = () => {
 	)
 }
 
-if ( ! isContentOnlyMode ) {
+if ( ! isContentOnlyMode && settings.stackable_enable_global_settings ) {
 	registerPlugin( 'stackable-global-settings', {
 		render: GlobalSettings,
 	} )
