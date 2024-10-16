@@ -13,7 +13,11 @@ import {
 	orderBy,
 	last,
 } from 'lodash'
-import { blockCategoryIndex, i18n } from 'stackable'
+import {
+	blockCategoryIndex,
+	i18n,
+	settings,
+} from 'stackable'
 
 /**
  * WordPress dependencies
@@ -38,8 +42,8 @@ import { __ } from '@wordpress/i18n'
  */
 export const BLOCK_STATE = Object.freeze( {
 	ENABLED: 1,
-	DISABLED: 2,
-	HIDDEN: 3,
+	HIDDEN: 2,
+	DISABLED: 3,
 } )
 
 /**
@@ -512,4 +516,52 @@ export const registerBlockType = ( name, _settings ) => {
 
 	settings = applyFilters( `stackable.${ name.replace( 'stackable/', '' ) }.settings`, settings )
 	_registerBlockType( name, settings )
+}
+
+export const substituteIfDisabled = ( blockName, blockAttributes, children ) => {
+	const disabled_blocks = settings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
+
+	if ( blockName === 'stackable/text' ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/paragraph', {
+				content: blockAttributes.text,
+			} ]
+		}
+		return [ 'stackable/text', blockAttributes ]
+	}
+
+	if ( blockName === 'stackable/heading' ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/heading', {
+				content: blockAttributes.text,
+				level: blockAttributes.textTag ? Number( blockAttributes.textTag.replace( 'h', '' ) ) : 2,
+			} ]
+		}
+		return [ 'stackable/heading', { ...blockAttributes } ]
+	}
+
+	if ( blockName === 'stackable/subtitle' ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/paragraph', {
+				content: blockAttributes.text,
+			} ]
+		}
+		return [ 'stackable/subtitle', blockAttributes ]
+	}
+
+	if ( blockName === 'stackable/button-group' ) {
+		if ( 'stackable/button-group|button' in disabled_blocks && disabled_blocks[ 'stackable/button-group|button' ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/buttons', {}, children ]
+		}
+		return [ 'stackable/button-group', blockAttributes, children ]
+	}
+
+	if ( blockName === 'stackable/button' ) {
+		if ( 'stackable/button-group|button' in disabled_blocks && disabled_blocks[ 'stackable/button-group|button' ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/button', {
+				text: blockAttributes.text,
+			} ]
+		}
+		return [ 'stackable/button', blockAttributes ]
+	}
 }
