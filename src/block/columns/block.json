@@ -7,7 +7,8 @@
 	"usesContext": [
 		"postId",
 		"postType",
-		"queryId"
+		"queryId",
+		"stackable/repeaterValue"
 	],
 	"keywords": [
 		"Section rows",

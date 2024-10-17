@@ -4,7 +4,14 @@
 	"title": "Inner Column",
 	"description": "A single column with advanced layout options.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId", "stackable/innerBlockOrientation", "stackable/columnWrapDesktop" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"stackable/innerBlockOrientation",
+		"stackable/columnWrapDesktop",
+		"stackable/repeaterValue"
+	],
 	"providesContext": {
 		"stackable/innerBlockOrientation": "innerBlockOrientation"
 	},

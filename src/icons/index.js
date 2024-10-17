@@ -39,6 +39,8 @@ import SVGPaginationIcon from './images/pagination.svg'
 import SVGPricingBoxIcon from './images/pricing-box-icon.svg'
 import SVGProgressCircleIcon from './images/progress-circle-icon.svg'
 import SVGProgressBarIcon from './images/progress-bar-icon.svg'
+import SVGRepeaterIcon from './images/repeater-icon.svg'
+import SVGRepeaterTemplateIcon from './images/repeater-template-icon.svg'
 import SVGSeparatorIcon from './images/separator-icon.svg'
 import SVGSocialButtonsIcon from './images/social-buttons.svg'
 import SVGSpacerIcon from './images/spacer-icon.svg'
@@ -260,6 +262,14 @@ export function ProgressCircleIcon() {
 
 export function ProgressBarIcon() {
 	return colorizeIcon( <SVGProgressBarIcon width="16" height="16" /> )
+}
+
+export function RepeaterIcon() {
+	return colorizeIcon( <SVGRepeaterIcon width="20" height="20" /> )
+}
+
+export function RepeaterTemplateIcon() {
+	return colorizeIcon( <SVGRepeaterTemplateIcon width="20" height="20" /> )
 }
 
 export function SeparatorIcon() {

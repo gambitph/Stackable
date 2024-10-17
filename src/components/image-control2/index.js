@@ -136,6 +136,8 @@ const ImageControl = memo( props => {
 				enable={ props.isDynamic }
 				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 				type="image-url"
+				hasFormat={ true }
+				rawValue={ attributes[ attrNameUrl ] }
 				{ ...dynamicContentProps }
 			>
 				<MediaUpload

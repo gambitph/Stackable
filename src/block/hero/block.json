@@ -8,7 +8,8 @@
 		"postId",
 		"postType",
 		"queryId",
-		"stackable/innerBlockOrientation"
+		"stackable/innerBlockOrientation",
+		"stackable/repeaterValue"
 	],
 	"providesContext": {
 		"stackable/innerBlockOrientation": "innerBlockOrientation"

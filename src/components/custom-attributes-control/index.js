@@ -117,6 +117,9 @@ const CustomAttributesControl = props => {
 					{ hasError && <span className="ugb-custom-attributes-control__error">{ __( 'There is an error in your custom attribute', i18n ) }</span> }
 				</Fragment>
 			) }
+			isDynamic={ true }
+			isFormatType={ false }
+			rawValue={ customAttributes }
 		/>
 	)
 }

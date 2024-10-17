@@ -153,12 +153,23 @@ class PanelTabs extends Component {
 				ref={ this.containerDiv }
 			>
 				<div className="ugb-panel-tabs__wrapper">
-					{ applyFilters( 'stackable.inspector.tabs', TABS ).map( ( {
-						value, title, label, icon,
-					}, i ) => {
+					{ applyFilters( 'stackable.inspector.tabs', TABS ).map( ( tabProps, i ) => {
+						let {
+							value, title, label, icon,
+						} = tabProps
+
 						if ( ! this.tabsToUse.includes( value ) ) {
 							return null
 						}
+
+						// Allow the different display attributes of the tab to be overridden.
+						if ( this.props.tabOverrides && this.props.tabOverrides[ value ] ) {
+							const override = this.props.tabOverrides[ value ]
+							title = override.title ? override.title : title
+							label = override.label ? override.label : label
+							icon = override.icon ? override.icon : icon
+						}
+
 						return (
 							<button
 								key={ i }

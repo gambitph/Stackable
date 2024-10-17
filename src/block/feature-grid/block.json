@@ -4,7 +4,13 @@
 	"title": "Feature Grid",
 	"description": "Display multiple product features or services. You can use Feature Grids one after another.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"stackable/innerBlockOrientation",
+		"stackable/repeaterValue"
+	],
 	"providesContext": {
 		"stackable/columnWrapDesktop": "columnWrapDesktop"
 	},
