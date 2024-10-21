@@ -50,6 +50,8 @@ const AdvancedTextControl = memo( props => {
 			<DynamicContentControl
 				enable={ isDynamic }
 				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
+				hasFormat={ true }
+				rawValue={ props.rawValue || value }
 				{ ...dynamicContentProps }
 			>
 				<TextInput
@@ -81,6 +83,7 @@ AdvancedTextControl.defaultProps = {
 	hover: false,
 	isDynamic: false,
 	isFormatType: true,
+	rawValue: '',
 
 	value: undefined,
 	onChange: undefined,

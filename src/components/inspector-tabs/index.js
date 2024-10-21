@@ -63,15 +63,22 @@ export {
 }
 
 const InspectorTabs = props => {
+	const {
+		tabs = [ 'layout', 'style', 'advanced' ],
+		tabOverrides = {},
+		hasLayoutPanel = true,
+	} = props
+
 	const { name } = useBlockEditContext()
 	const defaultTab = getBlockSupport( name, 'stkDefaultTab' ) || 'style'
-	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, props.tabs.includes( defaultTab ) ? defaultTab : 'style' )
+	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, tabs.includes( defaultTab ) ? defaultTab : 'style' )
 
 	return (
 		<>
 			<InspectorControls>
 				<PanelTabs
-					tabs={ props.tabs }
+					tabs={ tabs }
+					tabOverrides={ tabOverrides }
 					initialTab={ activeTab }
 					onClick={ setActiveTab }
 				/>
@@ -79,7 +86,7 @@ const InspectorTabs = props => {
 
 			{ /* Make sure the layout panel is the very first one */ }
 			<InspectorBlockControls>
-				{ props.hasLayoutPanel && (
+				{ hasLayoutPanel && (
 					<PanelAdvancedSettings
 						title={ __( 'Layout', i18n ) }
 						id="layout"
@@ -92,11 +99,6 @@ const InspectorTabs = props => {
 
 		</>
 	)
-}
-
-InspectorTabs.defaultProps = {
-	tabs: [ 'layout', 'style', 'advanced' ],
-	hasLayoutPanel: true,
 }
 
 export default memo( InspectorTabs )

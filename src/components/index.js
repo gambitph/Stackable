@@ -98,9 +98,7 @@ export {
 } from './inspector-tabs'
 export { default as Div } from './div'
 export { default as ControlIconToggle } from './control-icon-toggle'
-export {
-	default as DynamicContentControl, useDynamicContent, getDynamicContent,
-} from './dynamic-content-control'
+export { default as DynamicContentControl, useDynamicContent } from './dynamic-content-control'
 export { default as Separator2 } from './separator2'
 export { default as ColumnInnerBlocks } from './column-inner-blocks'
 export { default as VariationPicker } from './variation-picker'

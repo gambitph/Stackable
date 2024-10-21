@@ -4,7 +4,13 @@
 	"title": "Feature",
 	"description": "Display a product feature or a service in a large area.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"stackable/innerBlockOrientation",
+		"stackable/repeaterValue"
+	],
 	"providesContext": {
 		"stackable/columnWrapDesktop": "columnWrapDesktop"
 	},

@@ -8,7 +8,7 @@ import { ResetButton } from '../base-control2/reset-button'
 /**
  * WordPress dependencies
  */
-import { SelectControl } from '@wordpress/components'
+import { SelectControl, Spinner } from '@wordpress/components'
 import { memo } from '@wordpress/element'
 
 /**
@@ -30,12 +30,14 @@ const AdvancedSelectControl = memo( props => {
 			{ ...controlProps }
 			className={ classnames( 'ugb-advanced-select-control', props.className ) }
 		>
-			<SelectControl
+			{ props.isBusy && <Spinner /> }
+			{ ! props.isBusy && <SelectControl
 				{ ...selectProps }
 				role="listbox"
 				value={ typeof props.value === 'undefined' ? value : props.value }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
 			/>
+			}
 			<ResetButton
 				allowReset={ props.allowReset }
 				value={ typeof props.value === 'undefined' ? value : props.value }
@@ -59,6 +61,8 @@ AdvancedSelectControl.defaultProps = {
 
 	value: undefined,
 	onChange: undefined,
+
+	isBusy: false,
 }
 
 export default AdvancedSelectControl

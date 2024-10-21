@@ -19,7 +19,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Toggle', STACKABLE_I18N ),
@@ -39,7 +40,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
@@ -55,7 +57,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'parent' => [
 					'stackable/button-group'
@@ -77,7 +80,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Link', STACKABLE_I18N )
@@ -121,7 +125,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
@@ -143,7 +148,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
@@ -162,7 +168,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Slider', STACKABLE_I18N )
@@ -182,7 +189,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postType',
 					'queryId',
 					'stackable/innerBlockOrientation',
-					'stackable/columnWrapDesktop'
+					'stackable/columnWrapDesktop',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
@@ -209,7 +217,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				'uses_context' => [
 					'postId',
 					'postType',
-					'queryId'
+					'queryId',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Section rows', STACKABLE_I18N ),
@@ -233,7 +242,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Number', STACKABLE_I18N )
@@ -252,7 +262,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Timer', STACKABLE_I18N )
@@ -271,7 +282,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Template', STACKABLE_I18N )
@@ -290,7 +302,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Horizontal Rule', STACKABLE_I18N ),
@@ -309,7 +322,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Hide', STACKABLE_I18N ),
@@ -329,7 +343,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/columnWrapDesktop' => 'columnWrapDesktop'
@@ -348,7 +363,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/columnWrapDesktop' => 'columnWrapDesktop'
@@ -367,7 +383,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Title', STACKABLE_I18N )
@@ -386,7 +403,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
@@ -408,7 +426,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Slider', STACKABLE_I18N ),
@@ -431,7 +450,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'SVG', STACKABLE_I18N )
@@ -450,7 +470,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
@@ -466,7 +487,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'parent' => [
 					'stackable/button-group'
@@ -488,7 +510,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'SVG', STACKABLE_I18N )
@@ -507,7 +530,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Checklist', STACKABLE_I18N ),
@@ -534,7 +558,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'queryId',
 					'stackable/innerBlockOrientation',
 					'stackable/ordered',
-					'stackable/uniqueId'
+					'stackable/uniqueId',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 
@@ -556,7 +581,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',
@@ -572,7 +598,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
@@ -588,7 +615,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'keywords' => [
@@ -608,7 +636,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
@@ -631,7 +660,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Steps', STACKABLE_I18N )
@@ -650,7 +680,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Blog Posts', STACKABLE_I18N ),
@@ -684,7 +715,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Currency', STACKABLE_I18N ),
@@ -705,7 +737,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
@@ -729,7 +762,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'percentage status', STACKABLE_I18N )
@@ -748,7 +782,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'percentage status', STACKABLE_I18N )
@@ -767,7 +802,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Svg Divider', STACKABLE_I18N )
@@ -786,7 +822,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special'
@@ -801,7 +838,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
@@ -819,7 +857,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'queryId',
 					'stackable/innerBlockOrientation',
 					'stackable/tabPanelEffect',
-					'stackable/equalTabHeight'
+					'stackable/equalTabHeight',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 
@@ -842,7 +881,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'queryId',
 					'stackable/innerBlockOrientation',
 					'stackable/initialTabOpen',
-					'stackable/tabOrientation'
+					'stackable/tabOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 
@@ -863,7 +903,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'ToC', STACKABLE_I18N ),
@@ -884,7 +925,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'toggle', STACKABLE_I18N )
@@ -909,7 +951,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
@@ -928,7 +971,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'provides_context' => [
 					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
@@ -947,7 +991,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'Paragraph', STACKABLE_I18N )
@@ -966,7 +1011,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'history', STACKABLE_I18N ),
@@ -986,7 +1032,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterValue'
 				],
 				'keywords' => [
 					__( 'YouTube', STACKABLE_I18N ),

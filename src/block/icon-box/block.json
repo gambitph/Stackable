@@ -8,7 +8,8 @@
 		"postId",
 		"postType",
 		"queryId",
-		"stackable/innerBlockOrientation"
+		"stackable/innerBlockOrientation",
+		"stackable/repeaterValue"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",
