@@ -597,7 +597,13 @@ const Responsiveness = props => {
 
 // Toggle the block states between enabled, disabled and hidden.
 // Enabled blocks are not stored in the settings object.
-const Blocks = ( { settings, handleSettingsChange } ) => {
+const Blocks = props => {
+	const {
+		settings,
+		handleSettingsChange,
+		currentSearch,
+	} = props
+
 	const DERIVED_BLOCKS = getAllBlocks()
 	const disabledBlocks = settings.stackable_disabled_blocks ?? {} // eslint-disable-line camelcase
 
@@ -669,26 +675,13 @@ const Blocks = ( { settings, handleSettingsChange } ) => {
 						<div className="s-settings-grid">
 							{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 								const blockState = disabledBlocks[ block.name ] ?? BLOCK_STATE.ENABLED
-								const demoLink = block[ 'stk-demo' ] && (
-									<a
-										href={ block[ 'stk-demo' ] }
-										target="_blank"
-										rel="noopener noreferrer"
-										onClick={ ev => ev.stopPropagation() }
-									>
-										{ __( 'view demo', i18n ) }
-									</a>
-								)
-
-								const title = <>
-									<span>{ __( block.title, i18n ) }</span> { /* eslint-disable-line @wordpress/i18n-no-variables */ }
-									{ demoLink }
-								</>
 
 								return (
 									<AdminToolbarSetting
 										key={ i }
-										label={ title }
+										label={ __( block.title, i18n ) } // eslint-disable-line @wordpress/i18n-no-variables
+										demoLink={ block[ 'stk-demo' ] }
+										searchTerm={ currentSearch }
 										value={ blockState }
 										default={ BLOCK_STATE.ENABLED }
 										controls={ [

@@ -1,7 +1,14 @@
-.ugb-admin-toolbar-setting {
+.ugb-admin-toolbar-setting__wrapper {
 	display: flex;
-	padding: 10px;
-	.ugb-button-component {
-		width: 100%;
+	a {
+		margin-right: 10px;
+		width: 80px;
+	}
+	.ugb-admin-toolbar-setting {
+		display: flex;
+		.ugb-button-component {
+			padding: 14px;
+			width: 100%;
+		}
 	}
 }

@@ -16,7 +16,7 @@ import {
 import {
 	blockCategoryIndex,
 	i18n,
-	settings,
+	settings as stackableSettings,
 } from 'stackable'
 
 /**
@@ -45,6 +45,14 @@ export const BLOCK_STATE = Object.freeze( {
 	HIDDEN: 2,
 	DISABLED: 3,
 } )
+
+/**
+ * Block dependencies. If a block is hidden/disabled, the block it depends on will also be one.
+ */
+export const BLOCK_DEPENDENCIES = {
+	'stackable/icon-button': 'stackable/button-group|icon-button',
+	'stackable/button': 'stackable/button-group|button',
+}
 
 /**
  * Converts the registered block name into a block name string that can be used in hook names or ids.
@@ -489,6 +497,14 @@ export const addStackableBlockCategory = () => {
  * @param {Object} _settings The block properties to register
  */
 export const registerBlockType = ( name, _settings ) => {
+	// Do not register the block if the block is disabled.
+	if ( ( BLOCK_DEPENDENCIES[ name ] in stackableSettings.stackable_disabled_blocks &&
+		stackableSettings.stackable_disabled_blocks[ BLOCK_DEPENDENCIES[ name ] ] === BLOCK_STATE.DISABLED ) ||
+		stackableSettings.stackable_disabled_blocks[ name ] === BLOCK_STATE.DISABLED
+	) {
+		return
+	}
+
 	let settings = applyFilters( `stackable.block.metadata`, _settings || {} )
 
 	// If there is no variation title, then some labels in the editor will show
@@ -519,7 +535,7 @@ export const registerBlockType = ( name, _settings ) => {
 }
 
 export const substituteIfDisabled = ( blockName, blockAttributes, children ) => {
-	const disabled_blocks = settings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
+	const disabled_blocks = stackableSettings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
 
 	if ( blockName === 'stackable/text' ) {
 		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
