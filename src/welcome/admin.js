@@ -209,8 +209,8 @@ const ToggleBlockDialog = ( {
 		<div className="s-toggle-block-dialog">
 			<div className="s-toggle-block-dialog-content">
 				{ isDisabled
-					? <p>{ __( 'Disabling' + { blockName } + 'will also disable the blocks that require it:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
-					: <p>{ __( 'Enabling' + { blockName } + 'will also enable its required innerblocks:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+					? <p>{ __( 'Disabling ' + blockName + ' will also disable the blocks that require it:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+					: <p>{ __( 'Enabling ' + blockName + ' will also enable its required innerblocks:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
 				}
 				<ul>
 					{ blockList.map( ( block, i ) => (
