@@ -13,7 +13,10 @@ import './disabled-blocks'
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { addStackableBlockCategory, registerBlockType } from '~stackable/util'
+import {
+	addStackableBlockCategory,
+	registerBlockType,
+} from '~stackable/util'
 import { withVisualGuideContext } from '~stackable/higher-order'
 
 /**
@@ -45,7 +48,7 @@ const importAllAndRegister = r => {
 			settings.keywords = settings.keywords.map( keyword => __( keyword, i18n ) ) // eslint-disable-line @wordpress/i18n-no-variables
 		}
 
-		// Register the block.
+		// Register the block if it's not already registered and not disabled.
 		if ( ! getBlockType( name ) ) {
 			registerBlockType( name, settings )
 		}

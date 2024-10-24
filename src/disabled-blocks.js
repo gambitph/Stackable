@@ -1,40 +1,42 @@
 /**
- * Filter that modified the metadata of the blocks to disable blocks and
+ * Filter that modified the metadata of the blocks to hide blocks and
  * variations depending on the settings of the user.
  */
 import { settings } from 'stackable'
 import { addFilter } from '@wordpress/hooks'
-
-// Disable these blocks when the following variables are disabled. We need this
-// so that if a variation is disabled, we will no longer be able to add the
-// relevant block.
-const BLOCK_DEPENDENCIES = {
-	'stackable/icon-button': 'stackable/button-group|icon-button',
-	'stackable/button': 'stackable/button-group|button',
-}
+import { BLOCK_STATE, BLOCK_DEPENDENCIES } from '~stackable/util'
 
 const getDefaultVariation = variations => {
 	return variations?.find( ( { isDefault } ) => isDefault )?.name
 }
 const getVariationsToRemove = ( disabledBlocks, blockName ) => {
-	return disabledBlocks.filter( disabledBlock => disabledBlock.startsWith( `${ blockName }|` ) )
-		.map( disabledBlock => disabledBlock.split( '|' )[ 1 ] )
+	const variations = []
+	for ( const block in disabledBlocks ) {
+		if ( block.startsWith( `${ blockName }|` ) ) {
+			variations.push( block.split( '|' )[ 1 ] )
+		}
+	}
+	return variations
 }
 
 const applySettingsToMeta = metadata => {
-	let inserter = ! settings.stackable_disabled_blocks.includes( metadata.name )
+	const disabledBlocks = settings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
+	let inserter = true
 
-	// Check if this block is dependent on another variation being enabled.
-	if ( BLOCK_DEPENDENCIES[ metadata.name ] ) {
-		if ( settings.stackable_disabled_blocks.includes( BLOCK_DEPENDENCIES[ metadata.name ] ) ) {
-			inserter = false
-		}
+	// If the block is hidden, set the inserter to false.
+	if ( metadata.name in disabledBlocks ) {
+		inserter = ! disabledBlocks[ metadata.name ] === BLOCK_STATE.HIDDEN
 	}
 
-	const variationsToRemove = getVariationsToRemove( settings.stackable_disabled_blocks, metadata.name )
+	// Check if this block is dependent on another variation being enabled.
+	if ( BLOCK_DEPENDENCIES[ metadata.name ] && BLOCK_DEPENDENCIES[ metadata.name ] in disabledBlocks ) {
+		inserter = ! disabledBlocks[ BLOCK_DEPENDENCIES[ metadata.name ] ] === BLOCK_STATE.HIDDEN
+	}
+
+	const variationsToRemove = getVariationsToRemove( disabledBlocks, metadata.name )
 	let variations = metadata.variations || []
 
-	// Remove variations if there are ones disabled.
+	// Remove the variations that are hidden which removes the block from the inserter.
 	if ( variationsToRemove.length ) {
 		const hasDefaultVariation = !! getDefaultVariation( metadata.variations )
 		variations = variations.filter( variation => ! variationsToRemove.includes( variation.name ) )

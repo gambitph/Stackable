@@ -6,6 +6,7 @@ import './variation-picker'
 import './custom-block-styles-editor'
 import SaveMenu from './save-menu'
 import { useSavedDefaultBlockStyle } from '~stackable/hooks'
+import { settings } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -25,7 +26,9 @@ const _SaveMenu = withSelect( select => {
 	}
 } )( SaveMenu )
 
-registerPlugin( 'stackable-save-block-menu', { render: _SaveMenu } )
+if ( settings.stackable_enable_save_as_default_block ) {
+	registerPlugin( 'stackable-save-block-menu', { render: _SaveMenu } )
+}
 
 /**
  * Add the block style loader to each Stackable block.

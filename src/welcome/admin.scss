@@ -8,6 +8,11 @@
 	--stk-welcome-light-border: #d0d5dd;
 }
 
+// Make scroll smooth with inline navigation.
+html {
+	scroll-behavior: smooth;
+}
+
 // Clear out the margins of the admin page.
 
 body[class*="page_stackable"],
@@ -18,6 +23,10 @@ body[class*="page_stk-"] {
 	#wpbody-content > .wrap:not(#fs_connect) { // stylelint-disable-line selector-id-pattern
 		margin: 0;
 		padding: 0 50px;
+
+		&.wrap-settings {
+			padding: 0;
+		}
 	}
 }
 
@@ -30,6 +39,10 @@ body[class*="page_stk-"] {
 	margin-bottom: 40px;
 	border-bottom: 1px solid var(--stk-welcome-light-border);
 	font-weight: 300;
+
+	&.s-header-settings {
+		margin: 0;
+	}
 
 	.s-header {
 		padding: 0px;
@@ -397,6 +410,9 @@ body.toplevel_page_stk-custom-fields {
 				color: #f34957;
 			}
 		}
+		&.s-box-hidden {
+			display: none;
+		}
 	}
 	.s-absolute-spinner {
 		position: absolute;
@@ -459,6 +475,9 @@ body.toplevel_page_stk-custom-fields {
 			display: flex;
 			flex-direction: column;
 		}
+		&.s-body-container-with-sidenav {
+			margin-left: 250px;
+		}
 		p,
 		li {
 			line-height: 1.6;
@@ -476,10 +495,161 @@ body.toplevel_page_stk-custom-fields {
 			margin-bottom: 0 !important;
 		}
 	}
-	.s-body-container-grid {
-		display: grid;
-		grid-template-columns: 1fr 350px;
-		grid-gap: 30px;
+	.s-sidenav {
+		min-height: 90vh;
+		width: 250px;
+		left: 0;
+		position: absolute;
+		background-color: #fff;
+		padding-top: 20px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		.s-sidenav-item {
+			color: #444;
+			font-size: 14px;
+			padding: 15px 20px;
+			text-decoration: none;
+			display: block;
+			position: relative;
+			width: 100%;
+			text-align: left;
+			background: none;
+			border: none;
+			transition: background-color 0.3s ease;
+			cursor: pointer;
+			&:hover {
+				color: var(--stk-welcome-primary) !important;
+			}
+			&.s-active {
+				font-weight: 600;
+				color: var(--stk-welcome-primary) !important;
+				transition: color 0.3s ease;
+				&::after {
+					content: "";
+					position: absolute;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					width: 2px;
+					background-color: var(--stk-welcome-primary);
+					transition: width 0.3s ease;
+				}
+			}
+			&.s-sidenav-item-highlight {
+				font-weight: bold;
+			}
+		}
+		// This is a button, render this in the bottom of the side bar
+		// The side bar is a flex container, so this will be at the bottom.
+		.s-save-changes {
+			background: linear-gradient(135deg, #b300be, #f00069);
+			transition: all 0.1s ease-in-out;
+			text-decoration: none;
+			border: none;
+			color: #fff;
+			padding: 12px 20px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-size: 14px;
+			cursor: pointer;
+			box-sizing: border-box !important;
+			display: inline-block;
+			margin: 20px 20px 0;
+			&:hover {
+				opacity: 0.85;
+				box-shadow: none !important;
+			}
+		}
+	}
+	.s-sidenav-fixed {
+		position: fixed;
+		height: 100%;
+		top: 32px;
+		left: 160px;
+		.s-save-changes {
+			margin: 120px 20px 0;
+		}
+	}
+	.s-search-setting {
+		display: flex;
+		justify-content: end;
+		.s-search-setting__input {
+			margin: 0;
+			padding: 0.5em 1em;
+			width: 250px;
+		}
+	}
+	.ugb-admin-setting--highlight {
+		.ugb-admin-setting__label {
+			color: #333;
+		}
+	}
+	.components-base-control--highlight {
+		label {
+			color: #333;
+		}
+	}
+	.ugb-admin-setting--not-highlight {
+		display: none;
+	}
+
+	.components-base-control--not-highlight {
+		display: none;
+	}
+
+	.s-toggle-block-dialog {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5); // Semi-transparent black
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 1000;
+		.s-toggle-block-dialog-content {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 8px;
+			text-align: center;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			max-width: 400px;
+			width: 100%;
+			ul {
+				display: inline-block;
+				text-align: left;
+			}
+		}
+		.s-dialog-button {
+			margin-top: 20px;
+			&.s-dialog-button-confirm {
+				background-color: #28a745;
+				color: #fff;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 5px;
+				cursor: pointer;
+				margin-right: 10px;
+				transition: background-color 0.3s;
+				&:hover {
+					background-color: #218838;
+				}
+			}
+			&.s-dialog-button-cancel {
+				background-color: #dc3545;
+				color: #fff;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 5px;
+				cursor: pointer;
+				transition: background-color 0.3s;
+				&:hover {
+					background-color: #c82333;
+				}
+			}
+		}
 	}
 	.s-side {
 		h2,

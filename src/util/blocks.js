@@ -13,7 +13,11 @@ import {
 	orderBy,
 	last,
 } from 'lodash'
-import { blockCategoryIndex, i18n } from 'stackable'
+import {
+	blockCategoryIndex,
+	i18n,
+	settings as stackableSettings,
+} from 'stackable'
 
 /**
  * WordPress dependencies
@@ -32,6 +36,23 @@ import {
 import { useMemo } from '@wordpress/element'
 import { BlockIcon } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * Enum for disabling and hiding blocks.
+ */
+export const BLOCK_STATE = Object.freeze( {
+	ENABLED: 1,
+	HIDDEN: 2,
+	DISABLED: 3,
+} )
+
+/**
+ * Block dependencies. If a block is hidden/disabled, the block it depends on will also be one.
+ */
+export const BLOCK_DEPENDENCIES = {
+	'stackable/icon-button': 'stackable/button-group|icon-button',
+	'stackable/button': 'stackable/button-group|button',
+}
 
 /**
  * Converts the registered block name into a block name string that can be used in hook names or ids.
@@ -476,6 +497,14 @@ export const addStackableBlockCategory = () => {
  * @param {Object} _settings The block properties to register
  */
 export const registerBlockType = ( name, _settings ) => {
+	// Do not register the block if the block is disabled.
+	if ( ( BLOCK_DEPENDENCIES[ name ] in stackableSettings.stackable_disabled_blocks &&
+		stackableSettings.stackable_disabled_blocks[ BLOCK_DEPENDENCIES[ name ] ] === BLOCK_STATE.DISABLED ) ||
+		stackableSettings.stackable_disabled_blocks[ name ] === BLOCK_STATE.DISABLED
+	) {
+		return
+	}
+
 	let settings = applyFilters( `stackable.block.metadata`, _settings || {} )
 
 	// If there is no variation title, then some labels in the editor will show
@@ -503,4 +532,109 @@ export const registerBlockType = ( name, _settings ) => {
 
 	settings = applyFilters( `stackable.${ name.replace( 'stackable/', '' ) }.settings`, settings )
 	_registerBlockType( name, settings )
+}
+
+/**
+ * Substitutes a stackable block with an equivalent core block if the block is disabled.
+ *
+ * @param {string} blockName The block name
+ * @param {Object} blockAttributes The block attributes
+ * @param {Array} children The children blocks
+ *
+ * @return {Array} The resulting block definition
+ */
+export const substituteCoreIfDisabled = ( blockName, blockAttributes, children ) => {
+	const disabled_blocks = stackableSettings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
+
+	if ( blockName === 'stackable/text' ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/paragraph', {
+				content: blockAttributes.text,
+			} ]
+		}
+		return [ 'stackable/text', blockAttributes ]
+	}
+
+	if ( blockName === 'stackable/heading' ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/heading', {
+				content: blockAttributes.text,
+				level: blockAttributes.textTag ? Number( blockAttributes.textTag.replace( 'h', '' ) ) : 2,
+			} ]
+		}
+		return [ 'stackable/heading', { ...blockAttributes } ]
+	}
+
+	if ( blockName === 'stackable/subtitle' ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/paragraph', {
+				content: blockAttributes.text,
+			} ]
+		}
+		return [ 'stackable/subtitle', blockAttributes ]
+	}
+
+	if ( blockName === 'stackable/button-group' ) {
+		if ( 'stackable/button-group|button' in disabled_blocks && disabled_blocks[ 'stackable/button-group|button' ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/buttons', {}, children ]
+		}
+		return [ 'stackable/button-group', blockAttributes, children ]
+	}
+
+	if ( blockName === 'stackable/button' ) {
+		if ( 'stackable/button-group|button' in disabled_blocks && disabled_blocks[ 'stackable/button-group|button' ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/button', {
+				text: blockAttributes.text,
+			} ]
+		}
+		return [ 'stackable/button', blockAttributes ]
+	}
+
+	if ( blockName === 'stackable/image' ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/image', {
+				height: blockAttributes.imageHeight,
+			} ]
+		}
+		return [ 'stackable/image', blockAttributes ]
+	}
+}
+
+/**
+ * Substitutes a block with another block if any of the block names given are disabled.
+ *
+ * 	@param {Array} blockNames The block names to check if disabled
+ * 	@param {Array} originalBlockDefinition The original block definition
+ * 	@param {Array} substituteBlockDefinition The block definition to substitute with
+ *
+ * 	@return {Array} The resulting block definition
+ */
+export const substituteIfDisabled = ( blockNames, originalBlockDefinition, substituteBlockDefinition ) => {
+	const disabled_blocks = stackableSettings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
+
+	for ( const blockName of blockNames ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return substituteBlockDefinition
+		}
+	}
+
+	return originalBlockDefinition
+}
+
+/**
+ * Remove a given child block from a block tree definition if disabled
+ *
+ * 	@param {Array} blockName The block name of the child to remove
+ * 	@param {Array} blockTree The array that contains the child block
+ *
+ * 	@return {Array} The resulting block tree definition
+ */
+export const removeChildIfDisabled = ( blockName, blockTree ) => {
+	const disabled_blocks = stackableSettings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
+
+	if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+		return blockTree.filter( innerBlock => innerBlock[ 0 ] !== blockName )
+	}
+
+	return blockTree
 }
