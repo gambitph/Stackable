@@ -61,16 +61,62 @@ export const BLOCK_CATEROGIES = [
 	},
 ]
 
-// Implement pick without using lodash, because themes and plugins might remove
-// lodash from the admin.
-// const pick = ( obj, keys ) => {
-// 	return keys.reduce( ( acc, key ) => {
-// 		if ( obj && obj.hasOwnProperty( key ) ) {
-// 			acc[ key ] = obj[ key ]
-// 		}
-// 		return acc
-// 	}, {} )
-// }
+const BLOCK_DEPENDENCIES = {
+	'stackable/accordion': [
+		'stackable/icon-label',
+		'stackable/heading',
+		'stackable/icon',
+	],
+	'stackable/expand': [
+		'stackable/text',
+		'stackable/button-group|button',
+	],
+	'stackable/icon-label': [
+		'stackable/icon',
+		'stackable/heading',
+	],
+	'stackable/image-box': [
+		'stackable/image',
+		'stackable/subtitle',
+		'stackable/icon',
+	],
+	'stackable/price': [
+		'stackable/text',
+	],
+	'stackable/video-popup': [
+		'stackable/icon',
+		'stackable/image',
+	],
+	'stackable/blockquote': [
+		'stackable/icon',
+	],
+	'stackable/feature': [
+		'stackable/image',
+	],
+	'stackable/icon-box': [
+		'stackable/icon-label',
+		'stackable/icon',
+		'stackable/heading',
+	],
+	'stackable/pricing-box': [
+		'stackable/price',
+		'stackable/text',
+	],
+}
+
+const getChildrenBlocks = blockname => {
+	return BLOCK_DEPENDENCIES[ blockname ] || []
+}
+
+const getParentBlocks = blockName => {
+	const parents = []
+	for ( const parent in BLOCK_DEPENDENCIES ) {
+		if ( BLOCK_DEPENDENCIES[ parent ].includes( blockName ) ) {
+			parents.push( parent )
+		}
+	}
+	return parents
+}
 
 const BlockList = () => {
 	const DERIVED_BLOCKS = getAllBlocks()
@@ -151,6 +197,49 @@ const SaveSettingsNotice = () => {
 	)
 }
 
+// Confirmation dialog when disabling a block that is dependent on another block.
+const ToggleBlockDialog = ( {
+	blockName,
+	blockList,
+	isDisabled,
+	onConfirm,
+	onCancel,
+} ) => {
+	return (
+		<div className="s-toggle-block-dialog">
+			<div className="s-toggle-block-dialog-content">
+				{ isDisabled
+					? <p>{ __( 'Disabling' + { blockName } + 'will also disable the blocks that require it:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+					: <p>{ __( 'Enabling' + { blockName } + 'will also enable its required innerblocks:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+				}
+				<ul>
+					{ blockList.map( ( block, i ) => (
+						<li key={ i }>{ block }</li>
+					) ) }
+				</ul>
+				{ isDisabled
+					? <p>{ __( 'Are you sure you want to disable this block?', i18n ) }</p>
+					: <p>{ __( 'Are you sure you want to enable this block?', i18n ) }</p>
+				}
+				<div>
+					<button
+						className="s-dialog-button s-dialog-button-confirm"
+						onClick={ onConfirm }
+					>
+						{ __( 'Yes', i18n ) }
+					</button>
+					<button
+						className="s-dialog-button s-dialog-button-cancel"
+						onClick={ onCancel }
+					>
+						{ __( 'No', i18n ) }
+					</button>
+				</div>
+			</div>
+		</div>
+	)
+}
+
 // TODO: Proper tab nesting
 // Implement other highlight without admin base
 const Sidenav = ( {
@@ -166,6 +255,7 @@ const Sidenav = ( {
 			settings: [
 				'Nested Block Width',
 				'Nested Wide Block Width',
+				'Stackable Text as Default Block',
 				'Design Library',
 				'Block Linking (Beta)',
 				'Toolbar Text Highlight',
@@ -188,7 +278,12 @@ const Sidenav = ( {
 		{
 			id: 'blocks',
 			label: __( 'Blocks', i18n ),
-			settings: [],
+			settings: BLOCK_CATEROGIES.map( ( { id } ) => {
+				const DERIVED_BLOCKS = getAllBlocks()
+				return DERIVED_BLOCKS[ id ].map( block => {
+					return block.name.split( '/' )[ 1 ]
+				} )
+			} ).flat(),
 		},
 		{
 			id: 'optimizations',
@@ -607,112 +702,174 @@ const Blocks = props => {
 	const DERIVED_BLOCKS = getAllBlocks()
 	const disabledBlocks = settings.stackable_disabled_blocks ?? {} // eslint-disable-line camelcase
 
-	// TODO: Implement enable, disable and hide all blocks
+	const [ isDisabledDialogOpen, setIsDisabledDialogOpen ] = useState( false )
+	const [ isEnabledDialogOpen, setIsEnabledDialogOpen ] = useState( false )
+	const [ currentToggleBlock, setCurrentToggleBlock ] = useState( '' )
+	const [ currentToggleBlockList, setCurrentToggleBlockList ] = useState( [] )
 
-	// const enableAllBlocks = type => () => {
-	// 	let newDisabledBlocks = { ...disabledBlocks }
-	// 	DERIVED_BLOCKS[ type ].forEach( block => {
-	// 		newDisabledBlocks = newDisabledBlocks.filter( blockName => blockName !== block.name )
-	// 	} )
+	const enableAllBlocks = () => {
+		handleSettingsChange( { stackable_disabled_blocks: {} } ) // eslint-disable-line camelcase
+	}
 
-	// 	console.log(DERIVED_BLOCKS[ type ] )
+	const disableAllBlocks = () => {
+		const newDisabledBlocks = {}
+		BLOCK_CATEROGIES.forEach( ( { id } ) => {
+			DERIVED_BLOCKS[ id ].forEach( block => {
+				newDisabledBlocks[ block.name ] = BLOCK_STATE.DISABLED
+			} )
+		} )
+		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+	}
 
-	// 	Object.entries(disabledBlocks).forEach( ([key, value]) => {
-	// 		if (key in DERIVED_BLOCKS[ type ]) {
-	// 			delete disabledBlocks[key]
-	// 		}
-	// 	} )
+	const hideAllBlocks = () => {
+		const newDisabledBlocks = {}
+		BLOCK_CATEROGIES.forEach( ( { id } ) => {
+			DERIVED_BLOCKS[ id ].forEach( block => {
+				newDisabledBlocks[ block.name ] = BLOCK_STATE.HIDDEN
+			} )
+		} )
+		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+	}
 
-	// 	setDisabledBlocks( disabledBlocks )
-	// 	save( newDisabledBlocks, type )
-	// }
-
-	// const disableAllBlocks = type => () => {
-	// 	const newDisabledBlocks = [ ...disabledBlocks ]
-	// 	DERIVED_BLOCKS[ type ].forEach( block => {
-	// 		if ( ! newDisabledBlocks.includes( block.name ) ) {
-	// 			newDisabledBlocks.push( block.name )
-	// 		}
-	// 	} )
-	// 	setDisabledBlocks( newDisabledBlocks )
-	// 	save( newDisabledBlocks, type )
-	// }
-
-	const toggleBlock = ( name, type, value ) => {
+	const toggleBlock = ( name, value ) => {
 		const valueInt = Number( value )
 		let newDisabledBlocks = { ...disabledBlocks }
 
+		setCurrentToggleBlock( name )
+
+		// Check if a parent is being enabled
 		if ( valueInt === BLOCK_STATE.ENABLED ) {
-			delete newDisabledBlocks[ name ]
+			// Get the parent's children and confirm if they will also be enabled
+			const childrenBlocks = getChildrenBlocks( name )
+			if ( childrenBlocks.length > 0 ) {
+				setCurrentToggleBlockList( childrenBlocks )
+				setIsEnabledDialogOpen( true )
+			} else {
+				delete newDisabledBlocks[ name ]
+			}
+		} else if ( valueInt === BLOCK_STATE.DISABLED ) { // Check if a child is being disabled
+			// Get the child's parents and confirm if they will also be disabled
+			const parentBlocks = getParentBlocks( name )
+			if ( parentBlocks.length > 0 ) {
+				setCurrentToggleBlockList( parentBlocks )
+				setIsDisabledDialogOpen( true )
+			} else {
+				newDisabledBlocks = { ...disabledBlocks, [ name ]: valueInt }
+			}
 		} else {
 			newDisabledBlocks = { ...disabledBlocks, [ name ]: valueInt }
 		}
 		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
 	}
-	return (
-		<div className="s-blocks">
-			<h2>{ __( 'Blocks', i18n ) }</h2>
-			<p className="s-settings-subtitle">{ __( 'You can enable, hide and disable Stackable blocks. Hiding the blocks hides them from the editor. Disabling the blocks prevent them from being loaded for faster performance.', i18n ) }</p>
-			{ BLOCK_CATEROGIES.map( ( {
-				id, label, Icon,
-			} ) => {
-				const classes = classnames( [
-					's-box-block__title',
-					`s-box-block__title--${ id }`,
-				] )
-				return (
-					<div className="s-box s-box-block" key={ id }>
-						<h3 className={ classes }>
-							{ Icon && <Icon height="20" width="20" /> }
-							<span>{ label }</span>
-						</h3>
-						<div className="s-settings-header">
-							{ /*
-							<button onClick={ enableAllBlocks( id ) } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>
-							<button onClick={ disableAllBlocks( id ) } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
-							*/ }
-						</div>
-						<div className="s-settings-grid">
-							{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
-								const blockState = disabledBlocks[ block.name ] ?? BLOCK_STATE.ENABLED
 
-								return (
-									<AdminToolbarSetting
-										key={ i }
-										label={ __( block.title, i18n ) } // eslint-disable-line @wordpress/i18n-no-variables
-										demoLink={ block[ 'stk-demo' ] }
-										searchTerm={ currentSearch }
-										value={ blockState }
-										default={ BLOCK_STATE.ENABLED }
-										controls={ [
-											{
-												value: BLOCK_STATE.ENABLED,
-												title: __( 'Enabled', i18n ),
-												selectedColor: '#1b7800',
-											},
-											{
-												value: BLOCK_STATE.HIDDEN,
-												title: __( 'Hidden', i18n ),
-												selectedColor: '#7dba6c',
-											},
-											{
-												value: BLOCK_STATE.DISABLED,
-												title: __( 'Disabled', i18n ),
-												selectedColor: '#979e95',
-											},
-										] }
-										onChange={ value => {
-											toggleBlock( block.name, id, value )
-										} }
-										isSmall={ true }
-									/>
-								)
-							} ) }
+	const handleDisableDialogConfirm = () => {
+		setIsDisabledDialogOpen( false )
+		const newDisabledBlocks = { ...disabledBlocks, [ currentToggleBlock ]: BLOCK_STATE.DISABLED }
+		currentToggleBlockList.forEach( block => {
+			newDisabledBlocks[ block ] = BLOCK_STATE.DISABLED
+		} )
+		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+	}
+
+	const handleEnableDialogConfirm = () => {
+		setIsEnabledDialogOpen( false )
+		const newDisabledBlocks = { ...disabledBlocks }
+		delete newDisabledBlocks[ currentToggleBlock ]
+		currentToggleBlockList.forEach( block => {
+			delete newDisabledBlocks[ block ]
+		} )
+		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+	}
+
+	return (
+		<>
+			{ isDisabledDialogOpen && (
+				<ToggleBlockDialog
+					blockName={ currentToggleBlock }
+					blockList={ currentToggleBlockList }
+					isDisabled={ true }
+					onConfirm={ handleDisableDialogConfirm }
+					onCancel={ () => {
+						setIsDisabledDialogOpen( false )
+					} }
+				/>
+			) }
+
+			{ isEnabledDialogOpen && (
+				<ToggleBlockDialog
+					blockName={ currentToggleBlock }
+					blockList={ currentToggleBlockList }
+					isDisabled={ false }
+					onConfirm={ handleEnableDialogConfirm }
+					onCancel={ () => {
+						setIsEnabledDialogOpen( false )
+					} }
+				/>
+			) }
+
+			<div className="s-blocks">
+				<h2>{ __( 'Blocks', i18n ) }</h2>
+				<p className="s-settings-subtitle">{ __( 'You can enable, hide and disable Stackable blocks. Hiding the blocks hides them from the editor. Disabling the blocks prevent them from being loaded for faster performance.', i18n ) }</p>
+				<div className="s-settings-header">
+					<button onClick={ enableAllBlocks } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>
+					<button onClick={ hideAllBlocks } className="button button-large button-link">{ __( 'Hide All', i18n ) }</button>
+					<button onClick={ disableAllBlocks } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
+				</div>
+				{ BLOCK_CATEROGIES.map( ( {
+					id, label, Icon,
+				} ) => {
+					const classes = classnames( [
+						's-box-block__title',
+						`s-box-block__title--${ id }`,
+					] )
+					return (
+						<div className="s-box s-box-block" key={ id }>
+							<h3 className={ classes }>
+								{ Icon && <Icon height="20" width="20" /> }
+								<span>{ label }</span>
+							</h3>
+							<div className="s-settings-grid">
+								{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
+									const blockState = disabledBlocks[ block.name ] ?? BLOCK_STATE.ENABLED
+
+									return (
+										<AdminToolbarSetting
+											key={ i }
+											label={ __( block.title, i18n ) } // eslint-disable-line @wordpress/i18n-no-variables
+											demoLink={ block[ 'stk-demo' ] }
+											searchTerm={ currentSearch }
+											value={ blockState }
+											default={ BLOCK_STATE.ENABLED }
+											controls={ [
+												{
+													value: BLOCK_STATE.ENABLED,
+													title: __( 'Enabled', i18n ),
+													selectedColor: '#1b7800',
+												},
+												{
+													value: BLOCK_STATE.HIDDEN,
+													title: __( 'Hidden', i18n ),
+													selectedColor: '#7dba6c',
+												},
+												{
+													value: BLOCK_STATE.DISABLED,
+													title: __( 'Disabled', i18n ),
+													selectedColor: '#979e95',
+												},
+											] }
+											onChange={ value => {
+												toggleBlock( block.name, value )
+											} }
+											isSmall={ true }
+										/>
+									)
+								} ) }
+							</div>
 						</div>
-					</div>
-				)
-			} ) }
-		</div>
+					)
+				} ) }
+			</div>
+		</>
 	)
 }
 
