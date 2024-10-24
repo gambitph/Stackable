@@ -534,7 +534,16 @@ export const registerBlockType = ( name, _settings ) => {
 	_registerBlockType( name, settings )
 }
 
-export const substituteIfDisabled = ( blockName, blockAttributes, children ) => {
+/**
+ * Substitutes a stackable block with an equivalent core block if the block is disabled.
+ *
+ * @param {string} blockName The block name
+ * @param {Object} blockAttributes The block attributes
+ * @param {Array} children The children blocks
+ *
+ * @return {Array} The resulting block definition
+ */
+export const substituteCoreIfDisabled = ( blockName, blockAttributes, children ) => {
 	const disabled_blocks = stackableSettings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
 
 	if ( blockName === 'stackable/text' ) {
@@ -580,4 +589,52 @@ export const substituteIfDisabled = ( blockName, blockAttributes, children ) => 
 		}
 		return [ 'stackable/button', blockAttributes ]
 	}
+
+	if ( blockName === 'stackable/image' ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return [ 'core/image', {
+				height: blockAttributes.imageHeight,
+			} ]
+		}
+		return [ 'stackable/image', blockAttributes ]
+	}
+}
+
+/**
+ * Substitutes a block with another block if any of the block names given are disabled.
+ *
+ * 	@param {Array} blockNames The block names to check if disabled
+ * 	@param {Array} originalBlockDefinition The original block definition
+ * 	@param {Array} substituteBlockDefinition The block definition to substitute with
+ *
+ * 	@return {Array} The resulting block definition
+ */
+export const substituteIfDisabled = ( blockNames, originalBlockDefinition, substituteBlockDefinition ) => {
+	const disabled_blocks = stackableSettings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
+
+	for ( const blockName of blockNames ) {
+		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return substituteBlockDefinition
+		}
+	}
+
+	return originalBlockDefinition
+}
+
+/**
+ * Remove a given child block from a block tree definition if disabled
+ *
+ * 	@param {Array} blockName The block name of the child to remove
+ * 	@param {Array} blockTree The array that contains the child block
+ *
+ * 	@return {Array} The resulting block tree definition
+ */
+export const removeChildIfDisabled = ( blockName, blockTree ) => {
+	const disabled_blocks = stackableSettings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
+
+	if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+		return blockTree.filter( innerBlock => innerBlock[ 0 ] !== blockName )
+	}
+
+	return blockTree
 }
