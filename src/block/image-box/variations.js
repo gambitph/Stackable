@@ -20,7 +20,6 @@ import { applyFilters } from '@wordpress/hooks'
  * External dependencies
  */
 import { i18n, isPro } from 'stackable'
-import { substituteCoreIfDisabled } from '~stackable/util'
 
 /**
  * Template option choices for predefined columns layouts.
@@ -54,13 +53,13 @@ const variations = applyFilters(
 						textColor1: '#FFFFFF',
 						opacityParentHover: 1,
 					} ],
-					substituteCoreIfDisabled( 'stackable/heading', {
+					[ 'stackable/heading', {
 						text: _x( 'Title for This Block', 'Heading placeholder', i18n ),
 						textTag: 'h4',
 						textColorClass: 'has-white-color',
 						textColor1: '#FFFFFF',
-					} ),
-					substituteCoreIfDisabled( 'stackable/text', {
+					} ],
+					[ 'stackable/text', {
 						text: _x( 'Text for This Block', 'Text placeholder', i18n ),
 						opacity: 0,
 						transform: 'translateY(-24px)',
@@ -68,7 +67,7 @@ const variations = applyFilters(
 						transformParentHover: 'translateY(0px)',
 						textColorClass: 'has-white-color',
 						textColor1: '#FFFFFF',
-					} ),
+					} ],
 					[ 'stackable/icon', {
 						blockMargin: { top: 56 },
 						opacity: 0,
@@ -109,21 +108,21 @@ const variations = applyFilters(
 						textColorClass: 'has-white-color',
 						textColor1: '#FFFFFF',
 					} ],
-					substituteCoreIfDisabled( 'stackable/heading', {
+					[ 'stackable/heading', {
 						text: _x( 'Title for This Block', 'Heading placeholder', i18n ),
 						textTag: 'h4',
 						transform: 'translateY(32px)',
 						transformParentHover: 'translateY(0px)',
 						textColorClass: 'has-white-color',
 						textColor1: '#FFFFFF',
-					} ),
-					substituteCoreIfDisabled( 'stackable/text', {
+					} ],
+					[ 'stackable/text', {
 						text: _x( 'Text for This Block', 'Text placeholder', i18n ),
 						opacity: 0,
 						opacityParentHover: 1,
 						textColorClass: 'has-white-color',
 						textColor1: '#FFFFFF',
-					} ),
+					} ],
 					[ 'stackable/icon', {
 						opacity: 0,
 						transform: 'translateY(-32px)',

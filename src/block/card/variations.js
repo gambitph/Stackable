@@ -11,7 +11,6 @@ import ImageFaded from './images/faded.svg'
  * External dependencies
  */
 import { i18n, isPro } from 'stackable'
-import { substituteCoreIfDisabled, substituteIfDisabled } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -50,12 +49,12 @@ const variations = applyFilters(
 			pickerTitle: __( 'Default', i18n ),
 			pickerIcon: ImageDefault,
 			innerBlocks: [
-				substituteCoreIfDisabled( 'stackable/heading', {} ),
-				substituteCoreIfDisabled( 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ),
-				substituteCoreIfDisabled( 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ),
-				substituteCoreIfDisabled( 'stackable/button-group', {}, [
-					substituteCoreIfDisabled( 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ),
-				] ),
+				[ 'stackable/heading', {} ],
+				[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ],
+				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
+				[ 'stackable/button-group', {}, [
+					[ 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ],
+				] ],
 			],
 			scope: [ 'block' ],
 		},
@@ -80,8 +79,8 @@ const variations = applyFilters(
 			pickerTitle: __( 'Default 2', i18n ),
 			pickerIcon: ImageDefault2,
 			innerBlocks: [
-				substituteCoreIfDisabled( 'stackable/heading', {} ),
-				substituteCoreIfDisabled( 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ),
+				[ 'stackable/heading', {} ],
+				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/columns', {
 					rowAlign: 'center',
 					innerBlockContentAlign: 'alignfull',
@@ -95,9 +94,9 @@ const variations = applyFilters(
 							left: 0,
 						},
 					}, [
-						substituteCoreIfDisabled( 'stackable/button-group', {}, [
-							substituteCoreIfDisabled( 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ),
-						] ),
+						[ 'stackable/button-group', {}, [
+							[ 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ],
+						] ],
 					] ],
 					[ 'stackable/column', {
 						columnSpacing: {
@@ -106,7 +105,7 @@ const variations = applyFilters(
 							bottom: 0,
 							left: 0,
 						},
-					}, [ substituteIfDisabled( [ 'stackable/button-group|social-buttons', 'stackable/button-group|icon-button' ],
+					}, [
 						[ 'stackable/button-group', {
 							columnSpacing: {
 								top: 0,
@@ -133,15 +132,6 @@ const variations = applyFilters(
 								className: 'is-style-plain',
 							} ],
 						] ],
-						[ 'core/social-links',
-							{
-								align: 'right',
-							},
-							[
-								[ 'core/social-link', { service: 'facebook' } ],
-								[ 'core/social-link', { service: 'twitter' } ],
-							],
-						] ),
 					] ],
 				] ],
 			],
