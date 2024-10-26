@@ -11,6 +11,7 @@ import ImageFaded from './images/faded.svg'
  * External dependencies
  */
 import { i18n, isPro } from 'stackable'
+import { substituteIfDisabled } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -105,7 +106,7 @@ const variations = applyFilters(
 							bottom: 0,
 							left: 0,
 						},
-					}, [
+					}, [ substituteIfDisabled( [ 'stackable/button-group|social-buttons', 'stackable/button-group|icon-button' ],
 						[ 'stackable/button-group', {
 							columnSpacing: {
 								top: 0,
@@ -132,6 +133,15 @@ const variations = applyFilters(
 								className: 'is-style-plain',
 							} ],
 						] ],
+						[ 'core/social-links',
+							{
+								align: 'right',
+							},
+							[
+								[ 'core/social-link', { service: 'facebook' } ],
+								[ 'core/social-link', { service: 'twitter' } ],
+							],
+						] ),
 					] ],
 				] ],
 			],
