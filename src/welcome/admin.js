@@ -67,6 +67,9 @@ const BLOCK_DEPENDENCIES = {
 		'stackable/heading',
 		'stackable/icon',
 	],
+	'stackable/button-group|social-buttons': [
+		'stackable/button-group|icon-button',
+	],
 	'stackable/expand': [
 		'stackable/text',
 		'stackable/button-group|button',
@@ -101,6 +104,10 @@ const BLOCK_DEPENDENCIES = {
 	'stackable/pricing-box': [
 		'stackable/price',
 		'stackable/text',
+		'stackable/icon-list',
+	],
+	'stackable/testimonial': [
+		'stackable/image-box',
 	],
 }
 

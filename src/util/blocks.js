@@ -592,16 +592,24 @@ export const substituteCoreIfDisabled = ( blockName, blockAttributes, children )
 
 	if ( blockName === 'stackable/image' ) {
 		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-			return [ 'core/image', {
-				height: blockAttributes.imageHeight,
-			} ]
+			if ( blockAttributes ) {
+				return [ 'core/image', {
+					height: blockAttributes.imageHeight,
+				} ]
+			}
+			return [ 'core/image' ]
 		}
 		return [ 'stackable/image', blockAttributes ]
 	}
+
+	if ( children ) {
+		return [ blockName, blockAttributes, children ]
+	}
+	return [ blockName, blockAttributes ]
 }
 
 /**
- * Substitutes a block with another block if any of the block names given are disabled.
+ * Substitutes a block definition with another block definition if any of the block names given are disabled.
  *
  * 	@param {Array} blockNames The block names to check if disabled
  * 	@param {Array} originalBlockDefinition The original block definition
