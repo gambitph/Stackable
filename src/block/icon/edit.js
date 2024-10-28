@@ -84,7 +84,7 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				<Link linkTrigger=".stk--inner-svg">
-					<Icon />
+					<Icon defaultValue={ defaultIcon } />
 				</Link>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
