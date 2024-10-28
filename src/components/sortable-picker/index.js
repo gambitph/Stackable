@@ -20,6 +20,12 @@ import {
 import { useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
+const addItemPopoverProps = {
+	placement: 'left-start',
+	offset: 236,
+	shift: true,
+}
+
 const popoverProps = {
 	placement: 'left-start',
 	offset: 36,
@@ -59,6 +65,7 @@ const SortablePicker = props => {
 	return (
 		<BaseControl className={ classNames } label={ props.label }>
 			<Dropdown
+				popoverProps={ addItemPopoverProps }
 				renderToggle={ ( { onToggle, isOpen } ) => (
 					<Button
 						className="ugb-global-settings-color-picker__add-button"
@@ -189,9 +196,7 @@ const LabeledItemIndicator = props => {
 					)
 				} }
 				renderContent={ () => (
-					<div className="stk-color-palette-control__popover-content">
-						<ItemPicker item={ item } onChange={ onChange } />
-					</div>
+					<ItemPicker item={ item } onChange={ onChange } />
 				) }
 			/>
 			<Button

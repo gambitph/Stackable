@@ -135,14 +135,16 @@ const ColorPickers = props => {
 	  }
 
 	  const ItemPicker = ( { item, onChange } ) => {
-		return <ColorPicker
-			onChange={ value => onChange( {
-				...item,
-				color: value,
-			} ) }
-			color={ item.color }
-			enableAlpha={ true }
-		/>
+		return <div className="stk-color-palette-control__popover-content">
+			<ColorPicker
+				onChange={ value => onChange( {
+					...item,
+					color: value,
+				} ) }
+				color={ item.color }
+				enableAlpha={ true }
+			/>
+		</div>
 	  }
 
 	return (

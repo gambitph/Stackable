@@ -11,7 +11,9 @@ import {
 	PanelBody, TextControl, Spinner,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { useState, useEffect } from '@wordpress/element'
+import {
+	useState, useEffect, Fragment,
+} from '@wordpress/element'
 
 /**
  * External dependencies
@@ -25,7 +27,7 @@ import {
 import { faGetIcon, faFetchIcon } from '~stackable/util'
 import { FileDrop } from 'react-file-drop'
 import classnames from 'classnames'
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, doAction } from '@wordpress/hooks'
 
 let searchTimeout = null
 let tempMediaUpload = null
@@ -152,9 +154,7 @@ const IconSearchPopover = props => {
 				setIsDropping( false )
 				const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
 
-				if ( isPro && props.showPrompt ) {
-					applyFilters( 'stackable.global-settings.inspector.icon-library.prompt', null, svgString )
-				}
+				doAction( 'stackable.icon-search-popover.svg-upload', svgString )
 
 				props.onChange( svgString )
 				props.onClose()
@@ -172,6 +172,8 @@ const IconSearchPopover = props => {
 		'ugb-icon--has-upload': allowSVGUpload,
 		'ugb-icon--has-reset': props.allowReset,
 	} )
+
+	const IconLibraryIcons = applyFilters( 'stackable.global-settings.inspector.icon-library.icons', Fragment )
 
 	const content = (
 		<div className="stk-icon-search-popover-container">
@@ -249,9 +251,11 @@ const IconSearchPopover = props => {
 				</div>
 				<div className="ugb-icon-popover__iconlist">
 					{ isBusy && <Spinner /> }
-					{ ! isBusy && applyFilters( 'stackable.global-settings.inspector.icon-library.icons', null, {
-						icons: results.iconLibrary, onChange: props.onChange, onClose: props.onClose,
-					} ) }
+					{ ! isBusy && <IconLibraryIcons
+						icons={ results.iconLibrary }
+						onChange={ props.onChange }
+						onClose={ props.onClose }
+					/> }
 					{ ! isBusy && results.faIcons.map( ( { prefix, iconName }, i ) => {
 						const iconValue = `${ prefix }-${ iconName }`
 						return <button
@@ -326,7 +330,6 @@ IconSearchPopover.defaultProps = {
 	onClose: noop,
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	allowReset: true,
-	showPrompt: true,
 	__deprecatedAnchorRef: undefined,
 	__deprecatedPosition: 'center',
 	__deprecatedOnClickOutside: noop,
