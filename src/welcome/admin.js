@@ -187,23 +187,6 @@ const RestSettingsNotice = () => {
 	)
 }
 
-const SaveSettingsNotice = () => {
-	const [ isDismissed, setIsDismissed ] = useState( false )
-
-	if ( isDismissed ) {
-		return null
-	}
-
-	return (
-		<div className="notice notice-success is-dismissible" >
-			<p>{ __( 'Settings saved.', i18n ) }</p>
-			<button type="button" className="notice-dismiss" onClick={ () => setIsDismissed( true ) }>
-				<span className="screen-reader-text">Dismiss this notice.</span>
-			</button>
-		</div>
-	)
-}
-
 // Confirmation dialog when disabling a block that is dependent on another block.
 const ToggleBlockDialog = ( {
 	blockName,
@@ -247,13 +230,13 @@ const ToggleBlockDialog = ( {
 	)
 }
 
-// TODO: Proper tab nesting
-// Implement other highlight without admin base
+// Side navigation with the save changes button and search on tabs
 const Sidenav = ( {
 	currentTab,
 	handleTabChange,
 	handleSettingsSave,
 	currentSearch,
+	isSaving,
 } ) => {
 	const tabList = useMemo( () => [
 		{
@@ -406,7 +389,7 @@ const Sidenav = ( {
 					className="s-save-changes"
 					onClick={ handleSettingsSave }
 				>
-					{ __( 'Save Changes', i18n ) }
+					{ isSaving ? <Spinner /> : __( 'Save Changes', i18n ) }
 				</button>
 			</nav>
 		</>
@@ -436,6 +419,7 @@ const Settings = () => {
 	const [ unsavedChanges, setUnsavedChanges ] = useState( {} )
 	const [ currentTab, setCurrentTab ] = useState( 'editor-settings' )
 	const [ currentSearch, setCurrentSearch ] = useState( '' )
+	const [ isSaving, setIsSaving ] = useState( false )
 
 	const handleSettingsChange = useCallback( newSettings => {
 		setSettings( prev => ( { ...prev, ...newSettings } ) )
@@ -443,20 +427,16 @@ const Settings = () => {
 	}, [] )
 
 	const handleSettingsSave = useCallback( () => {
-		console.log( unsavedChanges ) // eslint-disable-line no-console
 		if ( Object.keys( unsavedChanges ).length === 0 ) {
 			return
 		}
+		setIsSaving( true )
 		const model = new models.Settings( unsavedChanges )
 		model.save().then( () => {
-			if ( document.querySelector( '.s-save-settings-notice' ) ) {
-				createRoot(
-					document.querySelector( '.s-save-settings-notice' )
-				).render(
-					<SaveSettingsNotice />
-				)
-				window.scrollTo( { top: 0, behavior: 'smooth' } )
-			}
+			// Add a little more time for the spinner for better feedback
+			setTimeout( () => {
+				setIsSaving( false )
+			}, 500 )
 		} )
 		setUnsavedChanges( {} )
 	}, [ unsavedChanges, settings ] )
@@ -482,6 +462,7 @@ const Settings = () => {
 			handleTabChange={ setCurrentTab }
 			handleSettingsSave={ handleSettingsSave }
 			currentSearch={ currentSearch }
+			isSaving={ isSaving }
 		/>
 		<article className="s-box" id={ currentTab }>
 			<Searchbar currentSearch={ currentSearch } handleSearchChange={ setCurrentSearch } />

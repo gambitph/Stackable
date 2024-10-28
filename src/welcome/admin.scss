@@ -398,6 +398,7 @@ body.toplevel_page_stk-custom-fields {
 		margin-bottom: 30px;
 		transition: all 0.3s ease;
 		position: relative;
+		min-height: 70vh;
 		&.s-box-spaced {
 			padding-left: 4vw;
 			padding-right: 4vw;
@@ -873,10 +874,14 @@ body.toplevel_page_stk-custom-fields {
 	grid-template-columns: 1fr 1fr 1fr;
 }
 
-// Collapse to a single column for mobile.
 @media screen and (max-width: 960px) {
+	// Collapse to a single column for mobile.
 	.s-body-container {
 		grid-template-columns: 1fr !important;
+	}
+	// Matched the width of wordpress admin menu
+	.s-sidenav-fixed {
+		left: 36px !important;
 	}
 }
 
