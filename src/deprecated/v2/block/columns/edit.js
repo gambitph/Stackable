@@ -49,9 +49,9 @@ import {
 	__, sprintf, _x,
 } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { Fragment } from '@wordpress/element'
+import { Fragment, useState } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { compose, withState } from '@wordpress/compose'
+import { compose } from '@wordpress/compose'
 import { select, dispatch } from '@wordpress/data'
 import { createBlock } from '@wordpress/blocks'
 
@@ -538,9 +538,21 @@ addFilter( 'stackable.columns.setAttributes', 'stackable/columns/columns-change'
 	return attributes
 } )
 
+// Higher-Order Component to add state to props since withState is deprecated
+const withSortColumnHighlight = WrappedComponent => props => {
+	const [ sortColumnHighlight, setSortColumnHighlight ] = useState( null )
+
+	return (
+		<WrappedComponent
+			{ ...props }
+			sortColumnHighlight={ sortColumnHighlight }
+			setSortColumnHighlight={ setSortColumnHighlight }
+		/>
+	)
+}
+
 export default compose(
-	// `withState` is needed to allow higher order functions to access the local state.
-	withState( { sortColumnHighlight: null } ),
+	withSortColumnHighlight,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,
