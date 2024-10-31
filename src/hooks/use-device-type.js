@@ -6,10 +6,7 @@ export const useDeviceType = () => {
 	const { deviceType } = useSelect( select => {
 		let deviceType = 'Desktop'
 
-		// In some editors, there is no edit-post / preview device type. If that
-		// happens, we just set our own internal device type.
-		deviceType = select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType() ||
-			select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType() ||
+		deviceType = select( 'core/editor' ).getDeviceType() ||
 			select( 'stackable/device-type' ).getDeviceType()
 
 		return { deviceType }
