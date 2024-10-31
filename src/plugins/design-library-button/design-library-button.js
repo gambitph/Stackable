@@ -3,7 +3,6 @@
  */
 import { i18n, settings } from 'stackable'
 import { SVGStackableIcon } from '~stackable/icons'
-import { Button } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -12,6 +11,7 @@ import { createBlock } from '@wordpress/blocks'
 import { dispatch, useSelect } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { useCallback } from '@wordpress/element'
+import { ToolbarButton } from '@wordpress/components'
 
 const DesignLibraryButton = () => {
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
@@ -31,11 +31,11 @@ const DesignLibraryButton = () => {
 	}, [ getEditorDom ] )
 
 	return ( settings.stackable_enable_design_library &&
-		<Button
+		<ToolbarButton
 			onClick={ onClick }
 			className="ugb-insert-library-button"
 			icon={ <SVGStackableIcon /> }
-		>{ __( 'Design Library', i18n ) }</Button>
+		>{ __( 'Design Library', i18n ) }</ToolbarButton>
 	)
 }
 
