@@ -5,14 +5,13 @@
  */
 import { useDeviceType } from '~stackable/hooks'
 import { createRoot } from '~stackable/util'
-import { useSetting } from '@wordpress/block-editor'
+import { useSettings } from '@wordpress/block-editor'
 import domReady from '@wordpress/dom-ready'
 import { useEffect } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 
 export const ThemeBlockSize = () => {
-	const contentSize = useSetting( 'layout.contentSize' )
-	const wideSize = useSetting( 'layout.wideSize' )
+	const [ contentSize, wideSize ] = useSettings( 'layout.contentSize', 'layout.wideSize' )
 
 	const deviceType = useDeviceType()
 	const editorDom = useSelect( select => {
