@@ -54,13 +54,12 @@ class StackableAccordion {
 						}, ANIM_OPTS )
 					}
 
-					// When the animation is done, allow text selection again.
+					// When the animation is done, remove wrapper and allow text selection again.
 					el.anim.onfinish = el.anim.oncancel = () => {
+						if ( doWrapHack ) {
+							removeWrapperHack( el, wrapper )
+						}
 						el.style.userSelect = 'auto'
-					}
-
-					if ( doWrapHack ) {
-						removeWrapperHack( el, wrapper )
 					}
 				}
 			} )
@@ -197,11 +196,9 @@ class StackableAccordion {
 		}
 
 		const removeWrapperHack = ( el, wrapper ) => {
-			el.anim.onfinish = el.anim.oncancel = () => {
-				// Unwrap el from the div
-				wrapper.parentNode?.insertBefore( el, wrapper )
-				wrapper?.remove()
-			}
+			// Unwrap el from the div
+			wrapper.parentNode?.insertBefore( el, wrapper )
+			wrapper?.remove()
 		}
 	}
 }
