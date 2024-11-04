@@ -499,6 +499,9 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 const dynamicContent = <SVGDatabaseIcon />
 
 export const DynamicContentButton = memo( props => {
+	if ( select( 'core/customize-widgets' ) ) {
+		return null
+	}
 	if ( ! isPro && ! showProNotice ) {
 		return null
 	}
