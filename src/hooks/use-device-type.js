@@ -6,7 +6,9 @@ export const useDeviceType = () => {
 	const { deviceType } = useSelect( select => {
 		let deviceType = 'Desktop'
 
-		deviceType = select( 'core/editor' ).getDeviceType() ||
+		deviceType = select( 'core/editor' )?.getDeviceType?.() ||
+			select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType?.() ||
+			select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ||
 			select( 'stackable/device-type' ).getDeviceType()
 
 		return { deviceType }

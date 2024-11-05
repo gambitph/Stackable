@@ -36,7 +36,10 @@ export const GlobalTypographyStyles = () => {
 
 	const { device } = useSelect(
 		select => ( {
-			device: select( 'core/editor' ).getDeviceType() || 'Desktop',
+			device: select( 'core/editor' )?.getDeviceType?.() ||
+				select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType?.() ||
+				select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ||
+				'Desktop',
 		} ),
 		[]
 	)
