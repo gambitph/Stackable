@@ -11,7 +11,7 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	useEffect, useState, useCallback, useRef, useMemo, lazy, Suspense,
+	useEffect, useState, useCallback, useMemo, lazy, Suspense,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
@@ -337,28 +337,9 @@ const Sidenav = ( {
 		},
 	], [] )
 
-	const sidenavRef = useRef( null )
-
-	useEffect( () => {
-		const handleScroll = () => {
-			const header = document.querySelector( '.s-header-settings' )
-
-			if ( header ) {
-				// If the header is scrolled out of view, make the sidebar fixed
-				if ( header.getBoundingClientRect().bottom <= 32 ) {
-					sidenavRef.current.classList.add( 's-sidenav-fixed' )
-				} else {
-					sidenavRef.current.classList.remove( 's-sidenav-fixed' )
-				}
-			}
-		}
-		window.addEventListener( 'scroll', handleScroll )
-		return () => window.removeEventListener( 'scroll', handleScroll )
-	}, [] )
-
 	return (
 		<>
-			<nav className="s-sidenav" ref={ sidenavRef }>
+			<nav className="s-sidenav">
 				<div>
 					{ tabList.map( ( {
 						id,
@@ -384,13 +365,15 @@ const Sidenav = ( {
 						</button>
 						)
 					} ) }
+					<div className="s-save-changes-wrapper">
+						<button
+							className="s-save-changes"
+							onClick={ handleSettingsSave }
+						>
+							{ isSaving ? <Spinner /> : __( 'Save Changes', i18n ) }
+						</button>
+					</div>
 				</div>
-				<button
-					className="s-save-changes"
-					onClick={ handleSettingsSave }
-				>
-					{ isSaving ? <Spinner /> : __( 'Save Changes', i18n ) }
-				</button>
 			</nav>
 		</>
 	)

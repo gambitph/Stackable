@@ -135,7 +135,7 @@ if ( ! function_exists( 'stackable_welcome_notification' ) ) {
                 ?>
                 <div class="stackable_notice">
                     <?php echo wp_kses_post( $notification['message'] ) ?>
-                    <p><button class="button" data-id="<?php echo esc_attr( $notification['id'] ) ?>" onclick="stackable_dismiss(this); event.preventDefault();"><?php _e( 'Don\'t show me this anymore', STACKABLE_I18N ) ?></button></p>
+                    <p><button class="button button-primary" data-id="<?php echo esc_attr( $notification['id'] ) ?>" onclick="stackable_dismiss(this); event.preventDefault();"><?php _e( 'Don\'t show me this anymore', STACKABLE_I18N ) ?></button></p>
                 </div>
                 <?php
             }
