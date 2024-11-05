@@ -44,7 +44,7 @@ import {
 	getContentAlignmentClasses,
 	ColumnsControl,
 } from '~stackable/block-components'
-import { useBlockContext, useDeviceType } from '~stackable/hooks'
+import { useDeviceType } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -59,6 +59,7 @@ import {
 } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { __, sprintf } from '@wordpress/i18n'
+import { useSelect } from '@wordpress/data'
 import { range } from 'lodash'
 import { defaultIconNext, defaultIconPrev } from './schema'
 
@@ -80,7 +81,14 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, numInnerBlocks } = useSelect( select => {
+		const { getBlockOrder } = select( 'core/block-editor' )
+		const numInnerBlocks = getBlockOrder( props.clientId ).length
+		return {
+			hasInnerBlocks: numInnerBlocks > 0,
+			numInnerBlocks,
+		}
+	}, [ props.clientId ] )
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	const carouselType = attributes.carouselType === '' ? 'slide' : attributes.carouselType
@@ -113,7 +121,6 @@ const Edit = props => {
 	], getContentAlignmentClasses( props.attributes ) )
 
 	const deviceType = useDeviceType()
-	const { numInnerBlocks } = useBlockContext()
 	const [ activeSlide, setActiveSlide ] = useState( 1 )
 	const [ dotActiveSlide, setDotActiveSlide ] = useState( 1 )
 	const [ slideOffset, setSlideOffset ] = useState( 0 )

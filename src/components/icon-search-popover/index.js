@@ -58,10 +58,11 @@ export const cleanSvgString = svgString => {
 	let newSvg = svgString.replace( /(^[\s\S]*?)(<svg)/gm, '$2' )
 		.replace( /(<\/svg>)([\s\S]*)/g, '$1' )
 
-	// Remove defs
-	if ( newSvg.indexOf( '<defs' ) !== -1 ) {
-		newSvg = newSvg.replace( /<defs[\s\S]*?<\/defs>/gm, '' )
-	}
+	// Generate a random numbere to append to the IDs
+	const svgId = Math.floor( Math.random() * new Date().getTime() ) % 100000
+	newSvg = newSvg.replace( /id="([^"]*)"/g, `id="$1-${ svgId }"` )
+	newSvg = newSvg.replace( /url\(#([^)]*)\)/g, `url(#$1-${ svgId })` )
+	newSvg = newSvg.replace( /href="#([^"]*)"/g, `href="#$1-${ svgId }"` )
 
 	// Remove comments
 	if ( newSvg.indexOf( '<!--' ) !== -1 ) {
@@ -145,7 +146,7 @@ const IconSearchPopover = props => {
 				return
 			}
 
-			// Read the SVG,
+			// Read the SVG
 			const fr = new FileReader()
 			fr.onload = function( e ) {
 				setIsDropping( false )

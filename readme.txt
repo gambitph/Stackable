@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.3
+Requires at least: 6.4
 Tested up to: 6.6.2
 Requires PHP: 7.3
-Stable tag: 3.13.8
+Stable tag: 3.13.10
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -294,6 +294,20 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.13.10 =
+* Fixed: Compatibility with WordPress 6.7 #3336
+* Fixed: Better support for custom SVGs in the icon picker #3265
+* Fixed: Cleanup of some code related to the previous performance update #3320
+* Fixed: Accordion block: text can become unselectable #3350
+* Fixed: Save default blocks: saving can be called multiple times and can cause the browser to hang #3355
+* Fixed: Map block: prevent error when using a custom map marker #3362
+
+= 3.13.9 =
+* Fixed: Text blocks: text gradient color doesn't show for misspelled words #3305
+* Fixed: Button block: adding a button block now places the cursor inside the button ##3324
+* Fixed: Conditional display: inspector options do not re-render when changing values #3342
+* Fixed: Optimized CSS: mobile styles can overwrite tablet styles sometimes (to fix, please re-save the page) #3345
 
 = 3.13.8 =
 * Fixed: Possible editor freezing when using deprecated icon lists inside patterns #3332

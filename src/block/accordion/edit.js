@@ -32,7 +32,7 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
+	useBlockAttributesContext, useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -46,7 +46,7 @@ import variations, { defaultIcon } from './variations'
 /**
  * WordPress dependencies
  */
-import { InnerBlocks } from '@wordpress/block-editor'
+import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
@@ -64,7 +64,12 @@ const Edit = props => {
 	} = props
 
 	const [ isOpen, setIsOpen ] = useState( props.attributes.startOpen )
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks } = useSelect( select => {
+		const { getBlockOrder } = select( 'core/block-editor' )
+		return {
+			hasInnerBlocks: getBlockOrder( clientId ).length > 0,
+		}
+	}, [ clientId ] )
 	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
@@ -215,8 +220,15 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 	const icon2 = useBlockAttributesContext( attributes => attributes.icon2 )
 	const setAttributes = useBlockSetAttributesContext()
 
-	const { parentTree } = useBlockContext()
-	const { getBlock } = useSelect( 'core/block-editor' )
+	const { clientId } = useBlockEditContext()
+	const { parentTree, getBlock } = useSelect( select => {
+		const { getBlock, getBlockParents } = select( 'core/block-editor' )
+		const parentTree = getBlockParents( clientId ).map( parentClientId => ( { clientId: parentClientId, name: getBlock( parentClientId ).name } ) )
+		return {
+			getBlock,
+			parentTree,
+		}
+	}, [ clientId ] )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
 	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )
@@ -259,8 +271,15 @@ addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/icon-lab
 
 // Return default icon for accordion
 addFilter( 'stackable.block-component.icon.default', 'stackable/accordion', starIcon => {
-	const { parentTree } = useBlockContext()
-	const { getBlock } = useSelect( 'core/block-editor' )
+	const { clientId } = useBlockEditContext()
+	const { parentTree, getBlock } = useSelect( select => {
+		const { getBlock, getBlockParents } = select( 'core/block-editor' )
+		const parentTree = getBlockParents( clientId ).map( parentClientId => ( { clientId: parentClientId, name: getBlock( parentClientId ).name } ) )
+		return {
+			getBlock,
+			parentTree,
+		}
+	}, [ clientId ] )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
 	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )
