@@ -33,6 +33,8 @@ class StackableAccordion {
 					// Prevent text selection while animating
 					el.style.userSelect = 'none'
 
+					clearTimeout( el.textSelectTimeout )
+
 					// When inside columns, flex prevents the accordion closing animation, this hack fixes it.
 					const doWrapHack = !! el.closest( '.stk-block-columns' )
 					let wrapper = null
@@ -61,6 +63,11 @@ class StackableAccordion {
 						}
 						el.style.userSelect = 'auto'
 					}
+
+					// Fallback to make sure accordion text is selectable just incase the onfinish or oncancel doesn't fire.
+					el.textSelectTimeout = setTimeout( () => {
+						el.style.userSelect = 'auto'
+					}, 700 )
 				}
 			} )
 		} )
