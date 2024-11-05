@@ -549,6 +549,11 @@ body.toplevel_page_stk-custom-fields {
 				font-weight: bold;
 			}
 		}
+		// Fade out the non-highlighted items.
+		.s-sidenav-item:has(~ .s-sidenav-item-highlight):not(.s-active):not(.s-sidenav-item-highlight),
+		.s-sidenav-item-highlight ~ .s-sidenav-item:not(.s-sidenav-item-highlight):not(.s-active) {
+			opacity: 0.3;
+		}
 		.s-save-changes-wrapper {
 			bottom: 0;
 			padding: 20px;
