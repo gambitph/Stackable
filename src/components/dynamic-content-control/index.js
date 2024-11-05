@@ -499,6 +499,7 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 const dynamicContent = <SVGDatabaseIcon />
 
 export const DynamicContentButton = memo( props => {
+	// Hide the button if inside the Customizer
 	if ( select( 'core/customize-widgets' ) ) {
 		return null
 	}
