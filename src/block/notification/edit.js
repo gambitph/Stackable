@@ -38,7 +38,6 @@ import {
 	ContentAlign,
 	getContentAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -51,6 +50,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
@@ -61,7 +61,14 @@ const Edit = props => {
 		setAttributes,
 	} = props
 
-	const { hasInnerBlocks, innerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useSelect( select => {
+		const { getBlock } = select( 'core/block-editor' )
+		const innerBlocks = getBlock( props.clientId ).innerBlocks
+		return {
+			hasInnerBlocks: innerBlocks.length > 0,
+			innerBlocks,
+		}
+	}, [ props.clientId ] )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [

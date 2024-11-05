@@ -6,6 +6,14 @@
 		min-width: auto;
 		width: 100%;
 
+		.components-base-control {
+			min-width: auto;
+		}
+
+		.components-input-base {
+			height: 30px;
+		}
+
 		.block-editor-link-control__search-input-wrapper {
 			margin: 0;
 		}
