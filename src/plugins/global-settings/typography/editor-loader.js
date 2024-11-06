@@ -35,14 +35,12 @@ export const GlobalTypographyStyles = () => {
 	const [ styleTimeout, setStyleTimeout ] = useState( null )
 
 	const { device } = useSelect(
-		select => {
-			const device = select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType() ||
-				select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType() ||
-				'Desktop'
-			return {
-				device,
-			}
-		},
+		select => ( {
+			device: select( 'core/editor' )?.getDeviceType?.() ||
+				select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType?.() ||
+				select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ||
+				'Desktop',
+		} ),
 		[]
 	)
 

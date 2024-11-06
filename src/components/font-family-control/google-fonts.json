@@ -9202,6 +9202,26 @@
     ]
   },
   {
+    "family": "Karla Tamil Inclined",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "tamil"
+    ]
+  },
+  {
+    "family": "Karla Tamil Upright",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "tamil"
+    ]
+  },
+  {
     "family": "Karma",
     "variants": [
       "300",
@@ -11643,6 +11663,8 @@
     "family": "Miriam Libre",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700"
     ],
     "subsets": [

@@ -35,7 +35,6 @@ import { createBlockCompleter } from '~stackable/util'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { createBlock } from '@wordpress/blocks'
 import { addFilter } from '@wordpress/hooks'
 import { sprintf, __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
@@ -106,25 +105,6 @@ const Edit = props => {
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }
 					onReplace={ onReplace }
-					onSplit={ ( value, isOriginal ) => {
-						// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js
-						let newAttributes
-
-						if ( isOriginal || value ) {
-							newAttributes = {
-								...props.attributes,
-								text: value,
-							}
-						}
-
-						const block = createBlock( 'stackable/subtitle', newAttributes )
-
-						if ( isOriginal ) {
-							block.clientId = props.clientId
-						}
-
-						return block
-					} }
 				/>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }

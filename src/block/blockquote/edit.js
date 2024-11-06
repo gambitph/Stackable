@@ -32,7 +32,6 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -42,11 +41,12 @@ import {
 /**
  * WordPress dependencies
  */
-import { InnerBlocks } from '@wordpress/block-editor'
+import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
 import { renderToString, memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
 
 export const defaultIcon = renderToString( <SVGDefaultQuote /> )
 
@@ -58,7 +58,12 @@ const Edit = props => {
 	} = props
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks } = useSelect( select => {
+		const { getBlockOrder } = select( 'core/block-editor' )
+		return {
+			hasInnerBlocks: getBlockOrder( props.clientId ).length > 0,
+		}
+	}, [ props.clientId ] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -146,7 +151,14 @@ addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/blockquote
 
 // Add more quotation mark icons in the Icon Block if it's inside the blockquote block.
 addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', output => {
-	const { parentBlock } = useBlockContext()
+	const { clientId } = useBlockEditContext()
+	const { parentBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+		return {
+			parentBlock: getBlock( parentClientId ),
+		}
+	}, [ clientId ] )
 	if ( parentBlock?.name === 'stackable/blockquote' ) {
 		return (
 			<>
@@ -165,7 +177,14 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 
 // Change the icon picker label for the Icon Block if it's inside the blockquote block.
 addFilter( 'stackable.block-component.icon.label', 'stackable/blockquote', label => {
-	const { parentBlock } = useBlockContext()
+	const { clientId } = useBlockEditContext()
+	const { parentBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+		return {
+			parentBlock: getBlock( parentClientId ),
+		}
+	}, [ clientId ] )
 	if ( parentBlock?.name === 'stackable/blockquote' ) {
 		return __( 'Pick another icon', i18n )
 	}

@@ -33,7 +33,6 @@ import {
 	ContainerDiv,
 	Columns,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -44,6 +43,7 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
@@ -56,7 +56,12 @@ const Edit = props => {
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks } = useSelect( select => {
+		const { getBlockOrder } = select( 'core/block-editor' )
+		return {
+			hasInnerBlocks: getBlockOrder( props.clientId ).length > 0,
+		}
+	}, [ props.clientId ] )
 
 	const blockClassNames = classnames( [
 		className,

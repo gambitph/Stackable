@@ -24,6 +24,7 @@ export const settings = {
 	supports: {
 		anchor: true,
 		spacing: true,
+		splitting: true,
 	},
 	example,
 	deprecated,

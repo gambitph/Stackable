@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { useBlockContext, useLinking } from '~stackable/hooks'
+import { useLinking } from '~stackable/hooks'
 import { useClosestLinkableBlock } from '~stackable/plugins/block-linking'
 import { Tooltip } from '~stackable/components'
 
@@ -8,6 +8,7 @@ import { Dashicon } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { getPlugin } from '@wordpress/plugins'
+import { useSelect } from '@wordpress/data'
 
 // We split this off because we use hooks that won't allow conditional rendering
 // for the Linking component.
@@ -19,8 +20,14 @@ export const Linking = props => {
 export const _Linking = () => {
 	const [ isLinked, setIsLinked ] = useLinking()
 
-	const { isOnlyBlock } = useBlockContext()
 	const { clientId } = useBlockEditContext()
+	const { isOnlyBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+		return {
+			isOnlyBlock: getBlock( parentClientId ).innerBlocks.length === 1,
+		}
+	}, [ clientId ] )
 
 	const closestLinkableBlock = useClosestLinkableBlock( clientId )
 

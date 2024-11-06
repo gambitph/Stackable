@@ -39,7 +39,6 @@ import {
 	getAlignmentClasses,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -48,7 +47,7 @@ import { sprintf, __ } from '@wordpress/i18n'
 import { DEFAULT_SVG, IconSvgDef } from './util'
 import { compose } from '@wordpress/compose'
 import { useInnerBlocksProps } from '@wordpress/block-editor'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import { addFilter } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
 
@@ -150,7 +149,12 @@ const Edit = props => {
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const { innerBlocks } = useBlockContext()
+	const { innerBlocks } = useSelect( select => {
+		const { getBlock } = select( 'core/block-editor' )
+		return {
+			innerBlocks: getBlock( props.clientId ).innerBlocks,
+		}
+	}, [ props.clientId ] )
 
 	const blockClassNames = classnames( [
 		className,

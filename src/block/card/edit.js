@@ -16,9 +16,7 @@ import {
 	InspectorTabs,
 	useBlockCssGenerator,
 } from '~stackable/components'
-import {
-	useBlockContext, useBlockStyle, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockStyle, useDeviceType } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -49,6 +47,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
@@ -57,16 +56,21 @@ const heightUnit = [ 'px', 'vh' ]
 
 const Edit = props => {
 	const {
-		hasInnerBlocks, innerBlocks,
-	} = useBlockContext()
-
-	const {
 		hasContainer,
 	} = props.attributes
 
 	const {
 		className, //isHovered,
 	} = props
+
+	const { hasInnerBlocks, innerBlocks } = useSelect( select => {
+		const { getBlock } = select( 'core/block-editor' )
+		const innerBlocks = getBlock( props.clientId ).innerBlocks
+		return {
+			hasInnerBlocks: innerBlocks.length > 0,
+			innerBlocks,
+		}
+	}, [ props.clientId ] )
 
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
