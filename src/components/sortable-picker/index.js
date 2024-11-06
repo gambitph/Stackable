@@ -17,7 +17,7 @@ import {
 	Dashicon,
 	Dropdown,
 } from '@wordpress/components'
-import { useState } from '@wordpress/element'
+import { useState, useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const addItemPopoverProps = {
@@ -138,10 +138,30 @@ const LabeledItemIndicator = props => {
 		onChange,
 		ItemPreview = null,
 		ItemPicker = null,
-
+		enableDebounce = true, // If false, onChange will be called immediately.
 	} = props
 
 	const [ isFocused, setIsFocused ] = useState( false )
+
+	const [ debouncedText, setDebouncedText ] = useState( item.name )
+
+	useEffect( () => {
+		setDebouncedText( item.name )
+	}, [ item.name ] )
+
+	useEffect( () => {
+		let timeout
+		if ( item.name !== debouncedText && enableDebounce ) {
+			timeout = setTimeout( () => {
+				onChange( {
+					...item,
+					name: debouncedText,
+				} )
+			}, 300 )
+		}
+
+		return () => clearTimeout( timeout )
+	}, [ debouncedText, onChange ] )
 
 	return (
 		<HStack justify="space-between" className="stk-global-settings-color-picker__color-indicator-wrapper">
@@ -164,12 +184,16 @@ const LabeledItemIndicator = props => {
 								<ItemPreview item={ item } />
 								<input
 									className="components-input-control__input"
-									value={ item.name }
+									value={ debouncedText }
 									onChange={ ev => {
-										onChange( {
-											...item,
-											name: ev.target.value,
-										} )
+										if ( enableDebounce ) {
+											setDebouncedText( ev.target.value )
+										} else {
+											onChange( {
+												...item,
+												name: ev.target.value,
+											} )
+										}
 									} }
 									onFocus={ () => setIsFocused( true ) }
 									onBlur={ ev => {
