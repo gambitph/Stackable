@@ -9,6 +9,12 @@
 }
 
 .ugb-panel--countdown .components-datetime__date {
+	.components-datetime__date__day[aria-label*="Selected" i] {
+		color: #fff;
+		&:hover {
+			color: #fff !important;
+		}
+	}
 	:last-child {
 		row-gap: 8px;
 		column-gap: 4px;

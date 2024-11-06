@@ -396,6 +396,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 
 				foreach ( $style_matches[1] as $i => $media_query ) {
 					$media_query = ! empty( $media_query ) ? substr( $media_query, 0, -1 ) : $media_query;
+					$media_query = str_replace( 'width: ', 'width:', $media_query ); // Ensure that the media query is consistent.
 					$selector = $style_matches[2][ $i ];
 					$style_rule = $style_matches[3][ $i ];
 

@@ -5,14 +5,20 @@
  */
 import { useDeviceType } from '~stackable/hooks'
 import { createRoot } from '~stackable/util'
-import { useSetting } from '@wordpress/block-editor'
+import { useSettings as _useSettings, useSetting as deprecatedUseSetting } from '@wordpress/block-editor'
 import domReady from '@wordpress/dom-ready'
 import { useEffect } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 
+// This is a custom hook for the deprecated useSetting since WP 6.3 & 6.4 doesn't have useSettings yet.
+const useSettings = _useSettings || ( () => {
+	const contentSize = deprecatedUseSetting( 'layout.contentSize' )
+	const wideSize = deprecatedUseSetting( 'layout.wideSize' )
+	return [ contentSize, wideSize ]
+} )
+
 export const ThemeBlockSize = () => {
-	const contentSize = useSetting( 'layout.contentSize' )
-	const wideSize = useSetting( 'layout.wideSize' )
+	const [ contentSize, wideSize ] = useSettings( 'layout.contentSize', 'layout.wideSize' )
 
 	const deviceType = useDeviceType()
 	const editorDom = useSelect( select => {

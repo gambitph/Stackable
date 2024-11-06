@@ -47,33 +47,6 @@ export function convertToListItems( blocks ) {
 	return listItems
 }
 
-export const useOnSplit = ( clientId, attributes ) => {
-	const { getBlock } = useSelect( 'core/block-editor' )
-
-	return useCallback( ( value, isOriginal ) => {
-		const block = getBlock( clientId )
-		let newBlock
-
-		if ( isOriginal || value ) {
-			newBlock = cloneBlock( block, {
-				...attributes,
-				text: value,
-			} )
-		} else {
-			newBlock = cloneBlock( block, {
-				...attributes,
-				text: '',
-			} )
-		}
-
-		if ( isOriginal ) {
-			newBlock.clientId = clientId
-		}
-
-		return newBlock
-	}, [ clientId, attributes ] )
-}
-
 export const useEnter = ( text, clientId ) => {
 	const {
 		removeBlocks, selectionChange, insertBlocks,

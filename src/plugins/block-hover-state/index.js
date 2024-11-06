@@ -1,6 +1,5 @@
 import { dispatch, useSelect } from '@wordpress/data'
 import { useEffect } from '@wordpress/element'
-import { last } from 'lodash'
 
 /**
  * Listens to any block selection changes. This is done as a plugin (and not
@@ -21,10 +20,12 @@ export const BlockHoverState = () => {
 		hoverStateClientId,
 	} = useSelect( select => {
 		const selectedClientId = select( 'core/block-editor' ).getSelectedBlockClientId() || select( 'core/block-editor' ).getFirstMultiSelectedBlockClientId()
+
+		const parentClientId = select( 'core/block-editor' ).getBlockRootClientId( selectedClientId )
 		return {
 			getEditorDom: select( 'stackable/editor-dom' ).getEditorDom,
 			selectedClientId,
-			selectedParent: last( select( 'stackable/block-context' ).getBlockContext( selectedClientId ).parentTree ),
+			selectedParent: select( 'core/block-editor' ).getBlock( parentClientId ),
 			selectedParentHoverBlock: select( 'stackable/hover-state' ).getSelectedParentHoverBlock(),
 			hoverStateClientId: select( 'stackable/hover-state' ).getSelectedBlock(),
 		}

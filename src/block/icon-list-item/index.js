@@ -22,6 +22,7 @@ export const settings = {
 		__experimentalSelector: 'li',
 		reusable: false,
 		stkSaveBlockStyle: false,
+		splitting: true,
 	},
 	example,
 	edit,

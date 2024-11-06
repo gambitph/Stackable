@@ -290,6 +290,22 @@
 	margin-top: 0;
 }
 
+// Typography
+// ::spelling-error is not supported by Firefox so we need to separate it to prevent the style rule above from being invalid
+// and because :is() does not allow pseudo-elements inside it.
+.stk--is-gradient::spelling-error,
+.stk--is-gradient li::spelling-error,
+.stk--is-gradient span::spelling-error,
+.stk--is-gradient a::spelling-error {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-o-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	-o-text-fill-color: transparent;
+}
+
 // Deprecated styles.
 @import "deprecated-editor-block";
 
