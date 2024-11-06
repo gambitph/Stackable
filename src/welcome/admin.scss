@@ -391,11 +391,10 @@ body.toplevel_page_stk-custom-fields {
 		background-color: #fff;
 		border-radius: 0;
 		overflow: hidden;
-		padding: 60px 35px;
+		padding: 30px;
 		overflow: visible;
 		box-shadow: 0 18px 35px -15px rgba(18, 63, 82, 0.25);
 		border: 0;
-		margin-bottom: 30px;
 		transition: all 0.3s ease;
 		position: relative;
 		&.s-box-spaced {
@@ -502,7 +501,7 @@ body.toplevel_page_stk-custom-fields {
 		width: 250px;
 		left: 0;
 		background-color: #fff;
-		padding-top: 40px;
+		padding-top: 80px;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -512,6 +511,9 @@ body.toplevel_page_stk-custom-fields {
 			display: flex;
 			flex-direction: column;
 			top: 50px;
+		}
+		+ .s-box {
+			padding-bottom: 200px;
 		}
 		.s-sidenav-item {
 			color: #444;
