@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import blockStyles from './style'
+import { useOnPaste } from './util'
 
 /**
  * External dependencies
@@ -118,6 +119,8 @@ const Edit = props => {
 		version: VERSION,
 	} )
 
+	const onPaste = useOnPaste( clientId )
+
 	return (
 		<>
 			<InspectorControls
@@ -141,6 +144,7 @@ const Edit = props => {
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }
 					onReplace={ onReplace }
+					onPaste={ onPaste }
 				/>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
