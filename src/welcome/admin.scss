@@ -587,6 +587,10 @@ body.toplevel_page_stk-custom-fields {
 				opacity: 0.85;
 				box-shadow: none !important;
 			}
+			&:not(.s-button-has-unsaved-changes) {
+				opacity: 0.5;
+				filter: grayscale(50%);
+			}
 		}
 	}
 	.s-search-setting {

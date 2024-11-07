@@ -234,6 +234,7 @@ const ToggleBlockDialog = ( {
 const Sidenav = ( {
 	currentTab,
 	handleTabChange,
+	hasUnsavedChanges,
 	handleSettingsSave,
 	currentSearch,
 	isSaving,
@@ -337,6 +338,11 @@ const Sidenav = ( {
 		},
 	], [] )
 
+	const saveButtonClasses = classnames( [
+		's-save-changes',
+		{ 's-button-has-unsaved-changes': hasUnsavedChanges },
+	] )
+
 	return (
 		<>
 			<nav className="s-sidenav">
@@ -348,14 +354,14 @@ const Sidenav = ( {
 					} ) => {
 						const isSearched = currentSearch &&
 							settings.some( setting => setting.toLowerCase().includes( currentSearch ) )
-						const classes = classnames( [
+						const tabClasses = classnames( [
 							's-sidenav-item',
 							{ 's-sidenav-item-highlight': isSearched },
 							{ 's-active': currentTab === id },
 						] )
 						return ( <button
 							key={ id }
-							className={ classes }
+							className={ tabClasses }
 							onClick={ () => handleTabChange( id ) }
 							onKeyDown={ () => handleTabChange( id ) }
 							role="tab"
@@ -367,7 +373,7 @@ const Sidenav = ( {
 					} ) }
 					<div className="s-save-changes-wrapper">
 						<button
-							className="s-save-changes"
+							className={ saveButtonClasses }
 							onClick={ handleSettingsSave }
 						>
 							{ isSaving ? <Spinner /> : __( 'Save Changes', i18n ) }
@@ -439,10 +445,13 @@ const Settings = () => {
 		currentSearch,
 	}
 
+	const hasUnsavedChanges = useMemo( () => Object.keys( unsavedChanges ).length > 0, [ unsavedChanges ] )
+
 	return <>
 		<Sidenav
 			currentTab={ currentTab }
 			handleTabChange={ setCurrentTab }
+			hasUnsavedChanges={ hasUnsavedChanges }
 			handleSettingsSave={ handleSettingsSave }
 			currentSearch={ currentSearch }
 			isSaving={ isSaving }
