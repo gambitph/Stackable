@@ -905,7 +905,7 @@ const EditorModeSettings = lazy( () => import( '../../pro__premium_only/src/welc
 
 const RoleManager = props => {
 	return <>
-		<h2>{ __( '📰 Role Manager', i18n ) }</h2>
+		<h2>{ __( 'Role Manager', i18n ) }</h2>
 		<p className="s-settings-subtitle">
 			{ __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks. ', i18n ) }
 			<a
@@ -940,7 +940,7 @@ const CustomFieldsManagerSettings = lazy( () => import( '../../pro__premium_only
 const CustomFields = props => {
 	return <>
 		<div className="s-custom-fields-settings-header">
-			<h2>{ __( '📋 Custom Fields', i18n ) }</h2>
+			<h2>{ __( 'Custom Fields', i18n ) }</h2>
 			{ isPro &&
 				<Suspense fallback={ <Spinner /> }>
 					<div className="s-custom-fields-enable">
@@ -1072,7 +1072,7 @@ const AdditionalOptions = props => {
 
 	return (
 		<div className="s-other-options-wrapper">
-			<h2>{ __( '🔩 Miscellaneous', i18n ) }</h2>
+			<h2>{ __( 'Miscellaneous', i18n ) }</h2>
 			{ showProNoticesOption &&
 				<CheckboxControl
 					label={ __( 'Show "Go premium" notices', i18n ) }
@@ -1092,7 +1092,7 @@ const AdditionalOptions = props => {
 					handleSettingsChange( { stackable_global_colors_native_compatibility: checked } ) // eslint-disable-line camelcase
 				} }
 			/>
-			<h3>{ __( '🏠 Migration Settings', i18n ) }</h3>
+			<h3>{ __( 'Migration Settings', i18n ) }</h3>
 			<p>
 				{ __( 'Migrating from version 2 to version 3?', i18n ) }
 				&nbsp;
