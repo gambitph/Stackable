@@ -480,142 +480,147 @@ const EditorSettings = props => {
 
 	return (
 		<div className="s-editor-settings">
-			<h2>{ __( 'Blocks', i18n ) }</h2>
-			<p className="s-settings-subtitle">{ __( 'You can customize the behavior of some blocks here.', i18n ) }</p>
-			<AdminTextSetting
-				label={ __( 'Nested Block Width', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_block_default_width }
-				type="text"
-				onChange={ value => {
-					handleSettingsChange( { stackable_block_default_width: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
-			/>
-			<AdminTextSetting
-				label={ __( 'Nested Wide Block Width', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_block_wide_width }
-				type="text"
-				onChange={ value => {
-					handleSettingsChange( { stackable_block_wide_width: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
-			/>
-			<AdminToggleSetting
-				label={ __( 'Stackable Text as Default Block', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_enable_text_default_block }
-				onChange={ value => {
-					handleSettingsChange( { stackable_enable_text_default_block: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'If enabled, Stackable Text blocks will be added by default instead of the native Paragraph Block.', i18n ) }
-			/>
-
-			<h2>{ __( 'Editor', i18n ) }</h2>
-			<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
-			<AdminToggleSetting
-				label={ __( 'Design Library', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_enable_design_library }
-				onChange={ value => {
-					handleSettingsChange( { stackable_enable_design_library: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
-			/>
-			<AdminToggleSetting
-				label={ __( 'Stackable Settings', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_enable_global_settings }
-				onChange={ value => {
-					handleSettingsChange( { stackable_enable_global_settings: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'Adds a button on the top of the editor which gives access to Stackable settings.', i18n ) }
-			/>
-			<AdminToggleSetting
-				label={ __( 'Block Linking (Beta)', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_enable_block_linking }
-				onChange={ value => {
-					handleSettingsChange( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
-				} }
-				help={
-					<>
-						{ __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', i18n ) }
-						&nbsp;
-						<a target="_docs" href="https://docs.wpstackable.com/article/452-how-to-use-block-linking">{ __( 'Learn more', i18n ) }</a>
-					</>
-				}
-			/>
-
-			<h2>{ __( 'Toolbar', i18n ) }</h2>
-			<p className="s-settings-subtitle">{ __( 'You can disable some toolbar features here.', i18n ) }	</p>
-			<AdminToggleSetting
-				label={ __( 'Toolbar Text Highlight', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_enable_text_highlight }
-				onChange={ value => {
-					handleSettingsChange( { stackable_enable_text_highlight: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'Adds a toolbar button for highlighting text', i18n ) }
-			/>
-			<AdminToggleSetting
-				label={ __( 'Toolbar Dynamic Content', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_enable_dynamic_content }
-				onChange={ value => {
-					handleSettingsChange( { stackable_enable_dynamic_content: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'Adds a toolbar button for inserting dynamic content', i18n ) }
-			/>
-			<AdminToggleSetting
-				label={ __( 'Copy & Paste Styles', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_enable_copy_paste_styles }
-				onChange={ value => {
-					handleSettingsChange( { stackable_enable_copy_paste_styles: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'Adds a toolbar button for copying and pasting block styles', i18n ) }
-			/>
-			<AdminToggleSetting
-				label={ __( 'Reset Layout', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_enable_reset_layout }
-				onChange={ value => {
-					handleSettingsChange( { stackable_enable_reset_layout: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'Adds a toolbar button for resetting the layout of a stackble block back to the original', i18n ) }
-			/>
-			<AdminToggleSetting
-				label={ __( 'Save as Default Block', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_enable_save_as_default_block }
-				onChange={ value => {
-					handleSettingsChange( { stackable_enable_save_as_default_block: value } ) // eslint-disable-line
-				} }
-				help={ __( 'Adds a toolbar button for saving a block as the default block', i18n ) }
-			/>
-
-			<h2>{ __( 'Inspector', i18n ) }</h2>
-			<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the inspector here.' ) }</p>
-			<AdminToggleSetting
-				label={ __( 'Don\'t show help video tooltips', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_help_tooltip_disabled === '1' }
-				onChange={ value => {
-					handleSettingsChange( { stackable_help_tooltip_disabled: value ? '1' : '' } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'Disables the help video tooltips that appear in the inspector.', i18n ) }
-			/>
-			<AdminToggleSetting
-				label={ __( 'Auto-Collapse Panels', i18n ) }
-				searchTerm={ currentSearch }
-				value={ settings.stackable_auto_collapse_panels }
-				onChange={ value => {
-					handleSettingsChange( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
-				} }
-				help={ __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', i18n ) }
-			/>
+			<div className="s-setting-group">
+				<h2>{ __( 'Blocks', i18n ) }</h2>
+				<p className="s-settings-subtitle">{ __( 'You can customize the behavior of some blocks here.', i18n ) }</p>
+				<AdminTextSetting
+					label={ __( 'Nested Block Width', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_block_default_width }
+					type="text"
+					onChange={ value => {
+						handleSettingsChange( { stackable_block_default_width: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
+				/>
+				<AdminTextSetting
+					label={ __( 'Nested Wide Block Width', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_block_wide_width }
+					type="text"
+					onChange={ value => {
+						handleSettingsChange( { stackable_block_wide_width: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
+				/>
+				<AdminToggleSetting
+					label={ __( 'Stackable Text as Default Block', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_enable_text_default_block }
+					onChange={ value => {
+						handleSettingsChange( { stackable_enable_text_default_block: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'If enabled, Stackable Text blocks will be added by default instead of the native Paragraph Block.', i18n ) }
+				/>
+			</div>
+			<div className="s-setting-group">
+				<h2>{ __( 'Editor', i18n ) }</h2>
+				<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
+				<AdminToggleSetting
+					label={ __( 'Design Library', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_enable_design_library }
+					onChange={ value => {
+						handleSettingsChange( { stackable_enable_design_library: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
+				/>
+				<AdminToggleSetting
+					label={ __( 'Stackable Settings', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_enable_global_settings }
+					onChange={ value => {
+						handleSettingsChange( { stackable_enable_global_settings: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'Adds a button on the top of the editor which gives access to Stackable settings.', i18n ) }
+				/>
+				<AdminToggleSetting
+					label={ __( 'Block Linking (Beta)', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_enable_block_linking }
+					onChange={ value => {
+						handleSettingsChange( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
+					} }
+					help={
+						<>
+							{ __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', i18n ) }
+							&nbsp;
+							<a target="_docs" href="https://docs.wpstackable.com/article/452-how-to-use-block-linking">{ __( 'Learn more', i18n ) }</a>
+						</>
+					}
+				/>
+			</div>
+			<div className="s-setting-group">
+				<h2>{ __( 'Toolbar', i18n ) }</h2>
+				<p className="s-settings-subtitle">{ __( 'You can disable some toolbar features here.', i18n ) }	</p>
+				<AdminToggleSetting
+					label={ __( 'Toolbar Text Highlight', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_enable_text_highlight }
+					onChange={ value => {
+						handleSettingsChange( { stackable_enable_text_highlight: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'Adds a toolbar button for highlighting text', i18n ) }
+				/>
+				<AdminToggleSetting
+					label={ __( 'Toolbar Dynamic Content', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_enable_dynamic_content }
+					onChange={ value => {
+						handleSettingsChange( { stackable_enable_dynamic_content: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'Adds a toolbar button for inserting dynamic content', i18n ) }
+				/>
+				<AdminToggleSetting
+					label={ __( 'Copy & Paste Styles', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_enable_copy_paste_styles }
+					onChange={ value => {
+						handleSettingsChange( { stackable_enable_copy_paste_styles: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'Adds a toolbar button for copying and pasting block styles', i18n ) }
+				/>
+				<AdminToggleSetting
+					label={ __( 'Reset Layout', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_enable_reset_layout }
+					onChange={ value => {
+						handleSettingsChange( { stackable_enable_reset_layout: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'Adds a toolbar button for resetting the layout of a stackble block back to the original', i18n ) }
+				/>
+				<AdminToggleSetting
+					label={ __( 'Save as Default Block', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_enable_save_as_default_block }
+					onChange={ value => {
+						handleSettingsChange( { stackable_enable_save_as_default_block: value } ) // eslint-disable-line
+					} }
+					help={ __( 'Adds a toolbar button for saving a block as the default block', i18n ) }
+				/>
+			</div>
+			<div className="s-setting-group">
+				<h2>{ __( 'Inspector', i18n ) }</h2>
+				<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the inspector here.' ) }</p>
+				<AdminToggleSetting
+					label={ __( 'Don\'t show help video tooltips', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_help_tooltip_disabled === '1' }
+					onChange={ value => {
+						handleSettingsChange( { stackable_help_tooltip_disabled: value ? '1' : '' } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'Disables the help video tooltips that appear in the inspector.', i18n ) }
+				/>
+				<AdminToggleSetting
+					label={ __( 'Auto-Collapse Panels', i18n ) }
+					searchTerm={ currentSearch }
+					value={ settings.stackable_auto_collapse_panels }
+					onChange={ value => {
+						handleSettingsChange( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
+					} }
+					help={ __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', i18n ) }
+				/>
+			</div>
 		</div>
 	)
 }

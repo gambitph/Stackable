@@ -673,6 +673,13 @@ body.toplevel_page_stk-custom-fields {
 			}
 		}
 	}
+
+	.s-setting-group:not(:last-child) {
+		border-bottom: 1px solid #eaecf0;
+		padding-bottom: 32px;
+		padding-top: 32px;
+	}
+
 	.s-side {
 		h2,
 		h3 {
