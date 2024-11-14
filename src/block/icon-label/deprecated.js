@@ -12,6 +12,10 @@ const deprecated = [
 		attributes: attributes( '3.13.1' ),
 		save: withVersion( '3.13.1' )( Save ),
 		isEligible: ( attributes, innerBlocks ) => {
+			if ( innerBlocks[ 0 ]?.name !== 'stackable/icon' ) {
+				return false
+			}
+
 			const iconBlockAttributes = innerBlocks[ 0 ].attributes
 			const hasIconSize = iconBlockAttributes.iconSize || iconBlockAttributes.iconSizeTablet || iconBlockAttributes.iconSizeMobile ? true : false
 			const hasIconGap = attributes.iconGap || attributes.iconGapTablet || attributes.iconGapMobile ? true : false
