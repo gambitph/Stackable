@@ -12,8 +12,8 @@ export const useOnPaste = clientId => {
 	return useCallback( event => {
 		event.preventDefault()
 		// Get the raw HTML from the clipboard
-		const html = event.clipboardData.getData( 'text/html' )
-		const plain = event.clipboardData.getData( 'text/plain' )
+		const html = event.clipboardData?.getData( 'text/html' ) || ''
+		const plain = event.clipboardData?.getData( 'text/plain' ) || ''
 
 		const blocks = pasteHandler( {
 			HTML: html,
