@@ -5,14 +5,13 @@ let i = 1
 
 const AdminBaseSetting = props => {
 	const [ uid ] = useState( `ugb-admin-setting-${ i++ }` )
-	const isSearched = props.searchTerm && props.label.toLowerCase().includes( props.searchTerm )
+	const isSearched = props.searchedSettings.includes( props.label )
 	const mainClasses = classnames( [
 		'ugb-admin-setting',
 		props.className,
 	], {
 		[ `ugb-admin-setting--${ props.size }` ]: props.size,
-		'ugb-admin-setting--highlight': isSearched,
-		'ugb-admin-setting--not-highlight': props.searchTerm && ! isSearched,
+		'ugb-admin-setting--not-highlight': ! isSearched,
 	} )
 
 	return (

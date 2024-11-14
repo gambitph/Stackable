@@ -602,16 +602,7 @@ body.toplevel_page_stk-custom-fields {
 			width: 250px;
 		}
 	}
-	.ugb-admin-setting--highlight {
-		.ugb-admin-setting__label {
-			color: #333;
-		}
-	}
-	.components-base-control--highlight {
-		label {
-			color: #333;
-		}
-	}
+
 	.ugb-admin-setting--not-highlight {
 		display: none;
 	}
@@ -674,10 +665,12 @@ body.toplevel_page_stk-custom-fields {
 		}
 	}
 
-	.s-setting-group:not(:last-child) {
-		border-bottom: 1px solid #eaecf0;
+	.s-setting-group {
 		padding-bottom: 32px;
 		padding-top: 32px;
+		&:not(:last-child) {
+			border-bottom: 1px solid #eaecf0;
+		}
 	}
 
 	.s-side {
