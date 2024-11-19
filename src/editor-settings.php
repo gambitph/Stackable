@@ -12,6 +12,10 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		 * Add our hooks.
 		 */
 		function __construct() {
+			// Migrate settings.
+			add_action( 'admin_init', array( $this, 'migrate_block_states' ) );
+			add_action( 'rest_api_init', array( $this, 'migrate_block_states' ) );
+
 			// Register settings.
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_settings' ) );
@@ -315,8 +319,8 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 
 				if ( is_array( $old_disabled_blocks ) ) {
 					foreach ( $old_disabled_blocks as $block_name ) {
-						// In the block_states, disabled is 1 and hidden is 2
-						$new_block_states[ $block_name ] = 1;
+						// In the block_states, hidden is 2 and disabled is 3
+						$new_block_states[ $block_name ] = 2;
 					}
 				}
 
