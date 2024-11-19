@@ -181,6 +181,7 @@ module.exports = [
 		'frontend_block_progress_bar': path.resolve( __dirname, '../src/block/progress-bar/frontend-progress-bar.js' ),
 		'frontend_block_horizontal_scroller': path.resolve( __dirname, '../src/block/horizontal-scroller/frontend-horizontal-scroller.js' ),
 		'frontend_block_tabs': path.resolve( __dirname, '../src/block/tabs/frontend-tabs.js' ),
+		'frontend_image_optimizer_polyfill': path.resolve( __dirname, '../src/block-components/image/image-optimizer-polyfill.js' ),
 	},
 
 	output: {
