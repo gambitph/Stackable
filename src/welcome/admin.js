@@ -790,7 +790,7 @@ const Blocks = props => {
 
 	const DERIVED_BLOCKS = getAllBlocks()
 	const groups = filteredSearchTree.find( tab => tab.id === 'blocks' ).groups
-	const disabledBlocks = settings.stackable_disabled_blocks ?? {} // eslint-disable-line camelcase
+	const disabledBlocks = settings.stackable_block_states ?? {} // eslint-disable-line camelcase
 
 	const [ isDisabledDialogOpen, setIsDisabledDialogOpen ] = useState( false )
 	const [ isEnabledDialogOpen, setIsEnabledDialogOpen ] = useState( false )
@@ -798,7 +798,7 @@ const Blocks = props => {
 	const [ currentToggleBlockList, setCurrentToggleBlockList ] = useState( [] )
 
 	const enableAllBlocks = () => {
-		handleSettingsChange( { stackable_disabled_blocks: {} } ) // eslint-disable-line camelcase
+		handleSettingsChange( { stackable_block_states: {} } ) // eslint-disable-line camelcase
 	}
 
 	const disableAllBlocks = () => {
@@ -808,7 +808,7 @@ const Blocks = props => {
 				newDisabledBlocks[ block.name ] = BLOCK_STATE.DISABLED
 			} )
 		} )
-		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
 	}
 
 	const hideAllBlocks = () => {
@@ -818,7 +818,7 @@ const Blocks = props => {
 				newDisabledBlocks[ block.name ] = BLOCK_STATE.HIDDEN
 			} )
 		} )
-		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
 	}
 
 	const toggleBlock = ( name, value ) => {
@@ -849,7 +849,7 @@ const Blocks = props => {
 		} else {
 			newDisabledBlocks = { ...disabledBlocks, [ name ]: valueInt }
 		}
-		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
 	}
 
 	const handleDisableDialogConfirm = () => {
@@ -858,7 +858,7 @@ const Blocks = props => {
 		currentToggleBlockList.forEach( block => {
 			newDisabledBlocks[ block ] = BLOCK_STATE.DISABLED
 		} )
-		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
 	}
 
 	const handleEnableDialogConfirm = () => {
@@ -868,7 +868,7 @@ const Blocks = props => {
 		currentToggleBlockList.forEach( block => {
 			delete newDisabledBlocks[ block ]
 		} )
-		handleSettingsChange( { stackable_disabled_blocks: newDisabledBlocks } ) // eslint-disable-line camelcase
+		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
 	}
 
 	return (

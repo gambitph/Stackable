@@ -41,7 +41,7 @@ const getVariationsToRemove = ( disabledBlocks, blockName ) => {
 }
 
 const applySettingsToMeta = metadata => {
-	const disabledBlocks = settings.stackable_disabled_blocks || {} // eslint-disable-line camelcase
+	const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
 	let inserter = true
 
 	// If the block is hidden, set the inserter to false.

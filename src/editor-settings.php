@@ -32,7 +32,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		public function register_settings() {
 			register_setting(
 				'stackable_editor_settings',
-				'stackable_disabled_blocks',
+				'stackable_block_states',
 				// Use an object to store the block names as keys and the value that represents if disabled or hidden.
 				// Enabled blocks are not stored in the object to save memory.
 				array(
@@ -255,7 +255,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		 */
 		public function add_settings( $settings ) {
 			$settings['stackable_google_maps_api_key'] = get_option( 'stackable_google_maps_api_key' );
-			$settings['stackable_disabled_blocks'] = get_option( 'stackable_disabled_blocks' );
+			$settings['stackable_block_states'] = get_option( 'stackable_block_states' );
 			$settings['stackable_enable_design_library'] = get_option( 'stackable_enable_design_library' );
 			$settings['stackable_optimize_inline_css'] = get_option( 'stackable_optimize_inline_css' );
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
@@ -297,6 +297,32 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			}
 
 			return $css;
+		}
+
+		/**
+		 * Migrate from disabled blocks array to block states object.
+		 *
+		 * @return void
+		 */
+		function migrate_block_states() {
+			$old_setting_name = 'stackable_disabled_blocks';
+			$new_setting_name = 'stackable_block_states'; 
+
+			// Check if the old setting exists and the new setting is empty.
+			if ( get_option( $old_setting_name ) !== false && empty( get_option( $new_setting_name, [] ) ) ) {
+				$old_disabled_blocks = get_option( $old_setting_name, [] );
+				$new_block_states = [];
+
+				if ( is_array( $old_disabled_blocks ) ) {
+					foreach ( $old_disabled_blocks as $block_name ) {
+						// In the block_states, disabled is 1 and hidden is 2
+						$new_block_states[ $block_name ] = 1;
+					}
+				}
+
+				update_option( $new_setting_name, $new_block_states );
+				delete_option( $old_setting_name );
+			}
 		}
 	}
 
