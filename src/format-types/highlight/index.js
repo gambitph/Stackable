@@ -256,7 +256,7 @@ const HighlightButton = props => {
 	)
 }
 
-if ( settings.stackable_enable_toolbar_text_highlight )	{
+if ( settings.stackable_enable_text_highlight )	{
 	registerFormatType(
 		'stk/highlight', {
 			title: __( 'Highlight Text', i18n ),
