@@ -104,6 +104,7 @@ const SortablePicker = props => {
 							onChange={ item => onChangeItem( item ) }
 							ItemPreview={ props.ItemPreview }
 							ItemPicker={ props.ItemPicker }
+							updateOnBlur={ props.updateOnBlur }
 						/> ) ) }
 				</SortableContainer>
 			</div>
@@ -138,30 +139,18 @@ const LabeledItemIndicator = props => {
 		onChange,
 		ItemPreview = null,
 		ItemPicker = null,
-		enableDebounce = true, // If false, onChange will be called immediately.
+		updateOnBlur = false, // If true, onChange will be called only when the input is blurred.
 	} = props
 
 	const [ isFocused, setIsFocused ] = useState( false )
-
 	const [ debouncedText, setDebouncedText ] = useState( item.name )
 
+	// Updates the debounced text when the items get resorted.
 	useEffect( () => {
-		setDebouncedText( item.name )
-	}, [ item.name ] )
-
-	useEffect( () => {
-		let timeout
-		if ( item.name !== debouncedText && enableDebounce ) {
-			timeout = setTimeout( () => {
-				onChange( {
-					...item,
-					name: debouncedText,
-				} )
-			}, 300 )
+		if ( item.name !== debouncedText ) {
+			setDebouncedText( item.name )
 		}
-
-		return () => clearTimeout( timeout )
-	}, [ debouncedText, onChange ] )
+	}, [ item.name ] )
 
 	return (
 		<HStack justify="space-between" className="stk-global-settings-color-picker__color-indicator-wrapper">
@@ -184,11 +173,12 @@ const LabeledItemIndicator = props => {
 								<ItemPreview item={ item } />
 								<input
 									className="components-input-control__input"
-									value={ debouncedText }
+									value={ isFocused ? debouncedText : item.name }
 									onChange={ ev => {
-										if ( enableDebounce ) {
-											setDebouncedText( ev.target.value )
-										} else {
+										setDebouncedText( ev.target.value )
+
+										// If we're not updating on blur, update the value immediately.
+										if ( ! updateOnBlur ) {
 											onChange( {
 												...item,
 												name: ev.target.value,
@@ -197,7 +187,18 @@ const LabeledItemIndicator = props => {
 									} }
 									onFocus={ () => setIsFocused( true ) }
 									onBlur={ ev => {
-										setIsFocused( false )
+										if ( updateOnBlur ) {
+											onChange( {
+												...item,
+												name: debouncedText,
+											} )
+										}
+
+										// Update isFocused after a delay to ensure onChange has finished if updating on blur.
+										setTimeout( () => {
+											setIsFocused( false )
+										}, 100 )
+
 										if ( isOpen && ! ev.relatedTarget?.closest( '.components-popover' ) ) {
 											onToggle()
 										}

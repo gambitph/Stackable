@@ -199,6 +199,8 @@ const IconSearchPopover = props => {
 					fr.onload = function( e ) {
 						setIsDropping( false )
 						const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
+
+						doAction( 'stackable.icon-search-popover.svg-upload', svgString )
 						props.onChange( svgString )
 						props.onClose()
 					}
