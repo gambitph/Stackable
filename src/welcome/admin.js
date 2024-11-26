@@ -618,7 +618,7 @@ const EditorSettings = props => {
 					/>
 					<AdminToggleSetting
 						label={ __( 'Stackable Settings', i18n ) }
-						searchedSettings={ blocks.children }
+						searchedSettings={ editor.children }
 						value={ settings.stackable_enable_global_settings }
 						onChange={ value => {
 							handleSettingsChange( { stackable_enable_global_settings: value } ) // eslint-disable-line camelcase
@@ -627,7 +627,7 @@ const EditorSettings = props => {
 					/>
 					<AdminToggleSetting
 						label={ __( 'Block Linking (Beta)', i18n ) }
-						searchedSettings={ blocks.children }
+						searchedSettings={ editor.children }
 						value={ settings.stackable_enable_block_linking }
 						onChange={ value => {
 							handleSettingsChange( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
