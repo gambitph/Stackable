@@ -377,16 +377,31 @@ const ToggleBlockDialog = ( {
 	onConfirm,
 	onCancel,
 } ) => {
+	const DERIVED_BLOCKS = getAllBlocks()
+
+	const getBlockTitle = name => {
+		for ( const category in DERIVED_BLOCKS ) {
+			for ( const block of DERIVED_BLOCKS[ category ] ) {
+				if ( block.name === name ) {
+					return block.title
+				}
+			}
+		}
+		return name
+	}
+
+	const blockTitle = getBlockTitle( blockName )
+
 	return (
 		<div className="s-toggle-block-dialog">
 			<div className="s-toggle-block-dialog-content">
 				{ isDisabled
-					? <p>{ __( 'Disabling ' + blockName + ' will also disable the blocks that require it:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
-					: <p>{ __( 'Enabling ' + blockName + ' will also enable its required innerblocks:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+					? <p>{ __( 'Disabling ' + blockTitle + ' will also disable the blocks that require it:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+					: <p>{ __( 'Enabling ' + blockTitle + ' will also enable its required innerblocks:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
 				}
 				<ul>
 					{ blockList.map( ( block, i ) => (
-						<li key={ i }>{ block }</li>
+						<li key={ i }>{ getBlockTitle( block ) }</li>
 					) ) }
 				</ul>
 				{ isDisabled
