@@ -192,11 +192,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 						<div class="s-content" id="settings-content"></div>
 						<?php do_action( 'stackable_settings_page_mid' ); ?>
-						<!-- We put all the other options here. -->
-						<article class="s-box s-box-hidden" id="other-settings">
-							<h2><?php _e( '🔩 Other Settings', STACKABLE_I18N ) ?></h2>
-							<aside class="s-other-options-wrapper"></aside>
-						</article>
 					</div>
 					<!-- <div class="s-side">
 						<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>

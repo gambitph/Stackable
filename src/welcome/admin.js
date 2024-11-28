@@ -25,6 +25,7 @@ import {
 	i18n,
 	showProNoticesOption,
 	isPro,
+	v2disabledBlocks,
 } from 'stackable'
 import classnames from 'classnames'
 import { importBlocks } from '~stackable/util/admin'
@@ -35,6 +36,8 @@ import AdminTextSetting from '~stackable/components/admin-text-setting'
 import AdminToolbarSetting from '~stackable/components/admin-toolbar-setting'
 import { GettingStarted } from './getting-started'
 import { BLOCK_STATE } from '~stackable/util/blocks'
+import { BlockToggler, OptimizationSettings } from '~stackable/deprecated/v2/welcome/admin'
+import blockData from '~stackable/deprecated/v2/welcome/blocks'
 
 const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 
@@ -222,6 +225,22 @@ const SEARCH_TREE = [
 			},
 		],
 	},
+	{
+		id: 'v2-settings',
+		label: __( 'V2 Settings', i18n ),
+		groups: [
+			{
+				id: 'optimizations',
+				children: [
+					__( 'Frontend JS & CSS Files' ),
+				],
+			},
+			{
+				id: 'blocks',
+				children: Object.values( blockData ).map( block => block.title ),
+			},
+		],
+	},
 ]
 
 const BLOCK_DEPENDENCIES = {
@@ -402,6 +421,7 @@ const Sidenav = ( {
 	currentSearch,
 	filteredSearchTree,
 	isSaving,
+	hasV2Tab,
 } ) => {
 	const saveButtonClasses = classnames( [
 		's-save-changes',
@@ -424,6 +444,11 @@ const Sidenav = ( {
 							{ 's-sidenav-item-highlight': isSearched },
 							{ 's-active': currentTab === id },
 						] )
+
+						if ( id === 'v2-settings' && ! hasV2Tab ) {
+							return null
+						}
+
 						return ( <button
 							key={ id }
 							className={ tabClasses }
@@ -437,12 +462,14 @@ const Sidenav = ( {
 						)
 					} ) }
 					<div className="s-save-changes-wrapper">
-						<button
-							className={ saveButtonClasses }
-							onClick={ handleSettingsSave }
-						>
-							{ isSaving ? <Spinner /> : __( 'Save Changes', i18n ) }
-						</button>
+						{ currentTab !== 'v2-settings' &&
+							<button
+								className={ saveButtonClasses }
+								onClick={ handleSettingsSave }
+							>
+								{ isSaving ? <Spinner /> : __( 'Save Changes', i18n ) }
+							</button>
+						}
 					</div>
 				</div>
 			</nav>
@@ -474,6 +501,13 @@ const Settings = () => {
 	const [ currentTab, setCurrentTab ] = useState( 'editor-settings' )
 	const [ currentSearch, setCurrentSearch ] = useState( '' )
 	const [ isSaving, setIsSaving ] = useState( false )
+	const [ hasV2Tab, setHasV2Tab ] = useState( false )
+
+	const hasV2Compatibility = currentSettings => {
+		return currentSettings.stackable_v2_frontend_compatibility === '1' ||
+			currentSettings.stackable_v2_editor_compatibility === '1' ||
+			currentSettings.stackable_v2_editor_compatibility_usage === '1'
+	}
 
 	const handleSettingsChange = useCallback( newSettings => {
 		setSettings( prev => ( { ...prev, ...newSettings } ) )
@@ -500,9 +534,18 @@ const Settings = () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
 				setSettings( response )
+				// Should only be set initially since we have to reload after setting for it to work with the backend
+				setHasV2Tab( hasV2Compatibility( response ) )
 			} )
 		} )
 	}, [] )
+
+	// However, when disabling V2 blocks, update the settings page to disallow further configuration
+	useEffect( () => {
+		if ( ! hasV2Compatibility( settings ) ) {
+			setHasV2Tab( false )
+		}
+	}, [ settings ] )
 
 	const hasUnsavedChanges = useMemo( () => Object.keys( unsavedChanges ).length > 0, [ unsavedChanges ] )
 	const filteredSearchTree = useMemo( () => {
@@ -526,6 +569,7 @@ const Settings = () => {
 		settings,
 		handleSettingsChange,
 		filteredSearchTree,
+		currentTab,
 	}
 
 	return <>
@@ -537,6 +581,7 @@ const Settings = () => {
 			currentSearch={ currentSearch }
 			filteredSearchTree={ filteredSearchTree }
 			isSaving={ isSaving }
+			hasV2Tab={ hasV2Tab }
 		/>
 		<article className="s-box" id={ currentTab }>
 			<Searchbar currentSearch={ currentSearch } handleSearchChange={ setCurrentSearch } />
@@ -549,6 +594,8 @@ const Settings = () => {
 			{ currentTab === 'custom-fields-settings' && <CustomFields { ...props } /> }
 			{ currentTab === 'integrations' && <Integrations { ...props } /> }
 			{ currentTab === 'other-settings' && <AdditionalOptions { ...props } /> }
+			{ /* Render the V2 settings and show/hide via CSS */ }
+			<V2Settings { ...props } />
 		</article>
 	</>
 }
@@ -1262,6 +1309,7 @@ const AdditionalOptions = props => {
 			{ migrationSettings.children.length > 0 &&
 				<div className="s-setting-group">
 					<h3>{ __( 'Migration Settings', i18n ) }</h3>
+					<p>{ __( 'After enabling the version 2 blocks, please refresh the page to re-fetch the blocks from the server.', i18n ) }</p>
 					<p>
 						{ __( 'Migrating from version 2 to version 3?', i18n ) }
 						&nbsp;
@@ -1308,8 +1356,39 @@ const AdditionalOptions = props => {
 	)
 }
 
-AdditionalOptions.defaultProps = {
-	showProNoticesOption: false,
+const V2Settings = props => {
+	const groups = props.filteredSearchTree.find( tab => tab.id === 'v2-settings' ).groups
+	const optimizations = groups.find( group => group.id === 'optimizations' )
+	const blocks = groups.find( group => group.id === 'blocks' )
+
+	const classes = classnames( [
+		's-v2-settings',
+		{ 's-settings-hide': props.currentTab !== 'v2-settings' },
+	] )
+
+	return (
+		<div className={ classes }>
+			{ optimizations.children.length > 0 &&
+				<div className="s-setting-group">
+					<h2>{ __( '🏃‍♂️ Optimization Settings', i18n ) } (V2)</h2>
+					<p className="s-settings-subtitle">
+						{ __( 'Here are some settings that you can tweak to optimize Stackable.', i18n ) }
+						<a href="https://docs.wpstackable.com/article/460-how-to-use-optimization-settings?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">{ __( 'Learn more.', i18n ) } </a>
+						<br />
+						<strong>{ __( 'This only works for version 2 blocks.', i18n ) }</strong>
+					</p>
+					<OptimizationSettings searchedSettings={ optimizations.children } />
+				</div>
+			}
+			{ blocks.children.length > 0 &&
+				<div className="s-setting-group">
+					<h2>{ __( 'Enable & Disable Blocks', i18n ) } (V2)</h2>
+					<strong>{ __( 'This only works for version 2 blocks.', i18n ) }</strong>
+					<BlockToggler blocks={ blockData } disabledBlocks={ v2disabledBlocks } searchedSettings={ blocks.children } />
+				</div>
+			}
+		</div>
+	)
 }
 
 // Load all the options into the UI.

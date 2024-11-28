@@ -673,6 +673,12 @@ body.toplevel_page_stk-custom-fields {
 		}
 	}
 
+	.s-v2-settings {
+		&.s-settings-hide {
+			display: none;
+		}
+	}
+
 	.s-side {
 		h2,
 		h3 {
