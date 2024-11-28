@@ -4,6 +4,11 @@
 import domReady from '@wordpress/dom-ready'
 
 class ImageOptimizerPolyfill {
+	/**
+	 * This script is loaded when EWWW Image Optimizer plugin is activated
+	 * If Easy IO setting is activated for EWWW Image Optimizer plugin, dynamic images becomes blurry.
+	 * This script fixes the issue by removing the &fit parameter from the srcset and src attributes
+	 */
 	init = () => {
 		const imgs = document.querySelectorAll( '.stk-block img' )
 		imgs.forEach( img => {
