@@ -563,6 +563,24 @@ const Settings = () => {
 	}, [ settings ] )
 
 	const hasUnsavedChanges = useMemo( () => Object.keys( unsavedChanges ).length > 0, [ unsavedChanges ] )
+
+	useEffect( () => {
+		const handleBeforeUnload = event => {
+			if ( hasUnsavedChanges ) {
+				event.preventDefault()
+				// Most browsers ignore the custom message, but returning a value triggers the dialog
+				// https://developer.mozilla.org/en-US/docs/Web/API/BeforeUnloadEvent/returnValue
+				event.returnValue = true
+			}
+		}
+
+		window.addEventListener( 'beforeunload', handleBeforeUnload )
+
+		return () => {
+			window.removeEventListener( 'beforeunload', handleBeforeUnload )
+		}
+	}, [ hasUnsavedChanges ] )
+
 	const filteredSearchTree = useMemo( () => {
 		if ( ! currentSearch ) {
 			return SEARCH_TREE
