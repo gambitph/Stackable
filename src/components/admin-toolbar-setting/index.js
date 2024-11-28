@@ -21,6 +21,7 @@ const AdminToolbarSetting = props => {
 						props.controls.map( option => {
 							const isSelected = props.value ? props.value === option.value : props.placeholder === option.value
 							const tabindex = isSelected ? '0' : '-1'
+							const isDisabled = props.disabledValues ? props.disabledValues.includes( option.value ) : false
 
 							return <Button
 								style={ option.selectedColor && isSelected ? { backgroundColor: option.selectedColor } : {} }
@@ -30,6 +31,7 @@ const AdminToolbarSetting = props => {
 								tabIndex={ tabindex }
 								aria-pressed={ isSelected }
 								isSmall={ props.isSmall }
+								disabled={ isDisabled }
 								onClick={ () => {
 									if ( option.value === props.value ) {
 										return

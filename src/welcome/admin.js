@@ -984,6 +984,8 @@ const Blocks = props => {
 							<div className="s-settings-grid">
 								{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 									const blockState = disabledBlocks[ block.name ] ?? BLOCK_STATE.ENABLED
+									// Do not allow the disabling of column
+									const disabledValues = block.name === 'stackable/columns' ? [ BLOCK_STATE.DISABLED ] : null
 
 									return (
 										<AdminToolbarSetting
@@ -1010,6 +1012,7 @@ const Blocks = props => {
 													selectedColor: '#979e95',
 												},
 											] }
+											disabledValues={ disabledValues }
 											onChange={ value => {
 												toggleBlock( block.name, value )
 											} }
