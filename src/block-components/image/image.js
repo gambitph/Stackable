@@ -269,7 +269,7 @@ const Image = memo( props => {
 					onError={ () => setHasImageError( true ) }
 					className={ imageClasses }
 					src={ src || undefined }
-					alt={ striptags( props.alt || undefined ) }
+					alt={ striptags( props.alt || '' ) }
 					title={ striptags( props.title || undefined ) }
 					width={ props.width || undefined }
 					height={ props.height || undefined }
@@ -438,10 +438,10 @@ const ImageContent = props => {
 		: undefined
 
 	const propsToPass = {}
-	const alt = striptags( props.alt || undefined )
-	if ( alt ) {
-		propsToPass.alt = alt
-	}
+
+	// Allow explicit empty string for accessibility
+	propsToPass.alt = striptags( props.alt || '' )
+
 	const title = striptags( props.title || undefined )
 	if ( title ) {
 		propsToPass.title = title
