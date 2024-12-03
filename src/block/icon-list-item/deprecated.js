@@ -2,7 +2,27 @@ import { Save } from './save'
 import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
-import { deprecateBlockShadowColor, deprecateContainerShadowColor } from '~stackable/block-components'
+import {
+	deprecateBlockShadowColor, deprecateContainerShadowColor, Typography,
+} from '~stackable/block-components'
+import { semverCompare } from '~stackable/util'
+
+import { addFilter } from '@wordpress/hooks'
+
+// Change tag from <span> to <p> to inherit theme link styles.
+addFilter( 'stackable.icon-list-item.save.typography.content', 'stackable/inheritThemeLinkStyles', ( output, props, attrs, textClassNames ) => {
+	if ( semverCompare( props.version, '<', '3.13.11' ) ) {
+		return (
+			<Typography.Content
+				attributes={ attrs }
+				className={ textClassNames }
+				tagName="span"
+			/>
+		)
+	}
+
+	return output
+} )
 
 const deprecated = [
 	{

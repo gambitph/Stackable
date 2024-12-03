@@ -8,6 +8,7 @@ import { Save } from './save'
  * External dependencies
  */
 import { withVersion } from '~stackable/higher-order'
+import { semverCompare } from '~stackable/util'
 import compareVersions from 'compare-versions'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
@@ -18,6 +19,14 @@ import {
  * WordPress dependencies
  */
 import { addFilter } from '@wordpress/hooks'
+
+addFilter( 'stackable.table-of-contents.save.blockClasses', 'stackable/inheritThemeLinkStyles', ( output, textClasses, props ) => {
+	if ( semverCompare( props.version, '<', '3.13.11' ) ) {
+		return output.filter( className => className !== 'entry-content' )
+	}
+
+	return output
+} )
 
 addFilter( 'stackable.table-of-contents.save.blockClasses', 'stackable/classesNotRendered', ( output, textClasses, props ) => {
 	if ( compareVersions( props.version, '3.6.2' ) === 0 ) {

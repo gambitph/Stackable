@@ -2,11 +2,47 @@ import { Save } from './save'
 import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
+import { semverCompare } from '~stackable/util'
 import {
+	BlockDiv, CustomCSS, Button, Typography,
 	deprecateBlockBackgroundColorOpacity, deprecateButtonGradientColor,
 	deprecateContainerBackgroundColorOpacity, deprecateShadowColor,
 	deprecateContainerShadowColor, deprecateBlockShadowColor,
 } from '~stackable/block-components'
+import { addFilter } from '@wordpress/hooks'
+import { useBlockProps } from '@wordpress/block-editor'
+
+// If button style is link, change BlockDiv tag from <div> to <p> to inherit theme link styles.
+addFilter( 'stackable.button.save.blockDiv.content', 'stackable/inheritThemeLinkStyles', ( output, props, propsToPass, blockClassNames, customAttributes, typographyInnerClassNames ) => {
+	if ( semverCompare( props.version, '<', '3.13.11' ) ) {
+		return (
+			<BlockDiv.Content
+				{ ...useBlockProps.save( { className: blockClassNames } ) }
+				attributes={ props.attributes }
+				applyCustomAttributes={ false }
+				version={ props.version }
+			>
+				{ props.attributes.generatedCss && <style>{ props.attributes.generatedCss }</style> }
+				<CustomCSS.Content attributes={ props.attributes } />
+				<Button.Content
+					{ ...propsToPass }
+					attributes={ props.attributes }
+					buttonProps={ {
+						id: props.attributes.anchorId || undefined,
+						...customAttributes,
+					} }
+				>
+					<Typography.Content
+						attributes={ props.attributes }
+						tagName="span"
+						className={ typographyInnerClassNames }
+					/>
+				</Button.Content>
+			</BlockDiv.Content>
+		)
+	}
+	return output
+} )
 
 const deprecated = [
 	{

@@ -170,7 +170,6 @@ const Edit = props => {
 					 }
 					<Typography
 						ref={ useEnterRef }
-						tagName="span"
 						className={ textClassNames }
 						onMerge={ onMerge }
 						onPaste={ onPaste }

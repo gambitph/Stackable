@@ -42,6 +42,7 @@ export const Save = props => {
 	const blockClassNames = classnames( applyFilters( 'stackable.table-of-contents.save.blockClasses', [
 		className,
 		'stk-block-table-of-contents',
+		'entry-content', // add this class to inherit theme link styles
 		blockAlignmentClass,
 		responsiveClass,
 	], textClasses, props ) )

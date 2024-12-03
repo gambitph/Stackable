@@ -20,6 +20,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { useBlockProps } from '@wordpress/block-editor'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -46,29 +47,32 @@ export const Save = props => {
 	] )
 
 	return (
-		<BlockDiv.Content
-			{ ...useBlockProps.save( { className: blockClassNames } ) }
-			attributes={ props.attributes }
-			applyCustomAttributes={ false }
-			version={ props.version }
-		>
-			{ props.attributes.generatedCss && <style>{ props.attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ props.attributes } />
-			<Button.Content
-				{ ...propsToPass }
+		applyFilters( 'stackable.button.save.blockDiv.content', (
+			<BlockDiv.Content
+				{ ...useBlockProps.save( { className: blockClassNames } ) }
 				attributes={ props.attributes }
-				buttonProps={ {
-					id: props.attributes.anchorId || undefined,
-					...customAttributes,
-				} }
+				applyCustomAttributes={ false }
+				version={ props.version }
+				blockTag={ props.attributes.className === 'is-style-link' ? 'p' : null }
 			>
-				<Typography.Content
+				{ props.attributes.generatedCss && <style>{ props.attributes.generatedCss }</style> }
+				<CustomCSS.Content attributes={ props.attributes } />
+				<Button.Content
+					{ ...propsToPass }
 					attributes={ props.attributes }
-					tagName="span"
-					className={ typographyInnerClassNames }
-				/>
-			</Button.Content>
-		</BlockDiv.Content>
+					buttonProps={ {
+						id: props.attributes.anchorId || undefined,
+						...customAttributes,
+					} }
+				>
+					<Typography.Content
+						attributes={ props.attributes }
+						tagName="span"
+						className={ typographyInnerClassNames }
+					/>
+				</Button.Content>
+			</BlockDiv.Content>
+		), props, propsToPass, blockClassNames, customAttributes, typographyInnerClassNames )
 	)
 }
 

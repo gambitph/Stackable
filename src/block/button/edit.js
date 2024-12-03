@@ -98,6 +98,7 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 				applyCustomAttributes={ false }
+				blockTag={ blockStyle === 'link' ? 'p' : null }
 			>
 				<Button
 					buttonProps={ {
