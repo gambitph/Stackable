@@ -137,7 +137,7 @@ const Controls = props => {
 							imageWidthAttribute: width,
 							imageHeightAttribute: height,
 							imageExternalUrl: '',
-							...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only set the alt if it's empty.
+							...( image.alt ? { imageAlt: image.alt || '' } : {} ), // Only overwrite current alt if new alt is not empty.
 						} )
 					} }
 				/>

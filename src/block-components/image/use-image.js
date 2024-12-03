@@ -1,13 +1,10 @@
 /**
  * WordPress Dependencies
  */
-import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
+import { useBlockSetAttributesContext } from '~stackable/hooks'
 
 export const useImage = () => {
 	const setAttributes = useBlockSetAttributesContext()
-	const attributes = useBlockAttributesContext( attributes => ( {
-		imageAlt: attributes.imageAlt,
-	} ) )
 
 	const onChange = image => {
 		setAttributes( {
@@ -16,7 +13,7 @@ export const useImage = () => {
 			imageHeightAttribute: image.height,
 			imageWidthAttribute: image.width,
 			imageExternalUrl: '',
-			...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only add the image alt if it's empty.
+			...( image.alt ? { imageAlt: image.alt || '' } : {} ), // Only overwrite current alt if new alt is not empty.
 		} )
 	}
 
