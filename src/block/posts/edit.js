@@ -174,6 +174,13 @@ const Edit = props => {
 		version: VERSION,
 	} )
 
+	// Ensure Post fields have focus when typing
+	// eslint-disable-next-line @wordpress/no-global-active-element
+	const focusedField = document.activeElement
+	setTimeout( () => {
+		focusedField?.focus()
+	} )
+
 	return (
 		<>
 			<InspectorControls
