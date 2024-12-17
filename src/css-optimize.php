@@ -209,12 +209,19 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 * @return void
 		 */
 		public function load_cached_css_for_post() {
-			// DEV NOTE: If we'll also do this for wp_template and
+			// DEV NOTE #1: If we'll also do this for wp_template and
 			// wp_template_part then we might need to use the actions:
 			// render_block_core_template_part_post and
 			// render_block_core_template_part_file
-			if ( is_singular() && ! is_preview() && ! is_attachment() ) {
-				$post_id = get_the_ID();
+			// DEV NOTE #2: Check for WooCommerce Shop Page as well
+			if ( ( is_singular() && ! is_preview() && ! is_attachment() ) ||  ( function_exists('is_shop' ) && is_shop() ) ) {
+				if ( function_exists('is_shop' ) && is_shop() ) {
+					// use wc_get_page_id() instead of get_the_ID() because
+					// the latter returns the product page ID instead of the shop page ID
+					$post_id = wc_get_page_id( 'shop' );
+				} else {
+					$post_id = get_the_ID();
+				}
 				$this->optimized_css = get_post_meta( $post_id, 'stackable_optimized_css', true );
 
 				if ( ! empty( $this->optimized_css ) ) {

@@ -8,6 +8,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * In WooCommerce Shop page, <style> tags are stripped out and the CSS styles are displayed in the frontend.
+ * This function removes the <style> tags and CSS styles before they are stripped out.
+ */
+if ( ! function_exists( 'stackable_pre_kses_woocomerce_shop' ) && function_exists( 'wc_get_page_id' ) ) {
+
+	function stackable_pre_kses_woocomerce_shop( $content, $allowed_html, $context ) {
+		// Check if we are on the WooCommerce Shop page
+		if ( is_shop() ) {
+			$optimized_css = get_post_meta( wc_get_page_id( 'shop' ), 'stackable_optimized_css', true );
+
+			// remove CSS before kses strips out <style> tags
+			if ( ! empty( $optimized_css ) ) {
+				$content = str_replace( '<style>' . $optimized_css . '</style>', '', $content );
+			}
+
+		}
+		return $content;
+	}
+
+	add_filter('pre_kses', 'stackable_pre_kses_woocomerce_shop', 10, 3);
+}
+
 if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 
 	/**
