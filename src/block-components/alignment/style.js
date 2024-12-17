@@ -11,8 +11,8 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		columnAlignSelectorEditCallback = ( () => '' ),
 		columnAlignSelectorSaveCallback = ( () => '' ),
-		innerBlockSelectorCallback = getAttribute => `.stk-${ getAttribute( 'uniqueId' ) }-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout`,
-		editorInnerBlockSelectorCallback = getAttribute => `.stk-${ getAttribute( 'uniqueId' ) }-inner-blocks`,
+		editorInnerBlockSelectorCallback = getAttribute => `.stk-${ getAttribute( 'uniqueId' ) }-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+		innerBlockSelectorCallback = getAttribute => `.stk-${ getAttribute( 'uniqueId' ) }-inner-blocks`,
 		dependencies = [],
 	} = props
 
@@ -62,15 +62,43 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		],
 	} ] )
 
-	{ /* When blocks are vertical */ }
+	blockStyleGenerator.addBlockStyles( 'innerBlockOrientation', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'flexDirection',
+		attrName: 'innerBlockOrientation',
+		key: 'innerBlockOrientation',
+		responsive: 'all',
+		valueCallback: value => value === 'horizontal' ? 'row' : 'column',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'flexDirection',
+		attrName: 'innerBlockOrientation',
+		key: 'innerBlockOrientation-save',
+		responsive: 'all',
+		valueCallback: value => value === 'horizontal' ? 'row' : 'column',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		 ],
+	} ] )
+
+	/* Desktop alignItems */
 	blockStyleGenerator.addBlockStyles( 'innerBlockJustify', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'alignItems',
 		attrName: 'innerBlockJustify',
 		key: 'innerBlockJustifyVerticalEdit',
-		responsive: 'all',
+		responsive: [ 'desktop' ],
 		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
 		dependencies: [
 			'innerBlockOrientation',
@@ -79,11 +107,11 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'alignItems',
 		attrName: 'innerBlockJustify',
 		key: 'innerBlockJustifyVerticalSave',
-		responsive: 'all',
+		responsive: [ 'desktop' ],
 		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
 		dependencies: [
 			'innerBlockOrientation',
@@ -94,68 +122,11 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
-		styleRule: 'justifyContent',
-		attrName: 'innerBlockAlign',
-		key: 'innerBlockAlignVerticalEdit',
-		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
-		dependencies: [
-			'innerBlockOrientation',
-			...dependencies,
-		],
-	}, {
-		...propsToPass,
-		renderIn: 'save',
 		selectorCallback: editorInnerBlockSelectorCallback,
-		styleRule: 'justifyContent',
-		attrName: 'innerBlockAlign',
-		key: 'innerBlockAlignVerticalSave',
-		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
-		dependencies: [
-			'innerBlockOrientation',
-			...dependencies,
-		],
-	} ] )
-
-	{ /* When blocks are horizontal */ }
-	blockStyleGenerator.addBlockStyles( 'innerBlockJustify', [ {
-		...propsToPass,
-		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
-		styleRule: 'justifyContent',
-		attrName: 'innerBlockJustify',
-		key: 'innerBlockJustifyHorizontalEdit',
-		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
-		dependencies: [
-			'innerBlockOrientation',
-			...dependencies,
-		],
-	}, {
-		...propsToPass,
-		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
-		styleRule: 'justifyContent',
-		attrName: 'innerBlockJustify',
-		key: 'innerBlockJustifyHorizontalSave',
-		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
-		dependencies: [
-			'innerBlockOrientation',
-			...dependencies,
-		],
-	} ] )
-
-	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
-		...propsToPass,
-		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'alignItems',
 		attrName: 'innerBlockAlign',
 		key: 'innerBlockAlignHorizontalEdit',
-		responsive: 'all',
+		responsive: [ 'desktop' ],
 		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
 		dependencies: [
 			'innerBlockOrientation',
@@ -164,11 +135,11 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'alignItems',
 		attrName: 'innerBlockAlign',
 		key: 'innerBlockAlignHorizontalSave',
-		responsive: 'all',
+		responsive: [ 'desktop' ],
 		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
 		dependencies: [
 			'innerBlockOrientation',
@@ -176,10 +147,296 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		],
 	} ] )
 
+	/* Tablet alignItems */
+	blockStyleGenerator.addBlockStyles( 'innerBlockJustify', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyVerticalEdit',
+		responsive: [ 'tablet' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) !== 'horizontal' : getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyVerticalSave',
+		responsive: [ 'tablet' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) !== 'horizontal' : getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignHorizontalEdit',
+		responsive: [ 'tablet' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) === 'horizontal' : getAttribute( 'innerBlockOrientation' ) === 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignHorizontalSave',
+		responsive: [ 'tablet' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) === 'horizontal' : getAttribute( 'innerBlockOrientation' ) === 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	/* Mobile alignItems */
+	blockStyleGenerator.addBlockStyles( 'innerBlockJustify', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyVerticalEdit',
+		responsive: [ 'mobile' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationMobile' ) ? getAttribute( 'innerBlockOrientationMobile' ) !== 'horizontal' : ( getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) !== 'horizontal' : getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ),
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyVerticalSave',
+		responsive: [ 'mobile' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationMobile' ) ? getAttribute( 'innerBlockOrientationMobile' ) !== 'horizontal' : ( getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) !== 'horizontal' : getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ),
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignHorizontalEdit',
+		responsive: [ 'mobile' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationMobile' ) ? getAttribute( 'innerBlockOrientationMobile' ) === 'horizontal' : ( getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) === 'horizontal' : getAttribute( 'innerBlockOrientation' ) === 'horizontal' ),
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignHorizontalSave',
+		responsive: [ 'mobile' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationMobile' ) ? getAttribute( 'innerBlockOrientationMobile' ) === 'horizontal' : ( getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) === 'horizontal' : getAttribute( 'innerBlockOrientation' ) === 'horizontal' ),
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	/* Desktop justifyContent */
+	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignVerticalEdit',
+		responsive: [ 'desktop' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignVerticalSave',
+		responsive: [ 'desktop' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'innerBlockJustify', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyHorizontalEdit',
+		responsive: [ 'desktop' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyHorizontalSave',
+		responsive: [ 'desktop' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	/* Tablet justifyContent */
+	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignVerticalEdit',
+		responsive: [ 'tablet' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) !== 'horizontal' : getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignVerticalSave',
+		responsive: [ 'tablet' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) !== 'horizontal' : getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'innerBlockJustify', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyHorizontalEdit',
+		responsive: [ 'tablet' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) === 'horizontal' : getAttribute( 'innerBlockOrientation' ) === 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyHorizontalSave',
+		responsive: [ 'tablet' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) === 'horizontal' : getAttribute( 'innerBlockOrientation' ) === 'horizontal',
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	/* Mobile justifyContent */
+	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignVerticalEdit',
+		responsive: [ 'mobile' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationMobile' ) ? getAttribute( 'innerBlockOrientationMobile' ) !== 'horizontal' : ( getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) !== 'horizontal' : getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ),
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockAlign',
+		key: 'innerBlockAlignVerticalSave',
+		responsive: [ 'mobile' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationMobile' ) ? getAttribute( 'innerBlockOrientationMobile' ) !== 'horizontal' : ( getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) !== 'horizontal' : getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ),
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'innerBlockJustify', [ {
+		...propsToPass,
+		renderIn: 'edit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyHorizontalEdit',
+		responsive: [ 'mobile' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationMobile' ) ? getAttribute( 'innerBlockOrientationMobile' ) === 'horizontal' : ( getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) === 'horizontal' : getAttribute( 'innerBlockOrientation' ) === 'horizontal' ),
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	}, {
+		...propsToPass,
+		renderIn: 'save',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockJustify',
+		key: 'innerBlockJustifyHorizontalSave',
+		responsive: [ 'mobile' ],
+		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientationMobile' ) ? getAttribute( 'innerBlockOrientationMobile' ) === 'horizontal' : ( getAttribute( 'innerBlockOrientationTablet' ) ? getAttribute( 'innerBlockOrientationTablet' ) === 'horizontal' : getAttribute( 'innerBlockOrientation' ) === 'horizontal' ),
+		dependencies: [
+			'innerBlockOrientation',
+			...dependencies,
+		],
+	} ] )
+
+	/* Inner Block Wrap */
 	blockStyleGenerator.addBlockStyles( 'innerBlockWrap', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'flexWrap',
 		attrName: 'innerBlockWrap',
 		key: 'innerBlockWrapEdit',
@@ -192,7 +449,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'flexWrap',
 		attrName: 'innerBlockWrap',
 		key: 'innerBlockWrapSave',
@@ -207,7 +464,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'innerBlockColumnGap', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'columnGap',
 		attrName: 'innerBlockColumnGap',
 		key: 'innerBlockColumnGapEdit',
@@ -221,7 +478,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'columnGap',
 		attrName: 'innerBlockColumnGap',
 		key: 'innerBlockColumnGapSave',
@@ -237,7 +494,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'innerBlockRowGap', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'rowGap',
 		attrName: 'innerBlockRowGap',
 		key: 'innerBlockRowGapEdit',
@@ -255,7 +512,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'rowGap',
 		attrName: 'innerBlockRowGap',
 		key: 'innerBlockRowGapSave',
@@ -276,7 +533,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'alignContent',
 		attrName: 'innerBlockAlign',
 		key: 'innerBlockAlignWrapEdit',
@@ -290,7 +547,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'alignContent',
 		attrName: 'innerBlockAlign',
 		key: 'innerBlockAlignWrapSave',
