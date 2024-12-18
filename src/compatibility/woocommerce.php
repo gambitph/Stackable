@@ -30,7 +30,7 @@ if ( ! function_exists( 'stackable_pre_kses_woocomerce_shop' ) ) {
 
 	}
 
-	add_action( 'wp', 'is_woocommerce_shop_page' );
+	add_action( 'woocommerce_before_main_content', 'is_woocommerce_shop_page' );
 }
 
 if ( ! function_exists( 'stackable_check_if_woocommerce_shop' ) ) {
