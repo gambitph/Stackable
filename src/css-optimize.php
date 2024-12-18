@@ -209,7 +209,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 * @return void
 		 */
 		public function load_cached_css_for_post() {
-			// DEV NOTE #1: If we'll also do this for wp_template and
+			// DEV NOTE: If we'll also do this for wp_template and
 			// wp_template_part then we might need to use the actions:
 			// render_block_core_template_part_post and
 			// render_block_core_template_part_file
@@ -217,7 +217,6 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			$optimize_css = apply_filters( 'stackable/load_cached_css_for_post', $optimize_css );
 			if ( $optimize_css ) {
 				$post_id = apply_filters( 'stackable/get_post_id_for_cached_css', get_the_ID() );
-
 				$this->optimized_css = get_post_meta( $post_id, 'stackable_optimized_css', true );
 
 				if ( ! empty( $this->optimized_css ) ) {
