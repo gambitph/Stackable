@@ -256,42 +256,34 @@ export const Edit = memo( props => {
 							const newAttributes = {}
 
 							if ( deviceType === 'Desktop' ) {
+								// If the new desktop value is the same as the tablet value, set the tablet value to ''
+								// since tablet value will just inherit the desktop value
+								// otherwise, set the tablet value to the old desktop value because tablet was inheriting the old value
+								if ( innerBlockOrientationTablet === value ) {
+									newAttributes.innerBlockOrientationTablet = ''
+								} else {
+									newAttributes.innerBlockOrientationTablet = innerBlockOrientation
+								}
 								newAttributes.innerBlockOrientation = value
-							} else if ( deviceType === 'Tablet' && innerBlockOrientation === value ) {
-								newAttributes.innerBlockOrientationTablet = ''
+								newAttributes.innerBlockJustify = ''
+								newAttributes.innerBlockAlign = ''
 							} else if ( deviceType === 'Tablet' ) {
-								newAttributes.innerBlockOrientationTablet = value
-							} else if ( deviceType === 'Mobile' && _innerBlockOrientationTablet === value ) {
-								newAttributes.innerBlockOrientationMobile = ''
-							} else if ( deviceType === 'Mobile' ) {
-								newAttributes.innerBlockOrientationMobile = value
+								if ( innerBlockOrientationMobile === value ) {
+									newAttributes.innerBlockOrientationMobile = ''
+								} else {
+									newAttributes.innerBlockOrientationMobile = _innerBlockOrientationTablet
+								}
+
+								// if the new tablet value is the same as the desktop value, set the tablet value to ''
+								newAttributes.innerBlockOrientationTablet = innerBlockOrientation === value ? '' : value
+								newAttributes.innerBlockJustifyTablet = ''
+								newAttributes.innerBlockAlignTablet = ''
+							} else {
+								newAttributes.innerBlockOrientationMobile = _innerBlockOrientationTablet === value ? '' : value
+								newAttributes.innerBlockJustifyMobile = ''
+								newAttributes.innerBlockAlignMobile = ''
 							}
 
-							if ( value === 'vertical' ) { // Vertical.
-								if ( deviceType === 'Desktop' ) {
-									newAttributes.innerBlockJustify = ''
-								}
-
-								if ( deviceType === 'Tablet' || ( deviceType === 'Desktop' && ! innerBlockOrientationTablet ) ) {
-									newAttributes.innerBlockJustifyTablet = ''
-								}
-
-								if ( deviceType === 'Mobile' || ( deviceType === 'Desktop' && ! innerBlockOrientationTablet && ! innerBlockOrientationMobile ) || ( deviceType === 'Tablet' && ! innerBlockOrientationMobile ) ) {
-									newAttributes.innerBlockJustifyMobile = ''
-								}
-							} else { // Horizontal
-								if ( deviceType === 'Desktop' ) {
-									newAttributes.innerBlockAlign = ''
-								}
-
-								if ( deviceType === 'Tablet' || ( deviceType === 'Desktop' && ! innerBlockOrientationTablet ) ) {
-									newAttributes.innerBlockAlignTablet = ''
-								}
-
-								if ( deviceType === 'Mobile' || ( deviceType === 'Desktop' && ! innerBlockOrientationTablet && ! innerBlockOrientationMobile ) || ( deviceType === 'Tablet' && ! innerBlockOrientationMobile ) ) {
-									newAttributes.innerBlockAlignMobile = ''
-								}
-							}
 							setAttributes( newAttributes )
 						} }
 					/>
