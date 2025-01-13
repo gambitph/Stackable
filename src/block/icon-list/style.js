@@ -212,6 +212,9 @@ Typography.addStyles( blockStyles, {
 	selector: [
 		'ul li',
 		'ol li',
+		// Apply directly to span for gradient text color
+		'ul li span',
+		'ol li span',
 	],
 	hoverSelector: [
 		'.%s:hover ul li',
