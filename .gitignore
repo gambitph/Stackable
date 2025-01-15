@@ -6,8 +6,14 @@ dist/**
 !dist/*.json
 **/*__premium_only*
 coverage
+wp-auth.json
+.env
 
 composer.phar
 composer.lock
 /vendor
 /wordpress
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
