@@ -88,6 +88,7 @@ if ( ! class_exists( 'Stackable_Design_Library_V2' ) ) {
 		 */
 		public function delete_design_library_cache() {
 			global $wpdb;
+			// This should be okay without using caching since function is used to clear cache.
 			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_transient_stackable_get_block_designs_v2_%'" );
 
 			if ( $transients ) {
