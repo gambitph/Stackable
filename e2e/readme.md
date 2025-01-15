@@ -19,7 +19,20 @@ Ideally, we should also handle these:
 - Blocks / content from old plugin versions to this new one look identical in
   the frontend
 
+Github workflow should also test:
+- Different WP versions that we support
+- Different PHP versions that we support
+
 # Usage
+
+Create an `.env` file in the root directory of the plugin with the contents:
+
+```
+WP_BASE_URL=http://local.local/
+WP_AUTH_STORAGE=wp-auth.json
+WP_USERNAME=admin
+WP_PASSWORD=password
+```
 
 Run this command to run e2e:
 
