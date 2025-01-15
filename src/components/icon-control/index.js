@@ -31,6 +31,7 @@ const IconControl = props => {
 			{ ...omit( props, [ 'onChange', 'value' ] ) }
 			allowReset={ true }
 			value={ props.value }
+			defaultValue={ props.defaultValue }
 			onChange={ props.onChange }
 			hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 		>
@@ -54,6 +55,7 @@ const IconControl = props => {
 								onClose={ onClose }
 								returnSVGValue={ props.returnSVGValue }
 								onChange={ props.onChange }
+								defaultValue={ props.defaultValue }
 							/>
 						) }
 					/>

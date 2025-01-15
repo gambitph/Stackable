@@ -22,7 +22,11 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import { version as VERSION, i18n } from 'stackable'
+import {
+	version as VERSION,
+	i18n,
+	settings,
+} from 'stackable'
 import classnames from 'classnames'
 import {
 	InspectorTabs,
@@ -144,7 +148,8 @@ const Edit = props => {
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }
 					onReplace={ onReplace }
-					onPaste={ onPaste }
+					// Only use the custom onPaste (for pasting block) when text is the default block and the current text is empty
+					onPaste={ settings.stackable_enable_text_default_block && props.attributes.text === '' ? onPaste : undefined }
 				/>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }

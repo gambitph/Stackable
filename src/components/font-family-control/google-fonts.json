@@ -96,7 +96,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -217,6 +218,17 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Agu Display",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -369,7 +381,8 @@
     ],
     "subsets": [
       "hebrew",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -1131,7 +1144,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -1319,7 +1333,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -1709,7 +1724,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -1948,7 +1964,21 @@
     ],
     "subsets": [
       "cyrillic",
-      "latin"
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Badeen Display",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -2565,7 +2595,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -4105,7 +4136,8 @@
       "900"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -4540,7 +4572,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -4630,7 +4663,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -5275,6 +5309,19 @@
     ]
   },
   {
+    "family": "Edu AU VIC WA NT Arrows",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Edu AU VIC WA NT Dots",
     "variants": [
       "regular",
@@ -5572,7 +5619,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -5833,7 +5881,8 @@
       "italic"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -5867,7 +5916,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -5876,7 +5926,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -6966,6 +7017,7 @@
     ],
     "subsets": [
       "latin",
+      "latin-ext",
       "telugu"
     ]
   },
@@ -6995,7 +7047,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -7037,7 +7090,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -7156,8 +7210,14 @@
       "900"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
       "korean",
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -7438,6 +7498,7 @@
     ],
     "subsets": [
       "latin",
+      "latin-ext",
       "telugu"
     ]
   },
@@ -7800,6 +7861,21 @@
       "latin",
       "latin-ext",
       "tamil"
+    ]
+  },
+  {
+    "family": "Hind Mysuru",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "kannada",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -8387,7 +8463,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -8915,7 +8992,6 @@
       "regular"
     ],
     "subsets": [
-      "arabic",
       "latin",
       "latin-ext"
     ]
@@ -9092,7 +9168,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -9153,7 +9230,8 @@
     ],
     "subsets": [
       "devanagari",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -9946,7 +10024,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10545,7 +10624,8 @@
       "italic"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10780,7 +10860,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10800,7 +10881,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11077,7 +11159,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11562,7 +11645,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11600,7 +11684,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12061,7 +12146,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12117,7 +12203,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12188,6 +12275,36 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Montserrat Underline",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -14514,12 +14631,16 @@
     ]
   },
   {
-    "family": "Noto Sans Phags Pa",
+    "family": "Noto Sans PhagsPa",
     "variants": [
       "regular"
     ],
     "subsets": [
-      "phags-pa"
+      "latin",
+      "latin-ext",
+      "math",
+      "phags-pa",
+      "symbols"
     ]
   },
   {
@@ -15847,7 +15968,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -15856,7 +15978,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -15866,7 +15989,8 @@
     ],
     "subsets": [
       "greek",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -15875,7 +15999,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -15884,7 +16009,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -15893,7 +16019,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -15902,7 +16029,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -15911,7 +16039,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -16025,6 +16154,7 @@
       "regular"
     ],
     "subsets": [
+      "arabic",
       "cyrillic",
       "cyrillic-ext",
       "greek",
@@ -16247,7 +16377,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -16292,7 +16423,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -16606,6 +16738,21 @@
     ]
   },
   {
+    "family": "Parkinsans",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Passero One",
     "variants": [
       "regular"
@@ -16818,6 +16965,16 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Phetsarath",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "lao"
     ]
   },
   {
@@ -17088,6 +17245,15 @@
     ]
   },
   {
+    "family": "Playwrite AR Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite AT",
     "variants": [
       "100",
@@ -17097,6 +17263,16 @@
       "100italic",
       "200italic",
       "300italic",
+      "italic"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite AT Guides",
+    "variants": [
+      "regular",
       "italic"
     ],
     "subsets": [
@@ -17116,11 +17292,29 @@
     ]
   },
   {
+    "family": "Playwrite AU NSW Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite AU QLD",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite AU QLD Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17140,11 +17334,29 @@
     ]
   },
   {
+    "family": "Playwrite AU SA Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite AU TAS",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite AU TAS Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17164,11 +17376,29 @@
     ]
   },
   {
+    "family": "Playwrite AU VIC Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite BE VLG",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite BE VLG Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17188,11 +17418,29 @@
     ]
   },
   {
+    "family": "Playwrite BE WAL Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite BR",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite BR Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17212,11 +17460,29 @@
     ]
   },
   {
+    "family": "Playwrite CA Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite CL",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite CL Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17236,11 +17502,29 @@
     ]
   },
   {
+    "family": "Playwrite CO Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite CU",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite CU Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17260,11 +17544,29 @@
     ]
   },
   {
+    "family": "Playwrite CZ Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite DE Grund",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite DE Grund Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17284,11 +17586,29 @@
     ]
   },
   {
+    "family": "Playwrite DE LA Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite DE SAS",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite DE SAS Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17308,6 +17628,15 @@
     ]
   },
   {
+    "family": "Playwrite DE VA Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite DK Loopet",
     "variants": [
       "100",
@@ -17320,11 +17649,29 @@
     ]
   },
   {
+    "family": "Playwrite DK Loopet Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite DK Uloopet",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite DK Uloopet Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17356,6 +17703,24 @@
     ]
   },
   {
+    "family": "Playwrite ES Deco Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite ES Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite FR Moderne",
     "variants": [
       "100",
@@ -17368,11 +17733,29 @@
     ]
   },
   {
+    "family": "Playwrite FR Moderne Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite FR Trad",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite FR Trad Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17396,6 +17779,16 @@
     ]
   },
   {
+    "family": "Playwrite GB J Guides",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite GB S",
     "variants": [
       "100",
@@ -17405,6 +17798,16 @@
       "100italic",
       "200italic",
       "300italic",
+      "italic"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite GB S Guides",
+    "variants": [
+      "regular",
       "italic"
     ],
     "subsets": [
@@ -17424,11 +17827,29 @@
     ]
   },
   {
+    "family": "Playwrite HR Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite HR Lijeva",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite HR Lijeva Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17448,11 +17869,29 @@
     ]
   },
   {
+    "family": "Playwrite HU Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite ID",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite ID Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17472,11 +17911,29 @@
     ]
   },
   {
+    "family": "Playwrite IE Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite IN",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite IN Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17496,11 +17953,29 @@
     ]
   },
   {
+    "family": "Playwrite IS Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite IT Moderna",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite IT Moderna Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17520,11 +17995,29 @@
     ]
   },
   {
+    "family": "Playwrite IT Trad Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite MX",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite MX Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17544,11 +18037,29 @@
     ]
   },
   {
+    "family": "Playwrite NG Modern Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite NL",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite NL Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17568,11 +18079,29 @@
     ]
   },
   {
+    "family": "Playwrite NO Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite NZ",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite NZ Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17592,11 +18121,29 @@
     ]
   },
   {
+    "family": "Playwrite PE Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite PL",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite PL Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17616,11 +18163,29 @@
     ]
   },
   {
+    "family": "Playwrite PT Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite RO",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite RO Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17640,11 +18205,29 @@
     ]
   },
   {
+    "family": "Playwrite SK Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite TZ",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite TZ Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17664,11 +18247,29 @@
     ]
   },
   {
+    "family": "Playwrite US Modern Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite US Trad",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite US Trad Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17688,11 +18289,29 @@
     ]
   },
   {
+    "family": "Playwrite VN Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite ZA",
     "variants": [
       "100",
       "200",
       "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite ZA Guides",
+    "variants": [
       "regular"
     ],
     "subsets": [
@@ -17796,7 +18415,8 @@
       "italic"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -17806,6 +18426,16 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Ponnala",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "telugu"
     ]
   },
   {
@@ -18750,7 +19380,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -18911,16 +19542,22 @@
     "family": "Roboto",
     "variants": [
       "100",
-      "100italic",
+      "200",
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
+      "600",
       "700",
-      "700italic",
+      "800",
       "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -18930,6 +19567,8 @@
       "greek-ext",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -19775,7 +20414,8 @@
     ],
     "subsets": [
       "devanagari",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -20253,7 +20893,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -20554,7 +21195,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -20638,7 +21280,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -20895,8 +21538,7 @@
       "regular"
     ],
     "subsets": [
-      "korean",
-      "latin"
+      "korean"
     ]
   },
   {
@@ -21105,7 +21747,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -21166,7 +21809,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -21415,8 +22059,7 @@
       "regular"
     ],
     "subsets": [
-      "korean",
-      "latin"
+      "korean"
     ]
   },
   {
@@ -21490,7 +22133,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -21545,7 +22189,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -21555,7 +22200,8 @@
       "700"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -21849,7 +22495,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -22432,7 +23079,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -22461,7 +23109,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -22855,7 +23504,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -23201,7 +23851,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -23233,7 +23884,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -23506,7 +24158,9 @@
     "variants": [
       "200",
       "300",
+      "300italic",
       "regular",
+      "italic",
       "700",
       "800",
       "900"
@@ -23658,7 +24312,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {

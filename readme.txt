@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.4
-Tested up to: 6.7
+Tested up to: 6.7.1
 Requires PHP: 7.3
-Stable tag: 3.13.11
+Stable tag: 3.13.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -294,6 +294,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.13.12 =
+* Fixed: Pasting text creates a new block instead of pasting on the current block #3371
+* Fixed: Pasting on icon list block makes a new block and loses cursor placement #3382
+* Fixed: Blocks inside a WooCommerce shop page can show css styles #3381
+* Fixed: Clearing the icon from the icon picker can make the icon blank #3348
+* Fixed: Sanitize titles for lightbox #3390
+* Fixed: Enhanced text sanitazion #3391
 
 = 3.13.11 =
 * Fixed: Icon Label block: Error when missing an Icon block #3368

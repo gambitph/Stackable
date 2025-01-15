@@ -6,7 +6,7 @@
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.13.11
+ * Version: 3.13.12
  *
  * @package Stackable
  */
@@ -24,7 +24,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
 defined( 'STACKABLE_BUILD' ) || define( 'STACKABLE_BUILD', 'free' );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.13.11' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.13.12' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://storage.googleapis.com/stackable-plugin-assets' ); // Design Library CDN URL
@@ -46,7 +46,7 @@ if ( ! function_exists( 'stackable_php_requirement_activation_check' ) ) {
 			deactivate_plugins( basename( __FILE__ ) );
 			wp_die(
 				sprintf(
-					__( '%s"Stackable" can not be activated. %s It requires PHP version 7.3.0 or higher, but PHP version %s is used on the site. Please upgrade your PHP version first ✌️ %s Back %s', STACKABLE_I18N ),
+					esc_html__( '%s"Stackable" can not be activated. %s It requires PHP version 7.3.0 or higher, but PHP version %s is used on the site. Please upgrade your PHP version first ✌️ %s Back %s', STACKABLE_I18N ),
 					'<strong>',
 					'</strong><br><br>',
 					PHP_VERSION,
@@ -70,7 +70,7 @@ if ( version_compare( PHP_VERSION, '7.3.0', '<' ) ) {
 		function stackable_php_requirement_notice() {
 	        printf(
 	            '<div class="notice notice-error"><p>%s</p></div>',
-	            sprintf( __( '"Stackable" requires PHP version 7.3.0 or higher, but PHP version %s is used on the site.', STACKABLE_I18N ), PHP_VERSION )
+	            sprintf( esc_html__( '"Stackable" requires PHP version 7.3.0 or higher, but PHP version %s is used on the site.', STACKABLE_I18N ), PHP_VERSION )
 	        );
 		}
 	}
@@ -131,7 +131,7 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_activated' ) ) {
 			if ( ! $ignore ) {
 				printf(
 					'<div class="notice notice-warning is-dismissible stackable_notice_gutenberg_plugin"><p>%s</p>%s</div>',
-					sprintf( __( '%sStackable Notice%s: We noticed that the Gutenberg plugin is active! Please be aware the Gutenberg plugin is used to try out the new Block Editor features, and Stackable might not be compatible with it. Click the close button on the side to dismiss this notice.', STACKABLE_I18N ), '<strong>', '</strong>' ),
+					sprintf( esc_html__( '%sStackable Notice%s: We noticed that the Gutenberg plugin is active! Please be aware the Gutenberg plugin is used to try out the new Block Editor features, and Stackable might not be compatible with it. Click the close button on the side to dismiss this notice.', STACKABLE_I18N ), '<strong>', '</strong>' ),
 					'<script>( function() {
 						document.body.addEventListener( "click", function( event ) {
 							if( event.target.matches( ".notice.stackable_notice_gutenberg_plugin button.notice-dismiss" ) ) {
