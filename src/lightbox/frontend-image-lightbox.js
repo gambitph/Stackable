@@ -93,6 +93,19 @@ const isImageBlock = el => {
 	return el && el.classList.contains( 'stk-block-image' )
 }
 
+function sanitize( string ) {
+	const map = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#x27;',
+		'/': '&#x2F;',
+	}
+	const reg = /[&<>"'/]/ig
+	return string.replace( reg, match => map[ match ] )
+}
+
 class StackableImageLightbox {
 	init = () => {
 		this.elements = []
@@ -134,6 +147,10 @@ class StackableImageLightbox {
 			if ( ! title && imageBlock ) {
 				title = imageBlock.getAttribute( 'alt' ) || null
 			}
+
+			// Sanitize strings.
+			title = title ? sanitize( title ) : null
+			link = typeof link === 'string' ? sanitize( link ) : link
 
 			const isUsingImageBlock = ( ! link || ! href ) && imageBlock
 
