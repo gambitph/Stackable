@@ -62,6 +62,7 @@ export const Icon = props => {
 		attrNameTemplate = '%s',
 		hasLinearGradient = true,
 		value = '',
+		defaultValue = '',
 		onChange = NOOP,
 		openEvenIfUnselected = false,
 	} = props
@@ -177,6 +178,7 @@ export const Icon = props => {
 						}
 						setIsOpen( false )
 					} }
+					defaultValue={ defaultValue }
 				/>
 			) }
 			{ getAttribute( 'icon2' ) && (

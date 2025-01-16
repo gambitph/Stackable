@@ -231,7 +231,7 @@ const IconSearchPopover = props => {
 					{ props.allowReset &&
 						<Button
 							onClick={ () => {
-								props.onChange( '' )
+								props.onChange( props.defaultValue || '' )
 								props.onClose()
 							} }
 							isSmall

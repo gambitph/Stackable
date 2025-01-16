@@ -5,7 +5,6 @@ import blockStyles from './style'
 import { getUseSvgDef } from '../icon-list/util'
 import {
 	convertToListItems,
-	useOnPaste,
 	useEnter,
 } from './util'
 
@@ -110,7 +109,6 @@ const Edit = props => {
 	] )
 
 	const useEnterRef = useEnter( text, clientId )
-	const onPaste = useOnPaste( clientId, parentBlock?.clientId, attributes, setAttributes )
 
 	const onMerge = forward => {
 		mergeBlocks( forward )
@@ -173,7 +171,6 @@ const Edit = props => {
 						tagName="span"
 						className={ textClassNames }
 						onMerge={ onMerge }
-						onPaste={ onPaste }
 						onReplace={ onReplace
 							? ( blocks, ...args ) => {
 								onReplace(
