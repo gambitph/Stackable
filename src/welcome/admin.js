@@ -478,12 +478,17 @@ const Sidenav = ( {
 					} ) }
 					<div className="s-save-changes-wrapper">
 						{ currentTab !== 'v2-settings' &&
-							<button
-								className={ saveButtonClasses }
-								onClick={ handleSettingsSave }
-							>
-								{ isSaving ? <Spinner /> : __( 'Save Changes', i18n ) }
-							</button>
+							<>
+								<div className="s-save-changes-inner-wrapper">
+									{ hasUnsavedChanges && <span className="s-save-changes-note">{ __( 'There are unsaved changes', i18n ) }</span> }
+									<button
+										className={ saveButtonClasses }
+										onClick={ handleSettingsSave }
+									>
+										{ isSaving ? <Spinner /> : __( 'Save Changes', i18n ) }
+									</button>
+								</div>
+							</>
 						}
 					</div>
 				</div>

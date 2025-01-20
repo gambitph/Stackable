@@ -166,7 +166,7 @@ body[class*="page_stk-"] {
 }
 .s-settings-subtitle {
 	width: 75%;
-	margin-bottom: 40px;
+	margin: 0.5em 0 40px;
 }
 .s-settings-field,
 .ugb-admin-setting {
@@ -501,7 +501,7 @@ body.toplevel_page_stk-custom-fields {
 		width: 250px;
 		left: 0;
 		background-color: #fff;
-		padding-top: 80px;
+		padding-top: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -564,6 +564,11 @@ body.toplevel_page_stk-custom-fields {
 			flex-direction: column;
 			justify-content: end;
 		}
+		.s-save-changes-inner-wrapper {
+			bottom: 20px;
+			display: inline-block;
+			position: sticky;
+		}
 		// This is a button, render this in the bottom of the side bar
 		// The side bar is a flex container, so this will be at the bottom.
 		.s-save-changes {
@@ -580,22 +585,29 @@ body.toplevel_page_stk-custom-fields {
 			font-size: 14px;
 			cursor: pointer;
 			box-sizing: border-box !important;
-			display: inline-block;
-			position: sticky;
-			bottom: 20px;
+			min-height: 55px;
 			&:hover {
 				opacity: 0.85;
 				box-shadow: none !important;
 			}
 			&:not(.s-button-has-unsaved-changes) {
-				opacity: 0.5;
-				filter: grayscale(50%);
+				filter: saturate(0);
 			}
+		}
+		.s-save-changes-note {
+			top: -30px;
+			position: absolute;
+			display: block;
+			right: 0;
+			left: 0;
+			text-align: center;
 		}
 	}
 	.s-search-setting {
 		display: flex;
 		justify-content: end;
+		position: absolute;
+		right: 30px;
 		.s-search-setting__input {
 			margin: 0;
 			padding: 0.5em 1em;
@@ -670,6 +682,16 @@ body.toplevel_page_stk-custom-fields {
 		padding-top: 32px;
 		&:not(:last-child) {
 			border-bottom: 1px solid #eaecf0;
+		}
+		&:first-child {
+			padding-top: 0;
+			h2 {
+				margin-top: 0;
+			}
+		}
+		h2 {
+			font-size: 1.6em;
+			margin: 1em 0 0.5em;
 		}
 	}
 
