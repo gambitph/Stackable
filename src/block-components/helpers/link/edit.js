@@ -11,6 +11,7 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useState } from '@wordpress/element'
 
 export const LinkControls = props => {
 	const {
@@ -23,8 +24,12 @@ export const LinkControls = props => {
 
 	const {
 		getAttribute,
+		updateAttribute,
 		updateAttributeHandler,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
+
+	const [ rel, setRel ] = useState( getAttribute( 'rel' ) )
+	const [ title, setTitle ] = useState( getAttribute( 'title' ) )
 
 	const url = getAttribute( 'url' ) || ''
 
@@ -70,14 +75,20 @@ export const LinkControls = props => {
 			<AdvancedTextControl
 				label={ __( 'Link rel', i18n ) }
 				help={ __( 'Link relationship keywords, e.g. nofollow noreferrer prefetch', i18n ) }
-				value={ getAttribute( 'rel' ) }
-				onChange={ updateAttributeHandler( 'rel' ) }
+				value={ rel }
+				onChange={ value => {
+					setRel( value )
+					updateAttribute( 'rel', value )
+				} }
 			/>
 			{ ( hasTitle || getAttribute( 'hasTitle' ) ) && (
 				<AdvancedTextControl
 					label={ __( 'Link Title', i18n ) }
-					value={ getAttribute( 'title' ) }
-					onChange={ updateAttributeHandler( 'title' ) }
+					value={ title }
+					onChange={ value => {
+						setTitle( value )
+						updateAttribute( 'title', value )
+					} }
 					isDynamic={ true }
 					isFormatType={ false }
 					help={ __( 'Also used for lightbox caption', i18n ) }
