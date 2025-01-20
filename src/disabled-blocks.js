@@ -114,7 +114,9 @@ Object.entries( VARIATION_FILTERS_WHITELIST ).forEach( ( [ hookName, whitelist ]
 	addFilter( hookName, 'stackable/disabled-blocks', blockVariations => {
 		return blockVariations.map( variation => {
 			const newVariation = _.cloneDeep( variation )
-			newVariation.innerBlocks = traverseBlocksAndSubstitute( newVariation.innerBlocks, whitelist )
+			if ( newVariation.innerBlocks && Array.isArray( newVariation.innerBlocks ) ) {
+				newVariation.innerBlocks = traverseBlocksAndSubstitute( newVariation.innerBlocks, whitelist )
+			}
 			return newVariation
 		} )
 	}, 11 )
