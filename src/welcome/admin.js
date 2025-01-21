@@ -9,12 +9,14 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import {
 	useEffect, useState, useCallback, useMemo, lazy, Suspense,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
-import { Spinner, CheckboxControl } from '@wordpress/components'
+import {
+	Button, Flex, FlexItem, Spinner, CheckboxControl, Modal,
+} from '@wordpress/components'
 import { loadPromise, models } from '@wordpress/api'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -393,37 +395,48 @@ const ToggleBlockDialog = ( {
 	const blockTitle = getBlockTitle( blockName )
 
 	return (
-		<div className="s-toggle-block-dialog">
-			<div className="s-toggle-block-dialog-content">
-				{ isDisabled
-					? <p>{ __( 'Disabling ' + blockTitle + ' will also disable the blocks that require it:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
-					: <p>{ __( 'Enabling ' + blockTitle + ' will also enable its required innerblocks:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
-				}
-				<ul>
-					{ blockList.map( ( block, i ) => (
-						<li key={ i }>{ getBlockTitle( block ) }</li>
-					) ) }
-				</ul>
-				{ isDisabled
-					? <p>{ __( 'Are you sure you want to disable this block?', i18n ) }</p>
-					: <p>{ __( 'Are you sure you want to enable this block?', i18n ) }</p>
-				}
-				<div>
-					<button
-						className="s-dialog-button s-dialog-button-confirm"
-						onClick={ onConfirm }
-					>
-						{ __( 'Yes', i18n ) }
-					</button>
-					<button
-						className="s-dialog-button s-dialog-button-cancel"
+		<Modal
+			className="s-confirm-modal"
+			size="medium"
+			title={ isDisabled
+				? sprintf( __( 'Disable %s block?', i18n ), blockTitle )
+				: sprintf( __( 'Enable %s block?', i18n ), blockTitle ) }
+			onRequestClose={ onCancel }
+		>
+			{ isDisabled
+				? <p>{ __( 'Disabling this block will also disable these blocks that require this block to function:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+				: <p>{ __( 'Enabling this block will also enable these blocks that are needed for this block to function:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+			}
+			<ul>
+				{ blockList.map( ( block, i ) => (
+					<li key={ i }>{ getBlockTitle( block ) }</li>
+				) ) }
+			</ul>
+			<Flex
+				justify="flex-end"
+				expanded={ false }
+			>
+				<FlexItem>
+					<Button
+						variant="secondary"
 						onClick={ onCancel }
 					>
-						{ __( 'No', i18n ) }
-					</button>
-				</div>
-			</div>
-		</div>
+						{ __( 'Cancel', i18n ) }
+					</Button>
+				</FlexItem>
+				<FlexItem>
+					<Button
+						variant="primary"
+						onClick={ onConfirm }
+					>
+						{ isDisabled
+							? __( 'Disable', i18n )
+							: __( 'Enable', i18n )
+						}
+					</Button>
+				</FlexItem>
+			</Flex>
+		</Modal>
 	)
 }
 

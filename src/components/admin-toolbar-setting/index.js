@@ -28,6 +28,11 @@ const AdminToolbarSetting = props => {
 								const tabindex = isSelected ? '0' : '-1'
 								const isDisabled = props.disabledValues ? props.disabledValues.includes( option.value ) : false
 
+								// Do not show the button if disabled.
+								if ( isDisabled ) {
+									return null
+								}
+
 								return <Button
 									style={ option.selectedColor && isSelected ? { color: option.selectedColor } : {} }
 									isPrimary={ ! option.selectedColor && isSelected }
