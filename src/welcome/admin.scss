@@ -379,6 +379,12 @@ body.settings_page_stackable-getting-started {
 	.s-body-container .updated {
 		display: none !important;
 	}
+	#wpfooter {
+		display: none;
+	}
+	#wpbody-content {
+		padding-bottom: 0;
+	}
 }
 body.settings_page_stackable,
 body.settings_page_stackable-getting-started,

@@ -668,8 +668,8 @@ const EditorSettings = props => {
 		<div className="s-editor-settings">
 			{ blocks.children.length > 0 &&
 				<div className="s-setting-group">
-					<h2>{ __( 'Blocks', i18n ) }</h2>
-					<p className="s-settings-subtitle">{ __( 'You can customize the behavior of some blocks here.', i18n ) }</p>
+					<h2>{ __( 'Block Widths', i18n ) }</h2>
+					<p className="s-settings-subtitle">{ __( 'Adjust the width of Stackable blocks here.', i18n ) }</p>
 					<AdminTextSetting
 						label={ __( 'Nested Block Width', i18n ) }
 						searchedSettings={ blocks.children }
@@ -690,6 +690,12 @@ const EditorSettings = props => {
 						} }
 						help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
 					/>
+				</div>
+			}
+			{ editor.children.length > 0 &&
+				<div className="s-setting-group">
+					<h2>{ __( 'Editor', i18n ) }</h2>
+					<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
 					<AdminToggleSetting
 						label={ __( 'Stackable Text as Default Block', i18n ) }
 						searchedSettings={ blocks.children }
@@ -699,12 +705,6 @@ const EditorSettings = props => {
 						} }
 						help={ __( 'If enabled, Stackable Text blocks will be added by default instead of the native Paragraph Block.', i18n ) }
 					/>
-				</div>
-			}
-			{ editor.children.length > 0 &&
-				<div className="s-setting-group">
-					<h2>{ __( 'Editor', i18n ) }</h2>
-					<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
 					<AdminToggleSetting
 						label={ __( 'Design Library', i18n ) }
 						searchedSettings={ editor.children }
@@ -712,7 +712,7 @@ const EditorSettings = props => {
 						onChange={ value => {
 							handleSettingsChange( { stackable_enable_design_library: value } ) // eslint-disable-line camelcase
 						} }
-						help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
+						help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs. Note: You can still access the Design Library by adding the Design Library block.', i18n ) }
 					/>
 					<AdminToggleSetting
 						label={ __( 'Stackable Settings', i18n ) }
@@ -721,7 +721,7 @@ const EditorSettings = props => {
 						onChange={ value => {
 							handleSettingsChange( { stackable_enable_global_settings: value } ) // eslint-disable-line camelcase
 						} }
-						help={ __( 'Adds a button on the top of the editor which gives access to Stackable settings.', i18n ) }
+						help={ __( 'Adds a button on the top of the editor which gives access to Stackable settings. Note: You won\'t be able to access Stackable settings when this is disabled.', i18n ) }
 					/>
 					<AdminToggleSetting
 						label={ __( 'Block Linking (Beta)', i18n ) }
@@ -760,7 +760,7 @@ const EditorSettings = props => {
 						onChange={ value => {
 							handleSettingsChange( { stackable_enable_dynamic_content: value } ) // eslint-disable-line camelcase
 						} }
-						help={ __( 'Adds a toolbar button for inserting dynamic content', i18n ) }
+						help={ __( 'Adds a toolbar button for inserting and modifying dynamic content', i18n ) }
 					/>
 					<AdminToggleSetting
 						label={ __( 'Copy & Paste Styles', i18n ) }
@@ -769,7 +769,7 @@ const EditorSettings = props => {
 						onChange={ value => {
 							handleSettingsChange( { stackable_enable_copy_paste_styles: value } ) // eslint-disable-line camelcase
 						} }
-						help={ __( 'Adds a toolbar button for copying and pasting block styles', i18n ) }
+						help={ __( 'Adds a toolbar button for advanced copying and pasting block styles', i18n ) }
 					/>
 					<AdminToggleSetting
 						label={ __( 'Reset Layout', i18n ) }
@@ -1081,6 +1081,7 @@ const Optimizations = props => {
 			{ optimizations.children.length > 0 &&
 				<div className="s-setting-group">
 					<h2>{ __( 'Optimizations', i18n ) }</h2>
+					<p className="s-settings-subtitle">{ __( 'Here you can adjust some optimization settings that are performed by Stackable.', i18n ) }</p>
 					<AdminToggleSetting
 						label={ __( 'Optimize Inline CSS', i18n ) }
 						searchedSettings={ optimizations.children }
@@ -1115,6 +1116,7 @@ const GlobalSettings = props => {
 			{ globalSettings.children.length > 0 &&
 				<div className="s-setting-group">
 					<h2>{ __( 'Global Settings', i18n ) }</h2>
+					<p className="s-settings-subtitle">{ __( 'Here you can tweak Global Settings that affect the styles across your entire site.', i18n ) }</p>
 					<AdminToggleSetting
 						label={ __( 'Force Typography Styles', i18n ) }
 						searchedSettings={ globalSettings.children }
@@ -1239,6 +1241,7 @@ const Integrations = props => {
 			{ props.integrations.children.length > 0 &&
 				<div className="s-setting-group">
 					<h2>{ __( 'Integrations', i18n ) }</h2>
+					<p className="s-settings-subtitle">{ __( 'Here are settings for the different integrations available in Stackable.', i18n ) }</p>
 					<AdminTextSetting
 						label={ __( 'Google Maps API Key', i18n ) }
 						searchedSettings={ props.integrations.children }
@@ -1339,6 +1342,7 @@ const AdditionalOptions = props => {
 			{ miscellaneous.children.length > 0 &&
 				<div className="s-setting-group">
 					<h2>{ __( 'Miscellaneous', i18n ) }</h2>
+					<p className="s-settings-subtitle">{ __( 'Below are other minor settings. Some may be useful when upgrading from older versions of Stackable.', i18n ) }</p>
 					{ showProNoticesOption &&
 						<CheckboxControl
 							label={ __( 'Show "Go premium" notices', i18n ) }
