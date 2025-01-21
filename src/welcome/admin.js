@@ -997,7 +997,7 @@ const Blocks = props => {
 
 			<div className="s-blocks">
 				<h2>{ __( 'Blocks', i18n ) }</h2>
-				<p className="s-settings-subtitle">{ __( 'Here you can enable, hide and disable Stackable blocks. Hiding blocks will prevent new blocks from being added in the Block Editor. Disabling blocks will prevent them from being registered at all. When using block variations or design library patterns, disabled blocks will be substituted with the relevant core blocks.', i18n ) }</p>
+				<p className="s-settings-subtitle">{ __( 'Here you can enable, hide and disable Stackable blocks. Hiding blocks will hide the block from the list of available blocks. Disabling blocks will prevent them from being registered at all. When using block variations or design library patterns, disabled blocks will be substituted with the relevant core blocks.', i18n ) }</p>
 				<div className="s-settings-header">
 					<Button variation="secondary" onClick={ enableAllBlocks }>{ __( 'Enable All', i18n ) }</Button>
 					<Button variation="secondary" onClick={ hideAllBlocks }>{ __( 'Hide All', i18n ) }</Button>
