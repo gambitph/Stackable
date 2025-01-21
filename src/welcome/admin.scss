@@ -369,6 +369,14 @@ body[class*="page_stk-"] {
 	margin-bottom: 32px;
 	padding-bottom: 0;
 }
+body.settings_page_stackable {
+	#wpwrap {
+		background: #fff;
+	}
+	.s-box {
+		box-shadow: none !important;
+	}
+}
 body.settings_page_stackable,
 body.settings_page_stackable-getting-started {
 	// Hide admin notices to not mess up the welcome screen.
@@ -514,6 +522,8 @@ body.toplevel_page_stk-custom-fields {
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
+		box-shadow: inset 0 -18px 35px -15px #123f5240;
+		z-index: 1;
 		> * {
 			position: sticky;
 			height: 100vh;
