@@ -365,7 +365,10 @@ body[class*="page_stk-"] {
 .s-logo-logo + * > .s-tabs {
 	justify-content: center;
 }
-
+.ugb-admin-setting.s-block-setting:not(:last-child) {
+	margin-bottom: 32px;
+	padding-bottom: 0;
+}
 body.settings_page_stackable,
 body.settings_page_stackable-getting-started {
 	// Hide admin notices to not mess up the welcome screen.
@@ -755,7 +758,7 @@ body.toplevel_page_stk-custom-fields {
 	}
 	.s-settings-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 		grid-gap: 64px;
 		grid-row-gap: 24px;
 		.s-box {
@@ -778,7 +781,7 @@ body.toplevel_page_stk-custom-fields {
 	.s-box-block__title {
 		display: flex;
 		align-items: center;
-		margin: -32px 12px 0 -8px !important;
+		margin: -32px 12px 32px -8px !important;
 		svg {
 			padding: 20px;
 			border-radius: 100%;

@@ -1013,6 +1013,7 @@ const Blocks = props => {
 									return (
 										<AdminToolbarSetting
 											key={ i }
+											className="s-block-setting"
 											label={ __( block.title, i18n ) } // eslint-disable-line @wordpress/i18n-no-variables
 											demoLink={ block[ 'stk-demo' ] }
 											searchedSettings={ group.children }
@@ -1022,17 +1023,16 @@ const Blocks = props => {
 												{
 													value: BLOCK_STATE.ENABLED,
 													title: __( 'Enabled', i18n ),
-													selectedColor: '#1b7800',
+													selectedColor: '#009733',
 												},
 												{
 													value: BLOCK_STATE.HIDDEN,
 													title: __( 'Hidden', i18n ),
-													selectedColor: '#7dba6c',
 												},
 												{
 													value: BLOCK_STATE.DISABLED,
 													title: __( 'Disabled', i18n ),
-													selectedColor: '#979e95',
+													selectedColor: '#de0000',
 												},
 											] }
 											disabledValues={ disabledValues }

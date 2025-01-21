@@ -4,6 +4,7 @@ import classnames from 'classnames'
 let i = 1
 
 const AdminBaseSetting = props => {
+	const { showLabel = true } = props
 	const [ uid ] = useState( `ugb-admin-setting-${ i++ }` )
 	const isSearched = props.searchedSettings ? props.searchedSettings.includes( props.label ) : true
 	const mainClasses = classnames( [
@@ -21,7 +22,7 @@ const AdminBaseSetting = props => {
 				htmlFor={ uid }
 				onClick={ props.onClick }
 			>
-				{ !! props.label && <span className="ugb-admin-setting__label">{ props.label }</span> }
+				{ !! props.label && showLabel && <span className="ugb-admin-setting__label">{ props.label }</span> }
 				<div className="ugb-admin-setting__field">
 					{ props.children }
 				</div>
