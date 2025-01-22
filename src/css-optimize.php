@@ -213,8 +213,10 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			// wp_template_part then we might need to use the actions:
 			// render_block_core_template_part_post and
 			// render_block_core_template_part_file
-			if ( is_singular() && ! is_preview() && ! is_attachment() ) {
-				$post_id = get_the_ID();
+			$optimize_css = is_singular() && ! is_preview() && ! is_attachment();
+			$optimize_css = apply_filters( 'stackable/load_cached_css_for_post', $optimize_css );
+			if ( $optimize_css ) {
+				$post_id = apply_filters( 'stackable/get_post_id_for_cached_css', get_the_ID() );
 				$this->optimized_css = get_post_meta( $post_id, 'stackable_optimized_css', true );
 
 				if ( ! empty( $this->optimized_css ) ) {
