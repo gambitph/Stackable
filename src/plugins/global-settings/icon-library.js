@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'stackable'
+import {
+	i18n, showProNotice, isPro,
+} from 'stackable'
 import {
 	PanelAdvancedSettings,
 	ProControl,
@@ -11,23 +13,24 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-addFilter( 'stackable.global-settings.inspector', 'stackable/icon-library', output => {
-	return (
-		<Fragment>
-			{ output }
+if ( showProNotice || isPro ) {
+	addFilter( 'stackable.global-settings.inspector', 'stackable/icon-library', output => {
+		return (
+			<Fragment>
+				{ output }
 
-			<PanelAdvancedSettings
-				title={ __( 'Icon Library', i18n ) }
-				id="icon-library-settings"
-				isPremiumPanel={ ! isPro }
-			>
-				{ ! isPro && <ProControl type="icon-library" /> }
-				{ isPro &&
-						applyFilters( 'stackable.global-settings.inspector.icon-library.control', null )
-				}
+				<PanelAdvancedSettings
+					title={ __( 'Icon Library', i18n ) }
+					id="icon-library-settings"
+					isPremiumPanel={ ! isPro }
+				>
+					{ ! isPro && <ProControl type="icon-library" /> }
+					{ isPro &&
+							applyFilters( 'stackable.global-settings.inspector.icon-library.control', null )
+					}
 
-			</PanelAdvancedSettings>
-		</Fragment>
-	)
-} )
-
+				</PanelAdvancedSettings>
+			</Fragment>
+		)
+	} )
+}
