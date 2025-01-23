@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import { i18n, isPro } from 'stackable'
-import { substituteIfDisabled } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -54,14 +53,6 @@ import ImageCover from './images/cover.svg'
 	],
 ]
 
-const socialLinksInnerBlocks = [
-	[ 'core/social-link', { service: 'facebook' } ],
-	[ 'core/social-link', { service: 'twitter' } ],
-	[ 'core/social-link', { service: 'instagram' } ],
-	[ 'core/social-link', { service: 'youtube' } ],
-	[ 'core/social-link', { service: 'linkedin' } ],
-]
-
 const variations = applyFilters(
 	'stackable.team-member.variations',
 	[
@@ -86,10 +77,7 @@ const variations = applyFilters(
 					text: __( 'Position', i18n ),
 				} ],
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
-				substituteIfDisabled( [ 'stackable/button-group|social-buttons', 'stackable/button-group|icon-button' ],
-					[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
-					[ 'core/social-links', { align: 'center' }, socialLinksInnerBlocks ],
-				),
+				[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
 			],
 			scope: [ 'block' ],
 		},
@@ -110,10 +98,7 @@ const variations = applyFilters(
 				[ 'stackable/subtitle', {
 					text: __( 'Position', i18n ),
 				} ],
-				substituteIfDisabled( [ 'stackable/button-group|social-buttons', 'stackable/button-group|icon-button' ],
-					[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
-					[ 'core/social-links', { align: 'center' }, socialLinksInnerBlocks ],
-				),
+				[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
 			],
 			scope: [ 'block' ],
 		},

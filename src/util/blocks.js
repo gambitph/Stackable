@@ -578,6 +578,18 @@ export const substituteCoreIfDisabled = ( blockName, blockAttributes, children )
 		if ( 'stackable/button-group|button' in disabled_blocks && disabled_blocks[ 'stackable/button-group|button' ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
 			return [ 'core/buttons', {}, children ]
 		}
+		if ( 'stackable/button-group|icon-button' in disabled_blocks && disabled_blocks[ 'stackable/button-group|icon-button' ] === BLOCK_STATE.DISABLED && // eslint-disable-line camelcase
+			children.length &&
+			children[ 0 ][ 0 ] === 'stackable/icon-button'
+		) {
+			return [ 'core/social-links',
+				{ align: blockAttributes.contentAlign },
+				[
+					[ 'core/social-link', { service: 'facebook' } ],
+					[ 'core/social-link', { service: 'twitter' } ],
+				],
+			]
+		}
 		return [ 'stackable/button-group', blockAttributes, children ]
 	}
 
@@ -606,27 +618,6 @@ export const substituteCoreIfDisabled = ( blockName, blockAttributes, children )
 		return [ blockName, blockAttributes, children ]
 	}
 	return [ blockName, blockAttributes ]
-}
-
-/**
- * Substitutes a block definition with another block definition if any of the block names given are disabled.
- *
- * 	@param {Array} blockNames The block names to check if disabled
- * 	@param {Array} originalBlockDefinition The original block definition
- * 	@param {Array} substituteBlockDefinition The block definition to substitute with
- *
- * 	@return {Array} The resulting block definition
- */
-export const substituteIfDisabled = ( blockNames, originalBlockDefinition, substituteBlockDefinition ) => {
-	const disabled_blocks = stackableSettings.stackable_block_states || {} // eslint-disable-line camelcase
-
-	for ( const blockName of blockNames ) {
-		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-			return substituteBlockDefinition
-		}
-	}
-
-	return originalBlockDefinition
 }
 
 /**
