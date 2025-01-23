@@ -245,55 +245,14 @@ const SEARCH_TREE = [
 	},
 ]
 
-const BLOCK_DEPENDENCIES = {
-	'stackable/accordion': [
-		'stackable/icon-label',
-		'stackable/heading',
-		'stackable/icon',
-	],
-	'stackable/button-group|social-buttons': [
-		'stackable/button-group|icon-button',
-	],
-	'stackable/expand': [
-		'stackable/text',
-		'stackable/button-group|button',
-	],
-	'stackable/icon-label': [
-		'stackable/icon',
-		'stackable/heading',
-	],
-	'stackable/image-box': [
-		'stackable/image',
-		'stackable/subtitle',
-		'stackable/icon',
-	],
-	'stackable/price': [
-		'stackable/text',
-	],
-	'stackable/video-popup': [
-		'stackable/icon',
-		'stackable/image',
-	],
-	'stackable/blockquote': [
-		'stackable/icon',
-	],
-	'stackable/feature': [
-		'stackable/image',
-	],
-	'stackable/icon-box': [
-		'stackable/icon-label',
-		'stackable/icon',
-		'stackable/heading',
-	],
-	'stackable/pricing-box': [
-		'stackable/price',
-		'stackable/text',
-		'stackable/icon-list',
-	],
-	'stackable/testimonial': [
-		'stackable/image-box',
-	],
-}
+const DERIVED_BLOCKS = getAllBlocks()
+// An object containing all the blocks and the children blocks they are dependent to
+const BLOCK_DEPENDENCIES = BLOCK_CATEROGIES.reduce( ( acc, { id } ) => {
+	DERIVED_BLOCKS[ id ].forEach( block => {
+		acc[ block.name ] = block[ 'stk-block-dependencies' ] ?? []
+	} )
+	return acc
+}, {} )
 
 const getChildrenBlocks = blockname => {
 	return BLOCK_DEPENDENCIES[ blockname ] || []

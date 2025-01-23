@@ -15,5 +15,10 @@
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",
-	"stk-demo": "https://wpstackable.com/pricing-table-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+	"stk-demo": "https://wpstackable.com/pricing-table-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
+	"stk-block-dependencies": [
+		"stackable/price",
+		"stackable/text",
+		"stackable/icon-list"
+	]
 }
