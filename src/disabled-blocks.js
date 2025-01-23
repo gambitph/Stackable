@@ -11,22 +11,6 @@ import {
 } from '~stackable/util'
 import _ from 'lodash'
 
-// Contains the hookname of block variations and a list of whitelisted block names to substitute.
-const VARIATION_FILTERS_WHITELIST = {
-	'stackable.accordion.variations': [ 'stackable/text' ],
-	'stackable.card.variations': [ 'stackable/heading', 'stackable/text', 'stackable/subtitle', 'stackable/button-group', 'stackable/button' ],
-	'stackable.image-box.variations': [ 'stackable/heading', 'stackable/text' ],
-	'stackable.notification.variations': [ 'stackable/heading', 'stackable/text', 'stackable/button-group', 'stackable/button' ],
-	'stackable.blockquote.variations': [ 'stackable/text' ],
-	'stackable.call-to-action.variations': [ 'stackable/heading', 'stackable/text', 'stackable/button-group', 'stackable/button' ],
-	'stackable.feature.variations': [ 'stackable/heading', 'stackable/text', 'stackable/button-group', 'stackable/button' ],
-	'stackable.feature-grid.variations': [ 'stackable/image', 'stackable/heading', 'stackable/text', 'stackable/button-group', 'stackable/button' ],
-	'stackable.hero.variations': [ 'stackable/heading', 'stackable/text', 'stackable/button-group', 'stackable/button' ],
-	'stackable.pricing-box.variations': [ 'stackable/heading', 'stackable/subtitle', 'stackable/button-group', 'stackable/button' ],
-	'stackable.team-member.variations': [ 'stackable/image', 'stackable/heading', 'stackable/subtitle', 'stackable/text', 'stackable/button-group', 'stackable/button' ],
-	'stackable.testimonial.variations': [ 'stackable/image', 'stackable/heading', 'stackable/subtitle', 'stackable/text' ],
-}
-
 const getDefaultVariation = variations => {
 	return variations?.find( ( { isDefault } ) => isDefault )?.name
 }
@@ -38,6 +22,27 @@ const getVariationsToRemove = ( disabledBlocks, blockName ) => {
 		}
 	}
 	return variations
+}
+
+// Traverse the innerblocks of a given block definition and substitute core blocks if disabled and whitelisted.
+const traverseBlocksAndSubstitute = ( blocks, whitelist ) => {
+	return blocks.map( block => {
+		let [ blockName, blockAttributes, innerBlocks ] = block
+
+		// If there are innerBlocks, recursively traverse them.
+		if ( innerBlocks && innerBlocks.length > 0 ) {
+			innerBlocks = traverseBlocksAndSubstitute( innerBlocks, whitelist )
+		}
+
+		if ( whitelist.includes( blockName ) ) {
+			return substituteCoreIfDisabled( blockName, blockAttributes, innerBlocks )
+		}
+
+		if ( innerBlocks ) {
+			return [ blockName, blockAttributes, innerBlocks ]
+		}
+		return [ blockName, blockAttributes ]
+	} )
 }
 
 const applySettingsToMeta = metadata => {
@@ -76,6 +81,17 @@ const applySettingsToMeta = metadata => {
 		}
 	}
 
+	const whitelist = metadata[ 'stk-substitution-blocks' ]
+	if ( whitelist ) {
+		variations = variations.map( variation => {
+			const newVariation = _.cloneDeep( variation )
+			if ( newVariation.innerBlocks && Array.isArray( newVariation.innerBlocks ) ) {
+				newVariation.innerBlocks = traverseBlocksAndSubstitute( newVariation.innerBlocks, whitelist )
+			}
+			return newVariation
+		} )
+	}
+
 	// Adjust the metadata.
 	metadata.variations = variations
 	if ( typeof metadata.supports === 'undefined' ) {
@@ -87,38 +103,3 @@ const applySettingsToMeta = metadata => {
 }
 
 addFilter( 'stackable.block.metadata', 'stackable/disabled-blocks', applySettingsToMeta )
-
-// Traverse the innerblocks of a given block definition and substitute core blocks if disabled and whitelisted.
-const traverseBlocksAndSubstitute = ( blocks, whitelist ) => {
-	return blocks.map( block => {
-		let [ blockName, blockAttributes, innerBlocks ] = block
-
-		// If there are innerBlocks, recursively traverse them.
-		if ( innerBlocks && innerBlocks.length > 0 ) {
-			innerBlocks = traverseBlocksAndSubstitute( innerBlocks, whitelist )
-		}
-
-		if ( whitelist.includes( blockName ) ) {
-			return substituteCoreIfDisabled( blockName, blockAttributes, innerBlocks )
-		}
-
-		if ( innerBlocks ) {
-			return [ blockName, blockAttributes, innerBlocks ]
-		}
-		return [ blockName, blockAttributes ]
-	} )
-}
-
-Object.entries( VARIATION_FILTERS_WHITELIST ).forEach( ( [ hookName, whitelist ] ) => {
-	// Make sure to run after pro filters
-	addFilter( hookName, 'stackable/disabled-blocks', blockVariations => {
-		return blockVariations.map( variation => {
-			const newVariation = _.cloneDeep( variation )
-			if ( newVariation.innerBlocks && Array.isArray( newVariation.innerBlocks ) ) {
-				newVariation.innerBlocks = traverseBlocksAndSubstitute( newVariation.innerBlocks, whitelist )
-			}
-			return newVariation
-		} )
-	}, 11 )
-} )
-

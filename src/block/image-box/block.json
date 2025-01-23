@@ -12,5 +12,9 @@
 		"stackable/image",
 		"stackable/subtitle",
 		"stackable/icon"
+	],
+	"stk-substitution-blocks": [
+		"stackable/heading",
+		"stackable/text"
 	]
 }

@@ -10,5 +10,8 @@
 	"stk-demo": "https://wpstackable.com/blockquote-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
 	"stk-block-dependencies": [
 		"stackable/icon"
+	],
+	"stk-substitution-blocks": [
+		"stackable/text"
 	]
 }

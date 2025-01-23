@@ -16,5 +16,8 @@
 		"stackable/icon-label",
 		"stackable/heading",
 		"stackable/icon"
+	],
+	"stk-substitution-blocks": [
+		"stackable/text"
 	]
 }
