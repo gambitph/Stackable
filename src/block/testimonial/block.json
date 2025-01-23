@@ -13,5 +13,11 @@
 	"stk-demo": "https://wpstackable.com/testimonial-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
 	"stk-block-dependencies": [
 		"stackable/image-box"
+	],
+	"stk-substitution-blocks": [
+		"stackable/image",
+		"stackable/heading",
+		"stackable/subtitle",
+		"stackable/text"
 	]
 }
