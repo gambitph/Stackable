@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import {
 	fontAwesomeSearchProIcons, iconsFaKit, iconsFaProKitVersion, iconsFaFreeKitVersion,
 } from 'stackable'
@@ -23,13 +24,17 @@ export const searchFontAwesomeIconName = async ( name = 'icon', isPro = fontAwes
 	  } )
 		.then( r => r.json() )
 
-	return data.data.search.reduce( ( iconResults, iconData ) => {
+	const faIcons = data.data.search.reduce( ( iconResults, iconData ) => {
 		convertFontAwesomeToIcon( iconData, isPro ).forEach( icon => {
 			iconResults.push( icon )
 		} )
 
 		return iconResults
 	}, [] )
+
+	const iconLibrary = applyFilters( 'stackable.global-settings.inspector.icon-library.search-icons', null, name )
+
+	return { faIcons, iconLibrary }
 }
 
 /**
