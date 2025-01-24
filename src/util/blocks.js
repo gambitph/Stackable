@@ -489,14 +489,6 @@ export const addStackableBlockCategory = () => {
  * @param {Object} _settings The block properties to register
  */
 export const registerBlockType = ( name, _settings ) => {
-	// Do not register the block if the block is disabled.
-	if ( ( _settings[ 'stk-block-dependency' ] in stackableSettings.stackable_block_states &&
-		stackableSettings.stackable_block_states[ _settings[ 'stk-block-dependency' ] ] === BLOCK_STATE.DISABLED ) ||
-		stackableSettings.stackable_block_states[ name ] === BLOCK_STATE.DISABLED
-	) {
-		return
-	}
-
 	let settings = applyFilters( `stackable.block.metadata`, _settings || {} )
 
 	// If there is no variation title, then some labels in the editor will show

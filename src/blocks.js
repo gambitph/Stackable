@@ -12,10 +12,14 @@ import './disabled-blocks'
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import {
+	i18n,
+	settings as stackableSettings,
+} from 'stackable'
 import {
 	addStackableBlockCategory,
 	registerBlockType,
+	BLOCK_STATE,
 } from '~stackable/util'
 import { withVisualGuideContext } from '~stackable/higher-order'
 
@@ -50,7 +54,13 @@ const importAllAndRegister = r => {
 
 		// Register the block if it's not already registered and not disabled.
 		if ( ! getBlockType( name ) ) {
-			registerBlockType( name, settings )
+			// Register the block if the block is not disabled.
+			if ( ! ( ( settings[ 'stk-block-dependency' ] in stackableSettings.stackable_block_states &&
+				stackableSettings.stackable_block_states[ settings[ 'stk-block-dependency' ] ] === BLOCK_STATE.DISABLED ) ||
+				stackableSettings.stackable_block_states[ name ] === BLOCK_STATE.DISABLED
+			) ) {
+				registerBlockType( name, settings )
+			}
 		}
 	} )
 }
