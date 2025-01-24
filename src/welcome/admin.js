@@ -246,8 +246,8 @@ const SEARCH_TREE = [
 ]
 
 const DERIVED_BLOCKS = getAllBlocks()
-// An object containing all the blocks and the children blocks they are dependent to
-const BLOCK_DEPENDENCIES = BLOCK_CATEROGIES.reduce( ( acc, { id } ) => {
+// An object containing all the blocks and their required children
+const REQUIRED_BLOCKS = BLOCK_CATEROGIES.reduce( ( acc, { id } ) => {
 	DERIVED_BLOCKS[ id ].forEach( block => {
 		acc[ block.name ] = block[ 'stk-required-blocks' ] ?? []
 	} )
@@ -255,13 +255,13 @@ const BLOCK_DEPENDENCIES = BLOCK_CATEROGIES.reduce( ( acc, { id } ) => {
 }, {} )
 
 const getChildrenBlocks = blockname => {
-	return BLOCK_DEPENDENCIES[ blockname ] || []
+	return REQUIRED_BLOCKS[ blockname ] || []
 }
 
 const getParentBlocks = blockName => {
 	const parents = []
-	for ( const parent in BLOCK_DEPENDENCIES ) {
-		if ( BLOCK_DEPENDENCIES[ parent ].includes( blockName ) ) {
+	for ( const parent in REQUIRED_BLOCKS ) {
+		if ( REQUIRED_BLOCKS[ parent ].includes( blockName ) ) {
 			parents.push( parent )
 		}
 	}
