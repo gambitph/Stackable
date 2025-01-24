@@ -47,14 +47,6 @@ export const BLOCK_STATE = Object.freeze( {
 } )
 
 /**
- * Block dependencies. If a block is hidden/disabled, the block it depends on will also be one.
- */
-export const BLOCK_DEPENDENCIES = {
-	'stackable/icon-button': 'stackable/button-group|icon-button',
-	'stackable/button': 'stackable/button-group|button',
-}
-
-/**
  * Converts the registered block name into a block name string that can be used in hook names or ids.
  *
  * @param {string} name The block name
@@ -498,8 +490,8 @@ export const addStackableBlockCategory = () => {
  */
 export const registerBlockType = ( name, _settings ) => {
 	// Do not register the block if the block is disabled.
-	if ( ( BLOCK_DEPENDENCIES[ name ] in stackableSettings.stackable_block_states &&
-		stackableSettings.stackable_block_states[ BLOCK_DEPENDENCIES[ name ] ] === BLOCK_STATE.DISABLED ) ||
+	if ( ( _settings[ 'stk-block-dependency' ] in stackableSettings.stackable_block_states &&
+		stackableSettings.stackable_block_states[ _settings[ 'stk-block-dependency' ] ] === BLOCK_STATE.DISABLED ) ||
 		stackableSettings.stackable_block_states[ name ] === BLOCK_STATE.DISABLED
 	) {
 		return

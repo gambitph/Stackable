@@ -6,7 +6,6 @@ import { settings } from 'stackable'
 import { addFilter } from '@wordpress/hooks'
 import {
 	BLOCK_STATE,
-	BLOCK_DEPENDENCIES,
 	substituteCoreIfDisabled,
 } from '~stackable/util'
 import _ from 'lodash'
@@ -55,8 +54,8 @@ const applySettingsToMeta = metadata => {
 	}
 
 	// Check if this block is dependent on another variation being enabled.
-	if ( BLOCK_DEPENDENCIES[ metadata.name ] && BLOCK_DEPENDENCIES[ metadata.name ] in disabledBlocks ) {
-		inserter = ! disabledBlocks[ BLOCK_DEPENDENCIES[ metadata.name ] ] === BLOCK_STATE.HIDDEN
+	if ( metadata[ 'stk-block-dependency' ] && metadata[ 'stk-block-dependency' ] in disabledBlocks ) {
+		inserter = ! disabledBlocks[ metadata[ 'stk-block-dependency' ] ] === BLOCK_STATE.HIDDEN
 	}
 
 	const variationsToRemove = getVariationsToRemove( disabledBlocks, metadata.name )
