@@ -408,11 +408,12 @@ const Sidenav = ( {
 	currentSearch,
 	filteredSearchTree,
 	isSaving,
+	isRecentlySaved,
 	hasV2Tab,
 } ) => {
 	const saveButtonClasses = classnames( [
 		's-save-changes',
-		{ 's-button-has-unsaved-changes': hasUnsavedChanges },
+		{ 's-button-has-unsaved-changes': hasUnsavedChanges && ! isRecentlySaved },
 	] )
 
 	return (
@@ -456,8 +457,15 @@ const Sidenav = ( {
 									<button
 										className={ saveButtonClasses }
 										onClick={ handleSettingsSave }
+										disabled={ isRecentlySaved }
 									>
-										{ isSaving ? <Spinner /> : __( 'Save Changes', i18n ) }
+										{ isSaving ? (
+											<Spinner />
+										) : isRecentlySaved ? (
+											__( 'Saved Succesfully!', i18n )
+										) : (
+											__( 'Save Changes', i18n )
+										) }
 									</button>
 								</div>
 							</>
@@ -493,6 +501,7 @@ const Settings = () => {
 	const [ currentTab, setCurrentTab ] = useState( 'editor-settings' )
 	const [ currentSearch, setCurrentSearch ] = useState( '' )
 	const [ isSaving, setIsSaving ] = useState( false )
+	const [ isRecentlySaved, setIsRecentlySaved ] = useState( false )
 	const [ hasV2Tab, setHasV2Tab ] = useState( false )
 
 	const hasV2Compatibility = currentSettings => {
@@ -511,12 +520,16 @@ const Settings = () => {
 			return
 		}
 		setIsSaving( true )
+		setIsRecentlySaved( true )
 		const model = new models.Settings( unsavedChanges )
 		model.save().then( () => {
 			// Add a little more time for the spinner for better feedback
 			setTimeout( () => {
 				setIsSaving( false )
 			}, 500 )
+			setTimeout( () => {
+				setIsRecentlySaved( false )
+			}, 1500 )
 		} )
 		setUnsavedChanges( {} )
 	}, [ unsavedChanges, settings ] )
@@ -591,6 +604,7 @@ const Settings = () => {
 			currentSearch={ currentSearch }
 			filteredSearchTree={ filteredSearchTree }
 			isSaving={ isSaving }
+			isRecentlySaved={ isRecentlySaved }
 			hasV2Tab={ hasV2Tab }
 		/>
 		<article className="s-box" id={ currentTab }>
