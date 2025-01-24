@@ -32,7 +32,7 @@
 			"category": "stackable",
 			"stk-type": "special",
 			"stk-demo": "https://wpstackable.com/social-buttons-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
-			"stk-block-dependencies": [
+			"stk-required-blocks": [
 				"stackable/button-group|icon-button"
 			]
 		}

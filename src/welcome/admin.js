@@ -249,7 +249,7 @@ const DERIVED_BLOCKS = getAllBlocks()
 // An object containing all the blocks and the children blocks they are dependent to
 const BLOCK_DEPENDENCIES = BLOCK_CATEROGIES.reduce( ( acc, { id } ) => {
 	DERIVED_BLOCKS[ id ].forEach( block => {
-		acc[ block.name ] = block[ 'stk-block-dependencies' ] ?? []
+		acc[ block.name ] = block[ 'stk-required-blocks' ] ?? []
 	} )
 	return acc
 }, {} )

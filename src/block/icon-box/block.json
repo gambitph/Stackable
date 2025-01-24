@@ -13,7 +13,7 @@
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",
 	"stk-demo": "https://wpstackable.com/icon-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
-	"stk-block-dependencies": [
+	"stk-required-blocks": [
 		"stackable/icon-label",
 		"stackable/icon",
 		"stackable/heading"
