@@ -914,8 +914,8 @@ const Blocks = props => {
 
 		// Check if a parent is being enabled
 		if ( valueInt === BLOCK_STATE.ENABLED ) {
-			// Get the parent's children and confirm if they will also be enabled
-			const childrenBlocks = getChildrenBlocks( name )
+			// Get the parent's disabled/hidden children and confirm if they will also be enabled
+			const childrenBlocks = getChildrenBlocks( name ).filter( block => block in disabledBlocks )
 			if ( childrenBlocks.length > 0 ) {
 				setCurrentToggleBlockList( childrenBlocks )
 				setIsEnabledDialogOpen( true )
@@ -923,8 +923,8 @@ const Blocks = props => {
 				delete newDisabledBlocks[ name ]
 			}
 		} else if ( valueInt === BLOCK_STATE.DISABLED ) { // Check if a child is being disabled
-			// Get the child's parents and confirm if they will also be disabled
-			const parentBlocks = getParentBlocks( name )
+			// Get the child's enabled parents and confirm if they will also be disabled
+			const parentBlocks = getParentBlocks( name ).filter( block => ! ( block in disabledBlocks ) )
 			if ( parentBlocks.length > 0 ) {
 				setCurrentToggleBlockList( parentBlocks )
 				setIsDisabledDialogOpen( true )
@@ -958,7 +958,7 @@ const Blocks = props => {
 
 	return (
 		<>
-			{ isDisabledDialogOpen && (
+			{ isDisabledDialogOpen && currentToggleBlockList && (
 				<ToggleBlockDialog
 					blockName={ currentToggleBlock }
 					blockList={ currentToggleBlockList }
@@ -970,7 +970,7 @@ const Blocks = props => {
 				/>
 			) }
 
-			{ isEnabledDialogOpen && (
+			{ isEnabledDialogOpen && currentToggleBlockList && (
 				<ToggleBlockDialog
 					blockName={ currentToggleBlock }
 					blockList={ currentToggleBlockList }
