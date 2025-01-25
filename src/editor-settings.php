@@ -12,10 +12,6 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		 * Add our hooks.
 		 */
 		function __construct() {
-			// Migrate settings.
-			add_action( 'admin_init', array( $this, 'migrate_block_states' ) );
-			add_action( 'rest_api_init', array( $this, 'migrate_block_states' ) );
-
 			// Register settings.
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_settings' ) );
@@ -233,7 +229,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'default' => true,
 				)
 			);
-			
+
 			register_setting(
 				'stackable_editor_settings',
 				'stackable_enable_text_default_block',
@@ -272,7 +268,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_enable_reset_layout'] = get_option( 'stackable_enable_reset_layout' );
 			$settings['stackable_enable_save_as_default_block'] = get_option( 'stackable_enable_save_as_default_block' );
 			$settings['stackable_enable_text_default_block'] = get_option( 'stackable_enable_text_default_block' );
-      
+
 			return $settings;
 		}
 
@@ -301,32 +297,6 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			}
 
 			return $css;
-		}
-
-		/**
-		 * Migrate from disabled blocks array to block states object.
-		 *
-		 * @return void
-		 */
-		function migrate_block_states() {
-			$old_setting_name = 'stackable_disabled_blocks';
-			$new_setting_name = 'stackable_block_states'; 
-
-			// Check if the old setting exists and the new setting is empty.
-			if ( get_option( $old_setting_name ) !== false && empty( get_option( $new_setting_name, [] ) ) ) {
-				$old_disabled_blocks = get_option( $old_setting_name, [] );
-				$new_block_states = [];
-
-				if ( is_array( $old_disabled_blocks ) ) {
-					foreach ( $old_disabled_blocks as $block_name ) {
-						// In the block_states, hidden is 2 and disabled is 3
-						$new_block_states[ $block_name ] = 2;
-					}
-				}
-
-				update_option( $new_setting_name, $new_block_states );
-				delete_option( $old_setting_name );
-			}
 		}
 	}
 

@@ -115,3 +115,4 @@ export { default as ColumnsWidthMultiControl } from './columns-width-multi-contr
 export { default as Popover } from './popover'
 export { default as HelpTooltip } from './help-tooltip'
 export { default as RichText } from './rich-text'
+export { default as SortablePicker } from './sortable-picker'

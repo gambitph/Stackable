@@ -11,7 +11,9 @@ import {
 	PanelBody, TextControl, Spinner,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { useState, useEffect } from '@wordpress/element'
+import {
+	useState, useEffect, Fragment,
+} from '@wordpress/element'
 
 /**
  * External dependencies
@@ -25,6 +27,7 @@ import {
 import { faGetIcon, faFetchIcon } from '~stackable/util'
 import { FileDrop } from 'react-file-drop'
 import classnames from 'classnames'
+import { applyFilters, doAction } from '@wordpress/hooks'
 
 let searchTimeout = null
 let tempMediaUpload = null
@@ -83,7 +86,7 @@ export const cleanSvgString = svgString => {
 
 const IconSearchPopover = props => {
 	const [ value, setValue ] = useState( '' )
-	const [ results, setResults ] = useState( [] )
+	const [ results, setResults ] = useState( { faIcons: [], iconLibrary: [] } )
 	const [ isBusy, setIsBusy ] = useState( false )
 	const [ isDropping, setIsDropping ] = useState( false )
 
@@ -151,6 +154,9 @@ const IconSearchPopover = props => {
 			fr.onload = function( e ) {
 				setIsDropping( false )
 				const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
+
+				doAction( 'stackable.icon-search-popover.svg-upload', svgString )
+
 				props.onChange( svgString )
 				props.onClose()
 			}
@@ -167,6 +173,8 @@ const IconSearchPopover = props => {
 		'ugb-icon--has-upload': allowSVGUpload,
 		'ugb-icon--has-reset': props.allowReset,
 	} )
+
+	const IconLibraryIcons = applyFilters( 'stackable.global-settings.inspector.icon-library.icons', Fragment )
 
 	const content = (
 		<div className="stk-icon-search-popover-container">
@@ -191,6 +199,8 @@ const IconSearchPopover = props => {
 					fr.onload = function( e ) {
 						setIsDropping( false )
 						const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
+
+						doAction( 'stackable.icon-search-popover.svg-upload', svgString )
 						props.onChange( svgString )
 						props.onClose()
 					}
@@ -244,13 +254,26 @@ const IconSearchPopover = props => {
 				</div>
 				<div className="ugb-icon-popover__iconlist">
 					{ isBusy && <Spinner /> }
-					{ ! isBusy && results.map( ( { prefix, iconName }, i ) => {
+					{ ! isBusy && <IconLibraryIcons
+						icons={ results.iconLibrary }
+						onChange={ props.onChange }
+						onClose={ props.onClose }
+					/> }
+					{ ! isBusy && results.faIcons.map( ( { prefix, iconName }, i ) => {
 						const iconValue = `${ prefix }-${ iconName }`
 						return <button
 							key={ i }
 							className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
 							onClick={ async () => {
-								if ( props.returnSVGValue ) {
+								if ( props.returnSVGValue && props.returnIconName ) {
+									let svgIcon = faGetIcon( prefix, iconName )
+
+									if ( ! svgIcon ) {
+										await faFetchIcon( prefix, iconName )
+										svgIcon = faGetIcon( prefix, iconName )
+									}
+									props.onChange( cleanSvgString( svgIcon ), prefix, iconName )
+								} else if ( props.returnSVGValue ) {
 									let svgIcon = faGetIcon( prefix, iconName )
 
 									if ( ! svgIcon ) {
@@ -267,7 +290,7 @@ const IconSearchPopover = props => {
 							<FontAwesomeIcon prefix={ prefix } iconName={ iconName } />
 						</button>
 					} ) }
-					{ ! isBusy && ! results.length &&
+					{ ! isBusy && ! results.faIcons.length && ! results.iconLibrary.length &&
 						<p className="components-base-control__help">{ __( 'No matches found', i18n ) }</p>
 					}
 				</div>
