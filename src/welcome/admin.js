@@ -890,7 +890,12 @@ const Blocks = props => {
 		const newDisabledBlocks = {}
 		BLOCK_CATEROGIES.forEach( ( { id } ) => {
 			DERIVED_BLOCKS[ id ].forEach( block => {
-				newDisabledBlocks[ block.name ] = BLOCK_STATE.DISABLED
+				// If the block cannot be disabled, default to hidden.
+				if ( block[ 'stk-cannot-be-disabled' ] ) {
+					newDisabledBlocks[ block.name ] = BLOCK_STATE.HIDDEN
+				} else {
+					newDisabledBlocks[ block.name ] = BLOCK_STATE.DISABLED
+				}
 			} )
 		} )
 		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
@@ -1011,8 +1016,7 @@ const Blocks = props => {
 									<div className="s-settings-grid">
 										{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 											const blockState = disabledBlocks[ block.name ] ?? BLOCK_STATE.ENABLED
-											// Do not allow the disabling of column
-											const disabledValues = block.name === 'stackable/columns' ? [ BLOCK_STATE.DISABLED ] : null
+											const disabledValues = block[ 'stk-cannot-be-disabled' ] ? [ BLOCK_STATE.DISABLED ] : null
 
 											return (
 												<AdminToolbarSetting
