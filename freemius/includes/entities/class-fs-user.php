@@ -38,10 +38,6 @@
 		 * @var float
 		 */
 		public $gross;
-		/**
-		 * @var bool
-		 */
-		public $is_beta;
 
 		#endregion Properties
 
@@ -50,6 +46,19 @@
 		 */
 		function __construct( $user = false ) {
 			parent::__construct( $user );
+		}
+
+		/**
+		 * This method removes the deprecated 'is_beta' property from the serialized data.
+		 * Should clean up the serialized data to avoid PHP 8.2 warning on next execution.
+		 *
+		 * @return void
+		 */
+		function __wakeup() {
+			if ( property_exists( $this, 'is_beta' ) ) {
+				// If we enter here, and we are running PHP 8.2, we already had the warning. But we sanitize data for next execution.
+				unset( $this->is_beta );
+			}
 		}
 
 		function get_name() {

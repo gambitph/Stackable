@@ -15893,6 +15893,17 @@
     ]
   },
   {
+    "family": "Noto Serif Todhri",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "todhri"
+    ]
+  },
+  {
     "family": "Noto Serif Toto",
     "variants": [
       "regular",
