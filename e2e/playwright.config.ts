@@ -62,6 +62,13 @@ export default defineConfig( {
 			testMatch: 'setup/auth.js',
 		},
 		{
+			name: 'tests',
+			use: {
+				storageState: process.env.WP_AUTH_STORAGE,
+			},
+			testMatch: 'tests/*.ts',
+		},
+		{
 			name: 'chromium',
 			use: { ...devices[ 'Desktop Chrome' ] },
 		},
