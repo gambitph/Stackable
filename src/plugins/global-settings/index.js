@@ -3,6 +3,7 @@
  */
 import './editor-loader'
 import './block-defaults'
+import './icon-library'
 
 /**
  * External dependencies

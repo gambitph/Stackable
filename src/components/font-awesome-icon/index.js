@@ -80,6 +80,10 @@ const addSVGAttributes = ( svgHTML, attributesToAdd = {}, attributesToRemove = [
 }
 
 const FontAwesomeIcon = memo( props => {
+	const { 
+		svgAttrsToAdd = { width: '32', height: '32' },
+		svgAttrsToRemove = [ 'id', 'data-name' ],
+	} = props
 	const [ forceUpdateCount, setForceUpdateCount ] = useState( 0 )
 	const forceUpdate = () => {
 		setForceUpdateCount( forceUpdateCount + 1 )
@@ -91,7 +95,7 @@ const FontAwesomeIcon = memo( props => {
 	if ( typeof props.value === 'string' && props.value.match( /^<svg/ ) ) {
 		let svg = addSVGAriaLabel( props.value, props.ariaLabel )
 		// Add fallback SVG width and height values.
-		svg = addSVGAttributes( svg, { width: '32', height: '32' } )
+		svg = addSVGAttributes( svg, svgAttrsToAdd, svgAttrsToRemove )
 		return <RawHTML { ...propsToPass }>{ props.prependRenderString + svg }</RawHTML>
 	}
 
@@ -109,7 +113,7 @@ const FontAwesomeIcon = memo( props => {
 
 		let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 		// Add fallback SVG width and height values.
-		svg = addSVGAttributes( svg, { width: '32', height: '32' } )
+		svg = addSVGAttributes( svg, svgAttrsToAdd, svgAttrsToRemove )
 		return <RawHTML { ...propsToPass }>{ props.prependRenderString + svg }</RawHTML>
 	}
 
@@ -123,7 +127,7 @@ const FontAwesomeIcon = memo( props => {
 
 	let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 	// Add fallback SVG width and height values.
-	svg = addSVGAttributes( svg, { width: '32', height: '32' } )
+	svg = addSVGAttributes( svg, svgAttrsToAdd, svgAttrsToRemove )
 	return <RawHTML { ...propsToPass }>{ props.prependRenderString + svg }</RawHTML>
 } )
 

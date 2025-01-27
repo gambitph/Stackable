@@ -9,6 +9,11 @@ coverage
 wp-auth.json
 .env
 
+.env
+wp-auth.json
+**/playwright/.auth
+test-results/**/trace.zip
+
 composer.phar
 composer.lock
 /vendor

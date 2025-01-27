@@ -10,55 +10,22 @@ import {
 /**
  * External dependencies
  */
-import classnames from 'classnames'
 import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
-import { Button } from '~stackable/components'
-import {
-	sortableContainer, sortableElement, sortableHandle,
-} from 'react-sortable-hoc'
+import { SortablePicker } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import {
-	ColorPicker,
-	BaseControl,
-	ColorIndicator,
-	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
-	__experimentalHStack as HStack,
-	Dashicon,
-	Dropdown,
-} from '@wordpress/components'
-import { useState, useRef } from '@wordpress/element'
+import { useRef } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
 import { models } from '@wordpress/api'
 import { __, sprintf } from '@wordpress/i18n'
-
-const popoverProps = {
-	placement: 'left-start',
-	offset: 36,
-	shift: true,
-}
-
-// We need to define these because 13 (return key) is not included in the
-// default keyCodes to initiate a drag.
-const DRAG_KEYCODES = {
-	lift: [ 32, 13 ],
-	drop: [ 32, 13 ],
-	cancel: [ 27 ],
-	up: [ 38, 37 ],
-	down: [ 40, 39 ],
-}
+import { ColorIndicator, ColorPicker } from '@wordpress/components'
 
 let saveTimeout = null
 
 const ColorPickers = props => {
-	const [ isSorting, setIsSorting ] = useState( false )
 	const ref = useRef()
-
 	const {
 		colors,
 	} = useSelect( select => {
@@ -149,7 +116,9 @@ const ColorPickers = props => {
 		}, 1 )
 	}
 
-	const onSortEnd = ( { oldIndex, newIndex } ) => {
+	const onSortEnd = ( {
+		oldIndex, newIndex, setIsSorting,
+	} ) => {
 		const updatedColors = cloneDeep( colors )
 		// Move the color to the new index.
 		updatedColors.splice( newIndex, 0, updatedColors.splice( oldIndex, 1 )[ 0 ] )
@@ -158,46 +127,39 @@ const ColorPickers = props => {
 		setIsSorting( false )
 	  }
 
-	const classNames = classnames(
-		'ugb-global-settings-color-picker',
-		'components-circular-option-picker',
-		'editor-color-palette-control__color-palette',
-		props.className
-	)
+	  const ItemPreview = ( { item } ) => {
+		return <ColorIndicator
+			className="stk-color-indicator block-editor-panel-color-gradient-settings__color-indicator"
+			colorValue={ item.color }
+		/>
+	  }
+
+	  const ItemPicker = ( { item, onChange } ) => {
+		return <div className="stk-color-palette-control__popover-content">
+			<ColorPicker
+				onChange={ value => onChange( {
+					...item,
+					color: value,
+				} ) }
+				color={ item.color }
+				enableAlpha={ true }
+			/>
+		</div>
+	  }
 
 	return (
-		<BaseControl className={ classNames } label={ props.label }>
-			<Button
-				className="ugb-global-settings-color-picker__add-button"
-				onClick={ handleAddIcon }
-				icon="plus-alt2"
-			/>
-			<div
-				ref={ ref }
-				className={ classnames(
-					'ugb-global-settings-color-picker__color-indicators',
-					{ 'is-sorting': isSorting }
-				) }
-			>
-				<SortableContainer
-					items={ colors }
-					onSortStart={ () => setIsSorting( true ) }
-					onSortEnd={ onSortEnd }
-					axis="y"
-					useDragHandle
-					keyCodes={ DRAG_KEYCODES }
-				>
-					{ colors.map( ( color, i ) => (
-						<SortableItem
-							key={ i }
-							index={ i }
-							color={ color }
-							onDelete={ () => onColorDelete( color ) }
-							onChange={ color => onChangeColor( color ) }
-						/> ) ) }
-				</SortableContainer>
-			</div>
-		</BaseControl>
+		<SortablePicker
+			ref={ ref }
+			items={ colors }
+			itemType="color"
+			onChangeItem={ onChangeColor }
+			onDeleteItem={ onColorDelete }
+			handleAddItem={ handleAddIcon }
+			onSortEnd={ onSortEnd }
+			ItemPreview={ ItemPreview }
+			ItemPicker={ ItemPicker }
+			{ ...props }
+		/>
 	)
 }
 
@@ -208,103 +170,3 @@ ColorPickers.defaultProps = {
 }
 
 export default ColorPickers
-
-const SortableItem = sortableElement( props => <LabeledColorIndicator { ...props } /> )
-
-const SortableContainer = sortableContainer( ( { children } ) => {
-	return <div>{ children }</div>
-} )
-
-const DragHandle = sortableHandle( () => <Dashicon
-	icon="menu"
-	size="16"
-	tabIndex="0"
-/> )
-
-const LabeledColorIndicator = props => {
-	const {
-		color,
-		onDelete,
-		onChange,
-	} = props
-
-	const [ isFocused, setIsFocused ] = useState( false )
-
-	return (
-		<HStack justify="space-between" className="stk-global-settings-color-picker__color-indicator-wrapper">
-			<Dropdown
-				popoverProps={ popoverProps }
-				// This is so that when we click on the label to edit it, the input doesn't lose focus.
-				focusOnMount={ ! isFocused ? 'firstElement' : false }
-				renderToggle={ ( { onToggle, isOpen } ) => {
-					return (
-						<Button
-							className="block-editor-panel-color-gradient-settings__dropdown"
-							onClick={ () => {
-								if ( ! isFocused ) {
-									onToggle()
-								}
-							} }
-							isPressed={ isOpen }
-						>
-							<HStack justify="flex-start">
-								<ColorIndicator
-									className="stk-color-indicator block-editor-panel-color-gradient-settings__color-indicator"
-									colorValue={ color.color }
-								/>
-								<input
-									className="components-input-control__input"
-									value={ color.name }
-									onChange={ ev => {
-										onChange( {
-											...color,
-											name: ev.target.value,
-										} )
-									} }
-									onFocus={ () => setIsFocused( true ) }
-									onBlur={ ev => {
-										setIsFocused( false )
-										if ( isOpen && ! ev.relatedTarget?.closest( '.components-popover' ) ) {
-											onToggle()
-										}
-									} }
-									onClick={ () => {
-										if ( ! isOpen ) {
-											onToggle()
-										}
-									} }
-									onKeyDown={ ev => {
-										// On enter, blur the input.
-										if ( ev.keyCode === 13 ) {
-											ev.target.blur()
-										}
-									} }
-								/>
-								<DragHandle />
-							</HStack>
-						</Button>
-					)
-				} }
-				renderContent={ () => (
-					<div className="stk-color-palette-control__popover-content">
-						<ColorPicker
-							onChange={ value => onChange( {
-								...color,
-								color: value,
-							} ) }
-							color={ color.color }
-							enableAlpha={ true }
-						/>
-					</div>
-				) }
-			/>
-			<Button
-				className="stk-global-settings-color-picker__delete-button"
-				icon="trash"
-				isSmall
-				isTertiary
-				onClick={ onDelete }
-			/>
-		</HStack>
-	)
-}
