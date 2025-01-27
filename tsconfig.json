@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"module": "NodeNext",
+		"baseUrl": ".",
+		"paths": {
+			"@wordpress/*": ["./node_modules/@wordpress/*"],
+			"~stackable/*": ["./src/*"]
+		},
+		"types": ["node"]
+	},
+}
