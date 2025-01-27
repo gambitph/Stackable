@@ -24,6 +24,17 @@ async function globalSetup() {
 	// filling in the input fields for the username and password and submitting the form.
 	// https://playwright.dev/docs/test-global-setup-teardown#example
 	await requestUtils.setupRest()
+
+	// Deactivate all plugins except Stackable
+	const plugins = await requestUtils.getPluginsMap()
+
+	// Use for loop because forEach cannot handle async operations
+	for ( const slug of Object.keys( plugins ) ) {
+		await requestUtils.deactivatePlugin( slug )
+	}
+
+	await requestUtils.activatePlugin( 'stackable-gutenberg-blocks' )
+
 	await requestContext.dispose()
 }
 
