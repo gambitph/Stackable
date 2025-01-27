@@ -5,6 +5,7 @@ export const substitute = {
 		return {
 			content: oldAttributes.text,
 			level: oldAttributes.textTag ? Number( oldAttributes.textTag.replace( 'h', '' ) ) : 2,
+			textAlign: oldAttributes.contentAlign,
 		}
 	},
 }

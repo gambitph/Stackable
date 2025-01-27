@@ -4,6 +4,7 @@ export const substitute = {
 	transform: oldAttributes => {
 		return {
 			content: oldAttributes.text,
+			align: oldAttributes.contentAlign,
 		}
 	},
 }
