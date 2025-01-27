@@ -20,6 +20,7 @@ export const substitute = {
 		if ( 'stackable/button-group|button' in disabledBlocks && disabledBlocks[ 'stackable/button-group|button' ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
 			return [ 'core/buttons', {}, innerBlocks ]
 		}
+		return [ 'stackable/button-group', oldAttributes, innerBlocks ]
 	},
 }
 

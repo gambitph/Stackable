@@ -10,6 +10,7 @@ export const substitute = {
 				text: oldAttributes.text,
 			} ]
 		}
+		return [ 'stackable/button', oldAttributes ]
 	},
 }
 
