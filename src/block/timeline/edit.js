@@ -43,6 +43,7 @@ import {
 } from '~stackable/higher-order'
 import { range } from 'lodash'
 import { substituteCoreIfDisabled } from '~stackable/util'
+import { substitutionRules } from '../../blocks'
 
 /**
  * WordPress dependencies
@@ -69,9 +70,12 @@ const TEMPLATE = [
 			left: 0,
 		},
 	}, [
-		substituteCoreIfDisabled( 'stackable/text', {
-			text: _x( 'Description for this block. Use this space for describing your block. Any text will do.', 'Content placeholder', i18n ),
-		} ),
+		substituteCoreIfDisabled(
+			'stackable/text',
+			{ text: _x( 'Description for this block. Use this space for describing your block. Any text will do.', 'Content placeholder', i18n ) },
+			[],
+			substitutionRules,
+		),
 	] ],
 ]
 
