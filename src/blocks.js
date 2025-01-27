@@ -22,6 +22,7 @@ import {
 	BLOCK_STATE,
 } from '~stackable/util'
 import { withVisualGuideContext } from '~stackable/higher-order'
+import { omit } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -32,6 +33,19 @@ import { addFilter } from '@wordpress/hooks'
 
 // Register our block category.
 addStackableBlockCategory()
+
+// Fetch all substitution rules before registering
+const fetchSubstitutionRules = r => {
+	const substitutionRules = {}
+	r.keys().forEach( key => {
+		const { substitute } = r( key )
+		if ( ! substitute ) {
+			return
+		}
+		substitutionRules[ substitute.from ] = omit( substitute, 'from' )
+	} )
+	return substitutionRules
+}
 
 // Register all the blocks found
 const importAllAndRegister = r => {
@@ -70,5 +84,7 @@ addFilter( 'stackable.registerBlockType.edit', 'stackable', edit => {
 	// This allows controls to show highlighted areas in the block.
 	return withVisualGuideContext( edit )
 } )
+
+export const substitutionRules = fetchSubstitutionRules( require.context( './block', true, /substitute\.js$/ ) )
 
 importAllAndRegister( require.context( './block', true, /index\.js$/ ) )

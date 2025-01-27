@@ -8,7 +8,8 @@ import {
 	BLOCK_STATE,
 	substituteCoreIfDisabled,
 } from '~stackable/util'
-import _ from 'lodash'
+import { substitutionRules } from './blocks'
+import { cloneDeep } from 'lodash'
 
 const getDefaultVariation = variations => {
 	return variations?.find( ( { isDefault } ) => isDefault )?.name
@@ -34,7 +35,7 @@ const traverseBlocksAndSubstitute = ( blocks, whitelist ) => {
 		}
 
 		if ( whitelist.includes( blockName ) ) {
-			return substituteCoreIfDisabled( blockName, blockAttributes, innerBlocks )
+			return substituteCoreIfDisabled( blockName, blockAttributes, innerBlocks, substitutionRules )
 		}
 
 		if ( innerBlocks ) {
@@ -83,7 +84,7 @@ const applySettingsToMeta = metadata => {
 	const whitelist = metadata[ 'stk-substitution-blocks' ]
 	if ( whitelist ) {
 		variations = variations.map( variation => {
-			const newVariation = _.cloneDeep( variation )
+			const newVariation = cloneDeep( variation )
 			if ( newVariation.innerBlocks && Array.isArray( newVariation.innerBlocks ) ) {
 				newVariation.innerBlocks = traverseBlocksAndSubstitute( newVariation.innerBlocks, whitelist )
 			}

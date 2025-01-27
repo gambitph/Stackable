@@ -523,83 +523,27 @@ export const registerBlockType = ( name, _settings ) => {
  *
  * @param {string} blockName The block name
  * @param {Object} blockAttributes The block attributes
- * @param {Array} children The children blocks
+ * @param {Array} innerBlocks The children blocks
+ * @param {Object} substitutionRules The substitution rules for transforming from stackable to core blocks
  *
  * @return {Array} The resulting block definition
  */
-export const substituteCoreIfDisabled = ( blockName, blockAttributes, children ) => {
+export const substituteCoreIfDisabled = ( blockName, blockAttributes, innerBlocks, substitutionRules ) => {
 	const disabled_blocks = stackableSettings.stackable_block_states || {} // eslint-disable-line camelcase
 
-	if ( blockName === 'stackable/text' ) {
+	if ( substitutionRules && blockName in substitutionRules ) {
+		const substitutionRule = substitutionRules[ blockName ]
+		// If a block have variants, let the the transform handle all the substitution
+		if ( 'variants' in substitutionRule ) {
+			return substitutionRule.transform( blockAttributes, innerBlocks, disabled_blocks )
+		}
 		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-			return [ 'core/paragraph', {
-				content: blockAttributes.text,
-			} ]
+			return [ substitutionRule.to, substitutionRule.transform( blockAttributes, innerBlocks ) ]
 		}
-		return [ 'stackable/text', blockAttributes ]
 	}
 
-	if ( blockName === 'stackable/heading' ) {
-		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-			return [ 'core/heading', {
-				content: blockAttributes.text,
-				level: blockAttributes.textTag ? Number( blockAttributes.textTag.replace( 'h', '' ) ) : 2,
-			} ]
-		}
-		return [ 'stackable/heading', { ...blockAttributes } ]
-	}
-
-	if ( blockName === 'stackable/subtitle' ) {
-		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-			return [ 'core/paragraph', {
-				content: blockAttributes.text,
-			} ]
-		}
-		return [ 'stackable/subtitle', blockAttributes ]
-	}
-
-	if ( blockName === 'stackable/button-group' ) {
-		if ( 'stackable/button-group|button' in disabled_blocks && disabled_blocks[ 'stackable/button-group|button' ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-			return [ 'core/buttons', {}, children ]
-		}
-		if ( 'stackable/button-group|icon-button' in disabled_blocks && disabled_blocks[ 'stackable/button-group|icon-button' ] === BLOCK_STATE.DISABLED && // eslint-disable-line camelcase
-			children.length &&
-			children[ 0 ][ 0 ] === 'stackable/icon-button'
-		) {
-			return [ 'core/social-links',
-				{ align: blockAttributes.contentAlign },
-				[
-					[ 'core/social-link', { service: 'facebook' } ],
-					[ 'core/social-link', { service: 'twitter' } ],
-				],
-			]
-		}
-		return [ 'stackable/button-group', blockAttributes, children ]
-	}
-
-	if ( blockName === 'stackable/button' ) {
-		if ( 'stackable/button-group|button' in disabled_blocks && disabled_blocks[ 'stackable/button-group|button' ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-			return [ 'core/button', {
-				text: blockAttributes.text,
-			} ]
-		}
-		return [ 'stackable/button', blockAttributes ]
-	}
-
-	if ( blockName === 'stackable/image' ) {
-		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-			if ( blockAttributes ) {
-				return [ 'core/image', {
-					height: blockAttributes.imageHeight,
-				} ]
-			}
-			return [ 'core/image' ]
-		}
-		return [ 'stackable/image', blockAttributes ]
-	}
-
-	if ( children ) {
-		return [ blockName, blockAttributes, children ]
+	if ( innerBlocks ) {
+		return [ blockName, blockAttributes, innerBlocks ]
 	}
 	return [ blockName, blockAttributes ]
 }
