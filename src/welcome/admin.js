@@ -991,7 +991,7 @@ const Blocks = props => {
 				{ groupLength <= 0 ? (
 					<h3>{ __( 'No matching settings', i18n ) }</h3>
 				) : (
-					<>
+					<div className="s-setting-group">
 						<h2>{ __( 'Blocks', i18n ) }</h2>
 						<p className="s-settings-subtitle">{ __( 'Here you can enable, hide and disable Stackable blocks. Hiding blocks will hide the block from the list of available blocks. Disabling blocks will prevent them from being registered at all. When using block variations or design library patterns, disabled blocks will be substituted with the relevant core blocks.', i18n ) }</p>
 						<div className="s-settings-header">
@@ -1055,7 +1055,7 @@ const Blocks = props => {
 								</div>
 							)
 						} ) }
-					</>
+					</div>
 				) }
 			</div>
 		</>
@@ -1398,7 +1398,7 @@ const AdditionalOptions = props => {
 					}
 					{ migrationSettings.children.length > 0 &&
 						<div className="s-setting-group">
-							<h3>{ __( 'Migration Settings', i18n ) }</h3>
+							<h2>{ __( 'Migration Settings', i18n ) }</h2>
 							<p>{ __( 'After enabling the version 2 blocks, please refresh the page to re-fetch the blocks from the server.', i18n ) }</p>
 							<p>
 								{ __( 'Migrating from version 2 to version 3?', i18n ) }
