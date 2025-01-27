@@ -17,6 +17,7 @@ import metadata from './block.json'
 import example from './example'
 import transforms from './transforms'
 import deprecated from './deprecated'
+import substitute from './substitute'
 
 /**
  * WordPress dependencies
@@ -38,4 +39,5 @@ export const settings = {
 	deprecated,
 	edit,
 	save,
+	substitute,
 }
