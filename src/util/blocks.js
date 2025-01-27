@@ -545,5 +545,5 @@ export const substituteCoreIfDisabled = ( blockName, blockAttributes, innerBlock
 	if ( innerBlocks ) {
 		return [ blockName, blockAttributes, innerBlocks ]
 	}
-	return [ blockName, blockAttributes ]
+	return [ blockName, blockAttributes, [] ]
 }

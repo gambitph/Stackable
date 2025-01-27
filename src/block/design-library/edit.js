@@ -11,6 +11,8 @@ import { SVGStackableIcon } from '~stackable/icons'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
 } from '~stackable/block-components'
+import { substituteCoreIfDisabled } from '~stackable/util'
+import { substitutionRules } from '../../blocks'
 
 /**
  * WordPress dependencies
@@ -18,7 +20,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { dispatch } from '@wordpress/data'
 import {
-	createBlock, parse, createBlocksFromInnerBlocksTemplate, getBlockVariations,
+	createBlock, parse, createBlocksFromInnerBlocksTemplate, getBlockVariations, getBlockType,
 } from '@wordpress/blocks'
 import { useState } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
@@ -27,6 +29,22 @@ import { useBlockProps } from '@wordpress/block-editor'
 
 // Replaces the current block with a block made out of attributes.
 const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design ) => {
+	// Recursively substitute core blocks to disabled Stackable blocks
+	const traverseBlocksAndSubstitute = blocks => {
+		return blocks.map( block => {
+			let [ blockName, blockAttributes, innerBlocks ] = block
+			if ( innerBlocks && innerBlocks.length > 0 ) {
+				innerBlocks = traverseBlocksAndSubstitute( innerBlocks )
+			}
+			const substituted = substituteCoreIfDisabled( blockName, blockAttributes, innerBlocks, substitutionRules )
+			if ( ! Array.isArray( substituted[ 2 ] ) ) {
+				substituted[ 2 ] = []
+			}
+			return substituted
+		} )
+	}
+
+	innerBlocks = traverseBlocksAndSubstitute( innerBlocks )
 	// const { replaceBlock } = dispatch( 'core/block-editor' )
 
 	// For wireframes, we'll need to apply any default block attributes to
@@ -44,9 +62,9 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 			blocks.forEach( block => {
 				const blockName = block[ 0 ]
 
-				// For blocks with varitions, do not remove the uniqueId
+				// For blocks with variations, do not remove the uniqueId
 				// since that will prompt the layout picker to show.
-				const hasVariations = getBlockVariations( blockName ).length > 0
+				const hasVariations = !! getBlockType( blockName ) && getBlockVariations( blockName ).length > 0
 				if ( ! hasVariations && block[ 1 ].uniqueId ) {
 					delete block[ 1 ].uniqueId
 				}
