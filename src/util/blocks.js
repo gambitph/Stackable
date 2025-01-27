@@ -547,21 +547,3 @@ export const substituteCoreIfDisabled = ( blockName, blockAttributes, innerBlock
 	}
 	return [ blockName, blockAttributes ]
 }
-
-/**
- * Remove a given child block from a block tree definition if disabled
- *
- * 	@param {Array} blockName The block name of the child to remove
- * 	@param {Array} blockTree The array that contains the child block
- *
- * 	@return {Array} The resulting block tree definition
- */
-export const removeChildIfDisabled = ( blockName, blockTree ) => {
-	const disabled_blocks = stackableSettings.stackable_block_states || {} // eslint-disable-line camelcase
-
-	if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-		return blockTree.filter( innerBlock => innerBlock[ 0 ] !== blockName )
-	}
-
-	return blockTree
-}
