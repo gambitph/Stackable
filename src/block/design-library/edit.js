@@ -2,7 +2,11 @@
  * Internal dependencies
  */
 import previewImage from './images/preview.jpg'
-import { i18n, srcUrl } from 'stackable'
+import {
+	i18n,
+	srcUrl,
+	settings,
+} from 'stackable'
 import {
 	Button,
 	ModalDesignLibrary,
@@ -11,7 +15,7 @@ import { SVGStackableIcon } from '~stackable/icons'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
 } from '~stackable/block-components'
-import { substituteCoreIfDisabled } from '~stackable/util'
+import { substituteCoreIfDisabled, BLOCK_STATE } from '~stackable/util'
 import { substitutionRules } from '../../blocks'
 
 /**
@@ -29,14 +33,30 @@ import { useBlockProps } from '@wordpress/block-editor'
 
 // Replaces the current block with a block made out of attributes.
 const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design ) => {
+	const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
+	const nonSubstitutableBlocks = new Set()
+
 	// Recursively substitute core blocks to disabled Stackable blocks
 	const traverseBlocksAndSubstitute = blocks => {
 		return blocks.map( block => {
 			let [ blockName, blockAttributes, innerBlocks ] = block
+
 			if ( innerBlocks && innerBlocks.length > 0 ) {
 				innerBlocks = traverseBlocksAndSubstitute( innerBlocks )
 			}
+
 			const substituted = substituteCoreIfDisabled( blockName, blockAttributes, innerBlocks, substitutionRules )
+			const blockType = getBlockType( blockName )
+
+			// Get the disabled non-substitutable blocks
+			if ( ! ( blockName in substitutionRules ) &&
+				( ! blockType || blockType[ 'stk-cannot-be-disabled' ] !== true ) &&
+				blockName in disabledBlocks &&
+				disabledBlocks[ blockName ] === BLOCK_STATE.DISABLED
+			) {
+				nonSubstitutableBlocks.add( blockName )
+			}
+
 			if ( ! Array.isArray( substituted[ 2 ] ) ) {
 				substituted[ 2 ] = []
 			}
@@ -45,6 +65,17 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 	}
 
 	innerBlocks = traverseBlocksAndSubstitute( innerBlocks )
+
+	// Warn the user which blocks are needed to be enabled
+	if ( nonSubstitutableBlocks.size > 0 ) {
+		// eslint-disable no-console
+		console.warn( // eslint-disable-line no-console
+			`The selected design requires the following block(s) to be enabled for it to function properly:\n\n` +
+			`${ Array.from( nonSubstitutableBlocks ).join( '\n' ) }`
+		)
+		// eslint-enable no-console
+	}
+
 	// const { replaceBlock } = dispatch( 'core/block-editor' )
 
 	// For wireframes, we'll need to apply any default block attributes to

@@ -529,15 +529,15 @@ export const registerBlockType = ( name, _settings ) => {
  * @return {Array} The resulting block definition
  */
 export const substituteCoreIfDisabled = ( blockName, blockAttributes, innerBlocks, substitutionRules ) => {
-	const disabled_blocks = stackableSettings.stackable_block_states || {} // eslint-disable-line camelcase
+	const disabledBlocks = stackableSettings.stackable_block_states || {} // eslint-disable-line camelcase
 
 	if ( substitutionRules && blockName in substitutionRules ) {
 		const substitutionRule = substitutionRules[ blockName ]
 		// If a block have variants, let the the transform handle all the substitution
 		if ( 'variants' in substitutionRule ) {
-			return substitutionRule.transform( blockAttributes, innerBlocks, disabled_blocks )
+			return substitutionRule.transform( blockAttributes, innerBlocks, disabledBlocks )
 		}
-		if ( blockName in disabled_blocks && disabled_blocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+		if ( blockName in disabledBlocks && disabledBlocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
 			return [ substitutionRule.to, substitutionRule.transform( blockAttributes, innerBlocks ) ]
 		}
 	}
