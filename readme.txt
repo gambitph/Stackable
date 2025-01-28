@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.4
 Tested up to: 6.7.1
 Requires PHP: 7.3
-Stable tag: 3.13.12
+Stable tag: 3.13.13
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -294,6 +294,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.13.13 =
+* New: Icon Library (Premium feature) - you can now upload custom SVGs and re-use them for the Icon Block! #361 #3317
+* Fixed: Text block: typing in the inspector will no longer escape html entities #3399
+* Fixed: Typing in the middle of an option in the inspector will no longer move the cursor to the end #3396
+* Fixed: Updated Freemius SDK to v2.11.0
 
 = 3.13.12 =
 * Fixed: Pasting text creates a new block instead of pasting on the current block #3371
