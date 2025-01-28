@@ -1297,10 +1297,7 @@ const Integrations = props => {
 										<label className="s-text-field" htmlFor="s-icon-kit-field">
 											<span className="s-settings-field__title">{ __( 'FontAwesome Pro Kit', i18n ) }</span>
 										</label>
-									</div>
-									<div>
 										<p className="s-settings-pro">
-											<span className="s-settings-field__title">{ __( 'FontAwesome Pro Kit', i18n ) }</span>
 											{ __( 'This is only available in Stackable Premium. ', i18n ) }
 											<a href="https://wpstackable.com/premium/?utm_source=wp-settings-integrations&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium">
 												{ __( 'Go Premium', i18n ) }
