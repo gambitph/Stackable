@@ -1,11 +1,11 @@
 export const substitute = {
-	from: 'stackable/subtitle',
+	from: 'stackable/count-up',
 	to: 'core/paragraph',
 	transform: oldAttributes => {
 		return {
-			fontSize: 'small',
-			align: oldAttributes.contentAlign,
+			fontSize: 'x-large',
 			content: oldAttributes.text,
+			align: oldAttributes.contentAlign,
 		}
 	},
 }

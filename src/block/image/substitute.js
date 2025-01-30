@@ -3,7 +3,10 @@ export const substitute = {
 	to: 'core/image',
 	transform: oldAttributes => {
 		if ( oldAttributes ) {
-			return { height: oldAttributes.imageHeight }
+			return {
+				height: oldAttributes.imageHeight,
+				url: oldAttributes.imageUrl,
+			}
 		}
 	},
 }

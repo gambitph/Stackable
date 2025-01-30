@@ -8,6 +8,7 @@ export const substitute = {
 		}
 		return [ 'core/paragraph', {
 			fontSize: 'x-large',
+			align: oldAttributes.contentAlign,
 			content,
 		} ]
 	},
