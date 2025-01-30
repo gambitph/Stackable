@@ -7,6 +7,7 @@ import schema from './schema'
 import example from './example'
 import metadata from './block.json'
 import deprecated from './deprecated'
+import substitute from './substitute'
 
 import { HorizontalScrollerIcon } from '~stackable/icons'
 
@@ -28,4 +29,5 @@ export const settings = {
 	deprecated,
 	edit,
 	save,
+	substitute,
 }
