@@ -538,6 +538,9 @@ export const substituteCoreIfDisabled = ( blockName, blockAttributes, innerBlock
 			return substitutionRule.transform( blockAttributes, innerBlocks, disabledBlocks )
 		}
 		if ( blockName in disabledBlocks && disabledBlocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			if ( ! substitutionRule.transform ) {
+				return [ substitutionRule.to, {} ]
+			}
 			return [ substitutionRule.to, substitutionRule.transform( blockAttributes, innerBlocks ) ]
 		}
 	}
