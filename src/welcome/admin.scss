@@ -244,6 +244,10 @@ body[class*="page_stk-"] {
 .s-icon-kit-settings-field > p {
 	margin-left: calc(var(--label-width) + 40px);
 }
+// Align the pro badge with the field.
+.s-icon-kit-settings-field > .s-settings-pro {
+	margin-top: -1.4em;
+}
 .s-integrations .ugb-admin-setting__field,
 .s-icon-settings-fa-version .ugb-admin-setting__field {
 	margin-left: 40px;
