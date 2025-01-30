@@ -185,23 +185,6 @@ body[class*="page_stk-"] {
 			box-sizing: border-box;
 			flex-shrink: 0;
 		}
-
-		.s-settings-field__status {
-			min-width: 40px;
-			display: inline-block;
-			vertical-align: middle;
-			svg {
-				width: 18px;
-				height: 18px;
-				margin: 5px 11px 0;
-			}
-			.s-settings-field__status--check {
-				color: #27de6c;
-			}
-			.s-settings-field__status--cross {
-				color: #ff5a7f;
-			}
-		}
 	}
 	[type="text"],
 	[type="number"],
@@ -222,7 +205,6 @@ body[class*="page_stk-"] {
 		}
 	}
 	p {
-		margin-left: var(--label-width);
 		font-style: italic;
 		margin-top: 4px;
 	}
@@ -240,20 +222,6 @@ body[class*="page_stk-"] {
 	.ugb-admin-setting {
 		margin: 0;
 	}
-}
-.s-icon-kit-settings-field > p {
-	margin-left: calc(var(--label-width) + 40px);
-}
-// Align the pro badge with the field.
-.s-icon-kit-settings-field > .s-settings-pro {
-	margin-top: -1.4em;
-}
-.s-integrations .ugb-admin-setting__field,
-.s-icon-settings-fa-version .ugb-admin-setting__field {
-	margin-left: 40px;
-}
-.s-integrations .ugb-admin-setting__help {
-	padding-left: 40px;
 }
 .s-icon-settings-fa-pro-version .ugb-admin-setting__field p {
 	margin-left: 20px;

@@ -1320,21 +1320,21 @@ const Integrations = props => {
 							/>
 							{ isPro
 								? <Suspense fallback={ <Spinner /> }>
-									<div className="s-icon-settings">
+									<div className="ugb-admin-setting">
 										<IconSettings { ...props } />
 									</div>
 								</Suspense>
 								: <>
-									<div className="s-settings-field s-icon-kit-settings-field">
+									<div className="s-settings-field ugb-admin-setting">
 										<label className="s-text-field" htmlFor="s-icon-kit-field">
-											<span className="s-settings-field__title">{ __( 'FontAwesome Pro Kit', i18n ) }</span>
+											<span className="s-settings-field__title ugb-admin-setting__label">{ __( 'FontAwesome Pro Kit', i18n ) }</span>
+											<p className="s-settings-pro">
+												{ __( 'This is only available in Stackable Premium. ', i18n ) }
+												<a href="https://wpstackable.com/premium/?utm_source=wp-settings-integrations&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium">
+													{ __( 'Go Premium', i18n ) }
+												</a>
+											</p>
 										</label>
-										<p className="s-settings-pro">
-											{ __( 'This is only available in Stackable Premium. ', i18n ) }
-											<a href="https://wpstackable.com/premium/?utm_source=wp-settings-integrations&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium">
-												{ __( 'Go Premium', i18n ) }
-											</a>
-										</p>
 									</div>
 								</>
 							}
