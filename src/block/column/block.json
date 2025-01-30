@@ -20,5 +20,5 @@
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "hidden",
-	"stk-cannot-be-disabled": true
+	"stk-available-states": [ "enabled", "hidden" ]
 }
