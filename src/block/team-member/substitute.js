@@ -1,12 +1,12 @@
 export const substitute = {
 	from: 'stackable/team-member',
-	variants: [],
-	to: 'stackable/columns',
 	transform: ( oldAttributes, innerBlocks ) => {
-		return [ 'stackable/columns',
+		return [
+			'stackable/columns',
 			{},
 			[
-				[ 'stackable/column',
+				[
+					'stackable/column',
 					{},
 					innerBlocks,
 				],

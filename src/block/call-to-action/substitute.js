@@ -1,7 +1,5 @@
 export const substitute = {
 	from: 'stackable/call-to-action',
-	variants: [ 'stackable/call-to-action' ],
-	to: [ 'stackable/columns' ],
 	transform: ( oldAttributes, innerBlocks ) => {
 		return [
 			'stackable/columns',

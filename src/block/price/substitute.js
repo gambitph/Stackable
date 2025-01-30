@@ -1,6 +1,5 @@
 export const substitute = {
 	from: 'stackable/price',
-	to: 'core/paragraph',
 	transform: ( oldAttributes, innerBlocks ) => {
 		let content = ''
 		for ( const block of innerBlocks ) {

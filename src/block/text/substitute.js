@@ -1,11 +1,13 @@
 export const substitute = {
 	from: 'stackable/text',
-	to: 'core/paragraph',
 	transform: oldAttributes => {
-		return {
-			content: oldAttributes.text,
-			align: oldAttributes.contentAlign,
-		}
+		return [
+			'core/paragraph',
+			{
+				content: oldAttributes.text,
+				align: oldAttributes.contentAlign,
+			},
+		]
 	},
 }
 

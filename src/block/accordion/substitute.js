@@ -1,7 +1,5 @@
 export const substitute = {
 	from: 'stackable/accordion',
-	variations: [ 'stackable/accordion' ],
-	to: 'core/details',
 	transform: ( oldAttributes, innerBlocks ) => {
 		// Get the heading
 		const heading = innerBlocks[ 0 ][ 2 ][ 0 ][ 2 ][ 0 ][ 1 ].text
@@ -13,7 +11,7 @@ export const substitute = {
 				open: false,
 				summary: heading,
 			},
-			[ insideBlocks ],
+			insideBlocks,
 		]
 	},
 }

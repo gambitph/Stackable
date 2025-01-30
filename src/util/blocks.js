@@ -533,15 +533,12 @@ export const substituteCoreIfDisabled = ( blockName, blockAttributes, innerBlock
 
 	if ( substitutionRules && blockName in substitutionRules ) {
 		const substitutionRule = substitutionRules[ blockName ]
-		// If a block have variants, let the the transform handle all the substitution
+		// If a block have variants, let the the transform handle checking for disabled
 		if ( 'variants' in substitutionRule ) {
 			return substitutionRule.transform( blockAttributes, innerBlocks, disabledBlocks )
 		}
 		if ( blockName in disabledBlocks && disabledBlocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
-			if ( ! substitutionRule.transform ) {
-				return [ substitutionRule.to, {} ]
-			}
-			return [ substitutionRule.to, substitutionRule.transform( blockAttributes, innerBlocks ) ]
+			return substitutionRule.transform( blockAttributes, innerBlocks )
 		}
 	}
 

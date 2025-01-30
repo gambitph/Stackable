@@ -1,12 +1,14 @@
 export const substitute = {
 	from: 'stackable/subtitle',
-	to: 'core/paragraph',
 	transform: oldAttributes => {
-		return {
-			fontSize: 'small',
-			align: oldAttributes.contentAlign,
-			content: oldAttributes.text,
-		}
+		return [
+			'core/paragraph',
+			{
+				fontSize: 'small',
+				align: oldAttributes.contentAlign,
+				content: oldAttributes.text,
+			},
+		]
 	},
 }
 

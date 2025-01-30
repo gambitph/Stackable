@@ -1,11 +1,13 @@
 export const substitute = {
 	from: 'stackable/blockquote',
-	to: 'core/pullquote',
 	transform: ( oldAttributes, innerBlocks ) => {
-		return {
-			value: innerBlocks[ 1 ][ 1 ].text,
-			align: oldAttributes.contentAlign,
-		}
+		return [
+			'core/pullquote',
+			{
+				value: innerBlocks[ 1 ][ 1 ].text,
+				align: oldAttributes.contentAlign,
+			},
+		]
 	},
 }
 
