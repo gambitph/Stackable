@@ -13,6 +13,7 @@ import metadata from './block.json'
 import example from './example'
 import { BlogPostsIcon } from '~stackable/icons'
 import deprecated from './deprecated'
+import substitute from './substitute'
 
 export const settings = {
 	...metadata,
@@ -30,4 +31,5 @@ export const settings = {
 	variations,
 	edit,
 	save,
+	substitute,
 }
