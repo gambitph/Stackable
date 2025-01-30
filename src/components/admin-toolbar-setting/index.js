@@ -26,10 +26,11 @@ const AdminToolbarSetting = props => {
 							props.controls.map( option => {
 								const isSelected = props.value ? props.value === option.value : props.placeholder === option.value
 								const tabindex = isSelected ? '0' : '-1'
-								const isDisabled = props.disabledValues ? props.disabledValues.includes( option.value ) : false
+								// If no available states provided, all states are allowed.
+								const isAvailable = props.availableStates ? props.availableStates.includes( option.value ) : true
 
-								// Do not show the button if disabled.
-								if ( isDisabled ) {
+								// Do not show the button if not available.
+								if ( ! isAvailable ) {
 									return null
 								}
 
@@ -40,7 +41,6 @@ const AdminToolbarSetting = props => {
 									label={ option.title || props.label }
 									tabIndex={ tabindex }
 									aria-pressed={ isSelected }
-									disabled={ isDisabled }
 									onClick={ () => {
 										if ( option.value === props.value ) {
 											return

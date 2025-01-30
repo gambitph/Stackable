@@ -872,6 +872,11 @@ const Blocks = props => {
 		filteredSearchTree,
 	} = props
 
+	const BLOCK_STATE_MAP = Object.freeze( {
+		enabled: BLOCK_STATE.ENABLED,
+		hidden: BLOCK_STATE.HIDDEN,
+		disabled: BLOCK_STATE.DISABLED,
+	} )
 	const DERIVED_BLOCKS = getAllBlocks()
 	const groups = filteredSearchTree.find( tab => tab.id === 'blocks' ).groups
 	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
@@ -882,19 +887,38 @@ const Blocks = props => {
 	const [ currentToggleBlock, setCurrentToggleBlock ] = useState( '' )
 	const [ currentToggleBlockList, setCurrentToggleBlockList ] = useState( [] )
 
+	// Map string states to integer block states
+	const mapStringStates = states => {
+		return states?.map(
+			state => BLOCK_STATE_MAP[ state.toLowerCase() ]
+		)
+	}
+
 	const enableAllBlocks = () => {
-		handleSettingsChange( { stackable_block_states: {} } ) // eslint-disable-line camelcase
+		const newDisabledBlocks = {}
+		BLOCK_CATEROGIES.forEach( ( { id } ) => {
+			DERIVED_BLOCKS[ id ].forEach( block => {
+				const availableStates = mapStringStates( block[ 'stk-available-states' ] )
+				// Retain previous state if cannot be enabled
+				if ( availableStates && ! availableStates.includes( BLOCK_STATE.ENABLED ) && disabledBlocks[ block.name ] ) {
+					newDisabledBlocks[ block.name ] = disabledBlocks[ block.name ]
+				}
+			} )
+		} )
+		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
 	}
 
 	const disableAllBlocks = () => {
 		const newDisabledBlocks = {}
 		BLOCK_CATEROGIES.forEach( ( { id } ) => {
 			DERIVED_BLOCKS[ id ].forEach( block => {
-				// If the block cannot be disabled, default to hidden.
-				if ( block[ 'stk-cannot-be-disabled' ] ) {
-					newDisabledBlocks[ block.name ] = BLOCK_STATE.HIDDEN
-				} else {
+				const availableStates = mapStringStates( block[ 'stk-available-states' ] )
+				if ( ! availableStates || availableStates.includes( BLOCK_STATE.DISABLED ) ) {
 					newDisabledBlocks[ block.name ] = BLOCK_STATE.DISABLED
+				} else if ( availableStates.includes( BLOCK_STATE.HIDDEN ) ) { // If the block cannot be disabled, default to hidden.
+					newDisabledBlocks[ block.name ] = BLOCK_STATE.HIDDEN
+				} else if ( disabledBlocks[ block.name ] ) { // Retain previous state if cannot be disabled or hidden
+					newDisabledBlocks[ block.name ] = disabledBlocks[ block.name ]
 				}
 			} )
 		} )
@@ -905,7 +929,12 @@ const Blocks = props => {
 		const newDisabledBlocks = {}
 		BLOCK_CATEROGIES.forEach( ( { id } ) => {
 			DERIVED_BLOCKS[ id ].forEach( block => {
-				newDisabledBlocks[ block.name ] = BLOCK_STATE.HIDDEN
+				const availableStates = mapStringStates( block[ 'stk-available-states' ] )
+				if ( ! availableStates || availableStates.includes( BLOCK_STATE.HIDDEN ) ) {
+					newDisabledBlocks[ block.name ] = BLOCK_STATE.HIDDEN
+				} else if ( disabledBlocks[ block.name ] ) { // Retain previous state if cannot be hidden
+					newDisabledBlocks[ block.name ] = disabledBlocks[ block.name ]
+				}
 			} )
 		} )
 		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
@@ -1016,8 +1045,11 @@ const Blocks = props => {
 									<div className="s-settings-grid">
 										{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 											const blockState = disabledBlocks[ block.name ] ?? BLOCK_STATE.ENABLED
-											const disabledValues = block[ 'stk-cannot-be-disabled' ] ? [ BLOCK_STATE.DISABLED ] : null
-
+											const availableStates = mapStringStates( block[ 'stk-available-states' ] )
+											// If there is only one state, do not render the block
+											if ( availableStates && availableStates.length <= 1 ) {
+												return null
+											}
 											return (
 												<AdminToolbarSetting
 													key={ i }
@@ -1043,7 +1075,7 @@ const Blocks = props => {
 															selectedColor: '#de0000',
 														},
 													] }
-													disabledValues={ disabledValues }
+													availableStates={ availableStates }
 													onChange={ value => {
 														toggleBlock( block.name, value )
 													} }
