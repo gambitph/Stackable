@@ -1,5 +1,5 @@
 import { addAttributes } from './attributes'
-import { Style } from './style'
+import { addStyles } from './style'
 import { Edit } from './edit'
 
 import classnames from 'classnames'
@@ -93,4 +93,4 @@ ContainerDiv.InspectorControls = Edit
 
 ContainerDiv.addAttributes = addAttributes
 
-ContainerDiv.Style = Style
+ContainerDiv.addStyles = addStyles

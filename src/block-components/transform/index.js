@@ -1,6 +1,6 @@
 import { addAttributes } from './attributes'
 import { Edit } from './edit'
-import { Style } from './style'
+import { addStyles } from './style'
 
 export const Transform = () => {
 	return null
@@ -10,4 +10,4 @@ Transform.InspectorControls = Edit
 
 Transform.addAttributes = addAttributes
 
-Transform.Style = Style
+Transform.addStyles = addStyles

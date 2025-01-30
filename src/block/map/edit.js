@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 import mapStyleOptions from './map-styles'
 import LocationControl from './location-control'
 import {
@@ -23,11 +23,11 @@ import {
 	PanelAdvancedSettings,
 	ResizerTooltip,
 	StyleControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import { useDeviceType } from '~stackable/hooks'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Icon,
@@ -64,7 +64,7 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import {
-	Fragment, useEffect, useRef, useState, useMemo, useCallback,
+	Fragment, useEffect, useRef, useState, useMemo, useCallback, memo,
 } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 
@@ -77,7 +77,6 @@ const Edit = props => {
 		isHovered,
 		isSelected,
 		setAttributes,
-		clientId,
 	} = props
 
 	const {
@@ -113,8 +112,6 @@ const Edit = props => {
 	useEffect( () => {
 		initMapLibrary( apiKey, initMap )
 	}, [] )
-
-	useGeneratedCss( attributes )
 
 	// Always keep note whether this block uses the Google API Key.
 	useEffect( () => {
@@ -259,224 +256,31 @@ const Edit = props => {
 		}
 	}, 400 ), [ geocoderRef.current, setAttributes, useGeocoding ] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						className={ classnames( { 'stk--uses-api-key': apiKey } ) }
-						initialOpen={ true }
-						id="general"
-					>
-						{ userCanManageApiKey && ! apiKey && (
-							<Notice className="stk-block-map__api-key-notice" status="info" isDismissible={ false }>
-								{ __( 'Some map features require a Google API Key.', i18n ) }
-							&nbsp;
-								<ExternalLink
-									type="link"
-									href={ settingsUrl + '#editor-settings' }
-									rel="next"
-								>
-									{ __( 'Add API key here.', i18n ) }
-								</ExternalLink>
-							</Notice>
-						) }
-						{ ! apiKey ? (
-							<>
-								<AdvancedTextControl
-									label={ __( 'Location', i18n ) }
-									attribute="address"
-									placeholder={ __( 'Enter an address or location', i18n ) }
-								/>
-							</>
-						) : (
-							<LocationControl
-								value={ address }
-								onTextChange={ address => {
-									if ( ! address ) {
-										return setAttributes( { address } )
-									}
-
-									// If the typed in value is a lat lng string, split it and set the lat and lng values.
-									let	 location = ''
-									if ( address.match( /^\s*[-\d.]+(.*?)[, ][-\d.]+/ ) ) { // Check if there's a number comma/space number.
-										const [ , lat, , lng ] = address.match( /^\s*([-\d.]+)(.*?)([-\d.]+)/ )
-										location = {
-											lat: parseFloat( lat ),
-											lng: parseFloat( lng ),
-										}
-									} else {
-										// Try Geocoding.
-										geocodeAddress( address )
-									}
-									setAttributes( {
-										address,
-										location,
-									} )
-								} }
-								onPlaceChange={ place => {
-									setAttributes( {
-										address: place.formatted_address,
-										location: { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() },
-									} )
-							 } }
-							/>
-						) }
-						<AdvancedRangeControl
-							label={ __( 'Height', i18n ) }
-							attribute="height"
-							min={ 0 }
-							sliderMin={ 200 }
-							sliderMax={ 500 }
-							step={ 1 }
-							allowReset={ true }
-							placeholder={ DEFAULT_HEIGHT }
-							responsive="all"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Zoom', i18n ) }
-							attribute="zoom"
-							min={ 1 }
-							max={ 24 }
-							step={ 1 }
-							allowReset={ true }
-							placeholder={ DEFAULT_ZOOM }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Enable Dragging', i18n ) }
-							className="stk--needs-api-key"
-							attribute="isDraggable"
-							defaultValue={ true }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Full Screen Button', i18n ) }
-							className="stk--needs-api-key"
-							attribute="showFullScreenButton"
-							defaultValue={ true }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Map Type Buttons', i18n ) }
-							className="stk--needs-api-key"
-							attribute="showMapTypeButtons"
-							defaultValue={ true }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Street View Button', i18n ) }
-							className="stk--needs-api-key"
-							attribute="showStreetViewButton"
-							defaultValue={ true }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Zoom Buttons', i18n ) }
-							className="stk--needs-api-key"
-							attribute="showZoomButtons"
-							defaultValue={ true }
-						/>
-					</PanelAdvancedSettings>
-					<PanelAdvancedSettings
-						title={ __( 'Map Style', i18n ) }
-						className={ classnames( { 'stk--uses-api-key': apiKey } ) }
-						initialOpen={ false }
-						id="map-style"
-					>
-						<StyleControl
-							className="stk--needs-api-key"
-							options={ mapStyleOptions }
-							value={ mapStyle }
-							onSelect={ style => {
-								setAttributes( {
-									mapStyle: style.value,
-									customMapStyle: '',
-								} )
-							} }
-						/>
-						<AdvancedTextControl
-							className="stk--needs-api-key"
-							label={ __( 'Custom Map Style (Paste JSON here)', i18n ) }
-							isMultiline
-							attribute="customMapStyle"
-							onChange={ value => {
-								setAttributes( {
-									mapStyle: '',
-									customMapStyle: value,
-								} )
-							} }
-							help={
-								<Fragment>
-									<ExternalLink href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#style">
-										{ __( 'Learn how to use Custom Map Styles', i18n ) }
-									</ExternalLink>
-								</Fragment>
-							}
-						/>
-					</PanelAdvancedSettings>
-					<PanelAdvancedSettings
-						className={ classnames( 'stk--needs-api-key', { 'stk--uses-api-key': apiKey } ) }
-						title={ __( 'Map Marker', i18n ) }
-						initialOpen={ false }
-						hasToggle={ true }
-						checked={ apiKey ? showMarker : false }
-						onChange={ showMarker => setAttributes( { showMarker } ) }
-						id="map-marker"
-					>
-						<div className="stk--needs-api-key">
-							<Icon.InspectorControls
-								hideControlsIfIconIsNotSet={ true }
-								hasShape={ false }
-								wrapInPanels={ false }
-								hasBackgroundShape={ false }
-								responsive=""
-								hover=""
-								hasGradient={ false }
-								iconSizeProps={ {
-									sliderMin: 20,
-									sliderMax: 100,
-									placeholder: DEFAULT_ICON_SIZE,
-								} }
-								iconControlHelp={ __( 'Uploaded Icon and Icon Color settings are not fully compatible.', i18n ) }
-							/>
-						</div>
-						{ icon && <AdvancedRangeControl
-							label={ __( 'Horizontal Icon Anchor Point', i18n ) }
-							className="stk--needs-api-key"
-							attribute="iconAnchorPositionX"
-							sliderMin={ -100 }
-							sliderMax={ 100 }
-							step={ 1 }
-							allowReset={ true }
-							placeholder="0"
-						/> }
-						{ icon && <AdvancedRangeControl
-							label={ __( 'Vertical Icon Anchor Point', i18n ) }
-							className="stk--needs-api-key"
-							attribute="iconAnchorPositionY"
-							sliderMin={ -100 }
-							sliderMax={ 100 }
-							step={ 1 }
-							allowReset={ true }
-							placeholder="0"
-						/> }
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<BlockDiv.InspectorControls hasSizeSpacing={ false } />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-map" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
-			<BlockStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
+			<InspectorControls
+				apiKey={ apiKey }
+				userCanManageApiKey={ userCanManageApiKey }
+				setAttributes={ setAttributes }
+				geocodeAddress={ geocodeAddress }
+				address={ address }
+				mapStyle={ mapStyle }
+				showMarker={ showMarker }
+				icon={ icon }
 			/>
+
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-map" />
 
 			<BlockDiv
@@ -545,6 +349,221 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					className={ classnames( { 'stk--uses-api-key': props.apiKey } ) }
+					initialOpen={ true }
+					id="general"
+				>
+					{ props.userCanManageApiKey && ! props.apiKey && (
+						<Notice className="stk-block-map__api-key-notice" status="info" isDismissible={ false }>
+							{ __( 'Some map features require a Google API Key.', i18n ) }
+							&nbsp;
+							<ExternalLink
+								type="link"
+								href={ settingsUrl + '#editor-settings' }
+								rel="next"
+							>
+								{ __( 'Add API key here.', i18n ) }
+							</ExternalLink>
+						</Notice>
+					) }
+					{ ! props.apiKey ? (
+						<>
+							<AdvancedTextControl
+								label={ __( 'Location', i18n ) }
+								attribute="address"
+								placeholder={ __( 'Enter an address or location', i18n ) }
+							/>
+						</>
+					) : (
+						<LocationControl
+							value={ props.address }
+							onTextChange={ address => {
+								if ( ! address ) {
+									return props.setAttributes( { address } )
+								}
+
+								// If the typed in value is a lat lng string, split it and set the lat and lng values.
+								let	 location = ''
+								if ( address.match( /^\s*[-\d.]+(.*?)[, ][-\d.]+/ ) ) { // Check if there's a number comma/space number.
+									const [ , lat, , lng ] = address.match( /^\s*([-\d.]+)(.*?)([-\d.]+)/ )
+									location = {
+										lat: parseFloat( lat ),
+										lng: parseFloat( lng ),
+									}
+								} else {
+									// Try Geocoding.
+									props.geocodeAddress( address )
+								}
+								props.setAttributes( {
+									address,
+									location,
+								} )
+							} }
+							onPlaceChange={ place => {
+								props.setAttributes( {
+									address: place.formatted_address,
+									location: { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() },
+								} )
+							 } }
+						/>
+					) }
+					<AdvancedRangeControl
+						label={ __( 'Height', i18n ) }
+						attribute="height"
+						min={ 0 }
+						sliderMin={ 200 }
+						sliderMax={ 500 }
+						step={ 1 }
+						allowReset={ true }
+						placeholder={ DEFAULT_HEIGHT }
+						responsive="all"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Zoom', i18n ) }
+						attribute="zoom"
+						min={ 1 }
+						max={ 24 }
+						step={ 1 }
+						allowReset={ true }
+						placeholder={ DEFAULT_ZOOM }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Enable Dragging', i18n ) }
+						className="stk--needs-api-key"
+						attribute="isDraggable"
+						defaultValue={ true }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Full Screen Button', i18n ) }
+						className="stk--needs-api-key"
+						attribute="showFullScreenButton"
+						defaultValue={ true }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Map Type Buttons', i18n ) }
+						className="stk--needs-api-key"
+						attribute="showMapTypeButtons"
+						defaultValue={ true }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Street View Button', i18n ) }
+						className="stk--needs-api-key"
+						attribute="showStreetViewButton"
+						defaultValue={ true }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Zoom Buttons', i18n ) }
+						className="stk--needs-api-key"
+						attribute="showZoomButtons"
+						defaultValue={ true }
+					/>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Map Style', i18n ) }
+					className={ classnames( { 'stk--uses-api-key': props.apiKey } ) }
+					initialOpen={ false }
+					id="map-style"
+				>
+					<StyleControl
+						className="stk--needs-api-key"
+						options={ mapStyleOptions }
+						value={ props.mapStyle }
+						onSelect={ style => {
+							props.setAttributes( {
+								mapStyle: style.value,
+								customMapStyle: '',
+							} )
+						} }
+					/>
+					<AdvancedTextControl
+						className="stk--needs-api-key"
+						label={ __( 'Custom Map Style (Paste JSON here)', i18n ) }
+						isMultiline
+						attribute="customMapStyle"
+						onChange={ value => {
+							props.setAttributes( {
+								mapStyle: '',
+								customMapStyle: value,
+							} )
+						} }
+						help={
+							<Fragment>
+								<ExternalLink href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#style">
+									{ __( 'Learn how to use Custom Map Styles', i18n ) }
+								</ExternalLink>
+							</Fragment>
+						}
+					/>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					className={ classnames( 'stk--needs-api-key', { 'stk--uses-api-key': props.apiKey } ) }
+					title={ __( 'Map Marker', i18n ) }
+					initialOpen={ false }
+					hasToggle={ true }
+					checked={ props.apiKey ? props.showMarker : false }
+					onChange={ showMarker => props.setAttributes( { showMarker } ) }
+					id="map-marker"
+				>
+					<div className="stk--needs-api-key">
+						<Icon.InspectorControls
+							hideControlsIfIconIsNotSet={ true }
+							hasShape={ false }
+							wrapInPanels={ false }
+							hasBackgroundShape={ false }
+							responsive=""
+							hover=""
+							hasGradient={ false }
+							iconSizeProps={ {
+								sliderMin: 20,
+								sliderMax: 100,
+								placeholder: DEFAULT_ICON_SIZE,
+							} }
+							iconControlHelp={ __( 'Uploaded Icon and Icon Color settings are not fully compatible.', i18n ) }
+						/>
+					</div>
+					{ props.icon && <AdvancedRangeControl
+						label={ __( 'Horizontal Icon Anchor Point', i18n ) }
+						className="stk--needs-api-key"
+						attribute="iconAnchorPositionX"
+						sliderMin={ -100 }
+						sliderMax={ 100 }
+						step={ 1 }
+						allowReset={ true }
+						placeholder="0"
+					/> }
+					{ props.icon && <AdvancedRangeControl
+						label={ __( 'Vertical Icon Anchor Point', i18n ) }
+						className="stk--needs-api-key"
+						attribute="iconAnchorPositionY"
+						sliderMin={ -100 }
+						sliderMax={ 100 }
+						step={ 1 }
+						allowReset={ true }
+						placeholder="0"
+					/> }
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<BlockDiv.InspectorControls hasSizeSpacing={ false } />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-map" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

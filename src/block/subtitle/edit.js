@@ -1,14 +1,13 @@
 /**
  * Internal dependencies
  */
-import { SubtitleStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
 k*/
 import {
 	BlockDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -24,7 +23,7 @@ import {
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
-import { InspectorTabs } from '~stackable/components'
+import { InspectorTabs, useBlockCssGenerator } from '~stackable/components'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -36,9 +35,9 @@ import { createBlockCompleter } from '~stackable/util'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { createBlock } from '@wordpress/blocks'
 import { addFilter } from '@wordpress/hooks'
 import { sprintf, __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 /**
  * Add `autocompleters` support for stackable/subtitle
@@ -54,14 +53,11 @@ addFilter( 'editor.Autocomplete.completers', 'stackable/subtitle', ( filteredCom
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		onReplace,
 		onRemove,
 		mergeBlocks,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -78,35 +74,22 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
+			<InspectorControls blockState={ props.blockState } />
 
-				<Typography.InspectorControls
-					{ ...props }
-					hasTextTag={ false }
-					isMultiline={ false }
-					initialOpen={ true }
-					hasTextShadow={ true }
-				/>
-
-				<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
-			<SubtitleStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-subtitle" />
 
 			<BlockDiv
@@ -122,31 +105,38 @@ const Edit = props => {
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }
 					onReplace={ onReplace }
-					onSplit={ ( value, isOriginal ) => {
-						// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js
-						let newAttributes
-
-						if ( isOriginal || value ) {
-							newAttributes = {
-								...props.attributes,
-								text: value,
-							}
-						}
-
-						const block = createBlock( 'stackable/subtitle', newAttributes )
-
-						if ( isOriginal ) {
-							block.clientId = props.clientId
-						}
-
-						return block
-					} }
 				/>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Typography.InspectorControls
+				{ ...props }
+				hasTextTag={ false }
+				isMultiline={ false }
+				initialOpen={ true }
+				hasTextShadow={ true }
+			/>
+
+			<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

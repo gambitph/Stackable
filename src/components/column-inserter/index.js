@@ -14,7 +14,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { plus } from '@wordpress/icons'
 import { __ } from '@wordpress/i18n'
 
-export const insertColumnBlock = ( rootClientId, blockName = '' ) => {
+export const insertColumnBlock = ( rootClientId, blockName = '', attributes = {} ) => {
 	const {
 		getBlock,
 		__experimentalGetAllowedBlocks: getAllowedBlocks,
@@ -25,7 +25,7 @@ export const insertColumnBlock = ( rootClientId, blockName = '' ) => {
 
 	// If block name is given, insert a blank block.
 	if ( blockName ) {
-		block = getBlockFromExample( blockName, {} )
+		block = getBlockFromExample( blockName, attributes )
 
 	// Else, copy the last block if it's available
 	} else {

@@ -13,7 +13,6 @@
 	/**
 	 * Class FS_Plugin_Plan
 	 *
-	 * @property FS_Pricing[] $pricing
 	 */
 	class FS_Plugin_Plan extends FS_Entity {
 
@@ -92,6 +91,14 @@
 		 * @var bool Is hidden plan.
 		 */
 		public $is_hidden;
+		/**
+		 * @var FS_Pricing[]
+		 */
+		public $pricing;
+		/**
+		 * @var object[]
+		 */
+		public $features;
 
 		#endregion Properties
 

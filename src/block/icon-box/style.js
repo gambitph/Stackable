@@ -10,56 +10,23 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
+} )
 
-const containerDivOptions = {
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+ContainerDiv.addStyles( blockStyles, {
 	sizeSelector: '.stk-block-icon-box__content',
 	sizeHorizontalAlignRule: 'margin',
 	sizeVerticalAlignRule: 'justifyContent',
-}
-
-export const ContainerStyles = memo( props => {
-	return (
-		<>
-			<Alignment.Style { ...props } />
-			<BlockDiv.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<EffectsAnimations.Style { ...props } />
-			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
-			<MarginBottom.Style { ...props } />
-		</>
-	)
 } )
+MarginBottom.addStyles( blockStyles )
 
-ContainerStyles.defaultProps = {
-	version: '',
-}
-
-ContainerStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
-
-	return (
-		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
-			<MarginBottom.Style.Content { ...props } />
-		</BlockCssCompiler>
-	)
-}
-
-ContainerStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
+export default blockStyles

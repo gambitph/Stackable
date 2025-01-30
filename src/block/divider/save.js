@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { DividerStyles } from './style'
 import { blockStyles } from './block-styles'
 
 import {
@@ -43,7 +42,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<DividerStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			{ [ 'dots', 'asterisks' ].includes( blockStyle ) ? (
 				<div className="stk-block-divider__dots" aria-hidden="true">

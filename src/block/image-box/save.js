@@ -1,7 +1,3 @@
-/** Internal dependencies
- */
-import { ImageBoxStyles } from './style'
-
 /**
  * External dependencies
  */
@@ -53,7 +49,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<ImageBoxStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />

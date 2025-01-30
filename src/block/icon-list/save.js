@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { IconListStyles } from './style'
 import { IconSvgDef } from './util'
 
 /**
@@ -52,7 +51,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<IconListStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			{ ! attributes.ordered && <IconSvgDef icon={ attributes.icon } uniqueId={ attributes.uniqueId } /> }
 			<ParentTagName className={ tagNameClassNames } >

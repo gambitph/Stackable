@@ -264,6 +264,7 @@ const EditorSettings = () => {
 					'stackable_auto_collapse_panels',
 					'stackable_enable_block_linking',
 					'stackable_enable_carousel_lazy_loading',
+					'stackable_enable_text_default_block',
 				] ) )
 			} )
 		} )
@@ -412,6 +413,20 @@ const EditorSettings = () => {
 				} )
 			} }
 			help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Stackable Text as Default Block', i18n ) }
+			value={ settings.stackable_enable_text_default_block }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_text_default_block: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_text_default_block: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'If enabled, Stackable Text blocks will be added by default instead of the native Paragraph Block.', i18n ) }
 		/>
 		{ isBusy &&
 			<div className="s-absolute-spinner">

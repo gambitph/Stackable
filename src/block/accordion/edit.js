@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -16,10 +16,10 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	InspectorAdvancedControls,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -32,7 +32,7 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
+	useBlockAttributesContext, useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -46,11 +46,11 @@ import variations, { defaultIcon } from './variations'
 /**
  * WordPress dependencies
  */
-import { InnerBlocks } from '@wordpress/block-editor'
+import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
-import { useState, useEffect } from '@wordpress/element'
+import { useState, useEffect, memo } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { findLast } from 'lodash'
 
@@ -61,13 +61,15 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
-		isSelected,
 	} = props
 
-	useGeneratedCss( props.attributes )
-
 	const [ isOpen, setIsOpen ] = useState( props.attributes.startOpen )
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks } = useSelect( select => {
+		const { getBlockOrder } = select( 'core/block-editor' )
+		return {
+			hasInnerBlocks: getBlockOrder( clientId ).length > 0,
+		}
+	}, [ clientId ] )
 	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
@@ -123,57 +125,22 @@ const Edit = props => {
 		'stk--is-open': isOpen, // This opens the accordion in the editor.
 	} )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
+			<InspectorControls />
 
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						id="general"
-						initialOpen={ true }
-					>
-						<AdvancedToggleControl
-							label={ __( 'Open at the start', i18n ) }
-							attribute="startOpen"
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Close adjacent on open', i18n ) }
-							attribute="onlyOnePanelOpen"
-							helpTooltip={ {
-								video: 'accordion-adjacent-open',
-								title: __( 'Close adjacent on open', i18n ),
-								description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
-							} }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Enable FAQ Schema', i18n ) }
-							attribute="enableFAQ"
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls backgroundMediaAllowVideo={ false } />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
-
-			<BlockStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-accordion" />
 
 			<BlockDiv
@@ -194,6 +161,54 @@ const Edit = props => {
 	)
 }
 
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedToggleControl
+						label={ __( 'Open at the start', i18n ) }
+						attribute="startOpen"
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Close adjacent on open', i18n ) }
+						attribute="onlyOnePanelOpen"
+						helpTooltip={ {
+							video: 'accordion-adjacent-open',
+							title: __( 'Close adjacent on open', i18n ),
+							description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
+						} }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Enable FAQ Schema', i18n ) }
+						attribute="enableFAQ"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls backgroundMediaAllowVideo={ false } />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
+
 export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
@@ -205,8 +220,15 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 	const icon2 = useBlockAttributesContext( attributes => attributes.icon2 )
 	const setAttributes = useBlockSetAttributesContext()
 
-	const { parentTree } = useBlockContext()
-	const { getBlock } = useSelect( 'core/block-editor' )
+	const { clientId } = useBlockEditContext()
+	const { parentTree, getBlock } = useSelect( select => {
+		const { getBlock, getBlockParents } = select( 'core/block-editor' )
+		const parentTree = getBlockParents( clientId ).map( parentClientId => ( { clientId: parentClientId, name: getBlock( parentClientId ).name } ) )
+		return {
+			getBlock,
+			parentTree,
+		}
+	}, [ clientId ] )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
 	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )
@@ -249,8 +271,15 @@ addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/icon-lab
 
 // Return default icon for accordion
 addFilter( 'stackable.block-component.icon.default', 'stackable/accordion', starIcon => {
-	const { parentTree } = useBlockContext()
-	const { getBlock } = useSelect( 'core/block-editor' )
+	const { clientId } = useBlockEditContext()
+	const { parentTree, getBlock } = useSelect( select => {
+		const { getBlock, getBlockParents } = select( 'core/block-editor' )
+		const parentTree = getBlockParents( clientId ).map( parentClientId => ( { clientId: parentClientId, name: getBlock( parentClientId ).name } ) )
+		return {
+			getBlock,
+			parentTree,
+		}
+	}, [ clientId ] )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
 	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )

@@ -1,6 +1,6 @@
 import { addAttributes } from './attributes'
 import { Edit } from './edit'
-import { Style } from './style'
+import { addStyles } from './style'
 
 import { applyFilters } from '@wordpress/hooks'
 
@@ -24,4 +24,4 @@ EffectsAnimations.InspectorControls = Edit
 
 EffectsAnimations.addAttributes = addAttributes
 
-EffectsAnimations.Style = Style
+EffectsAnimations.addStyles = addStyles

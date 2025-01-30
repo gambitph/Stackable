@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { PriceStyles } from './style'
-
-/**
  * External dependencies
  */
 import classnames from 'classnames'
@@ -44,7 +39,7 @@ export const Save = props => {
 			data-video={ attributes.videoLink }
 			version={ props.version }
 		>
-			<PriceStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<InnerBlocks.Content />
 		</BlockDiv.Content>

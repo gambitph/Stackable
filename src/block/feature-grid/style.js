@@ -11,58 +11,22 @@ import {
 	Transform,
 	Columns,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockStyleGenerator } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { memo } from '@wordpress/element'
-
-const alignmentOptions = {
-	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
-}
-
-const BlockStyles = memo( props => {
-	return (
-		<>
-			<Alignment.Style { ...props } { ...alignmentOptions } />
-			<BlockDiv.Style { ...props } />
-			<Column.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<EffectsAnimations.Style { ...props } />
-			<Separator.Style { ...props } />
-			<Columns.Style { ...props } />
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-BlockStyles.defaultProps = {
-	version: '',
-}
+Alignment.addStyles( blockStyles, {
+	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+} )
+BlockDiv.addStyles( blockStyles )
+Column.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+Separator.addStyles( blockStyles )
+Columns.addStyles( blockStyles )
 
-BlockStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
-
-	return (
-		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } { ...alignmentOptions } />
-			<BlockDiv.Style.Content { ...props } />
-			<Column.Style.Content { ...props } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<Separator.Style.Content { ...props } />
-			<Columns.Style.Content { ...props } />
-		</BlockCssCompiler>
-	)
-}
-
-BlockStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
-
-export default BlockStyles
+export default blockStyles

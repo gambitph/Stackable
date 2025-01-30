@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -10,10 +10,10 @@ import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
 import {
 	InspectorBlockControls, InspectorBottomTip, InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -36,6 +36,7 @@ import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+import { memo } from '@wordpress/element'
 
 const TEMPLATE = [
 	[ 'stackable/text', {
@@ -64,11 +65,8 @@ const TEMPLATE = [
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
@@ -83,31 +81,22 @@ const Edit = props => {
 		'stk-block-content',
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
+			<InspectorControls />
 
-				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-expand" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorBlockControls>
-					<InspectorBottomTip />
-				</InspectorBlockControls>
-			</>
-
-			<BlockStyles
-				version={ VERSION }
-				clientId={ clientId }
-				blockState={ props.blockState }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-expand" />
 
 			<style>{ `.stk-block.stk-block-expand .stk-block-expand__short-text::before { content: "${ __( 'Less text', i18n ) }" !important; }` }</style>
@@ -130,6 +119,28 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-expand" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorBlockControls>
+				<InspectorBottomTip />
+			</InspectorBlockControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

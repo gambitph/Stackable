@@ -20,6 +20,7 @@ import {
 	ShadowControl,
 } from '~stackable/components'
 import { getAttributeName, getAttrNameFunction } from '~stackable/util'
+import { escapeHTMLIfInvalid } from './util'
 
 /**
  * WordPress dependencies
@@ -28,7 +29,6 @@ import {
 	useEffect, useState, useCallback, memo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { escapeHTML } from '@wordpress/escape-html'
 import { applyFilters } from '@wordpress/hooks'
 
 const TYPOGRAPHY_SHADOWS = [
@@ -98,7 +98,7 @@ export const Controls = props => {
 		return () => clearTimeout( timeout )
 	}, [ updateAttribute, debouncedText, text ] )
 
-	const onChangeContent = useCallback( text => setDebouncedText( escapeHTML( text ) ), [] )
+	const onChangeContent = useCallback( text => setDebouncedText( escapeHTMLIfInvalid( text ) ), [] )
 
 	return (
 		<>

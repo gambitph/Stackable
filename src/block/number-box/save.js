@@ -1,8 +1,3 @@
-/**
- * Internal dependencies
- */
-import { HeadingStyles } from './style'
-
 import {
 	BlockDiv,
 	CustomCSS,
@@ -50,7 +45,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<HeadingStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<Typography.Content
 				tagName="div"

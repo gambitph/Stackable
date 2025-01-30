@@ -143,12 +143,24 @@ const ColorPaletteControl = memo( props => {
 	value = applyFilters( 'stackable.color-palette-control.color-value', value )
 
 	let colorLabel,
-		colorName = value
+		colorName = value,
+		popupPickerValue = value // We assign a value to this so that the popup picker will show a "check" on the selected color.
+
 	allColors.some( color => {
 		if ( color.color === value || color.gradient === value ) {
 			colorName = color.name
 			colorLabel = color.name
 			return true
+		}
+
+		// For Stackable global colors to have a correct name label.
+		if ( color.slug ) {
+			if ( `var(--${ color.slug })` === value ) {
+				colorName = color.name
+				colorLabel = color.name
+				popupPickerValue = color.color
+				return true
+			}
 		}
 		return false
 	} )
@@ -162,7 +174,7 @@ const ColorPaletteControl = memo( props => {
 
 	const colorPalette = (
 		<ColorPalettePopup
-			value={ value }
+			value={ popupPickerValue }
 			onChange={ onChange }
 			preOnChange={ props.preOnChange }
 			colors={ props.isGradient ? gradients : colors }

@@ -239,7 +239,7 @@
 	}
 	// Last of type since there's a .block-list-appender
 	// If the block parent is locked, there will be no appender block and data-is-drop-zone will not be present.
-	&:is([data-is-drop-zone="true"]) > [data-block]:nth-last-child(2) {
+	&:is([data-is-drop-zone="true"]) > [data-block]:nth-last-child(1) {
 		margin-bottom: 0;
 		&[data-type^="stackable/"] > .stk-block {
 			margin-bottom: 0;
@@ -288,6 +288,22 @@
 // Our headings have top margins if they're not the first heading, handle the different block structures.
 .editor-styles-wrapper [data-type^="stackable/heading"]:first-child .stk-block-heading__text {
 	margin-top: 0;
+}
+
+// Typography
+// ::spelling-error is not supported by Firefox so we need to separate it to prevent the style rule above from being invalid
+// and because :is() does not allow pseudo-elements inside it.
+.stk--is-gradient::spelling-error,
+.stk--is-gradient li::spelling-error,
+.stk--is-gradient span::spelling-error,
+.stk--is-gradient a::spelling-error {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-o-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	-o-text-fill-color: transparent;
 }
 
 // Deprecated styles.

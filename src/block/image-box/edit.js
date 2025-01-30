@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { ImageBoxStyles } from './style'
+import blockStyles from './style'
 import variations from './variations'
 
 /**
@@ -14,14 +14,13 @@ import {
 	InspectorBlockControls,
 	InspectorBottomTip,
 	InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -42,21 +41,26 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
+import { Fragment, memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
 
 export const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
-	const { hasInnerBlocks, innerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useSelect( select => {
+		const { getBlock } = select( 'core/block-editor' )
+		const innerBlocks = getBlock( props.clientId ).innerBlocks
+		return {
+			hasInnerBlocks: innerBlocks.length > 0,
+			innerBlocks,
+		}
+	}, [ props.clientId ] )
 
 	const {
-		clientId,
 		className,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -79,31 +83,23 @@ const Edit = props => {
 	const lastBlockName = last( innerBlocks )?.name
 	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<Fragment>
 
-			<InspectorTabs />
+			<InspectorControls />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<BlockLink.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<InspectorBlockControls>
-				<InspectorBottomTip />
-			</InspectorBlockControls>
-
-			<ImageBoxStyles
-				version={ VERSION }
-				clientId={ clientId }
-				blockState={ props.blockState }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-image-box" />
 
 			<BlockDiv
@@ -126,6 +122,29 @@ const Edit = props => {
 		</Fragment>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<BlockLink.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorBlockControls>
+				<InspectorBottomTip />
+			</InspectorBlockControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

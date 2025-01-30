@@ -106,9 +106,13 @@ export { default as ColumnInnerBlocks } from './column-inner-blocks'
 export { default as VariationPicker } from './variation-picker'
 export { default as InspectorBottomTip } from './inspector-bottom-tip'
 export { default as BlockWrapper } from './block-wrapper'
-export { default as BlockCss, BlockCssCompiler } from './block-css'
+// TODO: clean this
+export {
+	default as BlockCss, BlockCssCompiler, BlockStyleGenerator, useBlockCssGenerator,
+} from './block-css'
 export { default as ColumnsWidthControl } from './columns-width-control'
 export { default as ColumnsWidthMultiControl } from './columns-width-multi-control'
 export { default as Popover } from './popover'
 export { default as HelpTooltip } from './help-tooltip'
 export { default as RichText } from './rich-text'
+export { default as SortablePicker } from './sortable-picker'

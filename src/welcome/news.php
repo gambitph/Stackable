@@ -20,7 +20,13 @@ if ( ! function_exists( 'stackable_news_feed_links' ) ) {
 
 		// Get cached.
 		if ( get_transient( 'stackable_news_feed_links' ) ) {
-			return get_transient( 'stackable_news_feed_links' );
+			// We changed the way how news feed is cached, if this is a string,
+			// then this is still the old way, just discard it.
+			if ( is_string( get_transient( 'stackable_news_feed_links' ) ) ) {
+				delete_transient( 'stackable_news_feed_links' );
+			} else {
+				return get_transient( 'stackable_news_feed_links' );
+			}
 		}
 
 		include_once( ABSPATH . WPINC . '/feed.php' );
@@ -39,9 +45,8 @@ if ( ! function_exists( 'stackable_news_feed_links' ) ) {
 			return;
 		}
 
-		ob_start();
+		$links_data = array();
 
-		?><ul><?php
 		foreach ( $rss_items as $item ) {
 
 			$url = add_query_arg(
@@ -60,20 +65,16 @@ if ( ! function_exists( 'stackable_news_feed_links' ) ) {
 				$title = "🔥 " . $title;
 			}
 
-			?>
-			<li>
-				<a href="<?php echo esc_url( $url ) ?>" title="<?php echo esc_attr( $item->get_title() ) ?>" target="stackable">
-					<?php echo esc_html( $title ) ?>
-				</a>
-				<time><?php echo esc_html( $item->get_date( 'M j Y' ) ) ?></time>
-			</li>
-			<?php
+			$links_data[] = array(
+				'url' => esc_url( $url ),
+				'title' => esc_attr( $item->get_title() ),
+				'text' => esc_html( $title ),
+				'date' => esc_html( $item->get_date( 'M j Y' ) ),
+			);
 		}
-		?></ul><?php
 
-		$out = ob_get_clean();
-		set_transient( 'stackable_news_feed_links', $out, 60 * 60 * 24 );
-		return $out;
+		set_transient( 'stackable_news_feed_links', $links_data, 60 * 60 * 24 );
+		return stackable_news_feed_links_cached( false );
 	}
 }
 
@@ -84,8 +85,40 @@ if ( ! function_exists( 'stackable_news_feed_links_cached' ) ) {
 	 *
 	 * @return String
 	 */
-	function stackable_news_feed_links_cached() {
-		echo get_transient( 'stackable_news_feed_links' );
+	function stackable_news_feed_links_cached( $echo = true ) {
+		$links_data = get_transient( 'stackable_news_feed_links' );
+
+		// We changed the way how news feed is cached, if this is a string,
+		// then this is still the old way, just discard it.
+		if ( is_string( $links_data ) ) {
+			delete_transient( 'stackable_news_feed_links' );
+			return;
+		}
+
+		if ( ! $links_data ) {
+			return;
+		}
+
+		ob_start();
+		?>
+		<ul>
+			<?php foreach ( $links_data as $link ) : ?>
+				<li>
+					<a href="<?php echo esc_url( $link['url'] ) ?>" title="<?php echo esc_attr( $link['title'] ) ?>" target="stackable">
+						<?php echo esc_html( $link['text'] ) ?>
+					</a>
+					<time><?php echo esc_html( $link['date'] ) ?></time>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+		<?php
+
+		$output = ob_get_clean();
+		if ( $echo ) {
+			echo $output;
+		} else {
+			return $output;
+		}
 	}
 }
 

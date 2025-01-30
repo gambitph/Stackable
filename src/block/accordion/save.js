@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import BlockStyles from './style'
-
-/**
  * External dependencies
  */
 import classnames from 'classnames'
@@ -49,7 +44,7 @@ export const Save = props => {
 			open={ attributes.startOpen || undefined }
 			version={ props.version }
 		>
-			<BlockStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<InnerBlocks.Content />
 		</BlockDiv.Content>

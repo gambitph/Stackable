@@ -25,6 +25,7 @@ export const settings = {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
 		spacing: true,
+		splitting: true,
 	},
 	deprecated,
 	edit,

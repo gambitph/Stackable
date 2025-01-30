@@ -1,4 +1,3 @@
-import { CountdownStyles } from './style'
 import { CountdownNumber } from './countdown-number'
 import { Divider } from './divider'
 import { getCountdownAlignment } from './edit'
@@ -130,7 +129,7 @@ export const Save = props => {
 		>
 			<CustomCSS.Content attributes={ attributes } />
 			<div className="stk-block-countdown__container">
-				<CountdownStyles.Content version={ props.version } attributes={ attributes } />
+				{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 				{ attributes.dayShow &&
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 						<div className="stk-block-countdown__container-wrapper">

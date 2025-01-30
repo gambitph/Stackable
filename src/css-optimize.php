@@ -213,8 +213,10 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			// wp_template_part then we might need to use the actions:
 			// render_block_core_template_part_post and
 			// render_block_core_template_part_file
-			if ( is_singular() && ! is_preview() && ! is_attachment() ) {
-				$post_id = get_the_ID();
+			$optimize_css = is_singular() && ! is_preview() && ! is_attachment();
+			$optimize_css = apply_filters( 'stackable/load_cached_css_for_post', $optimize_css );
+			if ( $optimize_css ) {
+				$post_id = apply_filters( 'stackable/get_post_id_for_cached_css', get_the_ID() );
 				$this->optimized_css = get_post_meta( $post_id, 'stackable_optimized_css', true );
 
 				if ( ! empty( $this->optimized_css ) ) {
@@ -396,6 +398,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 
 				foreach ( $style_matches[1] as $i => $media_query ) {
 					$media_query = ! empty( $media_query ) ? substr( $media_query, 0, -1 ) : $media_query;
+					$media_query = str_replace( 'width: ', 'width:', $media_query ); // Ensure that the media query is consistent.
 					$selector = $style_matches[2][ $i ];
 					$style_rule = $style_matches[3][ $i ];
 

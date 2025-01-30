@@ -22,7 +22,7 @@ import {
 	AlignmentToolbar,
 	BlockControls,
 } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
@@ -52,7 +52,7 @@ const ALIGN_OPTIONS = [
 
 const ALIGN_OPTIONS_NO_JUSTIFY = ALIGN_OPTIONS.filter( option => option.align !== 'justify' )
 
-export const Edit = props => {
+export const Edit = memo( props => {
 	const {
 		contentAlign,
 		columnJustify,
@@ -137,7 +137,7 @@ export const Edit = props => {
 	</>
 
 	return (
-		<Fragment>
+		<>
 			<BlockControls>
 				<AlignmentToolbar
 					value={ contentAlign }
@@ -348,9 +348,9 @@ export const Edit = props => {
 					/>
 				}
 			</InspectorLayoutControls>
-		</Fragment>
+		</>
 	)
-}
+} )
 
 // Add additional classes when browser is Firefox to fix alignment
 const userAgent = navigator?.userAgent

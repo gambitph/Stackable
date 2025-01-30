@@ -8,7 +8,6 @@ import {
 	DEFAULT_LOCATION,
 	DEFAULT_ADDRESS,
 } from './util'
-import BlockStyles from './style'
 import { withVersion } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -84,7 +83,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<BlockStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			{ usesApiKey
 				? (

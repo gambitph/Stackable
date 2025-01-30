@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { SeparatorStyles } from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -15,13 +15,13 @@ import {
 	Separator2,
 	AdvancedRangeControl,
 	AdvancedToggleControl,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -37,26 +37,26 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { useMemo } from '@wordpress/element'
+import { useMemo, memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
+		setAttributes,
 	} = props
-
-	useGeneratedCss( props.attributes )
-
-	const PremiumSeparatorControls = useMemo( () => applyFilters( 'stackable.block.separator.edit.after', null ), [] )
 
 	const {
 		separatorDesign,
 		separatorInverted,
 	} = attributes
 
+	const attributesToPass = {
+		separatorLayer2Show: attributes.separatorLayer2Show,
+		separatorLayer3Show: attributes.separatorLayer3Show,
+	}
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-separator',
@@ -67,58 +67,22 @@ const Edit = props => {
 		'stk-block-separator__inner',
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs hasLayoutPanel={ false } />
+			<InspectorControls attributes={ attributesToPass } setAttributes={ setAttributes } />
 
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						id="general"
-						initialOpen={ true }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Height', i18n ) }
-							min={ 30 }
-							sliderMax={ 400 }
-							placeholder=""
-							attribute="separatorHeight"
-							responsive="all"
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Flip Horizontally', i18n ) }
-							attribute="separatorFlipHorizontally"
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Flip Vertically', i18n ) }
-							attribute="separatorFlipVertically"
-						/>
-					</PanelAdvancedSettings>
-					<PanelAdvancedSettings
-						title={ __( 'Separator', i18n ) }
-						id="separator"
-					>
-						<Separator.InspectorControls.SeparatorControls hasFlipVertically={ true } />
-					</PanelAdvancedSettings>
-					{ PremiumSeparatorControls && <PremiumSeparatorControls { ...props } /> }
-				</InspectorStyleControls>
-
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-separator" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
-			<SeparatorStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
-			/>
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-separator" />
 
 			<BlockDiv
@@ -139,6 +103,55 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	const PremiumSeparatorControls = useMemo( () => applyFilters( 'stackable.block.separator.edit.after', null ), [] )
+	return (
+		<>
+			<InspectorTabs hasLayoutPanel={ false } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Height', i18n ) }
+						min={ 30 }
+						sliderMax={ 400 }
+						placeholder=""
+						attribute="separatorHeight"
+						responsive="all"
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Flip Horizontally', i18n ) }
+						attribute="separatorFlipHorizontally"
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Flip Vertically', i18n ) }
+						attribute="separatorFlipVertically"
+					/>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Separator', i18n ) }
+					id="separator"
+				>
+					<Separator.InspectorControls.SeparatorControls hasFlipVertically={ true } />
+				</PanelAdvancedSettings>
+				{ PremiumSeparatorControls && <PremiumSeparatorControls { ...props } /> }
+			</InspectorStyleControls>
+
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-separator" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</> )
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

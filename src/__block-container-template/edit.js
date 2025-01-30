@@ -118,7 +118,7 @@ const Edit = props => {
 				/>
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
-				{ ! hasInnerBlocks && <GroupPlaceholder /> }
+				{ ! hasInnerBlocks && <GroupPlaceholder blockName="stackable/column" /> }
 				<Separator>
 					<div
 						className={ contentClassNames }

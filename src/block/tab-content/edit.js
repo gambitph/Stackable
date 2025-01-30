@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -13,11 +13,11 @@ import {
 	GroupPlaceholder,
 	InspectorTabs,
 	AdvancedToggleControl,
-	InspectorLayoutControls
+	InspectorLayoutControls,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	getRowClasses,
 	Alignment,
 	getAlignmentClasses,
@@ -43,6 +43,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 import { useSetActiveTabContext } from '../tabs/with-active-tab'
 import {
 	useSelect,
@@ -69,8 +70,6 @@ const Edit = props => {
 		clientId,
 		context,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const [ activeTab, , templateLock ] = useSetActiveTabContext()
 
@@ -103,20 +102,20 @@ const Edit = props => {
 		'stk-block-content',
 	], getContentAlignmentClasses( props.attributes ) )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
-				<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
-				<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-content" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			<InspectorControls />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -124,14 +123,10 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
-				<BlockStyles
-					version={ VERSION }
-					blockState={ props.blockState }
-					clientId={ clientId }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-tab-content" />
 
-				{ ! hasInnerBlocks && <GroupPlaceholder /> }
+				{/* { ! hasInnerBlocks && <GroupPlaceholder attributes={ TEMPLATE[0][1] } /> } */}
 				<Separator>
 					<div
 						className={ contentClassNames }
@@ -177,6 +172,23 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+			<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
+			<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-content" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+})
 
 export default compose(
 	withBlockWrapper,

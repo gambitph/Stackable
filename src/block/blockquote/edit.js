@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { ContainerStyles } from './style'
+import blockStyles from './style'
 import SVGDefaultQuote from './images/round-thin.svg'
 import { QUOTE_ICONS } from './quotes'
 import variations from './variations'
@@ -16,10 +16,10 @@ import {
 	InspectorBottomTip,
 	InspectorStyleControls,
 	InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	ContainerDiv,
 	ConditionalDisplay,
 	Alignment,
@@ -32,7 +32,6 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -42,11 +41,12 @@ import {
 /**
  * WordPress dependencies
  */
-import { InnerBlocks } from '@wordpress/block-editor'
+import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
-import { renderToString } from '@wordpress/element'
+import { renderToString, memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
 
 export const defaultIcon = renderToString( <SVGDefaultQuote /> )
 
@@ -54,14 +54,16 @@ const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 	} = props
 
-	useGeneratedCss( props.attributes )
-
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks } = useSelect( select => {
+		const { getBlockOrder } = select( 'core/block-editor' )
+		return {
+			hasInnerBlocks: getBlockOrder( props.clientId ).length > 0,
+		}
+	}, [ props.clientId ] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -75,30 +77,19 @@ const Edit = props => {
 		'stk-block-blockquote__content',
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<Alignment.InspectorControls />
-				<BlockDiv.InspectorControls />
-				<ContainerDiv.InspectorControls
-					sizeSelector=".stk-block-content"
-					hasContentVerticalAlign={ true }
-				/>
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-blockquote" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
-
+			<InspectorControls />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
 				clientId={ props.clientId }
@@ -106,11 +97,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				enableVariationPicker={ true }
 			>
-				<ContainerStyles
-					version={ VERSION }
-					blockState={ props.blockState }
-					clientId={ clientId }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-blockquote" />
 
 				<ContainerDiv className={ contentClassNames }>
@@ -125,6 +112,32 @@ const Edit = props => {
 	)
 }
 
+const InspectorControls = memo( () => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls
+				sizeSelector=".stk-block-content"
+				hasContentVerticalAlign={ true }
+			/>
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-blockquote" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
+
 export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
@@ -138,7 +151,14 @@ addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/blockquote
 
 // Add more quotation mark icons in the Icon Block if it's inside the blockquote block.
 addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', output => {
-	const { parentBlock } = useBlockContext()
+	const { clientId } = useBlockEditContext()
+	const { parentBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+		return {
+			parentBlock: getBlock( parentClientId ),
+		}
+	}, [ clientId ] )
 	if ( parentBlock?.name === 'stackable/blockquote' ) {
 		return (
 			<>
@@ -157,7 +177,14 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 
 // Change the icon picker label for the Icon Block if it's inside the blockquote block.
 addFilter( 'stackable.block-component.icon.label', 'stackable/blockquote', label => {
-	const { parentBlock } = useBlockContext()
+	const { clientId } = useBlockEditContext()
+	const { parentBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+		return {
+			parentBlock: getBlock( parentClientId ),
+		}
+	}, [ clientId ] )
 	if ( parentBlock?.name === 'stackable/blockquote' ) {
 		return __( 'Pick another icon', i18n )
 	}

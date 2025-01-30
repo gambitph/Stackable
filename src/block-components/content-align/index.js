@@ -10,7 +10,7 @@ export { getContentAlignmentClasses } from './use-content-align'
 
 ContentAlign.InspectorControls = Edit
 
-ContentAlign.Style = null
+ContentAlign.addStyles = () => {}
 
 ContentAlign.addAttributes = addAttributes
 

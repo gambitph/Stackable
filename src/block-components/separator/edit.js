@@ -12,7 +12,8 @@ import {
 	InspectorStyleControls,
 } from '~stackable/components'
 import {
-	useAttributeEditHandlers, useBlockAttributesContext, useBlockSetAttributesContext,
+	useBlockAttributesContext,
+	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 
 /*
@@ -26,6 +27,7 @@ import { i18n, showProNotice } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
+import { getAttributeNameFunc } from '~stackable/util'
 
 const SEPARATOR_SHADOWS = [
 	'none',
@@ -47,9 +49,7 @@ const SeparatorControls = props => {
 		hasFlipVertically,
 	} = props
 
-	const {
-		getAttrName,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const getAttrName = getAttributeNameFunc( attrNameTemplate )
 
 	const separatorShadowOptions = applyFilters( 'stackable.separator.shadows', SEPARATOR_SHADOWS )
 

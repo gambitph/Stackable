@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { CountdownStyles } from './style'
+import blockStyles from './style'
 import { CountdownNumber } from './countdown-number'
 import { Divider } from './divider'
 import { timezones as TIMEZONE_OPTIONS } from './timezones'
@@ -12,7 +12,6 @@ import { timezones as TIMEZONE_OPTIONS } from './timezones'
 import {
 	BlockDiv,
 	ContainerDiv,
-	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -29,6 +28,7 @@ import classnames from 'classnames'
 import {
 	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
 	AdvancedRangeControl, AdvancedToggleControl, AdvancedTextControl, AlignButtonsControl, ControlSeparator, InspectorLayoutControls,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	 withBlockAttributeContext,
@@ -40,7 +40,7 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Fragment } from '@wordpress/element'
+import { Fragment, memo } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { DateTimePicker } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -84,10 +84,7 @@ const Edit = props => {
 		className,
 		setAttributes,
 		attributes,
-		clientId,
 	} = props
-
-	useGeneratedCss( props.attributes )
 
 	const digitTextClasses = getTypographyClasses( attributes, 'digit%s' )
 
@@ -158,170 +155,26 @@ const Edit = props => {
 		messageTextClasses,
 	] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
 	return (
 		<>
-			<>
-				<InspectorTabs />
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						id="countdown"
-						initialOpen={ true }
-					>
-						<AdvancedToolbarControl
-							controls={ COUNTDOWN_TYPE_OPTIONS }
-							attribute="countdownType"
-							fullwidth={ true }
-							isSmall={ false }
-							allowReset={ false }
-							onChange={ value => {
-								if ( value === 'recurring' ) {
-									setAttributes( {
-										countdownType: 'recurring', actionOnExpiration: '', timezone: '',
-									} )
-								} else {
-									setAttributes( {
-										countdownType: 'dueDate', daysLeft: '', hoursLeft: '', minutesLeft: '', secondsLeft: '', restartInterval: '', timezone: '',
-									} )
-								}
-							} }
-						/>
-						<h3 className="components-base-control__label">
-							{ attributes.countdownType === 'dueDate' ? __( 'End Date', i18n ) : __( 'Start Date', i18n ) }
-						</h3>
-						<DateTimePicker
-							currentDate={ attributes.date }
-							is12Hour={ true }
-							onChange={ currentDate => {
-								// Do not include seconds
-								setAttributes( { date: currentDate.slice( 0, currentDate.length - 3 ) } )
-							} }
-							__nextRemoveResetButton={ true }
-						/>
-						<AdvancedSelectControl
-							label={ __( 'Timezone', i18n ) }
-							options={ TIMEZONE_OPTIONS }
-							attribute="timezone"
-							allowReset={ false }
-						/>
-						{	attributes.countdownType === 'dueDate' && (
-							<>
-								<AdvancedSelectControl
-									label={ __( 'Action on Expiration', i18n ) }
-									options={ ACTION_ON_EXPIRATION_OPTIONS }
-									defaultValue=""
-									attribute="actionOnExpiration"
-								/>
-								{ attributes.actionOnExpiration === 'showMessage' }
-							</>
-						) }
-						{ attributes.countdownType === 'recurring' && (
-							<Fragment>
-								<ControlSeparator />
-								<h3 className="components-base-control__label">{ __( 'Countdown Duration', i18n ) }</h3>
-								<AdvancedRangeControl
-									label={ __( 'Days', i18n ) }
-									min={ 0 }
-									max={ 364 }
-									attribute="daysLeft"
-								/>
-								<AdvancedRangeControl
-									label={ __( 'Hours', i18n ) }
-									min={ 0 }
-									max={ 23 }
-									attribute="hoursLeft"
-								/>
-								<AdvancedRangeControl
-									label={ __( 'Minutes', i18n ) }
-									min={ 0 }
-									max={ 59 }
-									attribute="minutesLeft"
-								/>
-								<AdvancedRangeControl
-									label={ __( 'Seconds', i18n ) }
-									min={ 0 }
-									max={ 59 }
-									attribute="secondsLeft"
-								/>
-								<ControlSeparator />
-								<AdvancedRangeControl
-									label={ __( 'Restart Countdown After no. of Hours', i18n ) }
-									min={ 0 }
-									maxSlider={ 10 }
-									attribute="restartInterval"
-								/>
-							</Fragment>
-						) }
-						<AdvancedToggleControl
-							label={ __( 'Enable Double Digit', i18n ) }
-							attribute="isDoubleDigitHidden"
-							defaultValue={ false }
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Box Gap', i18n ) }
-							min={ 0 }
-							sliderMax={ 50 }
-							attribute="boxGap"
-							placeholder="16"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Label Top Margin', i18n ) }
-							min={ 0 }
-							sliderMax={ 50 }
-							attribute="labelMarginTop"
-							placeholder="8"
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-				<Typography.InspectorControls
-					label={ __( 'Digits', i18n ) }
-					attrNameTemplate="digit%s"
-					hasTextTag={ false }
-					hasTextContent={ false }
-					initialOpen={ false }
-				/>
-				<Typography.InspectorControls
-					label={ __( 'Labels', i18n ) }
-					attrNameTemplate="label%s"
-					hasTextTag={ false }
-					hasTextContent={ false }
-					initialOpen={ false }
-				/>
-				<InspectorLayoutControls>
-					<AlignButtonsControl
-						label={ __( 'Content Alignment', i18n ) }
-						responsive="all"
-						attribute="contentAlignment"
-					/>
-				</InspectorLayoutControls>
-				<Divider.InspectorControls />
-				<BlockDiv.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<ContainerDiv.InspectorControls
-					hasContentVerticalAlign={ true }
-					sizeSelector=".stk-block-countdown__content"
-				/>
-				{ attributes.actionOnExpiration === 'showMessage' &&
-					<Typography.InspectorControls
-						label={ __( 'Expired Message', i18n ) }
-						attrNameTemplate="message%s"
-						hasTextTag={ true }
-						hasTextContent={ true }
-						initialOpen={ false }
-					/> }
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-countdown" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
-
-			<CountdownStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
+			<InspectorControls
+				setAttributes={ setAttributes }
+				countdownType={ attributes.countdownType }
+				date={ attributes.date }
+				actionOnExpiration={ attributes.actionOnExpiration }
 			/>
+
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-countdown" />
 
 			<BlockDiv
@@ -453,6 +306,167 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="countdown"
+					initialOpen={ true }
+				>
+					<AdvancedToolbarControl
+						controls={ COUNTDOWN_TYPE_OPTIONS }
+						attribute="countdownType"
+						fullwidth={ true }
+						isSmall={ false }
+						allowReset={ false }
+						onChange={ value => {
+							if ( value === 'recurring' ) {
+								props.setAttributes( {
+									countdownType: 'recurring', actionOnExpiration: '', timezone: '',
+								} )
+							} else {
+								props.setAttributes( {
+									countdownType: 'dueDate', daysLeft: '', hoursLeft: '', minutesLeft: '', secondsLeft: '', restartInterval: '', timezone: '',
+								} )
+							}
+						} }
+					/>
+					<h3 className="components-base-control__label">
+						{ props.countdownType === 'dueDate' ? __( 'End Date', i18n ) : __( 'Start Date', i18n ) }
+					</h3>
+					<DateTimePicker
+						currentDate={ props.date }
+						is12Hour={ true }
+						onChange={ currentDate => {
+							// Do not include seconds
+							props.setAttributes( { date: currentDate.slice( 0, currentDate.length - 3 ) } )
+						} }
+						__nextRemoveResetButton={ true }
+					/>
+					<AdvancedSelectControl
+						label={ __( 'Timezone', i18n ) }
+						options={ TIMEZONE_OPTIONS }
+						attribute="timezone"
+						allowReset={ false }
+					/>
+					{	props.countdownType === 'dueDate' && (
+						<>
+							<AdvancedSelectControl
+								label={ __( 'Action on Expiration', i18n ) }
+								options={ ACTION_ON_EXPIRATION_OPTIONS }
+								defaultValue=""
+								attribute="actionOnExpiration"
+							/>
+							{ props.actionOnExpiration === 'showMessage' }
+						</>
+					) }
+					{ props.countdownType === 'recurring' && (
+						<Fragment>
+							<ControlSeparator />
+							<h3 className="components-base-control__label">{ __( 'Countdown Duration', i18n ) }</h3>
+							<AdvancedRangeControl
+								label={ __( 'Days', i18n ) }
+								min={ 0 }
+								max={ 364 }
+								attribute="daysLeft"
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Hours', i18n ) }
+								min={ 0 }
+								max={ 23 }
+								attribute="hoursLeft"
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Minutes', i18n ) }
+								min={ 0 }
+								max={ 59 }
+								attribute="minutesLeft"
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Seconds', i18n ) }
+								min={ 0 }
+								max={ 59 }
+								attribute="secondsLeft"
+							/>
+							<ControlSeparator />
+							<AdvancedRangeControl
+								label={ __( 'Restart Countdown After no. of Hours', i18n ) }
+								min={ 0 }
+								maxSlider={ 10 }
+								attribute="restartInterval"
+							/>
+						</Fragment>
+					) }
+					<AdvancedToggleControl
+						label={ __( 'Enable Double Digit', i18n ) }
+						attribute="isDoubleDigitHidden"
+						defaultValue={ false }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Box Gap', i18n ) }
+						min={ 0 }
+						sliderMax={ 50 }
+						attribute="boxGap"
+						placeholder="16"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Label Top Margin', i18n ) }
+						min={ 0 }
+						sliderMax={ 50 }
+						attribute="labelMarginTop"
+						placeholder="8"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+			<Typography.InspectorControls
+				label={ __( 'Digits', i18n ) }
+				attrNameTemplate="digit%s"
+				hasTextTag={ false }
+				hasTextContent={ false }
+				initialOpen={ false }
+			/>
+			<Typography.InspectorControls
+				label={ __( 'Labels', i18n ) }
+				attrNameTemplate="label%s"
+				hasTextTag={ false }
+				hasTextContent={ false }
+				initialOpen={ false }
+			/>
+			<InspectorLayoutControls>
+				<AlignButtonsControl
+					label={ __( 'Content Alignment', i18n ) }
+					responsive="all"
+					attribute="contentAlignment"
+				/>
+			</InspectorLayoutControls>
+			<Divider.InspectorControls />
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<ContainerDiv.InspectorControls
+				hasContentVerticalAlign={ true }
+				sizeSelector=".stk-block-countdown__content"
+			/>
+			{ props.actionOnExpiration === 'showMessage' &&
+				<Typography.InspectorControls
+					label={ __( 'Expired Message', i18n ) }
+					attrNameTemplate="message%s"
+					hasTextTag={ true }
+					hasTextContent={ true }
+					initialOpen={ false }
+				/> }
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-countdown" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

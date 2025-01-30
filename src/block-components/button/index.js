@@ -8,7 +8,7 @@ import { useBlockAttributesContext } from '~stackable/hooks'
  * Internal dependencies
  */
 import { addAttributes } from './attributes'
-import { Style } from './style'
+import { addStyles } from './style'
 import { Edit } from './edit'
 import { Link } from '../link'
 import { Icon } from '../icon'
@@ -81,4 +81,4 @@ Button.InspectorControls = Edit
 
 Button.addAttributes = addAttributes
 
-Button.Style = Style
+Button.addStyles = addStyles

@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.3
-Tested up to: 6.6
+Requires at least: 6.4
+Tested up to: 6.7.1
 Requires PHP: 7.3
-Stable tag: 3.13.4
+Stable tag: 3.13.13
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -295,8 +295,76 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.13.13 =
+* New: Icon Library (Premium feature) - you can now upload custom SVGs and re-use them for the Icon Block! #361 #3317
+* Fixed: Text block: typing in the inspector will no longer escape html entities #3399
+* Fixed: Typing in the middle of an option in the inspector will no longer move the cursor to the end #3396
+* Fixed: Updated Freemius SDK to v2.11.0
+
+= 3.13.12 =
+* Fixed: Pasting text creates a new block instead of pasting on the current block #3371
+* Fixed: Pasting on icon list block makes a new block and loses cursor placement #3382
+* Fixed: Blocks inside a WooCommerce shop page can show css styles #3381
+* Fixed: Clearing the icon from the icon picker can make the icon blank #3348
+* Fixed: Sanitize titles for lightbox #3390
+* Fixed: Enhanced text sanitazion #3391
+
+= 3.13.11 =
+* Fixed: Icon Label block: Error when missing an Icon block #3368
+* Fixed: Disable Dynamic Content when inside the Customizer #3352
+* Fixed: Allow pasting of blocks when focused on a Stackable Text Block #3330
+
+= 3.13.10 =
+* Fixed: Compatibility with WordPress 6.7 #3336
+* Fixed: Better support for custom SVGs in the icon picker #3265
+* Fixed: Cleanup of some code related to the previous performance update #3320
+* Fixed: Accordion block: text can become unselectable #3350
+* Fixed: Save default blocks: saving can be called multiple times and can cause the browser to hang #3355
+* Fixed: Map block: prevent error when using a custom map marker #3362
+
+= 3.13.9 =
+* Fixed: Text blocks: text gradient color doesn't show for misspelled words #3305
+* Fixed: Button block: adding a button block now places the cursor inside the button ##3324
+* Fixed: Conditional display: inspector options do not re-render when changing values #3342
+* Fixed: Optimized CSS: mobile styles can overwrite tablet styles sometimes (to fix, please re-save the page) #3345
+
+= 3.13.8 =
+* Fixed: Possible editor freezing when using deprecated icon lists inside patterns #3332
+* Fixed: Timeline block: last timeline doesn't cut off in mobile view (part 2 of fix) #3292
+* Fixed: Icon List block: can produce an error when migrating from an old version #3334
+* Fixed: Prevent possible PHP error when calling kses too early
+
+= 3.13.7 =
+* Fixed: Stylesheets can sometimes not load in the frontend
+* Fixed: SVG error when using custom SVGs with a use tag #3323
+* Fixed: Carousel block: column alignment stops working for nested columns #3327
+* Fixed: Global colors: color not copied over when pasting in another site #3329
+* Fixed: Only do kses fixes when the user can edit posts
+
+= 3.13.6 =
+* New: Drastically improved performance of the Block Editor #3261
+* New: Added option to enable Stackable Text block as the default editor block #3279
+* New: Added `--stk-transition-default` CSS variable for easier transition customization #3266
+* Change: Disable Inner Column block margins in Carousel blocks #3173
+* Fixed: Posts block "<a" text may appear in post excerpts #3301
+* Fixed: Improved performance of Stackable Global Colors #3299
+* Fixed: Columns block: some settings may not work when used inside a Query Loop block #3109
+* Fixed: Carousel block: slide orders change if used inside a Columns block with different responsive column orders #3113
+* Fixed: Carousel block: fixed jumping and popup issues when infinite scrolling and autoplay are enabled #3287
+* Fixed: Posts block: Load more can load the wrong data if you have multiple Posts block in a page #3189
+* Fixed: Icon List block: transforming to this block can cause errors #3277
+* Fixed: Horizontal Scroller block: images no longer dragged when dragging to scroll #3280
+* Fixed: Timeline block: last timeline doesn't cut off in mobile view #3292
+
+= 3.13.5 =
+* Fixed: Otter Blocks compatibility #3276
+* Fixed: Carousel block: Same-page navigation now works properly #3098
+* Fixed: Some custom SVGs can interfere with othr uploaded custom SVGs #3265
+
 = 3.13.4 =
 * Fixed: Improved WordPress 6.6 compatibility and performance #357 #3258
+* Fixed: Text block performance #3271
+* Fixed: Carousel Block: Aria role errors when using infinite scrolling #3269
 * Fixed: Media query shortcuts not working in Custom CSS #3214
 * Fixed: Posts Block: Date now follows current website language setting #3241
 

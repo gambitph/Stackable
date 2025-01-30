@@ -12,13 +12,14 @@
  * Internal dependencies
  */
 import { BlockWrapper } from '~stackable/components'
-import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { useEffect, useState } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 const EMPTY_OBJ = {}
 
@@ -74,7 +75,17 @@ let selectedBlock = null
  */
 export const useDevicePreviewOptimization = blockProps => {
 	const { clientId, isSelected } = blockProps
-	const { rootBlockClientId } = useBlockContext()
+	const { rootBlockClientId } = useSelect(
+		select => {
+			const { getBlockRootClientId } = select( 'core/block-editor' )
+			const rootBlockClientId = getBlockRootClientId( clientId )
+
+			return {
+				rootBlockClientId,
+			}
+		},
+		[ clientId ]
+	)
 
 	// Remember the selected block.
 	if ( isSelected ) {

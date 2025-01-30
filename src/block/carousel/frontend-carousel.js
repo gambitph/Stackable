@@ -44,11 +44,12 @@ class _StackableCarousel {
 		this.liveregion.setAttribute( 'class', 'liveregion stk--hidden' )
 		this.wrapper.appendChild( this.liveregion )
 
+		this.fixChildrenAccessibility() // This needs to be first before infinte scrolling clones slides.
 		this.initProperties()
 		this.addEventListeners()
-		this.fixChildrenAccessibility()
 		this.fixAccessibility( this.currentSlide )
 		this.setDotActive( this.currentSlide )
+		this.fixInlineScrollNavigation()
 
 		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
 
@@ -225,6 +226,10 @@ class _StackableCarousel {
 
 	swapSlides = ( slide, dir ) => {
 		let setScrollToClone = false
+		if ( this.slidesToShow === this.slideEls.length ) {
+			setScrollToClone = true
+		}
+
 		if ( dir === 'N' && slide > this.slideEls.length ) {
 			slide = this.slideOffset
 			setScrollToClone = true
@@ -241,6 +246,16 @@ class _StackableCarousel {
 
 			original.map( node => this.sliderEl.insertBefore( node, this.clones[ needToSwap ] ) )
 			clones.map( node => this.sliderEl.insertBefore( node, this.slideEls[ needToSwap ] ) )
+
+			// This ensures that the cloned slides are in the right position when slides to show === number of slides
+			if ( this.slidesToShow === this.slideEls.length && dir === 'N' ) {
+				const children = this.sliderEl.children
+				this.sliderEl.append( children[ 0 ] )
+			} else if ( this.slidesToShow === this.slideEls.length && dir === 'P' ) {
+				const children = [ ...Array.from( this.sliderEl.children ).slice( -2 ) ].reverse()
+				children.map( node => this.sliderEl.insertBefore( node, this.sliderEl.children[ 0 ] ) )
+			}
+
 			this.swappedSlides = needToSwap
 		} else if ( this.swappedSlides > needToSwap ) {
 			// unswap original and clone slides that are not needed
@@ -250,6 +265,12 @@ class _StackableCarousel {
 			original.map( node => this.sliderEl.insertBefore( node, this.slideEls[ this.swappedSlides ] ) )
 			clones.map( node => this.sliderEl.insertBefore( node, this.clones[ this.swappedSlides ] ) )
 			this.swappedSlides = _needToSwap
+
+			// This ensures that the cloned slides are in the right position when slides to show === number of slides
+			if ( this.slidesToShow === this.slideEls.length ) {
+				const children = this.sliderEl.children
+				this.sliderEl.insertBefore( children[ children.length - 1 ], children[ 0 ] )
+			}
 		}
 
 		if ( setScrollToClone ) {
@@ -587,6 +608,34 @@ class _StackableCarousel {
 		}
 
 		this.hasTouched = false
+	}
+
+	// Pause autoplay while inline navigation is in progress
+	fixInlineScrollNavigation = () => {
+		let listenerTimeout = null
+
+		const handleEndScroll = () => {
+			this.unpauseAutoplay()
+			document.removeEventListener( 'scroll', scrollListener )
+		}
+
+		// After 200ms of non-scrolling, then the navigation scroll is done, restart the autoplay
+		const scrollListener = () => {
+			clearTimeout( listenerTimeout )
+			listenerTimeout = setTimeout( handleEndScroll, 200 )
+		}
+
+		// Listen to any scroll navigation clicks, including dynamically added
+		document.addEventListener( 'click', e => {
+			// Check if we're inside an anchor link
+			// eslint-disable-next-line @wordpress/no-global-event-listener
+			if ( e.target.closest( '[href^="#"]' ) ) {
+				this.pauseAutoplay()
+				document.addEventListener( 'scroll', scrollListener, { passive: true } )
+				clearTimeout( listenerTimeout )
+				listenerTimeout = setTimeout( handleEndScroll, 200 )
+			}
+		}, { passive: true } )
 	}
 }
 

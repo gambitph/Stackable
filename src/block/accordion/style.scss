@@ -86,6 +86,13 @@
 		}
 	}
 
+	// the transform property causes the background-attachment: fixed to not work as expected.
+	// remove it to prevent timeline block lines to be glitchy.
+	// see similar issue: https://www.sitepoint.com/community/t/background-attachment-fixed-not-working-as-expected/35374/4
+	.stk-block-accordion__content:has(.stk-block-timeline) {
+		transform: initial;
+	}
+
 	// Accordion content shows up in the front end.
 	&:not([open]) .stk-block-accordion__content {
 		max-height: 0;

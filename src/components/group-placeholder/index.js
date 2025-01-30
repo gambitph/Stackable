@@ -6,7 +6,11 @@ import { SVGStackableIcon } from '~stackable/icons'
 import { insertColumnBlock } from '../column-inserter'
 import { __ } from '@wordpress/i18n'
 
-const GroupPlaceholder = () => {
+const GroupPlaceholder = props => {
+	const {
+		blockName: blockNameToAdd = 'stackable/column',
+		attributes,
+	} = props
 	const { clientId, name: blockName } = useBlockEditContext()
 	const { blockTitle } = useSelect( select => {
 		return {
@@ -24,7 +28,7 @@ const GroupPlaceholder = () => {
 				isSecondary
 				className="ugb-design-library-block__button"
 				onClick={ () => {
-					insertColumnBlock( clientId )
+					insertColumnBlock( clientId, blockNameToAdd, attributes )
 				} }
 			>{ __( 'Add Block', i18n ) }</Button>
 		</Placeholder>

@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { IconLabelStyles } from './style'
-
-/**
  * External dependencies
  */
 import classnames from 'classnames'
@@ -59,7 +54,7 @@ export const Save = props => {
 			data-nodownload={ attributes.videoDownload ? null : '' }
 			data-loop={ attributes.videoLoop ? '' : null }
 		>
-			<IconLabelStyles.Content version={ props.version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			{ applyFilters( 'stackable.video-popup.save.div.content', (
 				<div

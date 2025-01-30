@@ -13,6 +13,7 @@ import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { getAttributeNameFunc } from '~stackable/util'
 
 const Layout = props => {
 	const deviceType = useDeviceType()
@@ -114,9 +115,8 @@ Layout.defaultProps = {
 }
 
 const Spacing = props => {
-	const {
-		getAttrName,
-	} = useAttributeEditHandlers( props.attrNameTemplate )
+	// Don't use the hook form so we don't rerender
+	const getAttrName = getAttributeNameFunc( props.attrNameTemplate )
 
 	const {
 		labelPaddings = __( 'Paddings', i18n ),

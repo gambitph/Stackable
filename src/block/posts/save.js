@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { PostsStyles } from './style'
 import { generateRenderPostItem } from './util'
 
 /**
@@ -63,7 +62,7 @@ export const Save = props => {
 			version={ props.version }
 			data-v={ props.attributes.version }
 		>
-			<PostsStyles.Content version={ version } attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ wrapperClassNames }>
 				<div className={ contentClassNames }>

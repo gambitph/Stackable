@@ -12,7 +12,8 @@ import { BlockLinking } from './block-linking'
 import { BlockHoverState } from './block-hover-state'
 import { ContentAlign } from './content-align'
 import { EditorDom } from './get-editor-dom'
-import { ClientTree } from './get-client-id-tree'
+import { StackableThemeFonts } from './get-theme-fonts'
+import { TextDefaultBlock } from './text-default-block'
 
 /**
  * WordPress dependencies
@@ -30,7 +31,7 @@ registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToCont
 registerPlugin( 'stackable-block-hover-state', { render: BlockHoverState } )
 registerPlugin( 'stackable-content-align', { render: ContentAlign } )
 registerPlugin( 'stackable-editor-dom', { render: EditorDom } )
-registerPlugin( 'stackable-client-tree', { render: ClientTree } )
+registerPlugin( 'stackable-theme-fonts', { render: StackableThemeFonts } )
 
 if ( devMode ) {
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )
@@ -39,5 +40,8 @@ if ( devMode ) {
 fetchSettings().then( response => {
 	if ( response.stackable_enable_block_linking ) {
 		registerPlugin( 'stackable-block-linking', { render: BlockLinking } )
+	}
+	if ( response.stackable_enable_text_default_block ) {
+		registerPlugin( 'stackable-text-default-block', { render: TextDefaultBlock } )
 	}
 } )

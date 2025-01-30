@@ -1,6 +1,6 @@
 import { addAttributes } from './attributes'
 import { Edit } from './edit'
-import { Style } from './style'
+import { addStyles } from './style'
 
 export const Columns = () => {
 	return null
@@ -8,6 +8,6 @@ export const Columns = () => {
 
 Columns.InspectorControls = Edit
 
-Columns.Style = Style
+Columns.addStyles = addStyles
 
 Columns.addAttributes = addAttributes

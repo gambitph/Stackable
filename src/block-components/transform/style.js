@@ -1,14 +1,8 @@
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { doAction } from '@wordpress/hooks'
 
-export const Style = props => {
-	const TransformStyles = applyFilters( 'stackable.block-component.transform.style', null )
-	return TransformStyles && <TransformStyles { ...props } />
-}
-
-Style.Content = props => {
-	const TransformStyles = applyFilters( 'stackable.block-component.transform.style.content', null )
-	return TransformStyles && <TransformStyles { ...props } />
+export const addStyles = ( blockStyleGenerator, props = {} ) => {
+	doAction( 'stackable.block-component.transform.style.addStyles', blockStyleGenerator, props )
 }

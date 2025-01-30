@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { CardStyles } from './style'
+import blockStyles from './style'
 import variations from './variations'
 
 /**
@@ -14,10 +14,9 @@ import {
 	InspectorBottomTip,
 	InspectorStyleControls,
 	InspectorTabs,
+	useBlockCssGenerator,
 } from '~stackable/components'
-import {
-	useBlockContext, useBlockStyle, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockStyle, useDeviceType } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -25,7 +24,6 @@ import {
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	Image,
 	getAlignmentClasses,
 	Alignment,
@@ -48,6 +46,8 @@ import {
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
@@ -56,19 +56,21 @@ const heightUnit = [ 'px', 'vh' ]
 
 const Edit = props => {
 	const {
-		hasInnerBlocks, innerBlocks,
-	} = useBlockContext()
-
-	const {
 		hasContainer,
 	} = props.attributes
 
-	useGeneratedCss( props.attributes )
-
 	const {
-		clientId,
 		className, //isHovered,
 	} = props
+
+	const { hasInnerBlocks, innerBlocks } = useSelect( select => {
+		const { getBlock } = select( 'core/block-editor' )
+		const innerBlocks = getBlock( props.clientId ).innerBlocks
+		return {
+			hasInnerBlocks: innerBlocks.length > 0,
+			innerBlocks,
+		}
+	}, [ props.clientId ] )
 
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -106,45 +108,25 @@ const Edit = props => {
 	const imageWidthUnit = props.attributes.imageWidthUnit || 'px'
 	const imageHeightUnit = props.attributes.imageHeightUnit || 'px'
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
-
-				<Image.InspectorControls
-					{ ...props }
-					initialOpen={ true }
-					hasWidth={ blockStyle === 'horizontal' }
-					hasHeight={ hasHeight }
-					widthUnits={ widthUnit }
-					heightUnits={ heightUnit }
-					hasBorderRadius={ false }
-					hasShape={ false }
-					hasShadow={ false }
-					hasAspectRatio={ ! [ 'horizontal', 'full', 'faded' ].includes( blockStyle ) }
-				/>
-				<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
-				<BlockDiv.InspectorControls />
-				<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
-				<BlockLink.InspectorControls />
-				<Advanced.InspectorControls />
-				<Transform.InspectorControls />
-				<EffectsAnimations.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-
-				<InspectorStyleControls>
-					<InspectorBottomTip />
-				</InspectorStyleControls>
-			</>
-
-			<CardStyles
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ clientId }
+			<InspectorControls
+				blockStyle={ blockStyle }
+				hasHeight={ hasHeight }
 			/>
+
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-card" />
 
 			<BlockDiv
@@ -183,6 +165,42 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Image.InspectorControls
+				// { ...props }
+				initialOpen={ true }
+				hasWidth={ props.blockStyle === 'horizontal' }
+				hasHeight={ props.hasHeight }
+				widthUnits={ widthUnit }
+				heightUnits={ heightUnit }
+				hasBorderRadius={ false }
+				hasShape={ false }
+				hasShadow={ false }
+				hasAspectRatio={ ! [ 'horizontal', 'full', 'faded' ].includes( props.blockStyle ) }
+			/>
+			<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
+			<BlockLink.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

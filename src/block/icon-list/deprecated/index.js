@@ -6,6 +6,7 @@ import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
 	deprecateBlockShadowColor, deprecateContainerShadowColor,
 } from '~stackable/block-components'
+import { createUniqueClass } from '~stackable/util'
 
 import { createBlock } from '@wordpress/blocks'
 
@@ -109,10 +110,13 @@ const deprecated = [
 			} else {
 				const contents = textToArray( text )
 				const blocks = contents.map( ( content, index ) => {
-					return createBlock( 'stackable/icon-list-item', {
+					const newBlock = createBlock( 'stackable/icon-list-item', {
 						text: content,
 						icon: getUniqueIcon( icons, index ),
 					} )
+					newBlock.attributes.uniqueId = createUniqueClass( newBlock.clientId )
+
+					return newBlock
 				} )
 				innerBlocks = blocks
 			}

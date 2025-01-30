@@ -9,184 +9,125 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockAttributesContext } from '~stackable/hooks'
-import { BlockCss, BlockCssCompiler } from '~stackable/components'
+// import { useBlockAttributesContext } from '~stackable/hooks'
+import { BlockStyleGenerator } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { memo } from '@wordpress/element'
-import { applyFilters } from '@wordpress/hooks'
+// import { applyFilters } from '@wordpress/hooks'
 
-const alignmentOptions = {
-	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
-}
-
-const Styles = props => {
-	const propsToPass = {
-		...props,
-		version: props.version,
-		versionAdded: '3.6.4',
-		versionDeprecated: '',
-	}
-
-	return (
-		<>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-columns-spacing"
-				attrName="columnSpacing"
-				key="columnSpacing"
-				hasUnits="px"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-column-gap"
-				attrName="horizontalScrollerColumnGap"
-				key="horizontalScrollerColumnGap-save"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-column-width"
-				attrName="horizontalScrollerColumnWidth"
-				key="horizontalScrollerColumnWidth-save"
-				hasUnits="px"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-column-height"
-				attrName="horizontalScrollerHeight"
-				key="horizontalScrollerHeight-save"
-				format="%spx"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-left-offset"
-				attrName="horizontalScrollerLeftOffset"
-				key="horizontalScrollerLeftOffset-save"
-				hasUnits="px"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-snapping"
-				attrName="horizontalScrollerSnap"
-				key="horizontalScrollerSnap-save"
-			/>
-
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-scrollbar-height"
-				attrName="scrollbarHeight"
-				key="scrollbarHeight"
-				format="%spx"
-				enabledCallback={ getAttribute => getAttribute( 'showScrollbar' ) }
-				dependencies={ [ 'showScrollbar' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-scrollbar-height-firefox"
-				attrName="scrollbarHeight"
-				key="scrollbarHeightFirefox"
-				valueCallback={ value => {
-					return value === 0 ? 'none' : ( value < 10 ? 'thin' : 'auto' )
-				} }
-				enabledCallback={ getAttribute => getAttribute( 'showScrollbar' ) }
-				dependencies={ [ 'showScrollbar' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-scrollbar-track-color"
-				attrName="scrollbarTrackColor"
-				key="scrollbarTrackColor"
-				enabledCallback={ getAttribute => getAttribute( 'showScrollbar' ) }
-				dependencies={ [ 'showScrollbar' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-scrollbar-thumb-color"
-				attrName="scrollbarThumbColor"
-				key="scrollbarThumbColor"
-				enabledCallback={ getAttribute => getAttribute( 'showScrollbar' ) }
-				dependencies={ [ 'showScrollbar' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s-horizontal-scroller"
-				styleRule="--stk-scrollbar-thumb-radius"
-				attrName="scrollbarThumbRadius"
-				key="scrollbarThumbRadius"
-				hasUnits="px"
-				enabledCallback={ getAttribute => getAttribute( 'showScrollbar' ) }
-				dependencies={ [ 'showScrollbar' ] }
-			/>
-		</>
-	)
-}
-
-const BlockStyles = memo( props => {
-	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
-	const numColumns = ( columnArrangement || '' ).split( ',' ).length
-
-	const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
-
-	return (
-		<>
-			<Alignment.Style { ...props } { ...alignmentOptions } />
-			<BlockDiv.Style { ...props } />
-			<MarginBottom.Style { ...props } />
-			<Advanced.Style { ...props } />
-			<Transform.Style { ...props } />
-			<EffectsAnimations.Style { ...props } />
-			<Styles { ...props } />
-			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
-		</>
-	)
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
 } )
 
-BlockStyles.defaultProps = {
-	version: '',
-}
+blockStyles.addBlockStyles( 'columnSpacing', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-columns-spacing',
+	attrName: 'columnSpacing',
+	key: 'columnSpacing',
+	hasUnits: 'px',
+	responsive: 'all',
+} ] )
 
-BlockStyles.Content = props => {
-	if ( props.attributes.generatedCss ) {
-		return <style>{ props.attributes.generatedCss }</style>
-	}
+blockStyles.addBlockStyles( 'horizontalScrollerColumnGap', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-column-gap',
+	attrName: 'horizontalScrollerColumnGap',
+	key: 'horizontalScrollerColumnGap-save',
+	format: '%spx',
+	responsive: 'all',
+} ] )
 
-	const numColumns = ( props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet || '' ).split( ',' ).length
-	const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
+blockStyles.addBlockStyles( 'horizontalScrollerColumnWidth', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-column-width',
+	attrName: 'horizontalScrollerColumnWidth',
+	key: 'horizontalScrollerColumnWidth-save',
+	hasUnits: 'px',
+	responsive: 'all',
+} ] )
 
-	return (
-		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } { ...alignmentOptions } />
-			<BlockDiv.Style.Content { ...props } />
-			<MarginBottom.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } />
-			<Transform.Style.Content { ...props } />
-			<EffectsAnimations.Style.Content { ...props } />
-			<Styles { ...props } />
-			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } selector={ '.%s-horizontal-scroller' } /> }
-		</BlockCssCompiler>
-	)
-}
+blockStyles.addBlockStyles( 'horizontalScrollerHeight', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-column-height',
+	attrName: 'horizontalScrollerHeight',
+	key: 'horizontalScrollerHeight-save',
+	format: '%spx',
+} ] )
 
-BlockStyles.Content.defaultProps = {
-	version: '',
-	attributes: {},
-}
+blockStyles.addBlockStyles( 'horizontalScrollerLeftOffset', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-left-offset',
+	attrName: 'horizontalScrollerLeftOffset',
+	key: 'horizontalScrollerLeftOffset-save',
+	hasUnits: 'px',
+	responsive: 'all',
+} ] )
 
-export default BlockStyles
+blockStyles.addBlockStyles( 'horizontalScrollerSnap', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-snapping',
+	attrName: 'horizontalScrollerSnap',
+	key: 'horizontalScrollerSnap-save',
+} ] )
+
+blockStyles.addBlockStyles( 'scrollbarHeight', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-scrollbar-height',
+	attrName: 'scrollbarHeight',
+	key: 'scrollbarHeight',
+	format: '%spx',
+	enabledCallback: getAttribute => getAttribute( 'showScrollbar' ),
+	dependencies: [ 'showScrollbar' ],
+}, {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-scrollbar-height-firefox',
+	attrName: 'scrollbarHeight',
+	key: 'scrollbarHeightFirefox',
+	valueCallback: value => {
+		return value === 0 ? 'none' : ( value < 10 ? 'thin' : 'auto' )
+	},
+	enabledCallback: getAttribute => getAttribute( 'showScrollbar' ),
+	dependencies: [ 'showScrollbar' ],
+} ] )
+
+blockStyles.addBlockStyles( 'scrollbarTrackColor', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-scrollbar-track-color',
+	attrName: 'scrollbarTrackColor',
+	key: 'scrollbarTrackColor',
+	enabledCallback: getAttribute => getAttribute( 'showScrollbar' ),
+	dependencies: [ 'showScrollbar' ],
+} ] )
+
+blockStyles.addBlockStyles( 'scrollbarThumbColor', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-scrollbar-thumb-color',
+	attrName: 'scrollbarThumbColor',
+	key: 'scrollbarThumbColor',
+	enabledCallback: getAttribute => getAttribute( 'showScrollbar' ),
+	dependencies: [ 'showScrollbar' ],
+} ] )
+
+blockStyles.addBlockStyles( 'scrollbarThumbRadius', [ {
+	selector: '.%s-horizontal-scroller',
+	styleRule: '--stk-scrollbar-thumb-radius',
+	attrName: 'scrollbarThumbRadius',
+	key: 'scrollbarThumbRadius',
+	hasUnits: 'px',
+	enabledCallback: getAttribute => getAttribute( 'showScrollbar' ),
+	dependencies: [ 'showScrollbar' ],
+} ] )
+
+Alignment.addStyles( blockStyles, {
+	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+} )
+BlockDiv.addStyles( blockStyles )
+MarginBottom.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+EffectsAnimations.addStyles( blockStyles )
+
+export default blockStyles

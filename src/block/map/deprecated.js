@@ -14,7 +14,14 @@ import { addFilter } from '@wordpress/hooks'
 
 const getIconOptions_3_13_0 = attributes => {
 	const newAttributes = { ...attributes }
+	if ( ! attributes.icon ) {
+		return null
+	}
 	const svgEl = createElementFromHTMLString( attributes.icon )
+
+	if ( ! svgEl || ! svgEl.firstElementChild ) {
+		return null
+	}
 	svgEl.firstElementChild.setAttribute( 'fill', 'currentColor' )
 	newAttributes.icon = svgEl.outerHTML
 	return getIconOptions( newAttributes )

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import blockStyles from './style'
 
 /**
  * External dependencies
@@ -17,10 +17,10 @@ import {
 	InspectorStyleControls,
 	InspectorTabs,
 	PanelAdvancedSettings,
+	useBlockCssGenerator,
 } from '~stackable/components'
 import {
 	BlockDiv,
-	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
 	getTypographyClasses,
@@ -35,7 +35,7 @@ import {
 	getContentAlignmentClasses,
 	Typography,
 } from '~stackable/block-components'
-import { useBlockContext, useDeviceType } from '~stackable/hooks'
+import { useDeviceType } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -52,9 +52,9 @@ import {
 } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { addFilter } from '@wordpress/hooks'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import {
-	useEffect, useRef, useState,
+	useEffect, useRef, useState, memo,
 } from '@wordpress/element'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
@@ -92,15 +92,34 @@ const Edit = props => {
 		setAttributes,
 	} = props
 
-	useGeneratedCss( props.attributes )
-
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const typographyClass = getTypographyClasses( props.attributes )
+
 	const {
 		hasInnerBlocks, nextBlock, previousBlock, adjacentBlocks, blockIndex,
-	} = useBlockContext()
+	} = useSelect( select => {
+		const {
+			getBlockRootClientId, getBlocks, getBlockIndex,
+		} = select( 'core/block-editor' )
+
+		const parentClientId = getBlockRootClientId( clientId )
+		const adjacentBlocks = getBlocks( parentClientId )
+		const blockIndex = getBlockIndex( clientId )
+		const hasInnerBlocks = adjacentBlocks[ blockIndex ]?.innerBlocks?.length > 0
+		const nextBlock = blockIndex < adjacentBlocks.length - 1 ? adjacentBlocks[ blockIndex + 1 ] : undefined
+		const previousBlock = blockIndex > 0 ? adjacentBlocks[ blockIndex - 1 ] : undefined
+
+		return {
+			hasInnerBlocks,
+			nextBlock,
+			previousBlock,
+			adjacentBlocks,
+			blockIndex,
+		}
+	}, [ clientId ] )
+
 	const deviceType = useDeviceType()
 
 	const middleRef = useRef()
@@ -304,7 +323,7 @@ const Edit = props => {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: false } )
 			isUpdating = true
-		} else if ( ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) && props.attributes.timelineIsLast ) {
+		} else if ( ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) && ! props.attributes.timelineIsLast ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: true } )
 			isUpdating = true
@@ -326,124 +345,26 @@ const Edit = props => {
 		)
 	}, [ nextBlock, previousBlock ] )
 
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
 	return (
 		<>
-			<>
-				<InspectorTabs />
+			<InspectorControls
+				blockState={ props.blockState }
+				timelineThickness={ props.attributes.timelineThickness }
+				timelineDotSize={ props.attributes.timelineDotSize }
+				timelineAccentColorType={ props.attributes.timelineAccentColorType }
 
-				<InspectorLayoutControls>
-					<AdvancedToolbarControl
-						label={ __( 'Content Position', i18n ) }
-						attribute="timelinePosition"
-						controls={ [
-							{ value: '', title: __( 'Left', i18n ) },
-							{ value: 'right', title: __( 'Right', i18n ) },
-						] }
-					/>
-					<AdvancedRangeControl
-						label={ sprintf( __( '%s Gap', i18n ), __( 'Timeline', i18n ) ) }
-						attribute="timelineGap"
-						sliderMax={ 100 }
-						min={ 0 }
-						responsive="all"
-						placeholder="16"
-					/>
-				</InspectorLayoutControls>
-
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'Timeline', i18n ) }
-						initialOpen={ true }
-						id="timeline"
-					>
-						<AdvancedRangeControl
-							label={ __( 'Accent Anchor Position', i18n ) }
-							attribute="timelineAnchor"
-							sliderMax={ 100 }
-							min={ 0 }
-							placeholder="50"
-							responsive="all"
-							help={ __( 'Succeeding timeline blocks will also use this value.', i18n ) }
-						/>
-
-						<ControlSeparator />
-
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }
-							attribute="timelineDotSize"
-							sliderMax={ 100 }
-							sliderMin={ props.attributes.timelineThickness || 3 }
-							min={ 1 }
-							placeholder="11"
-						/>
-						<AdvancedRangeControl
-							label={ sprintf( __( '%s Border Radius', i18n ), __( 'Dot', i18n ) ) }
-							attribute="timelineDotBorderRadius"
-							sliderMax={ ( props.attributes.timelineDotSize || 11 ) / 2 }
-							min={ 0 }
-							placeholder=""
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Line Thickness', i18n ) }
-							attribute="timelineThickness"
-							sliderMax={ 20 }
-							min={ 1 }
-							placeholder="3"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Horizontal Offset', i18n ) }
-							attribute="timelineOffset"
-							sliderMax={ 100 }
-							min={ 0 }
-							placeholder="40"
-						/>
-
-						<ControlSeparator />
-
-						<AdvancedToolbarControl
-							controls={ COLOR_TYPE_CONTROLS }
-							attribute="timelineAccentColorType"
-							isSmall={ true }
-						/>
-						<ColorPaletteControl
-							label={
-								props.attributes.timelineAccentColorType === 'gradient'
-									? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 1 )
-									: __( 'Timeline Accent Color', i18n )
-							}
-							attribute="timelineAccentColor"
-						/>
-						{ props.attributes.timelineAccentColorType === 'gradient' &&
-							<ColorPaletteControl
-								label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 2 ) }
-								attribute="timelineAccentColor2"
-							/>
-						}
-						<ColorPaletteControl
-							label={ __( 'Timeline Background Color', i18n ) }
-							attribute="timelineBackgroundColor"
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-
-				<Typography.InspectorControls
-					{ ...props }
-					hasTextTag={ false }
-					isMultiline={ true }
-					initialOpen={ false }
-					hasTextShadow={ true }
-				/>
-				<InspectorLayoutControls>
-					<ControlSeparator />
-				</InspectorLayoutControls>
-				<ContentAlign.InspectorControls />
-				<BlockDiv.InspectorControls hasContentVerticalAlign={ false } hasMinHeight={ false } />
-				<Advanced.InspectorControls />
-				<CustomAttributes.InspectorControls />
-				<CustomCSS.InspectorControls mainBlockClass="stk-block-timeline" />
-				<Responsive.InspectorControls />
-				<ConditionalDisplay.InspectorControls />
-			</>
+			/>
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -451,11 +372,7 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
-				<BlockStyles
-					version={ VERSION }
-					blockState={ props.blockState }
-					clientId={ clientId }
-				/>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
 				<CustomCSS mainBlockClass="stk-block-timeline" />
 
 				<div
@@ -555,6 +472,127 @@ const Edit = props => {
 		</>
 	)
 }
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<InspectorLayoutControls>
+				<AdvancedToolbarControl
+					label={ __( 'Content Position', i18n ) }
+					attribute="timelinePosition"
+					controls={ [
+						{ value: '', title: __( 'Left', i18n ) },
+						{ value: 'right', title: __( 'Right', i18n ) },
+					] }
+				/>
+				<AdvancedRangeControl
+					label={ sprintf( __( '%s Gap', i18n ), __( 'Timeline', i18n ) ) }
+					attribute="timelineGap"
+					sliderMax={ 100 }
+					min={ 0 }
+					responsive="all"
+					placeholder="16"
+				/>
+			</InspectorLayoutControls>
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Timeline', i18n ) }
+					initialOpen={ true }
+					id="timeline"
+				>
+					<AdvancedRangeControl
+						label={ __( 'Accent Anchor Position', i18n ) }
+						attribute="timelineAnchor"
+						sliderMax={ 100 }
+						min={ 0 }
+						placeholder="50"
+						responsive="all"
+						help={ __( 'Succeeding timeline blocks will also use this value.', i18n ) }
+					/>
+
+					<ControlSeparator />
+
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }
+						attribute="timelineDotSize"
+						sliderMax={ 100 }
+						sliderMin={ props.timelineThickness || 3 }
+						min={ 1 }
+						placeholder="11"
+					/>
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s Border Radius', i18n ), __( 'Dot', i18n ) ) }
+						attribute="timelineDotBorderRadius"
+						sliderMax={ ( props.timelineDotSize || 11 ) / 2 }
+						min={ 0 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Line Thickness', i18n ) }
+						attribute="timelineThickness"
+						sliderMax={ 20 }
+						min={ 1 }
+						placeholder="3"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Horizontal Offset', i18n ) }
+						attribute="timelineOffset"
+						sliderMax={ 100 }
+						min={ 0 }
+						placeholder="40"
+					/>
+
+					<ControlSeparator />
+
+					<AdvancedToolbarControl
+						controls={ COLOR_TYPE_CONTROLS }
+						attribute="timelineAccentColorType"
+						isSmall={ true }
+					/>
+					<ColorPaletteControl
+						label={
+							props.timelineAccentColorType === 'gradient'
+								? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 1 )
+								: __( 'Timeline Accent Color', i18n )
+						}
+						attribute="timelineAccentColor"
+					/>
+					{ props.timelineAccentColorType === 'gradient' &&
+						<ColorPaletteControl
+							label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 2 ) }
+							attribute="timelineAccentColor2"
+						/>
+					}
+					<ColorPaletteControl
+						label={ __( 'Timeline Background Color', i18n ) }
+						attribute="timelineBackgroundColor"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<Typography.InspectorControls
+				{ ...props }
+				hasTextTag={ false }
+				isMultiline={ true }
+				initialOpen={ false }
+				hasTextShadow={ true }
+			/>
+			<InspectorLayoutControls>
+				<ControlSeparator />
+			</InspectorLayoutControls>
+			<ContentAlign.InspectorControls />
+			<BlockDiv.InspectorControls hasContentVerticalAlign={ false } hasMinHeight={ false } />
+			<Advanced.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-timeline" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+		</>
+	)
+} )
 
 export default compose(
 	withBlockWrapperIsHovered,

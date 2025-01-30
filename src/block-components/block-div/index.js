@@ -1,7 +1,7 @@
 import './deprecated'
 import { addAttributes } from './attributes'
 import { createUniqueClass, useUniqueId } from './use-unique-id'
-import { Style } from './style'
+import { addStyles } from './style'
 import { Edit } from './edit'
 import { firefoxHasPolyfill } from './firefox-has-polyfill'
 
@@ -9,6 +9,7 @@ import classnames from 'classnames/dedupe'
 import { Div } from '~stackable/components'
 import { useVariationPicker } from '~stackable/hooks'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
+import { memo } from '@wordpress/element'
 
 import { useBlockProps } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
@@ -19,7 +20,7 @@ import { version as VERSION } from 'stackable'
 export { useUniqueId }
 export { deprecateBlockBackgroundColorOpacity, deprecateBlockShadowColor } from './deprecated'
 
-export const BlockDiv = props => {
+export const BlockDiv = memo( props => {
 	const {
 		className,
 		applyCustomAttributes,
@@ -96,7 +97,7 @@ export const BlockDiv = props => {
 		{ props.children }
 		{ firefoxHasPolyfill( clientId, attributes ) }
 	</Div>
-}
+} )
 
 BlockDiv.defaultProps = {
 	className: '',
@@ -174,4 +175,4 @@ BlockDiv.InspectorControls = Edit
 
 BlockDiv.addAttributes = addAttributes
 
-BlockDiv.Style = Style
+BlockDiv.addStyles = addStyles
