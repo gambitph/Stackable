@@ -1,9 +1,9 @@
 export const substitute = {
-	from: 'stackable/count-up',
+	from: 'stackable/number-box',
 	to: 'core/paragraph',
 	transform: oldAttributes => {
 		return {
-			fontSize: 'x-large',
+			fontSize: 'xx-large',
 			content: oldAttributes.text,
 			align: oldAttributes.contentAlign,
 			style: { spacing: { margin: { top: '0', bottom: '0' } } },
