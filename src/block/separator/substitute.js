@@ -1,5 +1,5 @@
 export const substitute = {
-	from: 'stackable/divider',
+	from: 'stackable/separator',
 	transform: () => {
 		return [
 			'core/separator',
