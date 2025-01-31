@@ -256,6 +256,47 @@ const Controls = props => {
 						}
 						return ''
 					} )() }
+					onChangeUnit={ ( unit, attributeName, oldUnit ) => {
+						// When the unit is changed, we need to adjust the width
+						// so that the image does not get distorted.
+						if ( isImageBlock && deviceType === 'Desktop' ) {
+							// Switching from % to px
+							if ( oldUnit === '%' && unit === 'px' ) {
+								// If image is too small, use the original image width
+								if ( imageBlockWidth && attributes.imageWidthAttribute < imageBlockWidth ) {
+									return setAttributes( {
+										imageWidth: attributes.imageWidthAttribute,
+										[ attributeName ]: unit,
+									} )
+								}
+								// If the width is larger than the block width, reset to 100% / width of block
+								if ( attributes.imageWidth === '' ) {
+									return setAttributes( {
+										imageWidth: imageBlockWidth,
+										[ attributeName ]: unit,
+									} )
+								}
+							// Switching from px to %
+							} else if ( oldUnit === 'px' && unit === '%' ) {
+								// If the image is larger than the block width, reset to 100%
+								if ( imageBlockWidth && attributes.imageWidthAttribute > imageBlockWidth ) {
+									return setAttributes( {
+										imageWidth: '',
+										[ attributeName ]: unit,
+									} )
+								}
+								// If image goes past 100$, reset to 100%
+								if ( attributes.imageWidth > 100 ) {
+									return setAttributes( {
+										imageWidth: '',
+										[ attributeName ]: unit,
+									} )
+								}
+							}
+						}
+						// Normal saving behavior.
+						setAttributes( { [ attributeName ]: unit } )
+					} }
 					responsive="all"
 					onOverrideReset={ () => {
 						// When resetting and in desktop, adjust the width so that we get the right "reset" value. Logic:

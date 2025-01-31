@@ -147,13 +147,18 @@ const AdvancedControl = props => {
 
 	const unit = props.unit ? props.unit : unitAttribute
 	const setAttributes = useBlockSetAttributesContext()
-	const onChangeUnit = unit => setAttributes( { [ unitAttrName ]: unit } )
+	const onChangeUnit = unit => {
+		if ( props.onChangeUnit ) {
+			return props.onChangeUnit( unit, unitAttrName, unitAttribute )
+		}
+		setAttributes( { [ unitAttrName ]: unit } )
+	}
 
 	return (
 		<BaseControl
 			{ ...props }
 			unit={ unit }
-			onChangeUnit={ props.onChangeUnit || onChangeUnit }
+			onChangeUnit={ onChangeUnit }
 		/>
 	)
 }
