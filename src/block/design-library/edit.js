@@ -38,13 +38,17 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 	// Recursively substitute core blocks to disabled Stackable blocks
 	const traverseBlocksAndSubstitute = blocks => {
 		return blocks.map( block => {
-			if ( block[ 2 ] && block[ 2 ].length > 0 ) {
-				block[ 2 ] = traverseBlocksAndSubstitute( block[ 2 ] )
-			}
+			let isDisabled = true
 
 			// Check if the new substituted block is still disabled
-			while ( block[ 0 ] in disabledBlocks && disabledBlocks[ block[ 0 ] ] === BLOCK_STATE.DISABLED ) {
+			while ( isDisabled ) {
 				block = substituteCoreIfDisabled( ...block, substitutionRules )
+				isDisabled = block[ 0 ] in disabledBlocks && disabledBlocks[ block[ 0 ] ] === BLOCK_STATE.DISABLED
+			}
+
+			// Do a preorder traversal by subsituting first before traversing
+			if ( block[ 2 ] && block[ 2 ].length > 0 ) {
+				block[ 2 ] = traverseBlocksAndSubstitute( block[ 2 ] )
 			}
 
 			if ( ! Array.isArray( block[ 2 ] ) ) {
