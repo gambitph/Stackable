@@ -40,17 +40,19 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 	const traverseBlocksAndSubstitute = blocks => {
 		return blocks.map( block => {
 			let isDisabled = true
+			// Maximum attempt to error if no substitution rule for the block
+			let attempts = 10
 
 			// Check if the new substituted block is still disabled
-			while ( isDisabled ) {
+			while ( isDisabled && attempts > 0 ) {
 				const previousBlockName = block[ 0 ]
 				block = substituteCoreIfDisabled( ...block, substitutionRules )
 				isDisabled = block[ 0 ] in disabledBlocks && disabledBlocks[ block[ 0 ] ] === BLOCK_STATE.DISABLED
-
 				// If the previous block is different from the new block, substitution has been made
 				if ( ! hasSubstituted && previousBlockName !== block[ 0 ] ) {
 					hasSubstituted = true
 				}
+				attempts--
 			}
 
 			// Do a preorder traversal by subsituting first before traversing

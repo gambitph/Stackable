@@ -4,8 +4,8 @@ export const substitute = {
 		return [
 			'core/paragraph',
 			{
-				content: oldAttributes.text,
-				align: oldAttributes.contentAlign,
+				content: oldAttributes?.text,
+				align: oldAttributes?.contentAlign,
 			},
 		]
 	},
