@@ -23,8 +23,9 @@ import {
 	Button, Dashicon, ResizableBox,
 } from '@wordpress/components'
 import {
-	useState, useEffect, memo, useRef,
+	useState, useEffect, memo, useRef, useMemo,
 } from '@wordpress/element'
+import { select } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 
 const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
@@ -81,6 +82,12 @@ const Image = memo( props => {
 	const [ currentWidth, setCurrentWidth ] = useState()
 	const [ imageWidthIsTooSmall, setImageWidthIsTooSmall ] = useState( false )
 	const imageRef = useRef()
+	const wrapperRef = useRef()
+
+	const { clientId } = useBlockEditContext()
+	const isImageBlock = useMemo( () => {
+		return select( 'core/block-editor' ).getBlockName( clientId ) === 'stackable/image'
+	}, [ clientId ] )
 
 	// Used to fix issue with Resizable where height in % doesn't show while resizing.
 	// @see https://github.com/bokuweb/re-resizable/issues/442
@@ -262,7 +269,7 @@ const Image = memo( props => {
 					} }
 				/>
 			) }
-			<div className="stk-img-resizer-wrapper">
+			<div className="stk-img-resizer-wrapper" ref={ wrapperRef }>
 				<img
 					ref={ imageRef }
 					onLoad={ () => setHasImageError( false ) }
@@ -291,6 +298,29 @@ const Image = memo( props => {
 							url = image.sizes[ currentSelectedSize ].url
 							width = image.sizes[ currentSelectedSize ].width
 							height = image.sizes[ currentSelectedSize ].height
+						}
+
+						// If the image being selected is smaller than the
+						// current width of the image block, don't use 100%
+						// because the image will look blurry, instead use the
+						// actual width.
+						if ( isImageBlock && imageRef.current && ! props.hasManuallyChangedDimensions ) {
+							// When the image gets reset, we need to also reset
+							// the width unit to '' so that when we add another
+							// image, the image would not be small
+							props.onChangeSize( {
+								width: '',
+								widthUnit: '%',
+							} )
+							// We need the width of the image block to compare
+							const imageBlockWidth = wrapperRef.current.parentElement?.parentElement?.clientWidth ||
+								wrapperRef.current.clientWidth
+							if ( width < imageBlockWidth ) {
+								props.onChangeSize( {
+									width,
+									widthUnit: 'px',
+								} )
+							}
 						}
 
 						props.onChange( {
