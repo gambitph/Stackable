@@ -7,12 +7,12 @@ test( 'Activating Stackable should redirect to the Getting Started Page', async 
 	await admin.visitAdminPage( 'plugins.php' )
 
 	// Deactivate Stackable
-	const deactivate = page.locator( '#deactivate-stackable-ultimate-gutenberg-blocks' )
+	const deactivate = page.getByLabel( 'Deactivate Stackable -' )
 	await expect( deactivate ).toBeVisible()
 	await deactivate.click()
 
 	// Activate Stackable
-	const activate = page.locator( '#activate-stackable-ultimate-gutenberg-blocks' )
+	const activate = page.getByLabel( 'Activate Stackable -' )
 	await expect( activate ).toBeVisible()
 	await activate.click()
 
