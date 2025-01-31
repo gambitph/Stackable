@@ -46,6 +46,7 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 				const previousBlockName = block[ 0 ]
 				block = substituteCoreIfDisabled( ...block, substitutionRules )
 				isDisabled = block[ 0 ] in disabledBlocks && disabledBlocks[ block[ 0 ] ] === BLOCK_STATE.DISABLED
+
 				// If the previous block is different from the new block, substitution has been made
 				if ( ! hasSubstituted && previousBlockName !== block[ 0 ] ) {
 					hasSubstituted = true
@@ -64,7 +65,8 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 		} )
 	}
 
-	innerBlocks = traverseBlocksAndSubstitute( innerBlocks )
+	// Substitute from the root of the design
+	[ blockName, attributes, innerBlocks ] = traverseBlocksAndSubstitute( [ [ blockName, attributes, innerBlocks ] ] )[ 0 ]
 
 	if ( hasSubstituted ) {
 		// eslint-disable-next-line no-alert
