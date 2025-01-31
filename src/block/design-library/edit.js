@@ -34,6 +34,7 @@ import { useBlockProps } from '@wordpress/block-editor'
 // Replaces the current block with a block made out of attributes.
 const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design ) => {
 	const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
+	let hasSubstituted = false
 
 	// Recursively substitute core blocks to disabled Stackable blocks
 	const traverseBlocksAndSubstitute = blocks => {
@@ -42,8 +43,13 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 
 			// Check if the new substituted block is still disabled
 			while ( isDisabled ) {
+				const previousBlockName = block[ 0 ]
 				block = substituteCoreIfDisabled( ...block, substitutionRules )
 				isDisabled = block[ 0 ] in disabledBlocks && disabledBlocks[ block[ 0 ] ] === BLOCK_STATE.DISABLED
+				// If the previous block is different from the new block, substitution has been made
+				if ( ! hasSubstituted && previousBlockName !== block[ 0 ] ) {
+					hasSubstituted = true
+				}
 			}
 
 			// Do a preorder traversal by subsituting first before traversing
@@ -59,6 +65,11 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 	}
 
 	innerBlocks = traverseBlocksAndSubstitute( innerBlocks )
+
+	if ( hasSubstituted ) {
+		// eslint-disable-next-line no-alert
+		alert( 'Notice: Disabled blocks in the design will be substituted with other Stackable or core blocks' )
+	}
 
 	// const { replaceBlock } = dispatch( 'core/block-editor' )
 
