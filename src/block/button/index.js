@@ -11,6 +11,7 @@ import schema from './schema'
 import metadata from './block.json'
 import transforms from './transforms'
 import deprecated from './deprecated'
+import substitute from './substitute'
 
 /**
  * External dependencies
@@ -36,4 +37,5 @@ export const settings = {
 	example,
 	edit,
 	save,
+	substitute,
 }

@@ -19,5 +19,6 @@
 		"stackable/tab-content"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "hidden"
+	"stk-type": "hidden",
+	"stk-available-states": [ "enabled", "hidden" ]
 }

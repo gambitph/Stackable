@@ -2,7 +2,11 @@
  * Internal dependencies
  */
 import previewImage from './images/preview.jpg'
-import { i18n, srcUrl } from 'stackable'
+import {
+	i18n,
+	srcUrl,
+	settings,
+} from 'stackable'
 import {
 	Button,
 	ModalDesignLibrary,
@@ -11,6 +15,8 @@ import { SVGStackableIcon } from '~stackable/icons'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
 } from '~stackable/block-components'
+import { substituteCoreIfDisabled, BLOCK_STATE } from '~stackable/util'
+import { substitutionRules } from '../../blocks'
 
 /**
  * WordPress dependencies
@@ -18,7 +24,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { dispatch } from '@wordpress/data'
 import {
-	createBlock, parse, createBlocksFromInnerBlocksTemplate, getBlockVariations,
+	createBlock, parse, createBlocksFromInnerBlocksTemplate, getBlockVariations, getBlockType,
 } from '@wordpress/blocks'
 import { useState } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
@@ -27,6 +33,48 @@ import { useBlockProps } from '@wordpress/block-editor'
 
 // Replaces the current block with a block made out of attributes.
 const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design ) => {
+	const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
+	let hasSubstituted = false
+
+	// Recursively substitute core blocks to disabled Stackable blocks
+	const traverseBlocksAndSubstitute = blocks => {
+		return blocks.map( block => {
+			let isDisabled = true
+			// Maximum attempt to error if no substitution rule for the block
+			let attempts = 10
+
+			// Check if the new substituted block is still disabled
+			while ( isDisabled && attempts > 0 ) {
+				const previousBlockName = block[ 0 ]
+				block = substituteCoreIfDisabled( ...block, substitutionRules )
+				isDisabled = block[ 0 ] in disabledBlocks && disabledBlocks[ block[ 0 ] ] === BLOCK_STATE.DISABLED
+				// If the previous block is different from the new block, substitution has been made
+				if ( ! hasSubstituted && previousBlockName !== block[ 0 ] ) {
+					hasSubstituted = true
+				}
+				attempts--
+			}
+
+			// Do a preorder traversal by subsituting first before traversing
+			if ( block[ 2 ] && block[ 2 ].length > 0 ) {
+				block[ 2 ] = traverseBlocksAndSubstitute( block[ 2 ] )
+			}
+
+			if ( ! Array.isArray( block[ 2 ] ) ) {
+				block[ 2 ] = []
+			}
+			return block
+		} )
+	}
+
+	// Substitute from the root of the design
+	[ blockName, attributes, innerBlocks ] = traverseBlocksAndSubstitute( [ [ blockName, attributes, innerBlocks ] ] )[ 0 ]
+
+	if ( hasSubstituted ) {
+		// eslint-disable-next-line no-alert
+		alert( 'Notice: Disabled blocks in the design will be substituted with other Stackable or core blocks' )
+	}
+
 	// const { replaceBlock } = dispatch( 'core/block-editor' )
 
 	// For wireframes, we'll need to apply any default block attributes to
@@ -44,9 +92,9 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 			blocks.forEach( block => {
 				const blockName = block[ 0 ]
 
-				// For blocks with varitions, do not remove the uniqueId
+				// For blocks with variations, do not remove the uniqueId
 				// since that will prompt the layout picker to show.
-				const hasVariations = getBlockVariations( blockName ).length > 0
+				const hasVariations = !! getBlockType( blockName ) && getBlockVariations( blockName ).length > 0
 				if ( ! hasVariations && block[ 1 ].uniqueId ) {
 					delete block[ 1 ].uniqueId
 				}
@@ -62,13 +110,16 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 
 	// Recursively update the attributes of all inner blocks for the new Color Picker
 	const migrateToNewColorPicker = blocks => {
-		blocks.forEach( block => {
-			let newAttributes = block[ 1 ]
-			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
-			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
-			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
-			block[ 1 ] = newAttributes
-			migrateToNewColorPicker( block[ 2 ] )
+		blocks?.forEach( block => {
+			try {
+				let newAttributes = block[ 1 ]
+				newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+				newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+				newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+				block[ 1 ] = newAttributes
+				migrateToNewColorPicker( block[ 2 ] )
+			} catch ( error ) {
+			}
 		} )
 	}
 

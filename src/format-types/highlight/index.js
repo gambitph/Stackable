@@ -5,7 +5,7 @@ import {
 	ColorPaletteControl, AdvancedToolbarControl, Popover,
 } from '~stackable/components'
 import { whiteIfDarkBlackIfLight } from '~stackable/util'
-import { i18n } from 'stackable'
+import { i18n, settings } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -256,17 +256,19 @@ const HighlightButton = props => {
 	)
 }
 
-registerFormatType(
-	'stk/highlight', {
-		title: __( 'Highlight Text', i18n ),
-		tagName: 'span',
-		className: 'stk-highlight',
-		edit: HighlightButton,
-		attributes: {
-			style: 'style',
-		},
-	}
-)
+if ( settings.stackable_enable_text_highlight )	{
+	registerFormatType(
+		'stk/highlight', {
+			title: __( 'Highlight Text', i18n ),
+			tagName: 'span',
+			className: 'stk-highlight',
+			edit: HighlightButton,
+			attributes: {
+				style: 'style',
+			},
+		}
+	)
+}
 
 // Backward compatibility, ugb/highlight, but this is not visible.
 registerFormatType(

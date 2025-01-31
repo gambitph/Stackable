@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import blockData from './blocks'
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
@@ -11,7 +6,6 @@ import {
 	Component, useEffect, useState, Fragment,
 } from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
-import domReady from '@wordpress/dom-ready'
 import { Spinner } from '@wordpress/components'
 import { loadPromise, models } from '@wordpress/api'
 
@@ -19,14 +13,12 @@ import { loadPromise, models } from '@wordpress/api'
  * External dependencies
  */
 import {
-	v2disabledBlocks as disabledBlocks,
 	i18n,
 	v2nonce as nonce,
 } from 'stackable'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
-import { createRoot } from '~stackable/util/element'
 
-class BlockToggler extends Component {
+export class BlockToggler extends Component {
 	constructor() {
 		super( ...arguments )
 		this.toggleBlock = this.toggleBlock.bind( this )
@@ -81,7 +73,7 @@ class BlockToggler extends Component {
 	}
 
 	render() {
-		const { blocks: blockData } = this.props
+		const { blocks: blockData, searchedSettings: searchedSettings } = this.props
 
 		return (
 			<div>
@@ -105,6 +97,7 @@ class BlockToggler extends Component {
 							<AdminToggleSetting
 								key={ i }
 								label={ __( block.title, i18n ) } /* eslint-disable-line @wordpress/i18n-no-variables */
+								searchedSettings={ searchedSettings }
 								value={ ! isDisabled }
 								onChange={ () => this.toggleBlock( blockName ) }
 								size="small"
@@ -119,7 +112,7 @@ class BlockToggler extends Component {
 	}
 }
 
-const OptimizationSettings = () => {
+export const OptimizationSettings = ( { searchSettings } ) => {
 	const [ optimizeScriptLoad, setOptimizeScriptLoad ] = useState( false )
 
 	useEffect( () => {
@@ -140,6 +133,7 @@ const OptimizationSettings = () => {
 	return <Fragment>
 		<AdminToggleSetting
 			label={ __( 'Frontend JS & CSS Files', i18n ) }
+			searchSettings={ searchSettings }
 			value={ optimizeScriptLoad }
 			onChange={ updateOptimizeScriptLoad }
 			disabled={ __( 'Load across entire site', i18n ) }
@@ -147,18 +141,3 @@ const OptimizationSettings = () => {
 		/>
 	</Fragment>
 }
-
-// Load all the options into the UI.
-domReady( () => {
-	if ( document.querySelector( '.s-settings-wrapper-v2' ) ) {
-		createRoot( document.querySelector( '.s-settings-wrapper-v2' ) ).render(
-			<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />
-		)
-	}
-
-	if ( document.querySelector( '.s-optimization-settings' ) ) {
-		createRoot( document.querySelector( '.s-optimization-settings' ) ).render(
-			<OptimizationSettings />
-		)
-	}
-} )

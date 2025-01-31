@@ -41,7 +41,9 @@ import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters, addFilter } from '@wordpress/hooks'
-import { memo } from '@wordpress/element'
+import {
+	memo, useState, useEffect,
+} from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 
 const heightUnit = [ 'px', 'vh', '%' ]
@@ -55,7 +57,6 @@ const Edit = props => {
 	const figcaptionClassnames = classnames(
 		getTypographyClasses( props.attributes, 'figcaption%s' ),
 		'stk-img-figcaption'
-
 	)
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -78,6 +79,14 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
+	// This is used to track whether or not the user has manually changed the
+	// dimensions of the image.  If not, then when the user changes the image
+	// size, the dimensions will be automatically calculated.
+	const [ hasManuallyChangedDimensions, setHasManuallyChangedDimensions ] = useState( !! props.attributes.imageWidth )
+	useEffect( () => {
+		setHasManuallyChangedDimensions( !! props.attributes.imageWidth )
+	}, [ props.attributes.imageWidth ] )
+
 	// Generate the CSS styles for the block.
 	const blockCss = useBlockCssGenerator( {
 		attributes: props.attributes,
@@ -91,7 +100,10 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorControls enableLink={ enableLink } />
+			<InspectorControls
+				enableLink={ enableLink }
+				hasManuallyChangedDimensions={ hasManuallyChangedDimensions }
+			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
 			<CustomCSS mainBlockClass="stk-block-image" />
@@ -107,6 +119,7 @@ const Edit = props => {
 					heightUnits={ heightUnit }
 					defaultWidth="100"
 					defaultHeight="auto"
+					hasManuallyChangedDimensions={ hasManuallyChangedDimensions }
 				/>
 				{ props.attributes.figcaptionShow &&
 					<Typography
@@ -132,6 +145,7 @@ const InspectorControls = memo( props => {
 				initialOpen={ true }
 				heightUnits={ heightUnit }
 				hasLightbox
+				hasManuallyChangedDimensions={ props.hasManuallyChangedDimensions }
 			/>
 			{ props.enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
 			<BlockDiv.InspectorControls />

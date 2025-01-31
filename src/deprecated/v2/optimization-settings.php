@@ -35,7 +35,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 				}
 
 				// Add the optimization setting.
-				add_action( 'stackable_settings_page_mid', array( $this, 'add_optimization_settings' ) );
+				// add_action( 'stackable_settings_page_mid', array( $this, 'add_optimization_settings' ) );
 			}
 		}
 

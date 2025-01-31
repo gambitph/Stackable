@@ -32,17 +32,20 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		public function register_settings() {
 			register_setting(
 				'stackable_editor_settings',
-				'stackable_disabled_blocks',
+				'stackable_block_states',
+				// Use an object to store the block names as keys and the value that represents if disabled or hidden.
+				// Enabled blocks are not stored in the object to save memory.
 				array(
-					'type' => 'array',
+					'type' => 'object',
 					'description' => __( 'Blocks that should be hidden in the block editor', STACKABLE_I18N ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
-							'items' => array(
-								'type' => 'string',
-							)
-						)
+							'type' => 'object',
+							'additionalProperties' => array(
+								'type' => 'number',
+							),
+						),
 					),
 					'default' => array(),
 				)
@@ -122,6 +125,18 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 
 			register_setting(
 				'stackable_editor_settings',
+				'stackable_enable_global_settings',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Allow the configuration of global settings such as color palette, typography, and block defaults', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
 				'stackable_enable_block_linking',
 				array(
 					'type' => 'boolean',
@@ -154,7 +169,67 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'default' => true,
 				)
 			);
-			
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_text_highlight',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for highlighting text', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_dynamic_content',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for inserting dynamic content', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_copy_paste_styles',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for copying and pasting block styles', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_reset_layout',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for resetting the layout of a block', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_save_as_default_block',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Adds a toolbar button for saving the current block variation as the default block', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
 			register_setting(
 				'stackable_editor_settings',
 				'stackable_enable_text_default_block',
@@ -180,13 +255,20 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		 */
 		public function add_settings( $settings ) {
 			$settings['stackable_google_maps_api_key'] = get_option( 'stackable_google_maps_api_key' );
-			$settings['stackable_disabled_blocks'] = get_option( 'stackable_disabled_blocks' );
+			$settings['stackable_block_states'] = get_option( 'stackable_block_states' );
 			$settings['stackable_enable_design_library'] = get_option( 'stackable_enable_design_library' );
 			$settings['stackable_optimize_inline_css'] = get_option( 'stackable_optimize_inline_css' );
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
+			$settings['stackable_enable_global_settings'] = get_option( 'stackable_enable_global_settings' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
 			$settings['stackable_enable_carousel_lazy_loading'] = get_option( 'stackable_enable_carousel_lazy_loading' );
+			$settings['stackable_enable_text_highlight'] = get_option( 'stackable_enable_text_highlight' );
+			$settings['stackable_enable_dynamic_content'] = get_option( 'stackable_enable_dynamic_content' );
+			$settings['stackable_enable_copy_paste_styles'] = get_option( 'stackable_enable_copy_paste_styles' );
+			$settings['stackable_enable_reset_layout'] = get_option( 'stackable_enable_reset_layout' );
+			$settings['stackable_enable_save_as_default_block'] = get_option( 'stackable_enable_save_as_default_block' );
 			$settings['stackable_enable_text_default_block'] = get_option( 'stackable_enable_text_default_block' );
+
 			return $settings;
 		}
 

@@ -32,6 +32,8 @@ import {
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
+import { substituteCoreIfDisabled } from '~stackable/util'
+import { substitutionRules } from '../../blocks'
 
 /**
  * WordPress dependencies
@@ -49,9 +51,12 @@ export const TEMPLATE = [
 			text: __( 'Icon Box', i18n ), hasP: true, textTag: 'h4',
 		} ],
 	] ],
-	[ 'stackable/text', {
-		text: 'Description for this block. Use this space for describing your block.',
-	} ],
+	substituteCoreIfDisabled(
+		'stackable/text',
+		{ text: 'Description for this block.' },
+		[],
+		substitutionRules,
+	),
 ]
 
 const Edit = props => {

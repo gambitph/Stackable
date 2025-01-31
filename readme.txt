@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.4
 Tested up to: 6.7.1
 Requires PHP: 7.3
-Stable tag: 3.13.13
+Stable tag: 3.14.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -294,6 +294,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.14.0 =
+* New: Granular plugin settings - enhanced settings page for better control of plugin features #3354
+* New: Added option to use an empty alt tag in images #3376
+* Fixed: Image block - using small images no longer stretch #3239
+* Fixed: Image block - switching between % and px width now doesn't cause the image to be too small or too big #3268
+* Fixed: EWWW Image Optimizer compatibility - no longer causes blurry images #3296
 
 = 3.13.13 =
 * New: Icon Library (Premium feature) - you can now upload custom SVGs and re-use them for the Icon Block! #361 #3317

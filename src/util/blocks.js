@@ -13,7 +13,11 @@ import {
 	orderBy,
 	last,
 } from 'lodash'
-import { blockCategoryIndex, i18n } from 'stackable'
+import {
+	blockCategoryIndex,
+	i18n,
+	settings as stackableSettings,
+} from 'stackable'
 
 /**
  * WordPress dependencies
@@ -32,6 +36,15 @@ import {
 import { useMemo } from '@wordpress/element'
 import { BlockIcon } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * Enum for disabling and hiding blocks.
+ */
+export const BLOCK_STATE = Object.freeze( {
+	ENABLED: 1,
+	HIDDEN: 2,
+	DISABLED: 3,
+} )
 
 /**
  * Converts the registered block name into a block name string that can be used in hook names or ids.
@@ -503,4 +516,34 @@ export const registerBlockType = ( name, _settings ) => {
 
 	settings = applyFilters( `stackable.${ name.replace( 'stackable/', '' ) }.settings`, settings )
 	_registerBlockType( name, settings )
+}
+
+/**
+ * Substitutes a stackable block with an equivalent core block if the block is disabled.
+ *
+ * @param {string} blockName The block name
+ * @param {Object} blockAttributes The block attributes
+ * @param {Array} innerBlocks The children blocks
+ * @param {Object} substitutionRules The substitution rules for transforming from stackable to core blocks
+ *
+ * @return {Array} The resulting block definition
+ */
+export const substituteCoreIfDisabled = ( blockName, blockAttributes, innerBlocks, substitutionRules ) => {
+	const disabledBlocks = stackableSettings.stackable_block_states || {} // eslint-disable-line camelcase
+
+	if ( substitutionRules && blockName in substitutionRules ) {
+		const substitutionRule = substitutionRules[ blockName ]
+		// If a block have variants, let the the transform handle checking for disabled
+		if ( 'variants' in substitutionRule ) {
+			return substitutionRule.transform( blockAttributes, innerBlocks, disabledBlocks )
+		}
+		if ( blockName in disabledBlocks && disabledBlocks[ blockName ] === BLOCK_STATE.DISABLED ) { // eslint-disable-line camelcase
+			return substitutionRule.transform( blockAttributes, innerBlocks )
+		}
+	}
+
+	if ( innerBlocks ) {
+		return [ blockName, blockAttributes, innerBlocks ]
+	}
+	return [ blockName, blockAttributes, [] ]
 }

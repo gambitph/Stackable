@@ -6,7 +6,7 @@
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.13.13
+ * Version: 3.14.0
  *
  * @package Stackable
  */
@@ -24,7 +24,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
 defined( 'STACKABLE_BUILD' ) || define( 'STACKABLE_BUILD', 'free' );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.13.13' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.14.0' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://storage.googleapis.com/stackable-plugin-assets' ); // Design Library CDN URL
@@ -252,6 +252,7 @@ if ( ! is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block/columns/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block/timeline/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block/icon-label/deprecated.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/image/index.php' );
 }
 
 /**
@@ -278,6 +279,7 @@ if ( sugb_fs()->is__premium_only() ) {
 }
 
 // Deprecated.
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/editor-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/navigation-panel-pre-enabled.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/font-awesome-version.php' );

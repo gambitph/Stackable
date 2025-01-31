@@ -8,6 +8,11 @@
 	--stk-welcome-light-border: #d0d5dd;
 }
 
+// Make scroll smooth with inline navigation.
+html {
+	scroll-behavior: smooth;
+}
+
 // Clear out the margins of the admin page.
 
 body[class*="page_stackable"],
@@ -18,6 +23,10 @@ body[class*="page_stk-"] {
 	#wpbody-content > .wrap:not(#fs_connect) { // stylelint-disable-line selector-id-pattern
 		margin: 0;
 		padding: 0 50px;
+
+		&.wrap-settings {
+			padding: 0;
+		}
 	}
 }
 
@@ -30,6 +39,10 @@ body[class*="page_stk-"] {
 	margin-bottom: 40px;
 	border-bottom: 1px solid var(--stk-welcome-light-border);
 	font-weight: 300;
+
+	&.s-header-settings {
+		margin: 0;
+	}
 
 	.s-header {
 		padding: 0px;
@@ -152,8 +165,8 @@ body[class*="page_stk-"] {
 	margin-right: -50px;
 }
 .s-settings-subtitle {
-	width: 75%;
-	margin-bottom: 40px;
+	width: calc(95% - 250px);
+	margin: 0.5em 0 40px;
 }
 .s-settings-field,
 .ugb-admin-setting {
@@ -171,23 +184,6 @@ body[class*="page_stk-"] {
 			padding-right: 15px;
 			box-sizing: border-box;
 			flex-shrink: 0;
-		}
-
-		.s-settings-field__status {
-			width: 40px;
-			display: inline-block;
-			vertical-align: middle;
-			svg {
-				width: 18px;
-				height: 18px;
-				margin: 5px 11px 0;
-			}
-			.s-settings-field__status--check {
-				color: #27de6c;
-			}
-			.s-settings-field__status--cross {
-				color: #ff5a7f;
-			}
 		}
 	}
 	[type="text"],
@@ -209,7 +205,6 @@ body[class*="page_stk-"] {
 		}
 	}
 	p {
-		margin-left: var(--label-width);
 		font-style: italic;
 		margin-top: 4px;
 	}
@@ -227,12 +222,6 @@ body[class*="page_stk-"] {
 	.ugb-admin-setting {
 		margin: 0;
 	}
-}
-.s-icon-kit-settings-field > p {
-	margin-left: calc(var(--label-width) + 40px);
-}
-.s-icon-settings-fa-version .ugb-admin-setting__field {
-	margin-left: 40px;
 }
 .s-icon-settings-fa-pro-version .ugb-admin-setting__field p {
 	margin-left: 20px;
@@ -352,7 +341,18 @@ body[class*="page_stk-"] {
 .s-logo-logo + * > .s-tabs {
 	justify-content: center;
 }
-
+.ugb-admin-setting.s-block-setting:not(:last-child) {
+	margin-bottom: 32px;
+	padding-bottom: 0;
+}
+body.settings_page_stackable {
+	#wpwrap {
+		background: #fff;
+	}
+	.s-box {
+		box-shadow: none !important;
+	}
+}
 body.settings_page_stackable,
 body.settings_page_stackable-getting-started {
 	// Hide admin notices to not mess up the welcome screen.
@@ -362,6 +362,12 @@ body.settings_page_stackable-getting-started {
 	// Hide admin notices in the Getting Started screen.
 	.s-body-container .updated {
 		display: none !important;
+	}
+	#wpfooter {
+		display: none;
+	}
+	#wpbody-content {
+		padding-bottom: 0;
 	}
 }
 body.settings_page_stackable,
@@ -378,11 +384,10 @@ body.toplevel_page_stk-custom-fields {
 		background-color: #fff;
 		border-radius: 0;
 		overflow: hidden;
-		padding: 60px 35px;
+		padding: 30px;
 		overflow: visible;
 		box-shadow: 0 18px 35px -15px rgba(18, 63, 82, 0.25);
 		border: 0;
-		margin-bottom: 30px;
 		transition: all 0.3s ease;
 		position: relative;
 		&.s-box-spaced {
@@ -396,6 +401,9 @@ body.toplevel_page_stk-custom-fields {
 			h3 {
 				color: #f34957;
 			}
+		}
+		&.s-box-hidden {
+			display: none;
 		}
 	}
 	.s-absolute-spinner {
@@ -476,11 +484,171 @@ body.toplevel_page_stk-custom-fields {
 			margin-bottom: 0 !important;
 		}
 	}
-	.s-body-container-grid {
+	#settings-content {
+		position: relative;
 		display: grid;
-		grid-template-columns: 1fr 350px;
-		grid-gap: 30px;
+		grid-template-columns: 250px 1fr;
 	}
+	.s-sidenav {
+		min-height: 90vh;
+		width: 250px;
+		left: 0;
+		background-color: #fff;
+		padding-top: 20px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		box-shadow: inset 0 -18px 35px -15px #123f5240;
+		z-index: 1;
+		> * {
+			position: sticky;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			top: 50px;
+		}
+		+ .s-box {
+			padding-bottom: 200px;
+		}
+		.s-sidenav-item {
+			color: #444;
+			font-size: 14px;
+			padding: 15px 20px;
+			text-decoration: none;
+			display: block;
+			position: relative;
+			width: 100%;
+			text-align: left;
+			background: none;
+			border: none;
+			transition: background-color 0.3s ease;
+			cursor: pointer;
+			&:hover {
+				color: var(--stk-welcome-primary) !important;
+			}
+			&.s-active {
+				font-weight: 600;
+				color: var(--stk-welcome-primary) !important;
+				transition: color 0.3s ease;
+				background: #f1f1f1;
+				&::after {
+					content: "";
+					position: absolute;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					width: 4px;
+					background-color: var(--stk-welcome-primary);
+					transition: width 0.3s ease;
+				}
+			}
+			&.s-sidenav-item-highlight {
+				font-weight: bold;
+			}
+		}
+		// Fade out the non-highlighted items.
+		.s-sidenav-item:has(~ .s-sidenav-item-highlight):not(.s-active):not(.s-sidenav-item-highlight),
+		.s-sidenav-item-highlight ~ .s-sidenav-item:not(.s-sidenav-item-highlight):not(.s-active) {
+			opacity: 0.3;
+		}
+		.s-save-changes-wrapper {
+			bottom: 0;
+			padding: 20px;
+			flex: 1 0 auto;
+			display: flex;
+			flex-direction: column;
+			justify-content: end;
+		}
+		.s-save-changes-inner-wrapper {
+			bottom: 20px;
+			display: inline-block;
+			position: sticky;
+		}
+		// This is a button, render this in the bottom of the side bar
+		// The side bar is a flex container, so this will be at the bottom.
+		.s-save-changes {
+			background: linear-gradient(135deg, #b300be, #f00069);
+			width: 100%;
+			margin: 0;
+			transition: all 0.1s ease-in-out;
+			text-decoration: none;
+			border: none;
+			color: #fff;
+			padding: 12px 20px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-size: 14px;
+			cursor: pointer;
+			box-sizing: border-box !important;
+			min-height: 55px;
+			&:hover {
+				opacity: 0.85;
+				box-shadow: none !important;
+			}
+			&:not(.s-button-has-unsaved-changes) {
+				filter: saturate(0);
+			}
+		}
+		.s-save-changes-note {
+			top: -30px;
+			position: absolute;
+			display: block;
+			right: 0;
+			left: 0;
+			text-align: center;
+		}
+	}
+	.s-search-setting {
+		display: flex;
+		justify-content: end;
+		position: absolute;
+		right: 30px;
+		.s-search-setting__input {
+			margin: 0;
+			padding: 0.5em 1em;
+			width: 250px;
+		}
+	}
+
+	.ugb-admin-setting--not-highlight {
+		display: none;
+	}
+
+	.components-base-control--not-highlight {
+		display: none;
+	}
+
+	.s-confirm-modal {
+		.components-button {
+			--wp-admin-theme-color: #f00069;
+			--wp-admin-theme-color-darker-10: #c40056;
+		}
+	}
+
+	.s-setting-group {
+		padding-bottom: 32px;
+		padding-top: 32px;
+		&:not(:last-child) {
+			border-bottom: 1px solid #eaecf0;
+		}
+		&:first-child {
+			padding-top: 0;
+			h2 {
+				margin-top: 0;
+			}
+		}
+		h2 {
+			font-size: 1.6em;
+			margin: 1em 0 0.5em;
+		}
+	}
+
+	.s-v2-settings {
+		&.s-settings-hide {
+			display: none;
+		}
+	}
+
 	.s-side {
 		h2,
 		h3 {
@@ -509,11 +677,19 @@ body.toplevel_page_stk-custom-fields {
 		}
 	}
 	.stackable_notice_wrapper {
-		outline: 2px solid #f00069;
-		margin-bottom: 30px;
+		// outline: 2px solid #f00069;
+		margin: 0;
+		padding: 20px;
+		background: #e9ebee;
 	}
 	.stackable_notice {
 		margin-bottom: 35px;
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+	#editor-settings {
+		margin-bottom: 0;
 	}
 	.s-settings-header {
 		text-align: right;
@@ -527,7 +703,7 @@ body.toplevel_page_stk-custom-fields {
 	}
 	.s-settings-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 		grid-gap: 64px;
 		grid-row-gap: 24px;
 		.s-box {
@@ -550,7 +726,7 @@ body.toplevel_page_stk-custom-fields {
 	.s-box-block__title {
 		display: flex;
 		align-items: center;
-		margin: -32px 12px 0 -8px !important;
+		margin: -32px 12px 32px -8px !important;
 		svg {
 			padding: 20px;
 			border-radius: 100%;
@@ -703,8 +879,8 @@ body.toplevel_page_stk-custom-fields {
 	grid-template-columns: 1fr 1fr 1fr;
 }
 
-// Collapse to a single column for mobile.
 @media screen and (max-width: 960px) {
+	// Collapse to a single column for mobile.
 	.s-body-container {
 		grid-template-columns: 1fr !important;
 	}
@@ -732,12 +908,8 @@ body.toplevel_page_stk-custom-fields {
 		margin-top: 0;
 		margin-left: 32px;
 	}
-	h3 {
-		margin-top: 2em;
-	}
 	p {
 		margin-bottom: 2em;
-		margin-top: -0.5em;
 	}
 }
 

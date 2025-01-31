@@ -32,10 +32,11 @@ import { getAttributeName } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import { useSelect } from '@wordpress/data'
+import { useSelect, select } from '@wordpress/data'
 import { _x, __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 // Note: image drop shadows do not accept negative spread.
 const IMAGE_SHADOWS = [
@@ -60,6 +61,7 @@ const Controls = props => {
 			imageHeightUnit: attributes.imageHeightUnit,
 			imageWidth: attributes.imageWidth,
 			imageHeight: attributes.imageHeight,
+			imageWidthAttribute: attributes.imageWidthAttribute,
 			imageHeightTablet: attributes[ getAttributeName( 'imageHeight', 'tablet' ) ],
 			imageHeightMobile: attributes[ getAttributeName( 'imageHeight', 'mobile' ) ],
 			imageHasLightbox: attributes.imageHasLightbox,
@@ -77,6 +79,24 @@ const Controls = props => {
 	} )
 	const setAttributes = useBlockSetAttributesContext()
 	const deviceType = useDeviceType()
+
+	// Get the width of the image block, this is needed for resizing the image
+	// when replacing, and for resetting the width.
+	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
+	const { clientId } = useBlockEditContext()
+	const editorDom = getEditorDom?.() || undefined
+	const isImageBlock = useMemo( () => {
+		return select( 'core/block-editor' ).getBlockName( clientId ) === 'stackable/image'
+	}, [ clientId ] )
+	const imageBlockWidth = useMemo( () => {
+		if ( editorDom ) {
+			if ( isImageBlock ) {
+				const blockEl = editorDom.querySelector( `[data-block="${ clientId }"]` )
+				return blockEl?.clientWidth || undefined
+			}
+		}
+		return undefined
+	}, [ editorDom, isImageBlock, clientId ] )
 
 	// Get the image size urls.
 	const { imageData } = useSelect( select => {
@@ -117,6 +137,8 @@ const Controls = props => {
 						imageUrl: '',
 						imageWidthAttribute: '',
 						imageHeightAttribute: '',
+						imageWidthUnit: '',
+						imageHeightUnit: '',
 					} ) }
 					onChange={ image => {
 						// Get the URL of the currently selected image size.
@@ -131,14 +153,34 @@ const Controls = props => {
 							height = image.sizes?.[ currentSelectedSize ]?.height || height || ''
 							width = image.sizes?.[ currentSelectedSize ]?.width || width || ''
 						}
-						setAttributes( {
+
+						const newAttributes = {
 							imageId: image.id,
 							imageUrl: url,
 							imageWidthAttribute: width,
 							imageHeightAttribute: height,
 							imageExternalUrl: '',
 							...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only set the alt if it's empty.
-						} )
+						}
+
+						// If the image being selected is smaller than the
+						// current width of the image block, don't use 100%
+						// because the image will look blurry, instead use the
+						// actual width.
+						if ( isImageBlock && imageBlockWidth && ! props.hasManuallyChangedDimensions ) {
+							// When the image gets reset, we need to also reset
+							// the width unit to '%' so that when we add another
+							// image, the image would not be small
+							newAttributes.imageWidth = ''
+							newAttributes.imageWidthUnit = '%'
+							// We need the width of the image block to compare
+							if ( width < imageBlockWidth ) {
+								newAttributes.imageWidth = width
+								newAttributes.imageWidthUnit = 'px'
+							}
+						}
+
+						setAttributes( newAttributes )
 					} }
 				/>
 			) }
@@ -200,8 +242,90 @@ const Controls = props => {
 					step={ props.widthStep }
 					initialPosition={ 100 }
 					allowReset={ true }
-					placeholder="250" // TODO: This should be referenced somewher instead of just a static number
+					// placeholder="250" // TODO: This should be referenced somewher instead of just a static number
+					placeholder="auto"
+					// Add a default value here so that the reset button will not appear.
+					default={ ( () => {
+						// We follow the logic in the override reset.
+						if ( isImageBlock && deviceType === 'Desktop' ) {
+							if ( attributes.imageWidthUnit === 'px' ) {
+								if ( imageBlockWidth && attributes.imageWidthAttribute < imageBlockWidth ) {
+									return attributes.imageWidthAttribute
+								}
+							}
+						}
+						return ''
+					} )() }
+					onChangeUnit={ ( unit, attributeName, oldUnit ) => {
+						// When the unit is changed, we need to adjust the width
+						// so that the image does not get distorted.
+						if ( isImageBlock && deviceType === 'Desktop' ) {
+							// Switching from % to px
+							if ( oldUnit === '%' && unit === 'px' ) {
+								// If image is too small, use the original image width
+								if ( imageBlockWidth && attributes.imageWidthAttribute < imageBlockWidth ) {
+									return setAttributes( {
+										imageWidth: attributes.imageWidthAttribute,
+										[ attributeName ]: unit,
+									} )
+								}
+								// If the width is larger than the block width, reset to 100% / width of block
+								if ( attributes.imageWidth === '' ) {
+									return setAttributes( {
+										imageWidth: imageBlockWidth,
+										[ attributeName ]: unit,
+									} )
+								}
+							// Switching from px to %
+							} else if ( oldUnit === 'px' && unit === '%' ) {
+								// If the image is larger than the block width, reset to 100%
+								if ( imageBlockWidth && attributes.imageWidthAttribute > imageBlockWidth ) {
+									return setAttributes( {
+										imageWidth: '',
+										[ attributeName ]: unit,
+									} )
+								}
+								// If image goes past 100$, reset to 100%
+								if ( attributes.imageWidth > 100 ) {
+									return setAttributes( {
+										imageWidth: '',
+										[ attributeName ]: unit,
+									} )
+								}
+							}
+						}
+						// Normal saving behavior.
+						setAttributes( { [ attributeName ]: unit } )
+					} }
 					responsive="all"
+					onOverrideReset={ () => {
+						// When resetting and in desktop, adjust the width so that we get the right "reset" value. Logic:
+						// - If the width is in px and the width attribute is set, use the original image with
+						//   ...unless the image width is larger than the block width, then reset to 100%
+						// - If the width is in %, and the image is smaller than the block, reset to the 'px' width
+						//   ...or just reset to 100%
+						if ( isImageBlock && deviceType === 'Desktop' ) {
+							let newWidthAttribute = ''
+							if ( attributes.imageWidthUnit === 'px' ) {
+								if ( attributes.imageWidthAttribute ) {
+									newWidthAttribute = attributes.imageWidthAttribute
+								}
+								if ( imageBlockWidth && attributes.imageWidthAttribute > imageBlockWidth ) {
+									newWidthAttribute = ''
+									// We need to do a 'set attribute' here.
+									setAttributes( { imageWidthUnit: '%' } )
+								}
+							} else if ( attributes.imageWidthUnit === '%' ) {
+								if ( imageBlockWidth && attributes.imageWidthAttribute < imageBlockWidth ) {
+									newWidthAttribute = attributes.imageWidthAttribute
+									// We need to do a 'set attribute' here.
+									setAttributes( { imageWidthUnit: 'px' } )
+								}
+							}
+							// Returning a value here overrides the reset into the new value
+							return newWidthAttribute
+						}
+					} }
 					helpTooltip={ {
 						//TODO: Add a working video
 						title: __( 'Image width', i18n ),
@@ -241,6 +365,13 @@ const Controls = props => {
 					label={ __( 'Image Alt', i18n ) }
 					value={ attributes.imageAlt }
 					onChange={ imageAlt => setAttributes( { imageAlt } ) }
+				/>
+			) }
+
+			{ props.hasAlt && ! attributes.imageAlt && (
+				<AdvancedToggleControl
+					label={ __( 'Show Empty Alt Attribute', i18n ) }
+					attribute="imageShowEmptyAlt"
 				/>
 			) }
 

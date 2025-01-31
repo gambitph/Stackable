@@ -27,7 +27,15 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https://wpstackable.com/accordion-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/accordion-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/icon-label',
+					'stackable/heading',
+					'stackable/icon'
+				],
+				'stk-substitution-blocks' => [
+					'stackable/text'
+				]
 			],
 			'stackable/blockquote' => [
 				'api_version' => '3',
@@ -43,7 +51,13 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https://wpstackable.com/blockquote-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/blockquote-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/icon'
+				],
+				'stk-substitution-blocks' => [
+					'stackable/text'
+				]
 			],
 			'stackable/button' => [
 				'api_version' => '3',
@@ -65,7 +79,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'hidden',
-				'stk-demo' => 'https://wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-block-dependency' => 'stackable/button-group|button'
 			],
 			'stackable/button-group' => [
 				'api_version' => '3',
@@ -105,7 +120,10 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 						'description' => __( 'Add social buttons.', STACKABLE_I18N ),
 						'category' => 'stackable',
 						'stk-type' => 'special',
-						'stk-demo' => 'https://wpstackable.com/social-buttons-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+						'stk-demo' => 'https://wpstackable.com/social-buttons-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+						'stk-required-blocks' => [
+							'stackable/button-group|icon-button'
+						]
 					]
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
@@ -131,7 +149,13 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https://wpstackable.com/call-to-action-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/call-to-action-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-substitution-blocks' => [
+					'stackable/heading',
+					'stackable/text',
+					'stackable/button-group',
+					'stackable/button'
+				]
 			],
 			'stackable/card' => [
 				'api_version' => '3',
@@ -150,7 +174,14 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https://wpstackable.com/card-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/card-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-substitution-blocks' => [
+					'stackable/heading',
+					'stackable/text',
+					'stackable/subtitle',
+					'stackable/button-group',
+					'stackable/button'
+				]
 			],
 			'stackable/carousel' => [
 				'api_version' => '3',
@@ -198,7 +229,11 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'stackable/tab-content'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
-				'stk-type' => 'hidden'
+				'stk-type' => 'hidden',
+				'stk-available-states' => [
+					'enabled',
+					'hidden'
+				]
 			],
 			'stackable/columns' => [
 				'api_version' => '3',
@@ -221,7 +256,11 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',
-				'stk-demo' => 'https://wpstackable.com/columns-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/columns-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-available-states' => [
+					'enabled',
+					'hidden'
+				]
 			],
 			'stackable/count-up' => [
 				'api_version' => '3',
@@ -278,7 +317,11 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https://wpstackable.com/designs/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/designs/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-available-states' => [
+					'enabled',
+					'hidden'
+				]
 			],
 			'stackable/divider' => [
 				'api_version' => '3',
@@ -317,7 +360,11 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https://wpstackable.com/expand-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/expand-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/text',
+					'stackable/button-group|button'
+				]
 			],
 			'stackable/feature' => [
 				'api_version' => '3',
@@ -336,7 +383,16 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https://wpstackable.com/feature-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/feature-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/image'
+				],
+				'stk-substitution-blocks' => [
+					'stackable/heading',
+					'stackable/text',
+					'stackable/button-group',
+					'stackable/button'
+				]
 			],
 			'stackable/feature-grid' => [
 				'api_version' => '3',
@@ -355,7 +411,14 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https://wpstackable.com/feature-grid-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/feature-grid-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-substitution-blocks' => [
+					'stackable/image',
+					'stackable/heading',
+					'stackable/text',
+					'stackable/button-group',
+					'stackable/button'
+				]
 			],
 			'stackable/heading' => [
 				'api_version' => '3',
@@ -396,7 +459,13 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https://wpstackable.com/hero-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/hero-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-substitution-blocks' => [
+					'stackable/heading',
+					'stackable/text',
+					'stackable/button-group',
+					'stackable/button'
+				]
 			],
 			'stackable/horizontal-scroller' => [
 				'api_version' => '3',
@@ -454,7 +523,12 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https://wpstackable.com/icon-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/icon-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/icon-label',
+					'stackable/icon',
+					'stackable/heading'
+				]
 			],
 			'stackable/icon-button' => [
 				'api_version' => '3',
@@ -476,7 +550,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'hidden',
-				'stk-demo' => 'https://wpstackable.com/icon-button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/icon-button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-block-dependency' => 'stackable/button-group|icon-button'
 			],
 			'stackable/icon-label' => [
 				'api_version' => '3',
@@ -495,7 +570,11 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https://wpstackable.com/icon-label-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/icon-label-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/icon',
+					'stackable/heading'
+				]
 			],
 			'stackable/icon-list' => [
 				'api_version' => '3',
@@ -576,7 +655,16 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https://wpstackable.com/image-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/image-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/image',
+					'stackable/subtitle',
+					'stackable/icon'
+				],
+				'stk-substitution-blocks' => [
+					'stackable/heading',
+					'stackable/text'
+				]
 			],
 			'stackable/map' => [
 				'api_version' => '3',
@@ -619,7 +707,16 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https://wpstackable.com/notification-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/notification-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/icon'
+				],
+				'stk-substitution-blocks' => [
+					'stackable/heading',
+					'stackable/text',
+					'stackable/button-group',
+					'stackable/button'
+				]
 			],
 			'stackable/number-box' => [
 				'api_version' => '3',
@@ -693,7 +790,10 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https://wpstackable.com/price-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/price-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/text'
+				]
 			],
 			'stackable/pricing-box' => [
 				'api_version' => '3',
@@ -717,7 +817,18 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https://wpstackable.com/pricing-table-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/pricing-table-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/price',
+					'stackable/text',
+					'stackable/icon-list'
+				],
+				'stk-substitution-blocks' => [
+					'stackable/heading',
+					'stackable/subtitle',
+					'stackable/button-group',
+					'stackable/button'
+				]
 			],
 			'stackable/progress-bar' => [
 				'api_version' => '3',
@@ -916,7 +1027,15 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https://wpstackable.com/team-member-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/team-member-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-substitution-blocks' => [
+					'stackable/image',
+					'stackable/heading',
+					'stackable/subtitle',
+					'stackable/text',
+					'stackable/button-group',
+					'stackable/button'
+				]
 			],
 			'stackable/testimonial' => [
 				'api_version' => '3',
@@ -935,7 +1054,16 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https://wpstackable.com/testimonial-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/testimonial-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/image-box'
+				],
+				'stk-substitution-blocks' => [
+					'stackable/image',
+					'stackable/heading',
+					'stackable/subtitle',
+					'stackable/text'
+				]
 			],
 			'stackable/text' => [
 				'api_version' => '3',
@@ -995,7 +1123,11 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https://wpstackable.com/video-popup-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/video-popup-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+				'stk-required-blocks' => [
+					'stackable/icon',
+					'stackable/image'
+				]
 			]
 		);
 

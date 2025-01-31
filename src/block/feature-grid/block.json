@@ -10,5 +10,12 @@
 	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",
-	"stk-demo": "https://wpstackable.com/feature-grid-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+	"stk-demo": "https://wpstackable.com/feature-grid-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
+	"stk-substitution-blocks": [
+		"stackable/image",
+		"stackable/heading",
+		"stackable/text",
+		"stackable/button-group",
+		"stackable/button"
+	]
 }

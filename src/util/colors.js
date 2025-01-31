@@ -90,6 +90,9 @@ export const extractColor = value => {
  * @return {string} color in #RRGGBBAA format
  */
 export const colorOpacityToHexAplha = ( color, opacity ) => {
+	if ( ! color ) {
+		return ''
+	}
 	if ( color.startsWith( '#' ) ) {
 		// Get the first 6 hex digits.
 		const hex = color.slice( 0, 7 )

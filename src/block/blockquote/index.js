@@ -11,6 +11,7 @@ import save from './save'
 import schema from './schema'
 import example from './example'
 import deprecated from './deprecated'
+import substitute from './substitute'
 
 /**
  * External dependencies
@@ -40,4 +41,5 @@ export const settings = {
 	variations,
 	edit,
 	save,
+	substitute,
 }

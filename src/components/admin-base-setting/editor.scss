@@ -1,7 +1,6 @@
 .ugb-admin-setting:not(:last-child) {
 	padding-bottom: 32px;
-	border-bottom: 1px solid #eaecf0;
-	margin-bottom: 32px;
+	margin-bottom: 16px;
 	&.ugb-admin-setting--small {
 		padding-bottom: 10px;
 		margin-bottom: 10px;
@@ -16,9 +15,9 @@
 		}
 		.ugb-admin-setting__label {
 			width: auto !important;
+			flex-basis: 250px;
 		}
 		.ugb-admin-setting__field {
-			flex: 0;
 			white-space: nowrap;
 		}
 	}

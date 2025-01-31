@@ -102,7 +102,16 @@ const AdvancedRangeControl = props => {
 	// Important, the attribute type for this option should be a string.
 	const _onChange = value => {
 		const onChangeFunc = typeof props.onChange === 'undefined' ? onChange : props.onChange
-		onChangeFunc( props.isDynamic ? value.toString() : value )
+		let newValue = props.isDynamic ? value.toString() : value
+
+		// On reset, allow overriding the value.
+		if ( newValue === '' ) {
+			const overrideValue = props.onOverrideReset?.()
+			if ( typeof overrideValue !== 'undefined' ) {
+				newValue = overrideValue
+			}
+		}
+		onChangeFunc( newValue )
 	}
 
 	const derivedValue = typeof props.value === 'undefined' ? value : props.value
@@ -148,6 +157,7 @@ AdvancedRangeControl.defaultProps = {
 
 	value: undefined,
 	onChange: undefined,
+	onOverrideReset: undefined,
 	forcePlaceholder: false,
 }
 

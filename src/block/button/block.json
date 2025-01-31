@@ -13,5 +13,6 @@
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "hidden",
-	"stk-demo": "https://wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+	"stk-demo": "https://wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
+	"stk-block-dependency": "stackable/button-group|button"
 }

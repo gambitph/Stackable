@@ -15,6 +15,7 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import deprecated from './deprecated'
+import substitute from './substitute'
 
 export const settings = {
 	...metadata,
@@ -29,5 +30,6 @@ export const settings = {
 		align: [ 'center', 'wide', 'full' ],
 		spacing: true,
 	},
+	substitute,
 }
 

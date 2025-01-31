@@ -16,6 +16,7 @@ import metadata from './block.json'
 import variations from './variations'
 import deprecated from './deprecated'
 import { buttonExample } from './example'
+import substitute from './substitute'
 
 /**
  * WordPress dependencies
@@ -40,4 +41,5 @@ export const settings = {
 	example: buttonExample,
 	edit,
 	save,
+	substitute,
 }

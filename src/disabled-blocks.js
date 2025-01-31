@@ -1,40 +1,68 @@
 /**
- * Filter that modified the metadata of the blocks to disable blocks and
+ * Filter that modified the metadata of the blocks to hide blocks and
  * variations depending on the settings of the user.
  */
 import { settings } from 'stackable'
 import { addFilter } from '@wordpress/hooks'
-
-// Disable these blocks when the following variables are disabled. We need this
-// so that if a variation is disabled, we will no longer be able to add the
-// relevant block.
-const BLOCK_DEPENDENCIES = {
-	'stackable/icon-button': 'stackable/button-group|icon-button',
-	'stackable/button': 'stackable/button-group|button',
-}
+import {
+	BLOCK_STATE,
+	substituteCoreIfDisabled,
+} from '~stackable/util'
+import { substitutionRules } from './blocks'
+import { cloneDeep } from 'lodash'
 
 const getDefaultVariation = variations => {
 	return variations?.find( ( { isDefault } ) => isDefault )?.name
 }
 const getVariationsToRemove = ( disabledBlocks, blockName ) => {
-	return disabledBlocks.filter( disabledBlock => disabledBlock.startsWith( `${ blockName }|` ) )
-		.map( disabledBlock => disabledBlock.split( '|' )[ 1 ] )
+	const variations = []
+	for ( const block in disabledBlocks ) {
+		if ( block.startsWith( `${ blockName }|` ) ) {
+			variations.push( block.split( '|' )[ 1 ] )
+		}
+	}
+	return variations
+}
+
+// Traverse the innerblocks of a given block definition and substitute core blocks if disabled and whitelisted.
+const traverseBlocksAndSubstitute = ( blocks, whitelist ) => {
+	return blocks.map( block => {
+		let [ blockName, blockAttributes, innerBlocks ] = block
+
+		// If there are innerBlocks, recursively traverse them.
+		if ( innerBlocks && innerBlocks.length > 0 ) {
+			innerBlocks = traverseBlocksAndSubstitute( innerBlocks, whitelist )
+		}
+
+		if ( whitelist.includes( blockName ) ) {
+			return substituteCoreIfDisabled( blockName, blockAttributes, innerBlocks, substitutionRules )
+		}
+
+		if ( innerBlocks ) {
+			return [ blockName, blockAttributes, innerBlocks ]
+		}
+		return [ blockName, blockAttributes ]
+	} )
 }
 
 const applySettingsToMeta = metadata => {
-	let inserter = ! settings.stackable_disabled_blocks.includes( metadata.name )
+	const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
+	let inserter = true
 
-	// Check if this block is dependent on another variation being enabled.
-	if ( BLOCK_DEPENDENCIES[ metadata.name ] ) {
-		if ( settings.stackable_disabled_blocks.includes( BLOCK_DEPENDENCIES[ metadata.name ] ) ) {
-			inserter = false
-		}
+	// If the block is hidden, set the inserter to false.
+	if ( metadata.name in disabledBlocks ) {
+		inserter = ! disabledBlocks[ metadata.name ] === BLOCK_STATE.HIDDEN
 	}
 
-	const variationsToRemove = getVariationsToRemove( settings.stackable_disabled_blocks, metadata.name )
+	// Check if this block is dependent on another variation being enabled.
+	if ( metadata[ 'stk-block-dependency' ] && metadata[ 'stk-block-dependency' ] in disabledBlocks ) {
+		inserter = ! disabledBlocks[ metadata[ 'stk-block-dependency' ] ] === BLOCK_STATE.HIDDEN
+	}
+
+	const variationsToRemove = getVariationsToRemove( disabledBlocks, metadata.name )
 	let variations = metadata.variations || []
 
-	// Remove variations if there are ones disabled.
+	// Remove the variations that are hidden which removes the block from the inserter.
 	if ( variationsToRemove.length ) {
 		const hasDefaultVariation = !! getDefaultVariation( metadata.variations )
 		variations = variations.filter( variation => ! variationsToRemove.includes( variation.name ) )
@@ -51,6 +79,17 @@ const applySettingsToMeta = metadata => {
 				inserter = false
 			}
 		}
+	}
+
+	const whitelist = metadata[ 'stk-substitution-blocks' ]
+	if ( whitelist ) {
+		variations = variations.map( variation => {
+			const newVariation = cloneDeep( variation )
+			if ( newVariation.innerBlocks && Array.isArray( newVariation.innerBlocks ) ) {
+				newVariation.innerBlocks = traverseBlocksAndSubstitute( newVariation.innerBlocks, whitelist )
+			}
+			return newVariation
+		} )
 	}
 
 	// Adjust the metadata.

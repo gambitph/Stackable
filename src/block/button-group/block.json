@@ -31,9 +31,13 @@
 			"description": "Add social buttons.",
 			"category": "stackable",
 			"stk-type": "special",
-			"stk-demo": "https://wpstackable.com/social-buttons-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+			"stk-demo": "https://wpstackable.com/social-buttons-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
+			"stk-required-blocks": [
+				"stackable/button-group|icon-button"
+			]
 		}
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "hidden"
+
 }

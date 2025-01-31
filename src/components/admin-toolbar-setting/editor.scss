@@ -1,0 +1,40 @@
+.ugb-admin-toolbar-setting__wrapper {
+	display: grid;
+	h3 {
+		margin: 0 0 0.25em;
+	}
+	.ugb-admin-toolbar-setting__group-wrapper {
+		grid-column: 2 / 3;
+		grid-row: 1 / 3;
+		align-items: center;
+		display: flex;
+		justify-content: right;
+	}
+	a {
+		margin-right: 10px;
+		width: 80px;
+	}
+	.ugb-admin-toolbar-setting {
+		display: flex;
+		background: #ebebeb;
+		padding: 3px;
+		border-radius: 50px;
+		.ugb-button-component {
+			background: transparent;
+			box-shadow: none;
+			border-radius: 50px;
+			gap: 8px;
+			padding: 0 16px;
+			&:not(.is-pressed) {
+				background: transparent;
+				color: #575757;
+			}
+			&.is-pressed {
+				background: #fff;
+				color: #1e1e1e;
+				box-shadow: 0 1px 3px #1018281a, 0 1px 2px #1018280f;
+				font-weight: bold;
+			}
+		}
+	}
+}

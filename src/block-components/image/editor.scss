@@ -232,6 +232,13 @@
 		z-index: 1;
 	}
 }
+// make the placeholder occupy the entire area since the placeholder is used to
+// measure in image blocks..
+.stk-block-image {
+	.stk-img-wrapper.stk-img-placeholder {
+		min-width: 100%;
+	}
+}
 
 // Don't do the hover effect when adjusting the hover effect.
 .stk-block:not(.stk--is-hovered) > .stk-img-wrapper {

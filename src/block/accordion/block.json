@@ -11,5 +11,13 @@
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special",
-	"stk-demo": "https://wpstackable.com/accordion-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+	"stk-demo": "https://wpstackable.com/accordion-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
+	"stk-required-blocks": [
+		"stackable/icon-label",
+		"stackable/heading",
+		"stackable/icon"
+	],
+	"stk-substitution-blocks": [
+		"stackable/text"
+	]
 }

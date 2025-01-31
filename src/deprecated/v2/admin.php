@@ -20,7 +20,7 @@ if ( ! class_exists( 'Stackable_Admin_Settings_V2' ) ) {
 				add_action( 'stackable_settings_admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 				// Add the optimization setting.
-				add_action( 'stackable_settings_page_mid', array( $this, 'add_optimization_settings' ), 11 );
+				// add_action( 'stackable_settings_page_mid', array( $this, 'add_block_settings' ), 11 );
 			}
 		}
 
@@ -33,7 +33,7 @@ if ( ! class_exists( 'Stackable_Admin_Settings_V2' ) ) {
 		 *
 		 * @return void
 		 */
-		public function add_optimization_settings() {
+		public function add_block_settings() {
 			?>
 			<article class="s-box" id="block-settings-v2">
 				<h2><?php _e( '🎛 Enable & Disable Blocks', STACKABLE_I18N ) ?> (V2)</h2>

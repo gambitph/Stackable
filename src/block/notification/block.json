@@ -14,5 +14,14 @@
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special",
-	"stk-demo": "https://wpstackable.com/notification-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+	"stk-demo": "https://wpstackable.com/notification-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
+	"stk-required-blocks": [
+		"stackable/icon"
+	],
+	"stk-substitution-blocks": [
+		"stackable/heading",
+		"stackable/text",
+		"stackable/button-group",
+		"stackable/button"
+	]
 }

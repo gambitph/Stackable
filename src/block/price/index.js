@@ -15,6 +15,7 @@ import schema from './schema'
 import metadata from './block.json'
 import example from './example'
 import deprecated from './deprecated'
+import substitute from './substitute'
 
 export const settings = {
 	...metadata,
@@ -28,4 +29,5 @@ export const settings = {
 	deprecated,
 	edit,
 	save,
+	substitute,
 }
