@@ -111,12 +111,15 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 	// Recursively update the attributes of all inner blocks for the new Color Picker
 	const migrateToNewColorPicker = blocks => {
 		blocks?.forEach( block => {
-			let newAttributes = block[ 1 ]
-			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
-			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
-			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
-			block[ 1 ] = newAttributes
-			migrateToNewColorPicker( block[ 2 ] )
+			try {
+				let newAttributes = block[ 1 ]
+				newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+				newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+				newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+				block[ 1 ] = newAttributes
+				migrateToNewColorPicker( block[ 2 ] )
+			} catch ( error ) {
+			}
 		} )
 	}
 
