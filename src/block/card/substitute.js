@@ -3,7 +3,7 @@ export const substitute = {
 	transform: ( oldAttributes, innerBlocks ) => {
 		return [
 			'stackable/columns',
-			{},
+			{ ...oldAttributes },
 			[
 				[
 					'stackable/column',
