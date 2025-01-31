@@ -1,5 +1,5 @@
 export const substitute = {
-	from: 'stackable/hero',
+	from: 'stackable/pricing-box',
 	transform: ( oldAttributes, innerBlocks ) => {
 		return [
 			'stackable/columns',
