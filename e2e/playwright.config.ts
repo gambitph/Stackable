@@ -56,22 +56,23 @@ export default defineConfig( {
 
 	/* Configure projects for major browsers */
 	projects: [
-		{
-			name: 'auth',
-			// testDir,
-			testMatch: 'setup/auth.js',
-		},
+		// {
+		// 	name: 'auth',
+		// 	// testDir,
+		// 	testMatch: 'setup/auth.js',
+		// },
 		{
 			name: 'tests',
 			use: {
 				storageState: process.env.WP_AUTH_STORAGE,
+				...devices[ 'Desktop Chrome' ],
 			},
 			testMatch: 'tests/*.ts',
 		},
-		{
-			name: 'chromium',
-			use: { ...devices[ 'Desktop Chrome' ] },
-		},
+		// {
+		// 	name: 'chromium',
+		// 	use: { ...devices[ 'Desktop Chrome' ] },
+		// },
 
 		// {
 		//   name: 'firefox',
