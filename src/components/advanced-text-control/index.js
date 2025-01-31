@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import { useInternalValue } from '~stackable/hooks'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import { useControlHandlers } from '../base-control2/hooks'
 import { ResetButton } from '../base-control2/reset-button'
@@ -40,6 +41,15 @@ const AdvancedTextControl = memo( props => {
 		isFormatType,
 	} )
 
+	// Track the value internally, because if not the value will be updated on
+	// every render and will make the cursor jump to the end.
+	const [ internalValue, setInternalValue ] = useInternalValue( typeof props.value === 'undefined' ? value : props.value )
+	const _onChange = typeof props.onChange === 'undefined' ? onChange : props.onChange
+	const internalOnChange = value => {
+		setInternalValue( value )
+		_onChange( value )
+	}
+
 	const TextInput = isMultiline ? TextareaControl : TextControl
 
 	return (
@@ -54,16 +64,16 @@ const AdvancedTextControl = memo( props => {
 			>
 				<TextInput
 					{ ...inputProps }
-					value={ typeof props.value === 'undefined' ? value : props.value }
-					onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+					value={ internalValue }
+					onChange={ internalOnChange }
 					className={ classnames( propsToPass.className, 'ugb-advanced-text-control' ) }
 				/>
 			</DynamicContentControl>
 			<ResetButton
 				allowReset={ allowReset && ! props.isDynamic }
-				value={ typeof props.value === 'undefined' ? value : props.value }
+				value={ internalValue }
 				default={ props.default }
-				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+				onChange={ internalOnChange }
 				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 			/>
 		</AdvancedControl>
