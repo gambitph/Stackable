@@ -23,8 +23,15 @@ if ( ! function_exists( 'stackable_load_image_optimizer_polyfill_frontend_script
 		}
 	}
 
-	if ( ! is_admin() && defined( 'EWWW_IMAGE_OPTIMIZER_PLUGIN_FILE' )) {
-		// Load the script in the frontend if EWWW Image Optimizer is active.
-		add_action( 'stackable/enqueue_scripts', 'stackable_load_image_optimizer_polyfill_frontend_script', 10, 2 );
+	function stackable_ewww_image_optimzer_plugin_checker() {
+		if ( ! is_admin() && defined( 'EWWW_IMAGE_OPTIMIZER_PLUGIN_FILE' ) ) {
+			// Load the script in the frontend if EWWW Image Optimizer is active.
+			add_action( 'stackable/enqueue_scripts', 'stackable_load_image_optimizer_polyfill_frontend_script', 10, 2 );
+		}
 	}
+
+	// Run the plugin checker after all plugins are loaded because
+	// the condition defined( 'EWWW_IMAGE_OPTIMIZER_PLUGIN_FILE' ) may return false
+	// even if the plugin is actually activated
+	add_action( 'plugins_loaded', 'stackable_ewww_image_optimzer_plugin_checker' );
 }

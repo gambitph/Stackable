@@ -11,29 +11,41 @@ class ImageOptimizerPolyfill {
 	 */
 	init = () => {
 		const imgs = document.querySelectorAll( '.stk-block img' )
-		imgs.forEach( img => {
-			if ( img.hasAttribute( 'srcset' ) ) {
-				let srcset = img.getAttribute( 'srcset' )
-				const pattern = /https?:\/\/[^\s,]+/g
-				const urls = srcset.match( pattern )
 
-				urls.forEach( url => {
-					const index = url.indexOf( '&fit' )
-					if ( index !== -1 ) {
-						const newUrl = url.slice( 0, index )
-						srcset = srcset.replace( url, newUrl )
-					}
-				} )
+		// Use Mutation Observer because the src and/or srcset attributes may change if using dynamic content
+		const MO = new MutationObserver( mutations => {
+			mutations.forEach( mutation => {
+				const img = mutation.target
 
-				img.setAttribute( 'srcset', srcset )
-			}
+				if ( img.hasAttribute( 'srcset' ) ) {
+					let srcset = img.getAttribute( 'srcset' )
+					const pattern = /https?:\/\/[^\s,]+/g
+					const urls = srcset.match( pattern )
 
-			if ( img.getAttribute( 'src' ).indexOf( '&fit' ) !== -1 ) {
-				const src = img.getAttribute( 'src' )
-				const index = src.indexOf( '&fit' )
-				const newSrc = src.slice( 0, index )
-				img.setAttribute( 'src', newSrc )
-			}
+					urls.forEach( url => {
+						const index = url.indexOf( '&fit' )
+						if ( index !== -1 ) {
+							const newUrl = url.slice( 0, index )
+							srcset = srcset.replace( url, newUrl )
+						}
+					} )
+
+					img.setAttribute( 'srcset', srcset )
+				}
+
+				if ( img.getAttribute( 'src' ).indexOf( '&fit' ) !== -1 ) {
+					const src = img.getAttribute( 'src' )
+					const index = src.indexOf( '&fit' )
+					const newSrc = src.slice( 0, index )
+					img.setAttribute( 'src', newSrc )
+				}
+			} )
+		} )
+
+		imgs.forEach( image => {
+			MO.observe( image, {
+				attributeFilter: [ 'src', 'srcset' ],
+			} )
 		} )
 	}
 }
