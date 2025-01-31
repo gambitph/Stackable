@@ -152,6 +152,7 @@ Image.Content = props => {
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }
 		alt={ alt || attributes.imageAlt }
+		showEmptyAlt={ attributes.imageShowEmptyAlt }
 		size={ attributes.imageSize }
 		src={ src || attributes.imageUrl || attributes.imageExternalUrl }
 

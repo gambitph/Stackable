@@ -244,6 +244,13 @@ const Controls = props => {
 				/>
 			) }
 
+			{ props.hasAlt && ! attributes.imageAlt && (
+				<AdvancedToggleControl
+					label={ __( 'Show Empty Alt Attribute', i18n ) }
+					attribute="imageShowEmptyAlt"
+				/>
+			) }
+
 			<AdvancedRangeControl
 				label={ __( 'Zoom', i18n ) }
 				attribute="imageZoom"

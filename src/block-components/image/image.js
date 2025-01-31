@@ -441,6 +441,8 @@ const ImageContent = props => {
 	const alt = striptags( props.alt || undefined )
 	if ( alt ) {
 		propsToPass.alt = alt
+	} else if ( props.showEmptyAlt ) {
+		propsToPass.alt = ''
 	}
 	const title = striptags( props.title || undefined )
 	if ( title ) {
