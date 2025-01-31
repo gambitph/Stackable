@@ -4,7 +4,7 @@ export const substitute = {
 		return [
 			'core/image',
 			{
-				height: oldAttributes?.imageHeight,
+				height: oldAttributes?.imageHeight ? ( oldAttributes?.imageHeight + 'px' ) : undefined,
 				url: oldAttributes?.imageUrl,
 			},
 		]
