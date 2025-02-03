@@ -3,7 +3,6 @@ import { BLOCK_STATE } from '~stackable/util'
 export const substitute = {
 	from: 'stackable/button-group',
 	variants: [ 'stackable/button-group|icon-button', 'stackable/button-group|button' ],
-	to: [ 'core/buttons', 'core/social-links' ],
 	transform: ( oldAttributes, innerBlocks, disabledBlocks ) => {
 		if ( 'stackable/button-group|icon-button' in disabledBlocks && disabledBlocks[ 'stackable/button-group|icon-button' ] === BLOCK_STATE.DISABLED && // eslint-disable-line camelcase
 			innerBlocks.length &&

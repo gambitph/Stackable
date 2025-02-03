@@ -1,23 +1,21 @@
 export const substitute = {
 	from: 'stackable/countdown',
-	variations: [],
-	to: 'stackable/columns',
-	transform: () => {
+	transform: oldAttributes => {
 		return [
 			'stackable/columns',
-			{},
+			{ ...oldAttributes },
 			[
 				[
 					'stackable/column',
 					{ align: 'center' },
 					[
-						[ 'core/text', {
+						[ 'core/paragraph', {
 							fontSize: 'x-large',
 							content: '3',
 							align: 'center',
 							style: { spacing: { margin: { top: '0', bottom: '0' } } },
 						} ],
-						[ 'core/text', {
+						[ 'core/paragraph', {
 							content: 'Days',
 							align: 'center',
 							style: { spacing: { margin: { top: '0', bottom: '0' } } },
@@ -28,13 +26,13 @@ export const substitute = {
 					'stackable/column',
 					{ align: 'center' },
 					[
-						[ 'core/text', {
+						[ 'core/paragraph', {
 							fontSize: 'x-large',
 							content: '16',
 							align: 'center',
 							style: { spacing: { margin: { top: '0', bottom: '0' } } },
 						} ],
-						[ 'core/text', {
+						[ 'core/paragraph', {
 							content: 'Hours',
 							align: 'center',
 							style: { spacing: { margin: { top: '0', bottom: '0' } } },

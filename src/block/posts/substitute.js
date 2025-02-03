@@ -1,7 +1,5 @@
 export const substitute = {
 	from: 'stackable/posts',
-	variants: [],
-	to: [ 'core/query' ],
 	transform: oldAttributes => {
 		return [
 			'core/query',
@@ -35,10 +33,10 @@ export const substitute = {
 						},
 					},
 					[
-						[ 'post-featured-image', { aspectRatio: '1' } ],
-						[ 'post-title', {} ],
-						[ 'post-date', {} ],
-						[ 'post-excerpt', { moreText: 'Continue Reading' } ],
+						[ 'core/post-featured-image', { aspectRatio: '1' } ],
+						[ 'core/post-title', {} ],
+						[ 'core/post-date', {} ],
+						[ 'core/post-excerpt', { moreText: 'Continue Reading' } ],
 					],
 				],
 			],

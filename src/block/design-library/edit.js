@@ -36,6 +36,10 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 	const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
 	let hasSubstituted = false
 
+	blockName = 'stackable/progress-circle'
+	attributes = { uniqueID: '1234567' }
+	innerBlocks = []
+
 	// Recursively substitute core blocks to disabled Stackable blocks
 	const traverseBlocksAndSubstitute = blocks => {
 		return blocks.map( block => {
