@@ -7,3 +7,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( plugin_dir_path( __FILE__ ) . './neve/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . './woocommerce.php' );
+require_once( plugin_dir_path( __FILE__ ) . './blocksy/index.php' );
