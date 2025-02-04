@@ -12,6 +12,7 @@ class ImageOptimizerPolyfill {
 	init = () => {
 		const imgs = document.querySelectorAll( '.stk-block img' )
 
+		let updateCount = 0
 		// Use Mutation Observer because the src and/or srcset attributes may change if using dynamic content
 		const MO = new MutationObserver( mutations => {
 			mutations.forEach( mutation => {
@@ -33,11 +34,23 @@ class ImageOptimizerPolyfill {
 					img.setAttribute( 'srcset', srcset )
 				}
 
+				if ( img.getAttribute( 'data-src' ).indexOf( '&fit' ) !== -1 ) {
+					const src = img.getAttribute( 'data-src' )
+					const index = src.indexOf( '&fit' )
+					const newSrc = src.slice( 0, index )
+					img.setAttribute( 'data-src', newSrc )
+				}
+
 				if ( img.getAttribute( 'src' ).indexOf( '&fit' ) !== -1 ) {
 					const src = img.getAttribute( 'src' )
 					const index = src.indexOf( '&fit' )
 					const newSrc = src.slice( 0, index )
 					img.setAttribute( 'src', newSrc )
+				}
+
+				updateCount++
+				if ( updateCount === imgs.length ) {
+					MO.disconnect()
 				}
 			} )
 		} )
