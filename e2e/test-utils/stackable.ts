@@ -18,7 +18,7 @@ export class StackableFixture {
 			}
 
 			const finishedCallback = async ( request: Request ) => {
-				if ( request.url().includes( 'wp-json/wp/v2/settings' ) && request.method() === 'GET' ) {
+				if ( request.url().includes( 'wp/v2/settings' ) && request.method() === 'GET' ) {
 					try {
 						let settings = null
 						await test.step( 'Wait for Stackable settings to load', async () => {
@@ -43,7 +43,7 @@ export class StackableFixture {
 				}
 			}
 			const failedCallback = async ( request: Request ) => {
-				if ( request.url().includes( 'wp-json/wp/v2/settings' ) && request.method() === 'GET' ) {
+				if ( request.url().includes( 'wp/v2/settings' ) && request.method() === 'GET' ) {
 					cleanup()
 					throw Error( 'Failed to get Stackable settings' )
 				}

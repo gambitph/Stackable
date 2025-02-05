@@ -35,6 +35,7 @@ export default defineConfig( {
 	reporter: process.env.CI
 		? [ [ 'list' ], [ 'github', { useDetails: true, showError: true } ], [ 'html', { outputFolder: '../playwright-report' } ] ]
 		: [ [ 'list' ], [ 'html', { outputFolder: '../playwright-report' } ] ],
+	reportSlowTests: null,
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
