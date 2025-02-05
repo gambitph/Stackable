@@ -15,6 +15,7 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import example from './example'
+import substitute from './substitute'
 
 export const settings = {
 	/**
@@ -66,6 +67,7 @@ export const settings = {
 	example,
 	edit,
 	save,
+	substitute,
 
 	// TODO: Uncomment this if we will allow transformation from other blocks to this block.
 	// transforms,
