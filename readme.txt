@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.4
 Tested up to: 6.7.1
 Requires PHP: 7.3
-Stable tag: 3.14.0
+Stable tag: 3.14.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -184,6 +184,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.14 Icon Library & Granular Plugin Settings](https://wpstackable.com/blog/icon-library-granular-plugin-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.13 Improved Stackable Server Performance](https://wpstackable.com/blog/improved-server-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.12 WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.11 New Timeline Block](https://wpstackable.com/blog/introducing-new-timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -295,11 +296,17 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.14.1 =
+* Fixed: Hotfix for EWWW Image Optimizer compatibility - freezing in the frontend if lazy loading and auto scaling are both enabled #3415
+
 = 3.14.0 =
+[Icon Library & Granular Plugin Settings](https://wpstackable.com/blog/icon-library-granular-plugin-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: Granular plugin settings - enhanced settings page for better control of plugin features #3354
 * New: Added option to use an empty alt tag in images #3376
 * Fixed: Image block - using small images no longer stretch #3239
 * Fixed: Image block - switching between % and px width now doesn't cause the image to be too small or too big #3268
+* Fixed: Dynamic Content - better compatibility with Blocksy Content Blocks #368
 * Fixed: EWWW Image Optimizer compatibility - no longer causes blurry images #3296
 
 = 3.13.13 =

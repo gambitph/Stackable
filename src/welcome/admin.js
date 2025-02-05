@@ -11,7 +11,7 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	useEffect, useState, useCallback, useMemo, lazy, Suspense,
+	useEffect, useState, useCallback, useMemo, Suspense, Fragment,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import {
@@ -1174,12 +1174,12 @@ const GlobalSettings = props => {
 	)
 }
 
-const EditorModeSettings = lazy( () => import( '../../pro__premium_only/src/welcome/editor-mode' ) )
-
 const RoleManager = props => {
 	const groups = props.filteredSearchTree.find( tab => tab.id === 'role-manager' ).groups
 	props.roleManager = groups.find( group => group.id === 'role-manager' )
 	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+
+	const EditorModeSettings = applyFilters( 'stackable.admin.settings.editorModeSettings', Fragment )
 
 	return (
 		<div className="s-role-manager">
@@ -1223,13 +1223,13 @@ const RoleManager = props => {
 	)
 }
 
-const CustomFieldsEnableSettings = lazy( () => import( '../../pro__premium_only/src/welcome/custom-fields-toggle' ) )
-const CustomFieldsManagerSettings = lazy( () => import( '../../pro__premium_only/src/welcome/custom-fields-roles' ) )
-
 const CustomFields = props => {
 	const groups = props.filteredSearchTree.find( tab => tab.id === 'custom-fields-settings' ).groups
 	props.customFields = groups.find( group => group.id === 'custom-fields-settings' )
 	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+
+	const CustomFieldsEnableSettings = applyFilters( 'stackable.admin.settings.customFieldsEnableSettings', Fragment )
+	const CustomFieldsManagerSettings = applyFilters( 'stackable.admin.settings.customFieldsManagerSettings', Fragment )
 
 	return (
 		<div className="s-custom-fields">
@@ -1276,8 +1276,6 @@ const CustomFields = props => {
 	)
 }
 
-const IconSettings = lazy( () => import( '../../pro__premium_only/src/welcome/icons.js' ) )
-
 const Integrations = props => {
 	const {
 		settings,
@@ -1288,6 +1286,8 @@ const Integrations = props => {
 	const groups = filteredSearchTree.find( tab => tab.id === 'integrations' ).groups
 	props.integrations = groups.find( group => group.id === 'integrations' )
 	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+
+	const IconSettings = applyFilters( 'stackable.admin.settings.iconSettings', Fragment )
 
 	return (
 		<div className="s-integrations">

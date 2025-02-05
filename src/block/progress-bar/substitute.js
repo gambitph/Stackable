@@ -1,12 +1,11 @@
 export const substitute = {
-	from: 'stackable/subtitle',
+	from: 'stackable/progress-bar',
 	transform: oldAttributes => {
 		return [
 			'core/paragraph',
 			{
-				fontSize: 'small',
-				align: oldAttributes?.contentAlign,
-				content: oldAttributes?.text,
+				content: oldAttributes?.progressValue || '50',
+				fontSize: 'x-large',
 			},
 		]
 	},

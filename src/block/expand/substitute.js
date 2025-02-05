@@ -1,10 +1,10 @@
 export const substitute = {
 	from: 'stackable/expand',
-	to: 'stackable/text',
 	transform: ( oldAttributes, innerBlocks ) => {
-		return {
-			text: innerBlocks[ 2 ][ 1 ].text,
-		}
+		return [
+			'stackable/text',
+			{ text: innerBlocks[ 2 ][ 1 ].text },
+		]
 	},
 }
 
