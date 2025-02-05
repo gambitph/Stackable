@@ -17,6 +17,8 @@ jobs:
       run: |
         npm ci --legacy-peer-deps
         npm run build:no-translate
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
     - name: Install wp-env
       run: |
         npm install -g @wordpress/env
