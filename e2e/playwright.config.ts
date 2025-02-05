@@ -32,10 +32,9 @@ export default defineConfig( {
 	// workers: process.env.CI ? 1 : undefined,
 	workers: 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: [
-		[ 'list' ],
-		[ 'html', { outputFolder: '../playwright-report' } ],
-	  ],
+	reporter: process.env.CI
+		? [ [ 'list' ], [ 'github', { useDetails: true, showError: true } ], [ 'html', { outputFolder: '../playwright-report' } ] ]
+		: [ [ 'list' ], [ 'html', { outputFolder: '../playwright-report' } ] ],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */

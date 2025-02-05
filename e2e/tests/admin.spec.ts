@@ -23,6 +23,7 @@ test( 'Activating Stackable should redirect to the Getting Started Page', async 
 		await expect( page ).toHaveURL( /page=stackable/ )
 		await expect( page.getByRole( 'link', { name: 'Activate Free Version' } ) ).toBeVisible()
 		await page.getByRole( 'link', { name: 'Activate Free Version' } ).click()
+		await page.getByRole( 'link', { name: 'Skip', exact: true } ).click()
 		await expect( page ).toHaveURL( /stackable-getting-started/ )
 	}
 } )
