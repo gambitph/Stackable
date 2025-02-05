@@ -1,6 +1,4 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright'
-
-import { deletePost } from 'e2e/test-utils'
+import { test, expect } from 'e2e/test-utils'
 import { createColor, getRgb } from '~stackable/plugins/global-settings/colors/util'
 
 test.describe( 'Global Settigs', () => {
@@ -16,7 +14,7 @@ test.describe( 'Global Settigs', () => {
 
 	// Delete created post
 	test.afterEach( async ( { requestUtils } ) => {
-		await deletePost( requestUtils, pid )
+		await requestUtils.deletePost( pid )
 	} )
 
 	test( 'When a color is added in the Global Colors, it should be present in the color picker', async ( {

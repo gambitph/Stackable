@@ -1,5 +1,4 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright'
-import { deletePost } from 'e2e/test-utils'
+import { test, expect } from 'e2e/test-utils'
 
 test.describe( 'Block Editor', () => {
 	let pid = null
@@ -14,7 +13,7 @@ test.describe( 'Block Editor', () => {
 
 	// Delete created post
 	test.afterEach( async ( { requestUtils } ) => {
-		await deletePost( requestUtils, pid )
+		await requestUtils.deletePost( pid )
 	} )
 
 	test( 'Stackable blocks can be added in the editor', async ( {

@@ -1,10 +1,9 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright'
-import { deletePost } from 'e2e/test-utils'
+import { test, expect } from 'e2e/test-utils'
 
 test.describe( 'Site Editor', () => {
-	test.beforeAll( async ( { requestUtils } ) => {
-		await requestUtils.activateTheme( 'twentytwentyfour' )
-	} )
+	// test.beforeAll( async ( { requestUtils } ) => {
+	// 	await requestUtils.activateTheme( 'twentytwentyfour' )
+	// } )
 
 	let pid = null
 	let postContentBlock = null
@@ -31,7 +30,7 @@ test.describe( 'Site Editor', () => {
 	} )
 
 	test.afterEach( async ( { requestUtils } ) => {
-		await deletePost( requestUtils, pid, 'pages' )
+		await requestUtils.deletePost( pid, 'pages' )
 	} )
 
 	test( 'Stackable blocks can be added in the site editor', async ( {

@@ -1,2 +1,3 @@
 export { test, expect } from './test'
-export { deletePost } from './deletePost'
+export { ExtendedRequestUtils } from './requestUtils'
+export { StackableFixture } from './stackable'

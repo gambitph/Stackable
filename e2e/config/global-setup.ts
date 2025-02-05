@@ -2,7 +2,7 @@
 
 import { request } from '@playwright/test'
 
-import { RequestUtils } from '@wordpress/e2e-test-utils-playwright'
+import { ExtendedRequestUtils } from 'e2e/test-utils'
 
 // To interact with the WP Guest Bar plugin's settings page, we must be authenticated.
 // Before any tests are run, we sign in, save the cookies set by WordPress, and then discard the session.
@@ -12,7 +12,7 @@ async function globalSetup() {
 	const requestContext = await request.newContext( {
 		baseURL: process.env.WP_BASE_URL,
 	} )
-	const requestUtils = new RequestUtils( requestContext, {
+	const requestUtils = new ExtendedRequestUtils( requestContext, {
 		storageStatePath: process.env.WP_AUTH_STORAGE,
 		user: {
 			username: process.env.WP_USERNAME,
@@ -26,14 +26,14 @@ async function globalSetup() {
 	await requestUtils.setupRest()
 
 	// Deactivate all plugins except Stackable
-	const plugins = await requestUtils.getPluginsMap()
+	const plugins = await requestUtils.getActivePlugins()
 
 	// Use for loop because forEach cannot handle async operations
 	for ( const slug of Object.keys( plugins ) ) {
 		await requestUtils.deactivatePlugin( slug )
 	}
 
-	await requestUtils.activatePlugin( 'stackable-gutenberg-blocks' )
+	await requestUtils.activatePlugin( process.env.STACKABLE_SLUG )
 
 	await requestContext.dispose()
 }

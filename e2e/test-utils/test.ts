@@ -1,12 +1,11 @@
-import { test as base, expect } from '@playwright/test'
-
 // We only require what's essential from the WordPress E2E test utils package.
 import {
-	Admin,
-	Editor,
-	PageUtils,
-	RequestUtils,
+	test as base,
+	expect,
 } from '@wordpress/e2e-test-utils-playwright'
+
+import { ExtendedRequestUtils } from './requestUtils'
+import { StackableFixture } from './stackable'
 
 // We could also import utils from other packages.
 // import { StoreApiUtils } from '@woocommerce/e2e-utils';
@@ -18,27 +17,14 @@ import {
 // https://github.com/WordPress/gutenberg/blob/trunk/packages/e2e-test-utils-playwright/src/test.ts
 // https://github.com/woocommerce/woocommerce-blocks/blob/trunk/tests/e2e/playwright-utils/test.ts
 const test = base.extend<{
-    admin: Admin;
-    editor: Editor;
-    pageUtils: PageUtils;
-    requestUtils: RequestUtils;
+    requestUtils: ExtendedRequestUtils;
+	stackable: StackableFixture;
 }>( {
-	async admin( {
-		page, pageUtils, editor,
-	}, use ) {
-		await use( new Admin( {
-			page, pageUtils, editor,
-		} ) )
-	},
-	async editor( { page }, use ) {
-		await use( new Editor( { page } ) )
-	},
-	async pageUtils( { page }, use ) {
-		await use( new PageUtils( { page } ) )
-	},
-	async requestUtils( {}, use ) {
+	requestUtils: async ( {}, use ) => {
+		let requestUtils = null
+
 		// We want to make all REST API calls as authenticated users.
-		const requestUtils = await RequestUtils.setup( {
+		requestUtils = await ExtendedRequestUtils.setup( {
 			baseURL: process.env.WP_BASE_URL,
 			user: {
 				username: process.env.WP_USERNAME,
@@ -47,6 +33,10 @@ const test = base.extend<{
 		} )
 
 		await use( requestUtils )
+	},
+
+	stackable: async ( { page }, use ) => {
+		await use( new StackableFixture( page ) )
 	},
 } )
 
