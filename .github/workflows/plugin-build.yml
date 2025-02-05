@@ -27,19 +27,6 @@ jobs:
         node ./tools/append-build-version.js $VERSION_SUFFIX
         cp -r build/stackable stackable-$VERSION_SUFFIX
 
-    - name: Install wp-env
-      run: |
-        npm install -g @wordpress/env
-
-    - name: Start wp-env
-      run: wp-env start
-
-    - name: Run playwright tests
-      run: npm run test
-
-    - name: Stop wp-env
-      run: wp-env stop
-
     # Keep this for now. Our plan is to simplify all tests into this one
     # workflow, this is needed so we can reuse the build folder across sub jobs.
     # - name: Create plugin zip file artifact uses: actions/upload-artifact@v3
