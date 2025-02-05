@@ -34,15 +34,28 @@ jobs:
           WP_PASSWORD: password
           STACKABLE_SLUG: Stackable/plugin
       run: npm run test
-    - name: Zip Playwright Report
-      uses: montudor/action-zip@v1
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
       with:
-        args: zip -qq -r playwright-report-${{ env.VERSION_SUFFIX }}.zip playwright-report
-    - name: Upload Playwright report artifact
-      if: ${{ github.event_name == 'pull_request' }}
-      uses: gavv/pull-request-artifacts@v1.0.0
+        name: playwright-report-${{ env.VERSION_SUFFIX }}.zip
+        path: playwright-report/
+        retention-days: 30
+    - name: Find Comment
+      uses: peter-evans/find-comment@v3
+      id: fc
       with:
-        commit: ${{ github.event.pull_request.head.sha }}
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: playwright-report-${{ env.VERSION_SUFFIX }}.zip
-        artifacts-branch: artifacts
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: Playwright Report Artifact
+    - name: Create or update comment
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          ` ## Playwright Report Artifact
+          | file | commit |
+          | ---- | ------ |
+          | [playwright-report-${{ env.VERSION_SUFFIX }}.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts) | ${{ github.sha }} |
+          `
+        edit-mode: replace
