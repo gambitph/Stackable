@@ -1,4 +1,7 @@
 {
-	"core": "WordPress/WordPress",
-	"plugins": [ "." ]
+    "core": null,
+    "plugins": [ "." ],
+	"config": {
+        "SCRIPT_DEBUG": false
+    }
 }
