@@ -133,12 +133,14 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			} )
 
 			addBlockCssFunc( {
-				// In the frontend, use the css custom property to specify the order.
+				// Old Issue: In the frontend, use the css custom property to specify the order.
 				// See style.scss We do this because we cannot use the direct descendent
 				// selector ">" in the saved CSS or else non-admin users in multisite
 				// will encounter block errors (this is a WP issue)
+				// Tested on Local with multisite (subdirectories) with non-admin account (editor).
 				renderIn: 'save',
-				styleRule: `--stk-col-order-${ i }`,
+				selector: `.%s-column > :nth-child(${ i })`,
+				styleRule: `order`,
 				responsive: 'all',
 				attrName: 'columnArrangement',
 				valueCallback: value => {
