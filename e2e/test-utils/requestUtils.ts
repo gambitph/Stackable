@@ -5,7 +5,8 @@ class ExtendedRequestUtils extends BaseRequestUtils {
 		const plugins : { [key: string]: any }[] = await this.rest( {
 			path: '/wp/v2/plugins',
 		} )
-
+		// eslint-disable-next-line no-console
+		console.info( 'plugins installed:', plugins.map( plugin => plugin.plugin ) )
 		const activePlugins = plugins.filter( plugin => plugin.status === 'active' ).reduce( ( pluginsMap, plugin ) => {
 			pluginsMap[ plugin.plugin ] = plugin.plugin
 			return pluginsMap
