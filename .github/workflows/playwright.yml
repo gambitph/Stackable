@@ -13,16 +13,28 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
-    - name: Install dependencies
+    - name: Set the version suffix for the output
+      run: echo VERSION_SUFFIX=${GITHUB_REF_NAME//\//-} >> $GITHUB_ENV
+    - name: Build Stackable Free Plugin
       run: |
         npm ci --legacy-peer-deps
         npm run build:no-translate
+    - name: Append PR in build version & create PR build folder
+      run: |
+        node ./tools/append-build-version.js $VERSION_SUFFIX
+        cp -r build/stackable stackable-$VERSION_SUFFIX
     - name: Install wp-env
       run: |
         npm install -g @wordpress/env
     - name: Start wp-env
       run: wp-env start
     - name: Run playwright tests
+      env:
+          WP_BASE_URL: http://localhost:8888
+          WP_AUTH_STORAGE: wp-auth.json
+          WP_USERNAME: admin
+          WP_PASSWORD: password
+          STACKABLE_SLUG: stackable-$VERSION_SUFFIX
       run: npm run test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
