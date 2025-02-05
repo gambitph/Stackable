@@ -20,7 +20,7 @@ jobs:
         npm ci --legacy-peer-deps
         npm run build:no-translate
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: npx playwright install chromium firefox webkit --with-deps
     - name: Install wp-env
       run: |
         npm install -g @wordpress/env
@@ -58,5 +58,5 @@ jobs:
           ## Playwright Report Artifact
           | file | commit |
           | ---- | ------ |
-          | [playwright-report-${{ env.VERSION_SUFFIX }}.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}) | ${{ github.sha }} |
+          | [playwright-report-${{ env.VERSION_SUFFIX }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}) | ${{ github.sha }} |
         edit-mode: replace
