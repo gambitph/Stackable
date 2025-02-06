@@ -39,7 +39,11 @@ jobs:
       if: ${{ !cancelled() }}
       run: |
         CONTENT=$(cat ./playwright-errors/errors.md)
-        echo "content=$CONTENT" >> $GITHUB_OUTPUT
+        {
+        echo 'JSON_RESPONSE<<EOF'
+        echo $CONTENT
+        echo EOF
+        } >> $GITHUB_OUTPUT
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       id: artifact-upload-step
