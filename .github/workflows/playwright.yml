@@ -35,6 +35,7 @@ jobs:
           STACKABLE_SLUG: Stackable/plugin
       run: npm run test
     - name: Run script to unzip and upload traces
+      if: ${{ !cancelled() }}
       run: |
         chmod +x ./.github/scripts/unzip_traces.sh
         ./.github/scripts/unzip_traces.sh
