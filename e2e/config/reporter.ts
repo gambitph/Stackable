@@ -8,13 +8,18 @@ import path from 'path'
 
 class MyReporter implements Reporter {
 	outputFolder: string;
-	testResults: Array<{title: string, id: string, trace: any}>;
+	testResults: Array<string>;
 
 	constructor() {
-		this.outputFolder = 'playwright-traces'
+		this.outputFolder = 'playwright-errors'
 		this.cleanupFolder()
 		this.testResults = []
 	}
+
+	removeColorCodes( input : string ) {
+		return input.replace( /\[[0-9;]*m/g, '' )
+	}
+
 	cleanupFolder() {
 		const folderPath = path.resolve( this.outputFolder )
 
@@ -35,14 +40,31 @@ class MyReporter implements Reporter {
 	}
 
 	onTestEnd( test: TestCase, result: TestResult ) {
-		if ( result.attachments.length !== 0 ) {
-			console.log( 'title:', test.title )
-			console.log( 'attachments', result.attachments )
-			this.testResults.push( {
-				id: test.id,
-				title: test.title,
-				trace: result.attachments.find( attachment => attachment.name === 'trace' ).path,
-			} )
+		if ( result.status !== test.expectedStatus ) {
+			let testResult = `### ${ test.title }
+`
+			if ( result.errors.length >= 1 ) {
+				testResult += `\`\`\`
+`
+				result.errors.forEach( error => {
+					if ( error.message ) {
+						testResult += `${ this.removeColorCodes( error.message ) }
+
+`
+					}
+
+					if ( error.snippet ) {
+						testResult += `${ this.removeColorCodes( error.snippet ) }
+
+`
+					}
+				} )
+				testResult += `\`\`\`
+
+`
+			}
+
+			this.testResults.push( testResult )
 		}
 	}
 
@@ -54,8 +76,15 @@ class MyReporter implements Reporter {
 		}
 
 		// Write the collected results to a JSON file
-		const reportPath = path.join( folderPath, 'test-traces.json' )
-		fs.writeFileSync( reportPath, JSON.stringify( this.testResults, null, 2 ) )
+		const reportPath = path.join( folderPath, 'errors.md' )
+		let reportContent = ''
+		if ( this.testResults.length ) {
+			reportContent += `## Failed Tests
+
+${ this.testResults.join( '' ) }`
+		}
+
+		fs.writeFileSync( reportPath, reportContent )
 	}
 }
 export default MyReporter
