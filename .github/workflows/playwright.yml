@@ -36,6 +36,7 @@ jobs:
       run: npm run test
     - name: Get failed tests
       id: get-failed-tests
+      if: ${{ !cancelled() }}
       run: |
         CONTENT=$(cat ./playwright-errors/errors.md)
         echo "::set-output name=content::$CONTENT"
