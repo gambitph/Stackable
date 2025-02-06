@@ -38,7 +38,7 @@ jobs:
       if: ${{ !cancelled() }}
       id: artifact-upload-step
       with:
-        name: playwright-report-${{ env.VERSION_SUFFIX }}.zip
+        name: playwright-report-${{ env.VERSION_SUFFIX }}
         path: playwright-report/
         overwrite: true
         retention-days: 30
@@ -58,5 +58,5 @@ jobs:
           ## Playwright Report Artifact
           | file | commit |
           | ---- | ------ |
-          | [playwright-report-${{ env.VERSION_SUFFIX }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}) | ${{ github.sha }} |
+          | [playwright-report-${{ env.VERSION_SUFFIX }}.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}) | ${{ github.sha }} |
         edit-mode: replace
