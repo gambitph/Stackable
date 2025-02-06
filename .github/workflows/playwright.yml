@@ -39,7 +39,7 @@ jobs:
       if: ${{ !cancelled() }}
       run: |
         CONTENT=$(cat ./playwright-errors/errors.md)
-        echo "::set-output name=content::$CONTENT"
+        echo "content=$CONTENT" >> $GITHUB_OUTPUT
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       id: artifact-upload-step
