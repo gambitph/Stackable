@@ -34,6 +34,10 @@ jobs:
           WP_PASSWORD: password
           STACKABLE_SLUG: Stackable/plugin
       run: npm run test
+    - name: Run script to unzip and upload traces
+      run: |
+        chmod +x ./.github/scripts/unzip_traces.sh
+        ./.github/scripts/unzip_traces.sh
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       id: artifact-upload-step

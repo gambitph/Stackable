@@ -13,7 +13,6 @@ dotenv.config( { path: path.resolve( __dirname, '../.env' ) } )
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig( {
-	testDir: '.',
 	// This is run before any tests. Check the file for more information.
 	// globalSetup: 'e2e-global-setup.ts',
 	globalSetup: fileURLToPath(
@@ -33,7 +32,7 @@ export default defineConfig( {
 	workers: 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: process.env.CI
-		? [ [ 'list' ], [ 'github', { useDetails: true, showError: true } ], [ 'html', { outputFolder: '../playwright-report' } ] ]
+		? [ [ 'list' ], [ 'github', { useDetails: true, showError: true } ], [ 'html', { outputFolder: '../playwright-report' } ], [ './config/reporter.ts' ] ]
 		: [ [ 'list' ], [ 'html', { outputFolder: '../playwright-report' } ] ],
 	reportSlowTests: null,
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -70,7 +69,7 @@ export default defineConfig( {
 				storageState: process.env.WP_AUTH_STORAGE,
 				...devices[ 'Desktop Chrome' ],
 			},
-			testMatch: 'tests/*.ts',
+			testDir: './tests',
 		},
 		// {
 		// 	name: 'chromium',
