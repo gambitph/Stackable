@@ -6,6 +6,8 @@ import type {
 import fs from 'fs'
 import path from 'path'
 
+const ansiRegex = new RegExp( '([\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)|(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~])))', 'g' )
+
 class MyReporter implements Reporter {
 	outputFolder: string;
 	testResults: Array<string>;
@@ -16,12 +18,8 @@ class MyReporter implements Reporter {
 		this.testResults = []
 	}
 
-	removeColorCodes( input : string ) {
-		return input.replace( /\[[0-9;]*m/g, '' )
-	}
-
-	escapeSpecialCharacters( input: string ) {
-		return input.replace( /([\'\"\&\{\}])/g, '\\$1' )
+	stripAnsiEscapes( str: string ): string {
+		return str.replace( ansiRegex, '' )
 	}
 
 	cleanupFolder() {
@@ -52,13 +50,13 @@ class MyReporter implements Reporter {
 `
 				result.errors.forEach( error => {
 					if ( error.message ) {
-						testResult += `${ this.removeColorCodes( error.message ) }
+						testResult += `${ error.message }
 
 `
 					}
 
 					if ( error.snippet ) {
-						testResult += `${ this.removeColorCodes( error.snippet ) }
+						testResult += `${ error.snippet }
 
 `
 					}
@@ -87,7 +85,7 @@ class MyReporter implements Reporter {
 
 ${ this.testResults.join( '' ) }`
 
-			reportContent = this.escapeSpecialCharacters( reportContent )
+			reportContent = this.stripAnsiEscapes( reportContent )
 		}
 
 		fs.writeFileSync( reportPath, reportContent )
