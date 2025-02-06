@@ -37,13 +37,7 @@ jobs:
     - name: Get failed tests
       id: get-failed-tests
       if: ${{ !cancelled() }}
-      run: |
-        CONTENT=$(cat ./playwright-errors/errors.md)
-        {
-        echo 'content<<EOF'
-        echo $CONTENT
-        echo EOF
-        } >> $GITHUB_OUTPUT
+      run: echo "content='$(printf "%s\n" "$(cat ./playwright-errors/errors.md)")'" >> $GITHUB_OUTPUT
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       id: artifact-upload-step

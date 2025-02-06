@@ -20,6 +20,10 @@ class MyReporter implements Reporter {
 		return input.replace( /\[[0-9;]*m/g, '' )
 	}
 
+	escapeQuotes( input: string ) {
+		return input.replace( /([\'\"])/g, '\\$1' )
+	}
+
 	cleanupFolder() {
 		const folderPath = path.resolve( this.outputFolder )
 
@@ -82,6 +86,8 @@ class MyReporter implements Reporter {
 			reportContent += `## Failed Tests
 
 ${ this.testResults.join( '' ) }`
+
+			reportContent = this.escapeQuotes( reportContent )
 		}
 
 		fs.writeFileSync( reportPath, reportContent )
