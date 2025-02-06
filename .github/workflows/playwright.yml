@@ -34,10 +34,6 @@ jobs:
           WP_PASSWORD: password
           STACKABLE_SLUG: Stackable/plugin
       run: npm run test
-    - name: Get failed tests
-      id: get-failed-tests
-      if: ${{ !cancelled() }}
-      run: echo "content='$(printf "%s\n" "$(cat ./playwright-errors/errors.md)")'" >> $GITHUB_OUTPUT
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       id: artifact-upload-step
@@ -61,7 +57,7 @@ jobs:
         comment-id: ${{ steps.fc.outputs.comment-id }}
         issue-number: ${{ github.event.pull_request.number }}
         body: |
-          ${{ steps.get-failed-tests.outputs.content }}
+          $(cat ./playwright-errors/errors.md)
           ## Playwright Report Artifact
           | file | commit |
           | ---- | ------ |

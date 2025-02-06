@@ -20,8 +20,8 @@ class MyReporter implements Reporter {
 		return input.replace( /\[[0-9;]*m/g, '' )
 	}
 
-	escapeQuotes( input: string ) {
-		return input.replace( /([\'\"])/g, '\\$1' )
+	escapeSpecialCharacters( input: string ) {
+		return input.replace( /([\'\"\&\{\}])/g, '\\$1' )
 	}
 
 	cleanupFolder() {
@@ -87,7 +87,7 @@ class MyReporter implements Reporter {
 
 ${ this.testResults.join( '' ) }`
 
-			reportContent = this.escapeQuotes( reportContent )
+			reportContent = this.escapeSpecialCharacters( reportContent )
 		}
 
 		fs.writeFileSync( reportPath, reportContent )
