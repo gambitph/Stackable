@@ -12,8 +12,8 @@ jobs:
       fail-fast: false  # Ensures the matrix doesn't stop if one job fails
       matrix:
         include:
-          - php_version: 5.6
-            wp_version: null
+          - php_version: 7.0.0
+            wp_version: 6.4
 
           - php_version: 7.3
             wp_version: null
@@ -71,6 +71,13 @@ jobs:
         npm install -g @wordpress/env
     - name: Start wp-env
       run: wp-env start
+    - name: Get PHP and WordPress versions
+      run: |
+        CONTAINER_NAME=$(docker ps --filter "ancestor=wordpress" --format "{{.Names}}")
+        echo "PHP Version:"
+        docker exec $CONTAINER_NAME php -v
+        echo "WordPress Version:"
+        docker exec $CONTAINER_NAME wp core version
     - name: Run playwright tests
       env:
         WP_BASE_URL: http://localhost:8889
@@ -79,11 +86,6 @@ jobs:
         WP_PASSWORD: password
         STACKABLE_SLUG: Stackable/plugin
       run: npm run test
-    - uses: markpatterson27/markdown-to-output@v1
-      id: mto
-      if: ${{ !cancelled() }}
-      with:
-        filepath: ./playwright-errors/errors.md
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       id: artifact-upload-step
@@ -92,24 +94,3 @@ jobs:
         path: playwright-report/
         overwrite: true
         retention-days: 30
-    - name: Find Comment
-      uses: peter-evans/find-comment@v3
-      if: ${{ !cancelled() }}
-      id: fc
-      with:
-        issue-number: ${{ github.event.pull_request.number }}
-        comment-author: 'github-actions[bot]'
-        body-includes: Playwright Report Artifact for PHP ${{ matrix.php_version }} and WP  ${{ env.WP_VERSION }}
-    - name: Create or update comment
-      uses: peter-evans/create-or-update-comment@v4
-      if: ${{ !cancelled() }}
-      with:
-        comment-id: ${{ steps.fc.outputs.comment-id }}
-        issue-number: ${{ github.event.pull_request.number }}
-        body: |
-          ## Playwright Report Artifact for PHP ${{ matrix.php_version }} and WP  ${{ env.WP_VERSION }}
-          | file | commit |
-          | ---- | ------ |
-          | [playwright-report-${{ env.VERSION_SUFFIX }}.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}) | ${{ github.sha }} |
-          ${{ steps.mto.outputs.body }}
-        edit-mode: replace

@@ -32,9 +32,7 @@ export default defineConfig( {
 	// workers: process.env.CI ? 1 : undefined,
 	workers: 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: process.env.CI
-		? [ [ 'list' ], [ 'html', { outputFolder: '../playwright-report', open: 'never' } ], [ './config/reporter.ts' ] ]
-		: [ [ 'list' ], [ 'html', { outputFolder: '../playwright-report', open: 'never' } ] ],
+	reporter: [ [ 'list' ], [ 'html', { outputFolder: '../playwright-report', open: 'never' } ] ],
 	reportSlowTests: null,
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
