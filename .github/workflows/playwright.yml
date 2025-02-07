@@ -13,7 +13,7 @@ jobs:
       matrix:
         include:
           - php_version: '7.3'
-            wp_version: 6.4
+            wp_version: 6.4.5
 
           - php_version: '7.3'
             wp_version: null
