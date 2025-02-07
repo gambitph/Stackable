@@ -11,6 +11,7 @@ import { i18n, version as VERSION } from 'stackable'
 import {
 	AdvancedToggleControl,
 	FourRangeControl,
+	GlobalColorSchemeControl,
 	InspectorLayoutControls,
 	InspectorTabs,
 	useBlockCssGenerator,
@@ -164,6 +165,7 @@ const Edit = props => {
 const InspectorControls = memo( props => {
 	return (
 		<>
+			<GlobalColorSchemeControl />
 			<InspectorTabs />
 
 			<InspectorLayoutControls>

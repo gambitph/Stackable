@@ -1,0 +1,20 @@
+.stk-global-color-scheme-control {
+	padding: 8px 16px 24px !important;
+	margin: 0 !important;
+	> .components-base-control__field {
+		display: flex;
+		gap: 8px;
+	}
+	.stk-control-label {
+		flex: 1 0 auto;
+	}
+	.stk-control-content {
+		flex: 1 1 100%;
+	}
+	.stk-control-label,
+	.components-base-control,
+	.components-base-control__field,
+	.components-select-control {
+		margin: 0 !important;
+	}
+}

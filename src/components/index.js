@@ -106,6 +106,7 @@ export { default as ColumnInnerBlocks } from './column-inner-blocks'
 export { default as VariationPicker } from './variation-picker'
 export { default as InspectorBottomTip } from './inspector-bottom-tip'
 export { default as BlockWrapper } from './block-wrapper'
+export { default as GlobalColorSchemeControl } from './global-color-scheme-control'
 // TODO: clean this
 export {
 	default as BlockCss, BlockCssCompiler, BlockStyleGenerator, useBlockCssGenerator,

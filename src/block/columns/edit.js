@@ -11,6 +11,7 @@ import classnames from 'classnames'
 import {
 	ColumnInnerBlocks,
 	ControlSeparator,
+	GlobalColorSchemeControl,
 	GroupPlaceholder,
 	InspectorLayoutControls,
 	InspectorTabs,
@@ -168,6 +169,7 @@ if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
 const InspectorControls = memo( () => {
 	return (
 		<>
+			<GlobalColorSchemeControl />
 			<InspectorTabs />
 
 			<Columns.InspectorControls />
