@@ -39,14 +39,20 @@ jobs:
       if: ${{ !cancelled() }}
       with:
         filepath: ./playwright-errors/errors.md
-    - uses: initdc/upload-artifact@baac12d9f85834b2f8baa26a08ff97c27cc82cd9
+    - name: Get trace files
+      id: get-trace-files
+      if: ${{ !cancelled() }}
+      run: |
+        IDS=$(cat ./playwright-errors/testIds.json)
+        TRACES=$(cat ./playwright-errors/traceFiles.json)
+        echo "testIds=$IDS" >> $GITHUB_OUTPUT
+        echo "traceFiles=$TRACES" >> $GITHUB_OUTPUT
+    - uses: BToersche/upload-artifact@5442a4e8a3867a1c14be1ee3a04c4f47b261d632
       id: upload-traces
       if: ${{ !cancelled() }}
       with:
-        artifact-per-file: true
-        artifact-name-rule: ${name}${ext}
-        path: |
-          test-results/*/trace.zip
+        name: '${{ steps.get-trace-files.outputs.testIds }}'
+        path: '${{ steps.get-trace-files.outputs.traceFiles }}'
         retention-days: 1
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}

@@ -11,11 +11,15 @@ const ansiRegex = new RegExp( '([\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]
 class MyReporter implements Reporter {
 	outputFolder: string;
 	testResults: Array<string>;
+	testIds: Array<string>;
+	traceFiles: Array<string>;
 
 	constructor() {
 		this.outputFolder = 'playwright-errors'
 		this.cleanupFolder()
 		this.testResults = []
+		this.testIds = []
+		this.traceFiles = []
 	}
 
 	stripAnsiEscapes( str: string ): string {
@@ -67,6 +71,8 @@ class MyReporter implements Reporter {
 			}
 
 			this.testResults.push( testResult )
+			this.testIds.push( test.id )
+			this.traceFiles.push( result.attachments.find( attachment => attachment.name === 'trace' ).path )
 		}
 	}
 
@@ -80,15 +86,25 @@ class MyReporter implements Reporter {
 		// Write the collected results to a JSON file
 		const reportPath = path.join( folderPath, 'errors.md' )
 		let reportContent = ''
+
+		const testIdsPath = path.join( folderPath, 'testIds.json' )
+		let testIdsContent = ''
+
+		const traceFilesPath = path.join( folderPath, 'traceFiles.json' )
+		let traceFilesContent = ''
 		if ( this.testResults.length ) {
 			reportContent += `## Failed Tests
 
 ${ this.testResults.join( '' ) }`
 
 			reportContent = this.stripAnsiEscapes( reportContent )
+			testIdsContent = JSON.stringify( this.testIds, null, 2 )
+			traceFilesContent = JSON.stringify( this.traceFiles, null, 2 )
 		}
 
 		fs.writeFileSync( reportPath, reportContent )
+		fs.writeFileSync( testIdsPath, testIdsContent )
+		fs.writeFileSync( traceFilesPath, traceFilesContent )
 	}
 }
 export default MyReporter
