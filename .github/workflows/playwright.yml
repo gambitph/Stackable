@@ -88,7 +88,7 @@ jobs:
       if: ${{ !cancelled() }}
       id: artifact-upload-step
       with:
-        name: playwright-report-${{ env.VERSION_SUFFIX }}
+        name: playwright-report-php_${{ matrix.php_version }}-wp_${{ env.WP_VERSION }}-${{ env.VERSION_SUFFIX }}
         path: playwright-report/
         overwrite: true
         retention-days: 30
