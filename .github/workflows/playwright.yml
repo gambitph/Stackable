@@ -29,6 +29,7 @@ jobs:
           - php_version: 8.2
             wp_version: null
 
+    name: Playwright tests on PHP ${{ matrix.php_version }} and WP ${{ matrix.wp_version || 'latest' }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -39,22 +40,22 @@ jobs:
     - name: Set WP Version and create .wp-env.json
       run: |
         WP_VERSION="${{ matrix.wp_version }}"
-        core="Wordpress/Wordpress#${{ matrix.wp_version }}"
+        core='"Wordpress/Wordpress#'${{ matrix.wp_version }}'"'
 
         if [[ -z "$WP_VERSION" || "$WP_VERSION" == "null" ]]; then
-          WP_VERSION="Latest"
+          WP_VERSION="latest"
           core=null
         fi
 
         echo "WP_VERSION=$WP_VERSION" >> $GITHUB_ENV
 
         echo '{
-            "core": $core,
-            "phpVersion": "${{ matrix.php_version }}"
-            "plugins": [ "." ],
-            "config": {
-                  "SCRIPT_DEBUG": false
-              }
+          "core": '$core',
+          "phpVersion": "7.5",
+          "plugins": [ "." ],
+          "config": {
+              "SCRIPT_DEBUG": false
+            }
           }' > .wp-env.json
 
         cat .wp-env.json
