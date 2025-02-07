@@ -97,4 +97,4 @@ jobs:
       if: ${{ !cancelled() && steps.run-playwright-tests.outcome == 'failure' }}
       run: |
         echo "${{ steps.mto.outputs.body }}" >> $GITHUB_STEP_SUMMARY
-        echo "Report: [playwright-report-php_${{ matrix.php_version }}-wp_${{ env.WP_VERSION }}-${{ env.VERSION_SUFFIX }}.zip](${{ steps.artifact-upload-step.outcome.artifact-url}})" >> $GITHUB_STEP_SUMMARY
+        echo "Report: [playwright-report-php_${{ matrix.php_version }}-wp_${{ env.WP_VERSION }}-${{ env.VERSION_SUFFIX }}.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }})" >> $GITHUB_STEP_SUMMARY

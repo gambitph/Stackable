@@ -4,7 +4,7 @@ import type {
 	Reporter, Suite, TestCase,
 } from '@playwright/test/reporter'
 
-import { ansiRegex, ms } from 'e2e/test-utils'
+import { ms } from 'e2e/test-utils'
 
 import fs from 'fs'
 import path from 'path'
@@ -21,10 +21,6 @@ class StkReporter implements Reporter {
 
 		this.totalTestCount = 0
 		this.failedTestErrors = []
-	}
-
-	stripAnsiEscapes( str: string ): string {
-		return str.replace( ansiRegex, '' )
 	}
 
 	cleanupFolder() {
