@@ -71,9 +71,7 @@ jobs:
         npm install -g @wordpress/env
     - name: Start wp-env
       run: wp-env start
-      id: start-wp-env
     - name: Run playwright tests
-      if: ${{ steps.start-wp-env.outcome != 'failure' }}
       id: run-playwright-tests
       env:
         WP_BASE_URL: http://localhost:8889
@@ -83,7 +81,7 @@ jobs:
         STACKABLE_SLUG: Stackable/plugin
       run: npm run test
     - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+      if: ${{ !failure() && !cancelled() }}
       id: artifact-upload-step
       with:
         name: playwright-report-php_${{ matrix.php_version }}-wp_${{ env.WP_VERSION }}-${{ env.VERSION_SUFFIX }}

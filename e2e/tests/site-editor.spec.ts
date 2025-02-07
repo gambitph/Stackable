@@ -33,7 +33,7 @@ test.describe( 'Site Editor', () => {
 		page,
 		editor,
 	} ) => {
-		await page.getByLabel( 'Toggle block inserter' ).click()
+		await page.getByLabel( 'Toggle block inserterx' ).click()
 		await page.locator( '.editor-block-list-item-stackable-text' ).click()
 
 		const blocks = await editor.getBlocks( { clientId: postContentBlock.clientId } )
@@ -50,7 +50,7 @@ test.describe( 'Site Editor', () => {
 		}, { clientId: postContentBlock.clientId } )
 
 		await editor.selectBlocks( editor.canvas.getByLabel( 'Block: Text' ) )
-		await expect( page.getByLabel( 'Layout Tab' ) ).toBeVisible()
+		await expect( page.getByLabel( 'Layout Tabx' ) ).toBeVisible()
 		await expect( page.getByLabel( 'Style Tab' ) ).toBeVisible()
 		await expect( page.getByLabel( 'Advanced Tab' ) ).toBeVisible()
 	} )
