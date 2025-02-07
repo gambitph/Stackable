@@ -28,17 +28,26 @@ jobs:
       run: wp-env start
     - name: Run playwright tests
       env:
-          WP_BASE_URL: http://localhost:8888
-          WP_AUTH_STORAGE: wp-auth.json
-          WP_USERNAME: admin
-          WP_PASSWORD: password
-          STACKABLE_SLUG: Stackable/plugin
+        WP_BASE_URL: http://localhost:8888
+        WP_AUTH_STORAGE: wp-auth.json
+        WP_USERNAME: admin
+        WP_PASSWORD: password
+        STACKABLE_SLUG: Stackable/plugin
       run: npm run test
     - uses: markpatterson27/markdown-to-output@v1
       id: mto
       if: ${{ !cancelled() }}
       with:
-          filepath: ./playwright-errors/errors.md
+        filepath: ./playwright-errors/errors.md
+    - uses: initdc/upload-artifact@baac12d9f85834b2f8baa26a08ff97c27cc82cd9
+      id: upload-traces
+      if: ${{ !cancelled() }}
+      with:
+        artifact-per-file: true
+        artifact-name-rule: ${dir}-${name}${ext}
+        path: |
+          test-results/*/trace.zip
+        retention-days: 1
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       id: artifact-upload-step

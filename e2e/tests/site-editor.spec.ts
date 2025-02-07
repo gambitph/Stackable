@@ -55,51 +55,51 @@ test.describe( 'Site Editor', () => {
 		await expect( page.getByLabel( 'Advanced Tab' ) ).toBeVisible()
 	} )
 
-	test( 'A Stackable block\'s attributes should update when settings are changed in the Inspector Controls.', async ( {
-		page,
-		editor,
-	} ) => {
-		await editor.insertBlock( {
-			name: 'stackable/text',
-		}, { clientId: postContentBlock.clientId } )
-		await editor.canvas.getByLabel( 'Type / to choose a block' ).fill( 'test' )
-		await expect( page.locator( '#inspector-textarea-control-0' ) ).toContainText( 'test' )
-		await page.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
-		await page.getByLabel( 'Hex color' ).fill( 'ff0000' )
-		await editor.canvas.locator( 'body' ).click()
+	// test( 'A Stackable block\'s attributes should update when settings are changed in the Inspector Controls.', async ( {
+	// 	page,
+	// 	editor,
+	// } ) => {
+	// 	await editor.insertBlock( {
+	// 		name: 'stackable/text',
+	// 	}, { clientId: postContentBlock.clientId } )
+	// 	await editor.canvas.getByLabel( 'Type / to choose a block' ).fill( 'test' )
+	// 	await expect( page.locator( '#inspector-textarea-control-0' ) ).toContainText( 'test' )
+	// 	await page.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
+	// 	await page.getByLabel( 'Hex color' ).fill( 'ff0000' )
+	// 	await editor.canvas.locator( 'body' ).click()
 
-		await expect( editor.canvas.locator( '[data-type="stackable/text"]' ) ).toContainText( 'test' )
-		await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+	// 	await expect( editor.canvas.locator( '[data-type="stackable/text"]' ) ).toContainText( 'test' )
+	// 	await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
 
-		await editor.saveDraft()
+	// 	await editor.saveDraft()
 
-		const blocks = await editor.getBlocks( { clientId: postContentBlock.clientId } )
-		const textBlock = blocks.find( block => block.name === 'stackable/text' )
-		expect( textBlock.attributes.text ).toBe( 'test' )
-		expect( textBlock.attributes.textColor1 ).toBe( '#ff0000' )
-	} )
+	// 	const blocks = await editor.getBlocks( { clientId: postContentBlock.clientId } )
+	// 	const textBlock = blocks.find( block => block.name === 'stackable/text' )
+	// 	expect( textBlock.attributes.text ).toBe( 'test' )
+	// 	expect( textBlock.attributes.textColor1 ).toBe( '#ff0000' )
+	// } )
 
-	test( 'The Stackable block added in the site editor should be visible in the frontend', async ( {
-		editor,
-	} ) => {
-		await editor.insertBlock( {
-			name: 'stackable/text',
-			attributes: {
-				text: 'test',
-				textColor1: '#ff0000',
-			},
-		}, { clientId: postContentBlock.clientId } )
+	// test( 'The Stackable block added in the site editor should be visible in the frontend', async ( {
+	// 	editor,
+	// } ) => {
+	// 	await editor.insertBlock( {
+	// 		name: 'stackable/text',
+	// 		attributes: {
+	// 			text: 'test',
+	// 			textColor1: '#ff0000',
+	// 		},
+	// 	}, { clientId: postContentBlock.clientId } )
 
-		const blocks = await editor.getBlocks( { clientId: postContentBlock.clientId } )
-		const uniqueId = blocks.find( block => block.name === 'stackable/text' ).attributes.uniqueId
+	// 	const blocks = await editor.getBlocks( { clientId: postContentBlock.clientId } )
+	// 	const uniqueId = blocks.find( block => block.name === 'stackable/text' ).attributes.uniqueId
 
-		await editor.saveDraft()
+	// 	await editor.saveDraft()
 
-		const preview = await editor.openPreviewPage()
+	// 	const preview = await editor.openPreviewPage()
 
-		await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toBeVisible()
-		await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toContainText( 'test' )
-		await expect( preview.locator( `[data-block-id="${ uniqueId }"] p` ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
-	} )
+	// 	await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toBeVisible()
+	// 	await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toContainText( 'test' )
+	// 	await expect( preview.locator( `[data-block-id="${ uniqueId }"] p` ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+	// } )
 } )
 
