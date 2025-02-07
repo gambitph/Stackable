@@ -12,17 +12,17 @@ jobs:
       fail-fast: false  # Ensures the matrix doesn't stop if one job fails
       matrix:
         include:
-          # - php_version: 5.6
-          #   wp_version: null
+          - php_version: 5.6
+            wp_version: null
 
           - php_version: 7.3
             wp_version: null
 
-          # - php_version: 8.2
-          #   wp_version: 6.4.5
+          - php_version: 8.2
+            wp_version: 6.4.5
 
-          # - php_version: 8.2
-          #   wp_version: 6.5.5
+          - php_version: 8.2
+            wp_version: 6.5.5
 
           - php_version: 8.2
             wp_version: 6.6.2
@@ -65,7 +65,7 @@ jobs:
         npm ci --legacy-peer-deps
         npm run build:no-translate
     - name: Install Playwright Browsers
-      run: npx playwright install chromium firefox webkit --with-deps
+      run: npx playwright install chromium --with-deps
     - name: Install wp-env
       run: |
         npm install -g @wordpress/env
@@ -73,7 +73,7 @@ jobs:
       run: wp-env start
     - name: Run playwright tests
       env:
-        WP_BASE_URL: http://localhost:8888
+        WP_BASE_URL: http://localhost:8889
         WP_AUTH_STORAGE: wp-auth.json
         WP_USERNAME: admin
         WP_PASSWORD: password
