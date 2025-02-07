@@ -87,10 +87,10 @@ class MyReporter implements Reporter {
 		const reportPath = path.join( folderPath, 'errors.md' )
 		let reportContent = ''
 
-		const testIdsPath = path.join( folderPath, 'testIds.json' )
+		const testIdsPath = path.join( folderPath, 'testIds.txt' )
 		let testIdsContent = ''
 
-		const traceFilesPath = path.join( folderPath, 'traceFiles.json' )
+		const traceFilesPath = path.join( folderPath, 'traceFiles.txt' )
 		let traceFilesContent = ''
 		if ( this.testResults.length ) {
 			reportContent += `## Failed Tests
@@ -98,8 +98,8 @@ class MyReporter implements Reporter {
 ${ this.testResults.join( '' ) }`
 
 			reportContent = this.stripAnsiEscapes( reportContent )
-			testIdsContent = JSON.stringify( this.testIds, null, 2 )
-			traceFilesContent = JSON.stringify( this.traceFiles, null, 2 )
+			testIdsContent = JSON.stringify( this.testIds )
+			traceFilesContent = JSON.stringify( this.traceFiles )
 		}
 
 		fs.writeFileSync( reportPath, reportContent )
