@@ -8,6 +8,27 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          # - php_version: 5.6
+          #   wp_version: null
+
+          - php_version: 7.3
+            wp_version: null
+
+          # - php_version: 8.2
+          #   wp_version: 6.4.5
+
+          # - php_version: 8.2
+          #   wp_version: 6.5.5
+
+          - php_version: 8.2
+            wp_version: 6.6.2
+
+          - php_version: 8.2
+            wp_version: null
+
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -15,6 +36,28 @@ jobs:
         node-version: lts/*
     - name: Set the version suffix for the output
       run: echo VERSION_SUFFIX=${GITHUB_REF_NAME//\//-} >> $GITHUB_ENV
+    - name: Set WP Version and create .wp-env.json
+      run: |
+        WP_VERSION="${{ matrix.wp_version }}"
+        core="Wordpress/Wordpress#${{ matrix.wp_version }}"
+
+        if [[ -z "$WP_VERSION" || "$WP_VERSION" == "null" ]]; then
+          WP_VERSION="Latest"
+          core=null
+        fi
+
+        echo "WP_VERSION=$WP_VERSION" >> $GITHUB_ENV
+
+        echo '{
+            "core": $core,
+            "phpVersion": "${{ matrix.php_version }}"
+            "plugins": [ "." ],
+            "config": {
+                  "SCRIPT_DEBUG": false
+              }
+          }' > .wp-env.json
+
+        cat .wp-env.json
     - name: Build Stackable Free Plugin
       run: |
         npm ci --legacy-peer-deps
@@ -39,21 +82,6 @@ jobs:
       if: ${{ !cancelled() }}
       with:
         filepath: ./playwright-errors/errors.md
-    - name: Get trace files
-      id: get-trace-files
-      if: ${{ !cancelled() }}
-      run: |
-        IDS=$(cat ./playwright-errors/testIds.json)
-        TRACES=$(cat ./playwright-errors/traceFiles.json)
-        echo "testIds=$IDS" >> $GITHUB_OUTPUT
-        echo "traceFiles=$TRACES" >> $GITHUB_OUTPUT
-    - uses: BToersche/upload-artifact@5442a4e8a3867a1c14be1ee3a04c4f47b261d632
-      id: upload-traces
-      if: ${{ !cancelled() }}
-      with:
-        name: '${{ steps.get-trace-files.outputs.testIds }}'
-        path: '${{ steps.get-trace-files.outputs.traceFiles }}'
-        retention-days: 1
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       id: artifact-upload-step
@@ -69,7 +97,7 @@ jobs:
       with:
         issue-number: ${{ github.event.pull_request.number }}
         comment-author: 'github-actions[bot]'
-        body-includes: Playwright Report Artifact
+        body-includes: Playwright Report Artifact for PHP ${{ matrix.php_version }} and WP  ${{ env.WP_VERSION }}
     - name: Create or update comment
       uses: peter-evans/create-or-update-comment@v4
       if: ${{ !cancelled() }}
@@ -78,7 +106,7 @@ jobs:
         issue-number: ${{ github.event.pull_request.number }}
         body: |
           ${{ steps.mto.outputs.body }}
-          ## Playwright Report Artifact
+          ## Playwright Report Artifact for PHP ${{ matrix.php_version }} and WP  ${{ env.WP_VERSION }}
           | file | commit |
           | ---- | ------ |
           | [playwright-report-${{ env.VERSION_SUFFIX }}.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}) | ${{ github.sha }} |
