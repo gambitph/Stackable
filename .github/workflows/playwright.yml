@@ -29,7 +29,7 @@ jobs:
           - php_version: 8.2
             wp_version: null
 
-    name: Playwright tests on PHP ${{ matrix.php_version }} and WP ${{ matrix.wp_version || 'latest' }}
+    name: PHP ${{ matrix.php_version }} and WP ${{ matrix.wp_version || 'latest' }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -51,7 +51,7 @@ jobs:
 
         echo '{
           "core": '$core',
-          "phpVersion": "7.5",
+          "phpVersion": "${{ matrix.php_version }}",
           "plugins": [ "." ],
           "config": {
               "SCRIPT_DEBUG": false
