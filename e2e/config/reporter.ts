@@ -114,6 +114,7 @@ class StkReporter implements Reporter {
 
 Failed Tests:
 ${ unexpectedTestTitles.join( '\n' ) }
+
 `
 
 			const folderPath = path.resolve( this.outputFolder )
