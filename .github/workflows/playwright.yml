@@ -71,12 +71,16 @@ jobs:
         npm install -g @wordpress/env
     - name: Start wp-env
       run: wp-env start
-    - name: Get PHP and WordPress versions
+      id: start-wp-env
+    - name: Verify PHP and WP versions running
       run: |
-        docker ps
-        wp-env logs
+        CONTAINER_ID=$(docker ps | grep 'tests-wordpress' | awk '{ print $1 }')
+        echo "Container ID: $CONTAINER_ID"
+        docker exec $CONTAINER_ID php -v
+        wp-env run cli grep wp_version wp-includes/version.php
     - name: Run playwright tests
-      if: ${{ !cancelled() }}
+      if: ${{ steps.start-wp-env.outcome != 'failure' }}
+      id: run-playwright-tests
       env:
         WP_BASE_URL: http://localhost:8889
         WP_AUTH_STORAGE: wp-auth.json
@@ -85,7 +89,7 @@ jobs:
         STACKABLE_SLUG: Stackable/plugin
       run: npm run test
     - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+      if: ${{ steps.run-playwright-tests.outcome == 'failure' }}
       id: artifact-upload-step
       with:
         name: playwright-report-php_${{ matrix.php_version }}-wp_${{ env.WP_VERSION }}-${{ env.VERSION_SUFFIX }}
