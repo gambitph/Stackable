@@ -24,7 +24,7 @@ export default defineConfig( {
 	// forbidOnly: !! process.env.CI,
 	/* Retry on CI only */
 	// retries: process.env.CI ? 1 : 0,
-	retries: 0,
+	retries: 1,
 	// Locally, we could take advantage of parallelism due to multicore systems.
 	// However, in the CI, we typically can use only one worker at a time.
 	// It's more straightforward to align how we run tests in both systems.
@@ -32,7 +32,7 @@ export default defineConfig( {
 	// workers: process.env.CI ? 1 : undefined,
 	workers: 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: [ [ 'list' ], [ 'html', { outputFolder: '../playwright-report', open: 'never' } ] ],
+	reporter: [ [ './config/reporter.ts' ], [ 'html', { outputFolder: '../playwright-report', open: 'never' } ] ],
 	reportSlowTests: null,
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {

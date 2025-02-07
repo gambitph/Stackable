@@ -81,10 +81,20 @@ jobs:
         STACKABLE_SLUG: Stackable/plugin
       run: npm run test
     - uses: actions/upload-artifact@v4
-      if: ${{ !failure() && !cancelled() }}
+      if: ${{ steps.run-playwright-tests.outcome == 'failure' }}
       id: artifact-upload-step
       with:
         name: playwright-report-php_${{ matrix.php_version }}-wp_${{ env.WP_VERSION }}-${{ env.VERSION_SUFFIX }}
         path: playwright-report/
         overwrite: true
         retention-days: 30
+    - uses: markpatterson27/markdown-to-output@v1
+      id: mto
+      if: ${{ steps.run-playwright-tests.outcome == 'failure' }}
+      with:
+        filepath: ./playwright-stk/errors.md
+    - name: Add test results to summary
+      if: ${{ steps.run-playwright-tests.outcome == 'failure' }}
+      run: |
+        echo "### Results for PHP ${{ matrix.php_version }} and WP ${{ matrix.wp_version || 'latest' }}" >> $GITHUB_STEP_SUMMARY
+        echo "${{ steps.mto.outputs.body }}" >> $GITHUB_STEP_SUMMARY
