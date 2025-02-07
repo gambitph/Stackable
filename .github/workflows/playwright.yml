@@ -9,6 +9,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false  # Ensures the matrix doesn't stop if one job fails
       matrix:
         include:
           # - php_version: 5.6
@@ -106,9 +107,9 @@ jobs:
         comment-id: ${{ steps.fc.outputs.comment-id }}
         issue-number: ${{ github.event.pull_request.number }}
         body: |
-          ${{ steps.mto.outputs.body }}
           ## Playwright Report Artifact for PHP ${{ matrix.php_version }} and WP  ${{ env.WP_VERSION }}
           | file | commit |
           | ---- | ------ |
           | [playwright-report-${{ env.VERSION_SUFFIX }}.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}) | ${{ github.sha }} |
+          ${{ steps.mto.outputs.body }}
         edit-mode: replace
