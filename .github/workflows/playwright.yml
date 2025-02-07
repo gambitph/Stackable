@@ -44,7 +44,7 @@ jobs:
       if: ${{ !cancelled() }}
       with:
         artifact-per-file: true
-        artifact-name-rule: ${dir}-${name}${ext}
+        artifact-name-rule: ${name}${ext}
         path: |
           test-results/*/trace.zip
         retention-days: 1
