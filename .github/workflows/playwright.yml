@@ -12,7 +12,7 @@ jobs:
       fail-fast: false  # Ensures the matrix doesn't stop if one job fails
       matrix:
         include:
-          - php_version: 7.0.0
+          - php_version: 7.0
             wp_version: 6.4
 
           - php_version: 7.3
@@ -73,12 +73,10 @@ jobs:
       run: wp-env start
     - name: Get PHP and WordPress versions
       run: |
-        CONTAINER_NAME=$(docker ps --filter "ancestor=wordpress" --format "{{.Names}}")
-        echo "PHP Version:"
-        docker exec $CONTAINER_NAME php -v
-        echo "WordPress Version:"
-        docker exec $CONTAINER_NAME wp core version
+        docker ps
+        wp-env logs
     - name: Run playwright tests
+      if: ${{ !cancelled() }}
       env:
         WP_BASE_URL: http://localhost:8889
         WP_AUTH_STORAGE: wp-auth.json
