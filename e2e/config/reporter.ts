@@ -49,22 +49,16 @@ class StkReporter implements Reporter {
 	}
 
 	onTestEnd( test: TestCase, result: TestResult ) {
-		// Console Reporter similar to Playwright's Dot Reporter:
-		// '·' for passed test
-		// '×' for attempt for retry
-		// 'T' for timed out
-		// 'F' for failed test
+		// Console Reporter similar to Playwright's List Reporter:
+		const resultMark = test.ok() ? '✓' : '✘'
+		const titlePath = test.titlePath().filter( t => t !== '' ).join( ' › ' )
+		const retryLabel = test.results.length > 1 ? `(retry #${ test.results.length - 1 }) ` : ''
+		const duration = `[${ ms( result.duration ) }]`
+		console.log( `${ resultMark } ${ titlePath } ${ retryLabel }${ duration }` )
 
-		if ( test.outcome() === 'expected' ) {
-			process.stdout.write( '·' )
-		} else {
-			const titlePath = test.titlePath().filter( t => t !== '' ).join( ' › ' )
-
-			const out = test.results.length <= test.retries ? '×' : ( result.status === 'timedOut' ? 'T' : 'F' )
-			process.stdout.write( out )
-
+		if ( result.status !== test.expectedStatus ) {
 			// Compile error messages and snippets
-			let testResult = `${ titlePath } ${ test.results.length > 1 ? `(retry #${ test.results.length - 1 }) ` : '' }[${ ms( result.duration ) }]` + '\n\n'
+			let testResult = `${ titlePath } ${ retryLabel }${ duration }` + '\n\n'
 			if ( result.errors.length >= 1 ) {
 				result.errors.forEach( error => {
 					if ( error.message ) {
