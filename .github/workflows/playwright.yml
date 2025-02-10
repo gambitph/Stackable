@@ -69,6 +69,10 @@ jobs:
     - name: Install wp-env
       run: |
         npm install -g @wordpress/env
+    - name: Create post with existing blocks
+      run: |
+        POST_ID=$(wp post create ./e2e/config/post-content.txt --post_title="Existing Blocks" --post_status=publish --porcelain)
+        echo "WP_TEST_POSTID=$POST_ID" >> $GITHUB_ENV
     - name: Start wp-env
       run: wp-env start
     - name: Run playwright tests
@@ -79,6 +83,7 @@ jobs:
         WP_USERNAME: admin
         WP_PASSWORD: password
         STACKABLE_SLUG: Stackable/plugin
+        WP_TEST_POSTID: ${{ env.WP_TEST_POSTID }}
       run: npm run test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() && steps.run-playwright-tests.outcome == 'failure' }}
