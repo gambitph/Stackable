@@ -61,17 +61,22 @@ test.describe( 'Block Editor', () => {
 
 		await editor.saveDraft()
 
-		await expect( async () => {
-			const blocks = await editor.getBlocks()
-			const attributes = blocks.find( block => block.name === 'stackable/text' ).attributes
+		await page.waitForFunction(
+			() => window?.wp?.blocks && window?.wp?.data
+		)
 
-			expect( attributes.textColor1 ).toBe( '#ff0000' )
-			expect( attributes.text ).toBe( 'test' )
-		} ).toPass( { intervals: [ 1_000, 2_000, 5_000 ] } )
+		const clientId = await editor.canvas.getByLabel( 'Block: Text' ).getAttribute( 'data-block' )
+
+		const attributes = await page.evaluate( async ( [ _clientId ] ) => {
+			return await window.wp.data.select( 'core/block-editor' ).getBlockAttributes( _clientId )
+		}, [ clientId ] )
+
+		expect( attributes ).toHaveAttribute( 'textColor1', '#ff0000' )
+		expect( attributes ).toHaveAttribute( 'text', 'test' )
 	} )
 
 	test( 'The Stackable block added in the editor should be visible in the frontend', async ( {
-		editor,
+		page, editor,
 	} ) => {
 		await editor.insertBlock( {
 			name: 'stackable/text',
@@ -81,8 +86,17 @@ test.describe( 'Block Editor', () => {
 			},
 		} )
 
-		const blocks = await editor.getBlocks()
-		const uniqueId = blocks.find( block => block.name === 'stackable/text' ).attributes.uniqueId
+		await page.waitForFunction(
+			() => window?.wp?.blocks && window?.wp?.data
+		)
+
+		const clientId = await editor.canvas.getByLabel( 'Block: Text' ).getAttribute( 'data-block' )
+
+		const attributes = await page.evaluate( async ( [ _clientId ] ) => {
+			return await window.wp.data.select( 'core/block-editor' ).getBlockAttributes( _clientId )
+		}, [ clientId ] )
+
+		const uniqueId = attributes.uniqueId
 
 		await editor.saveDraft()
 
