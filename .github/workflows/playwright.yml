@@ -71,7 +71,7 @@ jobs:
         npm install -g @wordpress/env
     - name: Create post with existing blocks
       run: |
-        POST_ID=$(wp post create ./e2e/config/post-content.txt --post_title="Existing Blocks" --post_status=publish --porcelain)
+        POST_ID=$(wp-env run cli wp post create ./e2e/config/post-content.txt --post_title="Existing Blocks" --post_status=publish --porcelain)
         echo "WP_TEST_POSTID=$POST_ID" >> $GITHUB_ENV
     - name: Start wp-env
       run: wp-env start
