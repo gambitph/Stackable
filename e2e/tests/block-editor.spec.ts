@@ -25,9 +25,7 @@ test.describe( 'Block Editor', () => {
 
 		await page.locator( '.editor-block-list-item-stackable-text' ).click()
 
-		const blocks = await editor.getBlocks()
-
-		expect( blocks[ 0 ].name ).toContain( 'stackable/text' )
+		await expect( editor.canvas.getByLabel( 'Block: Text' ) ).toBeVisible()
 	} )
 
 	test( 'Stackable Inspector Controls should show up upon clicking a Stackable block', async ( {
@@ -63,11 +61,13 @@ test.describe( 'Block Editor', () => {
 
 		await editor.saveDraft()
 
-		const blocks = await editor.getBlocks()
-		const attributes = blocks[ 0 ].attributes
+		await expect( async () => {
+			const blocks = await editor.getBlocks()
+			const attributes = blocks.find( block => block.name === 'stackable/text' ).attributes
 
-		expect( attributes.textColor1 ).toBe( '#ff0000' )
-		expect( attributes.text ).toBe( 'test' )
+			expect( attributes.textColor1 ).toBe( '#ff0000' )
+			expect( attributes.text ).toBe( 'test' )
+		} ).toPass( { intervals: [ 1_000, 2_000, 5_000 ] } )
 	} )
 
 	test( 'The Stackable block added in the editor should be visible in the frontend', async ( {
@@ -82,7 +82,7 @@ test.describe( 'Block Editor', () => {
 		} )
 
 		const blocks = await editor.getBlocks()
-		const uniqueId = blocks[ 0 ].attributes.uniqueId
+		const uniqueId = blocks.find( block => block.name === 'stackable/text' ).attributes.uniqueId
 
 		await editor.saveDraft()
 
