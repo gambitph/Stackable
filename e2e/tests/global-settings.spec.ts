@@ -30,12 +30,14 @@ test.describe( 'Global Settigs', () => {
 		const globalColors = panel.locator( '.ugb-global-settings-color-picker__color-indicators > div' )
 		const count = ( await globalColors.evaluate( node => Array.from( node.childNodes ) ) ).length
 
+		// Verify if a new color is added to the list
 		const newColor = globalColors.getByRole( 'button', { name: `Custom Color ${ count } ` } )
 		await expect( newColor ).toBeVisible()
+
+		// Get the value of the new global color
 		await newColor.click()
 		const hexValue = await page.getByLabel( 'Hex color' ).inputValue()
 
-		// Insert a Stackable Text Block and check if the added Global Colors is in the color picker
 		await page.getByLabel( 'Settings', { exact: true } ).click()
 		editor.insertBlock( {
 			name: 'stackable/text',
@@ -43,12 +45,19 @@ test.describe( 'Global Settigs', () => {
 				text: 'test',
 			},
 		} )
+
+		// Open the color picker
 		await page.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
+		// Verify the newly added global color is in the color picker
 		await expect( page.getByRole( 'heading', { name: 'Global Colors' } ) ).toBeVisible()
 		await expect( page.getByLabel( `Color: Custom Color ${ count }` ) ).toBeVisible()
+
+		// Verify the color value
 		await page.getByLabel( `Color: Custom Color ${ count }` ).click()
 		await expect( page.getByLabel( 'Hex color' ) ).toHaveValue( hexValue )
+
+		// Click on the color picker button to close the popup
 		await page.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
 		// Delete added Global Color
@@ -67,7 +76,11 @@ test.describe( 'Global Settigs', () => {
 		await page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' ).click()
 		await page.locator( '.stk-popover .components-base-control:nth-of-type(2)', { hasText: /Size/ } ).getByRole( 'textbox' ).fill( '32' )
 		await page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' ).click()
+
+		// Verify if the Heading 2 in Global Typography Styles has correct font size
 		await expect( page.getByRole( 'heading', { name: 'Heading 2' } ) ).toHaveCSS( 'font-size', '32px' )
+
+		// Open Block Settings
 		await page.getByLabel( 'Settings', { exact: true } ).click()
 
 		// Check if the added Stackable Heading Block has a font-size of 32

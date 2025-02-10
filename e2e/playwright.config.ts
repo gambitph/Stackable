@@ -23,8 +23,7 @@ export default defineConfig( {
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	// forbidOnly: !! process.env.CI,
 	/* Retry on CI only */
-	// retries: process.env.CI ? 1 : 0,
-	retries: 1,
+	retries: process.env.CI ? 1 : 0,
 	// Locally, we could take advantage of parallelism due to multicore systems.
 	// However, in the CI, we typically can use only one worker at a time.
 	// It's more straightforward to align how we run tests in both systems.

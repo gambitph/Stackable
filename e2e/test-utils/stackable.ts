@@ -8,6 +8,8 @@ export class StackableFixture {
 	  this.page = page
 	}
 
+	// When loading the Stackable settings in the Admin, there are 4 requests to wp/v2/settings
+	// This function waits for all 4 requests to finish to ensure Stackable settings are loaded and reflected on the page
 	async waitForSettings(): Promise<void> {
 		return new Promise( ( resolve, reject ) => {
 			let responseCount = 0

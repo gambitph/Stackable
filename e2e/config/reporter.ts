@@ -49,6 +49,12 @@ class StkReporter implements Reporter {
 	}
 
 	onTestEnd( test: TestCase, result: TestResult ) {
+		// Console Reporter similar to Playwright's Dot Reporter:
+		// '·' for passed test
+		// '×' for attempt for retry
+		// 'T' for timed out
+		// 'F' for failed test
+
 		if ( test.outcome() === 'expected' ) {
 			process.stdout.write( '·' )
 		} else {
@@ -57,6 +63,7 @@ class StkReporter implements Reporter {
 			const out = test.results.length <= test.retries ? '×' : ( result.status === 'timedOut' ? 'T' : 'F' )
 			process.stdout.write( out )
 
+			// Compile error messages and snippets
 			let testResult = `${ titlePath } ${ test.results.length > 1 ? `(retry #${ test.results.length - 1 }) ` : '' }[${ ms( result.duration ) }]` + '\n\n'
 			if ( result.errors.length >= 1 ) {
 				result.errors.forEach( error => {
@@ -103,6 +110,7 @@ class StkReporter implements Reporter {
 			console.log( `---\n\nFailed Tests:` )
 			console.log( this.failedTestErrors.join( '' ) )
 
+			// Generate md file for GitHub Job Summary Report
 			const md = `
 | PASSED | FLAKY | SKIPPED | FAILED |
 | ------ | ----- | ------- | ------ |

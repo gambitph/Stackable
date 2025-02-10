@@ -6,6 +6,7 @@ import {
 
 import { ExtendedRequestUtils } from './requestUtils'
 import { StackableFixture } from './stackable'
+import { ExtendedEditor } from './editor'
 
 // We could also import utils from other packages.
 // import { StoreApiUtils } from '@woocommerce/e2e-utils';
@@ -19,6 +20,7 @@ import { StackableFixture } from './stackable'
 const test = base.extend<{
     requestUtils: ExtendedRequestUtils;
 	stackable: StackableFixture;
+	editor: ExtendedEditor;
 }>( {
 	requestUtils: async ( {}, use ) => {
 		let requestUtils = null
@@ -37,6 +39,10 @@ const test = base.extend<{
 
 	stackable: async ( { page }, use ) => {
 		await use( new StackableFixture( page ) )
+	},
+
+	editor: async ( { page }, use ) => {
+		await use( new ExtendedEditor( { page } ) )
 	},
 } )
 
