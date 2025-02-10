@@ -35,7 +35,9 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 } )
 
 const GlobalSettings = () => {
-	const PluginSidebar = window.wp.editor.PluginSidebar
+	// For older WP versions (<6.6), wp.editor.PluginSidebar is undefined,
+	// use wp.editSite.PluginSidebar and wp.editPost.PluginSidebar as fallback
+	const PluginSidebar = window.wp.editor.PluginSidebar || window.wp.editSite?.PluginSidebar || window.wp.editPost?.PluginSidebar
 
 	return (
 		<>
