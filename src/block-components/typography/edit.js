@@ -100,6 +100,15 @@ export const Controls = props => {
 
 	const onChangeContent = useCallback( text => setDebouncedText( escapeHTML( text ) ), [] )
 
+	// OceanWP compatibility.
+	// If OceanWP theme is used, initially use the theme's margin to follow its layout
+	useEffect( () => {
+		if ( hasRemoveMargins ) {
+			const value = getAttribute( 'useThemeTextMargins' )
+			updateAttribute( 'useThemeTextMargins', applyFilters( 'stackable.heading.edit.useThemeTextMargins', value ) )
+		}
+	}, [] )
+
 	return (
 		<>
 			{ applyFilters( 'stackable.block-component.typography.before', null, props ) }
