@@ -110,7 +110,8 @@ test.describe( 'Global Settigs', () => {
 
 		// Open the Default Text Block Editor
 		const defaultBlockPagePromise = page.waitForEvent( 'popup' )
-		await page.locator( 'div:nth-child(37) > .components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' ).click()
+		const textBlock = page.locator( '.components-panel__body', { hasText: 'Block Defaults' } ).locator( '.stk-block-default-control', { hasText: /^Text$/ } ).first().getByLabel( 'Edit' )
+		await textBlock.click()
 		const defaultBlockPage = await defaultBlockPagePromise
 
 		// Set a color for the default Text Block
@@ -141,7 +142,7 @@ test.describe( 'Global Settigs', () => {
 		// Reset Default Block
 		await page.getByLabel( 'Stackable Settings' ).click()
 		await page.getByRole( 'button', { name: 'Block Defaults' } ).click()
-		await page.locator( 'div' ).filter( { hasText: /^Text$/ } ).first().getByLabel( 'Reset' ).click()
+		await page.locator( '.components-panel__body', { hasText: 'Block Defaults' } ).locator( '.stk-block-default-control', { hasText: /^Text$/ } ).first().getByLabel( 'Reset' ).click()
 	} )
 } )
 

@@ -62,7 +62,7 @@ export default defineConfig( {
 		// 	testMatch: 'setup/auth.js',
 		// },
 		{
-			name: 'tests',
+			name: 'Stackable Free',
 			use: {
 				storageState: process.env.WP_AUTH_STORAGE,
 				...devices[ 'Desktop Chrome' ],

@@ -15,8 +15,8 @@ class StkReporter implements Reporter {
 	totalTestCount: number;
 	suite: Suite;
 
-	constructor() {
-		this.outputFolder = 'playwright-stk'
+	constructor( options: { outputFolder?: string } = {} ) {
+		this.outputFolder = options.outputFolder || 'playwright-stk'
 		this.cleanupFolder()
 
 		this.totalTestCount = 0
