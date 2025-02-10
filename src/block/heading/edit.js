@@ -81,7 +81,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-heading',
-		'stk-block-heading--v3',
+		'stk-block-heading--v2',
 	] )
 
 	const textClassNames = classnames( [
