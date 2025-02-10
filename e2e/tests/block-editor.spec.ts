@@ -68,10 +68,14 @@ test.describe( 'Block Editor', () => {
 
 		// Verify block attributes
 		const clientId = await editor.canvas.getByLabel( 'Block: Text' ).getAttribute( 'data-block' )
-		const attributes = await editor.getBlockAttributes( clientId )
 
-		expect( attributes ).toHaveProperty( 'textColor1', '#ff0000' )
-		expect( attributes ).toHaveProperty( 'text', 'test' )
+		// Block attributes may not update immediately
+		await expect( async () => {
+			const attributes = await editor.getBlockAttributes( clientId )
+
+			expect( attributes ).toHaveProperty( 'textColor1', '#ff0000' )
+			expect( attributes ).toHaveProperty( 'text', 'test' )
+		} ).toPass( { intervals: [ 1_000, 2_000, 5_000 ] } )
 	} )
 
 	test( 'The Stackable block added in the editor should be visible in the frontend', async ( {
