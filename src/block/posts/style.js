@@ -294,15 +294,17 @@ Image.addStyles( blockStyles, {
 		}
 		return true
 	},
-	selectorCallback: getAttribute => {
-		const className = getAttribute( 'className' )
-		const blockStyle = getBlockStyle( variations, className )
-		const imageHasLink = getAttribute( 'imageHasLink' )
+	selectorCallbackWrapper: ( selector = '.stk-img-wrapper' ) => {
+		return getAttribute => {
+			const className = getAttribute( 'className' )
+			const blockStyle = getBlockStyle( variations, className )
+			const imageHasLink = getAttribute( 'imageHasLink' )
 
-		if ( [ 'list' ].includes( blockStyle?.name ) && imageHasLink ) {
-			return `${ itemSelector } .stk-block-posts__image-link`
+			if ( [ 'list' ].includes( blockStyle?.name ) && imageHasLink ) {
+				return `${ itemSelector } .stk-block-posts__image-link`
+			}
+			return selector
 		}
-		return '.stk-img-wrapper'
 	},
 	widthStyleRuleCallback: getAttribute => {
 		const className = getAttribute( 'className' )
