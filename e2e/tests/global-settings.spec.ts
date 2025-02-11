@@ -1,7 +1,7 @@
 import { test, expect } from 'e2e/test-utils'
 import { createColor, getRgb } from '~stackable/plugins/global-settings/colors/util'
 
-test.describe( 'Global Settigs', () => {
+test.describe( 'Global Settings', () => {
 	let pid = null
 
 	// Create Posts for testing

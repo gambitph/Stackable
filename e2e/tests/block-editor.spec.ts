@@ -39,6 +39,13 @@ test.describe( 'Block Editor', () => {
 		} )
 
 		await editor.selectBlocks( editor.canvas.getByLabel( 'Block: Text' ) )
+
+		const settings = page.getByLabel( 'Settings', { exact: true } )
+
+		if ( ! await settings.getAttribute( 'aria-pressed' ) ) {
+			await settings.click()
+		}
+
 		await expect( page.getByLabel( 'Layout Tab' ) ).toBeVisible()
 		await expect( page.getByLabel( 'Style Tab' ) ).toBeVisible()
 		await expect( page.getByLabel( 'Advanced Tab' ) ).toBeVisible()
@@ -51,6 +58,12 @@ test.describe( 'Block Editor', () => {
 		await editor.insertBlock( {
 			name: 'stackable/text',
 		} )
+
+		const settings = page.getByLabel( 'Settings', { exact: true } )
+
+		if ( ! await settings.getAttribute( 'aria-pressed' ) ) {
+			await settings.click()
+		}
 
 		// Add content and color to Stackable Text Block
 		await editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ).fill( 'test' )
