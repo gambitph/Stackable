@@ -129,7 +129,7 @@ test.describe( 'Global Settings', () => {
 		await defaultBlockPage.getByLabel( 'Hex color' ).fill( 'ff0000' )
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
-		const updateRequest = page.waitForResponse( response => response.url().includes( 'update_block_style' ) && response.request().method() === 'POST' )
+		const updateRequest = defaultBlockPage.waitForResponse( response => response.url().includes( 'update_block_style' ) && response.request().method() === 'POST' )
 
 		// In older WP versions, the button text is 'Update' instead of 'Save'
 		if ( await defaultBlockPage.getByRole( 'button', { name: 'Save', exact: true } ).isVisible() ) {
