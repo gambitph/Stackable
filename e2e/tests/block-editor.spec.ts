@@ -61,7 +61,7 @@ test.describe( 'Block Editor', () => {
 
 		const settings = page.getByLabel( 'Settings', { exact: true } )
 
-		if ( ! await settings.getAttribute( 'aria-pressed' ) ) {
+		if ( await settings.getAttribute( 'aria-pressed' ) === 'false' ) {
 			await settings.click()
 		}
 

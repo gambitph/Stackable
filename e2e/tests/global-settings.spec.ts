@@ -1,5 +1,4 @@
 import { test, expect } from 'e2e/test-utils'
-import { createColor, getRgb } from '~stackable/plugins/global-settings/colors/util'
 
 test.describe( 'Global Settings', () => {
 	let pid = null
@@ -62,7 +61,15 @@ test.describe( 'Global Settings', () => {
 
 		// Delete added Global Color
 		await page.getByLabel( 'Stackable Settings' ).click()
-		await panel.locator( `.ugb-global-settings-color-picker__color-indicators > div > div:nth-child(${ count }) > button.stk-global-settings-color-picker__delete-button` ).click()
+
+		page.on( 'dialog', async dialog => await dialog.accept() )
+		const deleteRequest = page.waitForResponse( response => response.url().includes( 'wp/v2/settings' ) && response.request().method() === 'POST' )
+
+		await globalColors.getByLabel( 'Delete' ).nth( count - 1 ).click()
+
+		await deleteRequest
+		const _count = ( await globalColors.evaluate( node => Array.from( node.childNodes ) ) ).length
+		expect( _count ).toBeLessThan( count )
 	} )
 
 	test( 'Global Typography Styles should be applied when adding a heading', async ( {
@@ -93,18 +100,21 @@ test.describe( 'Global Settings', () => {
 
 		await expect( editor.canvas.locator( '[data-type="stackable/heading"] > .stk-block-heading > h2[role="textbox"]' ) ).toHaveCSS( 'font-size', '32px' )
 
-		 // Reset Global Typography Styles
-		 await page.getByLabel( 'Stackable Settings' ).click()
-		 await page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).getByRole( 'button', { name: 'Reset' } ).click()
+		// Reset Global Typography Styles
+		await page.getByLabel( 'Stackable Settings' ).click()
+
+		const resetButton = page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).getByLabel( 'Reset' )
+		const deleteRequest = page.waitForResponse( response => response.url().includes( 'wp/v2/settings' ) && response.request().method() === 'POST' )
+		await resetButton.click()
+
+		await deleteRequest
+		await expect( resetButton ).not.toBeVisible()
 	} )
 
 	test( 'When a default block is created, adding the block should have the default block\'s attributes', async ( {
 		page,
 		editor,
 	} ) => {
-		// Generate a color
-		const color = createColor()
-
 		await page.getByLabel( 'Stackable Settings' ).click()
 		await page.getByRole( 'button', { name: 'Block Defaults' } ).click()
 
@@ -116,21 +126,20 @@ test.describe( 'Global Settings', () => {
 
 		// Set a color for the default Text Block
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
-		await defaultBlockPage.getByLabel( 'Hex color' ).fill( color.slice( 1 ) )
+		await defaultBlockPage.getByLabel( 'Hex color' ).fill( 'ff0000' )
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
-
-		const saveBlock = defaultBlockPage.waitForResponse( response =>
-			response.url().includes( 'update_block_style' ) && response.request().method() === 'POST' )
 
 		// In older WP versions, the button text is 'Update' instead of 'Save'
 		if ( await defaultBlockPage.getByRole( 'button', { name: 'Save', exact: true } ).isVisible() ) {
 			await defaultBlockPage.getByRole( 'button', { name: 'Save', exact: true } ).click()
+			await expect( defaultBlockPage.getByRole( 'button', { name: 'Saving' } ) ).toBeVisible()
+			await expect( defaultBlockPage.getByRole( 'button', { name: 'Save', exact: true } ) ).toBeVisible()
 		} else {
 			await defaultBlockPage.getByRole( 'button', { name: 'Update' } ).click()
+			await expect( defaultBlockPage.getByRole( 'button', { name: 'Updating' } ) ).toBeVisible()
+			await expect( defaultBlockPage.getByRole( 'button', { name: 'Update' } ) ).toBeVisible()
 		}
 
-		// Ensure block is saved before closing the Default Block Editor
-		await saveBlock
 		await defaultBlockPage.close()
 
 		// Insert a Stackable Text Block, and check if the color is the same as the one set in the default block
@@ -142,7 +151,7 @@ test.describe( 'Global Settings', () => {
 			},
 		} )
 
-		await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', `rgb(${ getRgb( color ) })` )
+		await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
 
 		// Reset Default Block
 		await page.getByLabel( 'Stackable Settings' ).click()
@@ -150,4 +159,3 @@ test.describe( 'Global Settings', () => {
 		await page.locator( '.components-panel__body', { hasText: 'Block Defaults' } ).locator( '.stk-block-default-control', { hasText: /^Text$/ } ).first().getByLabel( 'Reset' ).click()
 	} )
 } )
-
