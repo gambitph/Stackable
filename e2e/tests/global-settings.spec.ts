@@ -129,17 +129,17 @@ test.describe( 'Global Settings', () => {
 		await defaultBlockPage.getByLabel( 'Hex color' ).fill( 'ff0000' )
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
+		const updateRequest = page.waitForResponse( response => response.url().includes( 'update_block_style' ) && response.request().method() === 'POST' )
+
 		// In older WP versions, the button text is 'Update' instead of 'Save'
 		if ( await defaultBlockPage.getByRole( 'button', { name: 'Save', exact: true } ).isVisible() ) {
 			await defaultBlockPage.getByRole( 'button', { name: 'Save', exact: true } ).click()
-			await expect( defaultBlockPage.getByRole( 'button', { name: 'Saving' } ) ).toBeVisible()
-			await expect( defaultBlockPage.getByRole( 'button', { name: 'Save', exact: true } ) ).toBeVisible()
 		} else {
 			await defaultBlockPage.getByRole( 'button', { name: 'Update' } ).click()
-			await expect( defaultBlockPage.getByRole( 'button', { name: 'Updating' } ) ).toBeVisible()
-			await expect( defaultBlockPage.getByRole( 'button', { name: 'Update' } ) ).toBeVisible()
 		}
 
+		// Make sure default block has been updated before closing the tab
+		await updateRequest
 		await defaultBlockPage.close()
 
 		// Insert a Stackable Text Block, and check if the color is the same as the one set in the default block
