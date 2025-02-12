@@ -116,7 +116,7 @@ test.describe( 'Global Settings', () => {
 
 		// Set a color for the default Text Block
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
-		await defaultBlockPage.getByLabel( 'Hex color' ).fill( color )
+		await defaultBlockPage.getByLabel( 'Hex color' ).fill( color.slice( 1 ) )
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
 		// In older WP versions, the button text is 'Update' instead of 'Save'
