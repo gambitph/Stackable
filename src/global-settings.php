@@ -688,6 +688,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				return '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
 			}
 
+			// If the font is a CSS custom property, return it directly.
+			if ( strpos( $font_name, 'var(' ) === 0 ) {
+				return $font_name;
+			}
+
 			// Google font.
 			return '"' . $font_name . '", sans-serif';
 		}
