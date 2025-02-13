@@ -35,17 +35,23 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 				// Add a filter for replacing shortcut media queries before the breakpoint adjustment.
 				add_filter( 'stackable_frontend_css', array( $this, 'replace_shortcut_media_queries' ), 9 );
 
-				if ( $this->has_custom_breakpoints() ) {
-					// Add our filter that adjusts all CSS that we print out.
-					add_filter( 'stackable_frontend_css', array( $this, 'adjust_breakpoints' ) );
+				// This make sure all add_filter( 'stackable_responsive_breakpoints' , callback ) are called
+				// before getting the dynamic breakpoints
+				add_action('after_setup_theme', array( $this, 'setup_frontend_breakpoints') );
+			}
+		}
 
-					// If there are adjusted breakpoints, enqueue our adjusted responsive css.
-					add_action( 'stackable_block_enqueue_frontend_assets', array( $this, 'enqueue_adjusted_responsive_css' ) );
+		function setup_frontend_breakpoints() {
+			if ( $this->has_custom_breakpoints() ) {
+				// Add our filter that adjusts all CSS that we print out.
+				add_filter( 'stackable_frontend_css', array( $this, 'adjust_breakpoints' ) );
 
-					// Adjust the styles outputted by Stackable blocks.
-					// 11 Priority, do this last because changing style can affect inline css optimization.
-					add_filter( 'render_block', array( $this, 'adjust_block_styles' ), 11, 2 );
-				}
+				// If there are adjusted breakpoints, enqueue our adjusted responsive css.
+				add_action( 'stackable_block_enqueue_frontend_assets', array( $this, 'enqueue_adjusted_responsive_css' ) );
+
+				// Adjust the styles outputted by Stackable blocks.
+				// 11 Priority, do this last because changing style can affect inline css optimization.
+				add_filter( 'render_block', array( $this, 'adjust_block_styles' ), 11, 2 );
 			}
 		}
 
