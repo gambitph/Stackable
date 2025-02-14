@@ -96,3 +96,14 @@
 li.wp-block-stackable-icon-list-item.stk-block-icon-list-item {
 	margin-bottom: 0;
 }
+
+// If single text color is added (not gradient), reset text-fill-color.
+// Icon list marker is only limited to single text color.
+// These ensure that having gradient in parent icon list still allows
+// modification in icon list items.
+.stk-block-icon-list-item__text:is(.has-text-color):not(.stk--is-gradient),
+.stk-block-icon-list-item__marker {
+	-webkit-text-fill-color: initial !important;
+	-moz-text-fill-color: initial !important;
+	-o-text-fill-color: initial !important;
+}
