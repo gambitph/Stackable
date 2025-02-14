@@ -77,7 +77,7 @@ const TOOLBAR_ALIGN_OPTIONS = ALIGN_OPTIONS.map( control => {
 const ALIGNMENT_CONTROLS_DESKTOP = [
 	{
 		title: __( 'Horizontal', i18n ),
-		value: '',
+		value: 'horizontal',
 	},
 	{
 		title: __( 'Vertical', i18n ),
@@ -134,7 +134,7 @@ const Edit = props => {
 	] )
 
 	let contentAlignControls = null
-	if ( attributes.buttonAlign === '' ) {
+	if ( attributes.buttonAlign === 'horizontal' ) {
 		contentAlignControls = ALIGN_OPTIONS
 	}
 	if ( deviceType === 'Tablet' || deviceType === 'Mobile' ) {
