@@ -23,6 +23,7 @@ STK_RESPONSIVE_CSS;
 if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 	class Stackable_Dynamic_Breakpoints {
 
+		// Holds the value of the saved or default breakpoints
 		private $dynamic_breakpoints = false;
 
 		/**
