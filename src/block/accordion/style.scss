@@ -99,6 +99,12 @@
 		transform: translateY(25px);
 		opacity: 0;
 	}
+
+	// Prevent inside columns from being re-ordered when a parent column block
+	// has custom ordering.
+	> .stk-block-column {
+		order: initial !important;
+	}
 }
 
 // This is for the column hack. Remove margin for the wrapper div if accordion is inside a columns block
