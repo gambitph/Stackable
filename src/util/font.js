@@ -89,6 +89,11 @@ export const isGoogleFontEnqueued = ( fontName, head = document.querySelector( '
 }
 
 export const getFontFamily = fontName => {
+	// If the font is a CSS custom property, return it directly.
+	if ( fontName.match( /^\s*var\(--/ ) ) {
+		return fontName
+	}
+
 	// Google Font.
 	if ( isWebFont( fontName ) ) {
 		return `"${ fontName }", Sans-serif`
