@@ -55,10 +55,14 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-number-box',
-		blockAlignmentClass,
 	], {
 		'stk--has-shape': props.attributes.hasShape,
 	} )
+
+	const containerClassNames = classnames( [
+		'stk-block-number-box__container',
+		blockAlignmentClass,
+	] )
 
 	const textClassNames = classnames( [
 		'stk-block-number-box__text',
@@ -78,7 +82,6 @@ const Edit = props => {
 
 	return (
 		<>
-
 			<InspectorControls
 				setAttributes={ setAttributes }
 				blockState={ props.blockState }
@@ -94,11 +97,13 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
-				<Typography
-					tagName="div"
-					placeholder="1"
-					className={ textClassNames }
-				/>
+				<div className={ containerClassNames }>
+					<Typography
+						tagName="span"
+						placeholder="1"
+						className={ textClassNames }
+					/>
+				</div>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>

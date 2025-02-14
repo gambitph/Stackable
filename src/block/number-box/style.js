@@ -19,7 +19,7 @@ const blockStyles = new BlockStyleGenerator( {
 } )
 
 blockStyles.addBlockStyles( 'shapeSize', [ {
-	selector: '.stk-block-number-box__text',
+	selector: '.stk-block-number-box__container',
 	styleRule: 'height',
 	attrName: 'shapeSize',
 	key: 'shapeSize',
@@ -28,7 +28,7 @@ blockStyles.addBlockStyles( 'shapeSize', [ {
 	enabledCallback: getAttribute => getAttribute( 'hasShape' ),
 	dependencies: [ 'hasShape' ],
 }, {
-	selector: '.stk-block-number-box__text',
+	selector: '.stk-block-number-box__container',
 	styleRule: 'width',
 	attrName: 'shapeSize',
 	key: 'shapeSize-width',
@@ -40,12 +40,12 @@ blockStyles.addBlockStyles( 'shapeSize', [ {
 
 addBackgroundStyles( blockStyles, {
 	attrNameTemplate: 'shape%s',
-	selector: '.stk-block-number-box__text',
+	selector: '.stk-block-number-box__container',
 	renderCondition: 'hasShape',
 } )
 addBorderStyles( blockStyles, {
 	attrNameTemplate: 'shape%s',
-	selector: '.stk-block-number-box__text',
+	selector: '.stk-block-number-box__container',
 	renderCondition: 'hasShape',
 } )
 Alignment.addStyles( blockStyles )
