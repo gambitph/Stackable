@@ -184,43 +184,35 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 			// Handle CSS optimized values where there are no spaces between the
 			// colon and the value and if there is a space between the colon and
 			// the value.
-			if ( ! empty( $new_tablet ) &&
-			     ( strpos( $css, 'width:1024px)' ) !== false || strpos( $css, 'width:1023px)' ) !== false ||
-				   strpos( $css, 'width: 1024px)' ) !== false || strpos( $css, 'width: 1023px)' ) !== false )
-			) {
+			if ( ! empty( $new_tablet ) ) {
+				// Check if the style generated contains old breakpoints that we need to replace.
+				$has_old_tablet = strpos( $css, 'width: 1024px)' ) !== false ||
+				                  strpos( $css, 'width:1024px)' ) !== false;
+				$has_old_tablet_minus_1 = strpos( $css, 'width: 1023px)' ) !== false ||
+				                          strpos( $css, 'width:1023px)' ) !== false;
 
-				// Check if the style generated contains new breakpoints
-				$has_new_tablet = strpos( $css, 'width: ' . $new_tablet . 'px)' ) !== false ||
-				                  strpos( $css, 'width:' . $new_tablet . 'px)' ) !== false;
-				$has_new_tablet_minus_1 = strpos( $css, 'width: ' . ( $new_tablet - 1 ) . 'px)' ) !== false ||
-				                          strpos( $css, 'width:' . ( $new_tablet - 1 ) . 'px)' ) !== false;
-
-				if ( ! $has_new_tablet ) {
-					$css = preg_replace( "/(@media[^{]+)width:\s*1024px/", "$1width:" . $new_tablet . "px", $css );
+				if ( $has_old_tablet ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*1024px/m", "$1width:" . $new_tablet . "px", $css );
 				}
-
-				if ( ! $has_new_tablet_minus_1 ) {
-					$css = preg_replace( "/(@media[^{]+)width:\s*1023px/", "$1width:" . ( $new_tablet - 1 ) . "px", $css );
+				if ( $has_old_tablet_minus_1 ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*1023px/m", "$1width:" . ( $new_tablet - 1 ) . "px", $css );
 				}
 			}
 
 			// Mobile version
-			if ( ! empty( $new_mobile ) &&
-			     ( strpos( $css, 'width:768px)' ) !== false || strpos( $css, 'width:767px)' ) !== false ||
-				   strpos( $css, 'width: 768px)' ) !== false || strpos( $css, 'width: 767px)' ) !== false )
-			) {
+			if ( ! empty( $new_mobile ) ) {
 
-				$has_new_mobile = strpos( $css, 'width:' . $new_mobile . 'px)' ) !== false ||
-				                  strpos( $css, 'width: ' . $new_mobile . 'px)' ) !== false;
-				$has_new_mobile_minus_1 = strpos( $css, 'width:' . ( $new_mobile - 1 ) . 'px)' ) !== false ||
-				                          strpos( $css, 'width: ' . ( $new_mobile - 1 ) . 'px)' ) !== false;
+				// Check if the style generated contains old breakpoints that we need to replace.
+				$has_old_mobile = strpos( $css, 'width: 768px)' ) !== false ||
+				                  strpos( $css, 'width:768px)' ) !== false;
+				$has_old_mobile_minus_1 = strpos( $css, 'width: 767px)' ) !== false ||
+				                          strpos( $css, 'width:767px)' ) !== false;
 
-				if ( ! $has_new_mobile ) {
-					$css = preg_replace( "/(@media[^{]+)width:\s*768px/", "$1width:" . $new_mobile . "px", $css );
+				if ( $has_old_mobile ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*768px/m", "$1width:" . $new_mobile . "px", $css );
 				}
-
-				if ( ! $has_new_mobile_minus_1 ) {
-					$css = preg_replace( "/(@media[^{]+)width:\s*767px/", "$1width:" . ( $new_mobile - 1 ) . "px", $css );
+				if ( $has_old_mobile_minus_1 ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*767px/m", "$1width:" . ( $new_mobile - 1 ) . "px", $css );
 				}
 			}
 
