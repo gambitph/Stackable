@@ -48,6 +48,9 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 				// 11 Priority, do this last because changing style can affect inline css optimization.
 				add_filter( 'render_block', array( $this, 'adjust_block_styles' ), 11, 2 );
 			}
+
+			// Add the default breakpoints to the localized settings.
+			add_filter( 'stackable_localize_settings_script', array( $this, 'add_default_breakpoints' ) );
 		}
 
 		/**
@@ -76,6 +79,21 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 
 			$this->dynamic_breakpoints = $breakpoints;
 			return $this->dynamic_breakpoints;
+		}
+
+		/**
+		 * Add the default breakpoints to the localized settings to be used for
+		 * the default placeholder in the settings.
+		 *
+		 * @param Array $args
+		 * @return Array
+		 */
+		public function add_default_breakpoints( $args ) {
+			$args['defaultBreakpoints'] = apply_filters( 'stackable_responsive_breakpoints', array(
+				'tablet' => '1024',
+				'mobile' => '768',
+			) );
+			return $args;
 		}
 
 		/**
