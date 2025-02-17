@@ -7,6 +7,7 @@
  */
 import { GlobalColorStyles } from './colors'
 import { GlobalTypographyStyles } from './typography'
+import { GlobalBlockLayoutStyles } from './block-layouts'
 import './block-defaults'
 
 /**
@@ -44,6 +45,7 @@ const GlobalSettingsLoader = () => {
 		if ( editorBody ) {
 			editorBody.appendChild( globalTypographyWrapper )
 			editorBody.appendChild( globalColorWrapper )
+			editorBody.appendChild( globalBlockLayoutWrapper )
 		}
 	}, [ deviceType, editorDom ] )
 
@@ -56,12 +58,15 @@ registerPlugin( 'stackable-global-settings-loader', {
 
 const globalTypographyWrapper = document?.createElement( 'style' )
 const globalColorWrapper = document?.createElement( 'style' )
+const globalBlockLayoutWrapper = document?.createElement( 'style' )
 globalTypographyWrapper?.setAttribute( 'id', 'stk-global-typography-styles' )
 globalColorWrapper?.setAttribute( 'id', 'stk-global-color-styles' )
-
+globalBlockLayoutWrapper?.setAttribute( 'id', 'stk-global-block-layouts-styles' )
 domReady( () => {
 	document?.body?.appendChild( globalTypographyWrapper )
 	document?.body?.appendChild( globalColorWrapper )
+	document?.body?.appendChild( globalBlockLayoutWrapper )
 	createRoot( globalTypographyWrapper ).render( <GlobalTypographyStyles /> )
 	createRoot( globalColorWrapper ).render( <GlobalColorStyles /> )
+	createRoot( globalBlockLayoutWrapper ).render( <GlobalBlockLayoutStyles /> )
 } )

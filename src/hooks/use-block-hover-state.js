@@ -113,7 +113,7 @@ register( createReduxStore( 'stackable/hover-state', {
 	selectors: STORE_SELECTORS,
 } ) )
 
-export const useBlockHoverState = () => {
+export const useBlockHoverState = ( globalControl = false ) => {
 	const { clientId } = useBlockEditContext()
 	const clientIds = useSelect( select => select( 'core/block-editor' ).getMultiSelectedBlockClientIds() )
 
@@ -136,7 +136,6 @@ export const useBlockHoverState = () => {
 			getSelectedCollapsedBlock,
 			getSelectedCollapsedBlockChildren,
 		} = select( 'stackable/hover-state' )
-
 
 		const hasParentHoverState = getHasParentHoverState()
 		const parentHoverClientId = getSelectedParentHoverBlock()
@@ -190,6 +189,10 @@ export const useBlockHoverState = () => {
 				// We won't add any classes here anymore.
 				currentHoverState = 'collapsed'
 			}
+		}
+
+		if ( globalControl ) {
+			currentHoverState = hoverState
 		}
 
 		return {

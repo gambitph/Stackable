@@ -39,7 +39,7 @@ import { useMemo } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 // Note: image drop shadows do not accept negative spread.
-const IMAGE_SHADOWS = [
+export const IMAGE_SHADOWS = [
 	'none',
 	'0px 0 1px rgba(120, 120, 120, 0.5)',
 	'0px 0 2px rgba(120, 120, 120, 0.5)',

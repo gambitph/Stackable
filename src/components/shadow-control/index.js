@@ -22,7 +22,7 @@ import {
 import { applyFilters } from '@wordpress/hooks'
 import { Button, Dashicon } from '@wordpress/components'
 
-const getShadows = () => {
+export const getShadows = () => {
 	return applyFilters( 'stackable.shadows', [
 		'none',
 		'0 0 0 1px rgba(120, 120, 120, 0.1)',
@@ -130,8 +130,11 @@ const filterToValue = ( props, filters ) => {
 const ShadowFilterControl = props => {
 	const [ filters, setFilters ] = useState( {} )
 
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ _, controlProps ] = extractControlProps( props )
+
+	const value = typeof props.value === 'undefined' ? _value : props.value
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
 	useEffect( () => {
 		if ( value ) {
@@ -250,6 +253,7 @@ const ShadowControl = memo( props => {
 
 	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
 	const value = typeof props.value === 'undefined' ? _value : props.value
+
 	const [ propsToPass ] = extractControlProps( _props )
 
 	useEffect( () => {
@@ -300,6 +304,7 @@ const ShadowControl = memo( props => {
 						icon={ <Dashicon icon="admin-generic" /> }
 					/>
 				) }
+				globalControl={ props.globalControl }
 			/>
 			{ isPopoverOpen && (
 				<ShadowFilterControl
@@ -311,6 +316,9 @@ const ShadowControl = memo( props => {
 					hasInset={ props.hasInset }
 					isFilter={ props.isFilter }
 					onEscape={ () => setIsPopoverOpen( false ) }
+					globalControl={ props.globalControl }
+					value={ props.shadowFilterValue }
+					onChange={ props.shadowFilterOnChange }
 				/>
 			) }
 		</>

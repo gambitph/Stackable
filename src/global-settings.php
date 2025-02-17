@@ -310,6 +310,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					'default' => '',
 				)
 			);
+
+			do_action( 'register_stackable_global_settings' );
 		}
 
 		/**

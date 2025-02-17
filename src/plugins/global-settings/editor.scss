@@ -1,5 +1,18 @@
 .ugb-global-settings__inspector.components-panel {
 	.components-panel__body  .components-panel__body-title {
-		top: 48px;
+		top: 47px;
+		z-index: 5;
+	}
+
+	.ugb-global-block-layouts__section-settings {
+		border-top: 1px solid #e0e0e0;
+		margin: 0px -16px;
+		padding: 16px;
+
+		.ugb-global-block-layouts__section-title {
+			font-weight: bold;
+			text-transform: uppercase;
+			margin-bottom: 0;
+		}
 	}
 }
