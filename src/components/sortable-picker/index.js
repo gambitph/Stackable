@@ -225,6 +225,7 @@ const LabeledItemIndicator = props => {
 				) }
 			/>
 			<Button
+				aria-label="Delete"
 				className="stk-global-settings-color-picker__delete-button"
 				icon="trash"
 				isSmall

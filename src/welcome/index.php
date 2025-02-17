@@ -66,7 +66,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 				do_action( 'stackable_settings_admin_enqueue_scripts' );
 
-				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor', 'lodash' ) );
+				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor', 'lodash' ), STACKABLE_VERSION );
 
 				// Add translations.
 				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );

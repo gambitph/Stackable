@@ -28,6 +28,7 @@ import {
 	showProNoticesOption,
 	isPro,
 	v2disabledBlocks,
+	defaultBreakpoints,
 } from 'stackable'
 import classnames from 'classnames'
 import { importBlocks } from '~stackable/util/admin'
@@ -838,7 +839,7 @@ const Responsiveness = props => {
 										},
 									} )
 								} }
-								placeholder="1024"
+								placeholder={ defaultBreakpoints.tablet || '1024' }
 							> px</AdminTextSetting>
 							<AdminTextSetting
 								label={ __( 'Mobile Breakpoint', i18n ) }
@@ -853,7 +854,7 @@ const Responsiveness = props => {
 										},
 									} )
 								} }
-								placeholder="768"
+								placeholder={ defaultBreakpoints.mobile || '768' }
 							> px</AdminTextSetting>
 						</div>
 					}

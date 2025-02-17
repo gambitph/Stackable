@@ -15,6 +15,16 @@
 	margin-right: auto;
 }
 
+// Add a 0 specificity style to set the default column order. This is to prevent
+// the column order from spilling to nested blocks.
+// Target the stk-column-wrapper to also include blocks with column innerblocks
+// but are not columns (no stk-block-columns), like accordion and horizontal scroller.
+:where(.stk-block-columns) {
+	@for $i from 1 through 20 {
+		--stk-col-order-#{ $i }: #{ $i };
+	}
+}
+
 // Column order.
 @for $i from 1 through 20 {
 	.stk-block-column:nth-child(#{ $i }) {

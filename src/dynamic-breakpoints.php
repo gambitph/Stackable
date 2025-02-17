@@ -23,6 +23,9 @@ STK_RESPONSIVE_CSS;
 if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 	class Stackable_Dynamic_Breakpoints {
 
+		// Holds the value of the saved or default breakpoints
+		private $dynamic_breakpoints = false;
+
 		/**
 		 * Add our hooks.
 		 */
@@ -35,21 +38,22 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 				// Add a filter for replacing shortcut media queries before the breakpoint adjustment.
 				add_filter( 'stackable_frontend_css', array( $this, 'replace_shortcut_media_queries' ), 9 );
 
-				if ( $this->has_custom_breakpoints() ) {
-					// Add our filter that adjusts all CSS that we print out.
-					add_filter( 'stackable_frontend_css', array( $this, 'adjust_breakpoints' ) );
+				// Add our filter that adjusts all CSS that we print out.
+				add_filter( 'stackable_frontend_css', array( $this, 'adjust_breakpoints' ) );
 
+				//  Add filter to adjust breakpoints for Global Settings CSS.
+				add_filter( 'stackable_global_frontend_css', array( $this, 'adjust_breakpoints' ) );
 
-					add_filter( 'stackable_global_frontend_css', array( $this, 'adjust_breakpoints' ) );
+				// If there are adjusted breakpoints, enqueue our adjusted responsive css.
+				add_action( 'stackable_block_enqueue_frontend_assets', array( $this, 'enqueue_adjusted_responsive_css' ) );
 
-					// If there are adjusted breakpoints, enqueue our adjusted responsive css.
-					add_action( 'stackable_block_enqueue_frontend_assets', array( $this, 'enqueue_adjusted_responsive_css' ) );
-
-					// Adjust the styles outputted by Stackable blocks.
-					// 11 Priority, do this last because changing style can affect inline css optimization.
-					add_filter( 'render_block', array( $this, 'adjust_block_styles' ), 11, 2 );
-				}
+				// Adjust the styles outputted by Stackable blocks.
+				// 11 Priority, do this last because changing style can affect inline css optimization.
+				add_filter( 'render_block', array( $this, 'adjust_block_styles' ), 11, 2 );
 			}
+
+			// Add the default breakpoints to the localized settings.
+			add_filter( 'stackable_localize_settings_script', array( $this, 'add_default_breakpoints' ) );
 		}
 
 		/**
@@ -76,7 +80,23 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 				}
 			}
 
-			return $breakpoints;
+			$this->dynamic_breakpoints = $breakpoints;
+			return $this->dynamic_breakpoints;
+		}
+
+		/**
+		 * Add the default breakpoints to the localized settings to be used for
+		 * the default placeholder in the settings.
+		 *
+		 * @param Array $args
+		 * @return Array
+		 */
+		public function add_default_breakpoints( $args ) {
+			$args['defaultBreakpoints'] = apply_filters( 'stackable_responsive_breakpoints', array(
+				'tablet' => '1024',
+				'mobile' => '768',
+			) );
+			return $args;
 		}
 
 		/**
@@ -124,7 +144,10 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return boolean
 		 */
 		public function has_custom_breakpoints() {
-			$breakpoints = $this->get_dynamic_breakpoints();
+			$breakpoints = $this->dynamic_breakpoints;
+			if ( $breakpoints == false ) {
+				$breakpoints = $this->get_dynamic_breakpoints();
+			}
 			return ! empty( $breakpoints['tablet'] ) || ! empty( $breakpoints['mobile'] );
 		}
 
@@ -148,7 +171,11 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return String adjusted CSS
 		 */
 		public function adjust_breakpoints( $css ) {
-			$breakpoints = $this->get_dynamic_breakpoints();
+			if ( ! $this->has_custom_breakpoints() ) {
+				return $css;
+			}
+
+			$breakpoints = $this->dynamic_breakpoints;
 			$new_tablet = $breakpoints['tablet'];
 			$new_mobile = $breakpoints['mobile'];
 
@@ -157,33 +184,38 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 				return $css;
 			}
 
-			if ( ! empty( $new_tablet ) && ( strpos( $css, 'width:1024px)' ) !== false || strpos( $css, 'width:1023px)' ) !== false ) ) {
+			// Handle CSS optimized values where there are no spaces between the
+			// colon and the value and if there is a space between the colon and
+			// the value.
+			if ( ! empty( $new_tablet ) ) {
+				// Check if the style generated contains old breakpoints that we need to replace.
+				$has_old_tablet = strpos( $css, 'width: 1024px)' ) !== false ||
+				                  strpos( $css, 'width:1024px)' ) !== false;
+				$has_old_tablet_minus_1 = strpos( $css, 'width: 1023px)' ) !== false ||
+				                          strpos( $css, 'width:1023px)' ) !== false;
 
-				// Check if the style generated contains new breakpoints
-				$has_new_tablet = strpos( $css, 'width:' . $new_tablet . 'px)' ) !== false;
-				$has_new_tablet_minus_1 = strpos( $css, 'width:' . ( $new_tablet - 1 ) . 'px)' ) !== false;
-
-				if ( ! $has_new_tablet ) {
-					$css = preg_replace( "/(@media[^{]+)width:\s*1024px/", "$1width:" . $new_tablet . "px", $css );
+				if ( $has_old_tablet ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*1024px/m", "$1width:" . $new_tablet . "px", $css );
 				}
-
-				if ( ! $has_new_tablet_minus_1 ) {
-					$css = preg_replace( "/(@media[^{]+)width:\s*1023px/", "$1width:" . ( $new_tablet - 1 ) . "px", $css );
+				if ( $has_old_tablet_minus_1 ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*1023px/m", "$1width:" . ( $new_tablet - 1 ) . "px", $css );
 				}
 			}
 
 			// Mobile version
-			if ( ! empty( $new_mobile ) && ( strpos( $css, 'width:768px)' ) !== false || strpos( $css, 'width:767px)' ) !== false ) ) {
+			if ( ! empty( $new_mobile ) ) {
 
-				$has_new_mobile = strpos( $css, 'width:' . $new_mobile . 'px)' ) !== false;
-				$has_new_mobile_minus_1 = strpos( $css, 'width:' . ( $new_mobile - 1 ) . 'px)' ) !== false;
+				// Check if the style generated contains old breakpoints that we need to replace.
+				$has_old_mobile = strpos( $css, 'width: 768px)' ) !== false ||
+				                  strpos( $css, 'width:768px)' ) !== false;
+				$has_old_mobile_minus_1 = strpos( $css, 'width: 767px)' ) !== false ||
+				                          strpos( $css, 'width:767px)' ) !== false;
 
-				if ( ! $has_new_mobile ) {
-					$css = preg_replace( "/(@media[^{]+)width:\s*768px/", "$1width:" . $new_mobile . "px", $css );
+				if ( $has_old_mobile ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*768px/m", "$1width:" . $new_mobile . "px", $css );
 				}
-
-				if ( ! $has_new_mobile_minus_1 ) {
-					$css = preg_replace( "/(@media[^{]+)width:\s*767px/", "$1width:" . ( $new_mobile - 1 ) . "px", $css );
+				if ( $has_old_mobile_minus_1 ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*767px/m", "$1width:" . ( $new_mobile - 1 ) . "px", $css );
 				}
 			}
 
@@ -197,6 +229,10 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return void
 		 */
 		public function enqueue_adjusted_responsive_css() {
+			if ( ! $this->has_custom_breakpoints() ) {
+				return;
+			}
+
 			$css = stackable_get_responsive_css();
 			$css = apply_filters( 'stackable_frontend_css', $css );
 			wp_add_inline_style( 'ugb-style-css', $css );
@@ -212,6 +248,10 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return void
 		 */
 		public function adjust_block_styles( $block_content, $block ) {
+			if ( ! $this->has_custom_breakpoints() ) {
+				return $block_content;
+			}
+
 			if ( $block_content === null ) {
 				return $block_content;
 			}

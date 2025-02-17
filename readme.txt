@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.4
 Tested up to: 6.7.1
 Requires PHP: 7.3
-Stable tag: 3.14.1
+Stable tag: 3.14.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -295,6 +295,18 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.14.2 =
+* New: Added support for Blocksy modern font stacks #3435
+* New: Responsive breakpoint settings will now show Blocksy's breakpoints as the default value ce727ce
+* Fixed: Responsive breakpoints - added better support for dynamically inserted content 6911ebe
+* Fixed: Responsive breakpoints - now working properly in preview in some styles #3394
+* Fixed: Number box - typography gradient color now works properly #3307
+* Fixed: Icon list - typography gradient color now works properly #3309
+* Fixed: Columns - nested columns may show up in different order on tablet or mobile if parent has different order #3398
+* Fixed: Accordion block - may open upward if parent has different column arrangement #3406
+* Fixed: Settings may appear blank because of browser caching #3419
+* Fixed: Global settings - button does not appear in older WP versions #3425
 
 = 3.14.1 =
 * Fixed: Hotfix for EWWW Image Optimizer compatibility - freezing in the frontend if lazy loading and auto scaling are both enabled #3415
