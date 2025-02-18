@@ -24,6 +24,10 @@ $block-design-system: (
 		desktop: 32px 32px,
 		mobile: 24px 24px,
 	),
+
+	container-padding-hover: cssvar(container-padding),
+	container-padding-parent-hover: cssvar(container-padding),
+
 	container-padding-large: (
 		desktop: 64px 80px,
 		mobile: 32px 24px,
