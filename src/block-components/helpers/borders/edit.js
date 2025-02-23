@@ -17,7 +17,7 @@ import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
 
-const BORDER_CONTROLS = [
+export const BORDER_CONTROLS = [
 	{
 		value: '',
 		title: __( 'None', i18n ),

@@ -80,13 +80,6 @@
 		padding: cssvar(container-padding-hover);
 	}
 }
-.stk--is-hovered .stk-container:not(.stk--no-padding) {
-	padding: cssvar(container-padding-hover);
-}
-
-:where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .stk-container:not(.stk--no-padding) {
-	padding: cssvar(container-padding-parent-hover);
-}
 
 .stk--container-small .stk-container:not(.stk--no-padding) {
 	#{ '--stk-container-padding' }: cssvar(container-padding-small);
@@ -103,10 +96,9 @@
 		padding: cssvar(container-padding-hover);
 	}
 }
-.stk--is-hovered .stk-container-padding {
-	padding: cssvar(container-padding-hover);
-}
-:where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .stk-container-padding {
+
+:where(.stk-hover-parent:hover) .stk-container:not(.stk--no-padding),
+:where(.stk-hover-parent:hover) .stk-container-padding {
 	padding: cssvar(container-padding-parent-hover);
 }
 

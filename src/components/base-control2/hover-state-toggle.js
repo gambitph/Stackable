@@ -51,7 +51,7 @@ const _ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
 const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.map( s => upperFirst( camelCase( s ) ) )
 
 const HoverStateToggle = props => {
-	const [ currentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState( props.globalControl )
+	const [ currentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState( { globalControl: props.globalControl } )
 	const deviceType = useDeviceType()
 
 	// These are all of the attributes for all states.

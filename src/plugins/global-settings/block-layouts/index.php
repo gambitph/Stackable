@@ -105,14 +105,30 @@ if ( ! class_exists( 'Stackable_Global_Block_Layouts' ) ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
-		public function generate_style( $property, $value, $unit ) {
+		public function generate_style( $_property, $device, $hover_state, $value, $unit ) {
+			$property = $_property;
+			if ( $hover_state !== 'normal' ) {
+				$property .= '-' . $hover_state;
+			}
+
+			if ( strpos( $property, 'shadow' ) !== false ) {
+				return $property . ': ' . $value . ';';
+			}
+
 			if ( is_array( $value ) ) {
-				return $property . ': ' . $value[ 'top' ] . $unit . ' ' . $value[ 'right' ] . $unit . ' ' .  $value[ 'bottom' ] . $unit . ' ' .  $value[ 'left' ] . $unit . ' ' . ';';
+				return $property . ': ' . $value[ 'top' ] . $unit . ' ' . $value[ 'right' ] . $unit . ' ' .  $value[ 'bottom' ] . $unit . ' ' .  $value[ 'left' ] . $unit . ';';
 			}
 
 			return $property . ': ' . $value . $unit . ';';
 		}
 
+		public function get_unit( $block_layouts, $property, $state ) {
+			return $block_layouts[$property][ $state . 'Unit' ] ?? 'px';
+		}
+
+		public function get_states( $state ) {
+			return strpos( $state, 'Unit' ) === false;
+		}
 		/**-----------------------------------------------------------------------------
 		 * Block Layouts functions
 		 *-----------------------------------------------------------------------------*/
@@ -140,21 +156,26 @@ if ( ! class_exists( 'Stackable_Global_Block_Layouts' ) ) {
 				'mobile' => array(),
 			);
 
-			foreach ( $block_layouts as $property => $value ) {
-				if ( isset( $value[ 'desktop' ] ) ) {
-					$css[ 'desktop' ][] = $this->generate_style( $property, $value[ 'desktop' ], 'px' );
-				}
+			foreach ( $block_layouts as $property => $values ) {
+				$states = array_filter( $values, array( $this, 'get_states' ), ARRAY_FILTER_USE_KEY );
 
-				if ( isset( $value[ 'tablet' ] ) ) {
-					$css[ 'tablet' ][] = $this->generate_style( $property, $value[ 'tablet' ], 'px' );
-				}
+				foreach ( $states as $state => $value ) {
+					$unit = $this->get_unit( $block_layouts, $property, $state );
+					error_log( $property . ' ' . $state . ' ' . $unit );
 
-				if ( isset( $value[ 'mobile' ] ) ) {
-					$css[ 'mobile' ][] = $this->generate_style( $property, $value[ 'mobile' ], 'px' );
+					$device = strpos( $state, 'desktop' ) !== false ? 'desktop' : ( strpos( $state, 'tablet' ) !== false ? 'tablet' : 'mobile' );
+					$hover_state = strpos( $state, 'ParentHover' ) !== false ? 'parent-hover' : ( strpos( $state, 'Hover' ) !== false ? 'hover' : 'normal' );
+
+					$style = $this->generate_style( $property, $device, $hover_state, $value, $unit );
+					$css[ $device ][] = $style;
 				}
 			}
 
 			$generated_css = '';
+			if ( ! empty( $css[ 'desktop' ] ) || ! empty( $css[ 'tablet' ] ) || ! empty( $css[ 'mobile' ] ) ) {
+				$generated_css .= "\n/* Global block layouts */\n";
+			}
+
 			if ( ! empty( $css['desktop'] ) ) {
 				$generated_css .=  ':root { ' . implode( '', $css['desktop'] ) . ' }';
 			}
@@ -170,33 +191,6 @@ if ( ! class_exists( 'Stackable_Global_Block_Layouts' ) ) {
 				$generated_css .= '}';
 			}
 
-			// foreach ( $colors as $color_palette ) {
-			// 	if ( ! is_array( $color_palette ) ) {
-			// 		continue;
-			// 	}
-
-			// 	foreach ( $color_palette as $color ) {
-			// 		if ( ! is_array( $color ) ) {
-			// 			continue;
-			// 		}
-			// 		if ( ! array_key_exists( 'slug', $color ) || ! array_key_exists( 'color', $color ) || ! array_key_exists( 'rgb', $color ) ) {
-			// 			continue;
-			// 		}
-
-			// 		// Only do this for our global colors.
-			// 		if ( $color['color'] && $color['slug'] ) {
-			// 			// Add the custom css property.
-			// 			$css[] = '--' . $color['slug'] . ': ' . $color['color'] . ';';
-			// 			$css[] = '--' . $color['slug'] . '-rgba: ' . $color['rgb'] . ';';
-			// 		}
-			// 	}
-			// }
-
-			// if ( count( $css ) ) {
-			// 	$generated_color_css = "/* Global colors */\n";
-			// 	$generated_color_css .= ':root {' . implode( ' ', $css ) . '}';
-			// 	$current_css .= $generated_color_css;
-			// }
 			$current_css .= $generated_css;
 			return apply_filters( 'stackable_global_frontend_css' , $current_css );
 		}

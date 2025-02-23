@@ -19,3 +19,14 @@
 		column-gap: cssvar(button-gap);
 	}
 }
+
+// Containers
+.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container:not(.stk--no-padding),
+.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container-padding {
+	padding: cssvar(container-padding-parent-hover);
+}
+
+.stk--is-hovered .stk-container:not(.stk--no-padding),
+.stk--is-hovered .stk-container-padding {
+	padding: cssvar(container-padding-hover);
+}

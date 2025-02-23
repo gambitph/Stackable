@@ -113,7 +113,7 @@ register( createReduxStore( 'stackable/hover-state', {
 	selectors: STORE_SELECTORS,
 } ) )
 
-export const useBlockHoverState = ( globalControl = false ) => {
+export const useBlockHoverState = ( { globalControl = false } = {} ) => {
 	const { clientId } = useBlockEditContext()
 	const clientIds = useSelect( select => select( 'core/block-editor' ).getMultiSelectedBlockClientIds() )
 
