@@ -284,6 +284,53 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			register_setting(
 				'stackable_global_settings',
+				'stackable_font_pair_name',
+				array(
+					'type' => 'string',
+					'description' => __( 'Stackable global font pair', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_custom_font_pairs',
+				array(
+					'type' => 'array',
+					'description' => __( 'Stackable added custom font pairs', STACKABLE_I18N ),
+					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
+					'show_in_rest' => array(
+						'schema' => array(
+							'items' => array(
+								'type' => 'object',
+								'properties' => array(
+									'name' => array(
+										'type' => 'string',
+									),
+									'value' => array(
+										'type' => 'array',
+										'items' => array(
+											'type' => 'object',
+											'properties' => array(
+												'selector' => array(
+													'type' => 'string',
+												),
+												'styles' => $stackable_global_typography_schema
+											),
+										),
+									),
+								)
+							)
+						)
+					),
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
 				'stackable_icon_library',
 				array(
 					'type' => 'array',

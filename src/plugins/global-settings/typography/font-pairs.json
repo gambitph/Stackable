@@ -1,0 +1,1695 @@
+[
+	{
+		"name": "theme-default",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {}
+			},
+			{
+				"selector": "h2",
+				"styles": {}
+			},
+			{
+				"selector": "h3",
+				"styles": {}
+			},
+			{
+				"selector": "h4",
+				"styles": {}
+			},
+			{
+				"selector": "h5",
+				"styles": {}
+			},
+			{
+				"selector": "h6",
+				"styles": {}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {}
+			},
+			{
+				"selector": "p",
+				"styles": {}
+			}
+		]
+	},
+	{
+		"name": "playfair-display/fauna-one",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Playfair Display",
+					"fontSize": 3.815,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Playfair Display",
+					"fontSize": 3.052,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Playfair Display",
+					"fontSize": 2.441,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Playfair Display",
+					"fontSize": 1.953,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Playfair Display",
+					"fontSize": 1.563,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Playfair Display",
+					"fontSize": 1.25,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Fauna One",
+					"fontSize": 0.8,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Fauna One",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "fugaz-one/monda-regular",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Fugaz One",
+					"fontSize": 5.61,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Fugaz One",
+					"fontSize": 4.209,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Fugaz One",
+					"fontSize": 3.157,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Fugaz One",
+					"fontSize": 2.369,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Fugaz One",
+					"fontSize": 1.777,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Fugaz One",
+					"fontSize": 1.333,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Monda Regular",
+					"fontSize": 0.75,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Monda Regular",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "unica-one/vollkorn",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Unica One",
+					"fontSize": 1.476,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Unica One",
+					"fontSize": 1.383,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Unica One",
+					"fontSize": 1.296,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Unica One",
+					"fontSize": 1.215,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Unica One",
+					"fontSize": 1.138,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Unica One",
+					"fontSize": 1.067,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Vollkorn",
+					"fontSize": 0.937,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Vollkorn",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "megrim/roboto-slab",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Megrim",
+					"fontSize": 2.986,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Megrim",
+					"fontSize": 2.488,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Megrim",
+					"fontSize": 2.074,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Megrim",
+					"fontSize": 1.728,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Megrim",
+					"fontSize": 1.44,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Megrim",
+					"fontSize": 1.2,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Roboto Slab",
+					"fontSize": 0.833,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Roboto Slab",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "darumadrop-one/roboto-serif",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Darumadrop One",
+					"fontSize": 7.993,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Darumadrop One",
+					"fontSize": 5.653,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Darumadrop One",
+					"fontSize": 3.998,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Darumadrop One",
+					"fontSize": 2.827,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Darumadrop One",
+					"fontSize": 1.999,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Darumadrop One",
+					"fontSize": 1.414,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Roboto Serif",
+					"fontSize": 0.707,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Roboto Serif",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "old-standard-tt/questrial",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Old Standard TT",
+					"fontSize": 2.986,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Old Standard TT",
+					"fontSize": 2.488,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Old Standard TT",
+					"fontSize": 2.074,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Old Standard TT",
+					"fontSize": 1.728,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Old Standard TT",
+					"fontSize": 1.44,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Old Standard TT",
+					"fontSize": 1.2,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Questrial",
+					"fontSize": 0.833,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Questrial",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "ovo/mulish",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Ovo",
+					"fontSize": 2.027,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Ovo",
+					"fontSize": 1.802,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Ovo",
+					"fontSize": 1.602,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Ovo",
+					"fontSize": 1.424,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Ovo",
+					"fontSize": 1.266,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Ovo",
+					"fontSize": 1.125,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Mulish",
+					"fontSize": 0.889,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Mulish",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "neuton/neuton",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 2.986,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 2.488,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 2.074,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 1.728,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 1.44,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 1.2,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 0.833,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "vast-shadow/playfair-display",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Vast Shadow",
+					"fontSize": 2.986,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Vast Shadow",
+					"fontSize": 2.488,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Vast Shadow",
+					"fontSize": 2.074,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Vast Shadow",
+					"fontSize": 1.728,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Vast Shadow",
+					"fontSize": 1.44,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Vast Shadow",
+					"fontSize": 1.2,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Playfair Display",
+					"fontSize": 0.833,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Playfair Display",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "quattrocento/fanwood-text",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Quattrocento",
+					"fontSize": 5.61,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Quattrocento",
+					"fontSize": 4.209,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Quattrocento",
+					"fontSize": 3.157,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Quattrocento",
+					"fontSize": 2.369,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Quattrocento",
+					"fontSize": 1.777,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Quattrocento",
+					"fontSize": 1.333,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Fanwood Text",
+					"fontSize": 0.75,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Fanwood Text",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "quando/judson",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Quando",
+					"fontSize": 2.986,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Quando",
+					"fontSize": 2.488,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Quando",
+					"fontSize": 2.074,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Quando",
+					"fontSize": 1.728,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Quando",
+					"fontSize": 1.44,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Quando",
+					"fontSize": 1.2,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Judson",
+					"fontSize": 0.833,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Judson",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "ultra/stint-ultra-expanded",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Ultra",
+					"fontSize": 3.815,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Ultra",
+					"fontSize": 3.052,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Ultra",
+					"fontSize": 2.441,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Ultra",
+					"fontSize": 1.953,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Ultra",
+					"fontSize": 1.563,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Ultra",
+					"fontSize": 1.25,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Stint Ultra Expanded",
+					"fontSize": 0.8,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Stint Ultra Expanded",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "alfa-slab-one/gentium-book-plus",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Alfa Slab One",
+					"fontSize": 3.815,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Alfa Slab One",
+					"fontSize": 3.052,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Alfa Slab One",
+					"fontSize": 2.441,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Alfa Slab One",
+					"fontSize": 1.953,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Alfa Slab One",
+					"fontSize": 1.563,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Alfa Slab One",
+					"fontSize": 1.25,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Gentium Book Plus",
+					"fontSize": 0.8,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Gentium Book Plus",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "nixie-one/libre-baskerville",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Nixie One",
+					"fontSize": 3.815,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Nixie One",
+					"fontSize": 3.052,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Nixie One",
+					"fontSize": 2.441,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Nixie One",
+					"fontSize": 1.953,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Nixie One",
+					"fontSize": 1.563,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Nixie One",
+					"fontSize": 1.25,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Libre Baskerville",
+					"fontSize": 0.8,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Libre Baskerville",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "julius-sans-one/crimson-text",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Julius Sans One",
+					"fontSize": 2.027,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Julius Sans One",
+					"fontSize": 1.802,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Julius Sans One",
+					"fontSize": 1.602,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Julius Sans One",
+					"fontSize": 1.424,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Julius Sans One",
+					"fontSize": 1.266,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Julius Sans One",
+					"fontSize": 1.125,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Crimson Text",
+					"fontSize": 0.889,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Crimson Text",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "almendra-display/cardo",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Almendra Display",
+					"fontSize": 7.993,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Almendra Display",
+					"fontSize": 5.653,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Almendra Display",
+					"fontSize": 3.998,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Almendra Display",
+					"fontSize": 2.827,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Almendra Display",
+					"fontSize": 1.999,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Almendra Display",
+					"fontSize": 1.999,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Cardo",
+					"fontSize": 0.707,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Cardo",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "philosopher/muli",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Philosopher",
+					"fontSize": 5.61,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Philosopher",
+					"fontSize": 4.209,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Philosopher",
+					"fontSize": 3.157,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Philosopher",
+					"fontSize": 2.369,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Philosopher",
+					"fontSize": 1.777,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Philosopher",
+					"fontSize": 1.333,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Muli",
+					"fontSize": 0.75,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Muli",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "cinzel-decorative/amiri",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Cinzel Decorative",
+					"fontSize": 5.61,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Cinzel Decorative",
+					"fontSize": 4.209,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Cinzel Decorative",
+					"fontSize": 3.157,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Cinzel Decorative",
+					"fontSize": 2.369,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Cinzel Decorative",
+					"fontSize": 1.777,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Cinzel Decorative",
+					"fontSize": 1.333,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Amiri",
+					"fontSize": 0.75,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Amiri",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "oswald/quattrocento",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Oswald",
+					"fontSize": 3.815,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Oswald",
+					"fontSize": 3.052,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Oswald",
+					"fontSize": 2.441,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Oswald",
+					"fontSize": 1.953,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Oswald",
+					"fontSize": 1.563,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Oswald",
+					"fontSize": 1.25,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Quattrocento",
+					"fontSize": 0.8,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Quattrocento",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "mr.de-haviland/neuton",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Mr. De Haviland",
+					"fontSize": 5.61,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Mr. De Haviland",
+					"fontSize": 4.209,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Mr. De Haviland",
+					"fontSize": 3.157,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Mr. De Haviland",
+					"fontSize": 2.369,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Mr. De Haviland",
+					"fontSize": 1.777,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Mr. De Haviland",
+					"fontSize": 1.333,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 0.75,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Neuton",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "yeseva-one/merriweather-sans",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Yeseva One",
+					"fontSize": 5.61,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Yeseva One",
+					"fontSize": 4.209,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Yeseva One",
+					"fontSize": 3.157,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Yeseva One",
+					"fontSize": 2.369,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Yeseva One",
+					"fontSize": 1.777,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Yeseva One",
+					"fontSize": 1.333,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Merriweather",
+					"fontSize": 0.75,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Merriweather",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "shrikhand/scope-one",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Shrikhand",
+					"fontSize": 7.993,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Shrikhand",
+					"fontSize": 5.653,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Shrikhand",
+					"fontSize": 3.998,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Shrikhand",
+					"fontSize": 3.998,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Shrikhand",
+					"fontSize": 1.999,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Shrikhand",
+					"fontSize": 1.414,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Scope One",
+					"fontSize": 0.707,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Scope One",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "poppins/halant",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Poppins",
+					"fontSize": 7.993,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Poppins",
+					"fontSize": 5.653,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Poppins",
+					"fontSize": 3.998,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Poppins",
+					"fontSize": 2.827,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Poppins",
+					"fontSize": 1.999,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Poppins",
+					"fontSize": 1.414,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Halant",
+					"fontSize": 0.707,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Halant",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	},
+	{
+		"name": "chonburi/fjord-one",
+		"value": [
+			{
+				"selector": "h1",
+				"styles": {
+					"fontFamily": "Chonburi",
+					"fontSize": 3.815,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h2",
+				"styles": {
+					"fontFamily": "Chonburi",
+					"fontSize": 3.052,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h3",
+				"styles": {
+					"fontFamily": "Chonburi",
+					"fontSize": 2.441,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h4",
+				"styles": {
+					"fontFamily": "Chonburi",
+					"fontSize": 1.953,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h5",
+				"styles": {
+					"fontFamily": "Chonburi",
+					"fontSize": 1.563,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "h6",
+				"styles": {
+					"fontFamily": "Chonburi",
+					"fontSize": 1.25,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": ".stk-subtitle",
+				"styles": {
+					"fontFamily": "Fjord One",
+					"fontSize": 0.8,
+					"fontSizeUnit": "rem"
+				}
+			},
+			{
+				"selector": "p",
+				"styles": {
+					"fontFamily": "Fjord One",
+					"fontSize": 1,
+					"fontSizeUnit": "rem"
+				}
+			}
+		]
+	}
+]
