@@ -27,7 +27,7 @@ const InspectorSubHeader = props => {
 					size="small"
 					icon="trash"
 					alt={ __( 'Delete', i18n ) }
-					onTrash={ onTrash }
+					onClick={ onTrash }
 				/>
 			) }
 			{ showReset && (
@@ -36,7 +36,7 @@ const InspectorSubHeader = props => {
 					size="small"
 					icon="image-rotate"
 					alt={ __( 'Reset', i18n ) }
-					onReset={ onReset }
+					onClick={ onReset }
 				/>
 			) }
 		</div>
