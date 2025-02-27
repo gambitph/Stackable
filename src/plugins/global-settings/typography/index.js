@@ -4,22 +4,25 @@
 import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
 import { getThemeStyles } from './get-theme-styles'
+import FONT_PAIRS from './font-pairs.json'
+import FontPairPicker from './font-pair-picker'
 
 /**
  * External dependencies
  */
 import {
-	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator,
+	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, InspectorSubHeader, Button,
 } from '~stackable/components'
-import { fetchSettings } from '~stackable/util'
+import { fetchSettings, loadGoogleFont } from '~stackable/util'
 import { i18n } from 'stackable'
 import { omit, head } from 'lodash'
+import classNames from 'classnames'
 
 /**
  * WordPress dependencies
  */
 import {
-	Fragment, useEffect, useState,
+	Fragment, useEffect, useMemo, useRef, useState,
 } from '@wordpress/element'
 import { models } from '@wordpress/api'
 import { addFilter, doAction } from '@wordpress/hooks'
@@ -69,14 +72,22 @@ const TYPOGRAPHY_TAGS = [
 let saveThrottle = null
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography', output => {
+	const [ isPanelOpen, setIsPanelOpen ] = useState( false )
 	const [ typographySettings, setTypographySettings ] = useState( [] )
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
+	const [ customFontPairs, setCustomFontPairs ] = useState( [] )
+	const [ selectedFontPairName, setSelectedFontPairName ] = useState( 'theme-default' )
+	const [ editingFontPairName, setEditingFontPairName ] = useState( '' )
+
+	const fontPairContainerRef = useRef( null )
 
 	useEffect( () => {
 		fetchSettings().then( response => {
 			// Get settings.
 			setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
 			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
+			setCustomFontPairs( response.stackable_custom_font_pairs || [] )
+			setSelectedFontPairName( response.stackable_font_pair_name || '' )
 		} )
 	}, [] )
 
@@ -85,26 +96,73 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo )
 	}, [ JSON.stringify( typographySettings ), applySettingsTo ] )
 
-	const changeStyles = ( selector, styles ) => {
-		/**
-		 * Delete the object keys with empty strings.
-		 * Otherwise, the API will throw an error code 400
-		 * because of incompatible schema type.
-		 */
-		Object.keys( styles ).forEach( key => {
-			if ( styles[ key ] === '' ) {
-				delete styles[ key ]
+	useEffect( () => {
+		if ( fontPairContainerRef.current ) {
+			const selectedElement = fontPairContainerRef.current.querySelector( '.ugb-global-settings-font-pair__selected' )
+			if ( selectedElement ) {
+				selectedElement.scrollIntoView( { behavior: 'instant', block: 'center' } )
 			}
+		}
+	}, [ isPanelOpen ] )
+
+	const allFontPairs = useMemo( () => [
+		FONT_PAIRS[ 0 ],
+		...customFontPairs.map( fontPair => ( {
+			...fontPair,
+			isCustom: true,
+		} ) ),
+		...FONT_PAIRS.slice( 1 ),
+	], [ customFontPairs ] )
+
+	const changeFontPair = name => {
+		setSelectedFontPairName( name )
+		const model = new models.Settings( {
+			stackable_font_pair_name: name, // eslint-disable-line
+		} )
+		model.save()
+	}
+
+	const changeCustomFontPairs = fontPairs => {
+		setCustomFontPairs( fontPairs )
+		clearTimeout( saveThrottle )
+		saveThrottle = setTimeout( () => {
+			const model = new models.Settings( {
+				stackable_custom_font_pairs: [ ...fontPairs ] , // eslint-disable-line
+			} )
+			model.save()
+		}, 500 )
+	}
+
+	const changeStyles = updates => {
+		if ( ! Array.isArray( updates ) ) {
+			return
+		}
+
+		const newSettings = { ...typographySettings }
+
+		updates.forEach( ( { selector, styles } ) => {
+			if ( ! selector || typeof styles !== 'object' ) {
+				return
+			}
+
+			/**
+			 * Delete the object keys with empty strings.
+			 * Otherwise, the API will throw an error code 400
+			 * because of incompatible schema type.
+			 */
+			Object.keys( styles ).forEach( key => {
+				if ( styles[ key ] === '' ) {
+					delete styles[ key ]
+				}
+			} )
+
+			newSettings[ selector ] = styles
 		} )
 
-		const newSettings = {
-			...typographySettings,
-			[ selector ]: styles,
-		}
 		setTypographySettings( newSettings )
 
 		// Update the global styles immediately when reset font size is triggered.
-		if ( styles && ! styles.fontSize ) {
+		if ( updates.some( ( { styles } ) => styles && ! styles.fontSize ) ) {
 			doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
 		}
 
@@ -115,6 +173,14 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			} )
 			model.save()
 		}, 500 )
+
+		if ( editingFontPairName ) {
+			const mappedValue = Object.entries( newSettings ).map( ( [ selector, styles ] ) => ( { selector, styles } ) )
+			const updatedCustomFontPairs = customFontPairs
+				.map( fontPair => fontPair.name === editingFontPairName ? { ...fontPair, value: mappedValue } : fontPair )
+
+			changeCustomFontPairs( updatedCustomFontPairs )
+		}
 	}
 
 	const resetStyles = selector => {
@@ -139,31 +205,130 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		model.save()
 	}
 
+	const addFontPair = () => {
+		const newFontPair = {
+			...allFontPairs.find( fontPair => fontPair.name === selectedFontPairName ),
+			name: `custom-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
+		}
+
+		setSelectedFontPairName( newFontPair.name )
+		setEditingFontPairName( newFontPair.name )
+		changeCustomFontPairs( [ newFontPair, ...customFontPairs ] )
+	}
+
+	const deleteFontPair = name => {
+		// eslint-disable-next-line no-alert
+		const confirmDelete = window.confirm( __( 'Are you sure you want to delete this font pair?', i18n ) )
+		if ( ! confirmDelete ) {
+			return
+		}
+		const updatedCustomFontPairs = customFontPairs.filter( fontPair => fontPair.name !== name )
+
+		setSelectedFontPairName( '' )
+		setEditingFontPairName( '' )
+		changeCustomFontPairs( updatedCustomFontPairs )
+	}
+
 	return (
 		<Fragment>
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Typography', i18n ) }
+				className="ugb-global-typography__panel"
+				onToggle={ () => {
+					setIsPanelOpen( prev => ! prev )
+				} }
 			>
-				<p className="components-base-control__help">
-					{ __( 'Change the typography of your headings for all your blocks in your site.', i18n ) }
-					&nbsp;
-					<a href="https://docs.wpstackable.com/article/363-how-to-use-global-typography?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
-						{ __( 'Learn more about Global Typography', i18n ) }
-					</a>
-				</p>
-				<AdvancedSelectControl
-					label={ __( 'Apply Typography Styles to', i18n ) }
-					options={ [
-						{ value: 'blocks-stackable-native', label: __( 'Stackable and native blocks only', i18n ) },
-						{ value: 'blocks-stackable', label: __( 'Stackable blocks only', i18n ) },
-						{ value: 'blocks-all', label: __( 'Stackable and all other blocks', i18n ) },
-					] }
-					value={ applySettingsTo }
-					onChange={ changeApplySettingsTo }
-					default="blocks-stackable-native"
-				/>
-				<ControlSeparator />
+				{ ! editingFontPairName &&
+					<div>
+						<p className="components-base-control__help">
+							{ __( 'Change the typography of your headings for all your blocks in your site.', i18n ) }
+							&nbsp;
+							<a href="https://docs.wpstackable.com/article/363-how-to-use-global-typography?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+								{ __( 'Learn more about Global Typography', i18n ) }
+							</a>
+						</p>
+						<AdvancedSelectControl
+							label={ __( 'Apply Typography Styles to', i18n ) }
+							options={ [
+								{ value: 'blocks-stackable-native', label: __( 'Stackable and native blocks only', i18n ) },
+								{ value: 'blocks-stackable', label: __( 'Stackable blocks only', i18n ) },
+								{ value: 'blocks-all', label: __( 'Stackable and all other blocks', i18n ) },
+							] }
+							value={ applySettingsTo }
+							onChange={ changeApplySettingsTo }
+							default="blocks-stackable-native"
+						/>
+						<ControlSeparator />
+
+						<div className="ugb-global-settings-font-pair__heading">
+							<h3>Preset Font Pairs</h3>
+							<Button
+								className="ugb-global-settings-color-picker__add-button"
+								onClick={ addFontPair }
+								icon="plus-alt2"
+							/>
+						</div>
+
+						<div className="ugb-global-settings-font-pair__container" ref={ fontPairContainerRef }>
+							{ allFontPairs.map( fontPair => {
+								const headingStyles = fontPair.value?.find( val => val.selector === 'h1' )?.styles
+								const paragraphStyles = fontPair.value?.find( val => val.selector === 'p' )?.styles
+								if ( headingStyles?.fontFamily ) {
+									loadGoogleFont( headingStyles.fontFamily )
+								}
+								if ( paragraphStyles?.fontFamily ) {
+									loadGoogleFont( paragraphStyles.fontFamily )
+								}
+								const label = (
+									<div>
+										<span
+											style={ omit( { ...headingStyles }, [ 'fontSize', 'lineHeight' ] ) }
+											className="ugb-global-settings-font-pair__label"
+										>
+											{ headingStyles?.fontFamily ?? 'Theme Heading Default' }
+										</span>
+										<span
+											style={ omit( { ...paragraphStyles }, [ 'fontSize', 'lineHeight' ] ) }
+											className="ugb-global-settings-font-pair__sub-label"
+										>
+											{ paragraphStyles?.fontFamily ?? 'Theme Body Default' }
+										</span>
+									</div>
+								)
+
+								const className = classNames( { 'ugb-global-settings-font-pair__selected': selectedFontPairName === fontPair.name } )
+
+								return <FontPairPicker
+									key={ fontPair.name }
+									label={ label }
+									isCustom={ fontPair?.isCustom ?? false }
+									className={ className }
+									onClick={ () => {
+										changeFontPair( fontPair.name )
+										changeStyles( fontPair.value )
+									} }
+									onEdit={ () => {
+										setEditingFontPairName( fontPair.name )
+										changeFontPair( fontPair.name )
+										changeStyles( fontPair.value )
+									} }
+								/>
+							} ) }
+						</div>
+
+						<ControlSeparator />
+					</div>
+				}
+				{ editingFontPairName &&
+					<InspectorSubHeader
+						title="Editing Font Pair"
+						onBack={ () => setEditingFontPairName( '' ) }
+						onTrash={ () => deleteFontPair( editingFontPairName ) }
+					/>
+				}
+
+				<h3>Typography Settings</h3>
 				<style> { getThemeStyles() } </style>
 				{ TYPOGRAPHY_TAGS.map( ( {
 					label, selector, help,
@@ -175,7 +340,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 							label={ label }
 							selector={ selector }
 							value={ ( typographySettings[ selector ] ) || {} }
-							onChange={ value => changeStyles( selector, value ) }
+							onChange={ styles => changeStyles( [ { selector, styles } ] ) }
 							onReset={ () => resetStyles( selector ) }
 						/>
 					)
