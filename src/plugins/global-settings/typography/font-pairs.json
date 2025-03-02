@@ -1,1695 +1,2815 @@
 [
 	{
-		"name": "theme-default",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {}
-			},
-			{
-				"selector": "h2",
-				"styles": {}
-			},
-			{
-				"selector": "h3",
-				"styles": {}
-			},
-			{
-				"selector": "h4",
-				"styles": {}
-			},
-			{
-				"selector": "h5",
-				"styles": {}
-			},
-			{
-				"selector": "h6",
-				"styles": {}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {}
-			},
-			{
-				"selector": "p",
-				"styles": {}
-			}
-		]
-	},
-	{
-		"name": "playfair-display/fauna-one",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Playfair Display",
-					"fontSize": 3.815,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Playfair Display",
-					"fontSize": 3.052,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Playfair Display",
-					"fontSize": 2.441,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Playfair Display",
-					"fontSize": 1.953,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Playfair Display",
-					"fontSize": 1.563,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Playfair Display",
-					"fontSize": 1.25,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Fauna One",
-					"fontSize": 0.8,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Fauna One",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "fugaz-one/monda-regular",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Fugaz One",
-					"fontSize": 5.61,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Fugaz One",
-					"fontSize": 4.209,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Fugaz One",
-					"fontSize": 3.157,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Fugaz One",
-					"fontSize": 2.369,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Fugaz One",
-					"fontSize": 1.777,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Fugaz One",
-					"fontSize": 1.333,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Monda Regular",
-					"fontSize": 0.75,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Monda Regular",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "unica-one/vollkorn",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Unica One",
-					"fontSize": 1.476,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Unica One",
-					"fontSize": 1.383,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Unica One",
-					"fontSize": 1.296,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Unica One",
-					"fontSize": 1.215,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Unica One",
-					"fontSize": 1.138,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Unica One",
-					"fontSize": 1.067,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Vollkorn",
-					"fontSize": 0.937,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Vollkorn",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "megrim/roboto-slab",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Megrim",
-					"fontSize": 2.986,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Megrim",
-					"fontSize": 2.488,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Megrim",
-					"fontSize": 2.074,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Megrim",
-					"fontSize": 1.728,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Megrim",
-					"fontSize": 1.44,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Megrim",
-					"fontSize": 1.2,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Roboto Slab",
-					"fontSize": 0.833,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Roboto Slab",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "darumadrop-one/roboto-serif",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Darumadrop One",
-					"fontSize": 7.993,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Darumadrop One",
-					"fontSize": 5.653,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Darumadrop One",
-					"fontSize": 3.998,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Darumadrop One",
-					"fontSize": 2.827,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Darumadrop One",
-					"fontSize": 1.999,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Darumadrop One",
-					"fontSize": 1.414,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Roboto Serif",
-					"fontSize": 0.707,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Roboto Serif",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "old-standard-tt/questrial",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Old Standard TT",
-					"fontSize": 2.986,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Old Standard TT",
-					"fontSize": 2.488,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Old Standard TT",
-					"fontSize": 2.074,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Old Standard TT",
-					"fontSize": 1.728,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Old Standard TT",
-					"fontSize": 1.44,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Old Standard TT",
-					"fontSize": 1.2,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Questrial",
-					"fontSize": 0.833,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Questrial",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "ovo/mulish",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Ovo",
-					"fontSize": 2.027,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Ovo",
-					"fontSize": 1.802,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Ovo",
-					"fontSize": 1.602,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Ovo",
-					"fontSize": 1.424,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Ovo",
-					"fontSize": 1.266,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Ovo",
-					"fontSize": 1.125,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Mulish",
-					"fontSize": 0.889,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Mulish",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "neuton/neuton",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 2.986,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 2.488,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 2.074,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 1.728,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 1.44,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 1.2,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 0.833,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "vast-shadow/playfair-display",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Vast Shadow",
-					"fontSize": 2.986,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Vast Shadow",
-					"fontSize": 2.488,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Vast Shadow",
-					"fontSize": 2.074,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Vast Shadow",
-					"fontSize": 1.728,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Vast Shadow",
-					"fontSize": 1.44,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Vast Shadow",
-					"fontSize": 1.2,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Playfair Display",
-					"fontSize": 0.833,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Playfair Display",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "quattrocento/fanwood-text",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Quattrocento",
-					"fontSize": 5.61,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Quattrocento",
-					"fontSize": 4.209,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Quattrocento",
-					"fontSize": 3.157,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Quattrocento",
-					"fontSize": 2.369,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Quattrocento",
-					"fontSize": 1.777,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Quattrocento",
-					"fontSize": 1.333,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Fanwood Text",
-					"fontSize": 0.75,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Fanwood Text",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "quando/judson",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Quando",
-					"fontSize": 2.986,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Quando",
-					"fontSize": 2.488,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Quando",
-					"fontSize": 2.074,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Quando",
-					"fontSize": 1.728,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Quando",
-					"fontSize": 1.44,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Quando",
-					"fontSize": 1.2,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Judson",
-					"fontSize": 0.833,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Judson",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "ultra/stint-ultra-expanded",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Ultra",
-					"fontSize": 3.815,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Ultra",
-					"fontSize": 3.052,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Ultra",
-					"fontSize": 2.441,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Ultra",
-					"fontSize": 1.953,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Ultra",
-					"fontSize": 1.563,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Ultra",
-					"fontSize": 1.25,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Stint Ultra Expanded",
-					"fontSize": 0.8,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Stint Ultra Expanded",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "alfa-slab-one/gentium-book-plus",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Alfa Slab One",
-					"fontSize": 3.815,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Alfa Slab One",
-					"fontSize": 3.052,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Alfa Slab One",
-					"fontSize": 2.441,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Alfa Slab One",
-					"fontSize": 1.953,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Alfa Slab One",
-					"fontSize": 1.563,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Alfa Slab One",
-					"fontSize": 1.25,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Gentium Book Plus",
-					"fontSize": 0.8,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Gentium Book Plus",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "nixie-one/libre-baskerville",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Nixie One",
-					"fontSize": 3.815,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Nixie One",
-					"fontSize": 3.052,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Nixie One",
-					"fontSize": 2.441,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Nixie One",
-					"fontSize": 1.953,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Nixie One",
-					"fontSize": 1.563,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Nixie One",
-					"fontSize": 1.25,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Libre Baskerville",
-					"fontSize": 0.8,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Libre Baskerville",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "julius-sans-one/crimson-text",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Julius Sans One",
-					"fontSize": 2.027,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Julius Sans One",
-					"fontSize": 1.802,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Julius Sans One",
-					"fontSize": 1.602,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Julius Sans One",
-					"fontSize": 1.424,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Julius Sans One",
-					"fontSize": 1.266,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Julius Sans One",
-					"fontSize": 1.125,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Crimson Text",
-					"fontSize": 0.889,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Crimson Text",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "almendra-display/cardo",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Almendra Display",
-					"fontSize": 7.993,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Almendra Display",
-					"fontSize": 5.653,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Almendra Display",
-					"fontSize": 3.998,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Almendra Display",
-					"fontSize": 2.827,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Almendra Display",
-					"fontSize": 1.999,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Almendra Display",
-					"fontSize": 1.999,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Cardo",
-					"fontSize": 0.707,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Cardo",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "philosopher/muli",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Philosopher",
-					"fontSize": 5.61,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Philosopher",
-					"fontSize": 4.209,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Philosopher",
-					"fontSize": 3.157,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Philosopher",
-					"fontSize": 2.369,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Philosopher",
-					"fontSize": 1.777,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Philosopher",
-					"fontSize": 1.333,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Muli",
-					"fontSize": 0.75,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Muli",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "cinzel-decorative/amiri",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Cinzel Decorative",
-					"fontSize": 5.61,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Cinzel Decorative",
-					"fontSize": 4.209,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Cinzel Decorative",
-					"fontSize": 3.157,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Cinzel Decorative",
-					"fontSize": 2.369,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Cinzel Decorative",
-					"fontSize": 1.777,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Cinzel Decorative",
-					"fontSize": 1.333,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Amiri",
-					"fontSize": 0.75,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Amiri",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "oswald/quattrocento",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Oswald",
-					"fontSize": 3.815,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Oswald",
-					"fontSize": 3.052,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Oswald",
-					"fontSize": 2.441,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Oswald",
-					"fontSize": 1.953,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Oswald",
-					"fontSize": 1.563,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Oswald",
-					"fontSize": 1.25,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Quattrocento",
-					"fontSize": 0.8,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Quattrocento",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "mr.de-haviland/neuton",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Mr. De Haviland",
-					"fontSize": 5.61,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Mr. De Haviland",
-					"fontSize": 4.209,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Mr. De Haviland",
-					"fontSize": 3.157,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Mr. De Haviland",
-					"fontSize": 2.369,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Mr. De Haviland",
-					"fontSize": 1.777,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Mr. De Haviland",
-					"fontSize": 1.333,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 0.75,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Neuton",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "yeseva-one/merriweather-sans",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Yeseva One",
-					"fontSize": 5.61,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Yeseva One",
-					"fontSize": 4.209,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Yeseva One",
-					"fontSize": 3.157,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Yeseva One",
-					"fontSize": 2.369,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Yeseva One",
-					"fontSize": 1.777,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Yeseva One",
-					"fontSize": 1.333,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Merriweather",
-					"fontSize": 0.75,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Merriweather",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "shrikhand/scope-one",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Shrikhand",
-					"fontSize": 7.993,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Shrikhand",
-					"fontSize": 5.653,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Shrikhand",
-					"fontSize": 3.998,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Shrikhand",
-					"fontSize": 3.998,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Shrikhand",
-					"fontSize": 1.999,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Shrikhand",
-					"fontSize": 1.414,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Scope One",
-					"fontSize": 0.707,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Scope One",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "poppins/halant",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Poppins",
-					"fontSize": 7.993,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Poppins",
-					"fontSize": 5.653,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Poppins",
-					"fontSize": 3.998,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Poppins",
-					"fontSize": 2.827,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Poppins",
-					"fontSize": 1.999,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Poppins",
-					"fontSize": 1.414,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Halant",
-					"fontSize": 0.707,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Halant",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	},
-	{
-		"name": "chonburi/fjord-one",
-		"value": [
-			{
-				"selector": "h1",
-				"styles": {
-					"fontFamily": "Chonburi",
-					"fontSize": 3.815,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h2",
-				"styles": {
-					"fontFamily": "Chonburi",
-					"fontSize": 3.052,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h3",
-				"styles": {
-					"fontFamily": "Chonburi",
-					"fontSize": 2.441,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h4",
-				"styles": {
-					"fontFamily": "Chonburi",
-					"fontSize": 1.953,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h5",
-				"styles": {
-					"fontFamily": "Chonburi",
-					"fontSize": 1.563,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "h6",
-				"styles": {
-					"fontFamily": "Chonburi",
-					"fontSize": 1.25,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": ".stk-subtitle",
-				"styles": {
-					"fontFamily": "Fjord One",
-					"fontSize": 0.8,
-					"fontSizeUnit": "rem"
-				}
-			},
-			{
-				"selector": "p",
-				"styles": {
-					"fontFamily": "Fjord One",
-					"fontSize": 1,
-					"fontSizeUnit": "rem"
-				}
-			}
-		]
-	}
+        "name": "theme-heading-default/theme-body-default",
+        "typography": {
+            "h1": {
+                "fontFamily": ""
+            },
+            "h2": {
+                "fontFamily": ""
+            },
+            "h3": {
+                "fontFamily": ""
+            },
+            "h4": {
+                "fontFamily": ""
+            },
+            "h5": {
+                "fontFamily": ""
+            },
+            "h6": {
+                "fontFamily": ""
+            },
+            ".stk-subtitle": {
+                "fontFamily": ""
+            },
+            "p": {
+                "fontFamily": ""
+            }
+        }
+    },
+    {
+        "name": "dm-serif-display/dm-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h2": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h3": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h4": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h5": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h6": {
+                "fontFamily": "DM Serif Display"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "DM Sans"
+            },
+            "p": {
+                "fontFamily": "DM Sans"
+            }
+        }
+    },
+    {
+        "name": "ultra/pt-serif",
+        "typography": {
+            "h1": {
+                "fontFamily": "Ultra"
+            },
+            "h2": {
+                "fontFamily": "Ultra"
+            },
+            "h3": {
+                "fontFamily": "Ultra"
+            },
+            "h4": {
+                "fontFamily": "Ultra"
+            },
+            "h5": {
+                "fontFamily": "Ultra"
+            },
+            "h6": {
+                "fontFamily": "Ultra"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "PT Serif"
+            },
+            "p": {
+                "fontFamily": "PT Serif"
+            }
+        }
+    },
+    {
+        "name": "ibm-plex-sans-condensed/ibm-plex-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h2": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h3": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h4": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h5": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h6": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "IBM Plex Sans"
+            },
+            "p": {
+                "fontFamily": "IBM Plex Sans"
+            }
+        }
+    },
+    {
+        "name": "work-sans/merriweather",
+        "typography": {
+            "h1": {
+                "fontFamily": "Work Sans"
+            },
+            "h2": {
+                "fontFamily": "Work Sans"
+            },
+            "h3": {
+                "fontFamily": "Work Sans"
+            },
+            "h4": {
+                "fontFamily": "Work Sans"
+            },
+            "h5": {
+                "fontFamily": "Work Sans"
+            },
+            "h6": {
+                "fontFamily": "Work Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Merriweather"
+            },
+            "p": {
+                "fontFamily": "Merriweather"
+            }
+        }
+    },
+    {
+        "name": "oswald/source-sans-pro",
+        "typography": {
+            "h1": {
+                "fontFamily": "Oswald"
+            },
+            "h2": {
+                "fontFamily": "Oswald"
+            },
+            "h3": {
+                "fontFamily": "Oswald"
+            },
+            "h4": {
+                "fontFamily": "Oswald"
+            },
+            "h5": {
+                "fontFamily": "Oswald"
+            },
+            "h6": {
+                "fontFamily": "Oswald"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "p": {
+                "fontFamily": "Source Sans Pro"
+            }
+        }
+    },
+    {
+        "name": "barlow-condensed/montserrat",
+        "typography": {
+            "h1": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h2": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h3": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h4": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h5": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h6": {
+                "fontFamily": "Barlow Condensed"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Montserrat"
+            },
+            "p": {
+                "fontFamily": "Montserrat"
+            }
+        }
+    },
+    {
+        "name": "alegreya/alegreya",
+        "typography": {
+            "h1": {
+                "fontFamily": "Alegreya"
+            },
+            "h2": {
+                "fontFamily": "Alegreya"
+            },
+            "h3": {
+                "fontFamily": "Alegreya"
+            },
+            "h4": {
+                "fontFamily": "Alegreya"
+            },
+            "h5": {
+                "fontFamily": "Alegreya"
+            },
+            "h6": {
+                "fontFamily": "Alegreya"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Alegreya"
+            },
+            "p": {
+                "fontFamily": "Alegreya"
+            }
+        }
+    },
+    {
+        "name": "karla/merriweather",
+        "typography": {
+            "h1": {
+                "fontFamily": "Karla"
+            },
+            "h2": {
+                "fontFamily": "Karla"
+            },
+            "h3": {
+                "fontFamily": "Karla"
+            },
+            "h4": {
+                "fontFamily": "Karla"
+            },
+            "h5": {
+                "fontFamily": "Karla"
+            },
+            "h6": {
+                "fontFamily": "Karla"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Merriweather"
+            },
+            "p": {
+                "fontFamily": "Merriweather"
+            }
+        }
+    },
+    {
+        "name": "roboto-condensed/roboto",
+        "typography": {
+            "h1": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h2": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h3": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h4": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h5": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h6": {
+                "fontFamily": "Roboto Condensed"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Roboto"
+            },
+            "p": {
+                "fontFamily": "Roboto"
+            }
+        }
+    },
+    {
+        "name": "nunito-sans/nunito-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h2": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h3": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h4": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h5": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h6": {
+                "fontFamily": "Nunito Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Nunito Sans"
+            },
+            "p": {
+                "fontFamily": "Nunito Sans"
+            }
+        }
+    },
+    {
+        "name": "libre-baskerville/libre-baskerville",
+        "typography": {
+            "h1": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h2": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h3": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h4": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h5": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h6": {
+                "fontFamily": "Libre Baskerville"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "p": {
+                "fontFamily": "Libre Baskerville"
+            }
+        }
+    },
+    {
+        "name": "oswald/source-serif-pro",
+        "typography": {
+            "h1": {
+                "fontFamily": "Oswald"
+            },
+            "h2": {
+                "fontFamily": "Oswald"
+            },
+            "h3": {
+                "fontFamily": "Oswald"
+            },
+            "h4": {
+                "fontFamily": "Oswald"
+            },
+            "h5": {
+                "fontFamily": "Oswald"
+            },
+            "h6": {
+                "fontFamily": "Oswald"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Source Serif Pro"
+            },
+            "p": {
+                "fontFamily": "Source Serif Pro"
+            }
+        }
+    },
+    {
+        "name": "nunito/pt-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Nunito"
+            },
+            "h2": {
+                "fontFamily": "Nunito"
+            },
+            "h3": {
+                "fontFamily": "Nunito"
+            },
+            "h4": {
+                "fontFamily": "Nunito"
+            },
+            "h5": {
+                "fontFamily": "Nunito"
+            },
+            "h6": {
+                "fontFamily": "Nunito"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "PT Sans"
+            },
+            "p": {
+                "fontFamily": "PT Sans"
+            }
+        }
+    },
+    {
+        "name": "montserrat/hind",
+        "typography": {
+            "h1": {
+                "fontFamily": "Montserrat"
+            },
+            "h2": {
+                "fontFamily": "Montserrat"
+            },
+            "h3": {
+                "fontFamily": "Montserrat"
+            },
+            "h4": {
+                "fontFamily": "Montserrat"
+            },
+            "h5": {
+                "fontFamily": "Montserrat"
+            },
+            "h6": {
+                "fontFamily": "Montserrat"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Hind"
+            },
+            "p": {
+                "fontFamily": "Hind"
+            }
+        }
+    },
+    {
+        "name": "stint-ultra-expanded/pontano-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Stint Ultra Expanded"
+            },
+            "h2": {
+                "fontFamily": "Stint Ultra Expanded"
+            },
+            "h3": {
+                "fontFamily": "Stint Ultra Expanded"
+            },
+            "h4": {
+                "fontFamily": "Stint Ultra Expanded"
+            },
+            "h5": {
+                "fontFamily": "Stint Ultra Expanded"
+            },
+            "h6": {
+                "fontFamily": "Stint Ultra Expanded"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Pontano Sans"
+            },
+            "p": {
+                "fontFamily": "Pontano Sans"
+            }
+        }
+    },
+    {
+        "name": "karla/inconsolata",
+        "typography": {
+            "h1": {
+                "fontFamily": "Karla"
+            },
+            "h2": {
+                "fontFamily": "Karla"
+            },
+            "h3": {
+                "fontFamily": "Karla"
+            },
+            "h4": {
+                "fontFamily": "Karla"
+            },
+            "h5": {
+                "fontFamily": "Karla"
+            },
+            "h6": {
+                "fontFamily": "Karla"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Inconsolata"
+            },
+            "p": {
+                "fontFamily": "Inconsolata"
+            }
+        }
+    },
+    {
+        "name": "playfair-display/lato",
+        "typography": {
+            "h1": {
+                "fontFamily": "Playfair Display"
+            },
+            "h2": {
+                "fontFamily": "Playfair Display"
+            },
+            "h3": {
+                "fontFamily": "Playfair Display"
+            },
+            "h4": {
+                "fontFamily": "Playfair Display"
+            },
+            "h5": {
+                "fontFamily": "Playfair Display"
+            },
+            "h6": {
+                "fontFamily": "Playfair Display"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Lato"
+            },
+            "p": {
+                "fontFamily": "Lato"
+            }
+        }
+    },
+    {
+        "name": "libre-baskerville/source-sans-pro",
+        "typography": {
+            "h1": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h2": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h3": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h4": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h5": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h6": {
+                "fontFamily": "Libre Baskerville"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "p": {
+                "fontFamily": "Source Sans Pro"
+            }
+        }
+    },
+    {
+        "name": "cormorant-garamond/proza-libre",
+        "typography": {
+            "h1": {
+                "fontFamily": "Cormorant Garamond"
+            },
+            "h2": {
+                "fontFamily": "Cormorant Garamond"
+            },
+            "h3": {
+                "fontFamily": "Cormorant Garamond"
+            },
+            "h4": {
+                "fontFamily": "Cormorant Garamond"
+            },
+            "h5": {
+                "fontFamily": "Cormorant Garamond"
+            },
+            "h6": {
+                "fontFamily": "Cormorant Garamond"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Proza Libre"
+            },
+            "p": {
+                "fontFamily": "Proza Libre"
+            }
+        }
+    },
+    {
+        "name": "quattrocento/lora",
+        "typography": {
+            "h1": {
+                "fontFamily": "Quattrocento"
+            },
+            "h2": {
+                "fontFamily": "Quattrocento"
+            },
+            "h3": {
+                "fontFamily": "Quattrocento"
+            },
+            "h4": {
+                "fontFamily": "Quattrocento"
+            },
+            "h5": {
+                "fontFamily": "Quattrocento"
+            },
+            "h6": {
+                "fontFamily": "Quattrocento"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Lora"
+            },
+            "p": {
+                "fontFamily": "Lora"
+            }
+        }
+    },
+    {
+        "name": "quattrocento/quattrocento-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Quattrocento"
+            },
+            "h2": {
+                "fontFamily": "Quattrocento"
+            },
+            "h3": {
+                "fontFamily": "Quattrocento"
+            },
+            "h4": {
+                "fontFamily": "Quattrocento"
+            },
+            "h5": {
+                "fontFamily": "Quattrocento"
+            },
+            "h6": {
+                "fontFamily": "Quattrocento"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Quattrocento Sans"
+            },
+            "p": {
+                "fontFamily": "Quattrocento Sans"
+            }
+        }
+    },
+    {
+        "name": "playfair-display/source-sans-pro",
+        "typography": {
+            "h1": {
+                "fontFamily": "Playfair Display"
+            },
+            "h2": {
+                "fontFamily": "Playfair Display"
+            },
+            "h3": {
+                "fontFamily": "Playfair Display"
+            },
+            "h4": {
+                "fontFamily": "Playfair Display"
+            },
+            "h5": {
+                "fontFamily": "Playfair Display"
+            },
+            "h6": {
+                "fontFamily": "Playfair Display"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "p": {
+                "fontFamily": "Source Sans Pro"
+            }
+        }
+    },
+    {
+        "name": "yeseva-one/josefin-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Yeseva One"
+            },
+            "h2": {
+                "fontFamily": "Yeseva One"
+            },
+            "h3": {
+                "fontFamily": "Yeseva One"
+            },
+            "h4": {
+                "fontFamily": "Yeseva One"
+            },
+            "h5": {
+                "fontFamily": "Yeseva One"
+            },
+            "h6": {
+                "fontFamily": "Yeseva One"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Josefin Sans"
+            },
+            "p": {
+                "fontFamily": "Josefin Sans"
+            }
+        }
+    },
+    {
+        "name": "quicksand/quicksand",
+        "typography": {
+            "h1": {
+                "fontFamily": "Quicksand"
+            },
+            "h2": {
+                "fontFamily": "Quicksand"
+            },
+            "h3": {
+                "fontFamily": "Quicksand"
+            },
+            "h4": {
+                "fontFamily": "Quicksand"
+            },
+            "h5": {
+                "fontFamily": "Quicksand"
+            },
+            "h6": {
+                "fontFamily": "Quicksand"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Quicksand"
+            },
+            "p": {
+                "fontFamily": "Quicksand"
+            }
+        }
+    },
+    {
+        "name": "abril-fatface/poppins",
+        "typography": {
+            "h1": {
+                "fontFamily": "Abril Fatface"
+            },
+            "h2": {
+                "fontFamily": "Abril Fatface"
+            },
+            "h3": {
+                "fontFamily": "Abril Fatface"
+            },
+            "h4": {
+                "fontFamily": "Abril Fatface"
+            },
+            "h5": {
+                "fontFamily": "Abril Fatface"
+            },
+            "h6": {
+                "fontFamily": "Abril Fatface"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Poppins"
+            },
+            "p": {
+                "fontFamily": "Poppins"
+            }
+        }
+    },
+    {
+        "name": "fjalla-one/cantarell",
+        "typography": {
+            "h1": {
+                "fontFamily": "Fjalla One"
+            },
+            "h2": {
+                "fontFamily": "Fjalla One"
+            },
+            "h3": {
+                "fontFamily": "Fjalla One"
+            },
+            "h4": {
+                "fontFamily": "Fjalla One"
+            },
+            "h5": {
+                "fontFamily": "Fjalla One"
+            },
+            "h6": {
+                "fontFamily": "Fjalla One"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Cantarell"
+            },
+            "p": {
+                "fontFamily": "Cantarell"
+            }
+        }
+    },
+    {
+        "name": "syne/inter",
+        "typography": {
+            "h1": {
+                "fontFamily": "Syne"
+            },
+            "h2": {
+                "fontFamily": "Syne"
+            },
+            "h3": {
+                "fontFamily": "Syne"
+            },
+            "h4": {
+                "fontFamily": "Syne"
+            },
+            "h5": {
+                "fontFamily": "Syne"
+            },
+            "h6": {
+                "fontFamily": "Syne"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Inter"
+            },
+            "p": {
+                "fontFamily": "Inter"
+            }
+        }
+    },
+    {
+        "name": "source-sans-pro/source-serif-pro",
+        "typography": {
+            "h1": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "h2": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "h3": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "h4": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "h5": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "h6": {
+                "fontFamily": "Source Sans Pro"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Source Serif Pro"
+            },
+            "p": {
+                "fontFamily": "Source Serif Pro"
+            }
+        }
+    },
+    {
+        "name": "arvo/lato",
+        "typography": {
+            "h1": {
+                "fontFamily": "Arvo"
+            },
+            "h2": {
+                "fontFamily": "Arvo"
+            },
+            "h3": {
+                "fontFamily": "Arvo"
+            },
+            "h4": {
+                "fontFamily": "Arvo"
+            },
+            "h5": {
+                "fontFamily": "Arvo"
+            },
+            "h6": {
+                "fontFamily": "Arvo"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Lato"
+            },
+            "p": {
+                "fontFamily": "Lato"
+            }
+        }
+    },
+    {
+        "name": "roboto/nunito",
+        "typography": {
+            "h1": {
+                "fontFamily": "Roboto"
+            },
+            "h2": {
+                "fontFamily": "Roboto"
+            },
+            "h3": {
+                "fontFamily": "Roboto"
+            },
+            "h4": {
+                "fontFamily": "Roboto"
+            },
+            "h5": {
+                "fontFamily": "Roboto"
+            },
+            "h6": {
+                "fontFamily": "Roboto"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Nunito"
+            },
+            "p": {
+                "fontFamily": "Nunito"
+            }
+        }
+    },
+    {
+        "name": "cinzel/fauna-one",
+        "typography": {
+            "h1": {
+                "fontFamily": "Cinzel"
+            },
+            "h2": {
+                "fontFamily": "Cinzel"
+            },
+            "h3": {
+                "fontFamily": "Cinzel"
+            },
+            "h4": {
+                "fontFamily": "Cinzel"
+            },
+            "h5": {
+                "fontFamily": "Cinzel"
+            },
+            "h6": {
+                "fontFamily": "Cinzel"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Fauna One"
+            },
+            "p": {
+                "fontFamily": "Fauna One"
+            }
+        }
+    },
+    {
+        "name": "playfair-display/alice",
+        "typography": {
+            "h1": {
+                "fontFamily": "Playfair Display"
+            },
+            "h2": {
+                "fontFamily": "Playfair Display"
+            },
+            "h3": {
+                "fontFamily": "Playfair Display"
+            },
+            "h4": {
+                "fontFamily": "Playfair Display"
+            },
+            "h5": {
+                "fontFamily": "Playfair Display"
+            },
+            "h6": {
+                "fontFamily": "Playfair Display"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Alice"
+            },
+            "p": {
+                "fontFamily": "Alice"
+            }
+        }
+    },
+    {
+        "name": "cormorant/open-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Cormorant"
+            },
+            "h2": {
+                "fontFamily": "Cormorant"
+            },
+            "h3": {
+                "fontFamily": "Cormorant"
+            },
+            "h4": {
+                "fontFamily": "Cormorant"
+            },
+            "h5": {
+                "fontFamily": "Cormorant"
+            },
+            "h6": {
+                "fontFamily": "Cormorant"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Open Sans"
+            },
+            "p": {
+                "fontFamily": "Open Sans"
+            }
+        }
+    },
+    {
+        "name": "oswald/lora",
+        "typography": {
+            "h1": {
+                "fontFamily": "Oswald"
+            },
+            "h2": {
+                "fontFamily": "Oswald"
+            },
+            "h3": {
+                "fontFamily": "Oswald"
+            },
+            "h4": {
+                "fontFamily": "Oswald"
+            },
+            "h5": {
+                "fontFamily": "Oswald"
+            },
+            "h6": {
+                "fontFamily": "Oswald"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Lora"
+            },
+            "p": {
+                "fontFamily": "Lora"
+            }
+        }
+    },
+    {
+        "name": "yellowtail/lato",
+        "typography": {
+            "h1": {
+                "fontFamily": "Yellowtail"
+            },
+            "h2": {
+                "fontFamily": "Yellowtail"
+            },
+            "h3": {
+                "fontFamily": "Yellowtail"
+            },
+            "h4": {
+                "fontFamily": "Yellowtail"
+            },
+            "h5": {
+                "fontFamily": "Yellowtail"
+            },
+            "h6": {
+                "fontFamily": "Yellowtail"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Lato"
+            },
+            "p": {
+                "fontFamily": "Lato"
+            }
+        }
+    },
+    {
+        "name": "archivo/tenor-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Archivo"
+            },
+            "h2": {
+                "fontFamily": "Archivo"
+            },
+            "h3": {
+                "fontFamily": "Archivo"
+            },
+            "h4": {
+                "fontFamily": "Archivo"
+            },
+            "h5": {
+                "fontFamily": "Archivo"
+            },
+            "h6": {
+                "fontFamily": "Archivo"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Tenor Sans"
+            },
+            "p": {
+                "fontFamily": "Tenor Sans"
+            }
+        }
+    },
+    {
+        "name": "open-sans/average-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Open Sans"
+            },
+            "h2": {
+                "fontFamily": "Open Sans"
+            },
+            "h3": {
+                "fontFamily": "Open Sans"
+            },
+            "h4": {
+                "fontFamily": "Open Sans"
+            },
+            "h5": {
+                "fontFamily": "Open Sans"
+            },
+            "h6": {
+                "fontFamily": "Open Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Average Sans"
+            },
+            "p": {
+                "fontFamily": "Average Sans"
+            }
+        }
+    },
+    {
+        "name": "rufina/average-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Rufina"
+            },
+            "h2": {
+                "fontFamily": "Rufina"
+            },
+            "h3": {
+                "fontFamily": "Rufina"
+            },
+            "h4": {
+                "fontFamily": "Rufina"
+            },
+            "h5": {
+                "fontFamily": "Rufina"
+            },
+            "h6": {
+                "fontFamily": "Rufina"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Average Sans"
+            },
+            "p": {
+                "fontFamily": "Average Sans"
+            }
+        }
+    },
+    {
+        "name": "rufina/oxygen",
+        "typography": {
+            "h1": {
+                "fontFamily": "Rufina"
+            },
+            "h2": {
+                "fontFamily": "Rufina"
+            },
+            "h3": {
+                "fontFamily": "Rufina"
+            },
+            "h4": {
+                "fontFamily": "Rufina"
+            },
+            "h5": {
+                "fontFamily": "Rufina"
+            },
+            "h6": {
+                "fontFamily": "Rufina"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Oxygen"
+            },
+            "p": {
+                "fontFamily": "Oxygen"
+            }
+        }
+    },
+    {
+        "name": "rubik/roboto-mono",
+        "typography": {
+            "h1": {
+                "fontFamily": "Rubik"
+            },
+            "h2": {
+                "fontFamily": "Rubik"
+            },
+            "h3": {
+                "fontFamily": "Rubik"
+            },
+            "h4": {
+                "fontFamily": "Rubik"
+            },
+            "h5": {
+                "fontFamily": "Rubik"
+            },
+            "h6": {
+                "fontFamily": "Rubik"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Roboto Mono"
+            },
+            "p": {
+                "fontFamily": "Roboto Mono"
+            }
+        }
+    },
+    {
+        "name": "poiret-one/montserrat",
+        "typography": {
+            "h1": {
+                "fontFamily": "Poiret One"
+            },
+            "h2": {
+                "fontFamily": "Poiret One"
+            },
+            "h3": {
+                "fontFamily": "Poiret One"
+            },
+            "h4": {
+                "fontFamily": "Poiret One"
+            },
+            "h5": {
+                "fontFamily": "Poiret One"
+            },
+            "h6": {
+                "fontFamily": "Poiret One"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Montserrat"
+            },
+            "p": {
+                "fontFamily": "Montserrat"
+            }
+        }
+    },
+    {
+        "name": "oswald/quicksand",
+        "typography": {
+            "h1": {
+                "fontFamily": "Oswald"
+            },
+            "h2": {
+                "fontFamily": "Oswald"
+            },
+            "h3": {
+                "fontFamily": "Oswald"
+            },
+            "h4": {
+                "fontFamily": "Oswald"
+            },
+            "h5": {
+                "fontFamily": "Oswald"
+            },
+            "h6": {
+                "fontFamily": "Oswald"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Quicksand"
+            },
+            "p": {
+                "fontFamily": "Quicksand"
+            }
+        }
+    },
+    {
+        "name": "merriweather/merriweather",
+        "typography": {
+            "h1": {
+                "fontFamily": "Merriweather"
+            },
+            "h2": {
+                "fontFamily": "Merriweather"
+            },
+            "h3": {
+                "fontFamily": "Merriweather"
+            },
+            "h4": {
+                "fontFamily": "Merriweather"
+            },
+            "h5": {
+                "fontFamily": "Merriweather"
+            },
+            "h6": {
+                "fontFamily": "Merriweather"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Merriweather"
+            },
+            "p": {
+                "fontFamily": "Merriweather"
+            }
+        }
+    },
+    {
+        "name": "montserrat/open-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Montserrat"
+            },
+            "h2": {
+                "fontFamily": "Montserrat"
+            },
+            "h3": {
+                "fontFamily": "Montserrat"
+            },
+            "h4": {
+                "fontFamily": "Montserrat"
+            },
+            "h5": {
+                "fontFamily": "Montserrat"
+            },
+            "h6": {
+                "fontFamily": "Montserrat"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Open Sans"
+            },
+            "p": {
+                "fontFamily": "Open Sans"
+            }
+        }
+    },
+    {
+        "name": "roboto-slab/roboto",
+        "typography": {
+            "h1": {
+                "fontFamily": "Roboto Slab"
+            },
+            "h2": {
+                "fontFamily": "Roboto Slab"
+            },
+            "h3": {
+                "fontFamily": "Roboto Slab"
+            },
+            "h4": {
+                "fontFamily": "Roboto Slab"
+            },
+            "h5": {
+                "fontFamily": "Roboto Slab"
+            },
+            "h6": {
+                "fontFamily": "Roboto Slab"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Roboto"
+            },
+            "p": {
+                "fontFamily": "Roboto"
+            }
+        }
+    },
+    {
+        "name": "anton/roboto",
+        "typography": {
+            "h1": {
+                "fontFamily": "Anton"
+            },
+            "h2": {
+                "fontFamily": "Anton"
+            },
+            "h3": {
+                "fontFamily": "Anton"
+            },
+            "h4": {
+                "fontFamily": "Anton"
+            },
+            "h5": {
+                "fontFamily": "Anton"
+            },
+            "h6": {
+                "fontFamily": "Anton"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Roboto"
+            },
+            "p": {
+                "fontFamily": "Roboto"
+            }
+        }
+    },
+    {
+        "name": "montserrat/montserrat",
+        "typography": {
+            "h1": {
+                "fontFamily": "Montserrat"
+            },
+            "h2": {
+                "fontFamily": "Montserrat"
+            },
+            "h3": {
+                "fontFamily": "Montserrat"
+            },
+            "h4": {
+                "fontFamily": "Montserrat"
+            },
+            "h5": {
+                "fontFamily": "Montserrat"
+            },
+            "h6": {
+                "fontFamily": "Montserrat"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Montserrat"
+            },
+            "p": {
+                "fontFamily": "Montserrat"
+            }
+        }
+    },
+    {
+        "name": "sintony/poppins",
+        "typography": {
+            "h1": {
+                "fontFamily": "Sintony"
+            },
+            "h2": {
+                "fontFamily": "Sintony"
+            },
+            "h3": {
+                "fontFamily": "Sintony"
+            },
+            "h4": {
+                "fontFamily": "Sintony"
+            },
+            "h5": {
+                "fontFamily": "Sintony"
+            },
+            "h6": {
+                "fontFamily": "Sintony"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Poppins"
+            },
+            "p": {
+                "fontFamily": "Poppins"
+            }
+        }
+    },
+    {
+        "name": "fjalla-one/inter",
+        "typography": {
+            "h1": {
+                "fontFamily": "Fjalla One"
+            },
+            "h2": {
+                "fontFamily": "Fjalla One"
+            },
+            "h3": {
+                "fontFamily": "Fjalla One"
+            },
+            "h4": {
+                "fontFamily": "Fjalla One"
+            },
+            "h5": {
+                "fontFamily": "Fjalla One"
+            },
+            "h6": {
+                "fontFamily": "Fjalla One"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Inter"
+            },
+            "p": {
+                "fontFamily": "Inter"
+            }
+        }
+    },
+    {
+        "name": "teko/ubuntu",
+        "typography": {
+            "h1": {
+                "fontFamily": "Teko"
+            },
+            "h2": {
+                "fontFamily": "Teko"
+            },
+            "h3": {
+                "fontFamily": "Teko"
+            },
+            "h4": {
+                "fontFamily": "Teko"
+            },
+            "h5": {
+                "fontFamily": "Teko"
+            },
+            "h6": {
+                "fontFamily": "Teko"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Ubuntu"
+            },
+            "p": {
+                "fontFamily": "Ubuntu"
+            }
+        }
+    },
+    {
+        "name": "josefin-slab/josefin-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Josefin Slab"
+            },
+            "h2": {
+                "fontFamily": "Josefin Slab"
+            },
+            "h3": {
+                "fontFamily": "Josefin Slab"
+            },
+            "h4": {
+                "fontFamily": "Josefin Slab"
+            },
+            "h5": {
+                "fontFamily": "Josefin Slab"
+            },
+            "h6": {
+                "fontFamily": "Josefin Slab"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Josefin Sans"
+            },
+            "p": {
+                "fontFamily": "Josefin Sans"
+            }
+        }
+    },
+    {
+        "name": "outfit/outfit",
+        "typography": {
+            "h1": {
+                "fontFamily": "Outfit"
+            },
+            "h2": {
+                "fontFamily": "Outfit"
+            },
+            "h3": {
+                "fontFamily": "Outfit"
+            },
+            "h4": {
+                "fontFamily": "Outfit"
+            },
+            "h5": {
+                "fontFamily": "Outfit"
+            },
+            "h6": {
+                "fontFamily": "Outfit"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Outfit"
+            },
+            "p": {
+                "fontFamily": "Outfit"
+            }
+        }
+    },
+    {
+        "name": "philosopher/mulish",
+        "typography": {
+            "h1": {
+                "fontFamily": "Philosopher"
+            },
+            "h2": {
+                "fontFamily": "Philosopher"
+            },
+            "h3": {
+                "fontFamily": "Philosopher"
+            },
+            "h4": {
+                "fontFamily": "Philosopher"
+            },
+            "h5": {
+                "fontFamily": "Philosopher"
+            },
+            "h6": {
+                "fontFamily": "Philosopher"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Mulish"
+            },
+            "p": {
+                "fontFamily": "Mulish"
+            }
+        }
+    },
+    {
+        "name": "cormorant/proza-libre",
+        "typography": {
+            "h1": {
+                "fontFamily": "Cormorant"
+            },
+            "h2": {
+                "fontFamily": "Cormorant"
+            },
+            "h3": {
+                "fontFamily": "Cormorant"
+            },
+            "h4": {
+                "fontFamily": "Cormorant"
+            },
+            "h5": {
+                "fontFamily": "Cormorant"
+            },
+            "h6": {
+                "fontFamily": "Cormorant"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Proza Libre"
+            },
+            "p": {
+                "fontFamily": "Proza Libre"
+            }
+        }
+    },
+    {
+        "name": "mulish/space-mono",
+        "typography": {
+            "h1": {
+                "fontFamily": "Mulish"
+            },
+            "h2": {
+                "fontFamily": "Mulish"
+            },
+            "h3": {
+                "fontFamily": "Mulish"
+            },
+            "h4": {
+                "fontFamily": "Mulish"
+            },
+            "h5": {
+                "fontFamily": "Mulish"
+            },
+            "h6": {
+                "fontFamily": "Mulish"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Space Mono"
+            },
+            "p": {
+                "fontFamily": "Space Mono"
+            }
+        }
+    },
+    {
+        "name": "alfa-slab-one/gentium-book-basic",
+        "typography": {
+            "h1": {
+                "fontFamily": "Alfa Slab One"
+            },
+            "h2": {
+                "fontFamily": "Alfa Slab One"
+            },
+            "h3": {
+                "fontFamily": "Alfa Slab One"
+            },
+            "h4": {
+                "fontFamily": "Alfa Slab One"
+            },
+            "h5": {
+                "fontFamily": "Alfa Slab One"
+            },
+            "h6": {
+                "fontFamily": "Alfa Slab One"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Gentium Book Basic"
+            },
+            "p": {
+                "fontFamily": "Gentium Book Basic"
+            }
+        }
+    },
+    {
+        "name": "quattrocento/fanwood-text",
+        "typography": {
+            "h1": {
+                "fontFamily": "Quattrocento"
+            },
+            "h2": {
+                "fontFamily": "Quattrocento"
+            },
+            "h3": {
+                "fontFamily": "Quattrocento"
+            },
+            "h4": {
+                "fontFamily": "Quattrocento"
+            },
+            "h5": {
+                "fontFamily": "Quattrocento"
+            },
+            "h6": {
+                "fontFamily": "Quattrocento"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Fanwood Text"
+            },
+            "p": {
+                "fontFamily": "Fanwood Text"
+            }
+        }
+    },
+    {
+        "name": "playfair-display/quattrocento",
+        "typography": {
+            "h1": {
+                "fontFamily": "Playfair Display"
+            },
+            "h2": {
+                "fontFamily": "Playfair Display"
+            },
+            "h3": {
+                "fontFamily": "Playfair Display"
+            },
+            "h4": {
+                "fontFamily": "Playfair Display"
+            },
+            "h5": {
+                "fontFamily": "Playfair Display"
+            },
+            "h6": {
+                "fontFamily": "Playfair Display"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Quattrocento"
+            },
+            "p": {
+                "fontFamily": "Quattrocento"
+            }
+        }
+    },
+    {
+        "name": "old-standard-tt/mulish",
+        "typography": {
+            "h1": {
+                "fontFamily": "Old Standard TT"
+            },
+            "h2": {
+                "fontFamily": "Old Standard TT"
+            },
+            "h3": {
+                "fontFamily": "Old Standard TT"
+            },
+            "h4": {
+                "fontFamily": "Old Standard TT"
+            },
+            "h5": {
+                "fontFamily": "Old Standard TT"
+            },
+            "h6": {
+                "fontFamily": "Old Standard TT"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Mulish"
+            },
+            "p": {
+                "fontFamily": "Mulish"
+            }
+        }
+    },
+    {
+        "name": "alegreya/source-sans-pro",
+        "typography": {
+            "h1": {
+                "fontFamily": "Alegreya"
+            },
+            "h2": {
+                "fontFamily": "Alegreya"
+            },
+            "h3": {
+                "fontFamily": "Alegreya"
+            },
+            "h4": {
+                "fontFamily": "Alegreya"
+            },
+            "h5": {
+                "fontFamily": "Alegreya"
+            },
+            "h6": {
+                "fontFamily": "Alegreya"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "p": {
+                "fontFamily": "Source Sans Pro"
+            }
+        }
+    },
+    {
+        "name": "archivo-black/archivo",
+        "typography": {
+            "h1": {
+                "fontFamily": "Archivo Black"
+            },
+            "h2": {
+                "fontFamily": "Archivo Black"
+            },
+            "h3": {
+                "fontFamily": "Archivo Black"
+            },
+            "h4": {
+                "fontFamily": "Archivo Black"
+            },
+            "h5": {
+                "fontFamily": "Archivo Black"
+            },
+            "h6": {
+                "fontFamily": "Archivo Black"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Archivo"
+            },
+            "p": {
+                "fontFamily": "Archivo"
+            }
+        }
+    },
+    {
+        "name": "cardo/hind",
+        "typography": {
+            "h1": {
+                "fontFamily": "Cardo"
+            },
+            "h2": {
+                "fontFamily": "Cardo"
+            },
+            "h3": {
+                "fontFamily": "Cardo"
+            },
+            "h4": {
+                "fontFamily": "Cardo"
+            },
+            "h5": {
+                "fontFamily": "Cardo"
+            },
+            "h6": {
+                "fontFamily": "Cardo"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Hind"
+            },
+            "p": {
+                "fontFamily": "Hind"
+            }
+        }
+    },
+    {
+        "name": "josefin-sans/open-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h2": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h3": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h4": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h5": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h6": {
+                "fontFamily": "Josefin Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Open Sans"
+            },
+            "p": {
+                "fontFamily": "Open Sans"
+            }
+        }
+    },
+    {
+        "name": "josefin-sans/inter",
+        "typography": {
+            "h1": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h2": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h3": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h4": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h5": {
+                "fontFamily": "Josefin Sans"
+            },
+            "h6": {
+                "fontFamily": "Josefin Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Inter"
+            },
+            "p": {
+                "fontFamily": "Inter"
+            }
+        }
+    },
+    {
+        "name": "lora/merriweather",
+        "typography": {
+            "h1": {
+                "fontFamily": "Lora"
+            },
+            "h2": {
+                "fontFamily": "Lora"
+            },
+            "h3": {
+                "fontFamily": "Lora"
+            },
+            "h4": {
+                "fontFamily": "Lora"
+            },
+            "h5": {
+                "fontFamily": "Lora"
+            },
+            "h6": {
+                "fontFamily": "Lora"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Merriweather"
+            },
+            "p": {
+                "fontFamily": "Merriweather"
+            }
+        }
+    },
+    {
+        "name": "cabin/cabin",
+        "typography": {
+            "h1": {
+                "fontFamily": "Cabin"
+            },
+            "h2": {
+                "fontFamily": "Cabin"
+            },
+            "h3": {
+                "fontFamily": "Cabin"
+            },
+            "h4": {
+                "fontFamily": "Cabin"
+            },
+            "h5": {
+                "fontFamily": "Cabin"
+            },
+            "h6": {
+                "fontFamily": "Cabin"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Cabin"
+            },
+            "p": {
+                "fontFamily": "Cabin"
+            }
+        }
+    },
+    {
+        "name": "kreon/ubuntu",
+        "typography": {
+            "h1": {
+                "fontFamily": "Kreon"
+            },
+            "h2": {
+                "fontFamily": "Kreon"
+            },
+            "h3": {
+                "fontFamily": "Kreon"
+            },
+            "h4": {
+                "fontFamily": "Kreon"
+            },
+            "h5": {
+                "fontFamily": "Kreon"
+            },
+            "h6": {
+                "fontFamily": "Kreon"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Ubuntu"
+            },
+            "p": {
+                "fontFamily": "Ubuntu"
+            }
+        }
+    },
+    {
+        "name": "nunito/nunito-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Nunito"
+            },
+            "h2": {
+                "fontFamily": "Nunito"
+            },
+            "h3": {
+                "fontFamily": "Nunito"
+            },
+            "h4": {
+                "fontFamily": "Nunito"
+            },
+            "h5": {
+                "fontFamily": "Nunito"
+            },
+            "h6": {
+                "fontFamily": "Nunito"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Nunito Sans"
+            },
+            "p": {
+                "fontFamily": "Nunito Sans"
+            }
+        }
+    },
+    {
+        "name": "merriweather/source-sans-pro",
+        "typography": {
+            "h1": {
+                "fontFamily": "Merriweather"
+            },
+            "h2": {
+                "fontFamily": "Merriweather"
+            },
+            "h3": {
+                "fontFamily": "Merriweather"
+            },
+            "h4": {
+                "fontFamily": "Merriweather"
+            },
+            "h5": {
+                "fontFamily": "Merriweather"
+            },
+            "h6": {
+                "fontFamily": "Merriweather"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "p": {
+                "fontFamily": "Source Sans Pro"
+            }
+        }
+    },
+    {
+        "name": "lora/dm-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Lora"
+            },
+            "h2": {
+                "fontFamily": "Lora"
+            },
+            "h3": {
+                "fontFamily": "Lora"
+            },
+            "h4": {
+                "fontFamily": "Lora"
+            },
+            "h5": {
+                "fontFamily": "Lora"
+            },
+            "h6": {
+                "fontFamily": "Lora"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "DM Sans"
+            },
+            "p": {
+                "fontFamily": "DM Sans"
+            }
+        }
+    },
+    {
+        "name": "archivo-black/inter",
+        "typography": {
+            "h1": {
+                "fontFamily": "Archivo Black"
+            },
+            "h2": {
+                "fontFamily": "Archivo Black"
+            },
+            "h3": {
+                "fontFamily": "Archivo Black"
+            },
+            "h4": {
+                "fontFamily": "Archivo Black"
+            },
+            "h5": {
+                "fontFamily": "Archivo Black"
+            },
+            "h6": {
+                "fontFamily": "Archivo Black"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Inter"
+            },
+            "p": {
+                "fontFamily": "Inter"
+            }
+        }
+    },
+    {
+        "name": "bitter/raleway",
+        "typography": {
+            "h1": {
+                "fontFamily": "Bitter"
+            },
+            "h2": {
+                "fontFamily": "Bitter"
+            },
+            "h3": {
+                "fontFamily": "Bitter"
+            },
+            "h4": {
+                "fontFamily": "Bitter"
+            },
+            "h5": {
+                "fontFamily": "Bitter"
+            },
+            "h6": {
+                "fontFamily": "Bitter"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Raleway"
+            },
+            "p": {
+                "fontFamily": "Raleway"
+            }
+        }
+    },
+    {
+        "name": "montserrat/source-sans-pro",
+        "typography": {
+            "h1": {
+                "fontFamily": "Montserrat"
+            },
+            "h2": {
+                "fontFamily": "Montserrat"
+            },
+            "h3": {
+                "fontFamily": "Montserrat"
+            },
+            "h4": {
+                "fontFamily": "Montserrat"
+            },
+            "h5": {
+                "fontFamily": "Montserrat"
+            },
+            "h6": {
+                "fontFamily": "Montserrat"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Source Sans Pro"
+            },
+            "p": {
+                "fontFamily": "Source Sans Pro"
+            }
+        }
+    },
+    {
+        "name": "libre-baskerville/raleway",
+        "typography": {
+            "h1": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h2": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h3": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h4": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h5": {
+                "fontFamily": "Libre Baskerville"
+            },
+            "h6": {
+                "fontFamily": "Libre Baskerville"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Raleway"
+            },
+            "p": {
+                "fontFamily": "Raleway"
+            }
+        }
+    },
+    {
+        "name": "bubblegum-sans/open-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Bubblegum Sans"
+            },
+            "h2": {
+                "fontFamily": "Bubblegum Sans"
+            },
+            "h3": {
+                "fontFamily": "Bubblegum Sans"
+            },
+            "h4": {
+                "fontFamily": "Bubblegum Sans"
+            },
+            "h5": {
+                "fontFamily": "Bubblegum Sans"
+            },
+            "h6": {
+                "fontFamily": "Bubblegum Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Open Sans"
+            },
+            "p": {
+                "fontFamily": "Open Sans"
+            }
+        }
+    },
+    {
+        "name": "poiret-one/lato",
+        "typography": {
+            "h1": {
+                "fontFamily": "Poiret One"
+            },
+            "h2": {
+                "fontFamily": "Poiret One"
+            },
+            "h3": {
+                "fontFamily": "Poiret One"
+            },
+            "h4": {
+                "fontFamily": "Poiret One"
+            },
+            "h5": {
+                "fontFamily": "Poiret One"
+            },
+            "h6": {
+                "fontFamily": "Poiret One"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Lato"
+            },
+            "p": {
+                "fontFamily": "Lato"
+            }
+        }
+    },
+    {
+        "name": "roboto/roboto",
+        "typography": {
+            "h1": {
+                "fontFamily": "Roboto"
+            },
+            "h2": {
+                "fontFamily": "Roboto"
+            },
+            "h3": {
+                "fontFamily": "Roboto"
+            },
+            "h4": {
+                "fontFamily": "Roboto"
+            },
+            "h5": {
+                "fontFamily": "Roboto"
+            },
+            "h6": {
+                "fontFamily": "Roboto"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Roboto"
+            },
+            "p": {
+                "fontFamily": "Roboto"
+            }
+        }
+    },
+    {
+        "name": "roboto-mono/roboto",
+        "typography": {
+            "h1": {
+                "fontFamily": "Roboto Mono"
+            },
+            "h2": {
+                "fontFamily": "Roboto Mono"
+            },
+            "h3": {
+                "fontFamily": "Roboto Mono"
+            },
+            "h4": {
+                "fontFamily": "Roboto Mono"
+            },
+            "h5": {
+                "fontFamily": "Roboto Mono"
+            },
+            "h6": {
+                "fontFamily": "Roboto Mono"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Roboto"
+            },
+            "p": {
+                "fontFamily": "Roboto"
+            }
+        }
+    },
+    {
+        "name": "eb-garamond/montserrat",
+        "typography": {
+            "h1": {
+                "fontFamily": "EB Garamond"
+            },
+            "h2": {
+                "fontFamily": "EB Garamond"
+            },
+            "h3": {
+                "fontFamily": "EB Garamond"
+            },
+            "h4": {
+                "fontFamily": "EB Garamond"
+            },
+            "h5": {
+                "fontFamily": "EB Garamond"
+            },
+            "h6": {
+                "fontFamily": "EB Garamond"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Montserrat"
+            },
+            "p": {
+                "fontFamily": "Montserrat"
+            }
+        }
+    },
+    {
+        "name": "oswald/roboto",
+        "typography": {
+            "h1": {
+                "fontFamily": "Oswald"
+            },
+            "h2": {
+                "fontFamily": "Oswald"
+            },
+            "h3": {
+                "fontFamily": "Oswald"
+            },
+            "h4": {
+                "fontFamily": "Oswald"
+            },
+            "h5": {
+                "fontFamily": "Oswald"
+            },
+            "h6": {
+                "fontFamily": "Oswald"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Roboto"
+            },
+            "p": {
+                "fontFamily": "Roboto"
+            }
+        }
+    },
+    {
+        "name": "inter/inter",
+        "typography": {
+            "h1": {
+                "fontFamily": "Inter"
+            },
+            "h2": {
+                "fontFamily": "Inter"
+            },
+            "h3": {
+                "fontFamily": "Inter"
+            },
+            "h4": {
+                "fontFamily": "Inter"
+            },
+            "h5": {
+                "fontFamily": "Inter"
+            },
+            "h6": {
+                "fontFamily": "Inter"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Inter"
+            },
+            "p": {
+                "fontFamily": "Inter"
+            }
+        }
+    },
+    {
+        "name": "forum/work-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Forum"
+            },
+            "h2": {
+                "fontFamily": "Forum"
+            },
+            "h3": {
+                "fontFamily": "Forum"
+            },
+            "h4": {
+                "fontFamily": "Forum"
+            },
+            "h5": {
+                "fontFamily": "Forum"
+            },
+            "h6": {
+                "fontFamily": "Forum"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Work Sans"
+            },
+            "p": {
+                "fontFamily": "Work Sans"
+            }
+        }
+    },
+    {
+        "name": "tenor-sans/archivo-narrow",
+        "typography": {
+            "h1": {
+                "fontFamily": "Tenor Sans"
+            },
+            "h2": {
+                "fontFamily": "Tenor Sans"
+            },
+            "h3": {
+                "fontFamily": "Tenor Sans"
+            },
+            "h4": {
+                "fontFamily": "Tenor Sans"
+            },
+            "h5": {
+                "fontFamily": "Tenor Sans"
+            },
+            "h6": {
+                "fontFamily": "Tenor Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Archivo Narrow"
+            },
+            "p": {
+                "fontFamily": "Archivo Narrow"
+            }
+        }
+    },
+    {
+        "name": "playfair-display/raleway",
+        "typography": {
+            "h1": {
+                "fontFamily": "Playfair Display"
+            },
+            "h2": {
+                "fontFamily": "Playfair Display"
+            },
+            "h3": {
+                "fontFamily": "Playfair Display"
+            },
+            "h4": {
+                "fontFamily": "Playfair Display"
+            },
+            "h5": {
+                "fontFamily": "Playfair Display"
+            },
+            "h6": {
+                "fontFamily": "Playfair Display"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Raleway"
+            },
+            "p": {
+                "fontFamily": "Raleway"
+            }
+        }
+    },
+    {
+        "name": "poppins/lora",
+        "typography": {
+            "h1": {
+                "fontFamily": "Poppins"
+            },
+            "h2": {
+                "fontFamily": "Poppins"
+            },
+            "h3": {
+                "fontFamily": "Poppins"
+            },
+            "h4": {
+                "fontFamily": "Poppins"
+            },
+            "h5": {
+                "fontFamily": "Poppins"
+            },
+            "h6": {
+                "fontFamily": "Poppins"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Lora"
+            },
+            "p": {
+                "fontFamily": "Lora"
+            }
+        }
+    },
+    {
+        "name": "montserrat/lato",
+        "typography": {
+            "h1": {
+                "fontFamily": "Montserrat"
+            },
+            "h2": {
+                "fontFamily": "Montserrat"
+            },
+            "h3": {
+                "fontFamily": "Montserrat"
+            },
+            "h4": {
+                "fontFamily": "Montserrat"
+            },
+            "h5": {
+                "fontFamily": "Montserrat"
+            },
+            "h6": {
+                "fontFamily": "Montserrat"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Lato"
+            },
+            "p": {
+                "fontFamily": "Lato"
+            }
+        }
+    },
+    {
+        "name": "six-caps/inter",
+        "typography": {
+            "h1": {
+                "fontFamily": "Six Caps"
+            },
+            "h2": {
+                "fontFamily": "Six Caps"
+            },
+            "h3": {
+                "fontFamily": "Six Caps"
+            },
+            "h4": {
+                "fontFamily": "Six Caps"
+            },
+            "h5": {
+                "fontFamily": "Six Caps"
+            },
+            "h6": {
+                "fontFamily": "Six Caps"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Inter"
+            },
+            "p": {
+                "fontFamily": "Inter"
+            }
+        }
+    },
+    {
+        "name": "orelega-one/montserrat",
+        "typography": {
+            "h1": {
+                "fontFamily": "Orelega One"
+            },
+            "h2": {
+                "fontFamily": "Orelega One"
+            },
+            "h3": {
+                "fontFamily": "Orelega One"
+            },
+            "h4": {
+                "fontFamily": "Orelega One"
+            },
+            "h5": {
+                "fontFamily": "Orelega One"
+            },
+            "h6": {
+                "fontFamily": "Orelega One"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Montserrat"
+            },
+            "p": {
+                "fontFamily": "Montserrat"
+            }
+        }
+    },
+    {
+        "name": "della-respira/open-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Della Respira"
+            },
+            "h2": {
+                "fontFamily": "Della Respira"
+            },
+            "h3": {
+                "fontFamily": "Della Respira"
+            },
+            "h4": {
+                "fontFamily": "Della Respira"
+            },
+            "h5": {
+                "fontFamily": "Della Respira"
+            },
+            "h6": {
+                "fontFamily": "Della Respira"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Open Sans"
+            },
+            "p": {
+                "fontFamily": "Open Sans"
+            }
+        }
+    },
+    {
+        "name": "rozha-one/questrial",
+        "typography": {
+            "h1": {
+                "fontFamily": "Rozha One"
+            },
+            "h2": {
+                "fontFamily": "Rozha One"
+            },
+            "h3": {
+                "fontFamily": "Rozha One"
+            },
+            "h4": {
+                "fontFamily": "Rozha One"
+            },
+            "h5": {
+                "fontFamily": "Rozha One"
+            },
+            "h6": {
+                "fontFamily": "Rozha One"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Questrial"
+            },
+            "p": {
+                "fontFamily": "Questrial"
+            }
+        }
+    },
+    {
+        "name": "noto-serif/noto-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Noto Serif"
+            },
+            "h2": {
+                "fontFamily": "Noto Serif"
+            },
+            "h3": {
+                "fontFamily": "Noto Serif"
+            },
+            "h4": {
+                "fontFamily": "Noto Serif"
+            },
+            "h5": {
+                "fontFamily": "Noto Serif"
+            },
+            "h6": {
+                "fontFamily": "Noto Serif"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Noto Sans"
+            },
+            "p": {
+                "fontFamily": "Noto Sans"
+            }
+        }
+    },
+    {
+        "name": "playfair-display/dm-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Playfair Display"
+            },
+            "h2": {
+                "fontFamily": "Playfair Display"
+            },
+            "h3": {
+                "fontFamily": "Playfair Display"
+            },
+            "h4": {
+                "fontFamily": "Playfair Display"
+            },
+            "h5": {
+                "fontFamily": "Playfair Display"
+            },
+            "h6": {
+                "fontFamily": "Playfair Display"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "DM Sans"
+            },
+            "p": {
+                "fontFamily": "DM Sans"
+            }
+        }
+    },
+    {
+        "name": "dm-serif-display/red-hat-display",
+        "typography": {
+            "h1": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h2": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h3": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h4": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h5": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h6": {
+                "fontFamily": "DM Serif Display"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Red Hat Display"
+            },
+            "p": {
+                "fontFamily": "Red Hat Display"
+            }
+        }
+    },
+    {
+        "name": "oswald/merriweather",
+        "typography": {
+            "h1": {
+                "fontFamily": "Oswald"
+            },
+            "h2": {
+                "fontFamily": "Oswald"
+            },
+            "h3": {
+                "fontFamily": "Oswald"
+            },
+            "h4": {
+                "fontFamily": "Oswald"
+            },
+            "h5": {
+                "fontFamily": "Oswald"
+            },
+            "h6": {
+                "fontFamily": "Oswald"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Merriweather"
+            },
+            "p": {
+                "fontFamily": "Merriweather"
+            }
+        }
+    },
+    {
+        "name": "epilogue/epilogue",
+        "typography": {
+            "h1": {
+                "fontFamily": "Epilogue"
+            },
+            "h2": {
+                "fontFamily": "Epilogue"
+            },
+            "h3": {
+                "fontFamily": "Epilogue"
+            },
+            "h4": {
+                "fontFamily": "Epilogue"
+            },
+            "h5": {
+                "fontFamily": "Epilogue"
+            },
+            "h6": {
+                "fontFamily": "Epilogue"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Epilogue"
+            },
+            "p": {
+                "fontFamily": "Epilogue"
+            }
+        }
+    },
+    {
+        "name": "expletus-sans/hind",
+        "typography": {
+            "h1": {
+                "fontFamily": "Expletus Sans"
+            },
+            "h2": {
+                "fontFamily": "Expletus Sans"
+            },
+            "h3": {
+                "fontFamily": "Expletus Sans"
+            },
+            "h4": {
+                "fontFamily": "Expletus Sans"
+            },
+            "h5": {
+                "fontFamily": "Expletus Sans"
+            },
+            "h6": {
+                "fontFamily": "Expletus Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Hind"
+            },
+            "p": {
+                "fontFamily": "Hind"
+            }
+        }
+    }
 ]

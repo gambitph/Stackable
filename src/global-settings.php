@@ -309,17 +309,19 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 									'name' => array(
 										'type' => 'string',
 									),
-									'value' => array(
-										'type' => 'array',
-										'items' => array(
-											'type' => 'object',
-											'properties' => array(
-												'selector' => array(
-													'type' => 'string',
-												),
-												'styles' => $stackable_global_typography_schema
-											),
-										),
+									'typography' => array(
+										'type' => 'object',
+										'properties' => array(
+											'h1' => $stackable_global_typography_schema,
+											'h2' => $stackable_global_typography_schema,
+											'h2' => $stackable_global_typography_schema,
+											'h3' => $stackable_global_typography_schema,
+											'h4' => $stackable_global_typography_schema,
+											'h5' => $stackable_global_typography_schema,
+											'h6' => $stackable_global_typography_schema,
+											'p' => $stackable_global_typography_schema,
+											'.stk-subtitle' => $stackable_global_typography_schema,
+										)
 									),
 								)
 							)
