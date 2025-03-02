@@ -133,18 +133,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}, 500 )
 	}
 
-	const changeStyles = updates => {
-		if ( ! Array.isArray( updates ) ) {
-			return
-		}
-
+	const changeStyles = typography => {
 		const newSettings = { ...typographySettings }
 
-		updates.forEach( ( { selector, styles } ) => {
+		Object.entries( typography ).forEach( ( [ selector, styles ] ) => {
 			if ( ! selector || typeof styles !== 'object' ) {
 				return
 			}
-
 			/**
 			 * Delete the object keys with empty strings.
 			 * Otherwise, the API will throw an error code 400
@@ -162,7 +157,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		setTypographySettings( newSettings )
 
 		// Update the global styles immediately when reset font size is triggered.
-		if ( updates.some( ( { styles } ) => styles && ! styles.fontSize ) ) {
+		if ( Object.values( typography ).some( styles => styles && ! styles.fontSize ) ) {
 			doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
 		}
 
@@ -175,10 +170,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}, 500 )
 
 		if ( editingFontPairName ) {
-			const mappedValue = Object.entries( newSettings ).map( ( [ selector, styles ] ) => ( { selector, styles } ) )
 			const updatedCustomFontPairs = customFontPairs
-				.map( fontPair => fontPair.name === editingFontPairName ? { ...fontPair, value: mappedValue } : fontPair )
-
+				.map( fontPair => fontPair.name === editingFontPairName ? { ...fontPair, typography: newSettings } : fontPair )
 			changeCustomFontPairs( updatedCustomFontPairs )
 		}
 	}
@@ -272,12 +265,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 						<div className="ugb-global-settings-font-pair__container" ref={ fontPairContainerRef }>
 							{ allFontPairs.map( fontPair => {
-								const headingStyles = fontPair.value?.find( val => val.selector === 'h1' )?.styles
-								const paragraphStyles = fontPair.value?.find( val => val.selector === 'p' )?.styles
-								if ( headingStyles?.fontFamily ) {
+								const headingStyles = fontPair.typography.h1
+								const paragraphStyles = fontPair.typography.p
+								if ( headingStyles.fontFamily ) {
 									loadGoogleFont( headingStyles.fontFamily )
 								}
-								if ( paragraphStyles?.fontFamily ) {
+								if ( paragraphStyles.fontFamily ) {
 									loadGoogleFont( paragraphStyles.fontFamily )
 								}
 								const label = (
@@ -286,13 +279,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 											style={ omit( { ...headingStyles }, [ 'fontSize', 'lineHeight' ] ) }
 											className="ugb-global-settings-font-pair__label"
 										>
-											{ headingStyles?.fontFamily ?? 'Theme Heading Default' }
+											{ headingStyles.fontFamily ? headingStyles.fontFamily : 'Theme Heading Default' }
 										</span>
 										<span
 											style={ omit( { ...paragraphStyles }, [ 'fontSize', 'lineHeight' ] ) }
 											className="ugb-global-settings-font-pair__sub-label"
 										>
-											{ paragraphStyles?.fontFamily ?? 'Theme Body Default' }
+											{ paragraphStyles?.fontFamily ? paragraphStyles?.fontFamily : 'Theme Body Default' }
 										</span>
 									</div>
 								)
@@ -306,12 +299,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									className={ className }
 									onClick={ () => {
 										changeFontPair( fontPair.name )
-										changeStyles( fontPair.value )
+										changeStyles( fontPair.typography )
 									} }
 									onEdit={ () => {
 										setEditingFontPairName( fontPair.name )
 										changeFontPair( fontPair.name )
-										changeStyles( fontPair.value )
+										changeStyles( fontPair.typography )
 									} }
 								/>
 							} ) }
@@ -340,7 +333,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 							label={ label }
 							selector={ selector }
 							value={ ( typographySettings[ selector ] ) || {} }
-							onChange={ styles => changeStyles( [ { selector, styles } ] ) }
+							onChange={ styles => changeStyles( { [ selector ]: styles } ) }
 							onReset={ () => resetStyles( selector ) }
 						/>
 					)
