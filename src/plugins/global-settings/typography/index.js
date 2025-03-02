@@ -96,11 +96,15 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo )
 	}, [ JSON.stringify( typographySettings ), applySettingsTo ] )
 
+	// Scroll to the selected font pair when Global Typography tab is toggled
 	useEffect( () => {
-		if ( fontPairContainerRef.current ) {
-			const selectedElement = fontPairContainerRef.current.querySelector( '.ugb-global-settings-font-pair__selected' )
+		const container = fontPairContainerRef?.current
+		if ( container ) {
+			const selectedElement = container.querySelector( '.ugb-global-settings-font-pair__selected' )
 			if ( selectedElement ) {
-				selectedElement.scrollIntoView( { behavior: 'instant', block: 'center' } )
+				const containerRect = container.getBoundingClientRect()
+				const selectedRect = selectedElement.getBoundingClientRect()
+				container.scrollTop = selectedRect.top + ( selectedRect.height / 2 ) - containerRect.top - ( containerRect.height / 2 )
 			}
 		}
 	}, [ isPanelOpen ] )
