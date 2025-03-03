@@ -89,6 +89,7 @@
 		border: 1px solid #ddd;
 		padding: 8px;
 		margin-bottom: 8px;
+		gap: 8px;
 		cursor: pointer;
 		.ugb-base-control-multi-label {
 			margin-bottom: 0px;
@@ -97,12 +98,13 @@
 }
 
 .ugb-global-settings-font-pair__container {
-	width: calc(100% - 32px);
-	margin: 0 16px;
-	max-height: 280px;
+	max-height: 250px;
 	overflow: auto;
 	border: 1px solid #ddd;
-	padding: 8px;
+	border: none;
+	padding: 0;
+	width: calc(100% - 16px);
+	margin: 0;
 	.ugb-global-settings-font-pair__selected {
 		.components-base-control__field {
 			border: 2px solid #000;

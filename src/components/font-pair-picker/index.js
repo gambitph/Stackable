@@ -17,8 +17,8 @@ import { omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 
 const FontPairPicker = props => {
-	const headingStyles = props.fontPair.typography.h1
-	const paragraphStyles = props.fontPair.typography.p
+	const headingStyles = props.fontPair?.typography?.h1 || {}
+	const paragraphStyles = props.fontPair?.typography?.p || {}
 	if ( headingStyles.fontFamily ) {
 		loadGoogleFont( headingStyles.fontFamily )
 	}
@@ -67,6 +67,7 @@ const FontPairPicker = props => {
 							className="ugb-button-icon-control__edit"
 							label={ __( 'Edit', i18n ) }
 							icon="edit"
+							isSmall
 							onClick={ event => {
 								props.onEdit()
 								event.stopPropagation()
