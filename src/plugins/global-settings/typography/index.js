@@ -14,7 +14,9 @@ import {
 } from '~stackable/components'
 import { fetchSettings } from '~stackable/util'
 import { i18n, isPro } from 'stackable'
-import { omit, head } from 'lodash'
+import {
+	omit, head, isEqual,
+} from 'lodash'
 
 /**
  * WordPress dependencies
@@ -183,7 +185,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}
 
 	const resetStyles = selector => {
-		const newSettings = omit( typographySettings, [ selector ] )
+		let newSettings
+		const currentFontPair = [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
+		if ( ! editingFontPairName ) {
+			newSettings = { ...typographySettings, [ selector ]: currentFontPair.typography[ selector ] }
+		} else {
+			newSettings = omit( typographySettings, [ selector ] )
+			const updatedCustomFontPairs = customFontPairs
+				.map( fontPair => fontPair.name === editingFontPairName ? { ...fontPair, typography: newSettings } : fontPair )
+			updateCustomFontPairs( updatedCustomFontPairs )
+		}
+
 		doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
 
 		updateTypography( newSettings )
@@ -195,6 +207,45 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			stackable_global_typography_apply_to: value, // eslint-disable-line
 		} )
 		model.save()
+	}
+
+	const getIsAllowReset = selector => {
+		const currentFontPair = [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
+		const fontPairStyle = currentFontPair.typography[ selector ]
+		const typographyStyle = typographySettings[ selector ]
+		if ( ! editingFontPairName ) {
+			if ( ! isEqual( fontPairStyle, typographyStyle ) ) {
+				return true
+			}
+			return false
+		} else if ( typographyStyle && ( typographyStyle.fontFamily ||
+			typographyStyle.fontSize || typographyStyle.tabletFontSize || typographyStyle.mobileFontSize ||
+			typographyStyle.fontWeight ||
+			typographyStyle.textTransform ||
+			typographyStyle.lineHeight || typographyStyle.tabletLineHeight || typographyStyle.mobileLineHeight ||
+			typographyStyle.letterSpacing || typographyStyle.tabletLetterSpacing || typographyStyle.mobileLetterSpacing ) ) {
+			return true
+		}
+		return false
+	}
+
+	const getIsChangeConfirmed = () => {
+		// No need to confirm when the current font pair is custom
+		// since changes are saved
+		if ( customFontPairs.find( fontPair => fontPair.name === selectedFontPairName ) ) {
+			return true
+		}
+
+		const isDirty = TYPOGRAPHY_TAGS.some( ( { selector } ) => {
+			return getIsAllowReset( selector )
+		} )
+
+		if ( isDirty ) {
+		// eslint-disable-next-line no-alert
+			const confirmChange = window.confirm( __( 'Changing font pair will override the previous changes. Do you want to proceed?', i18n ) )
+			return confirmChange
+		}
+		return true
 	}
 
 	const CustomFontPairPickers = applyFilters(
@@ -255,6 +306,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 								fontPair={ FONT_PAIRS[ 0 ] }
 								isSelected={ selectedFontPairName === FONT_PAIRS[ 0 ].name }
 								onClick={ () => {
+									if ( ! getIsChangeConfirmed() ) {
+										return
+									}
 									updateSelectedFontPair( FONT_PAIRS[ 0 ].name )
 									changeStyles( FONT_PAIRS[ 0 ].typography )
 								} }
@@ -264,6 +318,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 								customFontPairs={ customFontPairs }
 								selected={ selectedFontPairName }
 								onClick={ ( name, typography ) => {
+									if ( ! getIsChangeConfirmed() ) {
+										return
+									}
 									updateSelectedFontPair( name )
 									changeStyles( typography )
 								} }
@@ -280,6 +337,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									fontPair={ fontPair }
 									isSelected={ selectedFontPairName === fontPair.name }
 									onClick={ () => {
+										if ( ! getIsChangeConfirmed() ) {
+											return
+										}
 										updateSelectedFontPair( fontPair.name )
 										changeStyles( fontPair.typography )
 									} }
@@ -316,6 +376,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 							label={ label }
 							selector={ selector }
 							value={ ( typographySettings[ selector ] ) || {} }
+							isAllowReset={ getIsAllowReset( selector ) }
 							onChange={ styles => changeStyles( { [ selector ]: styles } ) }
 							onReset={ () => resetStyles( selector ) }
 						/>

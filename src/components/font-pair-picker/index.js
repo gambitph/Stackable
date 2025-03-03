@@ -17,12 +17,12 @@ import { omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 
 const FontPairPicker = props => {
-	const headingStyles = props.fontPair?.typography?.h1 || {}
-	const paragraphStyles = props.fontPair?.typography?.p || {}
-	if ( headingStyles.fontFamily ) {
+	const headingStyles = props.fontPair.typography.h1
+	const paragraphStyles = props.fontPair.typography.p
+	if ( headingStyles?.fontFamily ) {
 		loadGoogleFont( headingStyles.fontFamily )
 	}
-	if ( paragraphStyles.fontFamily ) {
+	if ( paragraphStyles?.fontFamily ) {
 		loadGoogleFont( paragraphStyles.fontFamily )
 	}
 
@@ -32,7 +32,7 @@ const FontPairPicker = props => {
 				style={ omit( { ...headingStyles }, [ 'fontSize', 'lineHeight' ] ) }
 				className="ugb-global-settings-font-pair__label"
 			>
-				{ headingStyles.fontFamily ? headingStyles.fontFamily : 'Theme Heading Default' }
+				{ headingStyles?.fontFamily ? headingStyles.fontFamily : 'Theme Heading Default' }
 			</span>
 			<span
 				style={ omit( { ...paragraphStyles }, [ 'fontSize', 'lineHeight' ] ) }
@@ -67,7 +67,6 @@ const FontPairPicker = props => {
 							className="ugb-button-icon-control__edit"
 							label={ __( 'Edit', i18n ) }
 							icon="edit"
-							isSmall
 							onClick={ event => {
 								props.onEdit()
 								event.stopPropagation()
