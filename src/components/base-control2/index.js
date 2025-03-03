@@ -87,7 +87,7 @@ export const BaseControl = props => {
 								hover={ props.hover }
 								attribute={ props.attribute }
 								hasResponsive={ hasResponsive }
-								globalControl={ props.globalControl }
+								forceUpdateHoverState={ props.forceUpdateHoverState }
 							/>
 						) }
 					</div>
@@ -140,7 +140,7 @@ BaseControl.defaultProps = {
 	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 	helpTooltip: EMPTY_OBJ, // If supplied, displays a help tooltip when hovering on the label.
 
-	globalControl: false,
+	forceUpdateHoverState: false,
 }
 
 const AdvancedControl = props => {
@@ -194,7 +194,7 @@ AdvancedControl.defaultProps = {
 	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 	helpTooltip: EMPTY_OBJ, // If supplied, displays a help tooltip when hovering on the label.
 
-	globalControl: false,
+	forceUpdateHoverState: false,
 }
 
 export default AdvancedControl

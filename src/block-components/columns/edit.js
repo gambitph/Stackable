@@ -36,6 +36,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { useState } from '@wordpress/element'
 
 export const Controls = props => {
+	// TODO: Get global default value for placeholder
 	const [ , setColumnsUpdate ] = useState( 0 )
 	const deviceType = useDeviceType()
 	const { clientId } = useBlockEditContext()

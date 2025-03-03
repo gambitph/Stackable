@@ -254,7 +254,7 @@ const ShadowControl = memo( props => {
 	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
 	const value = typeof props.value === 'undefined' ? _value : props.value
 
-	const [ propsToPass ] = extractControlProps( _props )
+	const [ propsToPass, controlProps ] = extractControlProps( _props )
 
 	useEffect( () => {
 		const clickOutsideListener = event => {
@@ -282,6 +282,7 @@ const ShadowControl = memo( props => {
 		<>
 			<AdvancedRangeControl
 				{ ...propsToPass }
+				{ ...controlProps }
 				attribute={ props.attribute }
 				label={ label }
 				value={ value }
@@ -304,10 +305,10 @@ const ShadowControl = memo( props => {
 						icon={ <Dashicon icon="admin-generic" /> }
 					/>
 				) }
-				globalControl={ props.globalControl }
 			/>
 			{ isPopoverOpen && (
 				<ShadowFilterControl
+					{ ...controlProps }
 					anchorRect={ buttonRef.current?.getBoundingClientRect() }
 					attribute={ props.attribute }
 					responsive={ props.responsive }
@@ -316,7 +317,6 @@ const ShadowControl = memo( props => {
 					hasInset={ props.hasInset }
 					isFilter={ props.isFilter }
 					onEscape={ () => setIsPopoverOpen( false ) }
-					globalControl={ props.globalControl }
 					value={ props.shadowFilterValue }
 					onChange={ props.shadowFilterOnChange }
 				/>

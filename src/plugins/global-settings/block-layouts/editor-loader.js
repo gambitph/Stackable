@@ -109,14 +109,14 @@ export const GlobalBlockLayoutStyles = () => {
 		SelectedHoverChildren: select( 'stackable/hover-state' ).getSelectedHoverChildren(),
 	} ), [] )
 
-	const [ currentHoverState ] = useBlockHoverState( { globalControl: true } )
+	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
 	const [ styles, setStyles ] = useState( '' )
 
 	useEffect( () => {
 		if ( blockLayouts && typeof blockLayouts === 'object' ) {
 			renderGlobalStyles( blockLayouts, setStyles, currentHoverState, selectedBlockUniqueId, SelectedParentHoverBlock )
 		}
-	}, [ JSON.stringify( blockLayouts ), currentHoverState, SelectedParentHoverBlock ] )
+	}, [ blockLayouts, currentHoverState, SelectedParentHoverBlock ] )
 
 	return styles
 }
