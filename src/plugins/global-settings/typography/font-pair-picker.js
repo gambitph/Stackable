@@ -7,7 +7,9 @@ import { BaseControl, Button } from '~stackable/components'
  * External dependencies
  */
 import { i18n } from 'stackable'
-import classnames from 'classnames'
+import classNames from 'classnames'
+import { loadGoogleFont } from '~stackable/util'
+import { omit } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -15,10 +17,36 @@ import classnames from 'classnames'
 import { __ } from '@wordpress/i18n'
 
 const FontPairPicker = props => {
-	const mainClasses = classnames( [
-		props.className,
+	const headingStyles = props.fontPair.typography.h1
+	const paragraphStyles = props.fontPair.typography.p
+	if ( headingStyles.fontFamily ) {
+		loadGoogleFont( headingStyles.fontFamily )
+	}
+	if ( paragraphStyles.fontFamily ) {
+		loadGoogleFont( paragraphStyles.fontFamily )
+	}
+
+	const label = (
+		<div>
+			<span
+				style={ omit( { ...headingStyles }, [ 'fontSize', 'lineHeight' ] ) }
+				className="ugb-global-settings-font-pair__label"
+			>
+				{ headingStyles.fontFamily ? headingStyles.fontFamily : 'Theme Heading Default' }
+			</span>
+			<span
+				style={ omit( { ...paragraphStyles }, [ 'fontSize', 'lineHeight' ] ) }
+				className="ugb-global-settings-font-pair__sub-label"
+			>
+				{ paragraphStyles?.fontFamily ? paragraphStyles?.fontFamily : 'Theme Body Default' }
+			</span>
+		</div>
+	)
+
+	const classes = classNames( [
 		'ugb-button-icon-control',
 		'ugb-global-settings-font-pair-control',
+		{ 'ugb-global-settings-font-pair__selected': props?.isSelected },
 	] )
 
 	return (
@@ -30,10 +58,10 @@ const FontPairPicker = props => {
 		} } >
 			<BaseControl
 				key={ props.key }
-				label={ props.label }
-				className={ mainClasses }
+				label={ label }
+				className={ classes }
 			>
-				{ props?.isCustom &&
+				{ props.fontPair?.isCustom &&
 					<div className="ugb-button-icon-control__wrapper">
 						<Button
 							className="ugb-button-icon-control__edit"
@@ -52,8 +80,9 @@ const FontPairPicker = props => {
 }
 
 FontPairPicker.defaultProps = {
-	label: '',
-	classname: '',
+	key: '',
+	fontPair: {},
+	isSelected: false,
 	onClick: () => {},
 	onEdit: () => {},
 }

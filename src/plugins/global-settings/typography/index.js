@@ -13,10 +13,9 @@ import FontPairPicker from './font-pair-picker'
 import {
 	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, InspectorSubHeader, Button,
 } from '~stackable/components'
-import { fetchSettings, loadGoogleFont } from '~stackable/util'
+import { fetchSettings } from '~stackable/util'
 import { i18n } from 'stackable'
 import { omit, head } from 'lodash'
-import classNames from 'classnames'
 
 /**
  * WordPress dependencies
@@ -69,14 +68,16 @@ const TYPOGRAPHY_TAGS = [
 	},
 ]
 
-let saveThrottle = null
+let saveTypographyThrottle = null
+let saveSelectedFontPairThrottle = null
+let saveCustomFontPairsThrottle = null
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography', output => {
 	const [ isPanelOpen, setIsPanelOpen ] = useState( false )
 	const [ typographySettings, setTypographySettings ] = useState( [] )
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
 	const [ customFontPairs, setCustomFontPairs ] = useState( [] )
-	const [ selectedFontPairName, setSelectedFontPairName ] = useState( 'theme-default' )
+	const [ selectedFontPairName, setSelectedFontPairName ] = useState( 'theme-heading-default/theme-body-default' )
 	const [ editingFontPairName, setEditingFontPairName ] = useState( '' )
 
 	const fontPairContainerRef = useRef( null )
@@ -118,18 +119,35 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		...FONT_PAIRS.slice( 1 ),
 	], [ customFontPairs ] )
 
-	const changeFontPair = name => {
-		setSelectedFontPairName( name )
-		const model = new models.Settings( {
-			stackable_selected_font_pair: name, // eslint-disable-line
-		} )
-		model.save()
+	const updateTypography = newSettings => {
+		setTypographySettings( newSettings )
+
+		clearTimeout( saveTypographyThrottle )
+		saveTypographyThrottle = setTimeout( () => {
+			const model = new models.Settings( {
+				stackable_global_typography: [ newSettings ], // eslint-disable-line
+			} )
+			model.save()
+		}, 500 )
 	}
 
-	const changeCustomFontPairs = fontPairs => {
+	const updateSelectedFontPair = name => {
+		setSelectedFontPairName( name )
+
+		clearTimeout( saveSelectedFontPairThrottle )
+		saveSelectedFontPairThrottle = setTimeout( () => {
+			const model = new models.Settings( {
+				stackable_selected_font_pair: name, // eslint-disable-line
+			} )
+			model.save()
+		}, 500 )
+	}
+
+	const updateCustomFontPairs = fontPairs => {
 		setCustomFontPairs( fontPairs )
-		clearTimeout( saveThrottle )
-		saveThrottle = setTimeout( () => {
+
+		clearTimeout( saveCustomFontPairsThrottle )
+		saveCustomFontPairsThrottle = setTimeout( () => {
 			const model = new models.Settings( {
 				stackable_custom_font_pairs: [ ...fontPairs ] , // eslint-disable-line
 			} )
@@ -158,40 +176,25 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			newSettings[ selector ] = styles
 		} )
 
-		setTypographySettings( newSettings )
-
 		// Update the global styles immediately when reset font size is triggered.
 		if ( Object.values( typography ).some( styles => styles && ! styles.fontSize ) ) {
 			doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
 		}
 
-		clearTimeout( saveThrottle )
-		saveThrottle = setTimeout( () => {
-			const model = new models.Settings( {
-				stackable_global_typography: [ newSettings ], // eslint-disable-line
-			} )
-			model.save()
-		}, 500 )
+		updateTypography( newSettings )
 
 		if ( editingFontPairName ) {
 			const updatedCustomFontPairs = customFontPairs
 				.map( fontPair => fontPair.name === editingFontPairName ? { ...fontPair, typography: newSettings } : fontPair )
-			changeCustomFontPairs( updatedCustomFontPairs )
+			updateCustomFontPairs( updatedCustomFontPairs )
 		}
 	}
 
 	const resetStyles = selector => {
 		const newSettings = omit( typographySettings, [ selector ] )
-		setTypographySettings( newSettings )
 		doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
 
-		clearTimeout( saveThrottle )
-		saveThrottle = setTimeout( () => {
-			const model = new models.Settings( {
-				stackable_global_typography: [ newSettings ], // eslint-disable-line
-			} )
-			model.save()
-		}, 500 )
+		updateTypography( newSettings )
 	}
 
 	const changeApplySettingsTo = value => {
@@ -208,9 +211,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			name: `custom-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
 		}
 
-		setSelectedFontPairName( newFontPair.name )
 		setEditingFontPairName( newFontPair.name )
-		changeCustomFontPairs( [ newFontPair, ...customFontPairs ] )
+		updateSelectedFontPair( newFontPair.name )
+		updateCustomFontPairs( [ newFontPair, ...customFontPairs ] )
 	}
 
 	const deleteFontPair = name => {
@@ -221,9 +224,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}
 		const updatedCustomFontPairs = customFontPairs.filter( fontPair => fontPair.name !== name )
 
-		setSelectedFontPairName( '' )
 		setEditingFontPairName( '' )
-		changeCustomFontPairs( updatedCustomFontPairs )
+		updateSelectedFontPair( '' )
+		updateCustomFontPairs( updatedCustomFontPairs )
 	}
 
 	return (
@@ -269,45 +272,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 						<div className="ugb-global-settings-font-pair__container" ref={ fontPairContainerRef }>
 							{ allFontPairs.map( fontPair => {
-								const headingStyles = fontPair.typography.h1
-								const paragraphStyles = fontPair.typography.p
-								if ( headingStyles.fontFamily ) {
-									loadGoogleFont( headingStyles.fontFamily )
-								}
-								if ( paragraphStyles.fontFamily ) {
-									loadGoogleFont( paragraphStyles.fontFamily )
-								}
-								const label = (
-									<div>
-										<span
-											style={ omit( { ...headingStyles }, [ 'fontSize', 'lineHeight' ] ) }
-											className="ugb-global-settings-font-pair__label"
-										>
-											{ headingStyles.fontFamily ? headingStyles.fontFamily : 'Theme Heading Default' }
-										</span>
-										<span
-											style={ omit( { ...paragraphStyles }, [ 'fontSize', 'lineHeight' ] ) }
-											className="ugb-global-settings-font-pair__sub-label"
-										>
-											{ paragraphStyles?.fontFamily ? paragraphStyles?.fontFamily : 'Theme Body Default' }
-										</span>
-									</div>
-								)
-
-								const className = classNames( { 'ugb-global-settings-font-pair__selected': selectedFontPairName === fontPair.name } )
-
 								return <FontPairPicker
 									key={ fontPair.name }
-									label={ label }
-									isCustom={ fontPair?.isCustom ?? false }
-									className={ className }
+									fontPair={ fontPair }
+									isSelected={ selectedFontPairName === fontPair.name }
 									onClick={ () => {
-										changeFontPair( fontPair.name )
+										updateSelectedFontPair( fontPair.name )
 										changeStyles( fontPair.typography )
 									} }
 									onEdit={ () => {
 										setEditingFontPairName( fontPair.name )
-										changeFontPair( fontPair.name )
+										updateSelectedFontPair( fontPair.name )
 										changeStyles( fontPair.typography )
 									} }
 								/>
