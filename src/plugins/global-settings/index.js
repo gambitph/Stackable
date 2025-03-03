@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import './editor-loader'
+import './color-schemes'
 import './block-defaults'
 import './icon-library'
 
