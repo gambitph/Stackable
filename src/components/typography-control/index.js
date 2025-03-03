@@ -35,14 +35,7 @@ const TypographyControl = props => {
 				label={ props.label }
 				popoverLabel={ props.popoverLabel }
 				onReset={ props.onReset }
-				allowReset={
-					props.fontFamily ||
-					props.fontSize || props.tabletFontSize || props.mobileFontSize ||
-					props.fontWeight ||
-					props.textTransform ||
-					props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
-					props.letterSpacing || props.tabletLetterSpacing || props.mobileLetterSpacing
-				}
+				allowReset={ props?.isAllowReset }
 				resetPopoverTitle={ props.resetPopoverTitle }
 				resetPopoverDescription={ props.resetPopoverDescription }
 				className={ props.className }
