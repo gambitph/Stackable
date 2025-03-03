@@ -87,7 +87,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
 			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 			setCustomFontPairs( response.stackable_custom_font_pairs || [] )
-			setSelectedFontPairName( response.stackable_font_pair_name || '' )
+			setSelectedFontPairName( response.stackable_selected_font_pair || '' )
 		} )
 	}, [] )
 
@@ -121,7 +121,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const changeFontPair = name => {
 		setSelectedFontPairName( name )
 		const model = new models.Settings( {
-			stackable_font_pair_name: name, // eslint-disable-line
+			stackable_selected_font_pair: name, // eslint-disable-line
 		} )
 		model.save()
 	}
