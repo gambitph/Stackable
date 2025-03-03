@@ -284,10 +284,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			register_setting(
 				'stackable_global_settings',
-				'stackable_font_pair_name',
+				'stackable_selected_font_pair',
 				array(
 					'type' => 'string',
-					'description' => __( 'Stackable global font pair', STACKABLE_I18N ),
+					'description' => __( 'Stackable currently selected global font pair', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
