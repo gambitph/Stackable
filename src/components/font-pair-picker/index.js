@@ -61,7 +61,7 @@ const FontPairPicker = props => {
 				label={ label }
 				className={ classes }
 			>
-				{ props.fontPair?.isCustom &&
+				{ props?.isCustom &&
 					<div className="ugb-button-icon-control__wrapper">
 						<Button
 							className="ugb-button-icon-control__edit"

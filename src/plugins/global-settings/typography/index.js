@@ -5,26 +5,27 @@ import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
 import { getThemeStyles } from './get-theme-styles'
 import FONT_PAIRS from './font-pairs.json'
-import FontPairPicker from './font-pair-picker'
 
 /**
  * External dependencies
  */
 import {
-	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, InspectorSubHeader, Button,
+	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControl,
 } from '~stackable/components'
 import { fetchSettings } from '~stackable/util'
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 import { omit, head } from 'lodash'
 
 /**
  * WordPress dependencies
  */
 import {
-	Fragment, useEffect, useMemo, useRef, useState,
+	Fragment, useEffect, useRef, useState,
 } from '@wordpress/element'
 import { models } from '@wordpress/api'
-import { addFilter, doAction } from '@wordpress/hooks'
+import {
+	addFilter, applyFilters, doAction,
+} from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
 
 export { GlobalTypographyStyles }
@@ -109,15 +110,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			}
 		}
 	}, [ isPanelOpen ] )
-
-	const allFontPairs = useMemo( () => [
-		FONT_PAIRS[ 0 ],
-		...customFontPairs.map( fontPair => ( {
-			...fontPair,
-			isCustom: true,
-		} ) ),
-		...FONT_PAIRS.slice( 1 ),
-	], [ customFontPairs ] )
 
 	const updateTypography = newSettings => {
 		setTypographySettings( newSettings )
@@ -205,29 +197,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		model.save()
 	}
 
-	const addFontPair = () => {
-		const newFontPair = {
-			...allFontPairs.find( fontPair => fontPair.name === selectedFontPairName ),
-			name: `custom-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
-		}
-
-		setEditingFontPairName( newFontPair.name )
-		updateSelectedFontPair( newFontPair.name )
-		updateCustomFontPairs( [ newFontPair, ...customFontPairs ] )
-	}
-
-	const deleteFontPair = name => {
-		// eslint-disable-next-line no-alert
-		const confirmDelete = window.confirm( __( 'Are you sure you want to delete this font pair?', i18n ) )
-		if ( ! confirmDelete ) {
-			return
-		}
-		const updatedCustomFontPairs = customFontPairs.filter( fontPair => fontPair.name !== name )
-
-		setEditingFontPairName( '' )
-		updateSelectedFontPair( '' )
-		updateCustomFontPairs( updatedCustomFontPairs )
-	}
+	const CustomFontPairPickers = applyFilters(
+		'stackable.global-settings.typography.font-pairs.customPicker',
+		Fragment,
+	)
 
 	return (
 		<Fragment>
@@ -263,15 +236,45 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 						<div className="ugb-global-settings-font-pair__heading">
 							<h3>Preset Font Pairs</h3>
-							<Button
-								className="ugb-global-settings-color-picker__add-button"
-								onClick={ addFontPair }
-								icon="plus-alt2"
-							/>
+							{ isPro && applyFilters(
+								'stackable.global-settings.typography.font-pairs.addFontPair',
+								[ ...FONT_PAIRS, ...customFontPairs ],
+								selectedFontPairName,
+								newFontPair => {
+									setEditingFontPairName( newFontPair.name )
+									updateSelectedFontPair( newFontPair.name )
+									updateCustomFontPairs( [ newFontPair, ...customFontPairs ] )
+								}
+							) }
 						</div>
 
 						<div className="ugb-global-settings-font-pair__container" ref={ fontPairContainerRef }>
-							{ allFontPairs.map( fontPair => {
+							{ /* Theme Default */ }
+							<FontPairPicker
+								key={ FONT_PAIRS[ 0 ].name }
+								fontPair={ FONT_PAIRS[ 0 ] }
+								isSelected={ selectedFontPairName === FONT_PAIRS[ 0 ].name }
+								onClick={ () => {
+									updateSelectedFontPair( FONT_PAIRS[ 0 ].name )
+									changeStyles( FONT_PAIRS[ 0 ].typography )
+								} }
+							/>
+							{ /* Custom Font Pairs */ }
+							<CustomFontPairPickers
+								customFontPairs={ customFontPairs }
+								selected={ selectedFontPairName }
+								onClick={ ( name, typography ) => {
+									updateSelectedFontPair( name )
+									changeStyles( typography )
+								} }
+								onEdit={ ( name, typography ) => {
+									setEditingFontPairName( name )
+									updateSelectedFontPair( name )
+									changeStyles( typography )
+								} }
+							/>
+							{ /* Font Pair Presets */ }
+							{ FONT_PAIRS.slice( 1 ).map( fontPair => {
 								return <FontPairPicker
 									key={ fontPair.name }
 									fontPair={ fontPair }
@@ -280,24 +283,25 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 										updateSelectedFontPair( fontPair.name )
 										changeStyles( fontPair.typography )
 									} }
-									onEdit={ () => {
-										setEditingFontPairName( fontPair.name )
-										updateSelectedFontPair( fontPair.name )
-										changeStyles( fontPair.typography )
-									} }
 								/>
 							} ) }
 						</div>
-
+						{ ! isPro && <ProControl type="global-font-pairs" title="Creating and editing Custom Font Pairs are premium features" /> }
 						<ControlSeparator />
 					</div>
 				}
-				{ editingFontPairName &&
-					<InspectorSubHeader
-						title="Editing Font Pair"
-						onBack={ () => setEditingFontPairName( '' ) }
-						onTrash={ () => deleteFontPair( editingFontPairName ) }
-					/>
+				{ isPro && editingFontPairName &&
+					applyFilters(
+						'stackable.global-settings.typography.font-pairs.inspector-sub-header',
+						customFontPairs,
+						editingFontPairName,
+						() => setEditingFontPairName( '' ),
+						updatedCustomFontPairs => {
+							setEditingFontPairName( '' )
+							updateSelectedFontPair( '' )
+							updateCustomFontPairs( updatedCustomFontPairs )
+						}
+					)
 				}
 
 				<h3>Typography Settings</h3>
