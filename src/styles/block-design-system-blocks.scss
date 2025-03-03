@@ -13,15 +13,23 @@
 
 .stk-button-group {
 	row-gap: cssvar(button-row-gap);
-	column-gap: cssvar(button-gap);
+	column-gap: cssvar(button-column-gap);
 	justify-content: var(--stk-alignment-justify-content);
 }
 
-:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 	&:not(.is-style-link) {
 		.stk-button {
 			background: cssvar(button-background-color);
 			padding: cssvar(button-padding);
+
+			&::before {
+				border-style: cssvar(button-border-style);
+				box-shadow: cssvar(button-box-shadow);
+			}
+			&:hover::before {
+				box-shadow: cssvar(button-box-shadow-hover);
+			}
 
 			// Adjust icon color and icon size.
 			#{ '--stk-icon-color' }: cssvar(button-text-color);
@@ -39,9 +47,20 @@
 		}
 	}
 
+	&:not(.is-style-link, .is-style-ghost) .stk-button {
+		&::before {
+			border-width: cssvar(button-border-width);
+		}
+		&:hover::before {
+			border-width: cssvar(button-border-width-hover);
+		}
+
+	}
+
 	.stk-button {
 		// Adjust icon color and icon size.
-		--stk-icon-size: 1em;
+		#{'--stk-icon-size'}: cssvar(button-icon-size);
+		min-height: cssvar(button-min-height);
 	}
 
 	// Ghost button color.
@@ -52,6 +71,9 @@
 				border-width: cssvar(button-ghost-border-width);
 				border-color: cssvar(button-background-color);
 			}
+			&:hover::before {
+				border-width: cssvar(button-ghost-border-width-hover);
+			}
 		}
 	}
 
@@ -60,10 +82,23 @@
 		#{ '--stk-button-text-color' }: cssvar(button-background-color);
 	}
 }
+:is(.stk-block-button, .stk-block-pagination) .stk-button {
+	border-radius: cssvar(button-border-radius);
+}
 // Ensure buttons use the correct paddings.
 .stk-block-icon-button {
 	.stk-button {
 		#{ '--stk-button-padding' }: cssvar(icon-button-padding);
+	}
+}
+:where(.stk-hover-parent:hover) .stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+	&:not(.is-style-link, .is-style-ghost) .stk-button::before {
+		border-width: cssvar(button-border-width-parent-hover);
+		box-shadow: cssvar(button-box-shadow-parent-hover);
+	}
+	&.is-style-ghost .stk-button::before {
+		border-width: cssvar(button-ghost-border-width-parent-hover);
+		box-shadow: cssvar(button-box-shadow-parent-hover);
 	}
 }
 
@@ -87,8 +122,19 @@
 .stk-container:not(.stk--no-background) {
 	background-color: cssvar(container-background-color);
 	border-radius: cssvar(container-border-radius);
+	border-style: cssvar(container-border-style);
+	border-width: cssvar(container-border-width);
 	box-shadow: cssvar(container-box-shadow);
 	color: cssvar(container-color);
+
+	&:hover {
+		border-width: cssvar(container-border-width-hover);
+		box-shadow: cssvar(container-box-shadow-hover);
+	}
+}
+:where(.stk-hover-parent:hover) .stk-container:not(.stk--no-background) {
+	border-width: cssvar(container-border-width-parent-hover);
+	box-shadow: cssvar(container-box-shadow-parent-hover);
 }
 .stk-container-padding {
 	padding: cssvar(container-padding);
@@ -116,9 +162,46 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 // Block Background
 .stk-block-background {
 	background-color: cssvar(block-background-color);
+	border-radius: cssvar(block-background-border-radius);
+	box-shadow: cssvar(block-background-box-shadow);
 	&:not(.stk--no-padding) {
 		padding: cssvar(block-background-padding);
+		&:hover {
+			padding: cssvar(block-background-padding-hover);
+		}
 	}
+}
+
+.stk-block.stk-block-background {
+	border-style: cssvar(block-background-border-style);
+	border-width: cssvar(block-background-border-width);
+	&:hover {
+		border-width: cssvar(block-background-border-width-hover);
+		box-shadow: cssvar(block-background-box-shadow-hover);
+	}
+}
+
+:where(.stk-hover-parent:hover) .stk-block.stk-block-background {
+	border-width: cssvar(block-background-border-width-parent-hover);
+	box-shadow: cssvar(block-background-box-shadow-parent-hover);
+	&:not(.stk--no-padding) {
+		padding: cssvar(block-background-padding-parent-hover);
+	}
+}
+
+// Images
+.stk-img-wrapper {
+	filter: drop-shadow(cssvar(image-drop-shadow));
+	&:hover {
+		filter: drop-shadow(cssvar(image-drop-shadow-hover));
+	}
+
+	img {
+		border-radius: cssvar(image-border-radius);
+	}
+}
+:where(.stk-hover-parent:hover) .stk-img-wrapper {
+	filter: drop-shadow(cssvar(image-drop-shadow-parent-hover));
 }
 
 // Icons

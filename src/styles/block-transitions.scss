@@ -3,19 +3,19 @@
  */
 // Hover transitions.
 body.stk--anim-init {
-	:is(
+	:where(
 	.stk-block,
 	.stk-container,
 	.stk-container-padding,
-	.stk-img-wrapper, // Images.
-	.stk-img-wrapper img, // Images.
+	.stk-img-wrapper,
+	.stk-img-wrapper img,
 	.stk-block-heading__top-line,
 	.stk-block-heading__bottom-line,
-	.stk-block-posts__item-hide, // For posts transitions
-	.stk-block-posts__title > a, // For posts title
-	.stk-button, // Buttons
-	.stk-button__inner-text, // Button text
-	.stk-block li, // For icon list texts
+	.stk-block-posts__item-hide,
+	.stk-block-posts__title > a,
+	.stk-button,
+	.stk-button__inner-text,
+	.stk-block li,
 	.stk-block p,
 	.stk-block h1,
 	.stk-block h2,

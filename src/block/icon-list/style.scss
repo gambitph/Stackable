@@ -39,7 +39,7 @@
 	}
 	ul.stk-block-icon-list__ul,
 	ol.stk-block-icon-list__ol {
-		padding-inline-start: 0;
+		padding-inline-start: var(--stk-icon-list-indentation, 0);
 	}
 
 	.stk-block-icon-list__ol {

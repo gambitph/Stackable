@@ -20,6 +20,7 @@ import { range } from 'lodash'
 import {
 	useState, useEffect, useRef,
 } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
@@ -163,16 +164,22 @@ const ResizableBottomMargin = props => {
 	const deviceType = useDeviceType()
 	const attrName = getAttributeName( props.attribute, deviceType )
 	const unitAttrName = getAttributeName( `${ props.attribute }Unit`, deviceType )
+	const { globalBlockMarginBottom } = useSelect( select => {
+		const _blockLayouts = select( 'stackable/global-block-layouts' ).getBlockLayouts()
+		return {
+			globalBlockMarginBottom: _blockLayouts[ '--stk-block-margin-bottom' ],
+		}
+	}, [] )
 
-	let value = props[ attrName ]?.bottom
-	let unit = props[ unitAttrName ]
+	let value = props[ attrName ]?.bottom || globalBlockMarginBottom?.[ deviceType.toLowerCase() ]
+	let unit = props[ attrName ]?.bottom ? props[ unitAttrName ] : ( globalBlockMarginBottom?.[ `${ deviceType.toLowerCase() }Unit` ] || 'px' )
 
 	if ( deviceType === 'Mobile' ) {
 		if ( typeof value === 'undefined' || value === '' ) {
 			const attrNameTablet = getAttributeName( props.attribute, 'Tablet' )
 			const unitAttrNameTablet = getAttributeName( `${ props.attribute }Unit`, 'Tablet' )
-			value = props[ attrNameTablet ]?.bottom
-			unit = props[ unitAttrNameTablet ]
+			value = props[ attrNameTablet ]?.bottom || globalBlockMarginBottom?.tablet
+			unit = props[ attrNameTablet ]?.bottom ? props[ unitAttrNameTablet ] : globalBlockMarginBottom?.tabletUnit
 		}
 	}
 
@@ -180,8 +187,8 @@ const ResizableBottomMargin = props => {
 		if ( typeof value === 'undefined' || value === '' ) {
 			const attrNameDesktop = getAttributeName( props.attribute, 'Desktop' )
 			const unitAttrNameDesktop = getAttributeName( `${ props.attribute }Unit`, 'Desktop' )
-			value = props[ attrNameDesktop ]?.bottom
-			unit = props[ unitAttrNameDesktop ]
+			value = props[ attrNameDesktop ]?.bottom || globalBlockMarginBottom?.desktop
+			unit = props[ attrNameDesktop ]?.bottom ? props[ unitAttrNameDesktop ] : ( globalBlockMarginBottom?.desktopUnit || 'px' )
 		}
 	}
 

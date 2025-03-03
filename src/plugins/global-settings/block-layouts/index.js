@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import './store'
+import { LayoutSettings, STATES, hoverState } from './utils'
 
 /**
  * External dependencies
@@ -33,15 +34,6 @@ export { GlobalBlockLayoutStyles } from './editor-loader'
 
 let saveTimeout = null
 
-const LayoutSettings = props => {
-	return <>
-		<div className="ugb-global-block-layouts__section-settings">
-			<p className="ugb-global-block-layouts__section-title">{ props.title }</p>
-			{ props.children }
-		</div>
-	</>
-}
-
 addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', output => {
 	const [ , setIsOpen ] = useState( false )
 	const {
@@ -56,23 +48,18 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 	const deviceType = useDeviceType()
 	const shadows = getShadows()
 
-	const hoverState = {
-		'normal': '',
-		'hover': 'Hover',
-		'parent-hover': 'ParentHover'
-	}
-
-
 	const getValue = ( property, { responsive = false, hover = false, unit = false } = {} ) => {
 		return blockLayouts[ property ]?.[`${ responsive ? deviceType.toLowerCase() : 'desktop' }${ hover ? hoverState[ currentHoverState ] : '' }${ unit ? 'Unit' : '' }`]
 	}
 
-	const valueCallback = value => {
-		return value ? shadows.indexOf( value ) === -1 ? 'custom' : shadows.indexOf( value ) : ''
+	const valueCallback = (value, isImage = false ) => {
+		const options = isImage ? IMAGE_SHADOWS : shadows
+		return value ? ( options.indexOf( value ) === -1 ? 'custom' : options.indexOf( value ) ) : ''
 	}
 
-	const changeCallback = index => {
-		return index !== '' ? shadows[ index ] : index
+	const changeCallback = ( index, isImage = false ) => {
+		const options = isImage ? IMAGE_SHADOWS : shadows
+		return index !== '' ? options[ index ] : index
 	}
 
 	const onChange = ( property, _value, { responsive = false, hover = false, unit = false } = {} ) => {
@@ -105,11 +92,19 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 				delete newSettings[ property ]
 			}
 		} else if ( typeof _value === 'object' ) {
-			const value = {
-				top: _value.top || 0,
-				right: _value.right || 0,
-				bottom: _value.bottom || 0,
-				left: _value.left || 0,
+			const value = {}
+
+			if ( _value.top !== '' ) {
+				value.top = _value.top
+			}
+			if ( _value.right !== '' ) {
+				value.right = _value.right
+			}
+			if ( _value.bottom !== '' ) {
+				value.bottom = _value.bottom
+			}
+			if ( _value.left !== '' ) {
+				value.left = _value.left
 			}
 
 			newSettings[ property ][ state ] = value
@@ -141,6 +136,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						{ __( 'Learn more about Block Defaults', i18n ) }
 					</a>
 				</p>
+
+				<p className="components-base-control__help">
+					<span style={ {fontWeight: 'bold'} }>{ __( 'Note: ', i18n )}</span>
+					{ __( 'When editing block layouts in the hover states, select a block to view the applied styles.', i18n ) }
+				</p>
 				<LayoutSettings title={ __( 'Container', i18n ) }>
 					<FourRangeControl
 						label={ __( 'Padding', i18n ) }
@@ -150,21 +150,22 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						min={ [ 0, 0, 0 ] }
 						sliderMax={ [ 200, 30, 100 ] }
 						units={ [ 'px', 'em', '%' ] }
-						unit={ getValue( '--stk-container-padding', { responsive: true, hover: true, unit: true } ) || 'px' }
-						onChangeUnit={ value => onChange( '--stk-container-padding', value, { responsive: true, hover: true, unit: true } )}
-						top={ getValue( '--stk-container-padding', { responsive: true, hover: true } )?.top }
-						right={ getValue( '--stk-container-padding', { responsive: true, hover: true } )?.right  }
-						bottom={ getValue( '--stk-container-padding', { responsive: true, hover: true } )?.bottom }
-						left={ getValue( '--stk-container-padding', { responsive: true, hover: true } )?.left  }
-						onChange={ value => onChange( '--stk-container-padding', value, { responsive: true, hover: true } ) }
+						unit={ getValue( '--stk-container-padding', STATES.ALL_UNIT ) || 'px' }
+						onChangeUnit={ value => onChange( '--stk-container-padding', value, STATES.ALL_UNIT )}
+						top={ getValue( '--stk-container-padding', STATES.ALL )?.top }
+						right={ getValue( '--stk-container-padding', STATES.ALL )?.right  }
+						bottom={ getValue( '--stk-container-padding', STATES.ALL )?.bottom }
+						left={ getValue( '--stk-container-padding', STATES.ALL )?.left  }
+						onChange={ value => onChange( '--stk-container-padding', value, STATES.ALL ) }
+						placeholder="32"
 					/>
 					<AdvancedToolbarControl
 						label={ __( 'Borders', i18n ) }
 						controls={ BORDER_CONTROLS }
 						className="ugb-border-controls__border-type-toolbar"
 						isSmall={ true }
-						value={ getValue( '--stk-container-border-type') }
-						onChange={ value => onChange( '--stk-container-border-type', value ) }
+						value={ getValue( '--stk-container-border-style') }
+						onChange={ value => onChange( '--stk-container-border-style', value ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Border Width', i18n ) }
@@ -176,11 +177,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						step={ 1 }
 						sliderMax={ 5 }
 						defaultLocked={ true }
-						top={ getValue( '--stk-container-border-width', { responsive: true, hover: true } )?.top }
-						right={ getValue( '--stk-container-border-width', { responsive: true, hover: true } )?.right  }
-						bottom={ getValue( '--stk-container-border-width', { responsive: true, hover: true } )?.bottom }
-						left={ getValue( '--stk-container-border-width', { responsive: true, hover: true } )?.left  }
-						onChange={ value => onChange( '--stk-container-border-width', value, { responsive: true, hover: true } ) }
+						top={ getValue( '--stk-container-border-width', STATES.ALL )?.top }
+						right={ getValue( '--stk-container-border-width', STATES.ALL )?.right  }
+						bottom={ getValue( '--stk-container-border-width', STATES.ALL )?.bottom }
+						left={ getValue( '--stk-container-border-width', STATES.ALL )?.left  }
+						onChange={ value => onChange( '--stk-container-border-width', value, STATES.ALL ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -189,19 +190,19 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						sliderMax={ 50 }
 						responsive="all"
 						onChange={ value => onChange( '--stk-container-border-radius', value, { responsive: true } ) }
-						top={ getValue( '--stk-container-border-radius', { responsive: true } )?.top || '' }
-						right={ getValue( '--stk-container-border-radius', { responsive: true } )?.right || '' }
-						bottom={ getValue( '--stk-container-border-radius', { responsive: true } )?.bottom || '' }
-						left={ getValue( '--stk-container-border-radius', { responsive: true } )?.left || '' }
+						top={ getValue( '--stk-container-border-radius', STATES.RESPONSIVE )?.top }
+						right={ getValue( '--stk-container-border-radius', STATES.RESPONSIVE )?.right }
+						bottom={ getValue( '--stk-container-border-radius', STATES.RESPONSIVE )?.bottom }
+						left={ getValue( '--stk-container-border-radius', STATES.RESPONSIVE )?.left }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						hover="all"
 						globalControl={ true }
-						value={ valueCallback( getValue( '--stk-container-box-shadow', { hover: true }  || '' ) ) }
-						onChange={ value => onChange( '--stk-container-box-shadow', changeCallback( value ), { hover: true } ) }
-						shadowFilterValue={ getValue( '--stk-container-box-shadow', { hover: true } ) || '' }
-						shadowFilterOnChange={ value => onChange( '--stk-container-box-shadow', value, { hover: true } ) }
+						value={ valueCallback( getValue( '--stk-container-box-shadow', STATES.HOVER )  || '' ) }
+						onChange={ value => onChange( '--stk-container-box-shadow', changeCallback( value ), STATES.HOVER ) }
+						shadowFilterValue={ getValue( '--stk-container-box-shadow', STATES.HOVER ) || '' }
+						shadowFilterOnChange={ value => onChange( '--stk-container-box-shadow', value, STATES.HOVER ) }
 					/>
 				</LayoutSettings>
 
@@ -214,21 +215,22 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						min={ [ 0, 0, 0 ] }
 						sliderMax={ [ 200, 30, 100 ] }
 						units={ [ 'px', 'em', '%' ] }
-						unit={ getValue( '--stk-block-background-padding', { responsive: true, hover: true, unit: true } ) || 'px' }
-						onChangeUnit={ value => onChange( '--stk-block-background-padding', value, { responsive: true, hover: true, unit: true } )}
-						top={ getValue( '--stk-block-background-padding', { responsive: true, hover: true } )?.top }
-						right={ getValue( '--stk-block-background-padding', { responsive: true, hover: true } )?.right  }
-						bottom={ getValue( '--stk-block-background-padding', { responsive: true, hover: true } )?.bottom }
-						left={ getValue( '--stk-block-background-padding', { responsive: true, hover: true } )?.left  }
-						onChange={ value => onChange( '--stk-block-background-padding', value, { responsive: true, hover: true } ) }
+						unit={ getValue( '--stk-block-background-padding', STATES.ALL_UNIT ) || 'px' }
+						onChangeUnit={ value => onChange( '--stk-block-background-padding', value, STATES.ALL_UNIT )}
+						top={ getValue( '--stk-block-background-padding', STATES.ALL )?.top }
+						right={ getValue( '--stk-block-background-padding', STATES.ALL )?.right  }
+						bottom={ getValue( '--stk-block-background-padding', STATES.ALL )?.bottom }
+						left={ getValue( '--stk-block-background-padding', STATES.ALL )?.left  }
+						onChange={ value => onChange( '--stk-block-background-padding', value, STATES.ALL ) }
+						placeholder="24"
 					/>
 					<AdvancedToolbarControl
 						label={ __( 'Borders', i18n ) }
 						controls={ BORDER_CONTROLS }
 						className="ugb-border-controls__border-type-toolbar"
 						isSmall={ true }
-						value={ getValue( '--stk-block-background-border-type') }
-						onChange={ value => onChange( '--stk-block-background-border-type', value ) }
+						value={ getValue( '--stk-block-background-border-style') }
+						onChange={ value => onChange( '--stk-block-background-border-style', value ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Border Width', i18n ) }
@@ -240,11 +242,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						step={ 1 }
 						sliderMax={ 5 }
 						defaultLocked={ true }
-						top={ getValue( '--stk-block-background-border-width', { responsive: true, hover: true } )?.top }
-						right={ getValue( '--stk-block-background-border-width', { responsive: true, hover: true } )?.right  }
-						bottom={ getValue( '--stk-block-background-border-width', { responsive: true, hover: true } )?.bottom }
-						left={ getValue( '--stk-block-background-border-width', { responsive: true, hover: true } )?.left  }
-						onChange={ value => onChange( '--stk-block-background-border-width', value, { responsive: true, hover: true } ) }
+						top={ getValue( '--stk-block-background-border-width', STATES.ALL )?.top }
+						right={ getValue( '--stk-block-background-border-width', STATES.ALL )?.right  }
+						bottom={ getValue( '--stk-block-background-border-width', STATES.ALL )?.bottom }
+						left={ getValue( '--stk-block-background-border-width', STATES.ALL )?.left  }
+						onChange={ value => onChange( '--stk-block-background-border-width', value, STATES.ALL ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -253,19 +255,19 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						sliderMax={ 50 }
 						responsive="all"
 						onChange={ value => onChange( '--stk-block-background-border-radius', value, { responsive: true } ) }
-						top={ getValue( '--stk-block-background-border-radius', { responsive: true } )?.top || '' }
-						right={ getValue( '--stk-block-background-border-radius', { responsive: true } )?.right || '' }
-						bottom={ getValue( '--stk-block-background-border-radius', { responsive: true } )?.bottom || '' }
-						left={ getValue( '--stk-block-background-border-radius', { responsive: true } )?.left || '' }
+						top={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.top }
+						right={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.right }
+						bottom={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.bottom }
+						left={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.left }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						hover="all"
 						globalControl={ true }
-						value={ valueCallback( getValue( '--stk-block-background-box-shadow', { hover: true }  || '' ) ) }
-						onChange={ value => onChange( '--stk-block-background-box-shadow', changeCallback( value ), { hover: true } ) }
-						shadowFilterValue={ getValue( '--stk-block-background-box-shadow', { hover: true } ) || '' }
-						shadowFilterOnChange={ value => onChange( '--stk-block-background-box-shadow', value, { hover: true } ) }
+						value={ valueCallback( getValue( '--stk-block-background-box-shadow', STATES.HOVER ) || '' ) }
+						onChange={ value => onChange( '--stk-block-background-box-shadow', changeCallback( value ), STATES.HOVER ) }
+						shadowFilterValue={ getValue( '--stk-block-background-box-shadow', STATES.HOVER ) || '' }
+						shadowFilterOnChange={ value => onChange( '--stk-block-background-box-shadow', value, STATES.HOVER ) }
 					/>
 				</LayoutSettings>
 
@@ -273,10 +275,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 					<AdvancedRangeControl
 						label={ __( 'Block Margin Bottom', i18n ) }
 						responsive="all"
-						units={ [ 'px', '%' ] }
-						sliderMin={ [ -200, -100 ] }
+						sliderMin={ [ -50, -50 ] }
 						sliderMax={ [ 200, 100 ] }
-						placeholder="0"
+						placeholder="24"
+						globalControl={ true }
+						units={ [ 'px', '%' ] }
+						unit={ getValue( '--stk-block-margin-bottom', STATES.RESPONSIVE_UNIT ) || 'px' }
+						onChangeUnit={ value => onChange( '--stk-block-margin-bottom', value, STATES.RESPONSIVE_UNIT )}
+						value={ getValue( '--stk-block-margin-bottom', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-block-margin-bottom', value, STATES.RESPONSIVE )}
+
+
 					/>
 				</LayoutSettings>
 
@@ -286,11 +295,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						responsive="all"
 						min={ [ 0, 0 ] }
 						sliderMax={ [ 200, 30 ] }
+						placeholder="12"
 						units={ [ 'px', 'em', 'vw' ] }
-						unit={ getValue( '--stk-column-inner-spacing', { responsive: true, unit: true } ) || 'px' }
-						onChangeUnit={ value => onChange( '--stk-column-inner-spacing', value, { responsive: true, unit: true } )}
-						value={ valueCallback( getValue( '--stk-column-inner-spacing', { responsive: true }  || '' ) ) }
-						onChange={ value => onChange( '--stk-column-inner-spacing', changeCallback( value ), { responsive: true } ) }
+						unit={ getValue( '--stk-column-margin', STATES.RESPONSIVE_UNIT ) || 'px' }
+						onChangeUnit={ value => onChange( '--stk-column-margin', value, STATES.RESPONSIVE_UNIT )}
+						value={ getValue( '--stk-column-margin', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-column-margin', value, STATES.RESPONSIVE ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
@@ -298,8 +308,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						min={ 0 }
 						sliderMax={ 100 }
 						placeholder="0"
-						value={ valueCallback( getValue( '--stk-column-gap', { responsive: true }  || '' ) ) }
-						onChange={ value => onChange( '--stk-column-gap', changeCallback( value ), { responsive: true } ) }
+						value={ getValue( '--stk-column-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-column-gap', value, STATES.RESPONSIVE ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -307,8 +317,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						min={ 0 }
 						sliderMax={ 100 }
 						placeholder="0"
-						value={ valueCallback( getValue( '--stk-column-gap', { responsive: true }  || '' ) ) }
-						onChange={ value => onChange( '--stk-column-gap', changeCallback( value ), { responsive: true } ) }
+						value={ getValue( '--stk-column-row-gap',STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-column-row-gap', value, STATES.RESPONSIVE ) }
 					/>
 				</LayoutSettings>
 
@@ -317,11 +327,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						label={ __( 'Shadow / Outline', i18n ) }
 						options={ IMAGE_SHADOWS }
 						hover="all"
+						isFilter={ true }
 						globalControl={ true }
-						value={ valueCallback( getValue( '--stk-image-box-shadow', { hover: true }  || '' ) ) }
-						onChange={ value => onChange( '--stk-image-box-shadow', changeCallback( value ), { hover: true } ) }
-						shadowFilterValue={ getValue( '--stk-image-box-shadow', { hover: true } ) || '' }
-						shadowFilterOnChange={ value => onChange( '--stk-image-box-shadow', value, { hover: true } ) }
+						value={ valueCallback( getValue( '--stk-image-drop-shadow', STATES.HOVER ) || '', true ) }
+						onChange={ value => onChange( '--stk-image-drop-shadow', changeCallback( value, true ), STATES.HOVER ) }
+						shadowFilterValue={ getValue( '--stk-image-drop-shadow', STATES.HOVER ) }
+						shadowFilterOnChange={ value => onChange( '--stk-image-drop-shadow', value, STATES.HOVER ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -329,11 +340,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						isCorner={ true }
 						sliderMax={ 50 }
 						responsive="all"
-						onChange={ value => onChange( '--stk-image-border-radius', value, { responsive: true } ) }
-						top={ getValue( '--stk-image-border-radius', { responsive: true } )?.top || '' }
-						right={ getValue( '--stk-image-border-radius', { responsive: true } )?.right || '' }
-						bottom={ getValue( '--stk-image-border-radius', { responsive: true } )?.bottom || '' }
-						left={ getValue( '--stk-image-border-radius', { responsive: true } )?.left || '' }
+						onChange={ value => onChange( '--stk-image-border-radius', value, STATES.RESPONSIVE ) }
+						top={ getValue( '--stk-image-border-radius', STATES.RESPONSIVE )?.top }
+						right={ getValue( '--stk-image-border-radius', STATES.RESPONSIVE )?.right  }
+						bottom={ getValue( '--stk-image-border-radius', STATES.RESPONSIVE )?.bottom  }
+						left={ getValue( '--stk-image-border-radius',  STATES.RESPONSIVE )?.left }
 					/>
 
 				</LayoutSettings>
@@ -344,22 +355,56 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						responsive="all"
 						min={ 0 }
 						max={ 100 }
+						value={ getValue( '--stk-button-min-height',STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-button-min-height', value, STATES.RESPONSIVE ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Button Padding', i18n ) }
 						units={ [ 'px', '%' ] }
+						globalControl={ true }
 						responsive="all"
 						sliderMin={ [ 0, 0 ] }
 						sliderMax={ [ 40, 100 ] }
 						vhMode={ true }
+						unit={ getValue( '--stk-button-padding', STATES.RESPONSIVE_UNIT ) || 'px' }
+						onChangeUnit={ value => onChange( '--stk-button-padding', value, STATES.RESPONSIVE_UNIT )}
+						top={ getValue( '--stk-button-padding', STATES.RESPONSIVE )?.top }
+						right={ getValue( '--stk-button-padding', STATES.RESPONSIVE )?.right }
+						bottom={ getValue( '--stk-button-padding', STATES.RESPONSIVE )?.bottom }
+						left={ getValue( '--stk-button-padding', STATES.RESPONSIVE )?.left }
+						onChange={ value => onChange( '--stk-button-padding', value, STATES.RESPONSIVE ) }
+						placeholderTop="12"
+						placeholderBottom="12"
+						placeholderLeft="16"
+						placeholderRight="16"
+					/>
+					<FourRangeControl
+						label={ __( 'Icon Button Padding', i18n ) }
+						units={ [ 'px', '%' ] }
+						globalControl={ true }
+						responsive="all"
+						sliderMin={ [ 0, 0 ] }
+						sliderMax={ [ 40, 100 ] }
+						vhMode={ true }
+						unit={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE_UNIT ) || 'px' }
+						onChangeUnit={ value => onChange( '--stk-icon-button-padding', value, STATES.RESPONSIVE_UNIT )}
+						top={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE )?.top }
+						right={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE )?.right }
+						bottom={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE )?.bottom }
+						left={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE )?.left }
+						onChange={ value => onChange( '--stk-icon-button-padding', value, STATES.RESPONSIVE ) }
+						placeholderTop="12"
+						placeholderBottom="12"
+						placeholderLeft="12"
+						placeholderRight="12"
 					/>
 					<AdvancedToolbarControl
 						label={ __( 'Borders', i18n ) }
 						controls={ BORDER_CONTROLS }
 						className="ugb-border-controls__border-type-toolbar"
 						isSmall={ true }
-						value={ getValue( '--stk-block-background-border-type') }
-						onChange={ value => onChange( '--stk-block-background-border-type', value ) }
+						value={ getValue( '--stk-button-border-style') }
+						onChange={ value => onChange( '--stk-button-border-style', value ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Border Width', i18n ) }
@@ -371,18 +416,28 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						step={ 1 }
 						sliderMax={ 5 }
 						defaultLocked={ true }
-						top={ getValue( '--stk-block-background-border-width', { responsive: true, hover: true } )?.top }
-						right={ getValue( '--stk-block-background-border-width', { responsive: true, hover: true } )?.right  }
-						bottom={ getValue( '--stk-block-background-border-width', { responsive: true, hover: true } )?.bottom }
-						left={ getValue( '--stk-block-background-border-width', { responsive: true, hover: true } )?.left  }
-						onChange={ value => onChange( '--stk-block-background-border-width', value, { responsive: true, hover: true } ) }
+						top={ getValue( '--stk-button-border-width', STATES.ALL )?.top }
+						right={ getValue( '--stk-button-border-width', STATES.ALL )?.right  }
+						bottom={ getValue( '--stk-button-border-width', STATES.ALL )?.bottom }
+						left={ getValue( '--stk-button-border-width', STATES.ALL )?.left  }
+						onChange={ value => onChange( '--stk-button-border-width', value, STATES.ALL ) }
 					/>
-					<AdvancedRangeControl
+					<FourRangeControl
 						label={ __( 'Button Ghost Border Width', i18n ) }
+						responsive="all"
+						hover="all"
+						globalControl={ true }
 						min={ 0 }
 						max={ 99 }
 						step={ 1 }
 						sliderMax={ 5 }
+						defaultLocked={ true }
+						top={ getValue( '--stk-button-ghost-border-width', STATES.ALL )?.top }
+						right={ getValue( '--stk-button-ghost-border-width', STATES.ALL )?.right  }
+						bottom={ getValue( '--stk-button-ghost-border-width', STATES.ALL )?.bottom }
+						left={ getValue( '--stk-button-ghost-border-width', STATES.ALL )?.left  }
+						onChange={ value => onChange( '--stk-button-ghost-border-width', value, STATES.ALL ) }
+						placeholder="2"
 					/>
 					<FourRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -390,20 +445,20 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						isCorner={ true }
 						sliderMax={ 50 }
 						responsive="all"
-						onChange={ value => onChange( '--stk-block-background-border-radius', value, { responsive: true } ) }
-						top={ getValue( '--stk-block-background-border-radius', { responsive: true } )?.top || '' }
-						right={ getValue( '--stk-block-background-border-radius', { responsive: true } )?.right || '' }
-						bottom={ getValue( '--stk-block-background-border-radius', { responsive: true } )?.bottom || '' }
-						left={ getValue( '--stk-block-background-border-radius', { responsive: true } )?.left || '' }
+						onChange={ value => onChange( '--stk-button-border-radius', value, { responsive: true } ) }
+						top={ getValue( '--stk-button-border-radius', STATES.RESPONSIVE )?.top }
+						right={ getValue( '--stk-button-border-radius', STATES.RESPONSIVE )?.right }
+						bottom={ getValue( '--stk-button-border-radius', STATES.RESPONSIVE )?.bottom }
+						left={ getValue( '--stk-button-border-radius', STATES.RESPONSIVE )?.left }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						hover="all"
 						globalControl={ true }
-						value={ valueCallback( getValue( '--stk-block-background-box-shadow', { hover: true }  || '' ) ) }
-						onChange={ value => onChange( '--stk-block-background-box-shadow', changeCallback( value ), { hover: true } ) }
-						shadowFilterValue={ getValue( '--stk-block-background-box-shadow', { hover: true } ) || '' }
-						shadowFilterOnChange={ value => onChange( '--stk-block-background-box-shadow', value, { hover: true } ) }
+						value={ valueCallback( getValue( '--stk-button-box-shadow', STATES.HOVER ) || '' ) }
+						onChange={ value => onChange( '--stk-button-box-shadow', changeCallback( value ), STATES.HOVER ) }
+						shadowFilterValue={ getValue( '--stk-button-box-shadow', STATES.HOVER ) || '' }
+						shadowFilterOnChange={ value => onChange( '--stk-button-box-shadow', value, STATES.HOVER ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Icon Size', i18n ) }
@@ -411,12 +466,18 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						sliderMax={ 100 }
 						step={ 1 }
 						responsive="all"
+						value={ getValue( '--stk-button-icon-size', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-button-icon-size', value, STATES.RESPONSIVE ) }
+						placeholder="24"
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Icon Button Gap', i18n ) }
+						label={ __( 'Icon Gap', i18n ) }
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 50 }
+						value={ getValue( '--stk-button-icon-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-button-icon-gap', value, STATES.RESPONSIVE ) }
+						placeholder="8"
 					/>
 
 					<AdvancedRangeControl
@@ -424,34 +485,18 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						responsive="all"
 						min="0"
 						sliderMax="50"
-						placeholder=""
+						value={ getValue( '--stk-button-column-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-button-column-gap', value, STATES.RESPONSIVE ) }
+						placeholder="12"
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
-						attribute="rowGap"
 						responsive="all"
 						min="0"
 						sliderMax="50"
-						placeholder=""
-					/>
-					<AdvancedSelectControl
-						label={ __( 'Flex Wrap', i18n ) }
-						attribute="flexWrap"
-						options={ [
-							{
-								label: __( 'No Wrap', i18n ),
-								value: '',
-							},
-							{
-								label: __( 'Wrap', i18n ),
-								value: 'wrap',
-							},
-							{
-								label: __( 'Wrap Reverse', i18n ),
-								value: 'wrap-reverse',
-							},
-						] }
-						responsive="all"
+						value={ getValue( '--stk-button-row-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-button-row-gap', value, STATES.RESPONSIVE ) }
+						placeholder="12"
 					/>
 				</LayoutSettings>
 
@@ -463,12 +508,16 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						step={ 1 }
 						placeholder="16"
 						responsive="all"
+						value={ getValue( '--stk-icon-list-size', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-icon-list-size', value, STATES.RESPONSIVE ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
 						min="0"
 						sliderMax="50"
 						responsive="all"
+						value={ getValue( '--stk-icon-list-row-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-icon-list-row-gap', value, STATES.RESPONSIVE ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Icon Gap', i18n ) }
@@ -476,6 +525,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						sliderMax="20"
 						placeholder="8"
 						responsive="all"
+						value={ getValue( '--stk-icon-list-icon-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-icon-list-icon-gap', value, STATES.RESPONSIVE ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Indentation', i18n ) }
@@ -483,6 +534,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						sliderMax="50"
 						placeholder=""
 						responsive="all"
+						value={ getValue( '--stk-icon-list-indentation', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-icon-list-indentation', value, STATES.RESPONSIVE ) }
 					/>
 				</LayoutSettings>
 
@@ -493,6 +546,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						min={ 0 }
 						sliderMax={ 100 }
 						step={ 1 }
+						placeholder="36"
+						value={ getValue( '--stk-icon-size', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( '--stk-icon-size', value, STATES.RESPONSIVE ) }
 					/>
 				</LayoutSettings>
 

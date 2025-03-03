@@ -1,46 +1,19 @@
 /**
+ * Internal dependencies
+ */
+import { getDefault } from './utils'
+
+/**
  * WordPress dependencies
  */
 import { useSelect } from '@wordpress/data'
 import { useEffect, useState } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 /**
  * External dependencies
  */
 import { compact } from 'lodash'
 import { useBlockHoverState } from '~stackable/hooks'
-/*
-:root { --stk-container-border-radius: 10px 10px 10px 10px; :where(.stk--is-hovered, .stk-block:hover) {--stk-container-border-radius: 50px 50px 50px 50px;}}
- */
-
-const transformToNested = ( _blockLayouts ) => {
-	const devices = [ "desktop", "tablet", "mobile" ]
-
-	const blockLayouts = {}
-
-	for ( const property in _blockLayouts ) {
-		blockLayouts[ property ] = {}
-
-		devices.forEach( device => {
-			blockLayouts[ property ][ device ] = {}
-
-			if ( typeof blockLayouts[ property ][ `${ device }` ] !== undefined ) {
-				blockLayouts[ property ][ device ][ 'normal' ] = blockLayouts[ property ][ `${ device }` ]
-			}
-
-			if ( typeof blockLayouts[ property ][ `${ device }Hover` ] !== undefined ) {
-				blockLayouts[ property ][ device ][ 'hover' ] = blockLayouts[ property ][ `${ device }Hover` ]
-			}
-
-			if ( typeof blockLayouts[ property ][ `${ device }ParentHover` ] !== undefined ) {
-				blockLayouts[ property ][ device ][ 'parent-hover' ] = blockLayouts[ property ][ `${ device }ParentHover` ]
-			}
-		} )
-	}
-
-	return blockLayouts
-}
 
 const renderGlobalStyles = ( blockLayouts, setStyles, currentHoverState, blockUniqueId, parentHoverBlock, breakDesktop = 1024, breakTablet = 768 ) => {
 	if ( Object.keys( blockLayouts ).length === 0 ) {
@@ -50,9 +23,9 @@ const renderGlobalStyles = ( blockLayouts, setStyles, currentHoverState, blockUn
 	let css = ''
 
 	const deviceCss = {
-		'desktop': [],
-		'tablet': [],
-		'mobile': []
+		desktop: [],
+		tablet: [],
+		mobile: [],
 	}
 
 	const getUnit = ( property, state ) => {
@@ -69,10 +42,16 @@ const renderGlobalStyles = ( blockLayouts, setStyles, currentHoverState, blockUn
 		}
 
 		let style = ''
-		if ( property.includes( 'shadow' ) ) {
+		if ( typeof value === 'string' ) {
 			style = `${ property }: ${ value };`
 		} else if ( typeof value === 'object' ) {
-			style = `${ property }: ${ value.top }${ unit } ${ value.right }${ unit } ${ value.left }${ unit } ${ value.bottom }${ unit };`
+			const defaultValue = getDefault( _property, device )
+			const top = value.top !== undefined ? value.top : defaultValue.top
+			const right = value.right !== undefined ? value.right : defaultValue.right
+			const bottom = value.bottom !== undefined ? value.bottom : defaultValue.bottom
+			const left = value.left !== undefined ? value.left : defaultValue.left
+
+			style = `${ property }: ${ top }${ unit } ${ right }${ unit } ${ bottom }${ unit } ${ left }${ unit };`
 		} else {
 			style = `${ property }: ${ value }${ unit };`
 		}
@@ -109,7 +88,7 @@ const renderGlobalStyles = ( blockLayouts, setStyles, currentHoverState, blockUn
 	}
 
 	if ( deviceCss.tablet.length > 0 ) {
-		css += `@media screen and (max-width: ${ breakDesktop - 1 }px){ :root { ${ compact( deviceCss.tablet ).join( '' ) }} }`
+		css += `@media screen and (max-width: ${ breakDesktop - 1 }px){ :root { ${ compact( deviceCss.tablet ).join( '' ) }}}`
 	}
 
 	if ( deviceCss.mobile.length > 0 ) {
@@ -120,12 +99,14 @@ const renderGlobalStyles = ( blockLayouts, setStyles, currentHoverState, blockUn
 }
 
 export const GlobalBlockLayoutStyles = () => {
-	const { blockLayouts, selectedBlockUniqueId, SelectedParentHoverBlock,SelectedParentHoverBlockChildren, SelectedHoverChildren } = useSelect( select => ( {
+	const {
+		blockLayouts, selectedBlockUniqueId, SelectedParentHoverBlock,
+	} = useSelect( select => ( {
 		blockLayouts: select( 'stackable/global-block-layouts' ).getBlockLayouts() || [],
 		selectedBlockUniqueId: select( 'core/block-editor' ).getSelectedBlock()?.attributes?.uniqueId,
-		SelectedParentHoverBlock: select( 'stackable/hover-state').getSelectedParentHoverBlock(),
-		SelectedParentHoverBlockChildren: select( 'stackable/hover-state').getSelectedParentHoverBlockChildren(),
-		SelectedHoverChildren: select( 'stackable/hover-state').getSelectedHoverChildren()
+		SelectedParentHoverBlock: select( 'stackable/hover-state' ).getSelectedParentHoverBlock(),
+		SelectedParentHoverBlockChildren: select( 'stackable/hover-state' ).getSelectedParentHoverBlockChildren(),
+		SelectedHoverChildren: select( 'stackable/hover-state' ).getSelectedHoverChildren(),
 	} ), [] )
 
 	const [ currentHoverState ] = useBlockHoverState( { globalControl: true } )

@@ -97,7 +97,7 @@ blockStyles.addBlockStyles( 'iconRotation', [ {
 
 blockStyles.addBlockStyles( 'iconSize', [ {
 	selector: '',
-	styleRule: '--stk-icon-height',
+	styleRule: '--stk-icon-list-size',
 	attrName: 'iconSize',
 	key: 'iconSize',
 	responsive: 'all',

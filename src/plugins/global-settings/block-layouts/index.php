@@ -66,10 +66,10 @@ if ( ! class_exists( 'Stackable_Global_Block_Layouts' ) ) {
 			$type_four_range = array(
 				'type' => 'object',
 				'properties' => array(
-					'top' => array( 'type' => 'number' ),
-					'right' => array( 'type' => 'number' ),
-					'bottom' => array( 'type' => 'number' ),
-					'left' => array( 'type' => 'number' ),
+					'top' => array( 'type' => 'number', 'default' => '' ),
+					'right' => array( 'type' => 'number', 'default' => '' ),
+					'bottom' => array( 'type' => 'number', 'default' => '' ),
+					'left' => array( 'type' => 'number', 'default' => '' ),
 				)
 			);
 
@@ -90,9 +90,46 @@ if ( ! class_exists( 'Stackable_Global_Block_Layouts' ) ) {
 					'show_in_rest' => array(
 						'schema' => array(
 							'properties' => array(
+								'--stk-container-border-style' => $string_properties,
+								'--stk-container-border-width' => $four_range_properties,
 								'--stk-container-border-radius' => $four_range_properties,
 								'--stk-container-box-shadow' => $string_properties,
 								'--stk-container-padding' => $four_range_properties,
+
+								'--stk-block-background-border-style' => $string_properties,
+								'--stk-block-background-border-width' => $four_range_properties,
+								'--stk-block-background-border-radius' => $four_range_properties,
+								'--stk-block-background-box-shadow' => $string_properties,
+								'--stk-block-background-padding' => $four_range_properties,
+
+								'--stk-block-margin-bottom' => $number_properties,
+
+								'--stk-column-margin' => $number_properties,
+								'--stk-column-gap' => $number_properties,
+								'--stk-column-row-gap' => $number_properties,
+
+								'--stk-image-drop-shadow' => $string_properties,
+								'--stk-image-border-radius' => $four_range_properties,
+
+								'--stk-button-min-height' => $number_properties,
+								'--stk-button-padding' => $four_range_properties,
+								'--stk-icon-button-padding' => $four_range_properties,
+								'--stk-button-border-style' => $string_properties,
+								'--stk-button-border-width' => $four_range_properties,
+								'--stk-button-ghost-border-width' => $four_range_properties,
+								'--stk-button-border-radius' => $four_range_properties,
+								'--stk-button-box-shadow' => $string_properties,
+								'--stk-button-icon-size' => $number_properties,
+								'--stk-button-icon-gap' => $number_properties,
+								'--stk-button-column-gap' => $number_properties,
+								'--stk-button-row-gap' => $number_properties,
+
+								'--stk-icon-list-size' => $number_properties,
+								'--stk-icon-list-row-gap' => $number_properties,
+								'--stk-icon-list-icon-gap' => $number_properties,
+								'--stk-icon-list-indentation' => $number_properties,
+
+								'--stk-icon-size' => $number_properties
 							)
 						)
 					),
@@ -105,34 +142,46 @@ if ( ! class_exists( 'Stackable_Global_Block_Layouts' ) ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
-		public function generate_style( $_property, $device, $hover_state, $value, $unit ) {
-			$property = $_property;
-			if ( $hover_state !== 'normal' ) {
-				$property .= '-' . $hover_state;
-			}
-
-			if ( strpos( $property, 'shadow' ) !== false ) {
-				return $property . ': ' . $value . ';';
-			}
-
-			if ( is_array( $value ) ) {
-				return $property . ': ' . $value[ 'top' ] . $unit . ' ' . $value[ 'right' ] . $unit . ' ' .  $value[ 'bottom' ] . $unit . ' ' .  $value[ 'left' ] . $unit . ';';
-			}
-
-			return $property . ': ' . $value . $unit . ';';
-		}
-
 		public function get_unit( $block_layouts, $property, $state ) {
-			return $block_layouts[$property][ $state . 'Unit' ] ?? 'px';
+			return $block_layouts[ $property ][ $state . 'Unit' ] ?? 'px';
 		}
 
 		public function get_states( $state ) {
 			return strpos( $state, 'Unit' ) === false;
 		}
+
+		public function get_defaults( $property, $device ) {
+			$defaults = array(
+				'--stk-container-padding' => array(
+					'desktop' => array( 'top' => 32, 'right' => 32, 'bottom' => 32, 'left' => 32 ),
+					'mobile' => array( 'top' => 24, 'right' => 24, 'bottom' => 24, 'left' => 24 )
+				),
+				'--stk-block-background-padding' => array(
+					'desktop' => array( 'top' => 24, 'right' => 24, 'bottom' => 24, 'left' => 24 ),
+					'mobile' => array( 'top' => 16, 'right' => 16, 'bottom' => 16, 'left' => 16 )
+				),
+				'--stk-button-padding' => array(
+					'desktop' => array( 'top' => 12, 'right' => 16, 'bottom' => 12, 'left' => 16 ),
+				),
+				'--stk-icon-button-padding' => array(
+					'desktop' => array( 'top' => 12, 'right' => 12, 'bottom' => 12, 'left' => 12 ),
+				),
+			);
+
+			if ( ! isset( $defaults[ $property ] ) ) {
+				return array( 'top' => 0, 'right' => 0, 'bottom' => 0, 'left' => 0 );
+			}
+
+			if ( ! isset( $defaults[ $property ][ $device ] ) ) {
+				return $defaults[ $property ][ 'desktop' ];
+			}
+
+			return $defaults[ $property ][ $device ];
+		}
+
 		/**-----------------------------------------------------------------------------
 		 * Block Layouts functions
 		 *-----------------------------------------------------------------------------*/
-		// TODO: escape when output
 		/**
 		 * Add our global block layout styles in the frontend.
 		 *
@@ -161,36 +210,65 @@ if ( ! class_exists( 'Stackable_Global_Block_Layouts' ) ) {
 
 				foreach ( $states as $state => $value ) {
 					$unit = $this->get_unit( $block_layouts, $property, $state );
-					error_log( $property . ' ' . $state . ' ' . $unit );
 
 					$device = strpos( $state, 'desktop' ) !== false ? 'desktop' : ( strpos( $state, 'tablet' ) !== false ? 'tablet' : 'mobile' );
 					$hover_state = strpos( $state, 'ParentHover' ) !== false ? 'parent-hover' : ( strpos( $state, 'Hover' ) !== false ? 'hover' : 'normal' );
 
-					$style = $this->generate_style( $property, $device, $hover_state, $value, $unit );
-					$css[ $device ][] = $style;
+					$custom_property = $property;
+
+					if ( $hover_state !== 'normal' ) {
+						$custom_property .= '-' . $hover_state;
+					}
+
+					if ( is_string( $value ) ) {
+						$style = $value;
+					} else if ( is_array( $value ) ) {
+						$default_value = $this->get_defaults( $property, $device );
+						$top = isset( $value[ 'top' ] ) ? $value[ 'top' ] : $default_value[ 'top' ];
+						$right = isset( $value[ 'right' ] ) ? $value[ 'right' ] : $default_value[ 'right' ];
+						$bottom = isset( $value[ 'bottom' ] ) ? $value[ 'bottom' ] : $default_value[ 'bottom' ];
+						$left = isset( $value[ 'left' ] ) ? $value[ 'left' ] : $default_value[ 'left' ];
+
+						$style = $top . $unit . ' ' . $right . $unit . ' ' .  $bottom . $unit . ' ' .  $left  . $unit;
+					} else {
+						$style = $value . $unit;
+					}
+
+					$css[ $device ][ $custom_property ] = $style;
 				}
 			}
 
+			$styles = array();
 			$generated_css = '';
+
 			if ( ! empty( $css[ 'desktop' ] ) || ! empty( $css[ 'tablet' ] ) || ! empty( $css[ 'mobile' ] ) ) {
 				$generated_css .= "\n/* Global block layouts */\n";
 			}
 
 			if ( ! empty( $css['desktop'] ) ) {
-				$generated_css .=  ':root { ' . implode( '', $css['desktop'] ) . ' }';
+				$styles[] = array(
+						'selector'     => ':root',
+						'declarations' => $css[ 'desktop' ]
+				);
 			}
 
 			if ( ! empty( $css['tablet'] ) ) {
-				$generated_css .= '@media screen and (max-width:' . $tablet_breakpoint . 'px) {';
-				$generated_css .= ':root { ' . implode( '', $css['tablet'] ) . ' }';
-				$generated_css .= '}';
-			}
-			if ( ! empty( $css['mobile'] ) ) {
-				$generated_css .= '@media screen and (max-width:' . $mobile_breakpoint . 'px) {';
-				$generated_css .= ':root { ' . implode( '', $css['mobile'] ) . ' }';
-				$generated_css .= '}';
+				$styles[] = array(
+						'rules_group'  => '@media (max-width:' . $tablet_breakpoint .'px)',
+						'selector'     => ':root',
+						'declarations' => $css[ 'tablet' ]
+				);
 			}
 
+			if ( ! empty( $css['mobile'] ) ) {
+				$styles[] = array(
+					'rules_group'  => '@media (max-width:' . $mobile_breakpoint .'px)',
+					'selector'     => ':root',
+					'declarations' => $css[ 'mobile' ]
+				);
+			}
+
+			$generated_css .= wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			$current_css .= $generated_css;
 			return apply_filters( 'stackable_global_frontend_css' , $current_css );
 		}
