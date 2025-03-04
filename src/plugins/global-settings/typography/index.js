@@ -80,7 +80,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const [ typographySettings, setTypographySettings ] = useState( [] )
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
 	const [ customFontPairs, setCustomFontPairs ] = useState( [] )
-	const [ selectedFontPairName, setSelectedFontPairName ] = useState( 'theme-heading-default/theme-body-default' )
+	const [ selectedFontPairName, setSelectedFontPairName ] = useState( '' )
 	const [ editingFontPairName, setEditingFontPairName ] = useState( '' )
 
 	const fontPairContainerRef = useRef( null )
@@ -187,7 +187,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const resetStyles = selector => {
 		let newSettings
 		const currentFontPair = [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
-		if ( ! editingFontPairName ) {
+		if ( ! editingFontPairName && currentFontPair ) {
 			newSettings = { ...typographySettings, [ selector ]: currentFontPair.typography[ selector ] }
 		} else {
 			newSettings = omit( typographySettings, [ selector ] )
@@ -211,9 +211,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	const getIsAllowReset = selector => {
 		const currentFontPair = [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
-		const fontPairStyle = currentFontPair.typography[ selector ]
 		const typographyStyle = typographySettings[ selector ]
-		if ( ! editingFontPairName ) {
+		if ( ! editingFontPairName && currentFontPair ) {
+			const fontPairStyle = currentFontPair.typography[ selector ]
 			if ( ! isEqual( fontPairStyle, typographyStyle ) ) {
 				return true
 			}
