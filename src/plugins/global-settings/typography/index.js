@@ -13,7 +13,9 @@ import {
 	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControl,
 } from '~stackable/components'
 import { fetchSettings } from '~stackable/util'
-import { i18n, isPro } from 'stackable'
+import {
+	i18n, isPro, showProNotice,
+} from 'stackable'
 import {
 	omit, head, isEqual,
 } from 'lodash'
@@ -286,7 +288,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						<ControlSeparator />
 
 						<div className="ugb-global-settings-font-pair__heading">
-							<h3>Preset Font Pairs</h3>
+							<h3>{ __( 'Preset Font Pairs' ) }</h3>
 							{ isPro && applyFilters(
 								'stackable.global-settings.typography.font-pairs.addFontPair',
 								[ ...FONT_PAIRS, ...customFontPairs ],
@@ -346,7 +348,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 								/>
 							} ) }
 						</div>
-						{ ! isPro && <ProControl type="global-font-pairs" title="Creating and editing Custom Font Pairs are premium features" /> }
+						{ showProNotice && <ProControl type="font-pairs" /> }
 						<ControlSeparator />
 					</div>
 				}
@@ -364,7 +366,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 					)
 				}
 
-				<h3>Typography Settings</h3>
+				<h3>{ __( 'Typography Settings' ) }</h3>
 				<style> { getThemeStyles() } </style>
 				{ TYPOGRAPHY_TAGS.map( ( {
 					label, selector, help,
