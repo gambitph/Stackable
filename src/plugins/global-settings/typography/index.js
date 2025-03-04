@@ -16,9 +16,7 @@ import { fetchSettings } from '~stackable/util'
 import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
-import {
-	omit, head, isEqual,
-} from 'lodash'
+import { head, isEqual } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -83,7 +81,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
 	const [ customFontPairs, setCustomFontPairs ] = useState( [] )
 	const [ selectedFontPairName, setSelectedFontPairName ] = useState( '' )
-	const [ editingFontPairName, setEditingFontPairName ] = useState( '' )
+	const [ isEditingFontPair, setIsEditingFontPair ] = useState( false )
 
 	const fontPairContainerRef = useRef( null )
 
@@ -178,24 +176,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}
 
 		updateTypography( newSettings )
-
-		if ( editingFontPairName ) {
-			const updatedCustomFontPairs = customFontPairs
-				.map( fontPair => fontPair.name === editingFontPairName ? { ...fontPair, typography: newSettings } : fontPair )
-			updateCustomFontPairs( updatedCustomFontPairs )
-		}
 	}
 
 	const resetStyles = selector => {
 		let newSettings
 		const currentFontPair = [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
-		if ( ! editingFontPairName && currentFontPair ) {
+		if ( ! isEditingFontPair && currentFontPair ) {
 			newSettings = { ...typographySettings, [ selector ]: currentFontPair.typography[ selector ] }
-		} else {
-			newSettings = omit( typographySettings, [ selector ] )
-			const updatedCustomFontPairs = customFontPairs
-				.map( fontPair => fontPair.name === editingFontPairName ? { ...fontPair, typography: newSettings } : fontPair )
-			updateCustomFontPairs( updatedCustomFontPairs )
 		}
 
 		doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
@@ -214,7 +201,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const getIsAllowReset = selector => {
 		const currentFontPair = [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
 		const typographyStyle = typographySettings[ selector ]
-		if ( ! editingFontPairName && currentFontPair ) {
+		if ( ! isEditingFontPair && currentFontPair ) {
 			const fontPairStyle = currentFontPair.typography[ selector ]
 			if ( ! isEqual( fontPairStyle, typographyStyle ) ) {
 				return true
@@ -255,6 +242,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		Fragment,
 	)
 
+	const EditingFontPairPanel = applyFilters(
+		'stackable.global-settings.typography.font-pairs.editingFontPairPanel',
+		Fragment,
+	)
+
 	return (
 		<Fragment>
 			{ output }
@@ -265,8 +257,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 					setIsPanelOpen( prev => ! prev )
 				} }
 			>
-				{ ! editingFontPairName &&
-					<div>
+				<style> { getThemeStyles() } </style>
+				{ ! isEditingFontPair &&
+					<>
 						<p className="components-base-control__help">
 							{ __( 'Change the typography of your headings for all your blocks in your site.', i18n ) }
 							&nbsp;
@@ -294,7 +287,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 								[ ...FONT_PAIRS, ...customFontPairs ],
 								selectedFontPairName,
 								newFontPair => {
-									setEditingFontPairName( newFontPair.name )
+									setIsEditingFontPair( true )
 									updateSelectedFontPair( newFontPair.name )
 									updateCustomFontPairs( [ newFontPair, ...customFontPairs ] )
 								}
@@ -327,7 +320,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									changeStyles( typography )
 								} }
 								onEdit={ ( name, typography ) => {
-									setEditingFontPairName( name )
+									setIsEditingFontPair( true )
 									updateSelectedFontPair( name )
 									changeStyles( typography )
 								} }
@@ -350,40 +343,46 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						</div>
 						{ showProNotice && <ProControl type="font-pairs" /> }
 						<ControlSeparator />
-					</div>
-				}
-				{ isPro && editingFontPairName &&
-					applyFilters(
-						'stackable.global-settings.typography.font-pairs.inspector-sub-header',
-						customFontPairs,
-						editingFontPairName,
-						() => setEditingFontPairName( '' ),
-						updatedCustomFontPairs => {
-							setEditingFontPairName( '' )
-							updateSelectedFontPair( '' )
-							updateCustomFontPairs( updatedCustomFontPairs )
-						}
-					)
+
+						<h3>{ __( 'Typography Settings' ) }</h3>
+						{ TYPOGRAPHY_TAGS.map( ( {
+							label, selector, help,
+						}, index ) => {
+							return (
+								<TypographyPicker
+									help={ help }
+									key={ index }
+									label={ label }
+									selector={ selector }
+									value={ ( typographySettings[ selector ] ) || {} }
+									isAllowReset={ getIsAllowReset( selector ) }
+									onChange={ styles => changeStyles( { [ selector ]: styles } ) }
+									onReset={ () => resetStyles( selector ) }
+								/>
+							)
+						} ) }
+					</>
 				}
 
-				<h3>{ __( 'Typography Settings' ) }</h3>
-				<style> { getThemeStyles() } </style>
-				{ TYPOGRAPHY_TAGS.map( ( {
-					label, selector, help,
-				}, index ) => {
-					return (
-						<TypographyPicker
-							help={ help }
-							key={ index }
-							label={ label }
-							selector={ selector }
-							value={ ( typographySettings[ selector ] ) || {} }
-							isAllowReset={ getIsAllowReset( selector ) }
-							onChange={ styles => changeStyles( { [ selector ]: styles } ) }
-							onReset={ () => resetStyles( selector ) }
-						/>
-					)
-				} ) }
+				{ isPro && isEditingFontPair &&
+					<EditingFontPairPanel
+						TypographyPicker={ TypographyPicker }
+						TYPOGRAPHY_TAGS={ TYPOGRAPHY_TAGS }
+						typographySettings={ typographySettings }
+						customFontPairs={ customFontPairs }
+						selectedFontPairName={ selectedFontPairName }
+						changeStyles={ changeStyles }
+						updateTypography={ updateTypography }
+						updateCustomFontPairs={ updateCustomFontPairs }
+						setIsEditingFontPair={ setIsEditingFontPair }
+						onDelete={ updatedCustomFontPairs => {
+							setIsEditingFontPair( false )
+							updateSelectedFontPair( '' )
+							updateCustomFontPairs( updatedCustomFontPairs )
+						} }
+						getIsAllowReset={ getIsAllowReset }
+					/>
+				}
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
