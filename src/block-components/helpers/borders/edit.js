@@ -14,7 +14,7 @@ import {
  */
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useAttributeEditHandlers, useBlockLayoutDefaults } from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
 
 export const BORDER_CONTROLS = [
@@ -43,6 +43,8 @@ export const BorderControls = props => {
 		updateAttributes,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
+	const { getPlaceholder } = useBlockLayoutDefaults()
+
 	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
 
 	applyFilters( 'stackable.block-component.helpers.borders', null, getAttribute, updateAttributes )
@@ -57,6 +59,7 @@ export const BorderControls = props => {
 					attribute={ getAttrName( 'borderType' ) }
 					fullwidth={ true }
 					isSmall={ true }
+					placeholder={ getPlaceholder( `${ props.placeholderTemplate }-border-style` ) }
 				/>
 			}
 
@@ -71,6 +74,7 @@ export const BorderControls = props => {
 					step={ 1 }
 					sliderMax={ 5 }
 					defaultLocked={ true }
+					placeholder={ props.borderWidthPlaceholder || getPlaceholder( `${ props.placeholderTemplate }-border-width` ) }
 				/>
 			}
 
@@ -101,6 +105,7 @@ export const BorderControls = props => {
 				label={ __( 'Shadow / Outline', i18n ) }
 				attribute={ getAttrName( 'shadow' ) }
 				hover="all"
+				placeholder={ getPlaceholder( `${ props.placeholderTemplate }-box-shadow` ) }
 			/>
 		</Fragment>
 	)

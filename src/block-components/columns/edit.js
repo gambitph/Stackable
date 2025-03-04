@@ -22,6 +22,7 @@ import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 	useDeviceType,
+	useBlockLayoutDefaults,
 } from '~stackable/hooks'
 import { range } from 'lodash'
 
@@ -39,6 +40,7 @@ export const Controls = props => {
 	// TODO: Get global default value for placeholder
 	const [ , setColumnsUpdate ] = useState( 0 )
 	const deviceType = useDeviceType()
+	const { getPlaceholder } = useBlockLayoutDefaults()
 	const { clientId } = useBlockEditContext()
 	const {
 		numInnerBlocks, innerBlocks,
@@ -254,7 +256,7 @@ export const Controls = props => {
 						defaultLocked={ true }
 						min={ [ 0, 0 ] }
 						sliderMax={ [ 200, 30 ] }
-						placeholder={ numInnerBlocks === 1 ? '0' : '12' }
+						placeholder={ numInnerBlocks === 1 ? '0' : getPlaceholder( '--stk-column-margin' ) }
 						visualGuide={ {
 							selector: '.stk-%s-column > * > * > [data-type="stackable/column"] > * > .stk-column > .stk-inner-blocks',
 							highlight: 'column-spacing',
@@ -272,7 +274,7 @@ export const Controls = props => {
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 100 }
-						placeholder="0"
+						placeholder={ getPlaceholder( '--stk-columns-column-gap' ) }
 						visualGuide={ {
 							selector: '.stk-%s-column > * > *',
 							highlight: 'columns:column-gap',
@@ -289,7 +291,7 @@ export const Controls = props => {
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 100 }
-						placeholder="0"
+						placeholder={ getPlaceholder( '--stk-columns-row-gap' ) }
 						helpTooltip={ {
 							// TODO: Add a working video
 							description: __( 'Sets the distance between two or more columns', i18n ),

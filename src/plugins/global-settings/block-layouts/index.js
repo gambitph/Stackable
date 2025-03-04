@@ -21,7 +21,9 @@ import {
 } from '~stackable/components'
 import { IMAGE_SHADOWS, BORDER_CONTROLS } from '~stackable/block-components'
 import { i18n } from 'stackable'
-import { useDeviceType, useBlockHoverState } from '~stackable/hooks'
+import {
+	useDeviceType, useBlockHoverState, useBlockLayoutDefaults,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -40,13 +42,9 @@ let saveTimeout = null
 addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', output => {
 	const [ isOpen, setIsOpen ] = useState( false )
 	const [ displayHoverNotice, setDisplayHoverNotice ] = useState( false )
-	const {
-		blockLayouts,
-	} = useSelect( select => {
+	const { blockLayouts } = useSelect( select => {
 		const _blockLayouts = select( 'stackable/global-block-layouts' ).getBlockLayouts()
-		return {
-			blockLayouts: { ..._blockLayouts },
-		}
+		return { blockLayouts: { ..._blockLayouts } }
 	}, [] )
 	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
 	const deviceType = useDeviceType()
@@ -469,7 +467,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						responsive="all"
 						min={ 0 }
 						max={ 100 }
-						placeholder="0"
+						placeholder=""
 						value={ getValue( '--stk-button-min-height', STATES.RESPONSIVE ) }
 						onChange={ value => onChange( '--stk-button-min-height', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( '--stk-button-min-height', 'tablet' ) }
@@ -663,6 +661,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 						min="0"
 						sliderMax="50"
 						responsive="all"
+						placeholder="0"
 						value={ getValue( '--stk-icon-list-row-gap', STATES.RESPONSIVE ) }
 						onChange={ value => onChange( '--stk-icon-list-row-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( '--stk-icon-list-row-gap', 'tablet' ) }
@@ -710,4 +709,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/block-layouts', out
 			</PanelAdvancedSettings>
 		</>
 	)
+} )
+
+addFilter( 'stackable.resizable-bottom-margin.default', 'stackable/block-layouts', defaultMargin => {
+	const deviceType = useDeviceType()
+	const { getPlaceholder } = useBlockLayoutDefaults()
+
+	const value = getPlaceholder( '--stk-block-margin-bottom', { device: deviceType.toLowerCase() } )
+
+	return value || defaultMargin
 } )

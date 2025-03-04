@@ -12,7 +12,7 @@ import {
 	AdvancedSelectControl,
 } from '~stackable/components'
 import { i18n } from 'stackable'
-import { useBlockAttributesContext } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockLayoutDefaults } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -39,6 +39,8 @@ export const Icon = props => (
 		hasIconGap={ props.hasIconGap }
 		hasIconPosition={ props.hasIconPosition }
 		defaultValue={ props.defaultValue }
+		iconSizePlaceholderName="--stk-button-icon-size"
+		iconGapPlaceholderName={ props.iconGapPlaceholderName }
 	/>
 )
 
@@ -176,10 +178,13 @@ Colors.defaultProps = {
 const SizeControls = props => {
 	const {
 		attrNameTemplate = 'button%s',
+		paddingPlaceholderName = '--stk-button-padding',
 	} = props
 
 	const getAttrName = getAttributeNameFunc( attrNameTemplate )
+	const { getPlaceholder } = useBlockLayoutDefaults()
 
+	const buttonPaddingPlaceholder = getPlaceholder( paddingPlaceholderName, { single: false } )
 	return ( <>
 		{ props.hasFullWidth && (
 			<AdvancedToggleControl
@@ -193,6 +198,7 @@ const SizeControls = props => {
 			attribute={ getAttrName( 'minHeight' ) }
 			min={ 0 }
 			max={ 100 }
+			placeholder={ getPlaceholder( '--stk-button-min-height' ) }
 		/>
 		{ props.hasWidth && ! props.hasFullWidth && (
 			<AdvancedRangeControl
@@ -213,6 +219,10 @@ const SizeControls = props => {
 			sliderMin={ [ 0, 0 ] }
 			sliderMax={ [ 40, 100 ] }
 			vhMode={ true }
+			placeholderTop={ buttonPaddingPlaceholder?.top || '' }
+			placeholderRight={ buttonPaddingPlaceholder?.right || '' }
+			placeholderBottom={ buttonPaddingPlaceholder?.bottom || '' }
+			placeholderLeft={ buttonPaddingPlaceholder?.left || '' }
 			helpTooltip={ {
 				// TODO: Add a working video
 				title: __( 'Button padding', i18n ),
@@ -240,11 +250,21 @@ Size.defaultProps = {
 }
 
 const BorderControls = props => {
+	const className = useBlockAttributesContext( attributes => {
+		return attributes.className
+	} )
+	const { getPlaceholder } = useBlockLayoutDefaults()
+
+	const borderWidthPlaceholder = className === 'is-style-ghost' ? getPlaceholder( '--stk-button-ghost-border-width' ) : getPlaceholder( '--stk-button-border-width' )
+
 	return (
 		<_BorderControls
 			hasBorderRadiusHover={ false }
 			borderSelector={ props.borderSelector }
 			borderRadiusPlaceholder={ props.placeholder }
+			borderTypeValue={ getPlaceholder( '--stk-button-border-style' ) }
+			borderWidthPlaceholder={ borderWidthPlaceholder }
+			placeholderTemplate="--stk-button"
 			{ ...props }
 		/>
 	)
@@ -281,6 +301,7 @@ export const Edit = props => {
 		hasIconPosition,
 		borderRadiusPlaceholder,
 		hasFullWidth,
+		iconGapPlaceholderName,
 		...propsToPass
 	} = props
 
@@ -312,6 +333,7 @@ export const Edit = props => {
 				<Icon
 					hasIconGap={ hasIconGap }
 					hasIconPosition={ hasIconPosition }
+					iconGapPlaceholderName={ iconGapPlaceholderName }
 				/>
 			) }
 		</>
@@ -326,6 +348,7 @@ Edit.defaultProps = {
 	hasIconGap: true,
 	hasIconPosition: true,
 	hasFullWidth: false,
+	iconGapPlaceholderName: undefined,
 }
 
 Edit.Link = Link

@@ -8,6 +8,7 @@ import blockStyles from './style'
  */
 import classnames from 'classnames'
 import { i18n, version as VERSION } from 'stackable'
+import { useBlockLayoutDefaults } from '~stackable/hooks'
 import {
 	AdvancedToggleControl,
 	FourRangeControl,
@@ -162,6 +163,7 @@ const Edit = props => {
 // Inspector controls for the block, it's important that we only pass only the
 // props used by controls to prevent rerenders of all the inspector controls.
 const InspectorControls = memo( props => {
+	const { getPlaceholder } = useBlockLayoutDefaults()
 	return (
 		<>
 			<InspectorTabs />
@@ -175,7 +177,7 @@ const InspectorControls = memo( props => {
 					defaultLocked={ true }
 					min={ [ 0, 0 ] }
 					sliderMax={ [ 200, 30 ] }
-					placeholder={ props.isOnlyBlock && props.useZeroColumnSpacing ? '0' : '12' }
+					placeholder={ props.isOnlyBlock && props.useZeroColumnSpacing ? '0' : getPlaceholder( '--stk-column-margin' ) }
 					helpTooltip={ {
 						video: 'inner-block-padding',
 						description: __( 'Sets the paddings between the column content and the border.', i18n ),

@@ -21,7 +21,9 @@ import {
 	ProControl,
 } from '~stackable/components'
 import { getAttrNameFunction } from '~stackable/util'
-import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useBlockSetAttributesContext, useBlockLayoutDefaults,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -47,6 +49,7 @@ export const Edit = props => {
 		defaultValue,
 		onChangeIcon,
 		iconGapPlaceholder = '0',
+		iconSizePlaceholderName = '--stk-icon-size',
 		attrNameTemplate,
 	} = props
 
@@ -64,6 +67,7 @@ export const Edit = props => {
 		}
 	} )
 	const setAttributes = useBlockSetAttributesContext()
+	const { getPlaceholder } = useBlockLayoutDefaults()
 
 	const showIconControl = hideControlsIfIconIsNotSet ? !! attributes.icon : true
 
@@ -134,7 +138,7 @@ export const Edit = props => {
 				sliderMax={ 100 }
 				step={ 1 }
 				allowReset={ true }
-				placeholder=""
+				placeholder={ getPlaceholder( iconSizePlaceholderName ) || '' }
 				responsive={ responsive }
 				{ ...iconSizeProps }
 			/> }
@@ -178,7 +182,7 @@ export const Edit = props => {
 					min={ 0 }
 					sliderMax={ 50 }
 					allowReset={ true }
-					placeholder={ iconGapPlaceholder }
+					placeholder={ props.iconGapPlaceholderName ? getPlaceholder( props.iconGapPlaceholderName ) : iconGapPlaceholder }
 				/>
 			) }
 		</>

@@ -151,22 +151,7 @@ if ( ! class_exists( 'Stackable_Global_Block_Layouts' ) ) {
 		}
 
 		public function get_defaults( $property, $device ) {
-			$defaults = array(
-				'--stk-container-padding' => array(
-					'desktop' => array( 'top' => 32, 'right' => 32, 'bottom' => 32, 'left' => 32 ),
-					'mobile' => array( 'top' => 24, 'right' => 24, 'bottom' => 24, 'left' => 24 )
-				),
-				'--stk-block-background-padding' => array(
-					'desktop' => array( 'top' => 24, 'right' => 24, 'bottom' => 24, 'left' => 24 ),
-					'mobile' => array( 'top' => 16, 'right' => 16, 'bottom' => 16, 'left' => 16 )
-				),
-				'--stk-button-padding' => array(
-					'desktop' => array( 'top' => 12, 'right' => 16, 'bottom' => 12, 'left' => 16 ),
-				),
-				'--stk-icon-button-padding' => array(
-					'desktop' => array( 'top' => 12, 'right' => 12, 'bottom' => 12, 'left' => 12 ),
-				),
-			);
+			$defaults = json_decode( file_get_contents( plugin_dir_path( __FILE__ ) . 'defaults.json' ), true );
 
 			if ( ! isset( $defaults[ $property ] ) ) {
 				return array( 'top' => 0, 'right' => 0, 'bottom' => 0, 'left' => 0 );

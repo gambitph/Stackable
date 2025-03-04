@@ -50,6 +50,7 @@ import { useInnerBlocksProps } from '@wordpress/block-editor'
 import { dispatch, useSelect } from '@wordpress/data'
 import { addFilter } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
+import { useBlockLayoutDefaults } from '~stackable/hooks'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/icon-list-item' ]
 
@@ -234,6 +235,7 @@ const Edit = props => {
 }
 
 const InspectorControls = memo( props => {
+	const { getPlaceholder } = useBlockLayoutDefaults()
 	return (
 		<>
 			<InspectorTabs hasLayoutPanel={ false } />
@@ -298,6 +300,7 @@ const InspectorControls = memo( props => {
 						min="0"
 						sliderMax="50"
 						responsive="all"
+						placeholder={ getPlaceholder( '--stk-icon-list-row-gap' ) }
 					/>
 
 					<AdvancedRangeControl
@@ -306,7 +309,7 @@ const InspectorControls = memo( props => {
 						min="0"
 						sliderMax="20"
 						responsive="all"
-						placeholder="8"
+						placeholder={ getPlaceholder( '--stk-icon-list-icon-gap' ) }
 					/>
 
 					<AdvancedRangeControl
@@ -315,7 +318,7 @@ const InspectorControls = memo( props => {
 						min="0"
 						sliderMax="50"
 						responsive="all"
-						placeholder=""
+						placeholder={ getPlaceholder( '--stk-icon-list-indentation' ) }
 					/>
 
 				</PanelAdvancedSettings>
@@ -378,7 +381,7 @@ const InspectorControls = memo( props => {
 						step={ 1 }
 						allowReset={ true }
 						responsive="all"
-						placeholder="16"
+						placeholder={ getPlaceholder( '--stk-icon-list-size' ) }
 					/>
 
 					<AdvancedRangeControl

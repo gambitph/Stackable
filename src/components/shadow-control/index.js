@@ -129,6 +129,7 @@ const filterToValue = ( props, filters ) => {
 
 const ShadowFilterControl = props => {
 	const [ filters, setFilters ] = useState( {} )
+	const [ filtersPlaceholder, setFiltersPlaceholder ] = useState( {} )
 
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ _, controlProps ] = extractControlProps( props )
@@ -136,46 +137,53 @@ const ShadowFilterControl = props => {
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
-	useEffect( () => {
-		if ( value ) {
-			let _value = value.trim()
+	// Split string into 5 parts, the last part contains the rest of the string.
+	const splitStringIntoParts = ( str, splitTo = 5 ) => {
+		const parts = str.split( ' ' )
+		const result = []
+		for ( let i = 0; i < splitTo - 1; i++ ) {
+			if ( parts.length ) {
+				result.push( parts.shift() )
+			} else {
+				result.push( '' )
+			}
+		}
+		result.push( parts.join( ' ' ) )
+		return result
+	}
+	const updateFilters = ( __value, _filters, _setFilters, isFilter ) => {
+		if ( __value ) {
+			let _value = __value.trim()
 			if ( _value.startsWith( 'inset' ) ) {
-				filters.inset = true
+				_filters.inset = true
 				_value = _value.replace( /^inset\s*/, '' )
 			} else {
-				filters.inset = false
+				_filters.inset = false
 			}
 
-			// Split string into 5 parts, the last part contains the rest of the string.
-			function splitStringIntoParts( str, splitTo = 5 ) {
-				const parts = str.split( ' ' )
-				const result = []
-				for ( let i = 0; i < splitTo - 1; i++ ) {
-					if ( parts.length ) {
-						result.push( parts.shift() )
-					} else {
-						result.push( '' )
-					}
-				}
-				result.push( parts.join( ' ' ) )
-				return result
+			const [ horizontalOffset, verticalOffset, blur, spread, color ] = splitStringIntoParts( _value, isFilter ? 4 : 5 )
+			_filters.horizontalOffset = isNaN( parseInt( horizontalOffset ) ) ? 0 : parseInt( horizontalOffset )
+			_filters.verticalOffset = isNaN( parseInt( verticalOffset ) ) ? 0 : parseInt( verticalOffset )
+			_filters.blur = isNaN( parseInt( blur ) ) ? 0 : parseInt( blur )
+			_filters.shadowSpread = isNaN( parseInt( spread ) ) ? 0 : parseInt( spread )
+			_filters.shadowColor = color || ''
+
+			if ( isFilter ) {
+				_filters.shadowSpread = ''
+				_filters.shadowColor = spread
 			}
 
-			const [ horizontalOffset, verticalOffset, blur, spread, color ] = splitStringIntoParts( _value, props.isFilter ? 4 : 5 )
-			filters.horizontalOffset = isNaN( parseInt( horizontalOffset ) ) ? 0 : parseInt( horizontalOffset )
-			filters.verticalOffset = isNaN( parseInt( verticalOffset ) ) ? 0 : parseInt( verticalOffset )
-			filters.blur = isNaN( parseInt( blur ) ) ? 0 : parseInt( blur )
-			filters.shadowSpread = isNaN( parseInt( spread ) ) ? 0 : parseInt( spread )
-			filters.shadowColor = color || ''
-
-			if ( props.isFilter ) {
-				filters.shadowSpread = ''
-				filters.shadowColor = spread
-			}
-
-			setFilters( { ...filters } )
+			_setFilters( { ..._filters } )
 		}
+	}
+
+	useEffect( () => {
+		updateFilters( value, filters, setFilters, props.isFilter )
 	}, [ value, props.isFilter ] )
+
+	useEffect( () => {
+		updateFilters( props.placeholder, filtersPlaceholder, setFiltersPlaceholder, props.isFilter )
+	}, [ props.placeholder, props.isFilter ] )
 
 	return (
 		<Popover
@@ -206,12 +214,18 @@ const ShadowFilterControl = props => {
 							propsToPass.checked = !! filters[ filter.key ]
 						}
 
+						if ( filter.key === 'shadowColor' ) {
+							propsToPass.default = filtersPlaceholder[ filter.key ] || ''
+							propsToPass.value = filters[ filter.key ] || filtersPlaceholder[ filter.key ] || ''
+						}
+
 						return (
 							<Component
 								key={ filter.key }
 								allowReset={ true }
-								{ ...propsToPass }
 								value={ filters[ filter.key ] || '' }
+								{ ...propsToPass }
+								placeholder={ filtersPlaceholder[ filter.key ] || '' }
 								onChange={ value => {
 									const newValue = ( filter.changeCallback || ( v => v ) )( value )
 									filters[ filter.key ] = newValue
@@ -292,7 +306,7 @@ const ShadowControl = memo( props => {
 				allowReset={ true }
 				helpTooltip={ props.helpTooltip }
 				hover={ props.hover }
-				placeholder={ value === 'custom' ? __( 'Custom', i18n ) : '' }
+				placeholder={ value === 'custom' ? __( 'Custom', i18n ) : valueCallback( props.placeholder ) }
 				after={ (
 					<Button
 						className="stk-shadow-control__more-button"
@@ -312,6 +326,7 @@ const ShadowControl = memo( props => {
 					anchorRect={ buttonRef.current?.getBoundingClientRect() }
 					attribute={ props.attribute }
 					responsive={ props.responsive }
+					placeholder={ props.placeholder }
 					hover={ props.hover }
 					parentProps={ props }
 					hasInset={ props.hasInset }
