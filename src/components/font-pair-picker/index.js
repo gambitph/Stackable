@@ -32,13 +32,13 @@ const FontPairPicker = props => {
 				style={ omit( { ...headingStyles }, [ 'fontSize', 'lineHeight' ] ) }
 				className="ugb-global-settings-font-pair__label"
 			>
-				{ headingStyles?.fontFamily ? headingStyles.fontFamily : 'Theme Heading Default' }
+				{ headingStyles?.fontFamily ? headingStyles.fontFamily : __( 'Default Heading', i18n ) }
 			</span>
 			<span
 				style={ omit( { ...paragraphStyles }, [ 'fontSize', 'lineHeight' ] ) }
 				className="ugb-global-settings-font-pair__sub-label"
 			>
-				{ paragraphStyles?.fontFamily ? paragraphStyles?.fontFamily : 'Theme Body Default' }
+				{ paragraphStyles?.fontFamily ? paragraphStyles?.fontFamily : __( 'Default Body', i18n ) }
 			</span>
 		</div>
 	)
