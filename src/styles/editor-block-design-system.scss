@@ -43,7 +43,7 @@
 }
 
 // Containers
-[data-type^="stackable/"].wp-block .stk-container {
+[data-type^="stackable/"].wp-block .stk-container:not(.stk--no-padding) {
 	border-style: cssvar(container-border-style);
 	border-width: cssvar(container-border-width);
 }

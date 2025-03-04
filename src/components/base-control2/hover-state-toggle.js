@@ -94,6 +94,13 @@ const HoverStateToggle = props => {
 		}
 		return state
 	} ).map( state => {
+		if ( props.forceUpdateHoverState ) {
+			return {
+				...state,
+				hasValue: props.hasHoverStateValue?.[ state.value ] ?? false,
+			}
+		}
+
 		if ( state.value === 'normal' || ! props.attribute ) {
 			return state
 		}
@@ -118,6 +125,7 @@ HoverStateToggle.defaultProps = {
 	attribute: '',
 	hasResponsive: false, // Wether the attribute has responsive attributes (where we have hover states per device type)
 	forceUpdateHoverState: false,
+	hasHoverStateValue: undefined,
 }
 
 export default memo( HoverStateToggle )

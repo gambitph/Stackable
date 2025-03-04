@@ -105,8 +105,8 @@ if ( ! class_exists( 'Stackable_Global_Block_Layouts' ) ) {
 								'--stk-block-margin-bottom' => $number_properties,
 
 								'--stk-column-margin' => $number_properties,
-								'--stk-column-gap' => $number_properties,
-								'--stk-column-row-gap' => $number_properties,
+								'--stk-columns-column-gap' => $number_properties,
+								'--stk-columns-row-gap' => $number_properties,
 
 								'--stk-image-drop-shadow' => $string_properties,
 								'--stk-image-border-radius' => $four_range_properties,

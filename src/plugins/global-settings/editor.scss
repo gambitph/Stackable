@@ -16,3 +16,15 @@
 		}
 	}
 }
+
+.stk-reset-all-block-layout-settings {
+	border: 1px solid #000;
+	display: flex;
+	justify-self: center;
+	margin-bottom: 12px;
+}
+
+.stk-global-block-layouts-help-tooltip {
+	position: sticky;
+	top: 75px;
+}

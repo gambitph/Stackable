@@ -88,6 +88,7 @@ export const BaseControl = props => {
 								attribute={ props.attribute }
 								hasResponsive={ hasResponsive }
 								forceUpdateHoverState={ props.forceUpdateHoverState }
+								hasHoverStateValue={ props.hasHoverStateValue }
 							/>
 						) }
 					</div>
@@ -141,6 +142,12 @@ BaseControl.defaultProps = {
 	helpTooltip: EMPTY_OBJ, // If supplied, displays a help tooltip when hovering on the label.
 
 	forceUpdateHoverState: false,
+
+	// If hasHoverStateValue is supplied, it should contain the following:
+	// { hover: boolean, 'parent-hover': boolean }
+	// If 'hover' or 'parent-hover' is true, then the hover toggle will be highlighted to show that the hover state value has been set
+	hasHoverStateValue: undefined,
+
 }
 
 const AdvancedControl = props => {
@@ -195,6 +202,11 @@ AdvancedControl.defaultProps = {
 	helpTooltip: EMPTY_OBJ, // If supplied, displays a help tooltip when hovering on the label.
 
 	forceUpdateHoverState: false,
+
+	// If hasHoverStateValue is supplied, it should contain the following:
+	// { hover: boolean, 'parent-hover': boolean }
+	// If 'hover' or 'parent-hover' is true, then the hover toggle will be highlighted to show that the hover state value has been set
+	hasHoverStateValue: undefined,
 }
 
 export default AdvancedControl

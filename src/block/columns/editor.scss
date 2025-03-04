@@ -28,7 +28,7 @@
 
 .stk-block-columns > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	column-gap: var(--stk-column-gap, 0px);
-	row-gap: var(--stk-column-row-gap, 0px);
+	row-gap: var(--stk-columns-row-gap, 0px);
 }
 
 // For Firefox polyfill
