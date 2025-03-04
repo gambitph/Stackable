@@ -179,7 +179,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}
 
 	const resetStyles = selector => {
-		let newSettings
+		let newSettings = {}
 		const currentFontPair = [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
 		if ( ! isEditingFontPair && currentFontPair ) {
 			newSettings = { ...typographySettings, [ selector ]: currentFontPair.typography[ selector ] }
