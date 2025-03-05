@@ -43,9 +43,14 @@
 }
 
 // Containers
-[data-type^="stackable/"].wp-block .stk-container:not(.stk--no-padding) {
+[data-type^="stackable/"] .stk-container:not(.stk--no-background) {
 	border-style: cssvar(container-border-style);
 	border-width: cssvar(container-border-width);
+}
+
+:where(.stk-hover-parent:hover) [data-type^="stackable/"] .stk-container:not(.stk--no-background) {
+	border-width: cssvar(container-border-width-parent-hover);
+	box-shadow: cssvar(container-box-shadow-parent-hover);
 }
 
 .is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container:not(.stk--no-padding),
@@ -56,6 +61,16 @@
 .stk--is-hovered .stk-container:not(.stk--no-padding),
 .stk--is-hovered .stk-container-padding {
 	padding: cssvar(container-padding-hover);
+}
+
+.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container:not(.stk--no-background) {
+	box-shadow: cssvar(container-box-shadow-parent-hover);
+	border-width: cssvar(container-border-width-parent-hover);
+}
+
+.stk--is-hovered .stk-container:not(.stk--no-background) {
+	box-shadow: cssvar(container-box-shadow-hover);
+	border-width: cssvar(container-border-width-hover);
 }
 
 // Block Backgrounds
