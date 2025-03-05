@@ -203,7 +203,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		const typographyStyle = typographySettings[ selector ]
 		if ( ! isEditingFontPair && currentFontPair ) {
 			const fontPairStyle = currentFontPair.typography[ selector ]
-			if ( ! isEqual( fontPairStyle, typographyStyle ) ) {
+			if ( ! isEqual( fontPairStyle, typographyStyle ) && ! Array.isArray( typographyStyle ) ) {
 				return true
 			}
 			return false
