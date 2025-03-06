@@ -11,7 +11,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrNameTemplate = '%s',
 		hoverSelector,
 		borderRadiusSelector,
-		borderEnabledCallback = getAttribute => getAttribute( 'borderType' ),
+		borderEnabledCallback = getAttribute => getAttribute( 'borderType' ) !== '' && getAttribute( 'borderType' ) !== 'none',
 	} = props
 
 	// The style below is deprecated. We have to keep it because users who have

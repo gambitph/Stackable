@@ -36,6 +36,25 @@ export const BORDER_CONTROLS = [
 	},
 ]
 
+const BORDER_CONTROLS_WITH_NONE_VALUE = [
+	{
+		value: 'none',
+		title: __( 'None', i18n ),
+	},
+	{
+		value: 'solid',
+		title: __( 'Solid', i18n ),
+	},
+	{
+		value: 'dashed',
+		title: __( 'Dashed', i18n ),
+	},
+	{
+		value: 'dotted',
+		title: __( 'Dotted', i18n ),
+	},
+]
+
 export const BorderControls = props => {
 	const {
 		getAttribute,
@@ -47,6 +66,10 @@ export const BorderControls = props => {
 
 	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
 
+	const hasBorderType = borderTypeValue !== '' && borderTypeValue !== 'none'
+
+	const borderControls = getPlaceholder( `${ props.placeholderTemplate }-border-style` ) !== '' ? BORDER_CONTROLS_WITH_NONE_VALUE : BORDER_CONTROLS
+
 	applyFilters( 'stackable.block-component.helpers.borders', null, getAttribute, updateAttributes )
 
 	return (
@@ -54,7 +77,7 @@ export const BorderControls = props => {
 			{ props.hasBorderType &&
 				<AdvancedToolbarControl
 					label={ __( 'Borders', i18n ) }
-					controls={ BORDER_CONTROLS }
+					controls={ borderControls }
 					className="ugb-border-controls__border-type-toolbar"
 					attribute={ getAttrName( 'borderType' ) }
 					fullwidth={ true }
@@ -63,7 +86,7 @@ export const BorderControls = props => {
 				/>
 			}
 
-			{ borderTypeValue && props.hasBorderControls &&
+			{ hasBorderType && props.hasBorderControls &&
 				<FourRangeControl
 					label={ __( 'Border Width', i18n ) }
 					attribute={ getAttrName( 'borderWidth' ) }
@@ -78,7 +101,7 @@ export const BorderControls = props => {
 				/>
 			}
 
-			{ borderTypeValue && props.hasBorderControls &&
+			{ hasBorderType && props.hasBorderControls &&
 				<ColorPaletteControl
 					label={ __( 'Border Color', i18n ) }
 					attribute={ getAttrName( 'borderColor' ) }
