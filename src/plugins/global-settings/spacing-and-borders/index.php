@@ -96,7 +96,7 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 		public function add_global_spacing_and_borders_styles( $current_css ) {
 			$defaults = json_decode( file_get_contents( plugin_dir_path( __FILE__ ) . 'defaults.json' ), true );
 
-			$generated_css = Stackable_Global_Settings::generate_global_block_styles( 'stackable_global_spacing_and_borders', 'Global Spacing and Borders', $defaults );
+			$generated_css = Stackable_Global_Settings::generate_global_block_layouts( 'stackable_global_spacing_and_borders', 'Global Spacing and Borders', $defaults );
 
 			if ( ! $generated_css ) {
 				return $current_css;

@@ -875,7 +875,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @param String $current_css
 		 * @return String
 		 */
-		public static function generate_global_block_styles( $option_name, $settings_name, $defaults ) {
+		public static function generate_global_block_layouts( $option_name, $settings_name, $defaults ) {
 			$block_layouts = get_option( $option_name );
 
 			if ( ! $block_layouts || ! is_array( $block_layouts ) ) {
@@ -892,10 +892,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			);
 
 			foreach ( $block_layouts as $property => $values ) {
-				$states = array_filter( $values, array( 'Stackable_Global_Settings', 'get_block_style_states' ), ARRAY_FILTER_USE_KEY );
+				$states = array_filter( $values, array( 'Stackable_Global_Settings', 'get_block_layout_states' ), ARRAY_FILTER_USE_KEY );
 
 				foreach ( $states as $state => $value ) {
-					$unit = Stackable_Global_Settings::get_block_style_unit( $block_layouts, $property, $state );
+					$unit = Stackable_Global_Settings::get_block_layout_unit( $block_layouts, $property, $state );
 
 					$device = strpos( $state, 'desktop' ) !== false ? 'desktop' : ( strpos( $state, 'tablet' ) !== false ? 'tablet' : 'mobile' );
 					$hover_state = strpos( $state, 'ParentHover' ) !== false ? 'parent-hover' : ( strpos( $state, 'Hover' ) !== false ? 'hover' : 'normal' );
@@ -909,7 +909,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					if ( is_string( $value ) ) {
 						$style = $value;
 					} else if ( is_array( $value ) ) {
-						$default_value = Stackable_Global_Settings::get_block_style_defaults( $defaults, $property, $device );
+						$default_value = Stackable_Global_Settings::get_block_layout_defaults( $defaults, $property, $device );
 						$top = isset( $value[ 'top' ] ) ? $value[ 'top' ] : $default_value[ 'top' ];
 						$right = isset( $value[ 'right' ] ) ? $value[ 'right' ] : $default_value[ 'right' ];
 						$bottom = isset( $value[ 'bottom' ] ) ? $value[ 'bottom' ] : $default_value[ 'bottom' ];
@@ -958,15 +958,15 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			return $generated_css;
 		}
 
-		public static function get_block_style_unit( $block_styles, $property, $state ) {
-			return $block_styles[ $property ][ $state . 'Unit' ] ?? 'px';
+		public static function get_block_layout_unit( $block_layouts, $property, $state ) {
+			return $block_layouts[ $property ][ $state . 'Unit' ] ?? 'px';
 		}
 
-		public static function get_block_style_states( $state ) {
+		public static function get_block_layout_states( $state ) {
 			return strpos( $state, 'Unit' ) === false;
 		}
 
-		public static function get_block_style_defaults( $defaults, $property, $device ) {
+		public static function get_block_layout_defaults( $defaults, $property, $device ) {
 			if ( ! isset( $defaults[ $property ] ) ) {
 				return '';
 			}
