@@ -499,12 +499,14 @@ if ( ! function_exists( 'stackable_check_block_animation' ) ) {
 			return $block_content;
 		}
 
+		$has_global_animations = apply_filters( 'stackable_has_global_animations', false );
+
 		if ( strpos( $block_content, ':hover' ) !== false || // Hover effects
 			 strpos( $block_content, '--entrance-' ) !== false || // Entrance animations
 			 strpos( $block_content, 'stk-anim' ) !== false || // Scroll animations
 			 strpos( $block_content, '--stk-tran' ) !== false || // Transition duration
-			 strpos( $block_content, 'stk-entrance' ) !== false // Entrance class
-
+			 strpos( $block_content, 'stk-entrance' ) !== false || // Entrance class
+			$has_global_animations !== false // Global block layouts has hover effects
 		) {
 			// Adds a special class to the body tag, to indicate we can now run animations.
 			add_action( 'wp_footer', 'stackable_init_animations' );

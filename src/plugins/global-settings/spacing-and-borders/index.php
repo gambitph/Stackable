@@ -102,6 +102,12 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 				return $current_css;
 			}
 
+			if ( strpos( $generated_css, 'hover' ) !== false ) {
+				add_filter( 'stackable_has_global_animations', function( $has_global_animations ) {
+					return true;
+				} );
+			}
+
 			$current_css .= $generated_css;
 			return apply_filters( 'stackable_global_frontend_css' , $current_css );
 		}
