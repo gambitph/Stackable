@@ -1,4 +1,6 @@
 
+import { select } from '@wordpress/data'
+
 export const STATES = {
 	ALL: {
 		responsive: true, hover: true, unit: false,
@@ -41,4 +43,23 @@ export const getDefault = ( defaults, property, device ) => {
 	return defaultValue ?? ( {
 		top: 0, right: 0, bottom: 0, left: 0,
 	} )
+}
+
+export const getBlockLayoutDefault = ( property, device = 'desktop' ) => {
+	const spacingAndBorders = select( 'stackable/global-spacing-and-borders' ).getBlockLayouts()
+	const buttonsAndIcons = select( 'stackable/global-buttons-and-icons' ).getBlockLayouts()
+
+	const blockLayouts = { ...spacingAndBorders, ...buttonsAndIcons }
+
+	let defaultValue = blockLayouts?.[ property ]?.[ device ]
+
+	if ( device === 'mobile' && ! defaultValue ) {
+		defaultValue = blockLayouts[ property ].tablet
+	}
+
+	if ( ( device === 'mobile' || device === 'tablet' ) && ! defaultValue ) {
+		defaultValue = blockLayouts[ property ].desktop
+	}
+
+	return defaultValue || ''
 }

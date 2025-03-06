@@ -210,6 +210,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		hoverSelector: borderHoverSelector,
 		borderRadiusSelector: selector,
 		attrNameTemplate,
+		borderTypeGlobalProperty: '--stk-button-border-style',
 	} )
 
 	Icon.addStyles( blockStyleGenerator, {
