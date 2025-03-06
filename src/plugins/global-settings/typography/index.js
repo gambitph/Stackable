@@ -10,7 +10,7 @@ import FONT_PAIRS from './font-pairs.json'
  * External dependencies
  */
 import {
-	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControl,
+	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControlButton,
 } from '~stackable/components'
 import { fetchSettings } from '~stackable/util'
 import {
@@ -341,7 +341,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 								/>
 							} ) }
 						</div>
-						{ showProNotice && <ProControl type="font-pairs" /> }
+						{ showProNotice && <ProControlButton type="font-pairs" /> }
 						<ControlSeparator />
 
 						<h3>{ __( 'Typography Settings' ) }</h3>

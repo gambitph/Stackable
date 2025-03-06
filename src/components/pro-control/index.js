@@ -118,10 +118,10 @@ const LABELS = {
 		</ul>,
 	},
 	'font-pairs': {
-		title: __( 'Customize Font Pairs', i18n ),
+		title: __( 'Add Your Own Font Pairs', i18n ),
 		description: <ul>
 			<li>{ __( 'Add your own custom Font Pairs', i18n ) }</li>
-			<li>{ __( 'Edit custom Font Pairs based on the selected preset', i18n ) }</li>
+			<li>{ __( 'Manage your custom Font Pairs', i18n ) }</li>
 		</ul>,
 	},
 }
