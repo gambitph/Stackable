@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getDefault } from './utils'
+import { getDefault } from './block-layout-utils'
 
 /**
  * WordPress dependencies
@@ -15,7 +15,16 @@ import { useEffect, useState } from '@wordpress/element'
 import { compact } from 'lodash'
 import { useBlockHoverState } from '~stackable/hooks'
 
-const renderGlobalStyles = ( blockLayouts, setStyles, currentHoverState, blockUniqueId, parentHoverBlock, breakDesktop = 1024, breakTablet = 768 ) => {
+const renderGlobalStyles = (
+	blockLayouts,
+	blockLayoutDefaults,
+	setStyles,
+	currentHoverState,
+	blockUniqueId,
+	parentHoverBlock,
+	breakDesktop = 1024,
+	breakTablet = 768
+) => {
 	if ( Object.keys( blockLayouts ).length === 0 ) {
 		setStyles( '' )
 		return
@@ -45,7 +54,7 @@ const renderGlobalStyles = ( blockLayouts, setStyles, currentHoverState, blockUn
 		if ( typeof value === 'string' ) {
 			style = `${ property }: ${ value };`
 		} else if ( typeof value === 'object' ) {
-			const defaultValue = getDefault( _property, device )
+			const defaultValue = getDefault( blockLayoutDefaults, _property, device )
 			const top = value.top !== undefined ? value.top : defaultValue.top
 			const right = value.right !== undefined ? value.right : defaultValue.right
 			const bottom = value.bottom !== undefined ? value.bottom : defaultValue.bottom
@@ -98,15 +107,13 @@ const renderGlobalStyles = ( blockLayouts, setStyles, currentHoverState, blockUn
 	setStyles( css )
 }
 
-export const GlobalBlockLayoutStyles = () => {
+export const useBlockLayoutEditorLoader = ( storeName, blockLayoutDefaults ) => {
 	const {
 		blockLayouts, selectedBlockUniqueId, SelectedParentHoverBlock,
 	} = useSelect( select => ( {
-		blockLayouts: select( 'stackable/global-block-layouts' ).getBlockLayouts() || [],
+		blockLayouts: select( storeName ).getBlockLayouts() || [],
 		selectedBlockUniqueId: select( 'core/block-editor' ).getSelectedBlock()?.attributes?.uniqueId,
 		SelectedParentHoverBlock: select( 'stackable/hover-state' ).getSelectedParentHoverBlock(),
-		SelectedParentHoverBlockChildren: select( 'stackable/hover-state' ).getSelectedParentHoverBlockChildren(),
-		SelectedHoverChildren: select( 'stackable/hover-state' ).getSelectedHoverChildren(),
 	} ), [] )
 
 	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
@@ -114,7 +121,14 @@ export const GlobalBlockLayoutStyles = () => {
 
 	useEffect( () => {
 		if ( blockLayouts && typeof blockLayouts === 'object' ) {
-			renderGlobalStyles( blockLayouts, setStyles, currentHoverState, selectedBlockUniqueId, SelectedParentHoverBlock )
+			renderGlobalStyles(
+				blockLayouts,
+				blockLayoutDefaults,
+				setStyles,
+				currentHoverState,
+				selectedBlockUniqueId,
+				SelectedParentHoverBlock,
+			)
 		}
 	}, [ blockLayouts, currentHoverState, SelectedParentHoverBlock ] )
 

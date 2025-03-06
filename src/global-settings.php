@@ -3,6 +3,8 @@
  * Global Settings data handling.
  */
 
+use Blocksy\CustomPostType\Integrations\Stackable;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -88,6 +90,58 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				// Add our global typography styles in the frontend only.
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
 			}
+		}
+
+		public static function create_global_schema( $type ) {
+			return array(
+				'type' => 'object',
+				'properties' => array(
+					'desktop' => $type,
+					'tablet' => $type,
+					'mobile' => $type,
+					'desktopHover' => $type,
+					'tabletHover' => $type,
+					'mobileHover' => $type,
+					'desktopParentHover' => $type,
+					'tabletParentHover' => $type,
+					'mobileParentHover' => $type,
+					'desktopUnit' => array( 'type' => 'string' ),
+					'tabletUnit' => array( 'type' => 'string' ),
+					'mobileUnit' => array( 'type' => 'string' ),
+					'desktopHoverUnit' => array( 'type' => 'string' ),
+					'tabletHoverUnit' => array( 'type' => 'string' ),
+					'mobileHoverUnit' => array( 'type' => 'string' ),
+					'desktopParentHoverUnit' => array( 'type' => 'string' ),
+					'tabletParentHoverUnit' => array( 'type' => 'string' ),
+					'mobileParentHoverUnit' => array( 'type' => 'string' ),
+				)
+			);
+		}
+
+		public static function get_four_range_properties() {
+			$four_range_type  = array(
+				'type' => 'object',
+				'properties' => array(
+					'top' => array( 'type' => 'number', 'default' => '' ),
+					'right' => array( 'type' => 'number', 'default' => '' ),
+					'bottom' => array( 'type' => 'number', 'default' => '' ),
+					'left' => array( 'type' => 'number', 'default' => '' ),
+				)
+			);
+
+			return Stackable_Global_Settings::create_global_schema( $four_range_type );
+		}
+
+		public static function get_string_properties() {
+			$string_type = array( 'type' => 'string' );
+
+			return Stackable_Global_Settings::create_global_schema( $string_type );
+		}
+
+		public static function get_number_properties() {
+			$number_type = array( 'type' => 'number' );
+
+			return Stackable_Global_Settings::create_global_schema( $number_type );
 		}
 
 		/**
@@ -811,6 +865,121 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			return $selectors;
 		}
+
+		/**-----------------------------------------------------------------------------
+		 * Block Layouts functions
+		 *-----------------------------------------------------------------------------*/
+		/**
+		 * Generate CSS for:
+		 *  - Global Spacing and Borders
+		 *  - Global Buttons and Icons
+		 *
+		 * @param String $current_css
+		 * @return String
+		 */
+		public static function generate_global_block_styles( $option_name, $settings_name, $defaults ) {
+			$block_layouts = get_option( $option_name );
+
+			if ( ! $block_layouts || ! is_array( $block_layouts ) ) {
+				return false;
+			}
+
+			$tablet_breakpoint = 1023;
+			$mobile_breakpoint = 767;
+
+			$css = array(
+				'desktop' => array(),
+				'tablet' => array(),
+				'mobile' => array(),
+			);
+
+			foreach ( $block_layouts as $property => $values ) {
+				$states = array_filter( $values, array( 'Stackable_Global_Settings', 'get_block_style_states' ), ARRAY_FILTER_USE_KEY );
+
+				foreach ( $states as $state => $value ) {
+					$unit = Stackable_Global_Settings::get_block_style_unit( $block_layouts, $property, $state );
+
+					$device = strpos( $state, 'desktop' ) !== false ? 'desktop' : ( strpos( $state, 'tablet' ) !== false ? 'tablet' : 'mobile' );
+					$hover_state = strpos( $state, 'ParentHover' ) !== false ? 'parent-hover' : ( strpos( $state, 'Hover' ) !== false ? 'hover' : 'normal' );
+
+					$custom_property = $property;
+
+					if ( $hover_state !== 'normal' ) {
+						$custom_property .= '-' . $hover_state;
+					}
+
+					if ( is_string( $value ) ) {
+						$style = $value;
+					} else if ( is_array( $value ) ) {
+						$default_value = Stackable_Global_Settings::get_block_style_defaults( $defaults, $property, $device );
+						$top = isset( $value[ 'top' ] ) ? $value[ 'top' ] : $default_value[ 'top' ];
+						$right = isset( $value[ 'right' ] ) ? $value[ 'right' ] : $default_value[ 'right' ];
+						$bottom = isset( $value[ 'bottom' ] ) ? $value[ 'bottom' ] : $default_value[ 'bottom' ];
+						$left = isset( $value[ 'left' ] ) ? $value[ 'left' ] : $default_value[ 'left' ];
+
+						$style = $top . $unit . ' ' . $right . $unit . ' ' .  $bottom . $unit . ' ' .  $left  . $unit;
+					} else {
+						$style = $value . $unit;
+					}
+
+					$css[ $device ][ $custom_property ] = $style;
+				}
+			}
+
+			$styles = array();
+			$generated_css = '';
+
+			if ( ! empty( $css[ 'desktop' ] ) || ! empty( $css[ 'tablet' ] ) || ! empty( $css[ 'mobile' ] ) ) {
+				$generated_css .= "\n/* " . $settings_name . " */\n";
+			}
+
+			if ( ! empty( $css['desktop'] ) ) {
+				$styles[] = array(
+						'selector'     => ':root',
+						'declarations' => $css[ 'desktop' ]
+				);
+			}
+
+			if ( ! empty( $css['tablet'] ) ) {
+				$styles[] = array(
+						'rules_group'  => '@media (max-width:' . $tablet_breakpoint .'px)',
+						'selector'     => ':root',
+						'declarations' => $css[ 'tablet' ]
+				);
+			}
+
+			if ( ! empty( $css['mobile'] ) ) {
+				$styles[] = array(
+					'rules_group'  => '@media (max-width:' . $mobile_breakpoint .'px)',
+					'selector'     => ':root',
+					'declarations' => $css[ 'mobile' ]
+				);
+			}
+
+			$generated_css .= wp_style_engine_get_stylesheet_from_css_rules( $styles );
+			return $generated_css;
+		}
+
+		public static function get_block_style_unit( $block_styles, $property, $state ) {
+			return $block_styles[ $property ][ $state . 'Unit' ] ?? 'px';
+		}
+
+		public static function get_block_style_states( $state ) {
+			return strpos( $state, 'Unit' ) === false;
+		}
+
+		public static function get_block_style_defaults( $defaults, $property, $device ) {
+			if ( ! isset( $defaults[ $property ] ) ) {
+				return '';
+			}
+
+			if ( ! isset( $defaults[ $property ][ $device ] ) ) {
+				return $defaults[ $property ][ 'desktop' ];
+			}
+
+			return $defaults[ $property ][ $device ];
+		}
+
 	}
 
 	new Stackable_Global_Settings();

@@ -42,7 +42,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 	}
 }
 
-register( createReduxStore( 'stackable/global-block-layouts', {
+register( createReduxStore( 'stackable/global-spacing-and-borders', {
 	reducer: STORE_REDUCER,
 	actions: STORE_ACTIONS,
 	selectors: STORE_SELECTORS,
@@ -52,10 +52,10 @@ register( createReduxStore( 'stackable/global-block-layouts', {
 domReady( () => {
 	fetchSettings().then( response => {
 		const {
-			stackable_global_block_layouts: _blockLayouts,
+			stackable_global_spacing_and_borders: _blockLayouts,
 		} = response
 		const blockLayouts = _blockLayouts || []
 
-		dispatch( 'stackable/global-block-layouts' ).updateBlockLayouts( blockLayouts )
+		dispatch( 'stackable/global-spacing-and-borders' ).updateBlockLayouts( blockLayouts )
 	} )
 } )

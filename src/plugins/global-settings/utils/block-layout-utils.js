@@ -1,6 +1,4 @@
 
-import blockLayoutDefaults from './defaults.json'
-
 export const STATES = {
 	ALL: {
 		responsive: true, hover: true, unit: false,
@@ -37,14 +35,7 @@ export const LayoutSettings = props => {
 	</>
 }
 
-export const getBlockLayoutDefaults = () => {
-	const blockLayouts = { ...blockLayoutDefaults }
-	return blockLayouts
-}
-
-export const getDefault = ( property, device ) => {
-	const defaults = getBlockLayoutDefaults()
-
+export const getDefault = ( defaults, property, device ) => {
 	const defaultValue = defaults[ property ]?.[ device ] ?? defaults[ property ]?.desktop
 
 	return defaultValue ?? ( {

@@ -1,5 +1,6 @@
 import { useSelect } from '@wordpress/data'
-import { getBlockLayoutDefaults } from '~stackable/plugins/global-settings/block-layouts/utils'
+import defaultButtonsAndIcons from '~stackable/plugins/global-settings/buttons-and-icons/defaults.json'
+import defaultSpacingAndBorders from '~stackable/plugins/global-settings/spacing-and-borders/defaults.json'
 /**
  * Provides a function to get the placeholder for block componets from block layout settings.
  *
@@ -7,11 +8,12 @@ import { getBlockLayoutDefaults } from '~stackable/plugins/global-settings/block
  */
 export const useBlockLayoutDefaults = () => {
 	const { blockLayouts } = useSelect( select => {
-		const _blockLayouts = select( 'stackable/global-block-layouts' ).getBlockLayouts()
-		return { blockLayouts: { ..._blockLayouts } }
+		const spacingAndBorders = select( 'stackable/global-spacing-and-borders' ).getBlockLayouts()
+		const buttonsAndIcons = select( 'stackable/global-buttons-and-icons' ).getBlockLayouts()
+		return { blockLayouts: { ...spacingAndBorders, ...buttonsAndIcons } }
 	}, [] )
 
-	const defaults = getBlockLayoutDefaults()
+	const defaults = { ...defaultSpacingAndBorders, ...defaultButtonsAndIcons }
 
 	const HoverStates = {
 		normal: '',
