@@ -3,8 +3,6 @@
  * Global Settings data handling.
  */
 
-use Blocksy\CustomPostType\Integrations\Stackable;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
