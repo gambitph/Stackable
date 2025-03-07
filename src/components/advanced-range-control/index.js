@@ -103,8 +103,14 @@ const AdvancedRangeControl = props => {
 		placeholderRender = null
 	}
 
-	// Is value at first render the same as a step value?
-	const isMarkValue = props.marks && true
+	// Is value at first render the same as a step value? If so, do mark mode
+	// at the start, or show custom
+	let isMarkValue = !! props.marks
+	if ( props.marks && value ) {
+		const valueToCheck = value + unit
+		// Check if the current value exsits in the marks
+		isMarkValue = isMarkValue && props.marks.some( mark => mark.value === valueToCheck )
+	}
 	const [ isMarkMode, setIsMarkMode ] = useState( isMarkValue )
 
 	// If this supports dynamic content, then the value should be saved as a String.
@@ -112,18 +118,6 @@ const AdvancedRangeControl = props => {
 	const _onChange = value => {
 		const onChangeFunc = typeof props.onChange === 'undefined' ? onChange : props.onChange
 		let newValue = props.isDynamic ? value.toString() : value
-
-		// Support for steps. For steps, the value is an index, but the actual value is in the marks.
-		if ( newValue !== '' && isMarkMode && props.marks ) {
-			// Extract the unit and value.
-			const markValue = props.marks[ value ]?.value || '0'
-			const [ _newValue, unit ] = extractNumberAndUnit( markValue )
-			newValue = _newValue
-
-			// Update the unit.
-			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-			setAttributes( { [ unitAttrName ]: unit } )
-		}
 
 		// On reset, allow overriding the value.
 		if ( newValue === '' ) {
@@ -167,6 +161,7 @@ const AdvancedRangeControl = props => {
 
 		// Other necessary props for steps.
 		propsToPass.withInputField = false
+		controlProps.units = false
 	} else {
 		propsToPass.marks = undefined
 	}
@@ -177,8 +172,30 @@ const AdvancedRangeControl = props => {
 		controlProps.className += isMarkMode ? ' stk-range-control--mark-mode' : ''
 	}
 
+	// We need to change the way we handle the value and onChange if we're doing marks
+	let rangeValue = propsToPass.isDynamic ? parseFloat( derivedValue ) : derivedValue
+	let rangeOnChange = _onChange
 	if ( isMarkMode ) {
-		controlProps.units = false
+		rangeValue = props.marks.findIndex( mark => {
+			const [ _value, _unit ] = extractNumberAndUnit( mark.value )
+			return _value === derivedValue
+		} )
+		rangeOnChange = value => {
+			if ( value === '' ) {
+				return _onChange( value )
+			}
+
+			// Extract the unit and value.
+			const markValue = props.marks[ value ]?.value || '0'
+			const [ _newValue, unit ] = extractNumberAndUnit( markValue )
+			const newValue = _newValue
+
+			// Update the unit.
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			setAttributes( { [ unitAttrName ]: unit } )
+
+			_onChange( newValue )
+		}
 	}
 
 	return (
@@ -190,8 +207,8 @@ const AdvancedRangeControl = props => {
 			>
 				<RangeControl
 					{ ...propsToPass }
-					value={ propsToPass.isDynamic ? parseFloat( derivedValue ) : derivedValue }
-					onChange={ _onChange }
+					value={ rangeValue }
+					onChange={ rangeOnChange }
 					allowReset={ false }
 					placeholderRender={ placeholderRender }
 					__nextHasNoMarginBottom
