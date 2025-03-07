@@ -46,4 +46,29 @@
 	.components-number-control {
 		width: unset;
 	}
+
+	// For displaying marks
+	.components-range-control__thumb-wrapper {
+		z-index: 2;
+	}
+	.components-range-control__mark {
+		background: var(--stk-skin-bg-default) !important;
+		z-index: 1;
+		transform: translateX(-50%);
+		width: 3px;
+	}
+	.components-range-control__root {
+		min-height: 35px;
+	}
+	.stk-range-control__custom-button {
+		margin-inline-start: 8px;
+		top: -1px;
+		position: relative;
+	}
+}
+.stk-range-control--with-marks.stk-range-control--mark-mode .components-range-control__wrapper {
+	margin-inline-end: 8px;
+}
+.stk-range-control--with-marks.stk-range-control--mark-mode .components-range-control__wrapper:first-child:last-child {
+	top: -1px;
 }
