@@ -165,6 +165,7 @@ export const Controls = props => {
 					label={ __( 'Font Family', i18n ) }
 					onChange={ updateAttributeHandler( 'fontFamily' ) }
 					value={ getAttribute( 'fontFamily' ) }
+					placeholder="Theme Default"
 					helpTooltip={ {
 						video: 'typography-family',
 						description: __( 'Sets the font set to be used for the element', i18n ),
