@@ -44,7 +44,7 @@ const FontFamilyControl = props => {
 				id: 'modern-font-stacks',
 				title: __( 'Modern Font Stacks', i18n ),
 				options: [
-					{ label: __( 'System UI', i18n ), value: 'System-Ui' },
+					{ label: __( 'System UI', i18n ), value: 'System-UI' },
 					{ label: __( 'Transitional', i18n ), value: 'Transitional' },
 					{ label: __( 'Old Style', i18n ), value: 'Old-Style' },
 					{ label: __( 'Humanist', i18n ), value: 'Humanist' },
