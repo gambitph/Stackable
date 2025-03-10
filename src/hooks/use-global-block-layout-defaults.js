@@ -51,6 +51,7 @@ export const useBlockLayoutDefaults = () => {
 	}
 
 	return {
+		blockLayouts,
 		getPlaceholder,
 		getDefaults,
 	}

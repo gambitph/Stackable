@@ -14,7 +14,9 @@ import {
  */
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { useAttributeEditHandlers, useBlockLayoutDefaults } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers, useBlockLayoutDefaults, useBlockSetAttributesContext,
+} from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
 
 export const BORDER_CONTROLS = [
@@ -62,11 +64,8 @@ export const BorderControls = props => {
 		updateAttributes,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
-	const { getPlaceholder } = useBlockLayoutDefaults()
-
-	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
-
-	const hasBorderType = borderTypeValue !== '' && borderTypeValue !== 'none'
+	const setAttributes = useBlockSetAttributesContext()
+	const { blockLayouts, getPlaceholder } = useBlockLayoutDefaults()
 
 	const borderControls = getPlaceholder( `${ props.placeholderTemplate }-border-style` ) !== '' ? BORDER_CONTROLS_WITH_NONE_VALUE : BORDER_CONTROLS
 
@@ -86,7 +85,7 @@ export const BorderControls = props => {
 				/>
 			}
 
-			{ hasBorderType && props.hasBorderControls &&
+			{ props.hasBorderControls &&
 				<FourRangeControl
 					label={ __( 'Border Width', i18n ) }
 					attribute={ getAttrName( 'borderWidth' ) }
@@ -98,10 +97,21 @@ export const BorderControls = props => {
 					sliderMax={ 5 }
 					defaultLocked={ true }
 					placeholder={ props.borderWidthPlaceholder || getPlaceholder( `${ props.placeholderTemplate }-border-width` ) }
+					changeCallback={ value => {
+						const hasValue = value?.top || value?.right || value?.bottom || value?.left
+						const borderStyleProperty = `${ props.placeholderTemplate }-border-style`
+
+						// Set borderType to 'solid' if no borderType is selected and no global border settings is set
+						if ( hasValue && ! ( getAttribute( 'borderType' ) ) && ! blockLayouts?.[ borderStyleProperty ] ) {
+							setAttributes( { [ getAttrName( 'borderType' ) ]: 'solid' } )
+						}
+
+						return value
+					} }
 				/>
 			}
 
-			{ hasBorderType && props.hasBorderControls &&
+			{ props.hasBorderControls &&
 				<ColorPaletteControl
 					label={ __( 'Border Color', i18n ) }
 					attribute={ getAttrName( 'borderColor' ) }
