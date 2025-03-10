@@ -109,7 +109,7 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 			}
 
 			$current_css .= $generated_css;
-			return apply_filters( 'stackable_global_frontend_css' , $current_css );
+			return apply_filters( 'stackable_frontend_css' , $current_css );
 		}
 	}
 

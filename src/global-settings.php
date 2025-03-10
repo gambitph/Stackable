@@ -595,8 +595,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		public function generate_typography_styles( $selector, $styles ) {
 			$inherit = true;
 			$inherit_max = 50;
-			$tablet_breakpoint = 1025;
-			$mobile_breakpoint = 768;
+			$tablet_breakpoint = 1023;
+			$mobile_breakpoint = 767;
 
 			// Create desktop styles.
 			$css = array(

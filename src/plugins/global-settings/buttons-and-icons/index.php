@@ -108,7 +108,7 @@ if ( ! class_exists( 'Stackable_Global_Buttons_And_Icons' ) ) {
 			}
 
 			$current_css .= $generated_css;
-			return apply_filters( 'stackable_global_frontend_css' , $current_css );
+			return apply_filters( 'stackable_frontend_css' , $current_css );
 		}
 	}
 
