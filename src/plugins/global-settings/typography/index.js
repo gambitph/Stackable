@@ -234,7 +234,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		if ( isDirty ) {
 		// eslint-disable-next-line no-alert
-			const confirmChange = window.confirm( __( 'Changing font pair will override the previous changes. Do you want to proceed?', i18n ) )
+			const confirmChange = window.confirm( __( 'Picking a new font pair will overwrite the existing typography settings. Are you sure?', i18n ) )
 			return confirmChange
 		}
 		return true
