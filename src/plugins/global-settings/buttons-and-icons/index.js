@@ -76,10 +76,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 				</span>
 				}
 				<p className="components-base-control__help">
-					{ __( 'Manage how Stackable blocks look when they\'re inserted.', i18n ) }
+					{ __( 'Globally style buttons and icons across all our blocks.', i18n ) }
 					&nbsp;
-					<a href="https://docs.wpstackable.com/article/480-how-to-use-block-defaults?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
-						{ __( 'Learn more about Block Defaults', i18n ) }
+					<a href="https://docs.wpstackable.com/article/648-how-to-use-global-styles?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+						{ __( 'Learn more about Global Styles', i18n ) }
 					</a>
 				</p>
 				<Button
@@ -268,7 +268,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 
 				<LayoutSettings
 					title={ __( 'Icon Buttons', i18n ) }
-					description={ __( 'These are additional settings that apply to Icon Button Blocks.', i18n ) }
+					description={ __( 'Additional settings that apply to Icon Button Blocks.', i18n ) }
 				>
 					<FourRangeControl
 						label={ __( ' Button Padding', i18n ) }

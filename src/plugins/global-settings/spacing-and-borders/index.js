@@ -77,10 +77,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 				</span>
 				}
 				<p className="components-base-control__help">
-					{ __( 'Manage how Stackable blocks look when they\'re inserted.', i18n ) }
+					{ __( 'Globally style spacings and borders across all our blocks.', i18n ) }
 					&nbsp;
-					<a href="https://docs.wpstackable.com/article/480-how-to-use-block-defaults?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
-						{ __( 'Learn more about Block Defaults', i18n ) }
+					<a href="https://docs.wpstackable.com/article/648-how-to-use-global-styles?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+						{ __( 'Learn more about Global Styles', i18n ) }
 					</a>
 				</p>
 				<Button
@@ -102,12 +102,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 
 				<LayoutSettings
 					title={ __( 'Margins', i18n ) }
-					description={ __( 'These styles are applied to all Stackable Blocks.', i18n ) }
+					description={ __( 'These styles are applied to all our Blocks.', i18n ) }
 				>
 					<AdvancedRangeControl
 						label={ __( 'Block Margin Bottom', i18n ) }
 						responsive="all"
-						sliderMin={ [ -50, -50 ] }
+						sliderMin={ [ 0, 0 ] }
 						sliderMax={ [ 200, 100 ] }
 						placeholder="24"
 						units={ [ 'px', '%' ] }
@@ -126,7 +126,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 
 				<LayoutSettings
 					title={ __( 'Columns', i18n ) }
-					description={ __( 'These styles are applied to blocks with Inner Columns.', i18n ) }
+					description={ __( 'These styles are applied to Inner Column blocks.', i18n ) }
 				>
 					<AdvancedRangeControl
 						label={ __( ' Inner Column Spacing', i18n ) }
@@ -179,8 +179,95 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 				</LayoutSettings>
 
 				<LayoutSettings
-					title={ __( 'Container', i18n ) }
-					description={ __( 'These styles are applied to blocks with their Layout Tab > Container option turned on.', i18n ) }
+					title={ __( 'Background', i18n ) }
+					description={ __( 'These styles are applied to blocks that have the "Background" option enabled in the Style Tab.', i18n ) }
+				>
+					<FourRangeControl
+						label={ __( 'Padding', i18n ) }
+						placeholder="24"
+						responsive="all"
+						hover="all"
+						forceUpdateHoverState={ true }
+						min={ [ 0, 0, 0 ] }
+						sliderMax={ [ 200, 30, 100 ] }
+						units={ [ 'px', 'em', '%' ] }
+						unit={ getValue( '--stk-block-background-padding', STATES.ALL_UNIT ) || 'px' }
+						onChangeUnit={ value => onChange( '--stk-block-background-padding', value, STATES.ALL_UNIT ) }
+						top={ getValue( '--stk-block-background-padding', STATES.ALL )?.top }
+						right={ getValue( '--stk-block-background-padding', STATES.ALL )?.right }
+						bottom={ getValue( '--stk-block-background-padding', STATES.ALL )?.bottom }
+						left={ getValue( '--stk-block-background-padding', STATES.ALL )?.left }
+						onChange={ value => onChange( '--stk-block-background-padding', value, STATES.ALL ) }
+						hasHoverStateValue={ getHasHoverStateValues( '--stk-block-background-padding', true ) }
+						hasTabletValue={ getHasDeviceValue( '--stk-block-background-padding', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( '--stk-block-background-padding', 'mobile' ) }
+						helpTooltip={ {
+							video: 'inner-block-padding',
+							description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
+						} }
+					/>
+					<AdvancedToolbarControl
+						label={ __( 'Borders', i18n ) }
+						controls={ BORDER_CONTROLS }
+						className="ugb-border-controls__border-type-toolbar"
+						isSmall={ true }
+						value={ getValue( '--stk-block-background-border-style' ) }
+						onChange={ value => onChange( '--stk-block-background-border-style', value ) }
+					/>
+					<FourRangeControl
+						label={ __( 'Border Width', i18n ) }
+						responsive="all"
+						hover="all"
+						min={ 0 }
+						max={ 99 }
+						step={ 1 }
+						placeholder="1"
+						sliderMax={ 5 }
+						defaultLocked={ true }
+						forceUpdateHoverState={ true }
+						top={ getValue( '--stk-block-background-border-width', STATES.ALL )?.top }
+						right={ getValue( '--stk-block-background-border-width', STATES.ALL )?.right }
+						bottom={ getValue( '--stk-block-background-border-width', STATES.ALL )?.bottom }
+						left={ getValue( '--stk-block-background-border-width', STATES.ALL )?.left }
+						onChange={ value => onChange( '--stk-block-background-border-width', value, STATES.ALL ) }
+						hasHoverStateValue={ getHasHoverStateValues( '--stk-block-background-border-width', true ) }
+						hasTabletValue={ getHasDeviceValue( '--stk-block-background-border-width', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( '--stk-block-background-border-width', 'mobile' ) }
+					/>
+					<FourRangeControl
+						label={ __( 'Border Radius', i18n ) }
+						min={ 0 }
+						isCorner={ true }
+						sliderMax={ 50 }
+						responsive="all"
+						placeholder="0"
+						onChange={ value => onChange( '--stk-block-background-border-radius', value, STATES.RESPONSIVE ) }
+						top={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.top }
+						right={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.right }
+						bottom={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.bottom }
+						left={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.left }
+						hasTabletValue={ getHasDeviceValue( '--stk-block-background-border-radius', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( '--stk-block-background-border-radius', 'mobile' ) }
+						helpTooltip={ {
+							video: 'general-border-radius',
+							description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
+						} }
+					/>
+					<ShadowControl
+						label={ __( 'Shadow / Outline', i18n ) }
+						hover="all"
+						forceUpdateHoverState={ true }
+						value={ valueCallback( getValue( '--stk-block-background-box-shadow', STATES.HOVER ) || '' ) }
+						onChange={ value => onChange( '--stk-block-background-box-shadow', changeCallback( value ), STATES.HOVER ) }
+						shadowFilterValue={ getValue( '--stk-block-background-box-shadow', STATES.HOVER ) || '' }
+						shadowFilterOnChange={ value => onChange( '--stk-block-background-box-shadow', value, STATES.HOVER ) }
+						hasHoverStateValue={ getHasHoverStateValues( '--stk-block-background-box-shadow' ) }
+					/>
+				</LayoutSettings>
+
+				<LayoutSettings
+					title={ __( 'Containers', i18n ) }
+					description={ __( 'These styles are applied to blocks that have the "Container" option enabled in the Layout Tab.', i18n ) }
 				>
 					<FourRangeControl
 						label={ __( 'Padding', i18n ) }
@@ -267,95 +354,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 				</LayoutSettings>
 
 				<LayoutSettings
-					title={ __( 'Background', i18n ) }
-					description={ __( 'These styles are applied to blocks with their Style Tab > Background option turned on.', i18n ) }
-				>
-					<FourRangeControl
-						label={ __( 'Padding', i18n ) }
-						placeholder="24"
-						responsive="all"
-						hover="all"
-						forceUpdateHoverState={ true }
-						min={ [ 0, 0, 0 ] }
-						sliderMax={ [ 200, 30, 100 ] }
-						units={ [ 'px', 'em', '%' ] }
-						unit={ getValue( '--stk-block-background-padding', STATES.ALL_UNIT ) || 'px' }
-						onChangeUnit={ value => onChange( '--stk-block-background-padding', value, STATES.ALL_UNIT ) }
-						top={ getValue( '--stk-block-background-padding', STATES.ALL )?.top }
-						right={ getValue( '--stk-block-background-padding', STATES.ALL )?.right }
-						bottom={ getValue( '--stk-block-background-padding', STATES.ALL )?.bottom }
-						left={ getValue( '--stk-block-background-padding', STATES.ALL )?.left }
-						onChange={ value => onChange( '--stk-block-background-padding', value, STATES.ALL ) }
-						hasHoverStateValue={ getHasHoverStateValues( '--stk-block-background-padding', true ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-block-background-padding', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-block-background-padding', 'mobile' ) }
-						helpTooltip={ {
-							video: 'inner-block-padding',
-							description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
-						} }
-					/>
-					<AdvancedToolbarControl
-						label={ __( 'Borders', i18n ) }
-						controls={ BORDER_CONTROLS }
-						className="ugb-border-controls__border-type-toolbar"
-						isSmall={ true }
-						value={ getValue( '--stk-block-background-border-style' ) }
-						onChange={ value => onChange( '--stk-block-background-border-style', value ) }
-					/>
-					<FourRangeControl
-						label={ __( 'Border Width', i18n ) }
-						responsive="all"
-						hover="all"
-						min={ 0 }
-						max={ 99 }
-						step={ 1 }
-						placeholder="1"
-						sliderMax={ 5 }
-						defaultLocked={ true }
-						forceUpdateHoverState={ true }
-						top={ getValue( '--stk-block-background-border-width', STATES.ALL )?.top }
-						right={ getValue( '--stk-block-background-border-width', STATES.ALL )?.right }
-						bottom={ getValue( '--stk-block-background-border-width', STATES.ALL )?.bottom }
-						left={ getValue( '--stk-block-background-border-width', STATES.ALL )?.left }
-						onChange={ value => onChange( '--stk-block-background-border-width', value, STATES.ALL ) }
-						hasHoverStateValue={ getHasHoverStateValues( '--stk-block-background-border-width', true ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-block-background-border-width', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-block-background-border-width', 'mobile' ) }
-					/>
-					<FourRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						min={ 0 }
-						isCorner={ true }
-						sliderMax={ 50 }
-						responsive="all"
-						placeholder="0"
-						onChange={ value => onChange( '--stk-block-background-border-radius', value, STATES.RESPONSIVE ) }
-						top={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.top }
-						right={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.right }
-						bottom={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.bottom }
-						left={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.left }
-						hasTabletValue={ getHasDeviceValue( '--stk-block-background-border-radius', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-block-background-border-radius', 'mobile' ) }
-						helpTooltip={ {
-							video: 'general-border-radius',
-							description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
-						} }
-					/>
-					<ShadowControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						hover="all"
-						forceUpdateHoverState={ true }
-						value={ valueCallback( getValue( '--stk-block-background-box-shadow', STATES.HOVER ) || '' ) }
-						onChange={ value => onChange( '--stk-block-background-box-shadow', changeCallback( value ), STATES.HOVER ) }
-						shadowFilterValue={ getValue( '--stk-block-background-box-shadow', STATES.HOVER ) || '' }
-						shadowFilterOnChange={ value => onChange( '--stk-block-background-box-shadow', value, STATES.HOVER ) }
-						hasHoverStateValue={ getHasHoverStateValues( '--stk-block-background-box-shadow' ) }
-					/>
-				</LayoutSettings>
-
-				<LayoutSettings
-					title={ __( 'Image', i18n ) }
-					description={ __( 'These styles are applied to all images in Stackable Blocks.', i18n ) }
+					title={ __( 'Images', i18n ) }
+					description={ __( 'These styles are applied to all Image Blocks.', i18n ) }
 				>
 					<FourRangeControl
 						label={ __( 'Border Radius', i18n ) }
