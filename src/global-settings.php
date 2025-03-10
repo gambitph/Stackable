@@ -907,7 +907,17 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					}
 
 					if ( is_string( $value ) ) {
-						$style = $value;
+						if ( strpos( $value, 'rgb' ) ) {
+							// Convert rgba colors to hex alpha colors because
+							// the function wp_style_engine_get_stylesheet_from_css_rules() doesn't allow css values to have '('
+							// See safecss_filter_attr() of wp-includes/kses.php
+							$split_value = Stackable_Global_Settings::extract_rgba( $value );
+							$color = Stackable_Global_Settings::rgba_to_hex_alpha( $split_value['color'] );
+
+							$style = $split_value[ 'options' ] . ' ' . $color;
+						} else {
+							$style = $value;
+						}
 					} else if ( is_array( $value ) ) {
 						$default_value = Stackable_Global_Settings::get_block_layout_defaults( $defaults, $property, $device );
 						$top = isset( $value[ 'top' ] ) ? $value[ 'top' ] : $default_value[ 'top' ];
@@ -956,6 +966,40 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			$generated_css .= wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			return $generated_css;
+		}
+
+		public static function extract_rgba($value) {
+			$options = $value;
+			$color = '';
+
+			// Use a regex to find and extract the rgba value
+			if (preg_match('/rgba\(.*\)$/', $options, $matches)) {
+				$color = $matches[0];
+				$options = str_replace($color, '', $options);
+			}
+
+			$options = trim($options);
+
+			return [
+				'options' => $options,
+				'color' => $color,
+			];
+		}
+
+		public static function rgba_to_hex_alpha($color) {
+			// Remove 'rgba(' and ')' and split the values
+			$rgba = explode(',', substr($color, 5, -1));
+
+			$hexAlpha = array_map(function($val, $i) {
+				if ($i === 3) {
+					$opacity = floatval($val);
+					return str_pad(dechex(ceil($opacity * 255)), 2, '0', STR_PAD_LEFT);
+				}
+				$hex = dechex(intval($val));
+				return str_pad($hex, 2, '0', STR_PAD_LEFT);
+			}, $rgba, array_keys($rgba));
+
+			return '#' . implode('', $hexAlpha);
 		}
 
 		public static function get_block_layout_unit( $block_layouts, $property, $state ) {
