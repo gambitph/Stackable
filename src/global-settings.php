@@ -336,6 +336,55 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			register_setting(
 				'stackable_global_settings',
+				'stackable_selected_font_pair',
+				array(
+					'type' => 'string',
+					'description' => __( 'Stackable currently selected global font pair', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_custom_font_pairs',
+				array(
+					'type' => 'array',
+					'description' => __( 'Stackable added custom font pairs', STACKABLE_I18N ),
+					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
+					'show_in_rest' => array(
+						'schema' => array(
+							'items' => array(
+								'type' => 'object',
+								'properties' => array(
+									'name' => array(
+										'type' => 'string',
+									),
+									'typography' => array(
+										'type' => 'object',
+										'properties' => array(
+											'h1' => $stackable_global_typography_schema,
+											'h2' => $stackable_global_typography_schema,
+											'h2' => $stackable_global_typography_schema,
+											'h3' => $stackable_global_typography_schema,
+											'h4' => $stackable_global_typography_schema,
+											'h5' => $stackable_global_typography_schema,
+											'h6' => $stackable_global_typography_schema,
+											'p' => $stackable_global_typography_schema,
+											'.stk-subtitle' => $stackable_global_typography_schema,
+										)
+									),
+								)
+							)
+						)
+					),
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
 				'stackable_icon_library',
 				array(
 					'type' => 'array',
