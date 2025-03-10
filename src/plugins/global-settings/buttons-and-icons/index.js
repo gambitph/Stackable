@@ -28,7 +28,7 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { useState } from '@wordpress/element'
 import { isEmpty } from 'lodash'
@@ -82,22 +82,22 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						{ __( 'Learn more about Block Defaults', i18n ) }
 					</a>
 				</p>
-				{ ! isEmpty( blockLayouts ) &&
-					<Button
-						className="stk-reset-all-block-layout-settings"
-						isTertiary
-						onClick={ () => {
-							// eslint-disable-next-line no-alert
-							const confirmReset = window.confirm( __( 'Are you sure you want to reset all Button and Icon Styles to default values?', i18n ) )
-							if ( ! confirmReset ) {
-								return
-							}
+				<Button
+					className="stk-reset-all-block-layout-settings"
+					variant="secondary"
+					isSmall
+					disabled={ isEmpty( blockLayouts ) }
+					onClick={ () => {
+						// eslint-disable-next-line no-alert
+						const confirmReset = window.confirm( sprintf( __( 'Are you sure you want to reset all %s styles to their default values?', i18n ), __( 'Global Buttons & Icons', i18n ) ) )
+						if ( ! confirmReset ) {
+							return
+						}
 
-							saveSettings( {} )
-						} }
-						text={ __( 'Reset All Button and Icon Settings', i18n ) }
-					 />
-				}
+						saveSettings( {} )
+					} }
+					text={ __( 'Reset All', i18n ) }
+				/>
 
 				<LayoutSettings title={ __( 'Buttons', i18n ) }>
 					<AdvancedRangeControl
