@@ -3,6 +3,7 @@
  */
 import './editor-loader'
 import './buttons-and-icons'
+import './spacing-and-borders'
 import './block-defaults'
 import './icon-library'
 
