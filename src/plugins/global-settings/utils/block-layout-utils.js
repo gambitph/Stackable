@@ -37,9 +37,15 @@ export const LayoutSettings = props => {
 }
 
 export const getDefault = ( defaults, property, device ) => {
-	const defaultValue = defaults[ property ]?.[ device ] ?? defaults[ property ]?.desktop
+	let defaultValue = defaults[ property ]?.[ device ]
 
-	return defaultValue ?? ( {
-		top: 0, right: 0, bottom: 0, left: 0,
-	} )
+	if ( ! defaultValue && device === 'mobile' ) {
+		defaultValue = defaults[ property ]?.tablet
+	}
+
+	if ( ! defaultValue && ( device === 'mobile' || device === 'tablet' ) ) {
+		defaultValue = defaults[ property ]?.desktop
+	}
+
+	return defaultValue ?? ''
 }

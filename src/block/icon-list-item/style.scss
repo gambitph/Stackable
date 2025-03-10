@@ -42,8 +42,8 @@
 		position: relative;
 		.stk--svg-wrapper {
 			.stk--inner-svg svg {
-				height: var(--stk-icon-list-size, 16px);
-				width: var(--stk-icon-list-size, 16px);
+				height: var(--stk-icon-list-icon-size, 16px);
+				width: var(--stk-icon-list-icon-size, 16px);
 				transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
 				opacity: var(--stk-icon-list-icon-opacity, 1);
 				fill: var(--stk-icon-list-marker-color);
@@ -82,7 +82,7 @@
 		.stk-block-icon-list-item__marker::before {
 			content: counter(stk-icon-list-counter, var(--stk-list-style-type, decimal)) ". ";
 			display: block;
-			font-size: var(--stk-icon-list-size, 16px);
+			font-size: var(--stk-icon-list-icon-size, 16px);
 			color: var(--stk-icon-list-marker-color);
 			transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
 			opacity: var(--stk-icon-list-icon-opacity, 1);

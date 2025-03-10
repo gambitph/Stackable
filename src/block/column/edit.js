@@ -177,7 +177,7 @@ const InspectorControls = memo( props => {
 					defaultLocked={ true }
 					min={ [ 0, 0 ] }
 					sliderMax={ [ 200, 30 ] }
-					placeholder={ props.isOnlyBlock && props.useZeroColumnSpacing ? '0' : getPlaceholder( '--stk-column-margin' ) }
+					placeholder={ props.isOnlyBlock && props.useZeroColumnSpacing ? '0' : getPlaceholder( 'column-margin' ) }
 					helpTooltip={ {
 						video: 'inner-block-padding',
 						description: __( 'Sets the paddings between the column content and the border.', i18n ),

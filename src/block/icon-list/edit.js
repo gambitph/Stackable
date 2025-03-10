@@ -300,7 +300,7 @@ const InspectorControls = memo( props => {
 						min="0"
 						sliderMax="50"
 						responsive="all"
-						placeholder={ getPlaceholder( '--stk-icon-list-row-gap' ) }
+						placeholder={ getPlaceholder( 'icon-list-row-gap' ) }
 					/>
 
 					<AdvancedRangeControl
@@ -309,7 +309,7 @@ const InspectorControls = memo( props => {
 						min="0"
 						sliderMax="20"
 						responsive="all"
-						placeholder={ getPlaceholder( '--stk-icon-list-icon-gap' ) }
+						placeholder={ getPlaceholder( 'icon-list-icon-gap' ) }
 					/>
 
 					<AdvancedRangeControl
@@ -318,7 +318,7 @@ const InspectorControls = memo( props => {
 						min="0"
 						sliderMax="50"
 						responsive="all"
-						placeholder={ getPlaceholder( '--stk-icon-list-indentation' ) }
+						placeholder={ getPlaceholder( 'icon-list-indentation' ) }
 					/>
 
 				</PanelAdvancedSettings>
@@ -381,7 +381,7 @@ const InspectorControls = memo( props => {
 						step={ 1 }
 						allowReset={ true }
 						responsive="all"
-						placeholder={ getPlaceholder( '--stk-icon-list-size' ) }
+						placeholder={ getPlaceholder( 'icon-list-icon-size' ) }
 					/>
 
 					<AdvancedRangeControl

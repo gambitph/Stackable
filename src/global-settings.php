@@ -875,8 +875,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @param String $current_css
 		 * @return String
 		 */
-		public static function generate_global_block_layouts( $option_name, $settings_name, $defaults ) {
+		public static function generate_global_block_layouts( $option_name, $settings_name ) {
 			$block_layouts = get_option( $option_name );
+			$defaults = Stackable_Block_Design_System::get_block_design_system();
 
 			if ( ! $block_layouts || ! is_array( $block_layouts ) ) {
 				return false;
@@ -900,7 +901,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					$device = strpos( $state, 'desktop' ) !== false ? 'desktop' : ( strpos( $state, 'tablet' ) !== false ? 'tablet' : 'mobile' );
 					$hover_state = strpos( $state, 'ParentHover' ) !== false ? 'parent-hover' : ( strpos( $state, 'Hover' ) !== false ? 'hover' : 'normal' );
 
-					$custom_property = $property;
+					$custom_property = '--stk-' . $property;
 
 					if ( $hover_state !== 'normal' ) {
 						$custom_property .= '-' . $hover_state;
@@ -947,7 +948,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						'declarations' => $css[ 'desktop' ]
 				);
 			}
-
 			if ( ! empty( $css['tablet'] ) ) {
 				$styles[] = array(
 						'rules_group'  => '@media (max-width:' . $tablet_breakpoint .'px)',

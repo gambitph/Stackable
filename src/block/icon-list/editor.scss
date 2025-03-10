@@ -16,9 +16,9 @@
 		top: 0;
 		left: 0;
 		height: 1em;
-		width: var(--stk-icon-list-size, 1em);
+		width: var(--stk-icon-list-icon-size, 1em);
 		cursor: copy;
-		margin-left: calc(var(--stk-icon-list-size, 1em) * -1);
+		margin-left: calc(var(--stk-icon-list-icon-size, 1em) * -1);
 	}
 }
 

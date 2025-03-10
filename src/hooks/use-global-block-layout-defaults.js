@@ -1,6 +1,5 @@
 import { useSelect } from '@wordpress/data'
-import defaultButtonsAndIcons from '~stackable/plugins/global-settings/buttons-and-icons/defaults.json'
-import defaultSpacingAndBorders from '~stackable/plugins/global-settings/spacing-and-borders/defaults.json'
+import rawBlockDesignSystem from '~stackable/styles/block-design-system.json'
 /**
  * Provides a function to get the placeholder for block componets from block layout settings.
  *
@@ -13,27 +12,39 @@ export const useBlockLayoutDefaults = () => {
 		return { blockLayouts: { ...spacingAndBorders, ...buttonsAndIcons } }
 	}, [] )
 
-	const defaults = { ...defaultSpacingAndBorders, ...defaultButtonsAndIcons }
+	const _blockDesignSystem = { ...rawBlockDesignSystem }
+	const defaults = Object.values( _blockDesignSystem ).reduce( ( blockDesignSystem, section ) => {
+		Object.entries( section ).forEach( ( [ key, value ] ) => {
+			if ( typeof value === 'object' && 'hoverStates' in value ) {
+				delete value.hoverStates
+			}
+			blockDesignSystem[ key ] = value
+		} )
+		return blockDesignSystem
+	}, {} )
 
-	const HoverStates = {
-		normal: '',
-		hover: 'Hover',
-		'parent-hover': 'ParentHover',
-	}
+	const getInheritedValue = ( obj, property, device ) => {
+		let value = obj[ property ]?.[ device ]
 
-	const getDefaults = () => {
-		return defaults
+		if ( ! value && device === 'mobile' ) {
+			value = obj[ property ]?.tablet
+		}
+
+		if ( ! value && ( device === 'mobile' || device === 'tablet' ) ) {
+			value = obj[ property ]?.desktop
+		}
+
+		return value
 	}
 
 	const getPlaceholder = ( property, {
-		device = 'desktop', state = 'normal', single = true,
+		device = 'desktop', single = true,
 	} = {} ) => {
-		const deviceState = `${ device }${ HoverStates[ state ] }`
-		const defaultValue = defaults[ property ]?.[ deviceState ] ?? defaults[ property
-		]?.desktop
+		const deviceState = `${ device }`
+		const defaultValue = getInheritedValue( defaults, property, deviceState )
 
 		// Get placeholder from block layout settings or use default value
-		let placeholder = blockLayouts[ property ]?.[ deviceState ] || defaultValue
+		let placeholder = getInheritedValue( blockLayouts, property, deviceState ) || defaultValue
 
 		// Return single value for four range controls
 		if ( typeof placeholder === 'object' && single ) {
@@ -52,7 +63,7 @@ export const useBlockLayoutDefaults = () => {
 
 	return {
 		blockLayouts,
+		defaults,
 		getPlaceholder,
-		getDefaults,
 	}
 }

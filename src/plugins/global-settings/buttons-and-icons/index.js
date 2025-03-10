@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import './store'
-import blockLayoutDefaults from './defaults.json'
 
 /**
  * External dependencies
@@ -109,10 +108,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						min={ 0 }
 						max={ 100 }
 						placeholder=""
-						value={ getValue( '--stk-button-min-height', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-button-min-height', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-button-min-height', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-button-min-height', 'mobile' ) }
+						value={ getValue( 'button-min-height', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'button-min-height', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'button-min-height', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'button-min-height', 'mobile' ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Button Padding', i18n ) }
@@ -121,19 +120,19 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						sliderMin={ [ 0, 0 ] }
 						sliderMax={ [ 40, 100 ] }
 						vhMode={ true }
-						unit={ getValue( '--stk-button-padding', STATES.RESPONSIVE_UNIT ) || 'px' }
-						onChangeUnit={ value => onChange( '--stk-button-padding', value, STATES.RESPONSIVE_UNIT ) }
-						top={ getValue( '--stk-button-padding', STATES.RESPONSIVE )?.top }
-						right={ getValue( '--stk-button-padding', STATES.RESPONSIVE )?.right }
-						bottom={ getValue( '--stk-button-padding', STATES.RESPONSIVE )?.bottom }
-						left={ getValue( '--stk-button-padding', STATES.RESPONSIVE )?.left }
-						onChange={ value => onChange( '--stk-button-padding', value, STATES.RESPONSIVE ) }
+						unit={ getValue( 'button-padding', STATES.RESPONSIVE_UNIT ) || 'px' }
+						onChangeUnit={ value => onChange( 'button-padding', value, STATES.RESPONSIVE_UNIT ) }
+						top={ getValue( 'button-padding', STATES.RESPONSIVE )?.top }
+						right={ getValue( 'button-padding', STATES.RESPONSIVE )?.right }
+						bottom={ getValue( 'button-padding', STATES.RESPONSIVE )?.bottom }
+						left={ getValue( 'button-padding', STATES.RESPONSIVE )?.left }
+						onChange={ value => onChange( 'button-padding', value, STATES.RESPONSIVE ) }
 						placeholderTop="12"
 						placeholderBottom="12"
 						placeholderLeft="16"
 						placeholderRight="16"
-						hasTabletValue={ getHasDeviceValue( '--stk-button-padding', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-button-padding', 'mobile' ) }
+						hasTabletValue={ getHasDeviceValue( 'button-padding', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'button-padding', 'mobile' ) }
 						helpTooltip={ {
 							// TODO: Add a working video
 							title: __( 'Button padding', i18n ),
@@ -145,8 +144,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						controls={ BORDER_CONTROLS }
 						className="ugb-border-controls__border-type-toolbar"
 						isSmall={ true }
-						value={ getValue( '--stk-button-border-style' ) }
-						onChange={ value => onChange( '--stk-button-border-style', value ) }
+						value={ getValue( 'button-border-style' ) }
+						onChange={ value => onChange( 'button-border-style', value ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Border Width', i18n ) }
@@ -159,14 +158,14 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						sliderMax={ 5 }
 						defaultLocked={ true }
 						forceUpdateHoverState={ true }
-						top={ getValue( '--stk-button-border-width', STATES.ALL )?.top }
-						right={ getValue( '--stk-button-border-width', STATES.ALL )?.right }
-						bottom={ getValue( '--stk-button-border-width', STATES.ALL )?.bottom }
-						left={ getValue( '--stk-button-border-width', STATES.ALL )?.left }
-						onChange={ value => onChange( '--stk-button-border-width', value, STATES.ALL ) }
-						hasHoverStateValue={ getHasHoverStateValues( '--stk-button-border-width', true ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-button-border-width', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-button-border-width', 'mobile' ) }
+						top={ getValue( 'button-border-width', STATES.ALL )?.top }
+						right={ getValue( 'button-border-width', STATES.ALL )?.right }
+						bottom={ getValue( 'button-border-width', STATES.ALL )?.bottom }
+						left={ getValue( 'button-border-width', STATES.ALL )?.left }
+						onChange={ value => onChange( 'button-border-width', value, STATES.ALL ) }
+						hasHoverStateValue={ getHasHoverStateValues( 'button-border-width', true ) }
+						hasTabletValue={ getHasDeviceValue( 'button-border-width', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'button-border-width', 'mobile' ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Button Ghost Border Width', i18n ) }
@@ -179,14 +178,14 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						sliderMax={ 5 }
 						defaultLocked={ true }
 						forceUpdateHoverState={ true }
-						top={ getValue( '--stk-button-ghost-border-width', STATES.ALL )?.top }
-						right={ getValue( '--stk-button-ghost-border-width', STATES.ALL )?.right }
-						bottom={ getValue( '--stk-button-ghost-border-width', STATES.ALL )?.bottom }
-						left={ getValue( '--stk-button-ghost-border-width', STATES.ALL )?.left }
-						onChange={ value => onChange( '--stk-button-ghost-border-width', value, STATES.ALL ) }
-						hasHoverStateValue={ getHasHoverStateValues( '--stk-button-ghost-border-width', true ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-button-ghost-border-width', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-button-ghost-border-width', 'mobile' ) }
+						top={ getValue( 'button-ghost-border-width', STATES.ALL )?.top }
+						right={ getValue( 'button-ghost-border-width', STATES.ALL )?.right }
+						bottom={ getValue( 'button-ghost-border-width', STATES.ALL )?.bottom }
+						left={ getValue( 'button-ghost-border-width', STATES.ALL )?.left }
+						onChange={ value => onChange( 'button-ghost-border-width', value, STATES.ALL ) }
+						hasHoverStateValue={ getHasHoverStateValues( 'button-ghost-border-width', true ) }
+						hasTabletValue={ getHasDeviceValue( 'button-ghost-border-width', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'button-ghost-border-width', 'mobile' ) }
 					/>
 					<FourRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -195,13 +194,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						sliderMax={ 50 }
 						responsive="all"
 						placeholder="0"
-						onChange={ value => onChange( '--stk-button-border-radius', value, STATES.RESPONSIVE ) }
-						top={ getValue( '--stk-button-border-radius', STATES.RESPONSIVE )?.top }
-						right={ getValue( '--stk-button-border-radius', STATES.RESPONSIVE )?.right }
-						bottom={ getValue( '--stk-button-border-radius', STATES.RESPONSIVE )?.bottom }
-						left={ getValue( '--stk-button-border-radius', STATES.RESPONSIVE )?.left }
-						hasTabletValue={ getHasDeviceValue( '--stk-button-border-radius', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-button-border-radius', 'mobile' ) }
+						onChange={ value => onChange( 'button-border-radius', value, STATES.RESPONSIVE ) }
+						top={ getValue( 'button-border-radius', STATES.RESPONSIVE )?.top }
+						right={ getValue( 'button-border-radius', STATES.RESPONSIVE )?.right }
+						bottom={ getValue( 'button-border-radius', STATES.RESPONSIVE )?.bottom }
+						left={ getValue( 'button-border-radius', STATES.RESPONSIVE )?.left }
+						hasTabletValue={ getHasDeviceValue( 'button-border-radius', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'button-border-radius', 'mobile' ) }
 						helpTooltip={ {
 							video: 'general-border-radius',
 							description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
@@ -211,11 +210,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						label={ __( 'Shadow / Outline', i18n ) }
 						hover="all"
 						forceUpdateHoverState={ true }
-						value={ valueCallback( getValue( '--stk-button-box-shadow', STATES.HOVER ) || '' ) }
-						onChange={ value => onChange( '--stk-button-box-shadow', changeCallback( value ), STATES.HOVER ) }
-						shadowFilterValue={ getValue( '--stk-button-box-shadow', STATES.HOVER ) || '' }
-						shadowFilterOnChange={ value => onChange( '--stk-button-box-shadow', value, STATES.HOVER ) }
-						hasHoverStateValue={ getHasHoverStateValues( '--stk-button-box-shadow' ) }
+						value={ valueCallback( getValue( 'button-box-shadow', STATES.HOVER ) || '' ) }
+						onChange={ value => onChange( 'button-box-shadow', changeCallback( value ), STATES.HOVER ) }
+						shadowFilterValue={ getValue( 'button-box-shadow', STATES.HOVER ) || '' }
+						shadowFilterOnChange={ value => onChange( 'button-box-shadow', value, STATES.HOVER ) }
+						hasHoverStateValue={ getHasHoverStateValues( 'button-box-shadow' ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Icon Size', i18n ) }
@@ -224,10 +223,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						step={ 1 }
 						sliderMax={ 100 }
 						responsive="all"
-						value={ getValue( '--stk-button-icon-size', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-button-icon-size', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-button-icon-size', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-button-icon-size', 'mobile' ) }
+						value={ getValue( 'button-icon-size', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'button-icon-size', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'button-icon-size', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'button-icon-size', 'mobile' ) }
 
 					/>
 					<AdvancedRangeControl
@@ -236,10 +235,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 50 }
-						value={ getValue( '--stk-button-icon-gap', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-button-icon-gap', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-button-icon-gap', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-button-icon-gap', 'mobile' ) }
+						value={ getValue( 'button-icon-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'button-icon-gap', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'button-icon-gap', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'button-icon-gap', 'mobile' ) }
 					/>
 
 					<AdvancedRangeControl
@@ -248,10 +247,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						responsive="all"
 						min="0"
 						sliderMax="50"
-						value={ getValue( '--stk-button-column-gap', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-button-column-gap', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-button-column-gap', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-button-column-gap', 'mobile' ) }
+						value={ getValue( 'button-column-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'button-column-gap', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'button-column-gap', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'button-column-gap', 'mobile' ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -259,10 +258,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						responsive="all"
 						min="0"
 						sliderMax="50"
-						value={ getValue( '--stk-button-row-gap', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-button-row-gap', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-button-row-gap', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-button-row-gap', 'mobile' ) }
+						value={ getValue( 'button-row-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'button-row-gap', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'button-row-gap', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'button-row-gap', 'mobile' ) }
 					/>
 				</LayoutSettings>
 
@@ -281,15 +280,15 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						vhMode={ true }
 						sliderMin={ [ 0, 0 ] }
 						sliderMax={ [ 40, 100 ] }
-						unit={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE_UNIT ) || 'px' }
-						onChangeUnit={ value => onChange( '--stk-icon-button-padding', value, STATES.RESPONSIVE_UNIT ) }
-						top={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE )?.top }
-						right={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE )?.right }
-						bottom={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE )?.bottom }
-						left={ getValue( '--stk-icon-button-padding', STATES.RESPONSIVE )?.left }
-						onChange={ value => onChange( '--stk-icon-button-padding', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-icon-button-padding', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-icon-button-padding', 'mobile' ) }
+						unit={ getValue( 'icon-button-padding', STATES.RESPONSIVE_UNIT ) || 'px' }
+						onChangeUnit={ value => onChange( 'icon-button-padding', value, STATES.RESPONSIVE_UNIT ) }
+						top={ getValue( 'icon-button-padding', STATES.RESPONSIVE )?.top }
+						right={ getValue( 'icon-button-padding', STATES.RESPONSIVE )?.right }
+						bottom={ getValue( 'icon-button-padding', STATES.RESPONSIVE )?.bottom }
+						left={ getValue( 'icon-button-padding', STATES.RESPONSIVE )?.left }
+						onChange={ value => onChange( 'icon-button-padding', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'icon-button-padding', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'icon-button-padding', 'mobile' ) }
 						helpTooltip={ {
 							// TODO: Add a working video
 							title: __( 'Button padding', i18n ),
@@ -308,10 +307,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						step={ 1 }
 						placeholder="16"
 						responsive="all"
-						value={ getValue( '--stk-icon-list-size', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-icon-list-size', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-icon-list-size', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-icon-list-size', 'mobile' ) }
+						value={ getValue( 'icon-list-icon-size', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'icon-list-icon-size', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'icon-list-icon-size', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'icon-list-icon-size', 'mobile' ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -319,10 +318,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						sliderMax="50"
 						responsive="all"
 						placeholder="0"
-						value={ getValue( '--stk-icon-list-row-gap', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-icon-list-row-gap', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-icon-list-row-gap', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-icon-list-row-gap', 'mobile' ) }
+						value={ getValue( 'icon-list-row-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'icon-list-row-gap', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'icon-list-row-gap', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'icon-list-row-gap', 'mobile' ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Icon Gap', i18n ) }
@@ -330,10 +329,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						sliderMax="20"
 						placeholder="8"
 						responsive="all"
-						value={ getValue( '--stk-icon-list-icon-gap', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-icon-list-icon-gap', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-icon-list-icon-gap', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-icon-list-icon-gap', 'mobile' ) }
+						value={ getValue( 'icon-list-icon-gap', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'icon-list-icon-gap', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'icon-list-icon-gap', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'icon-list-icon-gap', 'mobile' ) }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Indentation', i18n ) }
@@ -341,10 +340,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						sliderMax="50"
 						placeholder="0"
 						responsive="all"
-						value={ getValue( '--stk-icon-list-indentation', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-icon-list-indentation', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-icon-list-indentation', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-icon-list-indentation', 'mobile' ) }
+						value={ getValue( 'icon-list-indentation', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'icon-list-indentation', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'icon-list-indentation', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'icon-list-indentation', 'mobile' ) }
 					/>
 				</LayoutSettings>
 
@@ -359,10 +358,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						sliderMax={ 100 }
 						step={ 1 }
 						placeholder="36"
-						value={ getValue( '--stk-icon-size', STATES.RESPONSIVE ) }
-						onChange={ value => onChange( '--stk-icon-size', value, STATES.RESPONSIVE ) }
-						hasTabletValue={ getHasDeviceValue( '--stk-icon-size', 'tablet' ) }
-						hasMobileValue={ getHasDeviceValue( '--stk-icon-size', 'mobile' ) }
+						value={ getValue( 'icon-size', STATES.RESPONSIVE ) }
+						onChange={ value => onChange( 'icon-size', value, STATES.RESPONSIVE ) }
+						hasTabletValue={ getHasDeviceValue( 'icon-size', 'tablet' ) }
+						hasMobileValue={ getHasDeviceValue( 'icon-size', 'mobile' ) }
 					/>
 				</LayoutSettings>
 
@@ -372,8 +371,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 } )
 
 export const GlobalButtonsAndIconsStyles = () => {
-	const defaults = { ...blockLayoutDefaults }
-	const styles = useBlockLayoutEditorLoader( 'stackable/global-buttons-and-icons', defaults )
+	const styles = useBlockLayoutEditorLoader( 'stackable/global-buttons-and-icons' )
 
 	return styles
 }

@@ -39,7 +39,7 @@ export const Icon = props => (
 		hasIconGap={ props.hasIconGap }
 		hasIconPosition={ props.hasIconPosition }
 		defaultValue={ props.defaultValue }
-		iconSizePlaceholderName="--stk-button-icon-size"
+		iconSizePlaceholderName="button-icon-size"
 		iconGapPlaceholderName={ props.iconGapPlaceholderName }
 	/>
 )
@@ -178,7 +178,7 @@ Colors.defaultProps = {
 const SizeControls = props => {
 	const {
 		attrNameTemplate = 'button%s',
-		paddingPlaceholderName = '--stk-button-padding',
+		paddingPlaceholderName = 'button-padding',
 	} = props
 
 	const getAttrName = getAttributeNameFunc( attrNameTemplate )
@@ -198,7 +198,7 @@ const SizeControls = props => {
 			attribute={ getAttrName( 'minHeight' ) }
 			min={ 0 }
 			max={ 100 }
-			placeholder={ getPlaceholder( '--stk-button-min-height' ) }
+			placeholder={ getPlaceholder( 'button-min-height' ) }
 		/>
 		{ props.hasWidth && ! props.hasFullWidth && (
 			<AdvancedRangeControl
@@ -255,16 +255,16 @@ const BorderControls = props => {
 	} )
 	const { getPlaceholder } = useBlockLayoutDefaults()
 
-	const borderWidthPlaceholder = className === 'is-style-ghost' ? getPlaceholder( '--stk-button-ghost-border-width' ) : getPlaceholder( '--stk-button-border-width' )
+	const borderWidthPlaceholder = className === 'is-style-ghost' ? getPlaceholder( 'button-ghost-border-width' ) : getPlaceholder( 'button-border-width' )
 
 	return (
 		<_BorderControls
 			hasBorderRadiusHover={ false }
 			borderSelector={ props.borderSelector }
 			borderRadiusPlaceholder={ props.placeholder }
-			borderTypeValue={ getPlaceholder( '--stk-button-border-style' ) }
+			borderTypeValue={ getPlaceholder( 'button-border-style' ) }
 			borderWidthPlaceholder={ borderWidthPlaceholder }
-			placeholderTemplate="--stk-button"
+			placeholderTemplate="button"
 			{ ...props }
 		/>
 	)

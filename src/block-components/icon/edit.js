@@ -49,7 +49,7 @@ export const Edit = props => {
 		defaultValue,
 		onChangeIcon,
 		iconGapPlaceholder = '0',
-		iconSizePlaceholderName = '--stk-icon-size',
+		iconSizePlaceholderName = 'icon-size',
 		attrNameTemplate,
 	} = props
 
