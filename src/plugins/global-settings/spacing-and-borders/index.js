@@ -100,7 +100,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 					text={ __( 'Reset All', i18n ) }
 				/>
 
-				<LayoutSettings title={ __( 'Margins', i18n ) }>
+				<LayoutSettings
+					title={ __( 'Margins', i18n ) }
+					description={ __( 'These styles are applied to all Stackable Blocks.', i18n ) }
+				>
 					<AdvancedRangeControl
 						label={ __( 'Block Margin Bottom', i18n ) }
 						responsive="all"
@@ -114,10 +117,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						onChange={ value => onChange( '--stk-block-margin-bottom', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( '--stk-block-margin-bottom', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-block-margin-bottom', 'mobile' ) }
+						helpTooltip={ {
+							video: 'advanced-block-margin',
+							description: __( 'Sets the block margin bottom, i.e. the space outside the block between the block border and the next block.', i18n ),
+						} }
 					/>
 				</LayoutSettings>
 
-				<LayoutSettings title={ __( 'Columns', i18n ) }>
+				<LayoutSettings
+					title={ __( 'Columns', i18n ) }
+					description={ __( 'These styles are applied to blocks with Inner Columns.', i18n ) }
+				>
 					<AdvancedRangeControl
 						label={ __( ' Inner Column Spacing', i18n ) }
 						responsive="all"
@@ -131,6 +141,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						onChange={ value => onChange( '--stk-column-margin', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( '--stk-column-margin', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-column-margin', 'mobile' ) }
+						helpTooltip={ {
+							// Add a working video
+							description: __( 'Sets column paddings, the space inside the block between the block elements and the column container border', i18n ),
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
@@ -142,6 +156,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						onChange={ value => onChange( '--stk-columns-column-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( '--stk-columns-column-gap', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-columns-column-gap', 'mobile' ) }
+						helpTooltip={ {
+							video: 'column-gap',
+							description: __( 'Sets the distance between two or more columns', i18n ),
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -153,10 +171,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						onChange={ value => onChange( '--stk-columns-row-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( '--stk-columns-row-gap', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-columns-row-gap', 'mobile' ) }
+						helpTooltip={ {
+							// TODO: Add a working video
+							description: __( 'Sets the distance between two or more columns', i18n ),
+						} }
 					/>
 				</LayoutSettings>
 
-				<LayoutSettings title={ __( 'Container', i18n ) }>
+				<LayoutSettings
+					title={ __( 'Container', i18n ) }
+					description={ __( 'These styles are applied to blocks with their Layout Tab > Container option turned on.', i18n ) }
+				>
 					<FourRangeControl
 						label={ __( 'Padding', i18n ) }
 						responsive="all"
@@ -176,6 +201,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						hasTabletValue={ getHasDeviceValue( '--stk-container-padding', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-container-padding', 'mobile' ) }
 						placeholder="32"
+						helpTooltip={ {
+							video: 'inner-block-padding',
+							description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
+						} }
 
 					/>
 					<AdvancedToolbarControl
@@ -220,7 +249,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						left={ getValue( '--stk-container-border-radius', STATES.RESPONSIVE )?.left }
 						hasTabletValue={ getHasDeviceValue( '--stk-container-border-radius', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-container-border-radius', 'mobile' ) }
-
+						helpTooltip={ {
+							video: 'general-border-radius',
+							description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
+						} }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
@@ -234,7 +266,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 					/>
 				</LayoutSettings>
 
-				<LayoutSettings title={ __( 'Background', i18n ) } >
+				<LayoutSettings
+					title={ __( 'Background', i18n ) }
+					description={ __( 'These styles are applied to blocks with their Style Tab > Background option turned on.', i18n ) }
+				>
 					<FourRangeControl
 						label={ __( 'Padding', i18n ) }
 						placeholder="24"
@@ -254,7 +289,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						hasHoverStateValue={ getHasHoverStateValues( '--stk-block-background-padding', true ) }
 						hasTabletValue={ getHasDeviceValue( '--stk-block-background-padding', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-block-background-padding', 'mobile' ) }
-
+						helpTooltip={ {
+							video: 'inner-block-padding',
+							description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
+						} }
 					/>
 					<AdvancedToolbarControl
 						label={ __( 'Borders', i18n ) }
@@ -298,6 +336,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						left={ getValue( '--stk-block-background-border-radius', STATES.RESPONSIVE )?.left }
 						hasTabletValue={ getHasDeviceValue( '--stk-block-background-border-radius', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-block-background-border-radius', 'mobile' ) }
+						helpTooltip={ {
+							video: 'general-border-radius',
+							description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
+						} }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
@@ -311,7 +353,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 					/>
 				</LayoutSettings>
 
-				<LayoutSettings title={ __( 'Image', i18n ) }>
+				<LayoutSettings
+					title={ __( 'Image', i18n ) }
+					description={ __( 'These styles are applied to all images in Stackable Blocks.', i18n ) }
+				>
 					<FourRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						min={ 0 }
@@ -326,6 +371,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						left={ getValue( '--stk-image-border-radius', STATES.RESPONSIVE )?.left }
 						hasTabletValue={ getHasDeviceValue( '--stk-image-border-radius', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-image-border-radius', 'mobile' ) }
+						helpTooltip={ {
+							video: 'image-border-radius',
+							description: __( 'Adjusts the radius of image corners to make them more rounded', i18n ),
+						} }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
@@ -338,6 +387,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						shadowFilterValue={ getValue( '--stk-image-drop-shadow', STATES.HOVER ) }
 						shadowFilterOnChange={ value => onChange( '--stk-image-drop-shadow', value, STATES.HOVER ) }
 						hasHoverStateValue={ getHasHoverStateValues( '--stk-image-drop-shadow' ) }
+						helpTooltip={ {
+							video: 'image-shadow',
+							title: __( 'Image Shadow', i18n ),
+							description: __( 'Adjusts the intensity of the image shadow', i18n ),
+						} }
 					/>
 				</LayoutSettings>
 

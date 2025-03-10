@@ -99,7 +99,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 					text={ __( 'Reset All', i18n ) }
 				/>
 
-				<LayoutSettings title={ __( 'Buttons', i18n ) }>
+				<LayoutSettings
+					title={ __( 'Buttons', i18n ) }
+					description={ __( 'These styles are applied to Button Blocks.', i18n ) }
+				>
 					<AdvancedRangeControl
 						label={ __( 'Min. Button Height', i18n ) }
 						responsive="all"
@@ -131,6 +134,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						placeholderRight="16"
 						hasTabletValue={ getHasDeviceValue( '--stk-button-padding', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-button-padding', 'mobile' ) }
+						helpTooltip={ {
+							// TODO: Add a working video
+							title: __( 'Button padding', i18n ),
+							description: __( 'Adjusts the space between the button text and button borders', i18n ),
+						} }
 					/>
 					<AdvancedToolbarControl
 						label={ __( 'Borders', i18n ) }
@@ -194,6 +202,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						left={ getValue( '--stk-button-border-radius', STATES.RESPONSIVE )?.left }
 						hasTabletValue={ getHasDeviceValue( '--stk-button-border-radius', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-button-border-radius', 'mobile' ) }
+						helpTooltip={ {
+							video: 'general-border-radius',
+							description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
+						} }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
@@ -254,10 +266,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 					/>
 				</LayoutSettings>
 
-				<LayoutSettings title={ __( 'Icon Buttons', i18n ) }>
-					<p>
-						{ __( 'These are additional settings that apply to Icon Button Blocks.', i18n ) }
-					</p>
+				<LayoutSettings
+					title={ __( 'Icon Buttons', i18n ) }
+					description={ __( 'These are additional settings that apply to Icon Button Blocks.', i18n ) }
+				>
 					<FourRangeControl
 						label={ __( ' Button Padding', i18n ) }
 						placeholderTop="12"
@@ -278,10 +290,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						onChange={ value => onChange( '--stk-icon-button-padding', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( '--stk-icon-button-padding', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( '--stk-icon-button-padding', 'mobile' ) }
-
+						helpTooltip={ {
+							// TODO: Add a working video
+							title: __( 'Button padding', i18n ),
+							description: __( 'Adjusts the space between the button text and button borders', i18n ),
+						} }
 					/>
 				</LayoutSettings>
-				<LayoutSettings title={ __( 'Icon List', i18n ) }>
+				<LayoutSettings
+					title={ __( 'Icon List', i18n ) }
+					description={ __( 'These styles are applied to Icon List Blocks.', i18n ) }
+				>
 					<AdvancedRangeControl
 						label={ __( 'Icon Size', i18n ) }
 						min={ 0 }
@@ -329,7 +348,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 					/>
 				</LayoutSettings>
 
-				<LayoutSettings title={ __( 'Icons', i18n ) }>
+				<LayoutSettings
+					title={ __( 'Icons', i18n ) }
+					description={ __( 'These styles are applied to Icon Blocks.', i18n ) }
+				>
 					<AdvancedRangeControl
 						label={ __( 'Icon Size', i18n ) }
 						responsive="all"
