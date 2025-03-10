@@ -94,7 +94,7 @@ export const getFontFamily = fontName => {
 		return fontName
 	}
 
-	// Modern font stacks.
+	// Modern font stacks. See https://github.com/system-fonts/modern-font-stacks
 	if ( fontName.match( /^system-ui$/i ) ) {
 		return 'system-ui, sans-serif'
 	} else if ( fontName.match( /^transitional$/i ) ) {
