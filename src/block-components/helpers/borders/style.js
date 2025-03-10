@@ -1,3 +1,5 @@
+import { getBlockLayoutDefault } from '~stackable/plugins/global-settings/utils'
+
 export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 	const propsToPass = {
 		...props,
@@ -11,8 +13,18 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrNameTemplate = '%s',
 		hoverSelector,
 		borderRadiusSelector,
-		borderEnabledCallback = getAttribute => getAttribute( 'borderType' ),
+		// borderEnabledCallback = getAttribute => getAttribute( 'borderType' ) !== 'none',
 	} = props
+
+	const defaultBorderEnabledCallback = getAttribute => {
+		const defaultBorderType = props.borderTypeGlobalProperty ? getBlockLayoutDefault( props.borderTypeGlobalProperty ) : ''
+
+		const value = defaultBorderType !== '' ? 'none' : ''
+
+		return getAttribute( 'borderType' ) !== value
+	}
+
+	const borderEnabledCallback = props.borderEnabledCallback ?? defaultBorderEnabledCallback
 
 	// The style below is deprecated. We have to keep it because users who have
 	// updated will suddenly see that they have lost their border radius

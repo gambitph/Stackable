@@ -145,6 +145,8 @@ const FourRangeControl = memo( props => {
 			propsToPass.initialPosition = ''
 			propsToPass.placeholder = props.placeholder
 		}
+	} else {
+		propsToPass.initialPosition = props.initialPosition !== '' ? props.initialPosition : props.placeholder
 	}
 
 	const deviceType = useDeviceType()

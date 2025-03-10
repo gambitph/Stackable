@@ -29,6 +29,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		attrNameTemplate: 'container%s',
 		selector: borderSelector,
 		hoverSelector: `${ borderSelector }:hover`,
+		borderTypeGlobalProperty: '--stk-container-border-style',
 	} )
 	addSizeStyles( blockStyleGenerator, {
 		...props,

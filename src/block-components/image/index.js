@@ -21,6 +21,7 @@ import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
 
 export { deprecationImageOverlayOpacity } from './deprecated'
+export { IMAGE_SHADOWS } from './edit'
 
 export const Image = props => {
 	const {

@@ -230,6 +230,8 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/kses.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/spacing-and-borders/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/buttons-and-icons/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/custom-block-styles.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/compatibility/index.php' );

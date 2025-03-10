@@ -17,6 +17,8 @@ $block-design-system: (
 	 */
 	container-background-color: #fff,
 	container-border-radius: 0px,
+	container-border-style: none,
+	container-border-width: 1px,
 	container-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04),
 	container-color: #1e1e1e,
 
@@ -24,6 +26,14 @@ $block-design-system: (
 		desktop: 32px 32px,
 		mobile: 24px 24px,
 	),
+
+	container-border-width-hover: cssvar(container-border-width),
+	container-border-width-parent-hover: cssvar(container-border-width),
+	container-box-shadow-hover: cssvar(container-box-shadow),
+	container-box-shadow-parent-hover: cssvar(container-box-shadow),
+	container-padding-hover: cssvar(container-padding),
+	container-padding-parent-hover: cssvar(container-padding),
+
 	container-padding-large: (
 		desktop: 64px 80px,
 		mobile: 32px 24px,
@@ -40,31 +50,66 @@ $block-design-system: (
 		desktop: 12px,
 		mobile: 8px,
 	),
+	columns-column-gap: 0px,
+	columns-row-gap: 0px,
 
 	/**
 	 * Block backgrounds
 	 */
 	block-background-color: #f1f1f1,
+	block-background-border-style: none,
+	block-background-border-width: 1px,
+	block-background-border-radius: 0px,
+	block-background-box-shadow: none,
 	block-background-padding: (
 		desktop: 24px 24px,
 		mobile: 16px 16px,
 	),
 
+	block-background-border-width-hover: cssvar(block-background-border-width),
+	block-background-border-width-parent-hover: cssvar(block-background-border-wdith),
+	block-background-box-shadow-hover: cssvar(block-background-box-shadow),
+	block-background-box-shadow-parent-hover: cssvar(block-background-box-shadow),
+	block-background-padding-hover: cssvar(block-background-padding),
+	block-background-padding-parent-hover: cssvar(block-background-padding),
+
+	/**
+	 * Images
+	 */
+	image-drop-shadow: none,
+	image-drop-shadow-hover: cssvar(image-drop-shadow),
+	image-drop-shadow-parent-hover: cssvar(image-drop-shadow),
+	image-border-radius: 0,
+
 	/**
 	 * Buttons
 	 */
 	button-background-color: #008de4,
+	button-min-height: 0,
 	button-padding: (
 		desktop: 12px 16px,
 	),
 	icon-button-padding: (
 		desktop: 12px,
 	),
+	button-icon-size: 1em,
 	button-text-color: #fff,
 	button-gap: 12px,
+	button-icon-gap: 8px,
+	button-border-style: none,
+	button-border-width: 1px,
 	button-ghost-border-width: 2px,
+	button-border-radius: 0px,
+	button-box-shadow: none,
 	button-column-gap: 12px,
 	button-row-gap: 12px,
+
+	button-border-width-hover: cssvar(button-border-width),
+	button-border-width-parent-hover: cssvar(button-border-width),
+	button-ghost-border-width-hover: cssvar(button-ghost-border-width),
+	button-ghost-border-width-parent-hover: cssvar(button-ghost-border-width),
+	button-box-shadow-hover: cssvar(button-box-shadow),
+	button-box-shadow-parent-hover: cssvar(button-box-shadow),
 
 	/**
 	 * Icons

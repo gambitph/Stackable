@@ -229,7 +229,7 @@ const InspectorControls = memo( props => {
 					attribute="buttonFullWidth"
 					defaultValue={ false }
 				/>
-				<FlexGapControls />
+				<FlexGapControls placeholderTemplate="--stk-button" />
 				<AdvancedSelectControl
 					label={ __( 'Flex Wrap', i18n ) }
 					attribute="flexWrap"

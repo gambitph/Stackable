@@ -41,6 +41,9 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 				// Add our filter that adjusts all CSS that we print out.
 				add_filter( 'stackable_frontend_css', array( $this, 'adjust_breakpoints' ) );
 
+				//  Add filter to adjust breakpoints for Global Settings CSS.
+				add_filter( 'stackable_global_frontend_css', array( $this, 'adjust_breakpoints' ) );
+
 				// If there are adjusted breakpoints, enqueue our adjusted responsive css.
 				add_action( 'stackable_block_enqueue_frontend_assets', array( $this, 'enqueue_adjusted_responsive_css' ) );
 

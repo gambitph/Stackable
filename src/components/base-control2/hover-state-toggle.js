@@ -51,7 +51,7 @@ const _ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
 const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.map( s => upperFirst( camelCase( s ) ) )
 
 const HoverStateToggle = props => {
-	const [ currentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
+	const [ currentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState( { forceUpdateHoverState: props.forceUpdateHoverState } )
 	const deviceType = useDeviceType()
 
 	// These are all of the attributes for all states.
@@ -77,11 +77,13 @@ const HoverStateToggle = props => {
 		return hover.includes( value )
 	} )
 
+	const displayTooltip = props.forceUpdateHoverState ? false : ! hasParentHoverState
+
 	const stateOptions = _stateOptions.map( state => {
 		if ( state.value === 'parent-hover' ) {
 			return {
-				disabled: ! hasParentHoverState,
-				tooltip: ! hasParentHoverState
+				disabled: props.forceUpdateHoverState ? false : ! hasParentHoverState,
+				tooltip: displayTooltip
 					? <span className="stk-tooltip__text">
 						{ sprintf( '%s - %s', __( 'Parent Hovered', i18n ), __( 'Add a Container Background to a parent block to enable this state.', i18n ) ) }
 						<br />
@@ -92,6 +94,13 @@ const HoverStateToggle = props => {
 		}
 		return state
 	} ).map( state => {
+		if ( props.forceUpdateHoverState ) {
+			return {
+				...state,
+				hasValue: props.hasHoverStateValue?.[ state.value ] ?? false,
+			}
+		}
+
 		if ( state.value === 'normal' || ! props.attribute ) {
 			return state
 		}
@@ -115,6 +124,8 @@ HoverStateToggle.defaultProps = {
 	hover: false,
 	attribute: '',
 	hasResponsive: false, // Wether the attribute has responsive attributes (where we have hover states per device type)
+	forceUpdateHoverState: false,
+	hasHoverStateValue: undefined,
 }
 
 export default memo( HoverStateToggle )
