@@ -120,6 +120,14 @@ test.describe( 'Global Settings', () => {
 
 		// Open the Default Text Block Editor
 		const defaultBlockPagePromise = page.waitForEvent( 'popup' )
+
+		// Reset the block defaults first if it has been edited
+		const resetButton = page.locator( '.components-panel__body', { hasText: 'Block Defaults' } ).locator( '.stk-block-default-control', { hasText: /^Text$/ } ).first().getByLabel( 'Reset' )
+
+		if ( await resetButton.isVisible() ) {
+			await resetButton.click()
+		}
+
 		const textBlock = page.locator( '.components-panel__body', { hasText: 'Block Defaults' } ).locator( '.stk-block-default-control', { hasText: /^Text$/ } ).first().getByLabel( 'Edit' )
 		await textBlock.click()
 		const defaultBlockPage = await defaultBlockPagePromise
@@ -129,12 +137,14 @@ test.describe( 'Global Settings', () => {
 		await defaultBlockPage.getByLabel( 'Hex color' ).fill( 'ff0000' )
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
-		const updateRequest = defaultBlockPage.waitForResponse( response => response.url().includes( 'update_block_style' ) && response.request().method() === 'POST' )
+		const updateRequest = defaultBlockPage.waitForResponse( response => response.url().includes( 'update_block_style' ) && response.request().method() === 'POST', { timeout: 5_000 } )
 
 		// In older WP versions, the button text is 'Update' instead of 'Save'
-		if ( await defaultBlockPage.getByRole( 'button', { name: 'Save', exact: true } ).isVisible() ) {
+		if ( await defaultBlockPage.getByRole( 'button', {
+			name: 'Save', exact: true, disabled: false,
+		} ).isVisible() ) {
 			await defaultBlockPage.getByRole( 'button', { name: 'Save', exact: true } ).click()
-		} else {
+		} else if ( await defaultBlockPage.getByRole( 'button', { name: 'Update', disabled: false } ).isVisible() ) {
 			await defaultBlockPage.getByRole( 'button', { name: 'Update' } ).click()
 		}
 
