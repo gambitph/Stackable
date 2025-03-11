@@ -16,6 +16,25 @@ const subsets = { /* eslint-disable quote-props */
 	'pl_PL': 'latin-ext',
 }
 
+// See https://github.com/system-fonts/modern-font-stacks
+const MODERN_FONTS = {
+	'system-ui': 'system-ui, sans-serif',
+	'transitional': "Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif",
+	'old-style': "'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif",
+	'humanist': "Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif",
+	'geometric-humanist': "Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif",
+	'classical-humanist': "Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif",
+	'neo-grotesque': "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
+	'monospace-slab-serif': "'Nimbus Mono PS', 'Courier New', monospace",
+	'monospace-code': "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace",
+	'industrial': "Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif",
+	'rounded-sans': "ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif",
+	'slab-serif': "Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif",
+	'antique': "Superclarendon, 'Bookman Old Style', 'URW Bookman', 'URW Bookman L', 'Georgia Pro', Georgia, serif",
+	'didone': "Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif",
+	'handwritten': "'Segoe Print', 'Bradley Hand', Chilanka, TSCu_Comic, casual, cursive",
+}
+
 export const getGoogleFontURL = fontName => {
 	const family = fontName.replace( / /g, '+' )
 	const subset = subsets[ locale ] ? `&subset=${ subsets }` : ''
@@ -94,37 +113,9 @@ export const getFontFamily = fontName => {
 		return fontName
 	}
 
-	// Modern font stacks. See https://github.com/system-fonts/modern-font-stacks
-	if ( fontName.match( /^system-ui$/i ) ) {
-		return 'system-ui, sans-serif'
-	} else if ( fontName.match( /^transitional$/i ) ) {
-		return "Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif"
-	} else if ( fontName.match( /^old-style$/i ) ) {
-		return "'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif"
-	} else if ( fontName.match( /^humanist$/i ) ) {
-		return "Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif"
-	} else if ( fontName.match( /^geometric-humanist$/i ) ) {
-		return "Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif"
-	} else if ( fontName.match( /^classical-humanist$/i ) ) {
-		return "Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif"
-	} else if ( fontName.match( /^neo-grotesque$/i ) ) {
-		return "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif"
-	} else if ( fontName.match( /^monospace-slab-serif$/i ) ) {
-		return "'Nimbus Mono PS', 'Courier New', monospace"
-	} else if ( fontName.match( /^monospace-code$/i ) ) {
-		return "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace"
-	} else if ( fontName.match( /^industrial$/i ) ) {
-		return "Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif"
-	} else if ( fontName.match( /^rounded-sans$/i ) ) {
-		return "ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif"
-	} else if ( fontName.match( /^slab-serif$/i ) ) {
-		return "Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif"
-	} else if ( fontName.match( /^antique$/i ) ) {
-		return "Superclarendon, 'Bookman Old Style', 'URW Bookman', 'URW Bookman L', 'Georgia Pro', Georgia, serif"
-	} else if ( fontName.match( /^didone$/i ) ) {
-		return "Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif"
-	} else if ( fontName.match( /^handwritten$/i ) ) {
-		return "'Segoe Print', 'Bradley Hand', Chilanka, TSCu_Comic, casual, cursive"
+	// Modern font stacks.
+	if ( fontName.toLowerCase() in MODERN_FONTS ) {
+		return MODERN_FONTS[ fontName.toLowerCase() ]
 	}
 
 	// Google Font.
