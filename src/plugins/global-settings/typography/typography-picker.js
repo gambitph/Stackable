@@ -2,7 +2,9 @@
  * External dependencies
  */
 import { Tooltip, TypographyControl } from '~stackable/components'
-import { createTypographyStyles, loadGoogleFont } from '~stackable/util'
+import {
+	createTypographyStyles, getFontFamilyLabel, loadGoogleFont,
+} from '~stackable/util'
 import { i18n } from 'stackable'
 import { upperFirst, omit } from 'lodash'
 import classnames from 'classnames'
@@ -118,7 +120,7 @@ export default TypographyPicker
 const createDescription = ( styleObject, device = 'desktop' ) => {
 	const description = []
 	if ( styleObject.fontFamily ) {
-		description.push( styleObject.fontFamily )
+		description.push( getFontFamilyLabel( styleObject.fontFamily ) )
 	}
 	if ( styleObject.fontSize ) {
 		description.push( `${ styleObject.fontSize }${ styleObject.fontSizeUnit || 'px' }` )
