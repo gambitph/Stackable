@@ -90,6 +90,15 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 		}
 
+		/**
+		 * Creates a complete schema for a given type.
+		 *
+		 * This function generates a schema that defines values for various device types
+		 * and hover states. It also includes the units associated with each device type.
+		 *
+		 * @param array $type The type definition for the schema
+		 * @return array The generated schema.
+		 */
 		public static function create_global_schema( $type ) {
 			return array(
 				'type' => 'object',
@@ -116,6 +125,12 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			);
 		}
 
+		/**
+		 * This function defines a schema for a four-range type and utilizes the
+		 * `create_global_schema` function to generate the complete schema.
+		 *
+		 * @return array The generated schema for four-range type.
+		 */
 		public static function get_four_range_properties() {
 			$four_range_type  = array(
 				'type' => 'object',
@@ -130,12 +145,24 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			return Stackable_Global_Settings::create_global_schema( $four_range_type );
 		}
 
+		/**
+		 * This function defines a schema for a string type and utilizes the
+		 * `create_global_schema` function to generate the complete schema.
+		 *
+		 * @return array The generated schema for string type.
+		 */
 		public static function get_string_properties() {
 			$string_type = array( 'type' => 'string' );
 
 			return Stackable_Global_Settings::create_global_schema( $string_type );
 		}
 
+		/**
+		 * This function defines a schema for a number type and utilizes the
+		 * `create_global_schema` function to generate the complete schema.
+		 *
+		 * @return array The generated schema for number type.
+		 */
 		public static function get_number_properties() {
 			$number_type = array( 'type' => 'number' );
 
@@ -872,8 +899,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 *  - Global Spacing and Borders
 		 *  - Global Buttons and Icons
 		 *
-		 * @param String $current_css
-		 * @return String
+		 * @param String $option_name
+		 * @param String $settings_name
+		 *
+		 * @return String generated css
 		 */
 		public static function generate_global_block_layouts( $option_name, $settings_name ) {
 			$block_layouts = get_option( $option_name );
