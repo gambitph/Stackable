@@ -1,5 +1,6 @@
 <?php
 // This is a generated file by gulp generate-block-design-system-php
+// Use block-design-system.json if you want to edit this file.
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {

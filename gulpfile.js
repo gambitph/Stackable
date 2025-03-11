@@ -260,6 +260,7 @@ gulp.task( 'generate-block-design-system-php', function( cb ) {
 	// Generate PHP variable string
 	const script = `<?php
 // This is a generated file by gulp generate-block-design-system-php
+// Use block-design-system.json if you want to edit this file.
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -284,7 +285,7 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 ?>
 `
 	// Write PHP variable to file
-	fs.writeFileSync( path.resolve( __dirname, 'src/styles/index.php' ), script )
+	fs.writeFileSync( path.resolve( __dirname, 'src/styles/block-design-system.php' ), script )
 
 	cb()
 } )
@@ -396,6 +397,7 @@ gulp.task( 'generate-block-design-system-scss', function( cb ) {
 	// Generate PHP variable string
 	const script = `@import "cssvars";
 // This is a generated file by gulp generate-block-design-system-scss
+// Use block-design-system.json if you want to edit this file.
 
 /**
  * Default Stackable UI Kit design.
