@@ -55,6 +55,7 @@ const TypographyPicker = props => {
 			showSecondFontSize={ false }
 			allowReset={ true }
 			fontFamily={ value.fontFamily }
+			defaultFontFamily={ props?.defaultFontFamily }
 			fontSize={ value.fontSize }
 			htmlTag={ props.selector }
 			tabletFontSize={ value.tabletFontSize }

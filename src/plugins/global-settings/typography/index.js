@@ -116,6 +116,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}
 	}, [ isPanelOpen ] )
 
+	const getCurrentFontPair = () => {
+		return [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
+	}
+
 	const updateTypography = newSettings => {
 		setTypographySettings( newSettings )
 
@@ -152,6 +156,14 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}, 500 )
 	}
 
+	const changeApplySettingsTo = value => {
+		setApplySettingsTo( value )
+		const model = new models.Settings( {
+			stackable_global_typography_apply_to: value, // eslint-disable-line
+		} )
+		model.save()
+	}
+
 	const changeStyles = typography => {
 		const newSettings = { ...typographySettings }
 
@@ -183,7 +195,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	const resetStyles = selector => {
 		let newSettings = {}
-		const currentFontPair = [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
+		const currentFontPair = getCurrentFontPair()
 		if ( ! isEditingFontPair && currentFontPair ) {
 			newSettings = { ...typographySettings, [ selector ]: currentFontPair.typography[ selector ] }
 		}
@@ -193,16 +205,15 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		updateTypography( newSettings )
 	}
 
-	const changeApplySettingsTo = value => {
-		setApplySettingsTo( value )
-		const model = new models.Settings( {
-			stackable_global_typography_apply_to: value, // eslint-disable-line
-		} )
-		model.save()
+	const getDefaultFontFamily = selector => {
+		const currentFontPair = getCurrentFontPair()
+		if ( ! isEditingFontPair && currentFontPair ) {
+			return currentFontPair.typography[ selector ]?.fontFamily ?? ''
+		}
 	}
 
 	const getIsAllowReset = selector => {
-		const currentFontPair = [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
+		const currentFontPair = getCurrentFontPair()
 		const typographyStyle = typographySettings[ selector ]
 		if ( ! isEditingFontPair && currentFontPair ) {
 			const fontPairStyle = currentFontPair.typography[ selector ]
@@ -358,6 +369,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									label={ label }
 									selector={ selector }
 									value={ ( typographySettings[ selector ] ) || {} }
+									defaultFontFamily={ getDefaultFontFamily( selector ) }
 									isAllowReset={ getIsAllowReset( selector ) }
 									onChange={ styles => changeStyles( { [ selector ]: styles } ) }
 									onReset={ () => resetStyles( selector ) }
