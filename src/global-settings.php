@@ -950,6 +950,18 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						}
 					} else if ( is_array( $value ) ) {
 						$default_value = Stackable_Global_Settings::get_block_layout_defaults( $defaults, $property, $device );
+
+						// In case the default value is a number (same value for all sides)
+						if ( ! is_array( $default_value ) ) {
+							$_default_value = $default_value;
+							$default_value = array(
+								"top" => $_default_value,
+								"right" => $_default_value,
+								"bottom" => $_default_value,
+								"left" => $_default_value
+							);
+						}
+
 						$top = isset( $value[ 'top' ] ) ? $value[ 'top' ] : $default_value[ 'top' ];
 						$right = isset( $value[ 'right' ] ) ? $value[ 'right' ] : $default_value[ 'right' ];
 						$bottom = isset( $value[ 'bottom' ] ) ? $value[ 'bottom' ] : $default_value[ 'bottom' ];
