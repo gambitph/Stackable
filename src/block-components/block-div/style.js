@@ -14,7 +14,6 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	addBorderStyles( blockStyleGenerator, {
 		...props,
 		attrNameTemplate: 'block%s',
-		borderTypeGlobalProperty: '--stk-block-background-border-style',
 	} )
 	addSizeStyles( blockStyleGenerator, {
 		...props,

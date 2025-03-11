@@ -52,26 +52,26 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 					'show_in_rest' => array(
 						'schema' => array(
 							'properties' => array(
-								'--stk-container-border-style' => $string_properties,
-								'--stk-container-border-width' => $four_range_properties,
-								'--stk-container-border-radius' => $four_range_properties,
-								'--stk-container-box-shadow' => $string_properties,
-								'--stk-container-padding' => $four_range_properties,
+								'container-border-style' => $string_properties,
+								'container-border-width' => $four_range_properties,
+								'container-border-radius' => $four_range_properties,
+								'container-box-shadow' => $string_properties,
+								'container-padding' => $four_range_properties,
 
-								'--stk-block-background-border-style' => $string_properties,
-								'--stk-block-background-border-width' => $four_range_properties,
-								'--stk-block-background-border-radius' => $four_range_properties,
-								'--stk-block-background-box-shadow' => $string_properties,
-								'--stk-block-background-padding' => $four_range_properties,
+								'block-background-border-style' => $string_properties,
+								'block-background-border-width' => $four_range_properties,
+								'block-background-border-radius' => $four_range_properties,
+								'block-background-box-shadow' => $string_properties,
+								'block-background-padding' => $four_range_properties,
 
-								'--stk-block-margin-bottom' => $number_properties,
+								'block-margin-bottom' => $number_properties,
 
-								'--stk-column-margin' => $number_properties,
-								'--stk-columns-column-gap' => $number_properties,
-								'--stk-columns-row-gap' => $number_properties,
+								'column-margin' => $number_properties,
+								'columns-column-gap' => $number_properties,
+								'columns-row-gap' => $number_properties,
 
-								'--stk-image-drop-shadow' => $string_properties,
-								'--stk-image-border-radius' => $four_range_properties,
+								'image-drop-shadow' => $string_properties,
+								'image-border-radius' => $four_range_properties,
 							)
 						)
 					),
@@ -94,22 +94,14 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 		 * @return String
 		 */
 		public function add_global_spacing_and_borders_styles( $current_css ) {
-			$defaults = json_decode( file_get_contents( plugin_dir_path( __FILE__ ) . 'defaults.json' ), true );
-
-			$generated_css = Stackable_Global_Settings::generate_global_block_layouts( 'stackable_global_spacing_and_borders', 'Global Spacing and Borders', $defaults );
+			$generated_css = Stackable_Global_Settings::generate_global_block_layouts( 'stackable_global_spacing_and_borders', 'Global Spacing and Borders' );
 
 			if ( ! $generated_css ) {
 				return $current_css;
 			}
 
-			if ( strpos( $generated_css, 'hover' ) !== false ) {
-				add_filter( 'stackable_has_global_animations', function( $has_global_animations ) {
-					return true;
-				} );
-			}
-
 			$current_css .= $generated_css;
-			return apply_filters( 'stackable_global_frontend_css' , $current_css );
+			return apply_filters( 'stackable_frontend_css' , $current_css );
 		}
 	}
 

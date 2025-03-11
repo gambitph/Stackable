@@ -140,8 +140,8 @@ const InspectorControls = memo( props => {
 				blockState={ props.blockState }
 				borderSelector=".stk-button"
 				hasFullWidth={ true }
-				borderRadiusPlaceholder={ getPlaceholder( '--stk-button-border-radius' ) }
-				iconGapPlaceholderName="--stk-button-icon-gap"
+				borderRadiusPlaceholder={ getPlaceholder( 'button-border-radius' ) }
+				iconGapPlaceholderName="button-icon-gap"
 			/>
 			<Typography.InspectorControls
 				{ ...props }

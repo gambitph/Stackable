@@ -393,7 +393,7 @@ const Controls = props => {
 					attribute="imageShadow"
 					hover="all"
 					isFilter={ true }
-					placeholder={ getPlaceholder( '--stk-image-drop-shadow' ) }
+					placeholder={ getPlaceholder( 'image-drop-shadow' ) }
 					helpTooltip={ {
 						video: 'image-shadow',
 						title: __( 'Image Shadow', i18n ),
@@ -431,7 +431,7 @@ const Controls = props => {
 					attribute="imageBorderRadius"
 					min="0"
 					sliderMax={ borderRadiusSliderMax }
-					placeholder={ getPlaceholder( '--stk-image-border-radius' ) || '0' }
+					placeholder={ getPlaceholder( 'image-border-radius' ) || '0' }
 					defaultValue={ 0 }
 					allowReset={ true }
 					helpTooltip={ {

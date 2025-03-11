@@ -1,5 +1,3 @@
-import { getBlockLayoutDefault } from '~stackable/plugins/global-settings/utils'
-
 export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 	const propsToPass = {
 		...props,
@@ -13,18 +11,8 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrNameTemplate = '%s',
 		hoverSelector,
 		borderRadiusSelector,
-		// borderEnabledCallback = getAttribute => getAttribute( 'borderType' ) !== 'none',
+		// borderEnabledCallback = getAttribute => getAttribute( 'borderType' ) !== '',
 	} = props
-
-	const defaultBorderEnabledCallback = getAttribute => {
-		const defaultBorderType = props.borderTypeGlobalProperty ? getBlockLayoutDefault( props.borderTypeGlobalProperty ) : ''
-
-		const value = defaultBorderType !== '' ? 'none' : ''
-
-		return getAttribute( 'borderType' ) !== value
-	}
-
-	const borderEnabledCallback = props.borderEnabledCallback ?? defaultBorderEnabledCallback
 
 	// The style below is deprecated. We have to keep it because users who have
 	// updated will suddenly see that they have lost their border radius
@@ -165,7 +153,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrName: 'borderColor',
 		key: 'borderColor',
 		attrNameTemplate,
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		hover: 'all',
 		hoverSelector,
 		dependencies: [ 'borderType' ],
@@ -182,7 +170,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		hover: 'all',
 		hoverSelector,
 		format: '%spx',
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		valuePreCallback: value => value?.top,
 		dependencies: [ 'borderType' ],
 	}, {
@@ -196,7 +184,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		hover: 'all',
 		hoverSelector,
 		format: '%spx',
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		valuePreCallback: value => value?.right,
 		dependencies: [ 'borderType' ],
 	}, {
@@ -210,7 +198,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		hover: 'all',
 		hoverSelector,
 		format: '%spx',
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		valuePreCallback: value => value?.bottom,
 		dependencies: [ 'borderType' ],
 	}, {
@@ -224,7 +212,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		hover: 'all',
 		hoverSelector,
 		format: '%spx',
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		valuePreCallback: value => value?.left,
 		dependencies: [ 'borderType' ],
 	} ] )

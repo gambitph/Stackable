@@ -28,7 +28,6 @@ const buildInclude = [
 	path.resolve( __dirname, './*.+(txt|php)' ), // All files in the root.
 	path.resolve( __dirname, './src/**/*.php' ), // Only PHP files in our source files, others will be compiled into dist.
 	path.resolve( __dirname, './src/**/block.json' ), // Allow block metadata files.
-	path.resolve( __dirname, './src/plugins/global-settings/*/defaults.json' ), // Global layout defaults.
 	path.resolve( __dirname, './dist/**' ),
 	path.resolve( __dirname, './freemius/**' ),
 	path.resolve( __dirname, './languages/**' ),
@@ -194,6 +193,218 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 
 	// Write PHP variable to file
 	fs.writeFileSync( path.resolve( __dirname, 'src/stk-block-types.php' ), script )
+
+	cb()
+} )
+
+gulp.task( 'generate-block-design-system-php', function( cb ) {
+	const fs = require( 'fs' )
+
+	let blockDesignSystem = 'array()'
+
+	const toAssocArray = ( key, value, cb, indent ) => {
+		if ( typeof value === 'object' ) {
+			const parsed = cb( value, indent + 1 )
+			return `"${ key }" => ${ parsed }`
+		}
+
+		if ( typeof value === 'string' ) {
+			return `"${ key }" => "${ value }"`
+		}
+
+		return `"${ key }" => ${ value }`
+	}
+
+	const parseBlockDesignSystem = ( obj, indent ) => {
+		let content = ''
+		const tab = '\t'.repeat( indent )
+
+		if ( typeof obj === 'object' ) {
+			content += 'array(\n'
+
+			Object.entries( obj ).forEach( ( [ key, value ], index, bds ) => {
+				if ( key === 'hoverStates' ) {
+					return
+				}
+
+				content += tab + toAssocArray( key, value, parseBlockDesignSystem, indent )
+
+				if ( index !== bds.length - 1 ) {
+					content += ',\n'
+				} else {
+					content += '\n'
+				}
+			} )
+			content += `\t`.repeat( indent - 1 ) + ')'
+		}
+		return content
+	}
+
+	const parseBlockDesignSystemSections = ( sections, indent ) => {
+		const combined = {}
+		Object.values( sections ).forEach( section => {
+			Object.entries( section ).forEach( ( [ key, value ] ) => {
+				combined[ key ] = value
+			} )
+		} )
+
+		return parseBlockDesignSystem( combined, indent )
+	}
+	const jsonPath = path.resolve( __dirname, `src/styles/block-design-system.json` )
+	if ( fs.existsSync( jsonPath ) ) {
+		const fileContent = fs.readFileSync( jsonPath, 'utf-8' )
+		const raw = JSON.parse( fileContent )
+		blockDesignSystem = parseBlockDesignSystemSections( raw, 4 )
+	}
+
+	// Generate PHP variable string
+	const script = `<?php
+// This is a generated file by gulp generate-block-design-system-php
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( ! class_exists( 'Stackable_Block_Design_System') ) {
+	class Stackable_Block_Design_System {
+
+		function __construct() {
+		}
+
+		public static function get_block_design_system() {
+			$block_design_system = ${ blockDesignSystem };
+
+			return $block_design_system;
+		}
+	}
+
+	new Stackable_Block_Design_System();
+}
+?>
+`
+	// Write PHP variable to file
+	fs.writeFileSync( path.resolve( __dirname, 'src/styles/index.php' ), script )
+
+	cb()
+} )
+
+gulp.task( 'generate-block-design-system-scss', function( cb ) {
+	const fs = require( 'fs' )
+
+	let blockDesignSystem = ''
+
+	const getFourRangeValue = sides => {
+		if ( Object.values( sides ).every( s => s === sides.top ) ) {
+			return `${ sides.top }px`
+		}
+
+		if ( sides.top === sides.bottom && sides.right === sides.left ) {
+			return `${ sides.top }px ${ sides.right }px`
+		}
+
+		return `${ sides.top }px ${ sides.right }px ${ sides.bottom }px ${ sides.left }px`
+	}
+
+	const getDeviceValue = ( obj, device = 'desktop' ) => {
+		const value = obj[ device ]
+
+		if ( typeof value === 'number' ) {
+			return `${ value }px`
+		}
+
+		if ( typeof value === 'object' ) {
+			return `${ getFourRangeValue( value ) }`
+		}
+
+		if ( value === '' ) {
+			return 'none'
+		}
+
+		return value
+	}
+
+	const getValue = ( property, obj, indent ) => {
+		if ( Object.keys( obj ).length === 1 ) {
+			return getDeviceValue( obj )
+		}
+
+		const tab = `\t`.repeat( indent )
+		let content = getDeviceValue( obj )
+		let hoverProperties = ''
+		if ( 'hoverStates' in obj ) {
+			hoverProperties += ',\n'
+			const _hoverProperties = []
+			Object.keys( obj.hoverStates ).forEach( state => {
+				if ( obj.hoverStates[ state ] ) {
+					_hoverProperties.push( tab + `${ property }-${ state }: cssvar(${ property })` )
+				}
+			} )
+			hoverProperties += _hoverProperties.join( ',\n' )
+		}
+
+		if ( 'hoverStates' in obj && Object.keys( obj ).length === 2 ) {
+			content += hoverProperties
+			return content
+		}
+
+		content = '(\n'
+		Object.keys( obj ).forEach( device => {
+			if ( device === 'hoverStates' ) {
+				return
+			}
+			content += `\t`.repeat( indent + 1 ) + `${ device }: ${ getDeviceValue( obj, device ) },\n`
+		} )
+		content += tab + ')'
+		content += hoverProperties
+
+		return content
+	}
+
+	const parseBlockDesignSystem = ( obj, indent ) => {
+		let content = ''
+		const tab = `\t`.repeat( indent )
+		Object.entries( obj ).forEach( ( [ key, v ] ) => {
+			const value = getValue( key, v, indent )
+			content += tab + `${ key }: ${ value },\n`
+		} )
+		return content
+	}
+
+	const parseBlockDesignSystemSections = ( sections, indent ) => {
+		let content = ''
+		if ( typeof sections === 'object' ) {
+			Object.entries( sections ).forEach( ( [ section, obj ], index, s ) => {
+				content += `	/**
+	 * ${ section }
+	 */
+`
+				content += parseBlockDesignSystem( obj, indent )
+				content += index !== s.length - 1 ? '\n' : ''
+			} )
+		}
+		return content
+	}
+
+	const jsonPath = path.resolve( __dirname, `src/styles/block-design-system.json` )
+	if ( fs.existsSync( jsonPath ) ) {
+		const fileContent = fs.readFileSync( jsonPath, 'utf-8' )
+		const raw = JSON.parse( fileContent )
+		blockDesignSystem = parseBlockDesignSystemSections( raw, 1 )
+	}
+
+	// Generate PHP variable string
+	const script = `@import "cssvars";
+// This is a generated file by gulp generate-block-design-system-scss
+
+/**
+ * Default Stackable UI Kit design.
+ */
+$block-design-system: (
+${ blockDesignSystem });
+`
+	// Write to SCSS file
+	fs.writeFileSync( path.resolve( __dirname, 'src/styles/block-design-system.scss' ), script )
 
 	cb()
 } )
@@ -492,7 +703,9 @@ gulp.task( 'style-deprecated', gulp.parallel(
 
 gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated', 'generate-translations-js', 'generate-stk-block-typesphp' ) )
 
-gulp.task( 'build', gulp.series( 'build-process' ) )
+gulp.task( 'build-block-design-system', gulp.parallel( 'generate-block-design-system-php', 'generate-block-design-system-scss' ) )
+
+gulp.task( 'build', gulp.series( 'build-block-design-system', 'build-process' ) )
 
 gulp.task( 'package', function() {
 	return gulp.src( buildInclude, { base: './' } )
@@ -507,6 +720,10 @@ gulp.task( 'zip', function() {
 } )
 
 const watchFuncs = ( basePath = '.' ) => {
+	gulp.watch(
+		[ `${ basePath }/src/styles/block-design-system.json` ],
+		gulp.parallel( [ 'generate-block-design-system-php', 'generate-block-design-system-scss' ] )
+	)
 	gulp.watch(
 		[ `${ basePath }/src/**/*.scss` ],
 		gulp.parallel( [ 'style', 'style-editor', 'welcome-styles', 'style-deprecated' ] )
@@ -523,7 +740,7 @@ const watchFuncs = ( basePath = '.' ) => {
 	)
 }
 
-gulp.task( 'watch', gulp.series( 'build-process', function watch( done ) {
+gulp.task( 'watch', gulp.series( 'build-block-design-system', 'build-process', function watch( done ) {
 	watchFuncs()
 	done()
 } ) )

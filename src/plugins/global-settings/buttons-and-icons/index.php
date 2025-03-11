@@ -52,25 +52,25 @@ if ( ! class_exists( 'Stackable_Global_Buttons_And_Icons' ) ) {
 					'show_in_rest' => array(
 						'schema' => array(
 							'properties' => array(
-								'--stk-button-min-height' => $number_properties,
-								'--stk-button-padding' => $four_range_properties,
-								'--stk-icon-button-padding' => $four_range_properties,
-								'--stk-button-border-style' => $string_properties,
-								'--stk-button-border-width' => $four_range_properties,
-								'--stk-button-ghost-border-width' => $four_range_properties,
-								'--stk-button-border-radius' => $four_range_properties,
-								'--stk-button-box-shadow' => $string_properties,
-								'--stk-button-icon-size' => $number_properties,
-								'--stk-button-icon-gap' => $number_properties,
-								'--stk-button-column-gap' => $number_properties,
-								'--stk-button-row-gap' => $number_properties,
+								'button-min-height' => $number_properties,
+								'button-padding' => $four_range_properties,
+								'icon-button-padding' => $four_range_properties,
+								'button-border-style' => $string_properties,
+								'button-border-width' => $four_range_properties,
+								'button-ghost-border-width' => $four_range_properties,
+								'button-border-radius' => $four_range_properties,
+								'button-box-shadow' => $string_properties,
+								'button-icon-size' => $number_properties,
+								'button-icon-gap' => $number_properties,
+								'button-column-gap' => $number_properties,
+								'button-row-gap' => $number_properties,
 
-								'--stk-icon-list-size' => $number_properties,
-								'--stk-icon-list-row-gap' => $number_properties,
-								'--stk-icon-list-icon-gap' => $number_properties,
-								'--stk-icon-list-indentation' => $number_properties,
+								'icon-list-icon-size' => $number_properties,
+								'icon-list-row-gap' => $number_properties,
+								'icon-list-icon-gap' => $number_properties,
+								'icon-list-indentation' => $number_properties,
 
-								'--stk-icon-size' => $number_properties
+								'icon-size' => $number_properties
 							)
 						)
 					),
@@ -93,22 +93,14 @@ if ( ! class_exists( 'Stackable_Global_Buttons_And_Icons' ) ) {
 		 * @return String
 		 */
 		public function add_global_buttons_and_icons_styles( $current_css ) {
-			$defaults = json_decode( file_get_contents( plugin_dir_path( __FILE__ ) . 'defaults.json' ), true );
-
-			$generated_css = Stackable_Global_Settings::generate_global_block_layouts( 'stackable_global_buttons_and_icons', 'Global Buttons and Icons', $defaults );
+			$generated_css = Stackable_Global_Settings::generate_global_block_layouts( 'stackable_global_buttons_and_icons', 'Global Buttons and Icons' );
 
 			if ( ! $generated_css ) {
 				return $current_css;
 			}
 
-			if ( strpos( $generated_css, 'hover' ) !== false ) {
-				add_filter( 'stackable_has_global_animations', function( $has_global_animations ) {
-					return true;
-				} );
-			}
-
 			$current_css .= $generated_css;
-			return apply_filters( 'stackable_global_frontend_css' , $current_css );
+			return apply_filters( 'stackable_frontend_css' , $current_css );
 		}
 	}
 

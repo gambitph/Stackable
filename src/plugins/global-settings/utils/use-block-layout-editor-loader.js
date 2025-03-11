@@ -13,7 +13,7 @@ import { useEffect, useState } from '@wordpress/element'
  * External dependencies
  */
 import { compact } from 'lodash'
-import { useBlockHoverState } from '~stackable/hooks'
+import { useBlockHoverState, useBlockLayoutDefaults } from '~stackable/hooks'
 
 const renderGlobalStyles = (
 	blockLayouts,
@@ -42,7 +42,7 @@ const renderGlobalStyles = (
 	}
 
 	const getValue = ( _property, device, state, value, unit ) => {
-		let property = _property
+		let property = '--stk-' + _property
 
 		if ( state === 'parent-hover' && currentHoverState === 'parent-hover' && blockUniqueId && parentHoverBlock ) {
 			property += '-hover'
@@ -107,7 +107,7 @@ const renderGlobalStyles = (
 	setStyles( css )
 }
 
-export const useBlockLayoutEditorLoader = ( storeName, blockLayoutDefaults ) => {
+export const useBlockLayoutEditorLoader = storeName => {
 	const {
 		blockLayouts, selectedBlockUniqueId, SelectedParentHoverBlock,
 	} = useSelect( select => ( {
@@ -118,6 +118,8 @@ export const useBlockLayoutEditorLoader = ( storeName, blockLayoutDefaults ) => 
 
 	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
 	const [ styles, setStyles ] = useState( '' )
+
+	const { defaults: blockLayoutDefaults } = useBlockLayoutDefaults()
 
 	useEffect( () => {
 		if ( blockLayouts && typeof blockLayouts === 'object' ) {

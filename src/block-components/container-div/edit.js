@@ -66,7 +66,7 @@ export const Edit = props => {
 					<SizeControls.Spacing
 						attrNameTemplate="container%s"
 						enableMargin={ false }
-						paddingPlaceholder={ getPlaceholder( '--stk-container-padding' ) }
+						paddingPlaceholder={ getPlaceholder( 'container-padding' ) }
 						visualGuide={ {
 							selector: '.stk-%s-container',
 						} }
@@ -93,9 +93,9 @@ export const Edit = props => {
 					>
 						<BorderControls
 							attrNameTemplate="container%s"
-							placeholderTemplate="--stk-container"
-							borderTypeValue={ getPlaceholder( '--stk-container-border-style' ) }
-							borderRadiusPlaceholder={ getPlaceholder( '--stk-container-border-radius' ) }
+							placeholderTemplate="container"
+							borderTypeValue={ getPlaceholder( 'container-border-style' ) }
+							borderRadiusPlaceholder={ getPlaceholder( 'container-border-radius' ) }
 						/>
 					</PanelAdvancedSettings>
 				</InspectorStyleControls>

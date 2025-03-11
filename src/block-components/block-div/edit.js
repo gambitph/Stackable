@@ -57,7 +57,7 @@ export const Edit = memo( props => {
 						/>
 						<SizeControls.Spacing
 							attrNameTemplate="block%s"
-							paddingPlaceholder={ hasBackground ? getPlaceholder( '--stk-block-background-padding' ) : '' }
+							paddingPlaceholder={ hasBackground ? getPlaceholder( 'block-background-padding' ) : '' }
 							visualGuide={ {
 								highlight: 'padding',
 							} }
@@ -87,9 +87,9 @@ export const Edit = memo( props => {
 				>
 					<BorderControls
 						attrNameTemplate="block%s"
-						placeholderTemplate="--stk-block-background"
-						borderTypeValue={ getPlaceholder( '--stk-block-background-border-style' ) }
-						borderRadiusPlaceholder={ getPlaceholder( '--stk-block-background-border-radius' ) }
+						placeholderTemplate="block-background"
+						borderTypeValue={ getPlaceholder( 'block-background-border-style' ) }
+						borderRadiusPlaceholder={ getPlaceholder( 'block-background-border-radius' ) }
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
