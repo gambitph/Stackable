@@ -114,8 +114,8 @@ export const getFontFamily = fontName => {
 	}
 
 	// Modern font stacks.
-	if ( fontName.toLowerCase() in MODERN_FONTS ) {
-		return MODERN_FONTS[ fontName.toLowerCase() ]
+	if ( MODERN_FONTS[ fontName ] ) {
+		return MODERN_FONTS[ fontName ]
 	}
 
 	// Google Font.
