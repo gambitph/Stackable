@@ -54,7 +54,19 @@ const renderGlobalStyles = (
 		if ( typeof value === 'string' ) {
 			style = `${ property }: ${ value };`
 		} else if ( typeof value === 'object' ) {
-			const defaultValue = getDefault( blockLayoutDefaults, _property, device )
+			let defaultValue = getDefault( blockLayoutDefaults, _property, device )
+
+			// In case the default value is a number (same value for all sides)
+			if ( typeof defaultValue !== 'object' ) {
+				const _defaultValue = defaultValue
+				defaultValue = {
+					top: _defaultValue,
+					right: _defaultValue,
+					bottom: _defaultValue,
+					left: _defaultValue,
+				}
+			}
+
 			const top = value.top !== undefined ? value.top : defaultValue.top
 			const right = value.right !== undefined ? value.right : defaultValue.right
 			const bottom = value.bottom !== undefined ? value.bottom : defaultValue.bottom

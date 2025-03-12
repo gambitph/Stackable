@@ -207,12 +207,14 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 // Icons
 .stk--inner-svg {
 	border-color: cssvar(icon-color);
-	svg:last-child:not(.ugb-custom-icon):not(.stk-custom-icon) {
+	svg:last-child {
 		width: cssvar(icon-size);
 		height: cssvar(icon-size);
-		&,
-		:is(g, path, rect, polygon, ellipse) {
-			fill: cssvar(icon-color);
+		&:not(.ugb-custom-icon):not(.stk-custom-icon) {
+			&,
+			:is(g, path, rect, polygon, ellipse) {
+				fill: cssvar(icon-color);
+			}
 		}
 	}
 }
