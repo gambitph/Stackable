@@ -1,0 +1,32 @@
+[
+	{
+		"backgroundColor": "#fef6e4",
+		"headingColor": "#001858",
+		"textColor": "#172c66",
+		"linkColor": "",
+		"accentColor": "#8bd3dd",
+		"buttonColor": "#f582ae",
+		"buttonTextColor": "#001858",
+		"buttonOutlineColor": "#f582ae"
+	},
+	{
+		"backgroundColor": "#0f0e17",
+		"headingColor": "#fffffe",
+		"textColor": "#fffffe",
+		"linkColor": "#e53170",
+		"accentColor": "#f25f4c",
+		"buttonColor": "#ff8906",
+		"buttonTextColor": "#fffffe",
+		"buttonOutlineColor": "#ff8906"
+	},
+	{
+		"backgroundColor": "#232946",
+		"headingColor": "#fffffe",
+		"textColor": "#b8c1ec",
+		"linkColor": "#eebbc3",
+		"accentColor": "#eebbc3",
+		"buttonColor": "#eebbc3",
+		"buttonTextColor": "#232946",
+		"buttonOutlineColor": "#eebbc3"
+	}
+]

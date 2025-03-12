@@ -55,17 +55,17 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 								'properties'=> array(
 									'name' => array( 'type' => 'string' ),
 									'key' => array( 'type' => 'string' ),
-									'color_scheme' => array(
+									'colorScheme' => array(
 										'type' => 'object',
 										'properties' => array(
-											'background-color' => $string_properties,
-											'heading-color' => $string_properties,
-											'text-color' => $string_properties,
-											'link-color' => $string_properties,
-											'accent-color' => $string_properties,
-											'button-color' => $string_properties,
-											'button-text-color' => $string_properties,
-											'button-outline-color' => $string_properties
+											'backgroundColor' => $string_properties,
+											'headingColor' => $string_properties,
+											'textColor' => $string_properties,
+											'linkColor' => $string_properties,
+											'accentColor' => $string_properties,
+											'buttonColor' => $string_properties,
+											'buttonTextColor' => $string_properties,
+											'buttonOutlineColor' => $string_properties
 										)
 									)
 								)
@@ -113,7 +113,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			);
 		}
 
-		public function sanitize_array_setting( $input ) {
+		public static function sanitize_array_setting( $input ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
@@ -126,64 +126,64 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			// If upgrading and there's no global color schemes, values in default color schemes are empty
 			if ( ! empty( $old_version ) && version_compare( $old_version, "3.15.0", "<" ) && ! get_option( 'stackable_global_color_schemes' ) ) {
 				$empty_color_scheme = array(
-					'background-color' => array( 'desktop' => '' ),
-					'heading-color' => array( 'desktop' => ''),
-					'text-color' => array( 'desktop' => '' ),
-					'link-color' => array( 'desktop' => '' ),
-					'accent-color' => array( 'desktop' => '' ),
-					'button-color' => array( 'desktop' => '' ),
-					'button-text-color' => array( 'desktop' => '' ),
-					'button-outline-color' => array( 'desktop' => '' )
+					'backgroundColor' => array( 'desktop' => '' ),
+					'headingColor' => array( 'desktop' => '' ),
+					'textColor' => array( 'desktop' => '' ),
+					'linkColor' => array( 'desktop' => '' ),
+					'accentColor' => array( 'desktop' => '' ),
+					'buttonColor' => array( 'desktop' => '' ),
+					'buttonTextColor' => array( 'desktop' => '' ),
+					'buttonOutlineColor' => array( 'desktop' => '' )
 				);
 
 				$default = array(
 					array(
 						'name' => 'Default Scheme',
 						'key' => 'scheme-default-1',
-						'color_scheme' => $empty_color_scheme
+						'colorScheme' => $empty_color_scheme
 					),
 					array(
 						'name' => 'Color Scheme 2',
 						'key' => 'scheme-default-2',
-						'color_scheme' => $empty_color_scheme
+						'colorScheme' => $empty_color_scheme
 					),
 				);
 
-				update_option( 'stackable_global_color_schemes', $default, 'no' );
+				update_option( 'stackable_global_color_schemes', $default );
 			} else if ( empty( $old_version ) ) {
 				// If new install, add default values in color schemes
 				$default = array(
 					array(
 						'name' => 'Default Scheme',
 						'key' => 'scheme-default-1',
-						'color_scheme' => array(
-							'background-color' => array( 'desktop' => '#fff' ),
-							'heading-color' => array( 'desktop' => '' ),
-							'text-color' => array( 'desktop' => '' ),
-							'link-color' => array( 'desktop' => '' ),
-							'accent-color' => array( 'desktop' => '#a6a6a6' ),
-							'button-color' => array( 'desktop' => '#008de4' ),
-							'button-text-color' => array( 'desktop' => '#fff' ),
-							'button-outline-color' => array( 'desktop' => '#008de4' )
+						'colorScheme' => array(
+							'backgroundColor' => array( 'desktop' => '#fff' ),
+							'headingColor' => array( 'desktop' => '' ),
+							'textColor' => array( 'desktop' => '' ),
+							'linkColor' => array( 'desktop' => '' ),
+							'accentColor' => array( 'desktop' => '#a6a6a6' ),
+							'buttonColor' => array( 'desktop' => '#008de4' ),
+							'buttonTextColor' => array( 'desktop' => '#fff' ),
+							'buttonOutlineColor' => array( 'desktop' => '#008de4' )
 						)
 					),
 					array(
 						'name' => 'Color Scheme 2',
 						'key' => 'scheme-default-2',
-						'color_scheme' => array(
-							'background-color' => array( 'desktop' => '#f1f1f1' ),
-							'heading-color' => array( 'desktop' => '' ),
-							'text-color' => array( 'desktop' => '' ),
-							'link-color' => array( 'desktop' => '' ),
-							'accent-color' => array( 'desktop' => '#a6a6a6' ),
-							'button-color' => array( 'desktop' => '#008de4' ),
-							'button-text-color' => array( 'desktop' => '#fff' ),
-							'button-outline-color' => array( 'desktop' => '#008de4' )
+						'colorScheme' => array(
+							'backgroundColor' => array( 'desktop' => '#f1f1f1' ),
+							'headingColor' => array( 'desktop' => '' ),
+							'textColor' => array( 'desktop' => '' ),
+							'linkColor' => array( 'desktop' => '' ),
+							'accentColor' => array( 'desktop' => '#a6a6a6' ),
+							'buttonColor' => array( 'desktop' => '#008de4' ),
+							'buttonTextColor' => array( 'desktop' => '#fff' ),
+							'buttonOutlineColor' => array( 'desktop' => '#008de4' )
 						)
 					),
 				);
 
-				update_option( 'stackable_global_color_schemes', $default, 'no' );
+				update_option( 'stackable_global_color_schemes', $default );
 			}
 		}
 

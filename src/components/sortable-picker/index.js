@@ -110,7 +110,7 @@ const SortablePicker = props => {
 							sortable={ false }
 							editableName={ editableName }
 							className={ props.buttonClassName }
-							buttonOnClick={ props.buttonOnClick }
+							onItemClick={ props.onItemClick }
 						/> )
 					 ) }
 					{ items?.map( ( item, i ) => (
@@ -125,7 +125,7 @@ const SortablePicker = props => {
 							updateOnBlur={ props.updateOnBlur }
 							editableName={ editableName }
 							className={ props.buttonClassName }
-							buttonOnClick={ props.buttonOnClick }
+							onItemClick={ props.onItemClick }
 						/> ) ) }
 				</SortableContainer>
 			</div>
@@ -192,8 +192,8 @@ const LabeledItemIndicator = props => {
 						<Button
 							className={ buttonClassNames }
 							onClick={ () => {
-								if ( props.buttonOnClick ) {
-									props.buttonOnClick( item )
+								if ( props.onItemClick ) {
+									props.onItemClick( item )
 									return
 								}
 

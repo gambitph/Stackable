@@ -1,22 +1,25 @@
 {
 	"Block": {
 		"block-margin-bottom": {
-				"desktop": 24,
-				"mobile": 16
-			}
+			"desktop": 24,
+			"mobile": 16
 		},
+		"accent-color": {
+			"desktop": "#008de4"
+		}
+	},
 	"Columns": {
 		"column-margin": {
-				"desktop": 12,
-				"mobile": 8
-			},
-			"columns-column-gap": {
-				"desktop": 0
-			},
-			"columns-row-gap": {
-				"desktop": 0
-			}
+			"desktop": 12,
+			"mobile": 8
 		},
+		"columns-column-gap": {
+			"desktop": 0
+		},
+		"columns-row-gap": {
+			"desktop": 0
+		}
+	},
 	"Containers": {
 		"container-padding": {
 			"desktop": {

@@ -169,7 +169,7 @@ const ColorPaletteControl = memo( props => {
 
 	const toggleSettings = {
 		colorValue: value,
-		label: colorLabel,
+		label: props.colorLabel || colorLabel,
 	}
 
 	const colorPalette = (
@@ -218,6 +218,7 @@ ColorPaletteControl.defaultProps = {
 	attribute: '',
 
 	value: undefined,
+	colorLabel: undefined,
 	onChange: undefined,
 	preOnChange: PASSTHRUOP,
 	isExpanded: false,

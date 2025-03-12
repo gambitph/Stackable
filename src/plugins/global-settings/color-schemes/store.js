@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-// import { head } from 'lodash'
+import { fetchSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -10,7 +10,6 @@ import {
 	register, createReduxStore, dispatch,
 } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
-import { fetchSettings } from '~stackable/util'
 
 // Include all the stored state.
 const DEFAULT_STATE = {

@@ -124,6 +124,13 @@ const LABELS = {
 			<li>{ __( 'Manage your custom Font Pairs', i18n ) }</li>
 		</ul>,
 	},
+	'color-schemes': {
+		title: __( 'Add Your Own Color Schemes', i18n ),
+		description: <ul>
+			<li>{ __( 'Add your own custom Color Schemes', i18n ) }</li>
+			<li>{ __( 'Manage your Block\'s Default Color Schemes', i18n ) }</li>
+		</ul>,
+	},
 }
 
 const ProControl = props => {

@@ -118,3 +118,9 @@ export { default as RichText } from './rich-text'
 export { default as SortablePicker } from './sortable-picker'
 export { default as InspectorSubHeader } from './inspector-sub-header'
 export { default as FontPairPicker } from './font-pair-picker'
+export { SectionSettings } from './section-settings'
+export {
+	default as ColorSchemePreview,
+	DEFAULT_COLOR_SCHEME_COLORS,
+	DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS,
+} from './color-scheme-preview'

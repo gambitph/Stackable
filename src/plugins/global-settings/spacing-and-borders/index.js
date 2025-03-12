@@ -14,11 +14,11 @@ import {
 	ShadowControl,
 	Button,
 	HelpTooltip,
+	SectionSettings,
 } from '~stackable/components'
 import {
 	useBlockLayoutEditorLoader,
 	useBlockLayoutInspectorUtils,
-	SectionSettings,
 	STATES,
 } from '../utils'
 import { BORDER_CONTROLS, IMAGE_SHADOWS } from '~stackable/block-components'
