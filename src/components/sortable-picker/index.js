@@ -19,6 +19,7 @@ import {
 } from '@wordpress/components'
 import { useState, useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { ResetButton } from '../base-control2/reset-button'
 
 const addItemPopoverProps = {
 	placement: 'left-start',
@@ -111,6 +112,7 @@ const SortablePicker = props => {
 							editableName={ editableName }
 							className={ props.buttonClassName }
 							onItemClick={ props.onItemClick }
+							showReset={ props.showResetCallback ? props.showResetCallback( item ) : true }
 						/> )
 					 ) }
 					{ items?.map( ( item, i ) => (
@@ -158,12 +160,12 @@ const LabeledItemIndicator = props => {
 		item,
 		onDelete,
 		onChange,
-		onReset = () => {},
 		ItemPreview = null,
 		ItemPicker = null,
 		updateOnBlur = false, // If true, onChange will be called only when the input is blurred.
 		sortable = true,
 		editableName = true,
+		showReset = true,
 	} = props
 
 	const [ isFocused, setIsFocused ] = useState( false )
@@ -260,14 +262,19 @@ const LabeledItemIndicator = props => {
 					<ItemPicker item={ item } onChange={ onChange } />
 				) }
 			/>
-			<Button
-				aria-label={ sortable ? 'Delete' : 'Reset' }
-				className={ sortable ? 'stk-global-settings-color-picker__delete-button' : 'stk-global-settings-sortable-picker__reset-button' }
-				icon={ sortable ? 'trash' : 'image-rotate' }
+			{ sortable && <Button
+				aria-label="Delete"
+				className="stk-global-settings-color-picker__delete-button"
+				icon="trash"
 				isSmall
 				isTertiary
-				onClick={ sortable ? onDelete : onReset }
+				onClick={ onDelete }
+			/> }
+			{ ! sortable && <ResetButton
+				showReset={ showReset }
+				onChange={ onDelete }
 			/>
+			}
 		</HStack>
 	)
 }

@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { hoverState } from '../utils'
-import { PresetColorSchemesPicker } from './presetColorSchemes'
+import PRESET_COLOR_SCHEMES from './preset-color-schemes.json'
 /**
  * External dependencies
  */
@@ -13,19 +13,25 @@ import {
 	ColorPaletteControl,
 	AdvancedTextControl,
 	ColorSchemePreview,
+	PresetColorSchemesPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
 	DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS,
 } from '~stackable/components'
 import { useBlockHoverState } from '~stackable/hooks'
 import { extractColor } from '~stackable/util'
+import { cloneDeep, isEqual } from 'lodash'
 
-import { useRef } from '@wordpress/element'
+import {
+	useRef, useState, useEffect,
+} from '@wordpress/element'
 import { useSelect, dispatch } from '@wordpress/data'
 import { models } from '@wordpress/api'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, doAction } from '@wordpress/hooks'
 
 let saveTimeout = null
+
+const PRESETS = [ ...PRESET_COLOR_SCHEMES ]
 
 const COLOR_SETTINGS = [ {
 	label: __( 'Background Color', i18n ),
@@ -63,32 +69,54 @@ const ColorSchemePicker = props => {
 	const { colorSchemes } = useSelect( select => {
 		const { colorSchemes: _colorSchemes } = select( 'stackable/global-color-schemes' ).getSettings()
 		return {
-			colorSchemes: [ ..._colorSchemes ],
+			colorSchemes: cloneDeep( _colorSchemes ),
 		}
 	} )
 
-	// console.log( 'colorSchemes', colorSchemes )
+	const [ subHeaderControls, setSubHeaderControls ] = useState( { showTrash: false, showReset: false } )
 	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
+	const currentState = `desktop${ hoverState[ currentHoverState ] }`
 
-	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
-
-	const handleAddItem = () => {
-		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', saveTimeout )
+	const showResetButton = item => {
+		return item.key === 'scheme-default-2'
+			? ! isEqual( item.colorScheme, DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS )
+			: ! isEqual( item.colorScheme, DEFAULT_COLOR_SCHEME_COLORS )
 	}
 
-	const currentState = `desktop${ hoverState[ currentHoverState ] }`
+	useEffect( () => {
+		if ( ! itemInEdit ) {
+			setSubHeaderControls( { showTrash: false, showReset: false } )
+			return
+		}
+		const controls = {
+			showTrash: ! itemInEdit.key.startsWith( 'scheme-default' ),
+			showReset: showResetButton( itemInEdit ),
+		}
+
+		setSubHeaderControls( controls )
+	}, [ itemInEdit ] )
+
+	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
 
 	const getDefaultPreviewColors = item => {
 		return item.key === 'scheme-default-2' ? DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS : DEFAULT_COLOR_SCHEME_COLORS
 	}
 
+	const handleAddItem = () => {
+		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', saveTimeout )
+	}
+
+	const onSortEnd = props => {
+		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.sort-color-schemes', props, saveTimeout )
+	}
+
 	const updateColorSchemes = currentItem => {
 		clearTimeout( saveTimeout )
 
-		const customUpdate = applyFilters( 'stackable.global-settings.global-color-schemes.update-color-schemes', currentItem, saveTimeout )
+		const customUpdate = applyFilters( 'stackable.global-settings.global-color-schemes.update-color-schemes', false, currentItem, saveTimeout )
 
 		if ( ! customUpdate ) {
-			const updatedColorSchemes = [ ...colorSchemes ]
+			const updatedColorSchemes = cloneDeep( colorSchemes )
 			const currentIndex = colorSchemes.findIndex( c => c.key === currentItem.key )
 			updatedColorSchemes[ currentIndex ] = currentItem
 
@@ -106,7 +134,7 @@ const ColorSchemePicker = props => {
 		if ( ! itemInEdit ) {
 			return
 		}
-		const currentItem = { ...itemInEdit }
+		const currentItem = cloneDeep( itemInEdit )
 		currentItem.name = name
 		setItemInEdit( currentItem )
 
@@ -117,7 +145,7 @@ const ColorSchemePicker = props => {
 		if ( ! itemInEdit ) {
 			return
 		}
-		const currentItem = { ...itemInEdit }
+		const currentItem = cloneDeep( itemInEdit )
 		currentItem.colorScheme[ property ][ currentState ] = color
 		setItemInEdit( currentItem )
 
@@ -128,13 +156,37 @@ const ColorSchemePicker = props => {
 		if ( ! itemInEdit ) {
 			return
 		}
-		const currentItem = { ...itemInEdit }
+		const currentItem = cloneDeep( itemInEdit )
 		Object.entries( colors ).forEach( ( [ property, color ] ) => {
 			currentItem.colorScheme[ property ].desktop = color
 		} )
 		setItemInEdit( currentItem )
 
 		updateColorSchemes( currentItem )
+	}
+
+	const onReset = item => {
+		// eslint-disable-next-line no-alert
+		const confirmReset = window.confirm( __( 'Are you sure you want to reset this color scheme to their default values?', i18n ) )
+		if ( ! confirmReset ) {
+			return
+		}
+
+		const currentItem = cloneDeep( item )
+		currentItem.colorScheme = item.key === 'scheme-default-2' ? cloneDeep( DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS ) : cloneDeep( DEFAULT_COLOR_SCHEME_COLORS )
+
+		if ( itemInEdit ) {
+			setItemInEdit( currentItem )
+		}
+		updateColorSchemes( currentItem )
+	}
+
+	const onDeleteItem = item => {
+		const customDelete = applyFilters( 'stackable.global-settings.global-color-schemes.delete-color-scheme', false, item, setItemInEdit, saveTimeout )
+
+		if ( ! customDelete ) {
+			onReset( item )
+		}
 	}
 
 	const ItemPreview = ( { item, withWrapper = false } ) => {
@@ -158,14 +210,6 @@ const ColorSchemePicker = props => {
 		> { Preview } </div> : Preview
 	}
 
-	const onItemClick = item => {
-		setItemInEdit( item )
-	}
-
-	const onBack = () => {
-		setItemInEdit( null )
-	}
-
 	return ( ! itemInEdit ? <SortablePicker
 		ref={ ref }
 		{ ...props }
@@ -174,19 +218,23 @@ const ColorSchemePicker = props => {
 		nonSortableItems={ colorSchemes }
 		editableName={ false }
 		// onChangeItem={ onChangeColorScheme }
-		// onDeleteItem={ onColorSchemeDelete }
+		onDeleteItem={ onDeleteItem }
 		handleAddItem={ handleAddItem }
-		// onSortEnd={ onSortEnd }
+		onSortEnd={ onSortEnd }
 		ItemPreview={ ItemPreview }
 		ItemPicker={ null }
 		buttonClassName="stk-global-color-scheme__color-scheme-item"
 		enableAddItem={ isPro }
-		onItemClick={ onItemClick }
+		onItemClick={ item => setItemInEdit( item ) }
+		showResetCallback={ item => showResetButton( item ) }
 	/> : <>
 		<InspectorSubHeader
 			title={ __( 'Editing Color Scheme', i18n ) }
-			onBack={ onBack }
-			showTrash={ false }
+			onBack={ () => setItemInEdit( null ) }
+			showTrash={ subHeaderControls.showTrash }
+			showReset={ subHeaderControls.showReset }
+			onTrash={ () => onDeleteItem( itemInEdit ) }
+			onReset={ () => onReset( itemInEdit ) }
 		/>
 		<div className="stk-global-color-scheme__edit-panel-preview">
 			<p> { __( 'Editing this scheme will also change all blocks that currently use this color scheme.', i18n ) } </p>
@@ -203,8 +251,13 @@ const ColorSchemePicker = props => {
 				} }
 			/>
 
-			<PresetColorSchemesPicker onPresetClick={ onPresetClick } />
+			<PresetColorSchemesPicker
+				label={ __( 'Preset Color Schemes', i18n ) }
+				presets={ PRESETS }
+				onPresetClick={ onPresetClick }
+			/>
 		</div>
+
 		{ COLOR_SETTINGS.map( ( settings, index ) => (
 			<ColorPaletteControl
 				key={ index }

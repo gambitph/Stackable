@@ -1,4 +1,4 @@
-import { Button } from '@wordpress/components'
+import { Button, BaseControl } from '@wordpress/components'
 
 export const DEFAULT_COLOR_SCHEME_COLORS = {
 	backgroundColor: { desktop: 'var(--stk-container-background-color, #fff)' },
@@ -46,6 +46,20 @@ const ColorSchemePreview = ( { colors, onClick = NOOP } ) => {
 				/>
 			</div>
 		</TagName>
+	)
+}
+
+export const PresetColorSchemesPicker = ( {
+	label, presets, onPresetClick,
+} ) => {
+	return (
+		<BaseControl label={ label } >
+			<div className="stk-preset-color-schemes__preset-wrapper">
+				{ presets.map( ( colors, index ) => {
+					return <ColorSchemePreview key={ index } colors={ colors } onClick={ () => onPresetClick( colors ) } />
+				} ) }
+			</div>
+		</BaseControl>
 	)
 }
 

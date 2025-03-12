@@ -1,5 +1,32 @@
+.stk-global-color-scheme__preview__background {
+	padding: 8px;
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+	box-sizing: border-box;
+	> div {
+		display: flex;
+		justify-content: center;
+		gap: 4px;
+	}
+}
+.stk-global-color-scheme__preview__typography {
+	margin-top: 0;
+	margin-bottom: 4px;
+	font-size: 20px;
+	line-height: normal;
+	gap: 0 !important;
+}
+.stk-global-color-scheme__preview__button {
+	width: 30px;
+	height: 11px;
+	flex-shrink: 0;
+	box-sizing: border-box;
+}
+
 .stk-preset-color-schemes__preset-wrapper {
-	border: 1px solid #e0e0e0;
 	display: grid;
 	gap: 4px;
 	grid-template-columns: repeat(2, 1fr);

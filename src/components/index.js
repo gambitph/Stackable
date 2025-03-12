@@ -121,6 +121,7 @@ export { default as FontPairPicker } from './font-pair-picker'
 export { SectionSettings } from './section-settings'
 export {
 	default as ColorSchemePreview,
+	PresetColorSchemesPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
 	DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS,
 } from './color-scheme-preview'
