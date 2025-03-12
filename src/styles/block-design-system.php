@@ -46,6 +46,34 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 						"left" => 24
 					),
 				),
+				"container-padding-large" => array(
+					"desktop" => array(
+						"top" => 64,
+						"right" => 80,
+						"bottom" => 64,
+						"left" => 80
+					),
+					"mobile" => array(
+						"top" => 32,
+						"right" => 24,
+						"bottom" => 32,
+						"left" => 24
+					)
+				),
+				"container-padding-small" => array(
+					"desktop" => array(
+						"top" => 16,
+						"right" => 32,
+						"bottom" => 16,
+						"left" => 32
+					),
+					"mobile" => array(
+						"top" => 8,
+						"right" => 24,
+						"bottom" => 8,
+						"left" => 24
+					)
+				),
 				"container-border-style" => array(
 					"desktop" => ""
 				),
