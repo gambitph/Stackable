@@ -1,5 +1,5 @@
 /**
- * Kadence Theme compatibility.
+ * OceanWP compatibility.
  */
 
 /**
