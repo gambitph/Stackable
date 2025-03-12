@@ -36,6 +36,34 @@
 				"parent-hover": true
 			}
 		},
+		"container-padding-large": {
+			"desktop": {
+				"top": 64,
+				"right": 80,
+				"bottom": 64,
+				"left": 80
+			},
+			"mobile": {
+				"top": 32,
+				"right": 24,
+				"bottom": 32,
+				"left": 24
+			}
+		},
+		"container-padding-small": {
+			"desktop": {
+				"top": 16,
+				"right": 32,
+				"bottom": 16,
+				"left": 32
+			},
+			"mobile": {
+				"top": 8,
+				"right": 24,
+				"bottom": 8,
+				"left": 24
+			}
+		},
 		"container-border-style": {
 			"desktop": ""
 		},

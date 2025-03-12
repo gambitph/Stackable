@@ -33,6 +33,14 @@ $block-design-system: (
 	),
 	container-padding-hover: cssvar(container-padding),
 	container-padding-parent-hover: cssvar(container-padding),
+	container-padding-large: (
+		desktop: 64px 80px,
+		mobile: 32px 24px,
+	),
+	container-padding-small: (
+		desktop: 16px 32px,
+		mobile: 8px 24px,
+	),
 	container-border-style: none,
 	container-border-width: 1px,
 	container-border-width-hover: cssvar(container-border-width),
