@@ -26,11 +26,11 @@ export const hoverState = {
 	'parent-hover': 'ParentHover',
 }
 
-export const LayoutSettings = props => {
+export const SectionSettings = props => {
 	return <>
-		<div className="ugb-global-block-layouts__section-settings">
-			<p className="ugb-global-block-layouts__section-title">{ props.title }</p>
-			<p>{ props.description }</p>
+		<div className="ugb-global-settings__section-settings">
+			<p className="ugb-global-settings__section-title">{ props.title }</p>
+			{ props.description && <p>{ props.description }</p> }
 			{ props.children }
 		</div>
 	</>

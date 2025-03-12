@@ -37,7 +37,7 @@
 		}
 	}
 
-	.ugb-global-settings-color-picker__color-indicators:not(.is-sorting) {
+	&:not(.stk-global-color-scheme-picker) .ugb-global-settings-color-picker__color-indicators:not(.is-sorting) {
 		.components-flex:not(:last-child) .block-editor-panel-color-gradient-settings__dropdown {
 			border-bottom: 0 !important;
 			border-bottom-left-radius: 0 !important;

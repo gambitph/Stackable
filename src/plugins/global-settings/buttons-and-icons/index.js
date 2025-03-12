@@ -18,7 +18,7 @@ import {
 import {
 	useBlockLayoutEditorLoader,
 	useBlockLayoutInspectorUtils,
-	LayoutSettings,
+	SectionSettings,
 	STATES,
 } from '../utils'
 import { BORDER_CONTROLS } from '~stackable/block-components'
@@ -98,7 +98,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 					text={ __( 'Reset All', i18n ) }
 				/>
 
-				<LayoutSettings
+				<SectionSettings
 					title={ __( 'Buttons', i18n ) }
 					description={ __( 'These styles are applied to Button Blocks.', i18n ) }
 				>
@@ -263,9 +263,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						hasTabletValue={ getHasDeviceValue( 'button-row-gap', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'button-row-gap', 'mobile' ) }
 					/>
-				</LayoutSettings>
+				</SectionSettings>
 
-				<LayoutSettings
+				<SectionSettings
 					title={ __( 'Icon Buttons', i18n ) }
 					description={ __( 'Additional settings that apply to Icon Button Blocks.', i18n ) }
 				>
@@ -295,8 +295,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 							description: __( 'Adjusts the space between the button text and button borders', i18n ),
 						} }
 					/>
-				</LayoutSettings>
-				<LayoutSettings
+				</SectionSettings>
+				<SectionSettings
 					title={ __( 'Icon List', i18n ) }
 					description={ __( 'These styles are applied to Icon List Blocks.', i18n ) }
 				>
@@ -345,9 +345,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						hasTabletValue={ getHasDeviceValue( 'icon-list-indentation', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'icon-list-indentation', 'mobile' ) }
 					/>
-				</LayoutSettings>
+				</SectionSettings>
 
-				<LayoutSettings
+				<SectionSettings
 					title={ __( 'Icons', i18n ) }
 					description={ __( 'These styles are applied to Icon Blocks.', i18n ) }
 				>
@@ -363,7 +363,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						hasTabletValue={ getHasDeviceValue( 'icon-size', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'icon-size', 'mobile' ) }
 					/>
-				</LayoutSettings>
+				</SectionSettings>
 
 			</PanelAdvancedSettings>
 		</>

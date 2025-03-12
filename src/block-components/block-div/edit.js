@@ -15,6 +15,7 @@ import {
 	InspectorBlockControls,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
@@ -27,6 +28,7 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 export const Edit = memo( props => {
 	const {
@@ -34,6 +36,20 @@ export const Edit = memo( props => {
 		initialOpen,
 		backgroundMediaAllowVideo,
 	} = props
+
+	const { COLOR_SCHEME_OPTIONS, backgroundModeColorScheme } = useSelect( select => {
+		const { colorSchemes, backgroundModeColorScheme } = select( 'stackable/global-color-schemes' ).getSettings()
+		const COLOR_SCHEME_OPTIONS = colorSchemes?.map( scheme => ( {
+			label: scheme.name,
+			value: scheme.key,
+		} ) )
+		return {
+			COLOR_SCHEME_OPTIONS,
+			backgroundModeColorScheme,
+		}
+	} )
+
+	const backgroundColorScheme = useBlockAttributesContext( attributes => attributes.backgroundColorScheme )
 	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
 	const setAttributes = useBlockSetAttributesContext()
 	const { getPlaceholder } = useBlockLayoutDefaults()
@@ -75,6 +91,13 @@ export const Edit = memo( props => {
 					onChange={ hasBackground => setAttributes( { hasBackground } ) }
 					initialOpen={ initialOpen === 'background' }
 				>
+					<AdvancedSelectControl
+						label={ __( 'Color Scheme', i18n ) }
+						value={ backgroundColorScheme || backgroundModeColorScheme }
+						options={ COLOR_SCHEME_OPTIONS }
+						onChange={ backgroundColorScheme => ( { backgroundColorScheme } ) }
+						default={ backgroundModeColorScheme }
+					/>
 					<BackgroundControls
 						attrNameTemplate="block%s"
 						onBackgroundEnableAttribute="hasBackground"

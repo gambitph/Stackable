@@ -1,10 +1,58 @@
-.stk--global-color-schemes--default-picker {
-	border-top: 1px solid #e0e0e0;
-	margin: 0px -16px;
-	padding: 16px 16px 0px 16px;
-	p {
-		font-weight: bold;
-		text-transform: uppercase;
-		margin-bottom: 8px;
+.stk-global-color-scheme__preview__background {
+	// background-color: gray;
+	padding: 8px;
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+	box-sizing: border-box;
+	> div {
+		display: flex;
+		justify-content: center;
+		gap: 4px;
 	}
+}
+.stk-global-color-scheme__preview__typography {
+	// color: red;
+	margin-top: 0;
+	margin-bottom: 4px;
+	font-size: 20px;
+	line-height: normal;
+	gap: 0 !important;
+}
+.stk-global-color-scheme__preview__button {
+	// background-color: blue;
+	width: 30px;
+	height: 11px;
+	flex-shrink: 0;
+	box-sizing: border-box;
+}
+
+.stk-global-color-scheme-picker {
+	.ugb-global-settings-color-picker__color-indicators > div {
+		display: flex;
+		flex-direction: column;
+		row-gap: 8px;
+	}
+}
+
+.stk-global-color-scheme__color-scheme-item.block-editor-panel-color-gradient-settings__dropdown {
+	height: max-content;
+	padding: 0 8px 0 0;
+}
+
+.stk-global-color-scheme__edit-panel-preview {
+	border-bottom: 1px solid #e0e0e0;
+	margin: 0px -16px 16px;
+	padding: 0px 16px;
+}
+
+.stk-global-color-scheme__preview-wrapper {
+	display: flex;
+	justify-content: center;
+	height: 70px;
+	outline: 1px solid #e0e0e0;
+	margin-bottom: 16px;
+	padding: 8px;
 }
