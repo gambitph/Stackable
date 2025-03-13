@@ -20,6 +20,7 @@ import {
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
+	useBlockColorSchemes,
 	useBlockLayoutDefaults,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
@@ -28,25 +29,15 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useSelect } from '@wordpress/data'
 
 export const Edit = props => {
 	const {
 		hasContentVerticalAlign = false,
 	} = props
 
-	const { COLOR_SCHEME_OPTIONS, containerModeColorScheme } = useSelect( select => {
-		const { colorSchemes, containerModeColorScheme } = select( 'stackable/global-color-schemes' ).getSettings()
-		const COLOR_SCHEME_OPTIONS = colorSchemes?.map( scheme => ( {
-			label: scheme.name,
-			value: scheme.key,
-		} ) )
-
-		return {
-			COLOR_SCHEME_OPTIONS,
-			containerModeColorScheme,
-		}
-	} )
+	const {
+		COLOR_SCHEME_OPTIONS, getScheme, containerModeColorScheme,
+	} = useBlockColorSchemes()
 
 	const hasContainer = useBlockAttributesContext( attributes => attributes.hasContainer )
 	const containerColorScheme = useBlockAttributesContext( attributes => attributes.containerColorScheme )
@@ -65,10 +56,9 @@ export const Edit = props => {
 				>
 					<AdvancedSelectControl
 						label={ __( 'Color Scheme', i18n ) }
-						value={ containerColorScheme || containerModeColorScheme }
-						// TODO: get options from color schemes
+						value={ getScheme( containerColorScheme ) || containerModeColorScheme }
 						options={ COLOR_SCHEME_OPTIONS }
-						onChange={ containerColorScheme => ( { containerColorScheme } ) }
+						onChange={ containerColorScheme => setAttributes( { containerColorScheme: containerColorScheme === containerModeColorScheme ? '' : containerColorScheme } ) }
 						default={ containerModeColorScheme }
 					/>
 					<SizeControls.Layout

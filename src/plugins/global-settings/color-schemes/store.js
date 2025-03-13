@@ -33,9 +33,9 @@ const STORE_ACTIONS = {
 const STORE_SELECTORS = {
 	getSettings: state => ( {
 		...state,
-		baseColorScheme: state.colorSchemes.find( schemes => schemes.key === state.baseColorScheme )?.key || 'scheme-default-1',
-		backgroundModeColorScheme: state.colorSchemes.find( schemes => schemes.key === state.backgroundModeColorScheme )?.key || 'scheme-default-2',
-		containerModeColorScheme: state.colorSchemes.find( schemes => schemes.key === state.containerModeColorScheme )?.key || 'scheme-default-1',
+		baseColorScheme: state.baseColorScheme || 'scheme-default-1',
+		backgroundModeColorScheme: state.backgroundModeColorScheme || 'scheme-default-2',
+		containerModeColorScheme: state.containerModeColorScheme || 'scheme-default-1',
 	} ),
 }
 
