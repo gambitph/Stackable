@@ -11,7 +11,7 @@ import ColorSchemePicker from './color-scheme-picker'
 import {
 	i18n, showProNotice, isPro,
 } from 'stackable'
-import { PanelAdvancedSettings, ProControl } from '~stackable/components'
+import { PanelAdvancedSettings, ProControlButton } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -44,7 +44,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 					setItemInEdit={ setItemInEdit }
 				/>
 				{ isPro && applyFilters( 'stackable.global-settings.global-color-schemes.inspector', Fragment, itemInEdit ) }
-				{ ! itemInEdit && ! isPro && showProNotice && <ProControl type="color-schemes" /> }
+				{ ! itemInEdit && showProNotice && <ProControlButton type="color-schemes" /> }
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
