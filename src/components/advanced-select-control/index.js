@@ -18,7 +18,7 @@ import classnames from 'classnames'
 import { isEqual } from 'lodash'
 
 const AdvancedSelectControl = memo( props => {
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
 		defaultValue: _defaultValue, // Don't pass this.

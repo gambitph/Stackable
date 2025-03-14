@@ -36,13 +36,19 @@ export const Edit = props => {
 	} = props
 
 	const {
-		COLOR_SCHEME_OPTIONS, getScheme, containerModeColorScheme,
-	} = useBlockColorSchemes()
-
-	const hasContainer = useBlockAttributesContext( attributes => attributes.hasContainer )
-	const containerColorScheme = useBlockAttributesContext( attributes => attributes.containerColorScheme )
+		hasContainer,
+		containerColorScheme,
+	} = useBlockAttributesContext( attributes => ( {
+		hasContainer: attributes.hasContainer,
+		containerColorScheme: attributes.containerColorScheme,
+	} ) )
 	const setAttributes = useBlockSetAttributesContext()
 	const { getPlaceholder } = useBlockLayoutDefaults()
+
+	const {
+		COLOR_SCHEME_OPTIONS, containerModeColorScheme,
+		getScheme, updateColorSchemesInUse,
+	} = useBlockColorSchemes()
 
 	return (
 		<>
@@ -56,9 +62,14 @@ export const Edit = props => {
 				>
 					<AdvancedSelectControl
 						label={ __( 'Color Scheme', i18n ) }
-						value={ getScheme( containerColorScheme ) || containerModeColorScheme }
+						value={ getScheme( containerColorScheme || containerModeColorScheme, { returnFallback: false } ) }
 						options={ COLOR_SCHEME_OPTIONS }
-						onChange={ containerColorScheme => setAttributes( { containerColorScheme: containerColorScheme === containerModeColorScheme ? '' : containerColorScheme } ) }
+						attribute="containerColorScheme"
+						changeCallback={ ( newScheme, oldScheme ) => {
+							const colorScheme = newScheme === containerModeColorScheme ? '' : newScheme
+							updateColorSchemesInUse( colorScheme, oldScheme )
+							return colorScheme
+						} }
 						default={ containerModeColorScheme }
 					/>
 					<SizeControls.Layout

@@ -57,6 +57,7 @@ export const BlockDiv = memo( props => {
 			{
 				[ uniqueBlockClass ]: withUniqueClass,
 				'stk-block-background': attributes.hasBackground,
+				[ `background-${ attributes.backgroundColorScheme }` ]: attributes.hasBackground && attributes.backgroundColorScheme,
 				// When the block has auto margins, we need to "add" those margins to
 				// the main block div so we can simulate the effect inside the editor.
 				// This works in conjunction with the styles in

@@ -38,13 +38,19 @@ export const Edit = memo( props => {
 	} = props
 
 	const {
-		COLOR_SCHEME_OPTIONS, getScheme, backgroundModeColorScheme,
-	} = useBlockColorSchemes()
-
-	const backgroundColorScheme = useBlockAttributesContext( attributes => attributes.backgroundColorScheme )
-	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
+		hasBackground,
+		backgroundColorScheme,
+	} = useBlockAttributesContext( attributes => ( {
+		hasBackground: attributes.hasBackground,
+		backgroundColorScheme: attributes.backgroundColorScheme,
+	} ) )
 	const setAttributes = useBlockSetAttributesContext()
 	const { getPlaceholder } = useBlockLayoutDefaults()
+
+	const {
+		COLOR_SCHEME_OPTIONS, backgroundModeColorScheme,
+		getScheme, updateColorSchemesInUse,
+	} = useBlockColorSchemes()
 
 	return (
 		<>
@@ -85,9 +91,14 @@ export const Edit = memo( props => {
 				>
 					<AdvancedSelectControl
 						label={ __( 'Color Scheme', i18n ) }
-						value={ getScheme( backgroundColorScheme, 'background' ) || backgroundModeColorScheme }
+						value={ getScheme( backgroundColorScheme || backgroundModeColorScheme, { mode: 'background', returnFallback: false } ) }
 						options={ COLOR_SCHEME_OPTIONS }
-						onChange={ backgroundColorScheme => setAttributes( { backgroundColorScheme: backgroundColorScheme === backgroundModeColorScheme ? '' : backgroundColorScheme } ) }
+						attribute="backgroundColorScheme"
+						changeCallback={ ( newScheme, oldScheme ) => {
+							const colorScheme = newScheme === backgroundModeColorScheme ? '' : newScheme
+							updateColorSchemesInUse( colorScheme, oldScheme, 'background' )
+							return colorScheme
+						} }
 						default={ backgroundModeColorScheme }
 					/>
 					<BackgroundControls

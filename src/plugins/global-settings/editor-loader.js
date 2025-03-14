@@ -6,7 +6,7 @@
  * Internal dependencies
  */
 import { GlobalColorStyles } from './colors'
-import './color-schemes'
+import { GlobalColorSchemeStyles } from './color-schemes'
 import { GlobalTypographyStyles } from './typography'
 import { GlobalSpacingAndBordersStyles } from './spacing-and-borders'
 import { GlobalButtonsAndIconsStyles } from './buttons-and-icons'
@@ -49,6 +49,7 @@ const GlobalSettingsLoader = () => {
 			editorBody.appendChild( globalColorWrapper )
 			editorBody.appendChild( globalSpacingAndBorderWrapper )
 			editorBody.appendChild( globalButtonsAndIconsWrapper )
+			editorBody.appendChild( globalColorSchemesWrapper )
 		}
 	}, [ deviceType, editorDom ] )
 
@@ -63,10 +64,12 @@ const globalTypographyWrapper = document?.createElement( 'style' )
 const globalColorWrapper = document?.createElement( 'style' )
 const globalSpacingAndBorderWrapper = document?.createElement( 'style' )
 const globalButtonsAndIconsWrapper = document?.createElement( 'style' )
+const globalColorSchemesWrapper = document?.createElement( 'style' )
 globalTypographyWrapper?.setAttribute( 'id', 'stk-global-typography-styles' )
 globalColorWrapper?.setAttribute( 'id', 'stk-global-color-styles' )
 globalSpacingAndBorderWrapper?.setAttribute( 'id', 'stk-global-spacing-and-borders-styles' )
 globalButtonsAndIconsWrapper?.setAttribute( 'id', 'stk-global-buttons-and-icons-styles' )
+globalColorSchemesWrapper?.setAttribute( 'id', 'stk-global-color-schemes-styles' )
 domReady( () => {
 	document?.body?.appendChild( globalTypographyWrapper )
 	document?.body?.appendChild( globalColorWrapper )
@@ -76,4 +79,5 @@ domReady( () => {
 	createRoot( globalColorWrapper ).render( <GlobalColorStyles /> )
 	createRoot( globalSpacingAndBorderWrapper ).render( <GlobalSpacingAndBordersStyles /> )
 	createRoot( globalButtonsAndIconsWrapper ).render( <GlobalButtonsAndIconsStyles /> )
+	createRoot( globalColorSchemesWrapper ).render( <GlobalColorSchemeStyles /> )
 } )

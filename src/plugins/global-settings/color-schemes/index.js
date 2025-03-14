@@ -20,6 +20,8 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
+export { GlobalColorSchemeStyles } from './editor-loader'
+
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-schemes', output => {
 	const [ itemInEdit, setItemInEdit ] = useState( null )
 

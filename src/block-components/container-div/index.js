@@ -23,6 +23,7 @@ export const ContainerDiv = props => {
 			containerBackgroundMediaExternalUrlTablet: attributes.containerBackgroundMediaExternalUrlTablet,
 			containerBackgroundMediaExternalUrlMobile: attributes.containerBackgroundMediaExternalUrlMobile,
 			containerBackgroundColorType: attributes.containerBackgroundColorType,
+			containerColorScheme: attributes.containerColorScheme,
 		}
 	} )
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
@@ -38,6 +39,7 @@ export const ContainerDiv = props => {
 		'stk-hover-parent': attributes.hasContainer && attributes.triggerHoverState, // This is needed to trigger parent-hover hover styles.
 		'stk--no-background': ! attributes.hasContainer,
 		'stk--no-padding': ! attributes.hasContainer,
+		[ `container-${ attributes.containerColorScheme }` ]: attributes.hasContainer && attributes.containerColorScheme,
 	} )
 
 	return <Div
