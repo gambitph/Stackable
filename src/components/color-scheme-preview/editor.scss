@@ -20,15 +20,44 @@
 	gap: 0 !important;
 }
 .stk-global-color-scheme__preview__button {
-	width: 30px;
-	height: 11px;
+	width: 20px;
+	height: 8px;
 	flex-shrink: 0;
 	box-sizing: border-box;
 }
+.stk-global-color-scheme__preview__circle {
+	width: 8px;
+	height: 8px;
+	flex-shrink: 0;
+	box-sizing: border-box;
+	border-radius: 100px;
+}
 
+.stk-preset-color-schemes__control {
+	margin-bottom: 12px;
+	.components-base-control__field {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.components-base-control__label {
+		margin-bottom: 0;
+	}
+}
+
+.stk-preset-color-schemes__popover {
+	width: 240px;
+	height: 300px;
+	overflow-y: scroll;
+	margin: -8px;
+	padding: 16px 12px 8px;
+}
 .stk-preset-color-schemes__preset-wrapper {
 	display: grid;
-	gap: 4px;
+	gap: 8px;
 	grid-template-columns: repeat(2, 1fr);
-	margin-bottom: 16px;
+
+	.stk-global-color-scheme__preview__background {
+		outline: 1px solid #e0e0e0;
+	}
 }

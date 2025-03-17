@@ -28,10 +28,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 	return (
 		<Fragment>
 			{ output }
-			<PanelAdvancedSettings
-				title={ __( 'Global Color Schemes', i18n ) }
-				initialOpen={ true }
-			>
+			<PanelAdvancedSettings title={ __( 'Global Color Schemes', i18n ) }>
 				{ ! itemInEdit && <p className="components-base-control__help">
 					{ __( 'Color schemes are applied to all blocks and sections of your entire website.', i18n ) }
 					&nbsp;

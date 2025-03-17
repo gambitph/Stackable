@@ -97,8 +97,8 @@ const ColorSchemePicker = props => {
 	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
 
 	// Add a custom color scheme
-	const handleAddItem = () => {
-		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', saveTimeout )
+	const handleAddItem = ( scheme = null ) => {
+		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', scheme, setItemInEdit, saveTimeout )
 	}
 
 	// For sorting custom color schemes
@@ -192,13 +192,22 @@ const ColorSchemePicker = props => {
 		}
 	}
 
+	const onDuplicate = item => {
+		// eslint-disable-next-line no-alert
+		const confirmDuplicate = window.confirm( __( 'Do you want to duplicate this color scheme?', i18n ) )
+
+		if ( confirmDuplicate ) {
+			handleAddItem( item )
+		}
+	}
+
 	// If the property does not have a value for hover/parent-hover states, return the desktop value
 	const getInheritedValue = property => {
-		if ( property[ currentState ] ) {
+		if ( property?.[ currentState ] ) {
 			return property[ currentState ]
 		}
 
-		return property.desktop
+		return property?.desktop
 	}
 
 	const ItemPreview = ( { item, withWrapper = false } ) => {
@@ -221,6 +230,8 @@ const ColorSchemePicker = props => {
 			backgroundColor: backgroundColorStyle,
 			headingColor: getInheritedValue( item.colorScheme.headingColor ) || defaults.headingColor.desktop,
 			textColor: getInheritedValue( item.colorScheme.textColor ) || defaults.textColor.desktop,
+			linkColor: getInheritedValue( item.colorScheme.linkColor ) || defaults.linkColor.desktop,
+			accentColor: getInheritedValue( item.colorScheme.accentColor ) || defaults.accentColor.desktop,
 			buttonBackgroundColor: getInheritedValue( item.colorScheme.buttonBackgroundColor ) || defaults.buttonBackgroundColor.desktop,
 			buttonOutlineColor: getInheritedValue( item.colorScheme.buttonOutlineColor ) || defaults.buttonOutlineColor.desktop,
 		}
@@ -251,12 +262,14 @@ const ColorSchemePicker = props => {
 		showResetCallback={ item => showResetButton( item ) }
 	/> : <>
 		<InspectorSubHeader
-			title={ __( 'Editing Color Scheme', i18n ) }
+			title={ __( 'Edit Color Scheme', i18n ) }
 			onBack={ () => setItemInEdit( null ) }
 			showTrash={ subHeaderControls.showTrash }
 			showReset={ subHeaderControls.showReset }
+			showDuplicate={ isPro }
 			onTrash={ () => onDeleteItem( itemInEdit ) }
 			onReset={ () => onReset( itemInEdit ) }
+			onDuplicate={ () => onDuplicate( itemInEdit ) }
 		/>
 		<div className="stk-global-color-scheme__edit-panel-preview">
 			<p> { __( 'Editing this scheme will also change all blocks that currently use this color scheme.', i18n ) } </p>

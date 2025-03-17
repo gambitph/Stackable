@@ -9,9 +9,11 @@ const InspectorSubHeader = props => {
 		onBack = NOOP,
 		onTrash = NOOP,
 		onReset = NOOP,
+		onDuplicate = NOOP,
 		title = '',
 		showTrash = true,
 		showReset = false,
+		showDuplicate = false,
 	} = props
 	return (
 		<div className="stk-inspector-sub-header">
@@ -21,6 +23,15 @@ const InspectorSubHeader = props => {
 				onClick={ onBack }
 			/>
 			<h2 className="components-base-control__label">{ title }</h2>
+			{ showDuplicate && (
+				<Button
+					className="stk-inspector-sub-header__duplicate"
+					size="small"
+					icon="admin-page"
+					alt={ __( 'Duplicate', i18n ) }
+					onClick={ onDuplicate }
+				/>
+			) }
 			{ showTrash && (
 				<Button
 					className="stk-inspector-sub-header__trash"
