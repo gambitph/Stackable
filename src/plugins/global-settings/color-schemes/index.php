@@ -231,7 +231,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			error_log( print_r( $styles, true ));
 			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			if ( $generated_css != '' ) {
-				$$current_css .= "\n/* Global Color Schemes */\n";
+				$current_css .= "\n/* Global Color Schemes */\n";
 				$current_css .= $generated_css;
 			}
 
