@@ -44,7 +44,6 @@ const PASSTHRUOP = v => v
 addFilter( 'stackable.color-palette-control.colors', 'stackable/global-color-schemes-color-palette-control', ( { colors: _colors, gradients } ) => {
 	// Get colors from the color schemes.
 	const { getColorGroups } = useBlockColorSchemes()
-
 	const colorSchemeColors = getColorGroups()
 
 	const colors = [

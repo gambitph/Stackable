@@ -60,6 +60,10 @@ export const useBlockColorSchemes = () => {
 
 				// Add name and slug to each color in the color scheme
 				const colors = Object.entries( scheme.colorScheme ).reduce( ( colors, [ property, value ] ) => {
+					// Only add colors that have values.
+					if ( ! value?.desktop ) {
+						return colors
+					}
 					return [
 						...colors,
 						{
@@ -69,6 +73,11 @@ export const useBlockColorSchemes = () => {
 						},
 					]
 				}, [] )
+
+				// Only add groups that have colors.
+				if ( colors.length === 0 ) {
+					return groups
+				}
 
 				// return color schemes as groups
 				return [
