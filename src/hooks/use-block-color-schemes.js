@@ -4,6 +4,7 @@ import { applyFilters } from '@wordpress/hooks'
 export const useBlockColorSchemes = () => {
 	const {
 		getScheme,
+		getColorGroups,
 		allColorSchemes,
 		COLOR_SCHEME_OPTIONS,
 		baseColorScheme,
@@ -35,8 +36,57 @@ export const useBlockColorSchemes = () => {
 			return COLOR_SCHEME_OPTIONS.find( scheme => scheme.value === key )?.value || ( returnFallback ? fallback : 'scheme-unavailable' )
 		}
 
+		// Converts property name to space separated string (e.g., backgroundColor --> Background Color)
+		const getLabel = property => {
+			const result = property.replace( /([a-z])([A-Z])/g, '$1 $2' )
+				.replace( /^([a-z])/, match => match.toUpperCase() )
+			return result
+		}
+
+		// Converts property name to kebab-cased string with scheme key as prefix
+		// (e.g., backgroundColor --> --stk-scheme-default-1-background-color)
+		const toKebab = ( property, slug ) => {
+			const result = property.replace( /([a-z0-9])([A-Z])/g, '$1-$2' )
+			return '--stk-' + slug + '-' + result.toLowerCase()
+		}
+
+		// get color groups for color palette picker.
+		const getColorGroups = () => {
+			const colorGroups = allColorSchemes.reduce( ( groups, scheme ) => {
+				// only add colors if the option to add color scheme in the picker is enabled.
+				if ( ! scheme.showInPicker ) {
+					return groups
+				}
+
+				// Add name and slug to each color in the color scheme
+				const colors = Object.entries( scheme.colorScheme ).reduce( ( colors, [ property, value ] ) => {
+					return [
+						...colors,
+						{
+							color: value?.desktop,
+							name: getLabel( property ),
+							slug: toKebab( property, scheme.key ),
+						},
+					]
+				}, [] )
+
+				// return color schemes as groups
+				return [
+					...groups,
+					{
+						name: scheme.name,
+						id: scheme.key,
+						colors,
+					},
+				]
+			}, [] )
+
+			return colorGroups
+		}
+
 		return {
 			getScheme,
+			getColorGroups,
 			allColorSchemes,
 			COLOR_SCHEME_OPTIONS,
 			baseColorScheme: getScheme( _baseColorScheme ),
@@ -47,6 +97,7 @@ export const useBlockColorSchemes = () => {
 
 	return {
 		getScheme,
+		getColorGroups,
 		allColorSchemes,
 		COLOR_SCHEME_OPTIONS,
 		baseColorScheme,

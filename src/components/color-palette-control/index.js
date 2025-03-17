@@ -31,6 +31,7 @@ import { applyFilters, addFilter } from '@wordpress/hooks'
 import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
+import { useBlockColorSchemes } from '~stackable/hooks'
 
 const popoverProps = {
 	placement: 'left-start',
@@ -39,6 +40,20 @@ const popoverProps = {
 }
 
 const PASSTHRUOP = v => v
+
+addFilter( 'stackable.color-palette-control.colors', 'stackable/global-color-schemes-color-palette-control', ( { colors: _colors, gradients } ) => {
+	// Get colors from the color schemes.
+	const { getColorGroups } = useBlockColorSchemes()
+
+	const colorSchemeColors = getColorGroups()
+
+	const colors = [
+		...colorSchemeColors,
+		..._colors,
+	]
+
+	return { colors, gradients }
+} )
 
 addFilter( 'stackable.color-palette-control.colors', 'stackable/color-palette-control', ( { colors: _colors, gradients: _gradients } ) => {
 	const {

@@ -74,6 +74,7 @@ domReady( () => {
 			stackable_global_background_mode_color_scheme: backgroundModeColorScheme,
 			stackable_global_container_mode_color_scheme: containerModeColorScheme,
 		} = response
+
 		const colorSchemes = Array.isArray( _colorSchemes ) && _colorSchemes.length > 0 ? _colorSchemes : [ {
 			name: 'Default Scheme',
 			key: 'scheme-default-1',
@@ -87,6 +88,7 @@ domReady( () => {
 				buttonTextColor: { desktop: '' },
 				buttonOutlineColor: { desktop: '' },
 			},
+			showInPicker: true,
 		}, {
 			name: 'Color Scheme 2',
 			key: 'scheme-default-2',
@@ -100,6 +102,7 @@ domReady( () => {
 				buttonTextColor: { desktop: '' },
 				buttonOutlineColor: { desktop: '' },
 			},
+			showInPicker: true,
 		} ]
 
 		const defaultColorScheme = {

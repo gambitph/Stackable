@@ -60,7 +60,7 @@ const popoverProps = {
 	shift: true,
 }
 
-export const PresetColorSchemesPicker = ( {
+export const ColorSchemePresetPicker = ( {
 	label, presets, onPresetClick,
 } ) => {
 	return (

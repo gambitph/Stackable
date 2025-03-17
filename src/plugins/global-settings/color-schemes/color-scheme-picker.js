@@ -12,8 +12,9 @@ import {
 	InspectorSubHeader,
 	ColorPaletteControl,
 	AdvancedTextControl,
+	AdvancedToggleControl,
 	ColorSchemePreview,
-	PresetColorSchemesPicker,
+	ColorSchemePresetPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
 } from '~stackable/components'
 import { useBlockHoverState } from '~stackable/hooks'
@@ -152,6 +153,17 @@ const ColorSchemePicker = props => {
 		updateColorSchemes( currentItem )
 	}
 
+	const onChangeShowInPicker = value => {
+		if ( ! itemInEdit ) {
+			return
+		}
+		const currentItem = cloneDeep( itemInEdit )
+		currentItem.showInPicker = value === '' ? false : value
+		setItemInEdit( currentItem )
+
+		updateColorSchemes( currentItem )
+	}
+
 	// Update the current color scheme when a preset is selected.
 	const onPresetClick = colors => {
 		if ( ! itemInEdit ) {
@@ -192,6 +204,7 @@ const ColorSchemePicker = props => {
 		}
 	}
 
+	// Duplicate the color scheme being edited
 	const onDuplicate = item => {
 		// eslint-disable-next-line no-alert
 		const confirmDuplicate = window.confirm( __( 'Do you want to duplicate this color scheme?', i18n ) )
@@ -286,13 +299,19 @@ const ColorSchemePicker = props => {
 				} }
 			/>
 
-			<PresetColorSchemesPicker
-				label={ __( 'Preset Color Schemes', i18n ) }
+			<ColorSchemePresetPicker
+				label={ __( 'Color Scheme Presets', i18n ) }
 				presets={ PRESETS }
 				onPresetClick={ onPresetClick }
 			/>
 		</div>
 
+		<AdvancedToggleControl
+			label={ __( 'Show color scheme colors in color picker', i18n ) }
+			checked={ itemInEdit?.showInPicker }
+			onChange={ value => onChangeShowInPicker( value ) }
+			defaultValue={ itemInEdit?.key?.startsWith( 'scheme-default' ) }
+		/>
 		{ COLOR_SETTINGS.map( ( settings, index ) => (
 			<ColorPaletteControl
 				key={ index }
