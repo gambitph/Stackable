@@ -7,7 +7,7 @@ import {
 } from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
 import { Spinner } from '@wordpress/components'
-import { loadPromise, models } from '@wordpress/api'
+import { models } from '@wordpress/api'
 
 /**
  * External dependencies
@@ -16,6 +16,7 @@ import {
 	i18n,
 	v2nonce as nonce,
 } from 'stackable'
+import { fetchSettings } from '~stackable/util/admin'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 
 export class BlockToggler extends Component {
@@ -116,11 +117,8 @@ export const OptimizationSettings = ( { searchSettings } ) => {
 	const [ optimizeScriptLoad, setOptimizeScriptLoad ] = useState( false )
 
 	useEffect( () => {
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setOptimizeScriptLoad( !! response.stackable_optimize_script_load )
-			} )
+		fetchSettings().then( response => {
+			setOptimizeScriptLoad( !! response.stackable_optimize_script_load )
 		} )
 	}, [] )
 
