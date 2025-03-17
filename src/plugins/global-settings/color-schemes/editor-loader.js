@@ -54,9 +54,11 @@ const generateRules = ( scheme, currentHoverState = 'normal', mode = '', appendS
 	}
 
 	properties.forEach( property => {
-		if ( mode && property === 'backgroundColor' && scheme[ property ]?.desktop ) {
-			const varname = mode === 'background' ? 'block' : 'container'
-			decls.push( `--stk-${ varname }-background-color${ suffix }: ${ getInheritedValue( scheme[ property ], state ) };` )
+		if ( property === 'backgroundColor' ) {
+			if ( mode && scheme[ property ]?.desktop ) {
+				const varname = mode === 'background' ? 'block' : 'container'
+				decls.push( `--stk-${ varname }-background-color${ suffix }: ${ getInheritedValue( scheme[ property ], state ) };` )
+			}
 			return
 		}
 
