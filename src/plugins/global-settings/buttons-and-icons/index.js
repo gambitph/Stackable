@@ -368,7 +368,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 			</PanelAdvancedSettings>
 		</>
 	)
-} )
+}, 10 )
 
 export const GlobalButtonsAndIconsStyles = () => {
 	const styles = useBlockLayoutEditorLoader( 'stackable/global-buttons-and-icons' )

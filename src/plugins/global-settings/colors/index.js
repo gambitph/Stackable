@@ -107,7 +107,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Color Palette', i18n ) }
-				initialOpen={ true }
 			>
 				<p className="components-base-control__help">
 					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
@@ -139,7 +138,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
-} )
+}, 20 )
 
 // Convert hex colors to global colors in Stackable blocks.
 addFilter( 'stackable.color-palette-control.change', 'stackable/global-colors', ( value, colorObject ) => {
