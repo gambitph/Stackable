@@ -9,6 +9,16 @@
 
 		.components-base-control__label {
 			overflow: hidden;
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				font-size: revert;
+				text-transform: unset;
+				font-weight: unset;
+			}
 		}
 	}
 	> .components-base-control__field {
@@ -70,4 +80,61 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+}
+
+.ugb-global-settings-font-pair__heading {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 4px;
+	h3 {
+		margin: 0;
+	}
+}
+
+.ugb-global-settings-font-pair-control {
+	.components-base-control__field {
+		border: 1px solid #ddd;
+		padding: 8px;
+		margin-bottom: 8px;
+		gap: 8px;
+		cursor: pointer;
+		.ugb-base-control-multi-label {
+			margin-bottom: 0px;
+		}
+	}
+}
+
+.ugb-global-settings-font-pair__container {
+	max-height: 250px;
+	overflow: auto;
+	border: 1px solid #ddd;
+	border: none;
+	padding: 0;
+	width: calc(100% - 16px);
+	margin: 0;
+	margin-bottom: 24px;
+	.ugb-global-settings-font-pair__selected {
+		.components-base-control__field {
+			border: 2px solid #000;
+		}
+	}
+	.ugb-global-settings-font-pair__label {
+		font-size: 1.2rem;
+		display: block;
+		margin-bottom: 4px;
+		line-height: 1.2;
+	}
+	.ugb-global-settings-font-pair__sub-label {
+		font-size: 1rem;
+		display: block;
+		line-height: 1;
+	}
+}
+
+.ugb-global-typography__panel {
+	.stk-inspector-sub-header {
+		margin-bottom: 16px;
+	}
 }

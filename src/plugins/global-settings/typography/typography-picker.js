@@ -57,6 +57,7 @@ const TypographyPicker = props => {
 			showSecondFontSize={ false }
 			allowReset={ true }
 			fontFamily={ value.fontFamily }
+			defaultFontFamily={ props?.defaultFontFamily }
 			fontSize={ value.fontSize }
 			htmlTag={ props.selector }
 			tabletFontSize={ value.tabletFontSize }
@@ -96,6 +97,7 @@ const TypographyPicker = props => {
 			onReset={ () => props.onReset( props.selector ) }
 			resetPopoverTitle={ sprintf( __( 'Reset %s Global Typography Style', i18n ), props.selector === 'p' ? __( 'Body Text', i18n ) : props.selector.toUpperCase() ) }
 			resetPopoverDescription={ __( 'Resetting this typography style will revert all typography to its original style. Proceed?', i18n ) }
+			isAllowReset={ props?.isAllowReset }
 		/>
 	)
 }

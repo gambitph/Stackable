@@ -19,6 +19,10 @@ import { Fragment, useMemo } from '@wordpress/element'
 import { i18n } from 'stackable'
 
 const TypographyControl = props => {
+	const {
+		isAllowReset = undefined, // Optional prop
+	} = props
+
 	// Compute the font size placeholder value.
 	const placeholder = useMemo( () => {
 		if ( typeof props.placeholder === 'function' ) {
@@ -29,20 +33,23 @@ const TypographyControl = props => {
 		 return props.fontSize || props.placeholder || getDefaultFontSize( props.htmlTag, true )
 	}, [ props.htmlTag, props.fontSize ] )
 
+	// Allow overriding, or use our original condition
+	const _allowReset = typeof isAllowReset !== undefined ? isAllowReset : (
+		props.fontFamily ||
+		props.fontSize || props.tabletFontSize || props.mobileFontSize ||
+		props.fontWeight ||
+		props.textTransform ||
+		props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
+		props.letterSpacing || props.tabletLetterSpacing || props.mobileLetterSpacing
+	)
+
 	return (
 		<Fragment>
 			<ButtonIconPopoverControl
 				label={ props.label }
 				popoverLabel={ props.popoverLabel }
 				onReset={ props.onReset }
-				allowReset={
-					props.fontFamily ||
-					props.fontSize || props.tabletFontSize || props.mobileFontSize ||
-					props.fontWeight ||
-					props.textTransform ||
-					props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
-					props.letterSpacing || props.tabletLetterSpacing || props.mobileLetterSpacing
-				}
+				allowReset={ _allowReset }
 				resetPopoverTitle={ props.resetPopoverTitle }
 				resetPopoverDescription={ props.resetPopoverDescription }
 				className={ props.className }
@@ -53,7 +60,8 @@ const TypographyControl = props => {
 						label={ __( 'Font Family', i18n ) }
 						onChange={ props.onChangeFontFamily }
 						value={ props.fontFamily }
-						placeholder={ __( 'Theme Default', i18n ) }
+						defaultValue={ props?.defaultFontFamily }
+						placeholder={ __( 'Default', i18n ) }
 						helpTooltip={ {
 							video: 'typography-family',
 							description: __( 'Sets the font set to be used for the element', i18n ),

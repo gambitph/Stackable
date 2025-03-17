@@ -117,6 +117,13 @@ const LABELS = {
 			<li>{ __( 'Organize your custom icons in your library', i18n ) }</li>
 		</ul>,
 	},
+	'font-pairs': {
+		title: __( 'Add Your Own Font Pairs', i18n ),
+		description: <ul>
+			<li>{ __( 'Add your own custom Font Pairs', i18n ) }</li>
+			<li>{ __( 'Manage your custom Font Pairs', i18n ) }</li>
+		</ul>,
+	},
 }
 
 const ProControl = props => {
