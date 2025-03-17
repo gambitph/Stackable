@@ -14,12 +14,33 @@ import {
  */
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers, useBlockLayoutDefaults, useBlockSetAttributesContext,
+} from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
 
-const BORDER_CONTROLS = [
+export const BORDER_CONTROLS = [
 	{
 		value: '',
+		title: __( 'None', i18n ),
+	},
+	{
+		value: 'solid',
+		title: __( 'Solid', i18n ),
+	},
+	{
+		value: 'dashed',
+		title: __( 'Dashed', i18n ),
+	},
+	{
+		value: 'dotted',
+		title: __( 'Dotted', i18n ),
+	},
+]
+
+const BORDER_CONTROLS_WITH_NONE_VALUE = [
+	{
+		value: 'none',
 		title: __( 'None', i18n ),
 	},
 	{
@@ -43,7 +64,10 @@ export const BorderControls = props => {
 		updateAttributes,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
-	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
+	const setAttributes = useBlockSetAttributesContext()
+	const { blockLayouts, getPlaceholder } = useBlockLayoutDefaults()
+
+	const borderControls = getPlaceholder( `${ props.placeholderTemplate }-border-style` ) !== '' ? BORDER_CONTROLS_WITH_NONE_VALUE : BORDER_CONTROLS
 
 	applyFilters( 'stackable.block-component.helpers.borders', null, getAttribute, updateAttributes )
 
@@ -52,15 +76,16 @@ export const BorderControls = props => {
 			{ props.hasBorderType &&
 				<AdvancedToolbarControl
 					label={ __( 'Borders', i18n ) }
-					controls={ BORDER_CONTROLS }
+					controls={ borderControls }
 					className="ugb-border-controls__border-type-toolbar"
 					attribute={ getAttrName( 'borderType' ) }
 					fullwidth={ true }
 					isSmall={ true }
+					placeholder={ getPlaceholder( `${ props.placeholderTemplate }-border-style` ) }
 				/>
 			}
 
-			{ borderTypeValue && props.hasBorderControls &&
+			{ props.hasBorderControls &&
 				<FourRangeControl
 					label={ __( 'Border Width', i18n ) }
 					attribute={ getAttrName( 'borderWidth' ) }
@@ -71,10 +96,22 @@ export const BorderControls = props => {
 					step={ 1 }
 					sliderMax={ 5 }
 					defaultLocked={ true }
+					placeholder={ props.borderWidthPlaceholder || getPlaceholder( `${ props.placeholderTemplate }-border-width` ) }
+					changeCallback={ value => {
+						const hasValue = value?.top || value?.right || value?.bottom || value?.left
+						const borderStyleProperty = `${ props.placeholderTemplate }-border-style`
+
+						// Set borderType to 'solid' if no borderType is selected and no global border settings is set
+						if ( hasValue && ! ( getAttribute( 'borderType' ) ) && ! blockLayouts?.[ borderStyleProperty ] ) {
+							setAttributes( { [ getAttrName( 'borderType' ) ]: 'solid' } )
+						}
+
+						return value
+					} }
 				/>
 			}
 
-			{ borderTypeValue && props.hasBorderControls &&
+			{ props.hasBorderControls &&
 				<ColorPaletteControl
 					label={ __( 'Border Color', i18n ) }
 					attribute={ getAttrName( 'borderColor' ) }
@@ -101,6 +138,7 @@ export const BorderControls = props => {
 				label={ __( 'Shadow / Outline', i18n ) }
 				attribute={ getAttrName( 'shadow' ) }
 				hover="all"
+				placeholder={ getPlaceholder( `${ props.placeholderTemplate }-box-shadow` ) }
 			/>
 		</Fragment>
 	)

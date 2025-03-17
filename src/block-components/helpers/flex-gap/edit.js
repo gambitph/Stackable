@@ -3,13 +3,17 @@
  */
 import { i18n } from 'stackable'
 import { AdvancedRangeControl } from '~stackable/components'
+import { useBlockLayoutDefaults } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 
-export const FlexGapControls = () => {
+export const FlexGapControls = props => {
+	const { placeholderTemplate = undefined } = props
+	const { getPlaceholder } = useBlockLayoutDefaults()
+
 	return (
 		<>
 			<AdvancedRangeControl
@@ -18,7 +22,7 @@ export const FlexGapControls = () => {
 				responsive="all"
 				min="0"
 				sliderMax="50"
-				placeholder=""
+				placeholder={ placeholderTemplate ? getPlaceholder( `${ placeholderTemplate }-column-gap` ) : '' }
 			/>
 			<AdvancedRangeControl
 				label={ __( 'Row Gap', i18n ) }
@@ -26,7 +30,7 @@ export const FlexGapControls = () => {
 				responsive="all"
 				min="0"
 				sliderMax="50"
-				placeholder=""
+				placeholder={ placeholderTemplate ? getPlaceholder( `${ placeholderTemplate }-row-gap` ) : '' }
 			/>
 		</>
 	)

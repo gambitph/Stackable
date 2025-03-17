@@ -287,10 +287,10 @@
 
 			.stk--svg-wrapper:not(:only-child) {
 				&:first-child .stk--inner-svg svg:last-child {
-					margin-inline-end: 8px;
+					margin-inline-end: var(--stk-button-icon-gap);
 				}
 				&:last-child .stk--inner-svg svg:last-child {
-					margin-inline-start: 8px;
+					margin-inline-start: var(--stk-button-icon-gap);
 				}
 			}
 			column-gap: 8px;

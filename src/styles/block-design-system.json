@@ -1,0 +1,253 @@
+{
+	"Block": {
+		"block-margin-bottom": {
+				"desktop": 24,
+				"mobile": 16
+			}
+		},
+	"Columns": {
+		"column-margin": {
+				"desktop": 12,
+				"mobile": 8
+			},
+			"columns-column-gap": {
+				"desktop": 0
+			},
+			"columns-row-gap": {
+				"desktop": 0
+			}
+		},
+	"Containers": {
+		"container-padding": {
+			"desktop": {
+				"top": 32,
+				"right": 32,
+				"bottom": 32,
+				"left": 32
+			},
+			"mobile": {
+				"top": 24,
+				"right": 24,
+				"bottom": 24,
+				"left": 24
+			},
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		},
+		"container-padding-large": {
+			"desktop": {
+				"top": 64,
+				"right": 80,
+				"bottom": 64,
+				"left": 80
+			},
+			"mobile": {
+				"top": 32,
+				"right": 24,
+				"bottom": 32,
+				"left": 24
+			}
+		},
+		"container-padding-small": {
+			"desktop": {
+				"top": 16,
+				"right": 32,
+				"bottom": 16,
+				"left": 32
+			},
+			"mobile": {
+				"top": 8,
+				"right": 24,
+				"bottom": 8,
+				"left": 24
+			}
+		},
+		"container-border-style": {
+			"desktop": ""
+		},
+		"container-border-width": {
+			"desktop": 1,
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		},
+		"container-border-radius": {
+			"desktop": 0
+		},
+		"container-box-shadow": {
+			"desktop": "0px 4px 24px rgba(0, 0, 0, 0.04)",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		},
+		"container-background-color": {
+			"desktop": "#fff"
+		},
+		"container-color": {
+			"desktop": "#1e1e1e"
+		}
+	},
+	"Block Backgrounds": {
+		"block-background-padding": {
+			"desktop": {
+				"top": 24,
+				"right": 24,
+				"bottom": 24,
+				"left": 24
+			},
+			"mobile": {
+				"top": 16,
+				"right": 16,
+				"bottom": 16,
+				"left": 16
+			},
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		},
+		"block-background-border-style": {
+			"desktop": ""
+		},
+		"block-background-border-width": {
+			"desktop": 1,
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		},
+		"block-background-border-radius": {
+			"desktop": 0
+		},
+		"block-background-box-shadow": {
+			"desktop": "",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		},
+		"block-background-color": {
+			"desktop": "#f1f1f1"
+		}
+	},
+	"Images": {
+		"image-border-radius": {
+			"desktop": 0
+		},
+		"image-drop-shadow": {
+			"desktop": "",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		}
+	},
+	"Buttons": {
+		"button-min-height": {
+			"desktop": 0
+		},
+		"button-padding": {
+			"desktop": {
+				"top": 12,
+				"right": 16,
+				"bottom": 12,
+				"left": 16
+			}
+		},
+		"button-border-style": {
+			"desktop": ""
+		},
+		"button-border-width": {
+			"desktop": 1,
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		},
+		"button-ghost-border-width": {
+			"desktop": 2,
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		},
+		"button-border-radius": {
+			"desktop": 0
+		},
+		"button-box-shadow": {
+			"desktop": "",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": true
+			}
+		},
+		"button-icon-size": {
+			"desktop": 24
+		},
+		"button-icon-gap": {
+			"desktop": 8
+		},
+		"button-column-gap": {
+			"desktop": 12
+		},
+		"button-row-gap": {
+			"desktop": 12
+		},
+		"button-background-color": {
+			"desktop": "#008de4"
+		},
+		"button-text-color": {
+			"desktop": "#fff"
+		},
+		"icon-button-padding": {
+			"desktop": {
+				"top": 12,
+				"right": 12,
+				"bottom": 12,
+				"left": 12
+			}
+		}
+	},
+	"Icon Lists": {
+		"icon-list-icon-size": {
+			"desktop": 16
+		},
+		"icon-list-row-gap": {
+			"desktop": 0
+		},
+		"icon-list-icon-gap": {
+			"desktop": 8
+		},
+		"icon-list-indentation": {
+			"desktop": 0
+		}
+	},
+	"Icons": {
+		"icon-size": {
+			"desktop": 36
+		},
+		"icon-color": {
+			"desktop": "#a6a6a6"
+		},
+		"icon-shape-color": {
+			"desktop": "#ddd"
+		}
+	},
+	"Typography": {
+		"subtitle-size": {
+			"desktop": 16
+		},
+		"subtitle-color": {
+			"desktop": "#39414d"
+		}
+	},
+	"Tabs": {
+		"tab-accent-color": {
+			"desktop": "#008de4"
+		}
+	}
+}

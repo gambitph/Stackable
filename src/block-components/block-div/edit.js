@@ -18,6 +18,7 @@ import {
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
+	useBlockLayoutDefaults,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 
@@ -35,6 +36,7 @@ export const Edit = memo( props => {
 	} = props
 	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
 	const setAttributes = useBlockSetAttributesContext()
+	const { getPlaceholder } = useBlockLayoutDefaults()
 
 	return (
 		<>
@@ -55,6 +57,7 @@ export const Edit = memo( props => {
 						/>
 						<SizeControls.Spacing
 							attrNameTemplate="block%s"
+							paddingPlaceholder={ hasBackground ? getPlaceholder( 'block-background-padding' ) : '' }
 							visualGuide={ {
 								highlight: 'padding',
 							} }
@@ -84,6 +87,9 @@ export const Edit = memo( props => {
 				>
 					<BorderControls
 						attrNameTemplate="block%s"
+						placeholderTemplate="block-background"
+						borderTypeValue={ getPlaceholder( 'block-background-border-style' ) }
+						borderRadiusPlaceholder={ getPlaceholder( 'block-background-border-radius' ) }
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>

@@ -9,8 +9,9 @@
 }
 
 .stk-block-columns > .stk-block-content {
-	--stk-column-gap: 0px; // For nested columns, this takes precedence.
-	column-gap: var(--stk-column-gap, 0px);
+	--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
+	column-gap: var(--stk-column-gap);
+	row-gap: var(--stk-columns-row-gap, 0px);
 	margin-left: auto;
 	margin-right: auto;
 }

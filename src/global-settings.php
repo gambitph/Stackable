@@ -91,6 +91,85 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		}
 
 		/**
+		 * Creates a complete schema for a given type.
+		 *
+		 * This function generates a schema that defines values for various device types
+		 * and hover states. It also includes the units associated with each device type.
+		 *
+		 * @param array $type The type definition for the schema
+		 * @return array The generated schema.
+		 */
+		public static function create_global_schema( $type ) {
+			return array(
+				'type' => 'object',
+				'properties' => array(
+					'desktop' => $type,
+					'tablet' => $type,
+					'mobile' => $type,
+					'desktopHover' => $type,
+					'tabletHover' => $type,
+					'mobileHover' => $type,
+					'desktopParentHover' => $type,
+					'tabletParentHover' => $type,
+					'mobileParentHover' => $type,
+					'desktopUnit' => array( 'type' => 'string' ),
+					'tabletUnit' => array( 'type' => 'string' ),
+					'mobileUnit' => array( 'type' => 'string' ),
+					'desktopHoverUnit' => array( 'type' => 'string' ),
+					'tabletHoverUnit' => array( 'type' => 'string' ),
+					'mobileHoverUnit' => array( 'type' => 'string' ),
+					'desktopParentHoverUnit' => array( 'type' => 'string' ),
+					'tabletParentHoverUnit' => array( 'type' => 'string' ),
+					'mobileParentHoverUnit' => array( 'type' => 'string' ),
+				)
+			);
+		}
+
+		/**
+		 * This function defines a schema for a four-range type and utilizes the
+		 * `create_global_schema` function to generate the complete schema.
+		 *
+		 * @return array The generated schema for four-range type.
+		 */
+		public static function get_four_range_properties() {
+			$four_range_type  = array(
+				'type' => 'object',
+				'properties' => array(
+					'top' => array( 'type' => 'number', 'default' => '' ),
+					'right' => array( 'type' => 'number', 'default' => '' ),
+					'bottom' => array( 'type' => 'number', 'default' => '' ),
+					'left' => array( 'type' => 'number', 'default' => '' ),
+				)
+			);
+
+			return Stackable_Global_Settings::create_global_schema( $four_range_type );
+		}
+
+		/**
+		 * This function defines a schema for a string type and utilizes the
+		 * `create_global_schema` function to generate the complete schema.
+		 *
+		 * @return array The generated schema for string type.
+		 */
+		public static function get_string_properties() {
+			$string_type = array( 'type' => 'string' );
+
+			return Stackable_Global_Settings::create_global_schema( $string_type );
+		}
+
+		/**
+		 * This function defines a schema for a number type and utilizes the
+		 * `create_global_schema` function to generate the complete schema.
+		 *
+		 * @return array The generated schema for number type.
+		 */
+		public static function get_number_properties() {
+			$number_type = array( 'type' => 'number' );
+
+			return Stackable_Global_Settings::create_global_schema( $number_type );
+		}
+
+		/**
 		 * Register the settings we need for global settings.
 		 *
 		 * @return void
@@ -359,6 +438,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					'default' => '',
 				)
 			);
+
+			do_action( 'register_stackable_global_settings' );
 		}
 
 		/**
@@ -590,8 +671,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		public function generate_typography_styles( $selector, $styles ) {
 			$inherit = true;
 			$inherit_max = 50;
-			$tablet_breakpoint = 1025;
-			$mobile_breakpoint = 768;
+			$tablet_breakpoint = 1023;
+			$mobile_breakpoint = 767;
 
 			// Create desktop styles.
 			$css = array(
@@ -858,6 +939,179 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			return $selectors;
 		}
+
+		/**-----------------------------------------------------------------------------
+		 * Block Layouts functions
+		 *-----------------------------------------------------------------------------*/
+		/**
+		 * Generate CSS for:
+		 *  - Global Spacing and Borders
+		 *  - Global Buttons and Icons
+		 *
+		 * @param String $option_name
+		 * @param String $settings_name
+		 *
+		 * @return String generated css
+		 */
+		public static function generate_global_block_layouts( $option_name, $settings_name ) {
+			$block_layouts = get_option( $option_name );
+			$defaults = Stackable_Block_Design_System::get_block_design_system();
+
+			if ( ! $block_layouts || ! is_array( $block_layouts ) ) {
+				return false;
+			}
+
+			$tablet_breakpoint = 1023;
+			$mobile_breakpoint = 767;
+
+			$css = array(
+				'desktop' => array(),
+				'tablet' => array(),
+				'mobile' => array(),
+			);
+
+			foreach ( $block_layouts as $property => $values ) {
+				$states = array_filter( $values, array( 'Stackable_Global_Settings', 'get_block_layout_states' ), ARRAY_FILTER_USE_KEY );
+
+				foreach ( $states as $state => $value ) {
+					$unit = Stackable_Global_Settings::get_block_layout_unit( $block_layouts, $property, $state );
+
+					$device = strpos( $state, 'desktop' ) !== false ? 'desktop' : ( strpos( $state, 'tablet' ) !== false ? 'tablet' : 'mobile' );
+					$hover_state = strpos( $state, 'ParentHover' ) !== false ? 'parent-hover' : ( strpos( $state, 'Hover' ) !== false ? 'hover' : 'normal' );
+
+					$custom_property = '--stk-' . $property;
+
+					if ( $hover_state !== 'normal' ) {
+						$custom_property .= '-' . $hover_state;
+					}
+
+					if ( is_string( $value ) ) {
+						if ( strpos( $value, 'rgb' ) ) {
+							// Convert rgba colors to hex alpha colors because
+							// the function wp_style_engine_get_stylesheet_from_css_rules() doesn't allow css values to have '('
+							// See safecss_filter_attr() of wp-includes/kses.php
+							$split_value = Stackable_Global_Settings::extract_rgba( $value );
+							$color = Stackable_Global_Settings::rgba_to_hex_alpha( $split_value['color'] );
+
+							$style = $split_value[ 'options' ] . ' ' . $color;
+						} else {
+							$style = $value;
+						}
+					} else if ( is_array( $value ) ) {
+						$default_value = Stackable_Global_Settings::get_block_layout_defaults( $defaults, $property, $device );
+
+						// In case the default value is a number (same value for all sides)
+						if ( ! is_array( $default_value ) ) {
+							$_default_value = $default_value;
+							$default_value = array(
+								"top" => $_default_value,
+								"right" => $_default_value,
+								"bottom" => $_default_value,
+								"left" => $_default_value
+							);
+						}
+
+						$top = isset( $value[ 'top' ] ) ? $value[ 'top' ] : $default_value[ 'top' ];
+						$right = isset( $value[ 'right' ] ) ? $value[ 'right' ] : $default_value[ 'right' ];
+						$bottom = isset( $value[ 'bottom' ] ) ? $value[ 'bottom' ] : $default_value[ 'bottom' ];
+						$left = isset( $value[ 'left' ] ) ? $value[ 'left' ] : $default_value[ 'left' ];
+
+						$style = $top . $unit . ' ' . $right . $unit . ' ' .  $bottom . $unit . ' ' .  $left  . $unit;
+					} else {
+						$style = $value . $unit;
+					}
+
+					$css[ $device ][ $custom_property ] = $style;
+				}
+			}
+
+			$styles = array();
+			$generated_css = '';
+
+			if ( ! empty( $css[ 'desktop' ] ) || ! empty( $css[ 'tablet' ] ) || ! empty( $css[ 'mobile' ] ) ) {
+				$generated_css .= "\n/* " . $settings_name . " */\n";
+			}
+
+			if ( ! empty( $css['desktop'] ) ) {
+				$styles[] = array(
+						'selector'     => ':root',
+						'declarations' => $css[ 'desktop' ]
+				);
+			}
+			if ( ! empty( $css['tablet'] ) ) {
+				$styles[] = array(
+						'rules_group'  => '@media (max-width:' . $tablet_breakpoint .'px)',
+						'selector'     => ':root',
+						'declarations' => $css[ 'tablet' ]
+				);
+			}
+
+			if ( ! empty( $css['mobile'] ) ) {
+				$styles[] = array(
+					'rules_group'  => '@media (max-width:' . $mobile_breakpoint .'px)',
+					'selector'     => ':root',
+					'declarations' => $css[ 'mobile' ]
+				);
+			}
+
+			$generated_css .= wp_style_engine_get_stylesheet_from_css_rules( $styles );
+			return $generated_css;
+		}
+
+		public static function extract_rgba($value) {
+			$options = $value;
+			$color = '';
+
+			// Use a regex to find and extract the rgba value
+			if (preg_match('/rgba\(.*\)$/', $options, $matches)) {
+				$color = $matches[0];
+				$options = str_replace($color, '', $options);
+			}
+
+			$options = trim($options);
+
+			return [
+				'options' => $options,
+				'color' => $color,
+			];
+		}
+
+		public static function rgba_to_hex_alpha($color) {
+			// Remove 'rgba(' and ')' and split the values
+			$rgba = explode(',', substr($color, 5, -1));
+
+			$hexAlpha = array_map(function($val, $i) {
+				if ($i === 3) {
+					$opacity = floatval($val);
+					return str_pad(dechex(ceil($opacity * 255)), 2, '0', STR_PAD_LEFT);
+				}
+				$hex = dechex(intval($val));
+				return str_pad($hex, 2, '0', STR_PAD_LEFT);
+			}, $rgba, array_keys($rgba));
+
+			return '#' . implode('', $hexAlpha);
+		}
+
+		public static function get_block_layout_unit( $block_layouts, $property, $state ) {
+			return $block_layouts[ $property ][ $state . 'Unit' ] ?? 'px';
+		}
+
+		public static function get_block_layout_states( $state ) {
+			return strpos( $state, 'Unit' ) === false;
+		}
+
+		public static function get_block_layout_defaults( $defaults, $property, $device ) {
+			if ( ! isset( $defaults[ $property ] ) ) {
+				return '';
+			}
+
+			if ( ! isset( $defaults[ $property ][ $device ] ) ) {
+				return $defaults[ $property ][ 'desktop' ];
+			}
+
+			return $defaults[ $property ][ $device ];
+		}
+
 	}
 
 	new Stackable_Global_Settings();

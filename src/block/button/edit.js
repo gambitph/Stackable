@@ -19,7 +19,7 @@ import {
 	Transform,
 	getAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockStyle } from '~stackable/hooks'
+import { useBlockLayoutDefaults, useBlockStyle } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapper,
@@ -121,6 +121,7 @@ const Edit = props => {
 }
 
 const InspectorControls = memo( props => {
+	const { getPlaceholder } = useBlockLayoutDefaults()
 	return (
 		<>
 			<BlockControls>
@@ -139,6 +140,8 @@ const InspectorControls = memo( props => {
 				blockState={ props.blockState }
 				borderSelector=".stk-button"
 				hasFullWidth={ true }
+				borderRadiusPlaceholder={ getPlaceholder( 'button-border-radius' ) }
+				iconGapPlaceholderName="button-icon-gap"
 			/>
 			<Typography.InspectorControls
 				{ ...props }
