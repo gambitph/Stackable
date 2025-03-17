@@ -138,7 +138,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
-}, 20 )
+}, 4 )
 
 // Convert hex colors to global colors in Stackable blocks.
 addFilter( 'stackable.color-palette-control.change', 'stackable/global-colors', ( value, colorObject ) => {
