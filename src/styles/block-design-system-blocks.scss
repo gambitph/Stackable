@@ -151,7 +151,6 @@
 	&:hover {
 		border-width: cssvar(container-border-width-hover);
 		box-shadow: cssvar(container-box-shadow-hover);
-		background-color: var(--stk-container-background-color-hover, var(--stk-container-background-color));
 	}
 }
 :where(.stk-hover-parent:hover) .stk-container:not(.stk--no-background) {
@@ -191,9 +190,6 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		&:hover {
 			padding: cssvar(block-background-padding-hover);
 		}
-	}
-	&:hover {
-		background-color: var(--stk-block-background-color-hover, var(--stk-block-background-color));
 	}
 }
 

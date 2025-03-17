@@ -75,6 +75,7 @@ domReady( () => {
 	document?.body?.appendChild( globalColorWrapper )
 	document?.body?.appendChild( globalSpacingAndBorderWrapper )
 	document?.body?.appendChild( globalButtonsAndIconsWrapper )
+	document?.body?.appendChild( globalColorSchemesWrapper )
 	createRoot( globalTypographyWrapper ).render( <GlobalTypographyStyles /> )
 	createRoot( globalColorWrapper ).render( <GlobalColorStyles /> )
 	createRoot( globalSpacingAndBorderWrapper ).render( <GlobalSpacingAndBordersStyles /> )
