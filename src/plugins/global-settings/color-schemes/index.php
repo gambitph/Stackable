@@ -169,14 +169,21 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		 * @return String
 		 */
 		public function add_global_color_schemes_styles( $current_css ) {
-			$schemes_array = get_option( 'stackable_global_color_schemes' );
-			$base_default = get_option( 'stackable_global_base_color_scheme' ) != '' ? get_option( 'stackable_global_base_color_scheme' ) : 'scheme-default-1';
-			$background_default = get_option( 'stackable_global_background_mode_color_scheme' ) != '' ? get_option( 'stackable_global_background_mode_color_scheme' ) : 'scheme-default-2';
-			$container_default = get_option( 'stackable_global_container_mode_color_scheme' ) != '' ? get_option( 'stackable_global_container_mode_color_scheme' ) : 'scheme-default-1';
+			$schemes_array = is_array( get_option( 'stackable_global_color_schemes' ) ) ? get_option( 'stackable_global_color_schemes' ) : [];
 
 			// Get all color schemes, including custom color schemes if any
 			$all_color_schemes = apply_filters( 'stackable_global_color_schemes.get_color_schemes', $schemes_array );
+
+			if ( ! is_array( $all_color_schemes ) ) {
+				return $current_css;
+			}
+
 			$this->color_schemes = $this->convert_to_assoc_array( $all_color_schemes );
+
+			$base_default = isset( $this->color_schemes[ get_option( 'stackable_global_base_color_scheme' ) ] ) ? get_option( 'stackable_global_base_color_scheme' ) : 'scheme-default-1';
+			$background_default = isset( $this->color_schemes[ get_option( 'stackable_global_background_mode_color_scheme' ) ] )  ? get_option( 'stackable_global_background_mode_color_scheme' ) : 'scheme-default-2';
+			$container_default = isset( $this->color_schemes[ get_option( 'stackable_global_container_mode_color_scheme' ) ] )  ? get_option( 'stackable_global_container_mode_color_scheme' ) : 'scheme-default-1';
+
 			$styles = array();
 
 			if ( isset( $this->color_schemes[$base_default] ) ) {

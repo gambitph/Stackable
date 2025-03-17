@@ -98,7 +98,7 @@ const ColorSchemePicker = props => {
 	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
 
 	// Add a custom color scheme
-	const handleAddItem = ( scheme = null ) => {
+	const handleAddItem = ( event, scheme = null ) => {
 		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', scheme, setItemInEdit, saveTimeout )
 	}
 
@@ -210,7 +210,7 @@ const ColorSchemePicker = props => {
 		const confirmDuplicate = window.confirm( __( 'Do you want to duplicate this color scheme?', i18n ) )
 
 		if ( confirmDuplicate ) {
-			handleAddItem( item )
+			handleAddItem( null, item )
 		}
 	}
 
