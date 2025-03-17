@@ -7,7 +7,11 @@ import { i18n } from 'stackable'
  * Internal dependencies
  */
 import fonts from './google-fonts.json'
-import { loadGoogleFont } from '~stackable/util'
+import {
+	loadGoogleFont,
+	MODERN_FONT_STACKS,
+	SYSTEM_FONT_STACKS,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -33,12 +37,18 @@ const FontFamilyControl = props => {
 			{
 				id: 'system-fonts',
 				title: __( 'System Fonts', i18n ),
-				options: [
-					{ label: __( 'Sans-Serif', i18n ), value: 'Sans-Serif' },
-					{ label: __( 'Serif', i18n ), value: 'Serif' },
-					{ label: __( 'Serif Alternative', i18n ), value: 'Serif-Alt' },
-					{ label: __( 'Monospace', i18n ), value: 'Monospace' },
-				],
+				options: Object.keys( SYSTEM_FONT_STACKS ).map( key => {
+					const font = SYSTEM_FONT_STACKS[ key ]
+					return { label: font.label, value: key }
+				} ),
+			},
+			{
+				id: 'modern-font-stacks',
+				title: __( 'Modern Font Stacks', i18n ),
+				options: Object.keys( MODERN_FONT_STACKS ).map( key => {
+					const font = MODERN_FONT_STACKS[ key ]
+					return { label: font.label, value: key }
+				} ),
 			},
 			{
 				id: 'google-fonts',
