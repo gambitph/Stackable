@@ -8,7 +8,7 @@
 	--gap: 16px;
 	--line-dot-size: 11px;
 	--line-dot-border-radius: 100%;
-	--line-accent-bg-color: #000;
+	--line-accent-bg-color: var(--stk-accent-color, #000);
 	--line-accent-bg-color-2: var(--line-accent-bg-color, #000);
 	--line-accent-bg-location: 50%;
 	--line-bg-color: #eee;

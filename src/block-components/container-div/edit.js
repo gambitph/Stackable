@@ -46,8 +46,9 @@ export const Edit = props => {
 	const { getPlaceholder } = useBlockLayoutDefaults()
 
 	const {
-		COLOR_SCHEME_OPTIONS, containerModeColorScheme,
-		getScheme, updateColorSchemesInUse,
+		getScheme,
+		COLOR_SCHEME_OPTIONS,
+		containerModeColorScheme,
 	} = useBlockColorSchemes()
 
 	return (
@@ -65,9 +66,8 @@ export const Edit = props => {
 						value={ getScheme( containerColorScheme || containerModeColorScheme, { returnFallback: false } ) }
 						options={ COLOR_SCHEME_OPTIONS }
 						attribute="containerColorScheme"
-						changeCallback={ ( newScheme, oldScheme ) => {
+						changeCallback={ newScheme => {
 							const colorScheme = newScheme === containerModeColorScheme ? '' : newScheme
-							updateColorSchemesInUse( colorScheme, oldScheme )
 							return colorScheme
 						} }
 						default={ containerModeColorScheme }

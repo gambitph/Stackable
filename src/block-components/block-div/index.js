@@ -133,6 +133,7 @@ BlockDiv.Content = props => {
 			uniqueBlockClass,
 			{
 				'stk-block-background': attributes.hasBackground,
+				[ `background-${ attributes.backgroundColorScheme }` ]: attributes.hasBackground && attributes.backgroundColorScheme,
 				// When the block has auto top/bottom margins, we need to force the
 				// parent container to be 100% height or else the auto won't have any
 				// effect in the frontend. This is okay in the editor-side.

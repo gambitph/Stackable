@@ -19,9 +19,6 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => 24,
 					"mobile" => 16
 				),
-				"accent-color" => array(
-					"desktop" => "#008de4"
-				),
 				"column-margin" => array(
 					"desktop" => 12,
 					"mobile" => 8

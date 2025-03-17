@@ -11,6 +11,24 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
+:where(.stk-block) {
+	p,
+	div {
+		color: var(--stk-text-color);
+	}
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: var(--stk-heading-color);
+	}
+}
+.stk-block a {
+	color: var(--stk-link-color);
+}
+
 .stk-button-group {
 	row-gap: cssvar(button-row-gap);
 	column-gap: cssvar(button-column-gap);
@@ -18,6 +36,7 @@
 }
 
 .stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+	#{'--stk-accent-color'}: cssvar(button-text-color);
 	&:not(.is-style-link) {
 		.stk-button {
 			background: cssvar(button-background-color);
@@ -65,11 +84,11 @@
 
 	// Ghost button color.
 	&.is-style-ghost {
-		#{ '--stk-button-text-color' }: cssvar(button-background-color);
+		#{ '--stk-button-text-color' }: var(--stk-button-outline-color, cssvar(button-background-color));
 		.stk-button {
 			&::before {
 				border-width: cssvar(button-ghost-border-width);
-				border-color: cssvar(button-background-color);
+				border-color: var(--stk-button-outline-color, cssvar(button-background-color));
 			}
 			&:hover::before {
 				border-width: cssvar(button-ghost-border-width-hover);
@@ -132,6 +151,7 @@
 	&:hover {
 		border-width: cssvar(container-border-width-hover);
 		box-shadow: cssvar(container-box-shadow-hover);
+		background-color: var(--stk-container-background-color-hover, var(--stk-container-background-color));
 	}
 }
 :where(.stk-hover-parent:hover) .stk-container:not(.stk--no-background) {
@@ -172,6 +192,9 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 			padding: cssvar(block-background-padding-hover);
 		}
 	}
+	&:hover {
+		background-color: var(--stk-block-background-color-hover, var(--stk-block-background-color));
+	}
 }
 
 .stk-block.stk-block-background {
@@ -208,14 +231,14 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 
 // Icons
 .stk--inner-svg {
-	border-color: cssvar(icon-color);
+	border-color: var(--stk-accent-color, cssvar(icon-color));
 	svg:last-child {
 		width: cssvar(icon-size);
 		height: cssvar(icon-size);
 		&:not(.ugb-custom-icon):not(.stk-custom-icon) {
 			&,
 			:is(g, path, rect, polygon, ellipse) {
-				fill: cssvar(icon-color);
+				fill: var(--stk-accent-color, cssvar(icon-color));
 			}
 		}
 	}
@@ -224,12 +247,12 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 // Typography
 .stk-subtitle {
 	font-size: cssvar(subtitle-size);
-	color: cssvar(subtitle-color);
+	color: var(--stk-accent-color, cssvar(subtitle-color));
 }
 
 // Posts
 .stk-block-posts {
 	&__meta {
-		color: cssvar(subtitle-color);
+		color: var(--stk-accent-color, cssvar(subtitle-color));
 	}
 }

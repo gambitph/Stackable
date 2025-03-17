@@ -1,19 +1,14 @@
 import { Button, BaseControl } from '@wordpress/components'
 
 export const DEFAULT_COLOR_SCHEME_COLORS = {
-	backgroundColor: { desktop: 'var(--stk-container-background-color, #fff)' },
+	backgroundColor: { desktop: '' },
 	headingColor: { desktop: '' },
 	textColor: { desktop: '' },
 	linkColor: { desktop: '' },
-	accentColor: { desktop: 'var(--stk-accent-color, #008de4)' },
-	buttonColor: { desktop: 'var(--stk-button-background-color, #008de4)' },
-	buttonTextColor: { desktop: 'var(--stk-button-text-color, #fff)' },
-	buttonOutlineColor: { desktop: 'var(--stk-button-background-color, #008de4)' },
-}
-
-export const DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS = {
-	...DEFAULT_COLOR_SCHEME_COLORS,
-	backgroundColor: { desktop: 'var(--stk-block-background-color, #fff)' },
+	accentColor: { desktop: '' },
+	buttonBackgroundColor: { desktop: '' },
+	buttonTextColor: { desktop: '' },
+	buttonOutlineColor: { desktop: '' },
 }
 
 const NOOP = () => {}
@@ -34,14 +29,14 @@ const ColorSchemePreview = ( { colors, onClick = NOOP } ) => {
 			<div>
 				<div
 					className="stk-global-color-scheme__preview__button"
-					style={ { backgroundColor: colors?.buttonColor } }
+					style={ { backgroundColor: `${ colors?.buttonBackgroundColor || 'var(--stk-button-background-color)' }` } }
 				/>
 				<div
 					className="stk-global-color-scheme__preview__button"
 					style={ {
 						borderStyle: 'solid',
 						borderWidth: '1px',
-						borderColor: colors?.buttonOutlineColor,
+						borderColor: `${ colors?.buttonOutlineColor || colors?.buttonBackgroundColor || 'var(--stk-button-background-color)' }`,
 					} }
 				/>
 			</div>

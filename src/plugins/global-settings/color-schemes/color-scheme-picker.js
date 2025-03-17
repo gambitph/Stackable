@@ -15,7 +15,6 @@ import {
 	ColorSchemePreview,
 	PresetColorSchemesPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
-	DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS,
 } from '~stackable/components'
 import { useBlockHoverState } from '~stackable/hooks'
 import { extractColor } from '~stackable/util'
@@ -50,7 +49,7 @@ const COLOR_SETTINGS = [ {
 	property: 'accentColor',
 }, {
 	label: __( 'Button Color', i18n ),
-	property: 'buttonColor',
+	property: 'buttonBackgroundColor',
 }, {
 	label: __( 'Button Text Color', i18n ),
 	property: 'buttonTextColor',
@@ -78,9 +77,7 @@ const ColorSchemePicker = props => {
 	const currentState = `desktop${ hoverState[ currentHoverState ] }`
 
 	const showResetButton = item => {
-		return item.key === 'scheme-default-2'
-			? ! isEqual( item.colorScheme, DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS )
-			: ! isEqual( item.colorScheme, DEFAULT_COLOR_SCHEME_COLORS )
+		return ! isEqual( item.colorScheme, DEFAULT_COLOR_SCHEME_COLORS )
 	}
 
 	useEffect( () => {
@@ -96,16 +93,15 @@ const ColorSchemePicker = props => {
 		setSubHeaderControls( controls )
 	}, [ itemInEdit ] )
 
+	// Get the custom color schemes
 	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
 
-	const getDefaultPreviewColors = item => {
-		return item.key === 'scheme-default-2' ? DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS : DEFAULT_COLOR_SCHEME_COLORS
-	}
-
+	// Add a custom color scheme
 	const handleAddItem = () => {
 		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', saveTimeout )
 	}
 
+	// For sorting custom color schemes
 	const onSortEnd = props => {
 		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.sort-color-schemes', props, saveTimeout )
 	}
@@ -113,9 +109,11 @@ const ColorSchemePicker = props => {
 	const updateColorSchemes = currentItem => {
 		clearTimeout( saveTimeout )
 
+		// If the color scheme being edited is a custom color scheme, customUpdate will return true
 		const customUpdate = applyFilters( 'stackable.global-settings.global-color-schemes.update-color-schemes', false, currentItem, saveTimeout )
 
 		if ( ! customUpdate ) {
+			// Do this only when the color scheme being edited is the default/fixed color schemes (the first two color schemes)
 			const updatedColorSchemes = cloneDeep( colorSchemes )
 			const currentIndex = colorSchemes.findIndex( c => c.key === currentItem.key )
 			updatedColorSchemes[ currentIndex ] = currentItem
@@ -130,6 +128,7 @@ const ColorSchemePicker = props => {
 		}
 	}
 
+	// For updating the Color Scheme name
 	const onChangeName = name => {
 		if ( ! itemInEdit ) {
 			return
@@ -141,6 +140,7 @@ const ColorSchemePicker = props => {
 		updateColorSchemes( currentItem )
 	}
 
+	// For updating the color scheme color set
 	const onChange = ( property, color ) => {
 		if ( ! itemInEdit ) {
 			return
@@ -152,13 +152,14 @@ const ColorSchemePicker = props => {
 		updateColorSchemes( currentItem )
 	}
 
+	// Update the current color scheme when a preset is selected.
 	const onPresetClick = colors => {
 		if ( ! itemInEdit ) {
 			return
 		}
 		const currentItem = cloneDeep( itemInEdit )
 		Object.entries( colors ).forEach( ( [ property, color ] ) => {
-			currentItem.colorScheme[ property ].desktop = color
+			currentItem.colorScheme[ property ][ currentState ] = color
 		} )
 		setItemInEdit( currentItem )
 
@@ -173,7 +174,7 @@ const ColorSchemePicker = props => {
 		}
 
 		const currentItem = cloneDeep( item )
-		currentItem.colorScheme = item.key === 'scheme-default-2' ? cloneDeep( DEFAULT_BACKGROUND_COLOR_SCHEME_COLORS ) : cloneDeep( DEFAULT_COLOR_SCHEME_COLORS )
+		currentItem.colorScheme = cloneDeep( DEFAULT_COLOR_SCHEME_COLORS )
 
 		if ( itemInEdit ) {
 			setItemInEdit( currentItem )
@@ -182,24 +183,46 @@ const ColorSchemePicker = props => {
 	}
 
 	const onDeleteItem = item => {
+		// If the color scheme to be deleted is a custom color scheme, customDelete will return true
 		const customDelete = applyFilters( 'stackable.global-settings.global-color-schemes.delete-color-scheme', false, item, setItemInEdit, saveTimeout )
 
 		if ( ! customDelete ) {
+			// Do not delete if it is not a custom color scheme, reset it to the default value instead.
 			onReset( item )
 		}
 	}
 
-	const ItemPreview = ( { item, withWrapper = false } ) => {
-		const defaults = getDefaultPreviewColors( item )
+	// If the property does not have a value for hover/parent-hover states, return the desktop value
+	const getInheritedValue = property => {
+		if ( property[ currentState ] ) {
+			return property[ currentState ]
+		}
 
-		const backgroundColorStyle = item.colorScheme.backgroundColor.desktop || defaults.backgroundColor.desktop
+		return property.desktop
+	}
+
+	const ItemPreview = ( { item, withWrapper = false } ) => {
+		/**
+		 * We have two default color schemes: scheme-default-1 and scheme-default-2
+		 * scheme-default-2 is our default color scheme when the block background setting is enabled
+		 * so we use --stk-block-background-color as the default background-color for scheme-default-2
+		 */
+		const defaults = {
+			...DEFAULT_COLOR_SCHEME_COLORS,
+			...( item.key === 'scheme-default-2'
+				? { backgroundColor: { desktop: 'var(--stk-block-background-color)' } }
+				: {}
+			),
+		}
+
+		const backgroundColorStyle = getInheritedValue( item.colorScheme.backgroundColor ) || defaults.backgroundColor.desktop
 
 		const colors = {
 			backgroundColor: backgroundColorStyle,
-			headingColor: item.colorScheme.headingColor.desktop || defaults.headingColor.desktop,
-			textColor: item.colorScheme.textColor.desktop || defaults.textColor.desktop,
-			buttonColor: item.colorScheme.buttonColor.desktop || defaults.buttonColor.desktop,
-			buttonOutlineColor: item.colorScheme.buttonOutlineColor.desktop || defaults.buttonOutlineColor.desktop,
+			headingColor: getInheritedValue( item.colorScheme.headingColor ) || defaults.headingColor.desktop,
+			textColor: getInheritedValue( item.colorScheme.textColor ) || defaults.textColor.desktop,
+			buttonBackgroundColor: getInheritedValue( item.colorScheme.buttonBackgroundColor ) || defaults.buttonBackgroundColor.desktop,
+			buttonOutlineColor: getInheritedValue( item.colorScheme.buttonOutlineColor ) || defaults.buttonOutlineColor.desktop,
 		}
 
 		const Preview = <ColorSchemePreview colors={ colors } />
@@ -217,7 +240,6 @@ const ColorSchemePicker = props => {
 		items={ customColorSchemes }
 		nonSortableItems={ colorSchemes }
 		editableName={ false }
-		// onChangeItem={ onChangeColorScheme }
 		onDeleteItem={ onDeleteItem }
 		handleAddItem={ handleAddItem }
 		onSortEnd={ onSortEnd }
@@ -262,12 +284,11 @@ const ColorSchemePicker = props => {
 			<ColorPaletteControl
 				key={ index }
 				label={ settings.label }
-				value={ itemInEdit?.colorScheme[ settings.property ][ currentState ] }
+				value={ getInheritedValue( itemInEdit?.colorScheme[ settings.property ] ) }
 				colorLabel={ extractColor( itemInEdit?.colorScheme[ settings.property ][ currentState ] ) }
-				hover="all"
+				// hover="all"
 				forceUpdateHoverState={ true }
 				onChange={ color => onChange( settings.property, color ) }
-				default={ getDefaultPreviewColors( itemInEdit )[ settings.property ][ currentState ] }
 				help={ settings.property === 'backgroundColor' ? __( 'Note: Background color is not used for Base Color Scheme.', i18n ) : '' }
 			/>
 		) ) }

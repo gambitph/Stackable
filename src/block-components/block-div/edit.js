@@ -48,8 +48,9 @@ export const Edit = memo( props => {
 	const { getPlaceholder } = useBlockLayoutDefaults()
 
 	const {
-		COLOR_SCHEME_OPTIONS, backgroundModeColorScheme,
-		getScheme, updateColorSchemesInUse,
+		getScheme,
+		COLOR_SCHEME_OPTIONS,
+		backgroundModeColorScheme,
 	} = useBlockColorSchemes()
 
 	return (
@@ -94,9 +95,8 @@ export const Edit = memo( props => {
 						value={ getScheme( backgroundColorScheme || backgroundModeColorScheme, { mode: 'background', returnFallback: false } ) }
 						options={ COLOR_SCHEME_OPTIONS }
 						attribute="backgroundColorScheme"
-						changeCallback={ ( newScheme, oldScheme ) => {
+						changeCallback={ newScheme => {
 							const colorScheme = newScheme === backgroundModeColorScheme ? '' : newScheme
-							updateColorSchemesInUse( colorScheme, oldScheme, 'background' )
 							return colorScheme
 						} }
 						default={ backgroundModeColorScheme }

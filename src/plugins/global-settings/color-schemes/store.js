@@ -10,7 +10,6 @@ import {
 	register, createReduxStore, dispatch,
 } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
-import { cloneDeep } from 'lodash'
 
 // Include all the stored state.
 const DEFAULT_STATE = {
@@ -18,7 +17,6 @@ const DEFAULT_STATE = {
 	baseColorScheme: '',
 	backgroundModeColorScheme: '',
 	containerModeColorScheme: '',
-	colorSchemesInUse: {},
 }
 
 const STORE_ACTIONS = {
@@ -29,10 +27,6 @@ const STORE_ACTIONS = {
 	updateDefaultColorScheme: colorSchemeObj => ( {
 		type: 'UPDATE_DEFAULT_COLOR_SCHEME',
 		colorSchemeObj,
-	} ),
-	updateColorSchemesInUse: props => ( {
-		type: 'UPDATE_COLOR_SCHEMES_IN_USE',
-		props,
 	} ),
 }
 
@@ -57,41 +51,6 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 			return {
 				...state,
 				...action.colorSchemeObj,
-			}
-		}
-		case 'UPDATE_COLOR_SCHEMES_IN_USE': {
-			const {
-				newScheme, oldScheme, clientId, mode = 'container',
-			} = action.props
-
-			const schemes = cloneDeep( state.colorSchemesInUse )
-
-			const oldSchemeKey = oldScheme ? `${ mode }-${ oldScheme }` : ''
-			const newSchemeKey = newScheme ? `${ mode }-${ newScheme }` : ''
-
-			if ( oldSchemeKey in schemes ) {
-				const index = schemes[ oldSchemeKey ].indexOf( clientId )
-				if ( index !== -1 ) {
-					schemes[ oldSchemeKey ].splice( index, 1 )
-				}
-
-				if ( schemes[ oldSchemeKey ].length === 0 ) {
-					delete schemes[ oldSchemeKey ]
-				}
-			}
-
-			if ( newSchemeKey in schemes ) {
-				const index = schemes[ newSchemeKey ].indexOf( clientId )
-				if ( index === -1 ) {
-					schemes[ newSchemeKey ].push( clientId )
-				}
-			} else if ( newSchemeKey !== '' ) {
-				schemes[ newSchemeKey ] = [ clientId ]
-			}
-
-			return {
-				...state,
-				colorSchemesInUse: schemes,
 			}
 		}
 		default: {

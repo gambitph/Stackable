@@ -1,19 +1,17 @@
 /**
+ * Internal dependencies
+ */
+import { hoverState } from '../utils'
+
+/**
  * WordPress dependencies
  */
-import { select } from '@wordpress/data'
 import { useEffect, useState } from '@wordpress/element'
 
 /**
  * External dependencies
  */
 import { useBlockColorSchemes } from '~stackable/hooks'
-
-const extractModeScheme = className => {
-	const match = className.match( /^([a-zA-Z]+)-(.+)$/ )
-
-	return match ? { mode: match[ 1 ], key: match[ 2 ] } : false
-}
 
 const convertToObj = colorSchemes => {
 	const obj = {}
@@ -25,44 +23,132 @@ const convertToObj = colorSchemes => {
 	return obj
 }
 
-const renderGlobalStyles = ( colorSchemesArray, colorSchemesInUse, setStyles ) => {
-	let css = ''
+const camelToKebab = property => {
+	const result = property.replace( /([a-z0-9])([A-Z])/g, '$1-$2' )
 
-	const colorSchemes = convertToObj( colorSchemesArray )
+	// Convert the result to lowercase and return with '--stk-' prefix
+	return '--stk-' + result.toLowerCase()
+}
 
-	colorSchemesInUse.forEach( className => {
-		const { mode, key } = extractModeScheme( className )
-		const scheme = colorSchemes[ key ]
+const getInheritedValue = ( property, currentState ) => {
+	return property?.[ currentState ] || property?.desktop
+}
 
-		if ( scheme?.backgroundColor ) {
+const generateRules = ( scheme, currentHoverState = 'normal', mode = '', appendSuffix = false ) => {
+	const decls = []
+	const state = `desktop${ hoverState[ currentHoverState ] }`
+	let suffix = ''
+	const properties = [
+		'backgroundColor',
+		'headingColor',
+		'textColor',
+		'linkColor',
+		'accentColor',
+		'buttonBackgroundColor',
+		'buttonTextColor',
+		'buttonOutlineColor',
+	]
+
+	if ( appendSuffix ) {
+		suffix = currentHoverState !== 'normal' ? `-${ currentHoverState }` : ''
+	}
+
+	properties.forEach( property => {
+		if ( mode && property === 'backgroundColor' && scheme[ property ]?.desktop ) {
 			const varname = mode === 'background' ? 'block' : 'container'
-			const decl = `--stk-${ varname }-background-color: ${ scheme.backgroundColor.desktop };`
-			css += `.${ className } { ${ decl } }`
+			decls.push( `--stk-${ varname }-background-color${ suffix }: ${ getInheritedValue( scheme[ property ], state ) };` )
+			return
+		}
+
+		if ( scheme[ property ]?.desktop ) {
+			const customProperty = camelToKebab( property )
+			decls.push( `${ customProperty }${ suffix }: ${ getInheritedValue( scheme[ property ], state ) };` )
 		}
 	} )
+
+	return decls.join( ' ' )
+}
+
+const renderGlobalStyles = (
+	setStyles,
+	colorSchemesArray,
+	baseColorScheme,
+	backgroundModeColorScheme,
+	containerModeColorScheme,
+	currentHoverState = 'normal',
+) => {
+	let css = ''
+
+	const rules = {
+		background: [],
+		container: [],
+	}
+	const colorSchemes = convertToObj( colorSchemesArray )
+
+	let decls,
+		scheme
+
+	if ( baseColorScheme in colorSchemes ) {
+		scheme = colorSchemes[ baseColorScheme ]
+		decls = generateRules( scheme, currentHoverState )
+		css += `:root { ${ decls } }`
+	}
+
+	if ( backgroundModeColorScheme in colorSchemes ) {
+		scheme = colorSchemes[ backgroundModeColorScheme ]
+		decls = generateRules( scheme, currentHoverState, 'background' )
+		css += `.stk-block-background { ${ decls } }`
+	}
+
+	if ( containerModeColorScheme in colorSchemes ) {
+		scheme = colorSchemes[ containerModeColorScheme ]
+		decls = generateRules( scheme, currentHoverState, 'container' )
+		css += `.stk-container:where(:not(.stk--no-background)) { ${ decls } }`
+	}
+
+	Object.entries( colorSchemes ).forEach( ( [ key, scheme ] ) => {
+		const backgrounds = generateRules( scheme, currentHoverState, 'background' )
+		rules.background.push( `.background-${ key }{ ${ backgrounds } }` )
+
+		const containers = generateRules( scheme, currentHoverState, 'container' )
+		rules.container.push( `.container-${ key }{ ${ containers } }` )
+	} )
+
+	css += `${ rules.background.join( ' ' ) }`
+	css += `${ rules.container.join( ' ' ) }`
 
 	setStyles( css )
 }
 
 export const GlobalColorSchemeStyles = () => {
 	const {
-		allColorSchemes, colorSchemesInUse, initializeColorSchemesInUse,
+		allColorSchemes,
+		baseColorScheme,
+		backgroundModeColorScheme,
+		containerModeColorScheme,
 	} = useBlockColorSchemes()
-	const initClientIds = select( 'core/block-editor' ).getClientIdsWithDescendants()
+
+	// const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
 
 	const [ styles, setStyles ] = useState( '' )
 
 	useEffect( () => {
-		if ( initClientIds && initClientIds.length > 0 ) {
-			initializeColorSchemesInUse( initClientIds )
-		}
-	}, [ initClientIds ] )
-
-	useEffect( () => {
 		if ( allColorSchemes && Array.isArray( allColorSchemes ) && allColorSchemes.length ) {
-			renderGlobalStyles( allColorSchemes, colorSchemesInUse, setStyles )
+			renderGlobalStyles(
+				setStyles,
+				allColorSchemes,
+				baseColorScheme,
+				backgroundModeColorScheme,
+				containerModeColorScheme,
+				// currentHoverState
+			)
 		}
-	}, [ allColorSchemes, colorSchemesInUse ] )
+	}, [ allColorSchemes,
+		baseColorScheme,
+		backgroundModeColorScheme,
+		containerModeColorScheme,
+		// currentHoverState,
+	 ] )
 
 	return styles
 }

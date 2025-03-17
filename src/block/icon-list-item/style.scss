@@ -1,5 +1,6 @@
 .stk-block-icon-list-item {
 	list-style-type: none !important;
+	--stk-icon-list-marker-color: var(--stk-accent-color);
 }
 .stk-block-icon-list.stk-block {
 	.wp-block-stackable-icon-list-item:not(:last-child)::after {

@@ -3,9 +3,6 @@
 		"block-margin-bottom": {
 			"desktop": 24,
 			"mobile": 16
-		},
-		"accent-color": {
-			"desktop": "#008de4"
 		}
 	},
 	"Columns": {

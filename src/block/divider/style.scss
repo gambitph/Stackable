@@ -3,7 +3,7 @@
 .stk-block.stk-block-divider {
 	hr.stk-block-divider__hr,
 	.stk-block-divider__dot {
-		background: #ddd;
+		background: var(--stk-accent-color, #ddd);
 	}
 }
 
