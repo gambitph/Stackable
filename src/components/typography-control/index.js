@@ -53,6 +53,7 @@ const TypographyControl = props => {
 						label={ __( 'Font Family', i18n ) }
 						onChange={ props.onChangeFontFamily }
 						value={ props.fontFamily }
+						placeholder={ __( 'Theme Default', i18n ) }
 						helpTooltip={ {
 							video: 'typography-family',
 							description: __( 'Sets the font set to be used for the element', i18n ),
