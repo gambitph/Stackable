@@ -44,7 +44,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		}
 
 		/**
-		 * Register the settings we need for global spacing and borders.
+		 * Register the settings we need for global color schemes.
 		 *
 		 * @return void
 		 */
