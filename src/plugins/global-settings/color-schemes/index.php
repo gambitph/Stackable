@@ -30,7 +30,6 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
   		function __construct() {
 			// Register our settings.
 			add_action( 'register_stackable_global_settings', array( $this, 'register_color_schemes' ) );
-			add_action( 'stackable_early_version_upgraded', array( $this, 'set_global_color_scheme_default_values' ), 10, 2 );
 			if ( is_frontend() ) {
 
 				/**
@@ -156,30 +155,6 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			}
 
 			return $_properties;
-		}
-
-		/**
-		 * When upgrading, make sure that there are default global color schemes.
-		 */
-		function set_global_color_scheme_default_values( $old_version, $new_version ) {
-			if ( ! get_option( 'stackable_global_color_schemes' ) ) {
-				$empty_color_scheme = Stackable_Global_Color_Schemes::get_color_scheme_properties( array( 'desktop' => '' ) );
-
-				$default = array(
-					array(
-						'name' => 'Default Scheme',
-						'key' => 'scheme-default-1',
-						'colorScheme' => $empty_color_scheme
-					),
-					array(
-						'name' => 'Color Scheme 2',
-						'key' => 'scheme-default-2',
-						'colorScheme' => $empty_color_scheme
-					),
-				);
-
-				update_option( 'stackable_global_color_schemes', $default );
-			}
 		}
 
 		/**-----------------------------------------------------------------------------
