@@ -92,7 +92,7 @@ test.describe( 'Block Editor', () => {
 	} )
 
 	test( 'The Stackable block added in the editor should be visible in the frontend', async ( {
-		page, editor,
+		page, editor, admin,
 	} ) => {
 		await editor.insertBlock( {
 			name: 'stackable/text',
@@ -124,5 +124,9 @@ test.describe( 'Block Editor', () => {
 		await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toBeVisible()
 		await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toContainText( 'test' )
 		await expect( preview.locator( `[data-block-id="${ uniqueId }"] p` ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+
+		// There should be no PHP errors on frontend
+		const pageError = await admin.getPageError()
+		expect( pageError ).toBeNull()
 	} )
 } )
