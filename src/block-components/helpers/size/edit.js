@@ -14,6 +14,77 @@ import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
  */
 import { __ } from '@wordpress/i18n'
 import { getAttributeNameFunc } from '~stackable/util'
+import { useSetting } from '@wordpress/block-editor'
+
+const HEIGHT_PRESET = [
+	{
+		value: '64px',
+		label: 'XS',
+	},
+	{
+		value: '128px',
+		label: 'S',
+	},
+	{
+		value: '192px',
+		label: 'M',
+	},
+	{
+		value: '256px',
+		label: 'L',
+	},
+	{
+		value: '384px',
+		label: 'XL',
+	},
+	{
+		value: '512px',
+		label: '2XL',
+	},
+	{
+		value: '640px',
+		label: '3XL',
+	},
+	{
+		value: '100vh',
+		label: 'Full',
+	},
+]
+
+const SPACING_PRESET = [
+	{
+		label: 'XS',
+		value: '4px',
+	},
+	{
+		label: 'S',
+		value: '8px',
+	},
+	{
+		label: 'M',
+		value: '16px',
+	},
+	{
+		label: 'L',
+		value: '24px',
+	},
+	{
+		label: 'XL',
+		value: '32px',
+	},
+	{
+		label: '2XL',
+		value: '48px',
+	},
+	{
+		label: '3XL',
+		value: '64px',
+	},
+	{
+		label: '4XL',
+		value: '96px',
+	},
+]
 
 const Layout = props => {
 	const deviceType = useDeviceType()
@@ -29,6 +100,8 @@ const Layout = props => {
 		labelHorizontalAlign = __( 'Content Horizontal Align', i18n ),
 		labelVerticalAlign = __( 'Content Vertical Align', i18n ),
 	} = props.labels
+
+	const heightMarks = HEIGHT_PRESET
 
 	return (
 		<>
@@ -47,6 +120,7 @@ const Layout = props => {
 					description: __( 'Adjusts the minimum allowable height of the block', i18n ),
 				} }
 				visualGuide={ props.visualGuide }
+				marks={ heightMarks }
 			/> }
 
 			{ props.hasContentVerticalAlign &&
@@ -132,6 +206,15 @@ const Spacing = props => {
 		...props.visualGuide,
 		highlight: 'margin',
 	}
+	let spacingMarks = SPACING_PRESET
+	const spacingSizes = useSetting( 'spacing.spacingSizes' )
+
+	if ( Array.isArray( spacingSizes ) && spacingSizes.length > 0 ) {
+		spacingMarks = spacingSizes.map( size => ( {
+			value: size.size,
+			label: size.name,
+		} ) )
+	}
 
 	return (
 		<>
@@ -150,6 +233,7 @@ const Spacing = props => {
 				} }
 				visualGuide={ paddingVisualGuide }
 				placeholder={ props.paddingPlaceholder }
+				marks={ spacingMarks }
 			/>
 
 			{ props.enableMargin &&
@@ -167,6 +251,7 @@ const Spacing = props => {
 						description: __( 'Sets the block margin, i.e. the space outside the block between the block border and the next block.', i18n ),
 					} }
 					visualGuide={ marginVisualGuide }
+					marks={ spacingMarks }
 				/>
 			}
 		</>
