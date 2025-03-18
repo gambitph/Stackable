@@ -139,7 +139,7 @@ test.describe( 'Global Settings', () => {
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
 		// The default timeout is 30s, extend it to 90s
-		const updateRequest = defaultBlockPage.waitForResponse( response => response.url().includes( 'update_block_style' ) && response.request().method() === 'POST', { timeout: 90_000 } )
+		const updateRequest = defaultBlockPage.waitForRequest( request => request.url().includes( 'update_block_style' ) && request.method() === 'POST', { timeout: 90_000 } )
 
 		// In older WP versions, the button text is 'Update' instead of 'Save'
 		if ( await defaultBlockPage.getByRole( 'button', {
