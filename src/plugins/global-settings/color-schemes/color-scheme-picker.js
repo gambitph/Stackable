@@ -12,7 +12,6 @@ import {
 	InspectorSubHeader,
 	ColorPaletteControl,
 	AdvancedTextControl,
-	AdvancedToggleControl,
 	ColorSchemePreview,
 	ColorSchemePresetPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
@@ -148,17 +147,6 @@ const ColorSchemePicker = props => {
 		}
 		const currentItem = cloneDeep( itemInEdit )
 		currentItem.colorScheme[ property ][ currentState ] = color
-		setItemInEdit( currentItem )
-
-		updateColorSchemes( currentItem )
-	}
-
-	const onChangeShowInPicker = value => {
-		if ( ! itemInEdit ) {
-			return
-		}
-		const currentItem = cloneDeep( itemInEdit )
-		currentItem.showInPicker = value === '' ? false : value
 		setItemInEdit( currentItem )
 
 		updateColorSchemes( currentItem )
@@ -306,12 +294,6 @@ const ColorSchemePicker = props => {
 			/>
 		</div>
 
-		<AdvancedToggleControl
-			label={ __( 'Show color scheme colors in color picker', i18n ) }
-			checked={ itemInEdit?.showInPicker }
-			onChange={ value => onChangeShowInPicker( value ) }
-			defaultValue={ itemInEdit?.key?.startsWith( 'scheme-default' ) }
-		/>
 		{ COLOR_SETTINGS.map( ( settings, index ) => (
 			<ColorPaletteControl
 				key={ index }

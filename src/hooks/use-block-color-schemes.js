@@ -13,6 +13,7 @@ export const useBlockColorSchemes = () => {
 	} = useSelect( select => {
 		const {
 			colorSchemes,
+			hideColorSchemeColors,
 			baseColorScheme: _baseColorScheme,
 			backgroundModeColorScheme: _backgroundModeColorScheme,
 			containerModeColorScheme: _containerModeColorScheme,
@@ -52,12 +53,12 @@ export const useBlockColorSchemes = () => {
 
 		// get color groups for color palette picker.
 		const getColorGroups = () => {
-			const colorGroups = allColorSchemes.reduce( ( groups, scheme ) => {
-				// only add colors if the option to add color scheme in the picker is enabled.
-				if ( ! scheme.showInPicker ) {
-					return groups
-				}
+			// only add colors if the option to add color scheme in the picker is enabled.
+			if ( hideColorSchemeColors ) {
+				return []
+			}
 
+			const colorGroups = allColorSchemes.reduce( ( groups, scheme ) => {
 				// Add name and slug to each color in the color scheme
 				const colors = Object.entries( scheme.colorScheme ).reduce( ( colors, [ property, value ] ) => {
 					// Only add colors that have values.

@@ -69,11 +69,22 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 										'type' => 'object',
 										'properties' => Stackable_Global_Color_Schemes::get_color_scheme_properties( $string_properties )
 									),
-									'showInPicker' => array( 'type' => 'boolean' ),
 								)
 							)
 						)
 					),
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_global_hide_color_scheme_colors',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Hide color scheme colors in the Stackable color picker', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
 					'default' => '',
 				)
 			);

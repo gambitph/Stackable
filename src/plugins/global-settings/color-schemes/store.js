@@ -14,6 +14,7 @@ import domReady from '@wordpress/dom-ready'
 // Include all the stored state.
 const DEFAULT_STATE = {
 	colorSchemes: [],
+	hideColorSchemeColors: '',
 	baseColorScheme: '',
 	backgroundModeColorScheme: '',
 	containerModeColorScheme: '',
@@ -24,9 +25,9 @@ const STORE_ACTIONS = {
 		type: 'UPDATE_COLOR_SCHEMES',
 		colorSchemes,
 	} ),
-	updateDefaultColorScheme: colorSchemeObj => ( {
-		type: 'UPDATE_DEFAULT_COLOR_SCHEME',
-		colorSchemeObj,
+	updateSettings: settings => ( {
+		type: 'UPDATE_SETTINGS',
+		settings,
 	} ),
 }
 
@@ -47,10 +48,10 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 				colorSchemes: action.colorSchemes,
 			}
 		}
-		case 'UPDATE_DEFAULT_COLOR_SCHEME': {
+		case 'UPDATE_SETTINGS': {
 			return {
 				...state,
-				...action.colorSchemeObj,
+				...action.settings,
 			}
 		}
 		default: {
@@ -70,6 +71,7 @@ domReady( () => {
 	fetchSettings().then( response => {
 		const {
 			stackable_global_color_schemes: _colorSchemes,
+			stackable_global_hide_color_scheme_colors: hideColorSchemeColors,
 			stackable_global_base_color_scheme: baseColorScheme,
 			stackable_global_background_mode_color_scheme: backgroundModeColorScheme,
 			stackable_global_container_mode_color_scheme: containerModeColorScheme,
@@ -88,7 +90,6 @@ domReady( () => {
 				buttonTextColor: { desktop: '' },
 				buttonOutlineColor: { desktop: '' },
 			},
-			showInPicker: true,
 		}, {
 			name: 'Color Scheme 2',
 			key: 'scheme-default-2',
@@ -102,16 +103,16 @@ domReady( () => {
 				buttonTextColor: { desktop: '' },
 				buttonOutlineColor: { desktop: '' },
 			},
-			showInPicker: true,
 		} ]
 
-		const defaultColorScheme = {
+		const settings = {
+			colorSchemes,
+			hideColorSchemeColors,
 			baseColorScheme,
 			backgroundModeColorScheme,
 			containerModeColorScheme,
 		}
 
-		dispatch( 'stackable/global-color-schemes' ).updateColorSchemes( colorSchemes )
-		dispatch( 'stackable/global-color-schemes' ).updateDefaultColorScheme( defaultColorScheme )
+		dispatch( 'stackable/global-color-schemes' ).updateSettings( settings )
 	} )
 } )

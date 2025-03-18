@@ -5,8 +5,8 @@
 /**
  * Internal dependencies
  */
-import { GlobalColorStyles } from './colors'
 import { GlobalColorSchemeStyles } from './color-schemes'
+import { GlobalColorStyles } from './colors'
 import { GlobalTypographyStyles } from './typography'
 import { GlobalSpacingAndBordersStyles } from './spacing-and-borders'
 import { GlobalButtonsAndIconsStyles } from './buttons-and-icons'

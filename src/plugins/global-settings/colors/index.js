@@ -16,7 +16,7 @@ import rgba from 'color-rgba'
 /**
  * WordPress dependencies
  */
-import { addFilter } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, useSelect } from '@wordpress/data'
@@ -102,13 +102,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 		settings.save()
 	}
 
+	const ColorToggleControls = applyFilters( 'stackable.global-settings.inspector.global-colors.toggle-controls', Fragment )
+
 	return (
 		<Fragment>
 			{ output }
-			<PanelAdvancedSettings
-				title={ __( 'Global Color Palette', i18n ) }
-				initialOpen={ true }
-			>
+			<PanelAdvancedSettings title={ __( 'Global Color Palette', i18n ) }>
 				<p className="components-base-control__help">
 					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
 					&nbsp;
@@ -136,6 +135,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 					checked={ ! hideSiteEditorColors }
 					onChange={ value => onChangeHideSiteEditorColors( ! value ) }
 				/>
+				{ ColorToggleControls }
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
