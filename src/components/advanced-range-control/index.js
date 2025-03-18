@@ -140,7 +140,6 @@ const AdvancedRangeControl = props => {
 	if ( props.marks && isMarkMode ) {
 		// Steps only have 1 increment values
 		propsToPass.min = 0
-		propsToPass.min = 0
 		propsToPass.max = props.marks.length - 1
 		propsToPass.sliderMax = props.marks.length - 1
 		propsToPass.step = 1
