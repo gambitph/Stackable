@@ -233,6 +233,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/styles/block-design-system.php'
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/spacing-and-borders/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/buttons-and-icons/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/preset-controls/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/custom-block-styles.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/compatibility/index.php' );
