@@ -53,7 +53,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
-} )
+}, 2 )
 
 addFilter( 'stackable.global-settings.inspector.global-colors.toggle-controls', 'stackable/global-color-schemes', output => {
 	const { hideColorSchemeColors } = useSelect( select => select( 'stackable/global-color-schemes' ).getSettings() )

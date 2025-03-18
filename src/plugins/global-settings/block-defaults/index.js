@@ -101,4 +101,4 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/default-blocks', ou
 			</PanelAdvancedSettings>
 		</>
 	)
-} )
+}, 80 )
