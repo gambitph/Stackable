@@ -15,6 +15,9 @@
 	p,
 	div {
 		color: var(--stk-text-color);
+		&:where(:hover) {
+			color: var(--stk-text-color-hover);
+		}
 	}
 	h1,
 	h2,
@@ -23,10 +26,16 @@
 	h5,
 	h6 {
 		color: var(--stk-heading-color);
+		&:where(:hover) {
+			color: var(--stk-heading-color-hover);
+		}
 	}
 }
 .stk-block a {
 	color: var(--stk-link-color);
+	&:where(:hover) {
+		color: var(--stk-link-color-hover);
+	}
 }
 
 .stk-button-group {
@@ -73,6 +82,12 @@
 		&:hover::before {
 			border-width: cssvar(button-border-width-hover);
 		}
+		&:hover {
+			#{ '--stk-button-background-color' }: cssvar(button-background-color-hover);
+			#{ '--stk-button-text-color' }: cssvar(button-text-color-hover);
+			#{ '--stk-accent-color-hover' }: cssvar(button-text-color-hover);
+			#{ '--stk-accent-color' }: cssvar(button-text-color-hover);
+		}
 
 	}
 
@@ -94,11 +109,28 @@
 				border-width: cssvar(button-ghost-border-width-hover);
 			}
 		}
+		&:where(:hover) {
+			#{ '--stk-button-text-color' }: cssvar(button-outline-color-hover);
+			#{ '--stk-button-outline-color' }: cssvar(button-outline-color-hover);
+			#{ '--stk-accent-color-hover' }: cssvar(button-outline-color-hover);
+		}
 	}
 
 	// Plain button color.
 	&.is-style-plain {
 		#{ '--stk-button-text-color' }: cssvar(button-background-color);
+		&:where(:hover) {
+			#{ '--stk-button-text-color' }: cssvar(button-background-color-hover);
+			#{ '--stk-accent-color-hover' }: cssvar(button-outline-color-hover);
+		}
+	}
+
+	&.is-style-link {
+		#{ '--stk-button-text-color' }: cssvar(link-color);
+		&:where(:hover) {
+			#{ '--stk-accent-color-hover' }: cssvar(link-color-hover);
+			#{ '--stk-accent-color' }: cssvar(link-color-hover);
+		}
 	}
 }
 :is(.stk-block-button, .stk-block-pagination) .stk-button {
@@ -151,6 +183,7 @@
 	&:hover {
 		border-width: cssvar(container-border-width-hover);
 		box-shadow: cssvar(container-box-shadow-hover);
+		background-color: cssvar(container-background-color-hover);
 	}
 }
 :where(.stk-hover-parent:hover) .stk-container:not(.stk--no-background) {
@@ -190,6 +223,9 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		&:hover {
 			padding: cssvar(block-background-padding-hover);
 		}
+	}
+	&:hover {
+		background-color: cssvar(block-background-color-hover);
 	}
 }
 
@@ -238,17 +274,26 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 			}
 		}
 	}
+	&:where(:hover) {
+		#{ '--stk-accent-color' }: cssvar(accent-color-hover);
+	}
 }
 
 // Typography
 .stk-subtitle {
 	font-size: cssvar(subtitle-size);
 	color: var(--stk-accent-color, cssvar(subtitle-color));
+	&:where(:hover) {
+		#{ '--stk-accent-color' }: cssvar(accent-color-hover);
+	}
 }
 
 // Posts
 .stk-block-posts {
 	&__meta {
 		color: var(--stk-accent-color, cssvar(subtitle-color));
+		&:where(:hover) {
+			#{ '--stk-accent-color' }: cssvar(accent-color-hover);
+		}
 	}
 }

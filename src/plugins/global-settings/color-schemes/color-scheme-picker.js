@@ -300,7 +300,7 @@ const ColorSchemePicker = props => {
 				label={ settings.label }
 				value={ getInheritedValue( itemInEdit?.colorScheme[ settings.property ] ) }
 				colorLabel={ extractColor( itemInEdit?.colorScheme[ settings.property ][ currentState ] ) }
-				// hover="all"
+				hover={ [ 'normal', 'hover' ] }
 				forceUpdateHoverState={ true }
 				onChange={ color => onChange( settings.property, color ) }
 				help={ settings.property === 'backgroundColor' ? __( 'Note: Background color is not used for Base Color Scheme.', i18n ) : '' }

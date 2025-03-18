@@ -4,6 +4,9 @@
 	hr.stk-block-divider__hr,
 	.stk-block-divider__dot {
 		background: var(--stk-accent-color, #ddd);
+		&:where(:hover) {
+			#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
+		}
 	}
 }
 

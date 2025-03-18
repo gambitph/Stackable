@@ -11,7 +11,7 @@ import { useEffect, useState } from '@wordpress/element'
 /**
  * External dependencies
  */
-import { useBlockColorSchemes } from '~stackable/hooks'
+import { useBlockColorSchemes, useBlockHoverState } from '~stackable/hooks'
 
 const convertToObj = colorSchemes => {
 	const obj = {}
@@ -88,32 +88,38 @@ const renderGlobalStyles = (
 	const colorSchemes = convertToObj( colorSchemesArray )
 
 	let decls,
+		declsHover = '',
 		scheme
 
 	if ( baseColorScheme in colorSchemes ) {
 		scheme = colorSchemes[ baseColorScheme ]
 		decls = generateRules( scheme, currentHoverState )
-		css += `:root { ${ decls } }`
+		declsHover = generateRules( scheme, 'hover', '', true )
+		css += `:root { ${ [ decls, declsHover ].join( '' ) } }`
 	}
 
 	if ( backgroundModeColorScheme in colorSchemes ) {
 		scheme = colorSchemes[ backgroundModeColorScheme ]
 		decls = generateRules( scheme, currentHoverState, 'background' )
-		css += `.stk-block-background { ${ decls } }`
+		declsHover = generateRules( scheme, 'hover', 'background', true )
+		css += `.stk-block-background { ${ [ decls, declsHover ].join( '' ) } }`
 	}
 
 	if ( containerModeColorScheme in colorSchemes ) {
 		scheme = colorSchemes[ containerModeColorScheme ]
 		decls = generateRules( scheme, currentHoverState, 'container' )
-		css += `.stk-container:where(:not(.stk--no-background)) { ${ decls } }`
+		declsHover = generateRules( scheme, 'hover', 'container', true )
+		css += `.stk-container:where(:not(.stk--no-background)) { ${ [ decls, declsHover ].join( '' ) } }`
 	}
 
 	Object.entries( colorSchemes ).forEach( ( [ key, scheme ] ) => {
 		const backgrounds = generateRules( scheme, currentHoverState, 'background' )
-		rules.background.push( `.background-${ key }{ ${ backgrounds } }` )
+		declsHover = generateRules( scheme, 'hover', 'background', true )
+		rules.background.push( `.background-${ key }{ ${ [ backgrounds, declsHover ].join( '' ) } }` )
 
 		const containers = generateRules( scheme, currentHoverState, 'container' )
-		rules.container.push( `.container-${ key }{ ${ containers } }` )
+		declsHover = generateRules( scheme, 'hover', 'container', true )
+		rules.container.push( `.container-${ key }{ ${ [ containers, declsHover ].join( '' ) } }` )
 	} )
 
 	css += `${ rules.background.join( ' ' ) }`
@@ -130,7 +136,7 @@ export const GlobalColorSchemeStyles = () => {
 		containerModeColorScheme,
 	} = useBlockColorSchemes()
 
-	// const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
+	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
 
 	const [ styles, setStyles ] = useState( '' )
 
@@ -142,14 +148,14 @@ export const GlobalColorSchemeStyles = () => {
 				baseColorScheme,
 				backgroundModeColorScheme,
 				containerModeColorScheme,
-				// currentHoverState
+				currentHoverState
 			)
 		}
 	}, [ allColorSchemes,
 		baseColorScheme,
 		backgroundModeColorScheme,
 		containerModeColorScheme,
-		// currentHoverState,
+		currentHoverState,
 	 ] )
 
 	return styles

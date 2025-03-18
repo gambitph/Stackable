@@ -28,6 +28,9 @@
 	font-size: 40px;
 	height: 50%;
 	color: var(--stk-accent-color);
+	&:where(:hover) {
+		#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
+	}
 }
 
 .stk-block-countdown__label,
@@ -47,6 +50,9 @@
 		line-height: 1;
 		font-size: 45px;
 		top: -12px;
+		&:where(:hover) {
+			#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
+		}
 	}
 
 	.stk-block-countdown__divider-line {

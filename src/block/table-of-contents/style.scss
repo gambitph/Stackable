@@ -41,5 +41,8 @@
 	// Add this so that it inherits the color from global color schemes.
 	::marker {
 		color: var(--stk-accent-color);
+		&:where(:hover) {
+			#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
+		}
 	}
 }

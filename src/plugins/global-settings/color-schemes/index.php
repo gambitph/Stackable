@@ -272,21 +272,30 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		 * @return Array
 		 */
 		public function get_css_custom_properties( $mode = '' ) {
-			$properties = array();
+			$properties_per_state = array();
 			$keys = Stackable_Global_Color_Schemes::get_color_scheme_properties();
-
-			foreach( $keys as $key ) {
-				if ( $key === 'backgroundColor' ) {
-					if ( $mode ) {
-						$prefix = $mode === 'background' ? 'block' : 'container';
-						$properties[ $key ] = "--stk-$prefix-background-color";
+			$states = array(
+				'desktop' => '',
+				'desktopHover' => '-hover',
+				'desktopParentHover' => '-parent-hover'
+			);
+			foreach ( $states as $device_state => $state ) {
+				$properties = array();
+				foreach( $keys as $key ) {
+					if ( $key === 'backgroundColor' ) {
+						if ( $mode ) {
+							$prefix = $mode === 'background' ? 'block' : 'container';
+							$properties[ $key ] = "--stk-$prefix-background-color" . $state;
+						}
+						continue;
 					}
-					continue;
+					$properties[ $key ] = $this->css_property_camel_to_kebab_case( $key ) . $state;
 				}
-				$properties[ $key ] = $this->css_property_camel_to_kebab_case( $key );
+				$properties_per_state[ $device_state ] = $properties;
 			}
 
-			return $properties;
+
+			return $properties_per_state;
 		}
 
 		/**
@@ -298,17 +307,24 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		 */
 		public function generate_css_rules( $scheme, $mode = '' ) {
 			$decls = array();
-			$css_custom_properties = $this->get_css_custom_properties( $mode );
+			$properties_per_state = $this->get_css_custom_properties( $mode );
 
-			foreach ($css_custom_properties as $property => $css_property ) {
-				if ( isset( $scheme[ $property ] )
-					&& isset( $scheme[ $property ][ 'desktop' ] )
-					&& $scheme[ $property ][ 'desktop' ] !== ''
-				) {
-					$decls[ $css_property ] = $scheme[ $property ][ 'desktop' ];
+			foreach ( $properties_per_state as $state => $properties ) {
+				foreach ( $properties as $property => $css_property ) {
+					if ( isset( $scheme[ $property ] )
+						&& isset( $scheme[ $property ][ $state ] )
+						&& $scheme[ $property ][ $state ] !== ''
+					) {
+						$decls[ $css_property ] = $scheme[ $property ][ $state ];
+					} else if ( isset( $scheme[ $property ] )
+						&& $state !== 'desktop'
+						&& isset( $scheme[ $property ][ 'desktop' ] )
+						&& $scheme[ $property ][ 'desktop' ] !== ''
+					) {
+						$decls[ $css_property ] = $scheme[ $property ][ 'desktop' ];
+					}
 				}
 			}
-
 			return $decls;
 		}
 
