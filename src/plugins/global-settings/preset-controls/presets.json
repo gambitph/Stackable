@@ -1,0 +1,97 @@
+{   
+   "settings": {
+        "spacing": {
+			"spacingSizes": [
+                {
+                  "label": "XS",
+                  "size": "0.25rem",
+                  "slug": "x-small"
+                },
+                {
+                  "label": "S",
+                  "size": "0.5rem",
+                  "slug": "small"
+                },
+                {
+                  "label": "M",
+                  "size": "1rem",
+                  "slug": "medium"
+                },
+                {
+                  "label": "L",
+                  "size": "1.5rem",
+                  "slug": "large"
+                },
+                {
+                  "label": "XL",
+                  "size": "2rem",
+                  "slug": "x-large"
+                },
+                {
+                  "label": "2XL",
+                  "size": "3rem",
+                  "slug": "xx-large"
+                },
+                {
+                  "label": "3XL",
+                  "size": "4rem",
+                  "slug": "xxx-large"
+                },
+                {
+                  "label": "4XL",
+                  "size": "6rem",
+                  "slug": "xxxx-large"
+                }
+            ] 
+        },
+        "typography": {
+			"fontSizes": [
+                {
+                    "label": "XS",
+                    "size": "0.75rem",
+                    "slug": "x-small"
+                },
+                {
+                    "label": "S",
+                    "size": "0.875rem",
+                    "slug": "small"
+                },
+                {
+                    "label": "M",
+                    "size": "1rem",
+                    "slug": "medium"
+                },
+                {
+                    "label": "L",
+                    "size": "1.125rem",
+                    "slug": "large"
+                },
+                {
+                    "label": "XL",
+                    "size": "1.5rem",
+                    "slug": "x-large"
+                },
+                {
+                    "label": "2XL",
+                    "size": "2rem",
+                    "slug": "xx-large"
+                },
+                {
+                    "label": "3XL",
+                    "size": "2.5rem",
+                    "slug": "xxx-large"
+                },
+                {
+                    "label": "4XL",
+                    "size": "3rem",
+                    "slug": "xxxx-large"
+                },
+                {
+                    "label": "5XL",
+                    "size": "4rem",
+                    "slug": "xxxxx-large"
+                }
+            ]
+        }
+   }
+}
