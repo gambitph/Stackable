@@ -34,25 +34,33 @@
 }
 
 .stk-preset-color-schemes__control {
-	margin-bottom: 12px;
+	margin: -16px -16px 16px;
+	border-bottom: 1px solid #e0e0e0;
 	.components-base-control__field {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		margin-bottom: 0px;
+		position: relative;
+		overflow-y: scroll;
+		height: 235px;
+
+		&::after {
+			display: block;
+			position: sticky;
+			bottom: 0px;
+			height: 16px;
+			content: "";
+			background: #fff;
+		}
 	}
 	.components-base-control__label {
-		margin-bottom: 0;
+		margin-bottom: 0px;
+		padding: 16px 16px 12px;
+		background: #fff;
+		position: sticky;
+		top: 0;
 	}
 }
-
-.stk-preset-color-schemes__popover {
-	width: 240px;
-	height: 300px;
-	overflow-y: scroll;
-	margin: -8px;
-	padding: 16px 12px 8px;
-}
 .stk-preset-color-schemes__preset-wrapper {
+	padding: 1px 16px;
 	display: grid;
 	gap: 8px;
 	grid-template-columns: repeat(2, 1fr);

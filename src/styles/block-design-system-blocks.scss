@@ -173,7 +173,7 @@
 	#{ '--stk-container-padding-parent-hover' }: cssvar(container-padding-small);
 }
 .stk-container:not(.stk--no-background) {
-	background-color: cssvar(container-background-color);
+	background: cssvar(container-background-color);
 	border-radius: cssvar(container-border-radius);
 	border-style: cssvar(container-border-style);
 	border-width: cssvar(container-border-width);
@@ -183,7 +183,7 @@
 	&:hover {
 		border-width: cssvar(container-border-width-hover);
 		box-shadow: cssvar(container-box-shadow-hover);
-		background-color: cssvar(container-background-color-hover);
+		background: var(--stk-container-background-color-hover, cssvar(container-background-color));
 	}
 }
 :where(.stk-hover-parent:hover) .stk-container:not(.stk--no-background) {
@@ -215,7 +215,7 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 
 // Block Background
 .stk-block-background {
-	background-color: cssvar(block-background-color);
+	background: cssvar(block-background-color);
 	border-radius: cssvar(block-background-border-radius);
 	box-shadow: cssvar(block-background-box-shadow);
 	&:not(.stk--no-padding) {
@@ -225,7 +225,7 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		}
 	}
 	&:hover {
-		background-color: cssvar(block-background-color-hover);
+		background: var(--stk-block-background-color-hover, cssvar(block-background-color));
 	}
 }
 

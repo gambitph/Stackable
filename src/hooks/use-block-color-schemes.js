@@ -53,45 +53,64 @@ export const useBlockColorSchemes = () => {
 
 		// get color groups for color palette picker.
 		const getColorGroups = () => {
-			// only add colors if the option to add color scheme in the picker is enabled.
 			if ( hideColorSchemeColors ) {
 				return []
 			}
 
-			const colorGroups = allColorSchemes.reduce( ( groups, scheme ) => {
+			const colorSchemeColors = []
+			const colorSchemeGradients = []
+
+			allColorSchemes.forEach( scheme => {
+				// only add colors if the option to add color scheme in the picker is enabled.
+				if ( scheme.hideInPicker ) {
+					return
+				}
+
+				const colors = []
+				const gradients = []
+
 				// Add name and slug to each color in the color scheme
-				const colors = Object.entries( scheme.colorScheme ).reduce( ( colors, [ property, value ] ) => {
+				Object.entries( scheme.colorScheme ).forEach( ( [ property, value ] ) => {
 					// Only add colors that have values.
 					if ( ! value?.desktop ) {
 						return colors
 					}
-					return [
-						...colors,
-						{
-							color: value?.desktop,
+
+					if ( value?.desktop.startsWith( 'linear-' ) || value?.desktop.startsWith( 'radial-' ) ) {
+						gradients.push( {
+							gradient: value?.desktop,
 							name: getLabel( property ),
 							slug: toKebab( property, scheme.key ),
-						},
-					]
-				}, [] )
+						} )
 
-				// Only add groups that have colors.
-				if ( colors.length === 0 ) {
-					return groups
-				}
+						return
+					}
 
-				// return color schemes as groups
-				return [
-					...groups,
-					{
+					colors.push( {
+						color: value?.desktop,
+						name: getLabel( property ),
+						slug: toKebab( property, scheme.key ),
+					} )
+				} )
+
+				if ( colors.length !== 0 ) {
+					colorSchemeColors.push( {
 						name: scheme.name,
 						id: scheme.key,
 						colors,
-					},
-				]
-			}, [] )
+					} )
+				}
 
-			return colorGroups
+				if ( gradients.length !== 0 ) {
+					colorSchemeGradients.push( {
+						name: scheme.name,
+						id: scheme.key,
+						gradients,
+					} )
+				}
+			} )
+
+			return { colorSchemeColors, colorSchemeGradients }
 		}
 
 		return {

@@ -15,6 +15,7 @@ import {
 	ColorSchemePreview,
 	ColorSchemePresetPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import { useBlockHoverState } from '~stackable/hooks'
 import { extractColor } from '~stackable/util'
@@ -152,6 +153,18 @@ const ColorSchemePicker = props => {
 		updateColorSchemes( currentItem )
 	}
 
+	// For updating option to show the color scheme in color pickers
+	const onChangeShowInPicker = value => {
+		if ( ! itemInEdit ) {
+			return
+		}
+		const currentItem = cloneDeep( itemInEdit )
+		currentItem.hideInPicker = ! value
+		setItemInEdit( currentItem )
+
+		updateColorSchemes( currentItem )
+	}
+
 	// Update the current color scheme when a preset is selected.
 	const onPresetClick = colors => {
 		if ( ! itemInEdit ) {
@@ -245,6 +258,20 @@ const ColorSchemePicker = props => {
 		> { Preview } </div> : Preview
 	}
 
+	const isGradient = property => {
+		if ( ! itemInEdit ) {
+			return false
+		}
+
+		const value = itemInEdit?.colorScheme[ property ]?.desktop
+
+		if ( ! value ) {
+			return false
+		}
+
+		return value.startsWith( 'linear-' ) || value.startsWith( 'radial-' )
+	}
+
 	return ( ! itemInEdit ? <SortablePicker
 		ref={ ref }
 		{ ...props }
@@ -286,13 +313,19 @@ const ColorSchemePicker = props => {
 					onChange: itemInEdit?.key === 'scheme-default-1' ? null : name => onChangeName( name ),
 				} }
 			/>
-
-			<ColorSchemePresetPicker
-				label={ __( 'Color Scheme Presets', i18n ) }
-				presets={ PRESETS }
-				onPresetClick={ onPresetClick }
-			/>
 		</div>
+
+		<ColorSchemePresetPicker
+			label={ __( 'Color Scheme Presets', i18n ) }
+			presets={ PRESETS }
+			onPresetClick={ onPresetClick }
+		/>
+		<AdvancedToggleControl
+			label={ __( 'Show Color Scheme in Color Pickers', i18n ) }
+			checked={ ! itemInEdit?.hideInPicker }
+			defaultValue={ true }
+			onChange={ value => onChangeShowInPicker( value ) }
+		/>
 
 		{ COLOR_SETTINGS.map( ( settings, index ) => (
 			<ColorPaletteControl
@@ -300,10 +333,12 @@ const ColorSchemePicker = props => {
 				label={ settings.label }
 				value={ getInheritedValue( itemInEdit?.colorScheme[ settings.property ] ) }
 				colorLabel={ extractColor( itemInEdit?.colorScheme[ settings.property ][ currentState ] ) }
-				hover={ [ 'normal', 'hover' ] }
+				hover={ isGradient( settings.property ) ? false : [ 'normal', 'hover' ] }
 				forceUpdateHoverState={ true }
 				onChange={ color => onChange( settings.property, color ) }
 				help={ settings.property === 'backgroundColor' ? __( 'Note: Background color is not used for Base Color Scheme.', i18n ) : '' }
+				hasGradientPicker={ true }
+				enableGradient={ currentHoverState === 'normal' }
 			/>
 		) ) }
 	</>

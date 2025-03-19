@@ -41,12 +41,20 @@ const popoverProps = {
 
 const PASSTHRUOP = v => v
 
-addFilter( 'stackable.color-palette-control.colors', 'stackable/global-color-schemes-color-palette-control', ( { colors: _colors, gradients } ) => {
+addFilter( 'stackable.color-palette-control.colors', 'stackable/global-color-schemes-color-palette-control', ( { colors: _colors, gradients: _gradients } ) => {
 	// Get colors from the color schemes.
 	const { getColorGroups } = useBlockColorSchemes()
-	const colorSchemeColors = getColorGroups()
+	const { colorSchemeColors, colorSchemeGradients } = getColorGroups()
 
-	const colors = [
+	let colors = cloneDeep( _colors )
+	let gradients = cloneDeep( _gradients )
+
+	gradients = [
+		...colorSchemeGradients,
+		...gradients,
+	]
+
+	colors = [
 		...colorSchemeColors,
 		..._colors,
 	]
@@ -193,6 +201,9 @@ const ColorPaletteControl = memo( props => {
 			preOnChange={ props.preOnChange }
 			colors={ props.isGradient ? gradients : colors }
 			isGradient={ props.isGradient }
+			hasGradientPicker={ props.hasGradientPicker }
+			enableGradient={ props.hasGradientPicker && props.enableGradient }
+			gradients={ gradients }
 		/>
 	)
 
@@ -237,6 +248,9 @@ ColorPaletteControl.defaultProps = {
 	preOnChange: PASSTHRUOP,
 	isExpanded: false,
 	isGradient: false,
+
+	hasGradientPicker: false,
+	enableGradient: false,
 }
 
 export default ColorPaletteControl

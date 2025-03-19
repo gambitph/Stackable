@@ -1,6 +1,4 @@
-import {
-	Button, BaseControl, Dropdown,
-} from '@wordpress/components'
+import { Button, BaseControl } from '@wordpress/components'
 
 export const DEFAULT_COLOR_SCHEME_COLORS = {
 	backgroundColor: { desktop: '' },
@@ -54,44 +52,21 @@ const ColorSchemePreview = ( { colors, onClick = NOOP } ) => {
 	)
 }
 
-const popoverProps = {
-	placement: 'left-start',
-	offset: 245,
-	shift: true,
-}
-
 export const ColorSchemePresetPicker = ( {
 	label, presets, onPresetClick,
 } ) => {
 	return (
 		<BaseControl label={ label } className="stk-preset-color-schemes__control">
-			<Dropdown
-				popoverProps={ popoverProps }
-				focusOnMount={ false }
-				renderToggle={ ( { onToggle, isOpen } ) => (
-					<Button
-						className="ugb-global-settings-color-picker__add-button"
-						onClick={ onToggle }
-						icon="screenoptions"
-						iconPosition="right"
-						aria-expanded={ isOpen }
-						size="small"
-						variant="tertiary"
+			<div className="stk-preset-color-schemes__preset-wrapper">
+				{ presets.map( ( colors, index ) => {
+					return <ColorSchemePreview
+						key={ index }
+						colors={ colors }
+						onClick={ () => onPresetClick( colors ) }
 					/>
-				) }
-				renderContent={ ( { onClose } ) => (
-					<BaseControl label={ label } className="stk-preset-color-schemes__popover">
-						<div className="stk-preset-color-schemes__preset-wrapper">
-							{ presets.map( ( colors, index ) => {
-								return <ColorSchemePreview key={ index } colors={ colors } onClick={ () => {
-									onPresetClick( colors )
-									onClose()
-								} } />
-							} ) }
-						</div>
-					</BaseControl>
-				) }
-			/>
+				} ) }
+			</div>
+
 		</BaseControl>
 	)
 }

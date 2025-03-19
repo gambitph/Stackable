@@ -2,6 +2,9 @@
  * A popup of a color palette.
  */
 
+import { AdvancedToolbarControl } from '..'
+import { i18n } from 'stackable'
+
 /**
  * WordPress dependencies
  */
@@ -13,7 +16,18 @@ import {
 	ColorPicker,
 	GradientPicker,
 } from '@wordpress/components'
-import { memo } from '@wordpress/element'
+import { memo, useState } from '@wordpress/element'
+
+const COLOR_TYPE_CONTROLS = [
+	{
+		value: '',
+		title: __( 'Single', i18n ),
+	},
+	{
+		value: 'gradient',
+		title: __( 'Gradient', i18n ),
+	},
+]
 
 export const ColorPalettePopup = memo( props => {
 	const {
@@ -21,9 +35,11 @@ export const ColorPalettePopup = memo( props => {
 		preOnChange,
 		value,
 		colors,
+		gradients,
 		isGradient,
 	} = props
 
+	const [ tab, setTab ] = useState( value.startsWith( 'linear-' ) || value.startsWith( 'radial-' ) ? 'gradient' : '' )
 	const allColors = colors.reduce( ( colors, group ) => {
 		return [
 			...colors,
@@ -46,18 +62,27 @@ export const ColorPalettePopup = memo( props => {
 
 	return (
 		<>
-			{ isGradient &&
+			{ props.hasGradientPicker && <AdvancedToolbarControl
+				className="stk-color-palette-popup-control__tabs"
+				controls={ COLOR_TYPE_CONTROLS }
+				fullwidth={ false }
+				allowReset={ false }
+				value={ tab }
+				onChange={ tab => setTab( tab ) }
+				disabled={ props.enableGradient ? [] : [ 'gradient' ] }
+			/> }
+			{ ( props.hasGradientPicker ? tab : isGradient ) &&
 				<GradientPicker
 					onChange={ newValue => {
 						onChange( preOnChange( newValue, value ) )
 					} }
 					value={ value.startsWith( 'linear-' ) || value.startsWith( 'radial-' ) ? value : null } // null prevents an error in Spectra
-					gradients={ colors }
+					gradients={ props.hasGradientPicker ? gradients : colors }
 					clearable={ false }
 					__experimentalHasMultipleOrigins={ true }
 				/>
 			}
-			{ ! isGradient &&
+			{ ( props.hasGradientPicker ? ! tab : ! isGradient ) &&
 				<ColorPicker
 					onChange={ newValue => {
 						onChange( preOnChange( newValue, value ) )
@@ -66,7 +91,7 @@ export const ColorPalettePopup = memo( props => {
 					enableAlpha={ true }
 				/>
 			}
-			{ ! isGradient && // Gradient already has it's own palette list of gradients. No need for this.
+			{ ( props.hasGradientPicker ? ! tab : ! isGradient ) && // Gradient already has it's own palette list of gradients. No need for this.
 				<ColorPalette
 					value={ value }
 					onChange={ newValue => {
@@ -93,6 +118,9 @@ ColorPalettePopup.defaultProps = {
 	preOnChange: PASSTHRU,
 
 	colors: [],
+	gradients: [],
 
 	isGradient: false,
+	hasGradientPicker: false,
+	enableGradient: false,
 }

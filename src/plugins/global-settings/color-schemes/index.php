@@ -69,6 +69,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 										'type' => 'object',
 										'properties' => Stackable_Global_Color_Schemes::get_color_scheme_properties( $string_properties )
 									),
+									'hideInPicker' => array( 'type' => 'boolean' )
 								)
 							)
 						)
