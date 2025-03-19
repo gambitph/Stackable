@@ -122,6 +122,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 					label={ __( 'Global Gradients', i18n ) }
 					onReset={ () => onChangeUseStackableColorsOnly( false ) }
 				/> */ }
+				{ ColorToggleControls }
 				<ToggleControl
 					label={ __( 'Show Theme Colors', i18n ) }
 					checked={ ! hideThemeColors }
@@ -137,7 +138,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 					checked={ ! hideSiteEditorColors }
 					onChange={ value => onChangeHideSiteEditorColors( ! value ) }
 				/>
-				{ ColorToggleControls }
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

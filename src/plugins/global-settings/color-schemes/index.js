@@ -33,7 +33,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Color Schemes', i18n ) }
-				initialOpen={ true }
 			>
 				{ ! itemInEdit && <p className="components-base-control__help">
 					{ __( 'Color schemes are applied to all blocks and sections of your entire website.', i18n ) }
@@ -70,7 +69,7 @@ addFilter( 'stackable.global-settings.inspector.global-colors.toggle-controls', 
 	return <>
 		{ output }
 		<ToggleControl
-			label={ __( 'Show Color Scheme Colors', i18n ) }
+			label={ __( 'Show Global Color Schemes', i18n ) }
 			checked={ ! hideColorSchemeColors }
 			onChange={ value => onChange( ! value ) }
 		/>
