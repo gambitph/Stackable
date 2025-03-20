@@ -13,6 +13,10 @@ $block-design-system: (
 		desktop: 24px,
 		mobile: 16px,
 	),
+	link-color: initial,
+	link-color-hover: cssvar(link-color),
+	accent-color: initial,
+	accent-color-hover: cssvar(accent-color),
 
 	/**
 	 * Columns
@@ -50,6 +54,7 @@ $block-design-system: (
 	container-box-shadow-hover: cssvar(container-box-shadow),
 	container-box-shadow-parent-hover: cssvar(container-box-shadow),
 	container-background-color: #fff,
+	container-background-color-hover: cssvar(container-background-color),
 	container-color: #1e1e1e,
 
 	/**
@@ -70,6 +75,7 @@ $block-design-system: (
 	block-background-box-shadow-hover: cssvar(block-background-box-shadow),
 	block-background-box-shadow-parent-hover: cssvar(block-background-box-shadow),
 	block-background-color: #f1f1f1,
+	block-background-color-hover: cssvar(block-background-color),
 
 	/**
 	 * Images
@@ -100,7 +106,11 @@ $block-design-system: (
 	button-column-gap: 12px,
 	button-row-gap: 12px,
 	button-background-color: #008de4,
+	button-background-color-hover: cssvar(button-background-color),
 	button-text-color: #fff,
+	button-text-color-hover: cssvar(button-text-color),
+	button-outline-color: var(--stk-button-background-color),
+	button-outline-color-hover: cssvar(button-outline-color),
 	icon-button-padding: 12px,
 
 	/**

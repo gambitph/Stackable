@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { hoverState } from '../utils'
+// import { hoverState } from '../utils'
 
 /**
  * WordPress dependencies
@@ -31,13 +31,23 @@ const camelToKebab = property => {
 }
 
 const getInheritedValue = ( property, currentState ) => {
-	return property?.[ currentState ] || property?.desktop
+	let value = property?.[ currentState ]
+
+	if ( ! value && currentState === 'desktopHover' ) {
+		value = property?.desktopParentHover
+	}
+
+	if ( ! value && currentState !== 'desktop' ) {
+		value = property?.desktop
+	}
+
+	return value
 }
 
-const generateRules = ( scheme, currentHoverState = 'normal', mode = '', appendSuffix = false ) => {
-	const decls = []
-	const state = `desktop${ hoverState[ currentHoverState ] }`
-	let suffix = ''
+const isGradient = value => value?.startsWith( 'linear-' ) || value?.startsWith( 'radial-' )
+
+const getCSS = ( scheme, mode = '' ) => {
+	const states = [ 'desktop', 'desktopHover', 'desktopParentHover' ]
 	const properties = [
 		'backgroundColor',
 		'headingColor',
@@ -49,26 +59,52 @@ const generateRules = ( scheme, currentHoverState = 'normal', mode = '', appendS
 		'buttonOutlineColor',
 	]
 
-	if ( appendSuffix ) {
-		suffix = currentHoverState !== 'normal' ? `-${ currentHoverState }` : ''
+	const decls = {
+		desktop: [],
+		desktopHover: [],
+		desktopParentHover: [],
 	}
 
-	properties.forEach( property => {
-		if ( property === 'backgroundColor' ) {
-			if ( mode && scheme[ property ]?.desktop ) {
-				const varname = mode === 'background' ? 'block' : 'container'
-				decls.push( `--stk-${ varname }-background-color${ suffix }: ${ getInheritedValue( scheme[ property ], state ) };` )
+	states.forEach( state => {
+		const suffix = state === 'desktopHover' ? '-hover' : ''
+		properties.forEach( property => {
+			const varname = mode === 'background' ? 'block' : 'container'
+			const customProperty = property === 'backgroundColor'
+				? `--stk-${ varname }-background-color` : camelToKebab( property )
+			if ( property === 'backgroundColor' && ! mode ) {
+				return
 			}
-			return
-		}
 
-		if ( scheme[ property ]?.desktop ) {
-			const customProperty = camelToKebab( property )
-			decls.push( `${ customProperty }${ suffix }: ${ getInheritedValue( scheme[ property ], state ) };` )
-		}
+			if ( scheme[ property ]?.[ state ] ) {
+				decls[ state ].push( `${ customProperty }${ suffix }: ${ scheme[ property ]?.[ state ] };` )
+				return
+			}
+
+			const inheritedValue = getInheritedValue( scheme[ property ], state )
+			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue ) {
+				decls[ state ].push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
+			}
+
+			if ( property === 'buttonBackgroundColor' && isGradient( scheme[ property ]?.[ state ] ) ) {
+				decls[ state ].push( `:where(.is-style-plain){ --stk-button-plain-text-color${ suffix }: var(--stk-button-outline-color${ suffix }); }` )
+			}
+		} )
 	} )
 
-	return decls.join( ' ' )
+	if ( isGradient( scheme.buttonBackgroundColor?.desktop ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
+		decls.desktopHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
+	}
+
+	if ( isGradient( scheme.buttonBackgroundColor?.desktopParentHover ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
+		decls.desktopParentHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
+	}
+
+	if ( isGradient( scheme.buttonBackgroundColor?.desktop ) &&
+		scheme.buttonBackgroundColor?.desktopParentHover && ! isGradient( scheme.buttonBackgroundColor?.desktopParentHover ) ) {
+		decls.desktopParentHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color: unset;--stk-button-plain-text-color-hover:unset; }` )
+	}
+
+	return decls
 }
 
 const renderGlobalStyles = (
@@ -77,9 +113,10 @@ const renderGlobalStyles = (
 	baseColorScheme,
 	backgroundModeColorScheme,
 	containerModeColorScheme,
-	currentHoverState = 'normal',
+	// currentHoverState = 'normal',
 ) => {
-	let css = ''
+	let css = '',
+		decls
 
 	const rules = {
 		background: [],
@@ -87,43 +124,57 @@ const renderGlobalStyles = (
 	}
 	const colorSchemes = convertToObj( colorSchemesArray )
 
-	let decls,
-		declsHover = '',
-		scheme
-
 	if ( baseColorScheme in colorSchemes ) {
-		scheme = colorSchemes[ baseColorScheme ]
-		decls = generateRules( scheme, currentHoverState )
-		declsHover = generateRules( scheme, 'hover', '', true )
-		css += `:root { ${ [ decls, declsHover ].join( '' ) } }`
+		decls = getCSS( colorSchemes[ baseColorScheme ] )
+		if ( decls.desktop.length || decls.desktopHover.length ) {
+			css += `:root{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }\n`
+		}
 	}
 
 	if ( backgroundModeColorScheme in colorSchemes ) {
-		scheme = colorSchemes[ backgroundModeColorScheme ]
-		decls = generateRules( scheme, currentHoverState, 'background' )
-		declsHover = generateRules( scheme, 'hover', 'background', true )
-		css += `.stk-block-background { ${ [ decls, declsHover ].join( '' ) } }`
+		decls = getCSS( colorSchemes[ backgroundModeColorScheme ], 'background' )
+		let bgcss = ''
+		if ( decls.desktop.length || decls.desktopHover.length ) {
+			bgcss += `.stk-block-background{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }\n`
+		}
+		if ( decls.desktopParentHover.length ) {
+			bgcss += `:where(.stk-hover-parent:hover) .stk-block-background{ ${ decls.desktopParentHover.join( '' ) } }\n`
+		}
+		css += bgcss
 	}
 
 	if ( containerModeColorScheme in colorSchemes ) {
-		scheme = colorSchemes[ containerModeColorScheme ]
-		decls = generateRules( scheme, currentHoverState, 'container' )
-		declsHover = generateRules( scheme, 'hover', 'container', true )
-		css += `.stk-container:where(:not(.stk--no-background)) { ${ [ decls, declsHover ].join( '' ) } }`
+		decls = getCSS( colorSchemes[ containerModeColorScheme ], 'container' )
+		let containercss = ''
+		if ( decls.desktop.length || decls.desktopHover.length ) {
+			containercss += `.stk-container:where(:not(.stk--no-background)){ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }\n`
+		}
+		if ( decls.desktopParentHover.length ) {
+			containercss += `.stk-container:where(:not(.stk--no-background):hover), :where(.stk-hover-parent:hover) .stk-container:where(:not(.stk--no-background)){ ${ decls.desktopParentHover.join( '' ) } }\n`
+		}
+		css += containercss
 	}
 
 	Object.entries( colorSchemes ).forEach( ( [ key, scheme ] ) => {
-		const backgrounds = generateRules( scheme, currentHoverState, 'background' )
-		declsHover = generateRules( scheme, 'hover', 'background', true )
-		rules.background.push( `.background-${ key }{ ${ [ backgrounds, declsHover ].join( '' ) } }` )
+		decls = getCSS( scheme, 'background' )
+		if ( decls.desktop.length || decls.desktopHover.length ) {
+			rules.background.push( `.background-${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }` )
+		}
+		if ( decls.desktopParentHover.length ) {
+			rules.background.push( `:where(.stk-hover-parent:hover) .background-${ key }{ ${ decls.desktopParentHover.join( '' ) } }` )
+		}
 
-		const containers = generateRules( scheme, currentHoverState, 'container' )
-		declsHover = generateRules( scheme, 'hover', 'container', true )
-		rules.container.push( `.container-${ key }{ ${ [ containers, declsHover ].join( '' ) } }` )
+		decls = getCSS( scheme, 'container' )
+		if ( decls.desktop.length || decls.desktopHover.length ) {
+			rules.container.push( `.container-${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }` )
+		}
+		if ( decls.desktopParentHover.length ) {
+			rules.container.push( `.container-${ key }:where(:hover), :where(.stk-hover-parent:hover) .container-${ key }{ ${ decls.desktopParentHover.join( '' ) } }` )
+		}
 	} )
 
-	css += `${ rules.background.join( ' ' ) }`
-	css += `${ rules.container.join( ' ' ) }`
+	css += `${ rules.background.join( '\n' ) }`
+	css += `${ rules.container.join( '\n' ) }`
 
 	setStyles( css )
 }

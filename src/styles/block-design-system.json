@@ -3,6 +3,20 @@
 		"block-margin-bottom": {
 			"desktop": 24,
 			"mobile": 16
+		},
+		"link-color": {
+			"desktop": "initial",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": false
+			}
+		},
+		"accent-color": {
+			"desktop": "initial",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": false
+			}
 		}
 	},
 	"Columns": {
@@ -85,7 +99,11 @@
 			}
 		},
 		"container-background-color": {
-			"desktop": "#fff"
+			"desktop": "#fff",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": false
+			}
 		},
 		"container-color": {
 			"desktop": "#1e1e1e"
@@ -131,7 +149,11 @@
 			}
 		},
 		"block-background-color": {
-			"desktop": "#f1f1f1"
+			"desktop": "#f1f1f1",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": false
+			}
 		}
 	},
 	"Images": {
@@ -198,10 +220,25 @@
 			"desktop": 12
 		},
 		"button-background-color": {
-			"desktop": "#008de4"
+			"desktop": "#008de4",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": false
+			}
 		},
 		"button-text-color": {
-			"desktop": "#fff"
+			"desktop": "#fff",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": false
+			}
+		},
+		"button-outline-color": {
+			"desktop": "var(--stk-button-background-color)",
+			"hoverStates": {
+				"hover": true,
+				"parent-hover": false
+			}
 		},
 		"icon-button-padding": {
 			"desktop": {
