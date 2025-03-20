@@ -26,7 +26,7 @@ import {
 } from '@wordpress/element'
 import { useSelect, dispatch } from '@wordpress/data'
 import { models } from '@wordpress/api'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { applyFilters, doAction } from '@wordpress/hooks'
 
 let saveTimeout = null
@@ -36,18 +36,36 @@ const PRESETS = [ ...PRESET_COLOR_SCHEMES ]
 const COLOR_SETTINGS = [ {
 	label: __( 'Background Color', i18n ),
 	property: 'backgroundColor',
+	disabledTooltip: {
+		gradient: sprintf( __( 'The %s cannot be changed in any hover state when using a gradient.', i18n ),
+			__( 'Background Color', i18n ) ),
+		'parent-hover': sprintf( __( 'Changing the %s is not allowed for %s state.', i18n ),
+			__( 'Background Color', i18n ), __( 'parent-hover', i18n ) ),
+	},
 }, {
 	label: __( 'Heading Color', i18n ),
 	property: 'headingColor',
+	disabledTooltip: {
+		hover: sprintf( __( 'Changing the %s is not allowed for %s state.', i18n ),
+			__( 'Heading Color', i18n ), __( 'hover', i18n ) ),
+	},
 }, {
 	label: __( 'Text Color', i18n ),
 	property: 'textColor',
+	disabledTooltip: {
+		hover: sprintf( __( 'Changing the %s is not allowed for %s state.', i18n ),
+			__( 'Text Color', i18n ), __( 'hover', i18n ) ),
+	},
 }, {
 	label: __( 'Link Color', i18n ),
 	property: 'linkColor',
 }, {
 	label: __( 'Accent Color', i18n ),
 	property: 'accentColor',
+	disabledTooltip: {
+		hover: sprintf( __( 'Changing the %s is not allowed for %s state.', i18n ),
+			__( 'Text Color', i18n ), __( 'hover', i18n ) ),
+	},
 }, {
 	label: __( 'Button Color', i18n ),
 	property: 'buttonBackgroundColor',
@@ -129,6 +147,14 @@ const ColorSchemePicker = props => {
 		}
 	}
 
+	const isGradient = value => {
+		if ( ! itemInEdit || ! value ) {
+			return false
+		}
+
+		return value.startsWith( 'linear-' ) || value.startsWith( 'radial-' )
+	}
+
 	// For updating the Color Scheme name
 	const onChangeName = name => {
 		if ( ! itemInEdit ) {
@@ -148,6 +174,12 @@ const ColorSchemePicker = props => {
 		}
 		const currentItem = cloneDeep( itemInEdit )
 		currentItem.colorScheme[ property ][ currentState ] = color
+
+		if ( property === 'backgroundColor' && isGradient( color ) ) {
+			currentItem.colorScheme[ property ].desktopHover = ''
+			currentItem.colorScheme[ property ].desktopParentHover = ''
+		}
+
 		setItemInEdit( currentItem )
 
 		updateColorSchemes( currentItem )
@@ -171,9 +203,17 @@ const ColorSchemePicker = props => {
 			return
 		}
 		const currentItem = cloneDeep( itemInEdit )
+		if ( currentHoverState === 'normal' ) {
+			currentItem.colorScheme = cloneDeep( DEFAULT_COLOR_SCHEME_COLORS )
+		}
+
 		Object.entries( colors ).forEach( ( [ property, color ] ) => {
+			if ( isDisabled( property ) ) {
+				return
+			}
 			currentItem.colorScheme[ property ][ currentState ] = color
 		} )
+
 		setItemInEdit( currentItem )
 
 		updateColorSchemes( currentItem )
@@ -250,26 +290,61 @@ const ColorSchemePicker = props => {
 			buttonOutlineColor: getInheritedValue( item.colorScheme.buttonOutlineColor ) || defaults.buttonOutlineColor.desktop,
 		}
 
-		const Preview = <ColorSchemePreview colors={ colors } />
+		const Preview = <ColorSchemePreview colors={ colors } withWrapper={ withWrapper } />
 
 		return withWrapper ? <div
 			className="stk-global-color-scheme__preview-wrapper"
-			style={ { backgroundColor: backgroundColorStyle } }
+			style={ { background: backgroundColorStyle } }
 		> { Preview } </div> : Preview
 	}
 
-	const isGradient = property => {
-		if ( ! itemInEdit ) {
+	const isDisabled = property => {
+		if ( property === 'backgroundColor' ) {
+			if ( isGradient( itemInEdit?.colorScheme[ property ]?.desktop ) && currentHoverState !== 'normal' ) {
+				return false
+			}
+
+			return currentHoverState === 'parent-hover'
+		}
+
+		if ( [ 'headingColor', 'textColor', 'accentColor' ].includes( property ) ) {
+			return currentHoverState === 'hover'
+		}
+
+		return false
+	}
+
+	const hasGradientPicker = property => {
+		if ( property === 'backgroundColor' || property === 'buttonBackgroundColor' ) {
+			return true
+		}
+
+		return false
+	}
+
+	const getAllowedHover = property => {
+		if ( property === 'backgroundColor' && isGradient( itemInEdit?.colorScheme[ property ]?.desktop ) ) {
 			return false
 		}
 
-		const value = itemInEdit?.colorScheme[ property ]?.desktop
+		return [ 'normal', 'hover', 'parent-hover' ]
+	}
 
-		if ( ! value ) {
-			return false
+	const getToggleProps = settings => {
+		const disabled = isDisabled( settings.property )
+		const gradient = isGradient( itemInEdit?.colorScheme[ settings.property ]?.desktop )
+		if ( ! disabled || ! settings.disabledTooltip ) {
+			return {}
 		}
 
-		return value.startsWith( 'linear-' ) || value.startsWith( 'radial-' )
+		const useGradientTooltip = gradient && !! settings.disabledTooltip.gradient
+		return {
+			disabled,
+			showTooltip: true,
+			__experimentalIsFocusable: true,
+			label: useGradientTooltip ? settings.disabledTooltip.gradient
+				: settings.disabledTooltip[ currentHoverState ],
+		}
 	}
 
 	return ( ! itemInEdit ? <SortablePicker
@@ -321,7 +396,7 @@ const ColorSchemePicker = props => {
 			onPresetClick={ onPresetClick }
 		/>
 		<AdvancedToggleControl
-			label={ __( 'Show Color Scheme in Color Pickers', i18n ) }
+			label={ __( 'Show Scheme Colors in Color Pickers', i18n ) }
 			checked={ ! itemInEdit?.hideInPicker }
 			defaultValue={ true }
 			onChange={ value => onChangeShowInPicker( value ) }
@@ -331,14 +406,16 @@ const ColorSchemePicker = props => {
 			<ColorPaletteControl
 				key={ index }
 				label={ settings.label }
-				value={ getInheritedValue( itemInEdit?.colorScheme[ settings.property ] ) }
+				value={ itemInEdit?.colorScheme[ settings.property ][ currentState ] }
 				colorLabel={ extractColor( itemInEdit?.colorScheme[ settings.property ][ currentState ] ) }
-				hover={ isGradient( settings.property ) ? false : [ 'normal', 'hover' ] }
+				hover={ getAllowedHover( settings.property ) }
 				forceUpdateHoverState={ true }
 				onChange={ color => onChange( settings.property, color ) }
 				help={ settings.property === 'backgroundColor' ? __( 'Note: Background color is not used for Base Color Scheme.', i18n ) : '' }
-				hasGradientPicker={ true }
-				enableGradient={ currentHoverState === 'normal' }
+				hasGradientPicker={ hasGradientPicker( settings.property ) }
+				enableGradient={ currentHoverState === 'normal' || settings.property === 'buttonBackgroundColor' }
+				additionalToggleProps={ getToggleProps( settings ) }
+				allowReset={ ! isDisabled( settings.property ) }
 			/>
 		) ) }
 	</>

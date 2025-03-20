@@ -192,6 +192,7 @@ const ColorPaletteControl = memo( props => {
 	const toggleSettings = {
 		colorValue: value,
 		label: props.colorLabel || colorLabel,
+		additionalToggleProps: props.additionalToggleProps,
 	}
 
 	const colorPalette = (
@@ -251,6 +252,7 @@ ColorPaletteControl.defaultProps = {
 
 	hasGradientPicker: false,
 	enableGradient: false,
+	additionalToggleProps: {},
 }
 
 export default ColorPaletteControl
@@ -258,7 +260,11 @@ export default ColorPaletteControl
 const renderToggle =
 	settings =>
 		( { onToggle, isOpen } ) => {
-			const { colorValue, label } = settings
+			const {
+				colorValue,
+				label,
+				additionalToggleProps,
+			} = settings
 
 			const toggleProps = {
 				onClick: onToggle,
@@ -267,6 +273,7 @@ const renderToggle =
 					{ 'is-open': isOpen }
 				),
 				'aria-expanded': isOpen,
+				...additionalToggleProps,
 			}
 
 			return (
