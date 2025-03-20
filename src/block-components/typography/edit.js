@@ -3,7 +3,7 @@
  */
 import { unescape } from 'lodash'
 import { i18n } from 'stackable'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useAttributeEditHandlers, usePresetControls } from '~stackable/hooks'
 import {
 	AlignButtonsControl,
 	AdvancedRangeControl,
@@ -30,7 +30,6 @@ import {
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { useSelect } from '@wordpress/data'
 
 const TYPOGRAPHY_SHADOWS = [
 	'none',
@@ -55,45 +54,6 @@ const GRADIENT_OPTIONS = [
 	{
 		value: 'gradient',
 		title: __( 'Gradient', i18n ),
-	},
-]
-
-const SIZE_PRESET = [
-	{
-		value: '0.75rem',
-		label: 'XS',
-	},
-	{
-		value: '0.875rem',
-		label: 'S',
-	},
-	{
-		value: '1rem',
-		label: 'M',
-	},
-	{
-		value: '1.125rem',
-		label: 'L',
-	},
-	{
-		value: '1.5rem',
-		label: 'XL',
-	},
-	{
-		value: '2rem',
-		label: '2XL',
-	},
-	{
-		value: '2.5rem',
-		label: '3XL',
-	},
-	{
-		value: '3rem',
-		label: '4XL',
-	},
-	{
-		value: '4rem',
-		label: '5XL',
 	},
 ]
 
@@ -140,14 +100,7 @@ export const Controls = props => {
 
 	const onChangeContent = useCallback( text => setDebouncedText( escapeHTMLIfInvalid( text ) ), [] )
 
-	const themeSettings = useSelect( select => select( 'core/block-editor' ).getSettings(), [] )
-	let sizeMarks = SIZE_PRESET
-	if ( Array.isArray( themeSettings?.fontSizes ) && themeSettings.fontSizes.length > 0 ) {
-		sizeMarks = themeSettings.fontSizes.map( size => ( {
-			value: size.size,
-			label: size.name,
-		} ) )
-	}
+	const presetMarks = usePresetControls( [ 'typography', 'fontSizes' ] )
 
 	return (
 		<>
@@ -318,7 +271,7 @@ export const Controls = props => {
 					title: __( 'Font size', i18n ),
 					description: __( 'Sets the size of text characters', i18n ),
 				} }
-				marks={ sizeMarks }
+				marks={ presetMarks }
 			/>
 
 			{ hasColor && (

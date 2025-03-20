@@ -259,7 +259,7 @@ export default memo( AdvancedRangeControl, isEqual )
 const extractNumberAndUnit = value => {
 	// Match the last characters that are not numbers.
 	const matches = value.match( /([\d.]+)(\D*)$/ )
-	if ( ! matches ) {
+	if ( ! matches || value.startsWith( 'var(--stk' ) ) {
 		return [ value, '' ]
 	}
 	return [ matches[ 1 ], matches[ 2 ] ]

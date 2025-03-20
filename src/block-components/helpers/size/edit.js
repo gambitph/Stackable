@@ -7,14 +7,15 @@ import {
 	AdvancedRangeControl,
 	FourRangeControl,
 } from '~stackable/components'
-import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers, useDeviceType, usePresetControls,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import { getAttributeNameFunc } from '~stackable/util'
-import { useSetting } from '@wordpress/block-editor'
 
 const HEIGHT_PRESET = [
 	{
@@ -48,41 +49,6 @@ const HEIGHT_PRESET = [
 	{
 		value: '100vh',
 		label: 'Full',
-	},
-]
-
-const SPACING_PRESET = [
-	{
-		label: 'XS',
-		value: '4px',
-	},
-	{
-		label: 'S',
-		value: '8px',
-	},
-	{
-		label: 'M',
-		value: '16px',
-	},
-	{
-		label: 'L',
-		value: '24px',
-	},
-	{
-		label: 'XL',
-		value: '32px',
-	},
-	{
-		label: '2XL',
-		value: '48px',
-	},
-	{
-		label: '3XL',
-		value: '64px',
-	},
-	{
-		label: '4XL',
-		value: '96px',
 	},
 ]
 
@@ -206,15 +172,8 @@ const Spacing = props => {
 		...props.visualGuide,
 		highlight: 'margin',
 	}
-	let spacingMarks = SPACING_PRESET
-	const spacingSizes = useSetting( 'spacing.spacingSizes' )
 
-	if ( Array.isArray( spacingSizes ) && spacingSizes.length > 0 ) {
-		spacingMarks = spacingSizes.map( size => ( {
-			value: size.size,
-			label: size.name,
-		} ) )
-	}
+	const presetMarks = usePresetControls( [ 'spacing', 'spacingSizes' ] )
 
 	return (
 		<>
@@ -233,7 +192,7 @@ const Spacing = props => {
 				} }
 				visualGuide={ paddingVisualGuide }
 				placeholder={ props.paddingPlaceholder }
-				marks={ spacingMarks }
+				marks={ presetMarks }
 			/>
 
 			{ props.enableMargin &&
@@ -251,7 +210,7 @@ const Spacing = props => {
 						description: __( 'Sets the block margin, i.e. the space outside the block between the block border and the next block.', i18n ),
 					} }
 					visualGuide={ marginVisualGuide }
-					marks={ spacingMarks }
+					marks={ presetMarks }
 				/>
 			}
 		</>

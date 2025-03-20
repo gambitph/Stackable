@@ -23,11 +23,12 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 */
   		function __construct() {
 			$this->stackable_presets = $this->load_presets( __DIR__ . '/presets.json');
-			$this->theme_presets = $this->load_presets( get_template_directory() . '/theme.json' );
+			$this->theme_presets = WP_Theme_JSON_Resolver::get_theme_data()->get_settings();
 			// Register our settings.
 			// add_action( 'register_stackable_global_settings', array( $this, 'register_preset_controls' ) );
 
 			add_filter( 'stackable_inline_styles_nodep', array( $this, 'add_preset_controls_styles' ) );
+			add_filter( 'stackable_inline_editor_styles', array( $this, 'add_preset_controls_styles' ) );
 		}
 
 		/**
@@ -73,12 +74,13 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		public function add_preset_controls_styles( $current_css ) {
 			$presets = $this->stackable_presets;
 			
-			if ( isset ( $this->theme_presets ) ) {
-				$presets = $this->theme_presets;
+			if ( isset( $this->theme_presets ) ) {
+				$presets[ 'spacing' ][ 'spacingSizes' ] = $this->theme_presets[ 'spacing' ][ 'spacingSizes' ][ 'theme' ] ?? $presets[ 'spacing' ][ 'spacingSizes' ];
+				$presets[ 'typography' ][ 'fontSizes' ] = $this->theme_presets[ 'typography' ][ 'fontSizes' ][ 'theme' ] ?? $presets[ 'typography' ][ 'fontSizes' ];
 			}
 	
 			$generated_css = ":root {\n";
-			$generated_css .= $this->generate_css_variables( $presets[ 'spacing' ][ 'spacingSizes' ], 'spacing' );
+			$generated_css .= $this->generate_css_variables( $presets[ 'spacing' ][ 'spacingSizes' ], 'spacing-size' );
 			$generated_css .= $this->generate_css_variables( $presets[ 'typography' ][ 'fontSizes' ], 'font-size' );
 			$generated_css .= "}\n";
 
@@ -87,6 +89,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			}
 	
 			$current_css .= $generated_css;
+			
 			return apply_filters( 'stackable_frontend_css' , $current_css );
 		}
 	}
