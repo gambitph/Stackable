@@ -13,13 +13,15 @@ export const DEFAULT_COLOR_SCHEME_COLORS = {
 
 const NOOP = () => {}
 
-const ColorSchemePreview = ( { colors, onClick = NOOP } ) => {
+const ColorSchemePreview = ( {
+	colors, withWrapper = false, onClick = NOOP,
+} ) => {
 	const TagName = onClick === NOOP ? 'div' : Button
 	const additionalProps = onClick === NOOP ? {} : { onClick }
 	return (
 		<TagName
 			className="stk-global-color-scheme__preview__background"
-			style={ { backgroundColor: colors?.backgroundColor } }
+			style={ withWrapper ? {} : { background: colors?.backgroundColor } }
 			{ ...additionalProps }
 		>
 			<div className="stk-global-color-scheme__preview__typography">
@@ -29,7 +31,7 @@ const ColorSchemePreview = ( { colors, onClick = NOOP } ) => {
 			<div>
 				<div
 					className="stk-global-color-scheme__preview__button"
-					style={ { backgroundColor: `${ colors?.buttonBackgroundColor || 'var(--stk-button-background-color)' }` } }
+					style={ { background: `${ colors?.buttonBackgroundColor || 'var(--stk-button-background-color)' }` } }
 				/>
 				<div
 					className="stk-global-color-scheme__preview__button"
