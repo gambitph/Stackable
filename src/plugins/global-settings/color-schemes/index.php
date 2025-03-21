@@ -37,9 +37,6 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				 */
 				// Add the Global Color Schemes styles in the frontend only.
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'add_global_color_schemes_styles' ) );
-
-				// Add render_block filter to get the non-default background and container color schemes used by our blocks.
-				add_filter( 'render_block', array( $this, 'get_block_schemes' ), 1, 2 );
 			}
 		}
 
@@ -198,34 +195,78 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 
 			$styles = array();
 
-			if ( isset( $this->color_schemes[$base_default] ) ) {
-				$declarations = $this->generate_css_rules( $this->color_schemes[$base_default] );
-				$styles[] = array(
-					'selector'     => ':root',
-					'declarations' => $declarations
+			// list CSS selectors for default schemes
+			$default_color_schemes = array(
+				array(
+					'key' => $base_default,
+					'mode' => '',
+					'selectors' => array(
+						'desktop' => ':root'
+					)
+				),
+				array(
+					'key' => $background_default,
+					'mode' => 'background',
+					'selectors' => array(
+						'desktop' => '.stk-block-background',
+						'desktopParentHover' => ':where(.stk-hover-parent:hover) .stk-block-background'
+					)
+				),
+				array(
+					'key' => $container_default,
+					'mode' => 'container',
+					'selectors' => array(
+						'desktop' => '.stk-container:where(:not(.stk--no-background))',
+						'desktopParentHover' => array( '.stk-container:where(:not(.stk--no-background):hover)', ':where(.stk-hover-parent:hover) .stk-container:where(:not(.stk--no-background))')
+					)
+				)
+			);
+
+			$block_color_schemes = array(
+				'background' => array(),
+				'container' => array(),
+			);
+
+			// generate selectors for all schemes in background and container mode
+			foreach ($this->color_schemes as $key => $_ ) {
+				$block_color_schemes['background'][] = array(
+					'key' => $key,
+					'mode' => 'background',
+					'selectors' => array(
+						'desktop' => ".background-$key",
+						'desktopParentHover' => ":where(.stk-hover-parent:hover) .background-$key"
+					)
+				);
+				$block_color_schemes['container'][] = array(
+					'key' => $key,
+					'mode' => 'container',
+					'selectors' => array(
+						'desktop' => ".container-$key",
+						'desktopParentHover' => array(".container-$key:where(:hover)",":where(.stk-hover-parent:hover) .container-$key")
+					)
 				);
 			}
 
-			if ( isset( $this->color_schemes[$background_default] ) ) {
-				$declarations = $this->generate_css_rules( $this->color_schemes[$background_default], 'background' );
-				$styles[] = array(
-					'selector'     => '.stk-block-background',
-					'declarations' => $declarations
-				);
-			}
-
-			if ( isset( $this->color_schemes[$container_default] ) ) {
-				$declarations = $this->generate_css_rules( $this->color_schemes[$container_default], 'container' );
-				$styles[] = array(
-					'selector'     => '.stk-container:where(:not(.stk--no-background))',
-					'declarations' => $declarations
-				);
+			foreach( $default_color_schemes as $scheme ) {
+				$styles = $this->generate_color_scheme_styles( $styles, $scheme );
 			}
 
 			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			if ( $generated_css != '' ) {
 				$current_css .= "\n/* Global Color Schemes */\n";
 				$current_css .= $generated_css;
+			}
+
+			foreach( $block_color_schemes as $mode => $block_schemes ) {
+				foreach( $block_schemes as $scheme ) {
+					$styles = $this->generate_color_scheme_styles( array(), $scheme );
+					$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $styles );
+					if ( $generated_css != '' ) {
+						$scheme_key = $scheme[ 'key' ];
+						$current_css .= "\n/* Global Color Schemes ($mode-$scheme_key) */\n";
+						$current_css .= $generated_css;
+					}
+				}
 			}
 
 			return apply_filters( 'stackable_frontend_css' , $current_css );
@@ -278,7 +319,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			$states = array(
 				'desktop' => '',
 				'desktopHover' => '-hover',
-				'desktopParentHover' => '-parent-hover'
+				'desktopParentHover' => ''
 			);
 			foreach ( $states as $device_state => $state ) {
 				$properties = array();
@@ -299,6 +340,44 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			return $properties_per_state;
 		}
 
+		public function get_inherited_value( $property, $current_state ) {
+			$value = $property[ $current_state ] ?? false;
+
+			if ( ! $value && $current_state == 'desktopHover' ) {
+				$value = $property[ 'desktopParentHover' ] ?? false;
+			}
+
+			if ( ! $value && $current_state !== 'desktop' ) {
+				$value = $property[ 'desktop' ];
+			}
+
+			return $value;
+		}
+
+		public function has_value( $scheme, $property, $state ) {
+			if ( ! isset( $scheme[ $property ] ) ) {
+				return false;
+			}
+
+			if ( ! isset( $scheme[ $property ][ $state ] ) ) {
+				return false;
+			}
+
+			if ( $scheme[ $property ][ $state ] === '' ) {
+				return false;
+			}
+
+			return true;
+		}
+
+		public function is_gradient( $scheme, $property, $state ) {
+			if ( ! $this->has_value( $scheme, $property, $state ) ) {
+				return false;
+			}
+			$value = $scheme[ $property ][ $state ];
+			return strpos( $value, 'linear-' ) !== false || strpos( $value, 'radial-' ) !== false;
+		}
+
 		/**
 		 * This returns the CSS declarations for the CSS rules.
 		 *
@@ -307,78 +386,155 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		 * @return Array
 		 */
 		public function generate_css_rules( $scheme, $mode = '' ) {
-			$decls = array();
+			$decls = array(
+				'desktop' => array(),
+				'desktopHover' => array(),
+				'desktopParentHover' => array(),
+			);
+
+			$button_plain_decls = array(
+				'desktop' => array(),
+				'desktopHover' => array(),
+				'desktopParentHover' => array(),
+			);
+
 			$properties_per_state = $this->get_css_custom_properties( $mode );
 
 			foreach ( $properties_per_state as $state => $properties ) {
 				foreach ( $properties as $property => $css_property ) {
-					if ( isset( $scheme[ $property ] )
-						&& isset( $scheme[ $property ][ $state ] )
-						&& $scheme[ $property ][ $state ] !== ''
-					) {
-						$decls[ $css_property ] = $scheme[ $property ][ $state ];
-					} else if ( isset( $scheme[ $property ] )
-						&& $state !== 'desktop'
-						&& isset( $scheme[ $property ][ 'desktop' ] )
-						&& $scheme[ $property ][ 'desktop' ] !== ''
-					) {
-						$decls[ $css_property ] = $scheme[ $property ][ 'desktop' ];
+					if ( $this->has_value( $scheme, $property, $state ) ) {
+						$decls[ $state ][ $css_property ] = $scheme[ $property ][ $state ];
+					}
+
+					$inherited_value = $this->get_inherited_value( $scheme[ $property ], $state );
+					if ( $state === 'desktopHover' && ! $this->has_value( $scheme, $property, $state ) ) {
+						$decls[ $state ][ $css_property ] = $inherited_value;
+					}
+
+					// If button background color is gradient, plain style buuttons should use the button outline color.
+					if ( $property == 'buttonBackgroundColor' && $this->is_gradient( $scheme, $property, $state ) ) {
+						$suffix = $state === 'desktopHover' ? '-hover' : '';
+						$button_plain_decls[ $state ][ "--stk-button-plain-text-color$suffix" ] = "var(--stk-button-outline-color$suffix)";
 					}
 				}
 			}
-			return $decls;
+
+			// if the button background color is gradient on normal or parent-hover states,
+			// and there's no button background color set on hover,
+			// plain-style buttons will turn black.
+			// To prevent this, use button-outline-color-hover.
+			if ( $this->is_gradient( $scheme, 'buttonBackgroundColor', 'desktop' )
+				&& ! $this->has_value( $scheme, 'buttonBackgroundColor', 'desktopHover' )
+			) {
+				$button_plain_decls[ 'desktopHover' ][ '--stk-button-plain-text-color-hover' ] = 'var(--stk-button-outline-color-hover)';
+			}
+
+			if ( $this->is_gradient( $scheme, 'buttonBackgroundColor', 'desktopParentHover' )
+				&& ! $this->has_value( $scheme, 'buttonBackgroundColor', 'desktopHover' )
+			) {
+				$button_plain_decls[ 'desktopParentHover' ][ '--stk-button-plain-text-color-hover' ] = 'var(--stk-button-outline-color-hover)';
+			}
+
+			// if the button background color is gradient on normal state and solid on parent-hover state,
+			// we need to unset the --stk-button-plain-text-color,
+			// so that plain-style buttons on parent-hover state will use the button background color.
+			if ( $this->is_gradient( $scheme, 'buttonBackgroundColor', 'desktop' )
+				&& $this->has_value( $scheme, 'buttonBackgroundColor', 'desktopParentHover' )
+				&& ! $this->is_gradient( $scheme, 'buttonBackgroundColor', 'desktopParentHover' )
+			) {
+				$button_plain_decls[ 'desktopParentHover' ][ '--stk-button-plain-text-color' ] = 'unset';
+				$button_plain_decls[ 'desktopParentHover' ][ '--stk-button-plain-text-color-hover' ] = 'unset';
+			}
+
+			return array( $decls, $button_plain_decls );
 		}
 
 		/**
-		 * This is the render_block filter callback.
-		 * This checks if the block uses a non-default background/container color scheme.
-		 */
-		public function get_block_schemes( $block_content, $block ) {
-			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
-				return $block_content;
-			}
-
-			$attributes = $block[ 'attrs' ];
-
-			// Check if the block's backgroundColorScheme has been added to $block_background_schemes
-			// and add the custom background color scheme to the global styles once
-			if ( isset( $attributes[ 'backgroundColorScheme' ] ) &&
-				! in_array( $attributes[ 'backgroundColorScheme' ], $this->block_background_schemes ) ) {
-				$this->block_background_schemes[] = $attributes[ 'backgroundColorScheme' ];
-				$this->add_block_color_schemes_styles( 'background', $attributes[ 'backgroundColorScheme' ] );
-			}
-
-			// Check if the block's containerColorScheme has been added to $block_container_schemes
-			// and add the custom container color scheme to the global styles once
-			if ( isset( $attributes[ 'containerColorScheme' ] ) &&
-				! in_array( $attributes[ 'containerColorScheme' ], $this->block_container_schemes ) ) {
-				$this->block_container_schemes[] = $attributes[ 'containerColorScheme' ];
-				$this->add_block_color_schemes_styles( 'container', $attributes[ 'containerColorScheme' ] );
-			}
-
-			return $block_content;
-		}
-
-		/**
-		 * This appends the custom color schemes used by our blocks to the global styles.
+		 * This returns the array that contains the css selectors
+		 * and declarations needed for wp_style_engine_get_stylesheet_from_css_rules
 		 *
-		 * @param String 	$mode ('', 'background', 'container')
+		 * @param Array 	$styles
 		 * @param Array 	$scheme
 		 * @return Array
 		 */
-		public function add_block_color_schemes_styles( $mode, $scheme ) {
-			if ( isset( $this->color_schemes[ $scheme ] ) ) {
-				$declarations = $this->generate_css_rules( $this->color_schemes[ $scheme ], $mode );
+		public function generate_color_scheme_styles( $styles, $scheme ) {
+			$scheme_key = $scheme[ 'key' ];
+			$selectors = $scheme[ 'selectors' ];
+			$mode = $scheme[ 'mode' ];
+
+			if ( isset( $this->color_schemes[ $scheme_key ] ) ) {
+				list($decls, $button_plain_decls) = $this->generate_css_rules( $this->color_schemes[ $scheme_key ], $mode );
+
 				$styles[] = array(
-					'selector'     => '.' .$mode . '-' . $scheme,
-					'declarations' => $declarations
+					'selector'     => $selectors[ 'desktop' ],
+					'declarations' => array_merge( $decls[ 'desktop' ], $decls[ 'desktopHover'] )
 				);
 
-				$generated_css = "/* Global Color Schemes ($mode-$scheme) */\n";
-				$generated_css .= wp_style_engine_get_stylesheet_from_css_rules( $styles );
-				$css = apply_filters( 'stackable_frontend_css' , $generated_css );
-				wp_add_inline_style( 'ugb-style-css-nodep', $css );
+				$styles[] = array(
+					'selector'     => $selectors[ 'desktop' ] . ' :where(.is-style-plain)',
+					'declarations' => array_merge( $button_plain_decls[ 'desktop' ], $button_plain_decls[ 'desktopHover'] )
+				);
+
+				if ( isset( $selectors[ 'desktopParentHover' ] ) ) {
+					$parent_hover_selector = is_array( $selectors[ 'desktopParentHover' ] ) ? $selectors[ 'desktopParentHover' ] : array( $selectors[ 'desktopParentHover' ] );
+
+					$styles[] = array(
+						'selector'     => implode(", ", $parent_hover_selector),
+						'declarations' => $decls[ 'desktopParentHover' ]
+					);
+					$styles[] = array(
+						'selector'     => implode(", ", array_map( fn( $s ) => "$s :where(.is-style-plain)", $parent_hover_selector ) ),
+						'declarations' => $button_plain_decls[ 'desktopParentHover' ]
+					);
+				}
+
+				$styles = $this->add_theme_compatibility( $styles, $this->color_schemes[ $scheme_key ], $selectors );
 			}
+
+			return $styles;
+		}
+
+		public function add_theme_compatibility( $styles, $scheme, $selectors ) {
+			$classes = get_body_class();
+
+			if ( in_array( 'stk--is-blocksy-theme', $classes ) ) {
+				$bg_property = '--stk-button-background-color';
+				$text_property = '--stk-button-text-color';
+
+				$states = array(
+					'desktop' => [],
+					'desktopParentHover' => []
+				);
+
+				foreach( $states as $state => $_ ) {
+					if ( $this->has_value( $scheme, 'buttonBackgroundColor', $state ) ) {
+						$states[ $state ][ $bg_property ] = $scheme[ 'buttonBackgroundColor' ][ $state ];
+					}
+
+					if ( $this->has_value( $scheme, 'buttonTextColor', $state ) ) {
+						$states[ $state ][ $text_property ] = $scheme[ 'buttonTextColor' ][ $state ];
+					}
+				}
+
+				// Add a new selector with higher specificity
+				if ( count( $states[ 'desktop' ] ) ) {
+					$styles[] = array(
+						'selector'     => $selectors[ 'desktop' ] . ' ' . '.stk-block-button',
+						'declarations' => $states[ 'desktop' ]
+					);
+				}
+
+				if ( count( $states[ 'desktopParentHover' ] ) && isset( $selectors[ 'desktopParentHover' ] ) ) {
+					$parent_hover_selector = is_array( $selectors[ 'desktopParentHover' ] ) ? $selectors[ 'desktopParentHover' ] : array( $selectors[ 'desktopParentHover' ] );
+
+					$styles[] = array(
+						'selector'     => implode(", ", array_map( fn( $s ) => "$s .stk-block-button", $parent_hover_selector ) ),
+						'declarations' => $states[ 'desktopParentHover' ]
+					);
+				}
+			}
+
+			return $styles;
 		}
 	}
 

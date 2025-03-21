@@ -1,5 +1,10 @@
 @import "cssvars";
 
+// Typography
+:where(.block-editor-block-list__layout) .stk-block > :is(h1,h2,h3,h4,h5,h6) {
+	color: var(--stk-heading-color);
+}
+
 // Block spacing when horizontally oriented.
 .stk--block-horizontal-flex > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	column-gap: cssvar(block-margin-bottom);

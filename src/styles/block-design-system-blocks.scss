@@ -11,18 +11,16 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
-:where(.stk-block) {
-	> :is(p, div) {
-		color: var(--stk-text-color);
-	}
-	> :is(h1,h2,h3,h4,h5,h6) {
-		color: var(--stk-heading-color);
-	}
+:where(.stk-block) > :is(p, div) {
+	color: var(--stk-text-color);
+}
+.stk-block > :is(h1,h2,h3,h4,h5,h6) {
+	color: var(--stk-heading-color);
 }
 
 .stk-block a {
 	color: var(--stk-link-color);
-	&:where(:hover) {
+	&:hover {
 		color: var(--stk-link-color-hover);
 	}
 }

@@ -90,7 +90,7 @@ domReady( () => {
 				buttonTextColor: { desktop: '' },
 				buttonOutlineColor: { desktop: '' },
 			},
-			hideInPicker: '',
+			hideInPicker: false,
 		}, {
 			name: 'Color Scheme 2',
 			key: 'scheme-default-2',
@@ -104,7 +104,7 @@ domReady( () => {
 				buttonTextColor: { desktop: '' },
 				buttonOutlineColor: { desktop: '' },
 			},
-			hideInPicker: '',
+			hideInPicker: false,
 		} ]
 
 		const settings = {

@@ -24,15 +24,30 @@ const EditorPreviewClass = () => {
 
 	// Update the editor class when the preview size changes.
 	useEffect( () => {
-		if ( editorEl && editorEl.classList.contains( `stk-preview-device-${ deviceType.toLowerCase() }` ) === false ) {
-			editorEl.classList.remove( 'stk-preview-device-desktop', 'stk-preview-device-tablet', 'stk-preview-device-mobile' )
-			editorEl.classList.add( `stk-preview-device-${ deviceType.toLowerCase() }` )
+		const themeRegex = /stk--is-\w+-theme/gm
 
-			// At first load of the editor, the `stk-preview-device-*` is removed, so we have to re-add it.
+		if ( editorEl ) {
+			// Add device class
+			if ( editorEl && editorEl.classList.contains( `stk-preview-device-${ deviceType.toLowerCase() }` ) === false ) {
+				editorEl.classList.remove( 'stk-preview-device-desktop', 'stk-preview-device-tablet', 'stk-preview-device-mobile' )
+				editorEl.classList.add( `stk-preview-device-${ deviceType.toLowerCase() }` )
+			}
+
+			// Add theme class
+			if ( document.querySelector( 'body' ).className.match( themeRegex ) && ! editorEl.className.match( themeRegex ) ) {
+				const theme = document.querySelector( 'body' ).className.match( themeRegex )[ 0 ]
+				editorEl.classList.add( theme )
+			}
+
+			// At first load of the editor, the `stk-preview-device-*` and `stk--is-*-theme` are removed, so we have to re-add it.
 			const mo = onClassChange( editorEl, () => {
 				if ( editorEl?.classList.contains( `stk-preview-device-${ deviceType.toLowerCase() }` ) === false ) {
 					editorEl.classList.remove( 'stk-preview-device-desktop', 'stk-preview-device-tablet', 'stk-preview-device-mobile' )
 					editorEl.classList.add( `stk-preview-device-${ deviceType.toLowerCase() }` )
+				}
+				if ( document.querySelector( 'body' ).className.match( themeRegex ) && ! editorEl.className.match( themeRegex ) ) {
+					const theme = document.querySelector( 'body' ).className.match( themeRegex )[ 0 ]
+					editorEl.classList.add( theme )
 				}
 			} )
 
