@@ -15,17 +15,17 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 	 */
     class Stackable_Size_And_Spacing_Preset_Controls {
 
-		public $stackable_presets;
 		public $theme_presets;
+		public $default_presets;
+		public $stackable_presets;
 
 		/**
 		 * Initialize
 		 */
   		function __construct() {
-			$this->stackable_presets = $this->load_presets( __DIR__ . '/presets.json');
 			$this->theme_presets = WP_Theme_JSON_Resolver::get_theme_data()->get_settings();
-			// Register our settings.
-			// add_action( 'register_stackable_global_settings', array( $this, 'register_preset_controls' ) );
+			$this->default_presets = WP_Theme_JSON_Resolver::get_core_data()->get_settings();
+			$this->stackable_presets = $this->load_presets( __DIR__ . '/presets.json');
 
 			add_filter( 'stackable_inline_styles_nodep', array( $this, 'add_preset_controls_styles' ) );
 			add_filter( 'stackable_inline_editor_styles', array( $this, 'add_preset_controls_styles' ) );
@@ -53,7 +53,13 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			return [];
 		}
 
-		// Generate CSS variables based on preset type (e.g., fontSizes, spacing)
+		/**
+		 * Generate CSS variables based on preset type (e.g., fontSizes, spacing)
+		 *
+		 * @param array $presests 
+		 * @param array $prefix 
+		 * @return mixed
+		 */
 		public function generate_css_variables( $presets, $prefix ) {
 			$css = "";
 			foreach ( $presets as $preset ) {
@@ -66,22 +72,49 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		}
 
 		/**
+		 * Get the value from an array deeply with an array of keys
+		 *
+		 * @param array $array 
+		 * @param array $keys 
+		 * @return mixed
+		 */
+		public function deepGet( $array, $keys ) {
+			return array_reduce( $keys, fn( $value, $key ) => $value[ $key ] ?? null, $array );
+		}
+
+		/**
 		 * Add our global preset control styles.
 		 *
 		 * @param String $current_css
 		 * @return String
 		 */
 		public function add_preset_controls_styles( $current_css ) {
-			$presets = $this->stackable_presets;
-			
-			if ( isset( $this->theme_presets ) ) {
-				$presets[ 'spacing' ][ 'spacingSizes' ] = $this->theme_presets[ 'spacing' ][ 'spacingSizes' ][ 'theme' ] ?? $presets[ 'spacing' ][ 'spacingSizes' ];
-				$presets[ 'typography' ][ 'fontSizes' ] = $this->theme_presets[ 'typography' ][ 'fontSizes' ][ 'theme' ] ?? $presets[ 'typography' ][ 'fontSizes' ];
-			}
-	
+			$preset_keys = array(
+				'spacing-size' => array( 'spacing', 'spacingSizes' ),
+				'font-size' => array( 'typography', 'fontSizes' ),
+			);
+
 			$generated_css = ":root {\n";
-			$generated_css .= $this->generate_css_variables( $presets[ 'spacing' ][ 'spacingSizes' ], 'spacing-size' );
-			$generated_css .= $this->generate_css_variables( $presets[ 'typography' ][ 'fontSizes' ], 'font-size' );
+
+			foreach ( $preset_keys as $key => $value ) {
+				if ( ! empty( $this->deepGet( $this->theme_presets, $value )[ 'theme' ] ) ) {
+					$generated_css .= $this->generate_css_variables( 
+						$this->deepGet( $this->theme_presets, $value )[ 'theme' ], 
+						$key,
+					);
+				} elseif ( ! empty( $this->deepGet( $this->default_presets, $value )[ 'default' ] ) ) {
+					$generated_css .= $this->generate_css_variables( 
+						$this->deepGet( $this->default_presets, $value )[ 'default' ], 
+						$key,
+					);
+				} else {
+					$generated_css .= $this->generate_css_variables( 
+						$this->deepGet( $this->stackable_presets, $value ), 
+						$key,
+					);
+				}
+			}
+
 			$generated_css .= "}\n";
 
 			if ( ! $generated_css ) {
