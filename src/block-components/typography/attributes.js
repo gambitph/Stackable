@@ -3,7 +3,7 @@ import { deprecatedAddAttributes } from './deprecated'
 const typographyAttributes = {
 	fontSize: {
 		stkResponsive: true,
-		type: 'number',
+		type: 'string',
 		default: '',
 		stkUnits: 'px',
 	},

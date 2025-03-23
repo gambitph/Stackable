@@ -113,11 +113,11 @@ const AdvancedRangeControl = props => {
 	}
 	const [ isMarkMode, setIsMarkMode ] = useState( isMarkValue )
 
-	// If this supports dynamic content, then the value should be saved as a String.
+	// If this supports dynamic content and can have CSS variables, the value should be saved as a String.
 	// Important, the attribute type for this option should be a string.
 	const _onChange = value => {
 		const onChangeFunc = typeof props.onChange === 'undefined' ? onChange : props.onChange
-		let newValue = props.isDynamic ? value.toString() : value
+		let newValue = props.isDynamic || props.hasCSSVariableValue ? value.toString() : value
 
 		// On reset, allow overriding the value.
 		if ( newValue === '' ) {
@@ -172,7 +172,7 @@ const AdvancedRangeControl = props => {
 	}
 
 	// We need to change the way we handle the value and onChange if we're doing marks
-	let rangeValue = propsToPass.isDynamic ? parseFloat( derivedValue ) : derivedValue
+	let rangeValue = propsToPass.isDynamic || props.hasCSSVariableValue ? parseFloat( derivedValue ) : derivedValue
 	let rangeOnChange = _onChange
 	if ( isMarkMode ) {
 		rangeValue = props.marks.findIndex( mark => {
@@ -190,8 +190,10 @@ const AdvancedRangeControl = props => {
 			const newValue = _newValue
 
 			// Update the unit.
-			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-			setAttributes( { [ unitAttrName ]: unit } )
+			if ( unit ) {
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				setAttributes( { [ unitAttrName ]: unit } )
+			}
 
 			_onChange( newValue )
 		}
@@ -250,6 +252,7 @@ AdvancedRangeControl.defaultProps = {
 
 	marks: undefined, // [{ value: '14px', label: 'S' }, { value: '16px', label: 'M' }]
 	allowCustom: true,
+	hasCSSVariableValue: false,
 }
 
 export default memo( AdvancedRangeControl, isEqual )
