@@ -1,3 +1,5 @@
+import { applyFilters } from '@wordpress/hooks'
+
 export const convertToObj = colorSchemes => {
 	const obj = {}
 
@@ -113,38 +115,7 @@ const addThemeCompatibility = ( decls, scheme, mode ) => {
 	const themeRegex = /stk--is-\w+-theme/gm
 	const theme = document.querySelector( 'body' ).className.match( themeRegex )?.[ 0 ]
 
-	if ( theme === 'stk--is-blocksy-theme' ) {
-		let buttonSelector = ''
-		const backgroundProperty = camelToKebab( 'buttonBackgroundColor' )
-		const textProperty = camelToKebab( 'buttonTextColor' )
-
-		switch ( mode ) {
-			case 'background':
-				buttonSelector = [
-					' > :where(.stk-button-group) > :where(div) > :where(div) > div:where([data-type="stackable/button"])',
-					' > :where(.stk-inner-blocks) > :where(div) > :where(div) > :where([data-type="stackable/button-group"]) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > :where(div) > :where(div) > div:where([data-type="stackable/button"])',
-				].join( ',' )
-				break
-			case 'container':
-				buttonSelector = ' > :where(div) > :where(div) > :where([data-type="stackable/button-group"]) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > :where(div) > :where(div) > div:where([data-type="stackable/button"])'
-				break
-			default:
-				buttonSelector = ' :where([data-type="stackable/button-group"]) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > :where(div) > :where(div) > div:where([data-type="stackable/button"])'
-		}
-
-		const _decls = {
-			desktop: [],
-			desktopParentHover: [],
-		}
-
-		Object.keys( _decls ).forEach( state => {
-			const bgValue = getInheritedValue( scheme.buttonBackgroundColor, state, mode )
-			decls[ state ].push( `${ buttonSelector }{${ backgroundProperty }: ${ bgValue };}` )
-
-			const textValue = getInheritedValue( scheme.buttonTextColor, state, mode )
-			decls[ state ].push( `${ buttonSelector }{${ textProperty }: ${ textValue };}` )
-		} )
-	}
+	decls = applyFilters( 'stackable.global-settings.global-color-schemes.add-theme-compatibility', decls, scheme, mode, theme )
 
 	return decls
 }

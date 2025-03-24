@@ -82,7 +82,7 @@ const HoverStateToggle = props => {
 	const stateOptions = _stateOptions.map( state => {
 		if ( state.value === 'parent-hover' ) {
 			return {
-				disabled: props.forceUpdateHoverState ? props.disabledHoverOptions.includes( state.value ) : ! hasParentHoverState,
+				disabled: props.forceUpdateHoverState ? false : ! hasParentHoverState,
 				tooltip: displayTooltip
 					? <span className="stk-tooltip__text">
 						{ sprintf( '%s - %s', __( 'Parent Hovered', i18n ), __( 'Add a Container Background to a parent block to enable this state.', i18n ) ) }
@@ -126,7 +126,6 @@ HoverStateToggle.defaultProps = {
 	hasResponsive: false, // Wether the attribute has responsive attributes (where we have hover states per device type)
 	forceUpdateHoverState: false,
 	hasHoverStateValue: undefined,
-	disabledHoverOptions: [],
 }
 
 export default memo( HoverStateToggle )

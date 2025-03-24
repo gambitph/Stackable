@@ -1,13 +1,93 @@
 [
 	{
-		"backgroundColor": "#fbe9d0",
-		"headingColor": "#874f41",
-		"textColor": "#874f41",
-		"linkColor": "#e64833",
-		"accentColor": "#e64833",
-		"buttonBackgroundColor": "#244855",
-		"buttonTextColor": "#90aead",
-		"buttonOutlineColor": "#244855"
+		"backgroundColor": "#ffffff",
+		"headingColor": "#024950",
+		"textColor": "#003135",
+		"linkColor": "#964734",
+		"accentColor": "#0fa4af",
+		"buttonBackgroundColor": "#0fa4af",
+		"buttonTextColor": "#afdde5",
+		"buttonOutlineColor": "#0fa4af"
+	},
+	{
+		"backgroundColor": "#ffffff",
+		"headingColor": "#c50900",
+		"textColor": "#141414",
+		"linkColor": "#273db4",
+		"accentColor": "#f95ca4",
+		"buttonBackgroundColor": "#ed7845",
+		"buttonTextColor": "#ffffff",
+		"buttonOutlineColor": "#ed7845"
+	},
+	{
+		"backgroundColor": "#f3f5f7",
+		"headingColor": "#e7717d",
+		"textColor": "#7e685a",
+		"linkColor": "#afd275",
+		"accentColor": "#afd275",
+		"buttonBackgroundColor": "#7e685a",
+		"buttonTextColor": "#c2b9b0",
+		"buttonOutlineColor": "#7e685a"
+	},
+	{
+		"backgroundColor": "#ede8f5",
+		"headingColor": "#7091e6",
+		"textColor": "#3d52a0",
+		"linkColor": "#3d52a0",
+		"accentColor": "#8697c4",
+		"buttonBackgroundColor": "#3d52a0",
+		"buttonTextColor": "#adbbda",
+		"buttonOutlineColor": "#3d52a0"
+	},
+	{
+		"backgroundColor": "#e2e8fa",
+		"headingColor": "#0a21c0",
+		"textColor": "#050a44",
+		"linkColor": "#2c2e3a",
+		"accentColor": "#7988f7",
+		"buttonBackgroundColor": "#050a44",
+		"buttonTextColor": "#b3b4bd",
+		"buttonOutlineColor": "#050a44"
+	},
+	{
+		"backgroundColor": "#ebe9e1",
+		"headingColor": "#e43d12",
+		"textColor": "#e43d12",
+		"linkColor": "#efb11d",
+		"accentColor": "#ffa2b6",
+		"buttonBackgroundColor": "#d6536d",
+		"buttonTextColor": "#ebe9e1",
+		"buttonOutlineColor": "#d6536d"
+	},
+	{
+		"backgroundColor": "#d3d9d4",
+		"headingColor": "#2e3944",
+		"textColor": "#748d92",
+		"linkColor": "#124e66",
+		"accentColor": "#2e3944",
+		"buttonBackgroundColor": "#124e66",
+		"buttonTextColor": "#d3d9d4",
+		"buttonOutlineColor": "#124e66"
+	},
+	{
+		"backgroundColor": "#244855",
+		"headingColor": "#e64833",
+		"textColor": "#fbe9d0",
+		"linkColor": "#90aead",
+		"accentColor": "#90aead",
+		"buttonBackgroundColor": "#fbe9d0",
+		"buttonTextColor": "#874f41",
+		"buttonOutlineColor": "#fbe9d0"
+	},
+	{
+		"backgroundColor": "#ac8968",
+		"headingColor": "#3e362e",
+		"textColor": "#3e362e",
+		"linkColor": "#865d36",
+		"accentColor": "#865d36",
+		"buttonBackgroundColor": "#3e362e",
+		"buttonTextColor": "#93785b",
+		"buttonOutlineColor": "#3e362e"
 	},
 	{
 		"backgroundColor": "#0b0c10",
@@ -15,88 +95,8 @@
 		"textColor": "#c5c6c7",
 		"linkColor": "#45a29e",
 		"accentColor": "#45a29e",
-		"buttonBackgroundColor": "#66fcf1",
-		"buttonTextColor": "#1f2833",
-		"buttonOutlineColor": "#66fcf1"
-	},
-	{
-		"backgroundColor": "#e3e2df",
-		"headingColor": "#5d001e",
-		"textColor": "#5d001e",
-		"linkColor": "#ee4c7c",
-		"accentColor": "#ee4c7c",
-		"buttonBackgroundColor": "#9a1750",
-		"buttonTextColor": "#e3e2df",
-		"buttonOutlineColor": "#9a1750"
-	},
-	{
-		"backgroundColor": "#fef6e4",
-		"headingColor": "#001858",
-		"textColor": "#172c66",
-		"linkColor": "#8bd3dd",
-		"accentColor": "#8bd3dd",
-		"buttonBackgroundColor": "#f582ae",
-		"buttonTextColor": "#001858",
-		"buttonOutlineColor": "#f582ae"
-	},
-	{
-		"backgroundColor": "#fffffe",
-		"headingColor": "#272343",
-		"textColor": "#2d334a",
-		"linkColor": "#ffd803",
-		"accentColor": "#ffd803",
-		"buttonBackgroundColor": "#ffd803",
-		"buttonTextColor": "#272343",
-		"buttonOutlineColor": "#ffd803"
-	},
-	{
-		"backgroundColor": "#0f0e17",
-		"headingColor": "#fffffe",
-		"textColor": "#a7a9be",
-		"linkColor": "#e53170",
-		"accentColor": "#e53170",
-		"buttonBackgroundColor": "#ff8906",
-		"buttonTextColor": "#fffffe",
-		"buttonOutlineColor": "#ff8906"
-	},
-	{
-		"backgroundColor": "#232946",
-		"headingColor": "#fffffe",
-		"textColor": "#b8c1ec",
-		"linkColor": "#eebbc3",
-		"accentColor": "#eebbc3",
-		"buttonBackgroundColor": "#eebbc3",
-		"buttonTextColor": "#232946",
-		"buttonOutlineColor": "#eebbc3"
-	},
-	{
-		"backgroundColor": "#16161a",
-		"headingColor": "#fffffe",
-		"textColor": "#94a1b2",
-		"linkColor": "#2cb67d",
-		"accentColor": "#2cb67d",
-		"buttonBackgroundColor": "#7f5af0",
-		"buttonTextColor": "#fffffe",
-		"buttonOutlineColor": "#7f5af0"
-	},
-	{
-		"backgroundColor": "#f2f7f5",
-		"headingColor": "#00473e",
-		"textColor": "#475d5b",
-		"linkColor": "#fa5246",
-		"accentColor": "#ffa8ba",
-		"buttonBackgroundColor": "#faae2b",
-		"buttonTextColor": "#00473e",
-		"buttonOutlineColor": "#faae2b"
-	},
-	{
-		"backgroundColor": "#004643",
-		"headingColor": "#fffffe",
-		"textColor": "#abd1c6",
-		"linkColor": "#f9bc60",
-		"accentColor": "#e16162",
-		"buttonBackgroundColor": "#f9bc60",
-		"buttonTextColor": "#001e1d",
-		"buttonOutlineColor": "#f9bc60"
+		"buttonBackgroundColor": "#45a29e",
+		"buttonTextColor": "#ffffff",
+		"buttonOutlineColor": "#45a29e"
 	}
 ]

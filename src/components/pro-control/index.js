@@ -127,7 +127,8 @@ const LABELS = {
 	'color-schemes': {
 		title: __( 'Unlock Unlimited Color Schemes', i18n ),
 		description: <ul>
-			<li>{ __( 'Add and reuse custom color schemes', i18n ) }</li>
+			<li>{ __( 'Access to 50+ curated color scheme presets', i18n ) }</li>
+			<li>{ __( 'Create your own color schemes', i18n ) }</li>
 			<li>{ __( 'Set default color schemes for blocks and sections', i18n ) }</li>
 			<li>{ __( 'Streamline your design workflow', i18n ) }</li>
 		</ul>,

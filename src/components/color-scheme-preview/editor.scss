@@ -35,28 +35,9 @@
 
 .stk-preset-color-schemes__control {
 	margin: -16px -16px 16px;
-	border-bottom: 1px solid #e0e0e0;
-	.components-base-control__field {
-		margin-bottom: 0px;
-		position: relative;
-		overflow-y: scroll;
-		height: 235px;
-
-		&::after {
-			display: block;
-			position: sticky;
-			bottom: 0px;
-			height: 16px;
-			content: "";
-			background: #fff;
-		}
-	}
 	.components-base-control__label {
 		margin-bottom: 0px;
 		padding: 16px 16px 12px;
-		background: #fff;
-		position: sticky;
-		top: 0;
 	}
 }
 .stk-preset-color-schemes__preset-wrapper {
@@ -64,6 +45,8 @@
 	display: grid;
 	gap: 8px;
 	grid-template-columns: repeat(2, 1fr);
+	overflow-y: scroll;
+	height: 235px;
 
 	.stk-global-color-scheme__preview__background {
 		outline: 1px solid #e0e0e0;

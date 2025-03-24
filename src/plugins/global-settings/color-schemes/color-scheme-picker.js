@@ -6,7 +6,9 @@ import PRESET_COLOR_SCHEMES from './preset-color-schemes.json'
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'stackable'
+import {
+	i18n, isPro, showProNotice,
+} from 'stackable'
 import {
 	SortablePicker,
 	InspectorSubHeader,
@@ -16,6 +18,8 @@ import {
 	ColorSchemePresetPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
 	AdvancedToggleControl,
+	ProControlButton,
+	ControlSeparator,
 } from '~stackable/components'
 import { useBlockHoverState } from '~stackable/hooks'
 import { extractColor } from '~stackable/util'
@@ -92,9 +96,10 @@ const ColorSchemePicker = props => {
 		}
 	} )
 
+	const presets = applyFilters( 'stackable.global-settings.global-color-schemes.presets', PRESETS )
+
 	const [ subHeaderControls, setSubHeaderControls ] = useState( { showTrash: false, showReset: false } )
-	const [ currentHoverState, _, hasParentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
-	const clientIds = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientIds() )
+	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
 
 	const currentState = `desktop${ hoverState[ currentHoverState ] }`
 
@@ -114,12 +119,6 @@ const ColorSchemePicker = props => {
 
 		setSubHeaderControls( controls )
 	}, [ itemInEdit ] )
-
-	useEffect( () => {
-		if ( clientIds.length > 0 && ! hasParentHoverState && currentHoverState === 'parent-hover' ) {
-			dispatch( 'stackable/hover-state' ).updateHoverState( 'normal' )
-		}
-	}, [ hasParentHoverState ] )
 
 	// Get the custom color schemes
 	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
@@ -348,14 +347,6 @@ const ColorSchemePicker = props => {
 		return [ 'normal', 'hover', 'parent-hover' ]
 	}
 
-	const getDisabledHoverOptions = () => {
-		if ( clientIds.length > 0 && ! hasParentHoverState ) {
-			return [ 'parent-hover' ]
-		}
-
-		return []
-	}
-
 	const getToggleProps = settings => {
 		const disabled = isDisabled( settings.property )
 		const gradient = isGradient( itemInEdit?.colorScheme[ settings.property ]?.desktop )
@@ -418,9 +409,12 @@ const ColorSchemePicker = props => {
 
 		<ColorSchemePresetPicker
 			label={ __( 'Color Scheme Presets', i18n ) }
-			presets={ PRESETS }
+			presets={ presets }
 			onPresetClick={ onPresetClick }
 		/>
+		{ showProNotice && <ProControlButton type="color-schemes" /> }
+		<ControlSeparator />
+
 		<AdvancedToggleControl
 			label={ __( 'Show Scheme Colors in Color Pickers', i18n ) }
 			checked={ ! itemInEdit?.hideInPicker }
@@ -442,7 +436,6 @@ const ColorSchemePicker = props => {
 				enableGradient={ currentHoverState === 'normal' || settings.property === 'buttonBackgroundColor' }
 				additionalToggleProps={ getToggleProps( settings ) }
 				allowReset={ ! isDisabled( settings.property ) }
-				disabledHoverOptions={ getDisabledHoverOptions() }
 			/>
 		) ) }
 	</>
