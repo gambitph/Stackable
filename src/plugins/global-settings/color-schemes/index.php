@@ -340,10 +340,10 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			return $properties_per_state;
 		}
 
-		public function get_inherited_value( $property, $current_state ) {
+		public function get_inherited_value( $property, $current_state, $mode ) {
 			$value = $property[ $current_state ] ?? false;
 
-			if ( ! $value && $current_state == 'desktopHover' ) {
+			if ( ! $value && $current_state == 'desktopHover' && $mode === 'container' ) {
 				$value = $property[ 'desktopParentHover' ] ?? false;
 			}
 
@@ -406,7 +406,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 						$decls[ $state ][ $css_property ] = $scheme[ $property ][ $state ];
 					}
 
-					$inherited_value = $this->get_inherited_value( $scheme[ $property ], $state );
+					$inherited_value = $this->get_inherited_value( $scheme[ $property ], $state, $mode );
 					if ( $state === 'desktopHover' && ! $this->has_value( $scheme, $property, $state ) ) {
 						$decls[ $state ][ $css_property ] = $inherited_value;
 					}
@@ -488,13 +488,13 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					);
 				}
 
-				$styles = $this->add_theme_compatibility( $styles, $this->color_schemes[ $scheme_key ], $selectors );
+				$styles = $this->add_theme_compatibility( $styles, $this->color_schemes[ $scheme_key ], $selectors, $mode );
 			}
 
 			return $styles;
 		}
 
-		public function add_theme_compatibility( $styles, $scheme, $selectors ) {
+		public function add_theme_compatibility( $styles, $scheme, $selectors, $mode ) {
 			$classes = get_body_class();
 
 			if ( in_array( 'stk--is-blocksy-theme', $classes ) ) {
@@ -517,9 +517,39 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				}
 
 				// Add a new selector with higher specificity
+				$desktop_button_selector = '';
+				$parent_hover_button_selector = '';
+				$parent_hover_selector = array();
+
+				if ( isset( $selectors[ 'desktopParentHover' ] ) ) {
+					$parent_hover_selector = is_array( $selectors[ 'desktopParentHover' ] ) ? $selectors[ 'desktopParentHover' ] : array( $selectors[ 'desktopParentHover' ] );
+				}
+
+				switch ( $mode ) {
+					case 'background':
+						$desktop_button_selector = implode(", ", array(
+							$selectors[ 'desktop' ] . ' > :where(.stk-button-group) > .stk-block-button',
+							$selectors[ 'desktop' ] . ' > :where(.stk-container) > :where(.stk-inner-blocks) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button',
+						) );
+
+						if (isset( $selectors[ 'desktopParentHover' ] )) {
+							$parent_hover_button_selector = implode(", ", array_map( fn( $s ) => "$s > :where(.stk-button-group) > .stk-block-button, $s > :where(.stk-container) > :where(.stk-inner-blocks) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button", $parent_hover_selector ) );
+						}
+						break;
+					case 'container':
+						$desktop_button_selector = $selectors[ 'desktop' ] . ' > :where(.stk-inner-blocks) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button';
+
+						if (isset( $selectors[ 'desktopParentHover' ] )) {
+							$parent_hover_button_selector = implode(", ", array_map( fn( $s ) => "$s > :where(.stk-inner-blocks) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button", $parent_hover_selector ) );
+						}
+						break;
+					default:
+						$desktop_button_selector = $selectors[ 'desktop' ] . ' :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button';
+				}
+
 				if ( count( $states[ 'desktop' ] ) ) {
 					$styles[] = array(
-						'selector'     => $selectors[ 'desktop' ] . ' ' . '.stk-block-button',
+						'selector'     => $desktop_button_selector,
 						'declarations' => $states[ 'desktop' ]
 					);
 				}
@@ -528,7 +558,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					$parent_hover_selector = is_array( $selectors[ 'desktopParentHover' ] ) ? $selectors[ 'desktopParentHover' ] : array( $selectors[ 'desktopParentHover' ] );
 
 					$styles[] = array(
-						'selector'     => implode(", ", array_map( fn( $s ) => "$s .stk-block-button", $parent_hover_selector ) ),
+						'selector'     => $parent_hover_button_selector,
 						'declarations' => $states[ 'desktopParentHover' ]
 					);
 				}

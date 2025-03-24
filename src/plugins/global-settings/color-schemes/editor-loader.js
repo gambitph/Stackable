@@ -1,17 +1,19 @@
 /**
  * Internal dependencies
  */
-import { convertToObj, getCSS } from './utils'
-
-/**
- * WordPress dependencies
- */
-import { useEffect, useState } from '@wordpress/element'
+import {
+	convertToObj, getCSS, schemeHasValue,
+} from './utils'
 
 /**
  * External dependencies
  */
 import { useBlockColorSchemes, useBlockHoverState } from '~stackable/hooks'
+
+/**
+ * WordPress dependencies
+ */
+import { useEffect, useState } from '@wordpress/element'
 
 const renderGlobalStyles = (
 	setStyles,
@@ -19,7 +21,7 @@ const renderGlobalStyles = (
 	baseColorScheme,
 	backgroundModeColorScheme,
 	containerModeColorScheme,
-	// currentHoverState = 'normal',
+	currentHoverState,
 ) => {
 	let css = '',
 		decls
@@ -30,15 +32,15 @@ const renderGlobalStyles = (
 	}
 	const colorSchemes = convertToObj( colorSchemesArray )
 
-	if ( baseColorScheme in colorSchemes ) {
-		decls = getCSS( colorSchemes[ baseColorScheme ] )
+	if ( baseColorScheme in colorSchemes && schemeHasValue( colorSchemes[ baseColorScheme ] ) ) {
+		decls = getCSS( colorSchemes[ baseColorScheme ], currentHoverState )
 		if ( decls.desktop.length || decls.desktopHover.length ) {
 			css += `:root{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }\n`
 		}
 	}
 
-	if ( backgroundModeColorScheme in colorSchemes ) {
-		decls = getCSS( colorSchemes[ backgroundModeColorScheme ], 'background' )
+	if ( backgroundModeColorScheme in colorSchemes && schemeHasValue( colorSchemes[ backgroundModeColorScheme ] ) ) {
+		decls = getCSS( colorSchemes[ backgroundModeColorScheme ], currentHoverState, 'background' )
 		let bgcss = ''
 		if ( decls.desktop.length || decls.desktopHover.length ) {
 			bgcss += `.stk-block-background{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }\n`
@@ -49,8 +51,8 @@ const renderGlobalStyles = (
 		css += bgcss
 	}
 
-	if ( containerModeColorScheme in colorSchemes ) {
-		decls = getCSS( colorSchemes[ containerModeColorScheme ], 'container' )
+	if ( containerModeColorScheme in colorSchemes && schemeHasValue( colorSchemes[ containerModeColorScheme ] ) ) {
+		decls = getCSS( colorSchemes[ containerModeColorScheme ], currentHoverState, 'container' )
 		let containercss = ''
 		if ( decls.desktop.length || decls.desktopHover.length ) {
 			containercss += `.stk-container:where(:not(.stk--no-background)){ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }\n`
@@ -62,7 +64,11 @@ const renderGlobalStyles = (
 	}
 
 	Object.entries( colorSchemes ).forEach( ( [ key, scheme ] ) => {
-		decls = getCSS( scheme, 'background' )
+		if ( ! schemeHasValue( scheme ) ) {
+			return
+		}
+
+		decls = getCSS( scheme, currentHoverState, 'background' )
 		if ( decls.desktop.length || decls.desktopHover.length ) {
 			rules.background.push( `.background-${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }` )
 		}
@@ -70,7 +76,7 @@ const renderGlobalStyles = (
 			rules.background.push( `:where(.stk-hover-parent:hover) .background-${ key }{ ${ decls.desktopParentHover.join( '' ) } }` )
 		}
 
-		decls = getCSS( scheme, 'container' )
+		decls = getCSS( scheme, currentHoverState, 'container' )
 		if ( decls.desktop.length || decls.desktopHover.length ) {
 			rules.container.push( `.container-${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }` )
 		}
@@ -93,19 +99,18 @@ export const GlobalColorSchemeStyles = () => {
 		containerModeColorScheme,
 	} = useBlockColorSchemes()
 
+	const [ styles, setStyles ] = useState( '' )
 	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
 
-	const [ styles, setStyles ] = useState( '' )
-
 	useEffect( () => {
-		if ( allColorSchemes && Array.isArray( allColorSchemes ) && allColorSchemes.length ) {
+		if ( allColorSchemes && Array.isArray( allColorSchemes ) ) {
 			renderGlobalStyles(
 				setStyles,
 				allColorSchemes,
 				baseColorScheme,
 				backgroundModeColorScheme,
 				containerModeColorScheme,
-				currentHoverState
+				currentHoverState,
 			)
 		}
 	}, [ allColorSchemes,

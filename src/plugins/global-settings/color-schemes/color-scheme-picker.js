@@ -82,6 +82,7 @@ const ColorSchemePicker = props => {
 	const {
 		itemInEdit,
 		setItemInEdit,
+		setDisplayHoverNotice,
 	} = props
 
 	const { colorSchemes } = useSelect( select => {
@@ -92,7 +93,9 @@ const ColorSchemePicker = props => {
 	} )
 
 	const [ subHeaderControls, setSubHeaderControls ] = useState( { showTrash: false, showReset: false } )
-	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
+	const [ currentHoverState, _, hasParentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
+	const clientIds = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientIds() )
+
 	const currentState = `desktop${ hoverState[ currentHoverState ] }`
 
 	const showResetButton = item => {
@@ -111,6 +114,12 @@ const ColorSchemePicker = props => {
 
 		setSubHeaderControls( controls )
 	}, [ itemInEdit ] )
+
+	useEffect( () => {
+		if ( clientIds.length > 0 && ! hasParentHoverState && currentHoverState === 'parent-hover' ) {
+			dispatch( 'stackable/hover-state' ).updateHoverState( 'normal' )
+		}
+	}, [ hasParentHoverState ] )
 
 	// Get the custom color schemes
 	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
@@ -172,6 +181,15 @@ const ColorSchemePicker = props => {
 		if ( ! itemInEdit ) {
 			return
 		}
+
+		if ( currentHoverState !== 'normal' ) {
+			const disableHoverNotice = localStorage.getItem( 'stk-disable-global-block-color-schemes-hover-notice' )
+
+			if ( ! disableHoverNotice ) {
+				setDisplayHoverNotice( true )
+			}
+		}
+
 		const currentItem = cloneDeep( itemInEdit )
 		currentItem.colorScheme[ property ][ currentState ] = color
 
@@ -330,6 +348,14 @@ const ColorSchemePicker = props => {
 		return [ 'normal', 'hover', 'parent-hover' ]
 	}
 
+	const getDisabledHoverOptions = () => {
+		if ( clientIds.length > 0 && ! hasParentHoverState ) {
+			return [ 'parent-hover' ]
+		}
+
+		return []
+	}
+
 	const getToggleProps = settings => {
 		const disabled = isDisabled( settings.property )
 		const gradient = isGradient( itemInEdit?.colorScheme[ settings.property ]?.desktop )
@@ -416,6 +442,7 @@ const ColorSchemePicker = props => {
 				enableGradient={ currentHoverState === 'normal' || settings.property === 'buttonBackgroundColor' }
 				additionalToggleProps={ getToggleProps( settings ) }
 				allowReset={ ! isDisabled( settings.property ) }
+				disabledHoverOptions={ getDisabledHoverOptions() }
 			/>
 		) ) }
 	</>

@@ -4,6 +4,22 @@
 :where(.block-editor-block-list__layout) .stk-block > :is(h1,h2,h3,h4,h5,h6) {
 	color: var(--stk-heading-color);
 }
+.stk--is-hovered > .stk-hover-parent .stk-block {
+	> :is(p:where(:not(.stk-block-subtitle__text)), div) {
+		color: var(--stk-text-color-parent-hover);
+	}
+	> :is(h1,h2,h3,h4,h5,h6) {
+		color: var(--stk-heading-color-parent-hover);
+	}
+	#{ '--stk-accent-color' }: cssvar(accent-color-parent-hover);
+}
+
+.stk--is-hovered > .stk-hover-parent .stk-block a {
+	color: var(--stk-link-color-parent-hover);
+}
+.is-selected > .stk--is-hovered.stk-block a {
+	color: var(--stk-link-color-current-hover);
+}
 
 // Block spacing when horizontally oriented.
 .stk--block-horizontal-flex > .block-editor-inner-blocks > .block-editor-block-list__layout {
@@ -28,6 +44,52 @@
 		box-shadow: cssvar(button-box-shadow-hover);
 	}
 }
+
+.stk--is-hovered > .stk-hover-parent :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+	&:not(.is-style-link, .is-style-ghost, .is-style-plain) .stk-button {
+		background: var(--stk-button-background-color-parent-hover, cssvar(button-background-color));
+		#{ '--stk-button-text-color' }: cssvar(button-text-color-parent-hover);
+		#{ '--stk-accent-color' }: cssvar(button-text-color-parent-hover);
+	}
+	&.is-style-link .stk-button {
+		#{ '--stk-accent-color' }: cssvar(link-color-parent-hover);
+	}
+	&.is-style-ghost .stk-button {
+		#{ '--stk-button-text-color' }: cssvar(button-outline-color-parent-hover);
+		#{ '--stk-button-outline-color' }: cssvar(button-outline-color-parent-hover);
+		#{ '--stk-accent-color' }: cssvar(button-outline-color-parent-hover);
+	}
+	&.is-style-plain .stk-button {
+		#{ '--stk-button-background-color' }: cssvar(button-background-color-parent-hover);
+		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-parent-hover, cssvar(button-background-color));
+		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-parent-hover, cssvar(button-background-color));
+	}
+}
+.is-selected > .stk--is-hovered:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+	&:not(.is-style-link, .is-style-ghost, .is-style-plain) .stk-button {
+		background: var(--stk-button-background-color-current-hover, cssvar(button-background-color));
+		#{ '--stk-button-text-color' }: cssvar(button-text-color-current-hover);
+		#{ '--stk-accent-color-hover' }: cssvar(button-text-color-current-hover);
+		#{ '--stk-accent-color' }: cssvar(button-text-color-current-hover);
+	}
+	&.is-style-link .stk-button {
+		#{ '--stk-accent-color-hover' }: cssvar(link-color-current-hover);
+		#{ '--stk-accent-color' }: cssvar(link-color-current-hover);
+	}
+	&.is-style-ghost .stk-button {
+		#{ '--stk-button-text-color' }: cssvar(button-outline-color-current-hover);
+		#{ '--stk-button-outline-color' }: cssvar(button-outline-color-current-hover);
+		#{ '--stk-accent-color-hover' }: cssvar(button-outline-color-current-hover);
+		#{ '--stk-accent-color' }: cssvar(button-outline-color-current-hover);
+	}
+	&.is-style-plain .stk-button {
+		#{ '--stk-button-background-color' }: cssvar(button-background-color-current-hover);
+		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-current-hover, cssvar(button-background-color));
+		#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-current-hover, cssvar(button-background-color));
+		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-current-hover, cssvar(button-background-color));
+	}
+}
+
 .is-selected .stk--is-hovered :where(.stk-hover-parent [data-type^="stackable/"]) :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 	&:not(.is-style-link, .is-style-ghost) .stk-button::before {
 		border-width: cssvar(button-border-width-parent-hover);
@@ -76,6 +138,7 @@
 .stk--is-hovered .stk-container:not(.stk--no-background) {
 	box-shadow: cssvar(container-box-shadow-hover);
 	border-width: cssvar(container-border-width-hover);
+	background: var(--stk-container-background-color-hover, cssvar(container-background-color));
 }
 
 // Block Backgrounds
@@ -94,12 +157,13 @@
 
 .is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-block-background {
 	border-width: cssvar(block-background-border-width-parent-hover);
-	box-shadow: cssvar(block-background-box-shadow--parent-hover);
+	box-shadow: cssvar(block-background-box-shadow-parent-hover);
 }
 
 [data-type^="stackable/"] .stk--is-hovered.stk-block-background {
 	border-width: cssvar(block-background-border-width-hover);
 	box-shadow: cssvar(block-background-box-shadow-hover);
+	background: var(--stk-block-background-color-hover, cssvar(block-background-color));
 }
 
 // Images

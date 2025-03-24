@@ -11,7 +11,9 @@ import ColorSchemePicker from './color-scheme-picker'
 import {
 	i18n, showProNotice, isPro,
 } from 'stackable'
-import { PanelAdvancedSettings, ProControlButton } from '~stackable/components'
+import {
+	PanelAdvancedSettings, ProControlButton, HelpTooltip,
+} from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -27,13 +29,29 @@ export { GlobalColorSchemeStyles } from './editor-loader'
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-schemes', output => {
 	const [ itemInEdit, setItemInEdit ] = useState( null )
+	const [ isOpen, setIsOpen ] = useState( false )
+	const [ displayHoverNotice, setDisplayHoverNotice ] = useState( false )
 
 	return (
 		<Fragment>
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Color Schemes', i18n ) }
+				onToggle={ isOpen => setIsOpen( isOpen ) }
 			>
+				{ isOpen && displayHoverNotice && <span className="stk-global-block-layouts-help-tooltip">
+					<HelpTooltip
+						title={ __( 'Hover States', i18n ) }
+						description={ __( 'When editing color schemes in the hover states, select a block to view the applied colors.', i18n ) }
+						closeOnEscape={ false }
+						showTooltipCheckbox={ false }
+						onClose={ () => {
+							setDisplayHoverNotice( false )
+							localStorage.setItem( 'stk-disable-global-block-color-schemes-hover-notice', true )
+						} }
+					/>
+				</span>
+				}
 				{ ! itemInEdit && <p className="components-base-control__help">
 					{ __( 'Color schemes are applied to all blocks and sections of your entire website.', i18n ) }
 					&nbsp;
@@ -46,6 +64,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 					label={ __( 'Color Schemes', i18n ) }
 					itemInEdit={ itemInEdit }
 					setItemInEdit={ setItemInEdit }
+					setDisplayHoverNotice={ setDisplayHoverNotice }
 				/>
 				{ isPro && applyFilters( 'stackable.global-settings.global-color-schemes.inspector', Fragment, itemInEdit ) }
 				{ ! itemInEdit && showProNotice && <ProControlButton type="color-schemes" /> }

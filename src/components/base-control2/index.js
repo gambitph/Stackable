@@ -89,6 +89,7 @@ export const BaseControl = props => {
 								hasResponsive={ hasResponsive }
 								forceUpdateHoverState={ props.forceUpdateHoverState }
 								hasHoverStateValue={ props.hasHoverStateValue }
+								disabledHoverOptions={ props.disabledHoverOptions }
 							/>
 						) }
 					</div>
@@ -147,6 +148,8 @@ BaseControl.defaultProps = {
 	// { hover: boolean, 'parent-hover': boolean }
 	// If 'hover' or 'parent-hover' is true, then the hover toggle will be highlighted to show that the hover state value has been set
 	hasHoverStateValue: undefined,
+
+	disabledHoverOptions: [],
 
 }
 
@@ -207,6 +210,8 @@ AdvancedControl.defaultProps = {
 	// { hover: boolean, 'parent-hover': boolean }
 	// If 'hover' or 'parent-hover' is true, then the hover toggle will be highlighted to show that the hover state value has been set
 	hasHoverStateValue: undefined,
+
+	disabledHoverOptions: [],
 }
 
 export default AdvancedControl

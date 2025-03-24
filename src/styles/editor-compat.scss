@@ -8,6 +8,9 @@
 	margin-left: -10px;
 	margin-right: -10px;
 }
+.stk--is-blocksy-theme .stk--is-hovered.stk-block > :is(h1,h2,h3,h4,h5,h6) {
+	color: var(--stk-heading-color-parent-hover);
+}
 
 // Default block width and wide widths - used for Content Width of column-type blocks.
 .ct-theme-editor-styles {

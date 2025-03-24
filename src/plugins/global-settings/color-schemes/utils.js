@@ -1,4 +1,3 @@
-
 export const convertToObj = colorSchemes => {
 	const obj = {}
 
@@ -9,6 +8,14 @@ export const convertToObj = colorSchemes => {
 	return obj
 }
 
+export const schemeHasValue = scheme => {
+	const hasValue = Object.values( scheme ).some( states => {
+		return Object.values( states ).some( value => value !== '' )
+	} )
+
+	return hasValue
+}
+
 const camelToKebab = property => {
 	const result = property.replace( /([a-z0-9])([A-Z])/g, '$1-$2' )
 
@@ -16,10 +23,10 @@ const camelToKebab = property => {
 	return '--stk-' + result.toLowerCase()
 }
 
-const getInheritedValue = ( property, currentState ) => {
+const getInheritedValue = ( property, currentState, mode ) => {
 	let value = property?.[ currentState ]
 
-	if ( ! value && currentState === 'desktopHover' ) {
+	if ( ! value && currentState === 'desktopHover' && mode === 'container' ) {
 		value = property?.desktopParentHover
 	}
 
@@ -32,7 +39,7 @@ const getInheritedValue = ( property, currentState ) => {
 
 const isGradient = value => value?.startsWith( 'linear-' ) || value?.startsWith( 'radial-' )
 
-export const getCSS = ( scheme, mode = '' ) => {
+export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 	const states = [ 'desktop', 'desktopHover', 'desktopParentHover' ]
 	const properties = [
 		'backgroundColor',
@@ -66,9 +73,18 @@ export const getCSS = ( scheme, mode = '' ) => {
 				decls[ state ].push( `${ customProperty }${ suffix }: ${ scheme[ property ]?.[ state ] };` )
 			}
 
-			const inheritedValue = getInheritedValue( scheme[ property ], state )
+			const inheritedValue = getInheritedValue( scheme[ property ], state, mode )
+			if ( state === 'desktopParentHover' && currentHoverState !== 'normal' && property !== 'backgroundColor' && inheritedValue ) {
+				decls.desktopHover.push( `${ customProperty }-parent-hover: ${ inheritedValue };` )
+			}
+
 			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue ) {
 				decls[ state ].push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
+			}
+
+			if ( currentHoverState !== 'normal' ) {
+				const currentHover = mode === '' && currentHoverState === 'parent-hover' ? '' : `-${ currentHoverState }`
+				decls.desktopHover.push( `${ customProperty }-current-hover: var(${ customProperty }${ currentHover });` )
 			}
 
 			if ( property === 'buttonBackgroundColor' && isGradient( scheme[ property ]?.[ state ] ) ) {
@@ -90,37 +106,44 @@ export const getCSS = ( scheme, mode = '' ) => {
 		decls.desktopParentHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color: unset;--stk-button-plain-text-color-hover:unset; }` )
 	}
 
-	return addThemeCompatibility( decls, scheme )
+	return addThemeCompatibility( decls, scheme, mode )
 }
 
-const addThemeCompatibility = ( decls, scheme ) => {
+const addThemeCompatibility = ( decls, scheme, mode ) => {
 	const themeRegex = /stk--is-\w+-theme/gm
 	const theme = document.querySelector( 'body' ).className.match( themeRegex )?.[ 0 ]
 
 	if ( theme === 'stk--is-blocksy-theme' ) {
-		const backgroundColor = camelToKebab( 'buttonBackgroundColor' )
-		const textColor = camelToKebab( 'buttonTextColor' )
+		let buttonSelector = ''
+		const backgroundProperty = camelToKebab( 'buttonBackgroundColor' )
+		const textProperty = camelToKebab( 'buttonTextColor' )
+
+		switch ( mode ) {
+			case 'background':
+				buttonSelector = [
+					' > :where(.stk-button-group) > :where(div) > :where(div) > div:where([data-type="stackable/button"])',
+					' > :where(.stk-inner-blocks) > :where(div) > :where(div) > :where([data-type="stackable/button-group"]) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > :where(div) > :where(div) > div:where([data-type="stackable/button"])',
+				].join( ',' )
+				break
+			case 'container':
+				buttonSelector = ' > :where(div) > :where(div) > :where([data-type="stackable/button-group"]) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > :where(div) > :where(div) > div:where([data-type="stackable/button"])'
+				break
+			default:
+				buttonSelector = ' :where([data-type="stackable/button-group"]) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > :where(div) > :where(div) > div:where([data-type="stackable/button"])'
+		}
 
 		const _decls = {
 			desktop: [],
 			desktopParentHover: [],
 		}
+
 		Object.keys( _decls ).forEach( state => {
-			if ( scheme.buttonBackgroundColor?.[ state ] ) {
-				_decls[ state ].push( `${ backgroundColor }: ${ scheme.buttonBackgroundColor?.[ state ] };` )
-			}
+			const bgValue = getInheritedValue( scheme.buttonBackgroundColor, state, mode )
+			decls[ state ].push( `${ buttonSelector }{${ backgroundProperty }: ${ bgValue };}` )
 
-			if ( scheme.buttonTextColor?.[ state ] ) {
-				_decls[ state ].push( `${ textColor }: ${ scheme.buttonTextColor?.[ state ] };` )
-			}
+			const textValue = getInheritedValue( scheme.buttonTextColor, state, mode )
+			decls[ state ].push( `${ buttonSelector }{${ textProperty }: ${ textValue };}` )
 		} )
-
-		if ( _decls.desktop.length ) {
-			decls.desktop.push( `.stk-block-button{ ${ _decls.desktop.join( '' ) }}` )
-		}
-		if ( _decls.desktopParentHover.length ) {
-			decls.desktopParentHover.push( `.stk-block-button{ ${ _decls.desktopParentHover.join( '' ) }}` )
-		}
 	}
 
 	return decls
