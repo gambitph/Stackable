@@ -6,7 +6,6 @@ import { i18n } from 'stackable'
 /**
  * Internal dependencies
  */
-import fonts from './google-fonts.json'
 import {
 	loadGoogleFont,
 	MODERN_FONT_STACKS,
@@ -18,19 +17,31 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo } from '@wordpress/element'
+import {
+	useMemo, useState, useEffect,
+} from '@wordpress/element'
 import AdvancedAutosuggestControl from '../advanced-autosuggest-control'
 
 import { select } from '@wordpress/data'
 
-const fontOptions = fonts.map( font => {
-	return { label: font.family, value: font.family }
-} )
+const loadGoogleFonts = async () => {
+	const { default: fonts } =
+		await import( /* webpackChunkName: "data/google-fonts" */ './google-fonts.json' )
+	return fonts.map( font => ( { label: font.family, value: font.family } ) )
+}
 
 const FontFamilyControl = props => {
 	const {
 		loadingThemeFont, themeFonts, themeFontOptions,
 	} = select( 'stackable/theme-fonts' ).getThemeFonts()
+
+	const [ googleFontOptions, setGoogleFontOptions ] = useState( [] )
+
+	useEffect( () => {
+		loadGoogleFonts().then( fontOptions => {
+			setGoogleFontOptions( fontOptions )
+		} )
+	}, [] )
 
 	const options = useMemo( () => {
 		const allFontOptions = [
@@ -53,7 +64,7 @@ const FontFamilyControl = props => {
 			{
 				id: 'google-fonts',
 				title: __( 'Google Fonts', i18n ),
-				options: fontOptions,
+				options: googleFontOptions,
 			},
 		]
 		if ( themeFonts.length ) {
@@ -64,7 +75,7 @@ const FontFamilyControl = props => {
 			} )
 		}
 		return applyFilters( 'stackable.font-family-control.options', allFontOptions )
-	}, [ loadingThemeFont ] )
+	}, [ loadingThemeFont, googleFontOptions ] )
 
 	return (
 		<AdvancedAutosuggestControl
@@ -74,7 +85,7 @@ const FontFamilyControl = props => {
 			onChange={ fontFamily => {
 				if ( ! themeFonts.includes( fontFamily ) ) {
 					// Load font if it's a Google font.
-					fontOptions.some( font => {
+					googleFontOptions.some( font => {
 						if ( font.value === fontFamily ) {
 							loadGoogleFont( fontFamily )
 							return true
