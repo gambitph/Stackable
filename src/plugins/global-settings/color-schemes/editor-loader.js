@@ -32,6 +32,15 @@ const renderGlobalStyles = (
 	}
 	const colorSchemes = convertToObj( colorSchemesArray )
 
+	/**
+	 * The following order should be followed to ensure that blocks use the correct color scheme:
+	 * 1. Base color scheme
+	 * 2. Default Background color scheme
+	 * 3. Default Container color scheme
+	 * 4. Background color schemes (used by blocks that opt to use non-default background schemes)
+	 * 5. Container color schemes (used by blocks that opt to use non-default container schemes)
+	 */
+
 	if ( baseColorScheme in colorSchemes && schemeHasValue( colorSchemes[ baseColorScheme ] ) ) {
 		decls = getCSS( colorSchemes[ baseColorScheme ], currentHoverState )
 		if ( decls.desktop.length || decls.desktopHover.length ) {

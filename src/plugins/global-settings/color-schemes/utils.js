@@ -1,5 +1,18 @@
 import { applyFilters } from '@wordpress/hooks'
 
+/*
+ * colorSchemes is originally an array of objects:
+ * [ {
+ * name: 'Default Scheme',
+ * key: 'scheme-default-1',
+ * colorScheme: Object
+ * hideInPicker: false,
+ * }, ... ]
+ *
+ * This returns an object with the color scheme key as the key
+ * and the color scheme object as the value:
+ *
+ */
 export const convertToObj = colorSchemes => {
 	const obj = {}
 
@@ -10,6 +23,7 @@ export const convertToObj = colorSchemes => {
 	return obj
 }
 
+// Check if the color scheme contains a value for any of the states
 export const schemeHasValue = scheme => {
 	const hasValue = Object.values( scheme ).some( states => {
 		return Object.values( states ).some( value => value !== '' )
@@ -28,6 +42,7 @@ const camelToKebab = property => {
 const getInheritedValue = ( property, currentState, mode ) => {
 	let value = property?.[ currentState ]
 
+	// The block should inherit the desktopParentHover value on hover state if it is a container scheme
 	if ( ! value && currentState === 'desktopHover' && mode === 'container' ) {
 		value = property?.desktopParentHover
 	}
@@ -67,6 +82,7 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 			const customProperty = property === 'backgroundColor'
 				? `--stk-${ varname }-background-color` : camelToKebab( property )
 
+			// Add background color only if it is a background or container scheme
 			if ( property === 'backgroundColor' && ! mode ) {
 				return
 			}
@@ -89,12 +105,17 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 				decls.desktopHover.push( `${ customProperty }-current-hover: var(${ customProperty }${ currentHover });` )
 			}
 
+			// If button background color is gradient, plain style buuttons should use the button outline color.
 			if ( property === 'buttonBackgroundColor' && isGradient( scheme[ property ]?.[ state ] ) ) {
 				decls[ state ].push( `:where(.is-style-plain){ --stk-button-plain-text-color${ suffix }: var(--stk-button-outline-color${ suffix }); }` )
 			}
 		} )
 	} )
 
+	// if the button background color is gradient on normal or parent-hover states,
+	// and there's no button background color set on hover,
+	// plain-style buttons will turn black.
+	// To prevent this, use button-outline-color-hover.
 	if ( isGradient( scheme.buttonBackgroundColor?.desktop ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
 		decls.desktopHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
 	}
@@ -103,6 +124,9 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 		decls.desktopParentHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
 	}
 
+	// if the button background color is gradient on normal state and solid on parent-hover state,
+	// we need to unset the --stk-button-plain-text-color,
+	// so that plain-style buttons on parent-hover state will use the button background color.
 	if ( isGradient( scheme.buttonBackgroundColor?.desktop ) &&
 		scheme.buttonBackgroundColor?.desktopParentHover && ! isGradient( scheme.buttonBackgroundColor?.desktopParentHover ) ) {
 		decls.desktopParentHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color: unset;--stk-button-plain-text-color-hover:unset; }` )

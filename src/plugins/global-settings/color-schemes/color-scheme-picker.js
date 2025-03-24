@@ -225,6 +225,7 @@ const ColorSchemePicker = props => {
 		}
 
 		Object.entries( colors ).forEach( ( [ property, color ] ) => {
+			// Don't add color if it is disabled
 			if ( isDisabled( property ) ) {
 				return
 			}
@@ -316,6 +317,9 @@ const ColorSchemePicker = props => {
 	}
 
 	const isDisabled = property => {
+		// Color Palette Controls are disabled for:
+		// 1. Background Color when it is a gradient and not in the normal state
+		// 2. Heading Color, Text Color, Accent Color when it is in the hover state
 		if ( property === 'backgroundColor' ) {
 			if ( isGradient( itemInEdit?.colorScheme[ property ]?.desktop ) && currentHoverState !== 'normal' ) {
 				return false
@@ -340,6 +344,7 @@ const ColorSchemePicker = props => {
 	}
 
 	const getAllowedHover = property => {
+		// Background Color cannot be edited in the hover state if it is a gradient
 		if ( property === 'backgroundColor' && isGradient( itemInEdit?.colorScheme[ property ]?.desktop ) ) {
 			return false
 		}
@@ -348,6 +353,7 @@ const ColorSchemePicker = props => {
 	}
 
 	const getToggleProps = settings => {
+		// If the property is disabled, pass the disabled tooltip label as props to the Color Palette Control
 		const disabled = isDisabled( settings.property )
 		const gradient = isGradient( itemInEdit?.colorScheme[ settings.property ]?.desktop )
 		if ( ! disabled || ! settings.disabledTooltip ) {
