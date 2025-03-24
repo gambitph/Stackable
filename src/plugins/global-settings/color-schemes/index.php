@@ -533,14 +533,14 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 						) );
 
 						if (isset( $selectors[ 'desktopParentHover' ] )) {
-							$parent_hover_button_selector = implode(", ", array_map( fn( $s ) => "$s > :where(.stk-button-group) > .stk-block-button, $s > :where(.stk-container) > :where(.stk-inner-blocks) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button", $parent_hover_selector ) );
+							$parent_hover_button_selector = implode(", ", array_map( function ( $s ){ return "$s > :where(.stk-button-group) > .stk-block-button, $s > :where(.stk-container) > :where(.stk-inner-blocks) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button"; }, $parent_hover_selector ) );
 						}
 						break;
 					case 'container':
 						$desktop_button_selector = $selectors[ 'desktop' ] . ' > :where(.stk-inner-blocks) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button';
 
 						if (isset( $selectors[ 'desktopParentHover' ] )) {
-							$parent_hover_button_selector = implode(", ", array_map( fn( $s ) => "$s > :where(.stk-inner-blocks) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button", $parent_hover_selector ) );
+							$parent_hover_button_selector = implode(", ", array_map( function ( $s ){ return "$s > :where(.stk-inner-blocks) > :where(.stk-block:not(.stk-block-background)) > :where(.stk-button-group) > .stk-block-button"; }, $parent_hover_selector ) );
 						}
 						break;
 					default:
