@@ -21,6 +21,7 @@ test.describe( 'Global Settings', () => {
 		editor,
 	} ) => {
 		await page.getByLabel( 'Stackable Settings' ).click()
+		await page.getByRole( 'button', { name: 'Global Color Palette' } ).click()
 
 		// Add a new Global Color
 		const panel = page.locator( '.ugb-global-settings-color-picker ' ).filter( { hasText: 'Global Colors' } )

@@ -4,7 +4,7 @@
 import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
 import { getThemeStyles } from './get-theme-styles'
-import FONT_PAIRS from './font-pairs.json'
+import FREE_FONT_PAIRS from './font-pairs.json'
 
 /**
  * External dependencies
@@ -76,6 +76,8 @@ let saveSelectedFontPairThrottle = null
 let saveCustomFontPairsThrottle = null
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography', output => {
+	const FONT_PAIRS = applyFilters( 'stackable.global-settings.typography.font-pairs.premium-font-pairs', FREE_FONT_PAIRS )
+
 	const [ isPanelOpen, setIsPanelOpen ] = useState( false )
 	const [ typographySettings, setTypographySettings ] = useState( [] )
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
