@@ -483,7 +483,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 						'declarations' => $decls[ 'desktopParentHover' ]
 					);
 					$styles[] = array(
-						'selector'     => implode(", ", array_map( fn( $s ) => "$s :where(.is-style-plain)", $parent_hover_selector ) ),
+						'selector'     => implode(", ", array_map( function ( $s ){ return "$s :where(.is-style-plain)";}, $parent_hover_selector ) ),
 						'declarations' => $button_plain_decls[ 'desktopParentHover' ]
 					);
 				}
