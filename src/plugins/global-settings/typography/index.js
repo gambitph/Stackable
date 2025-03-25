@@ -58,6 +58,10 @@ const TYPOGRAPHY_TAGS = [
 		selector: 'h6',
 	},
 	{
+		label: __( 'Body Text', i18n ),
+		selector: 'p',
+	},
+	{
 		label: __( 'Subtitle', i18n ),
 		selector: '.stk-subtitle',
 		help: (
@@ -66,8 +70,8 @@ const TYPOGRAPHY_TAGS = [
 			</> ),
 	},
 	{
-		label: __( 'Body Text', i18n ),
-		selector: 'p',
+		label: __( 'Button', i18n ),
+		selector: '.stk-button__inner-text',
 	},
 ]
 
