@@ -100,7 +100,7 @@ export const Controls = props => {
 
 	const onChangeContent = useCallback( text => setDebouncedText( escapeHTMLIfInvalid( text ) ), [] )
 
-	const presetMarks = usePresetControls( [ 'typography', 'fontSizes' ] )
+	const presetMarks = usePresetControls( 'fontSizes' )
 
 	return (
 		<>

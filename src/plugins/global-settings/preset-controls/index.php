@@ -15,6 +15,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 	 */
     class Stackable_Size_And_Spacing_Preset_Controls {
 
+		public $custom_presets;
 		public $theme_presets;
 		public $default_presets;
 		public $stackable_presets;
@@ -23,6 +24,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * Initialize
 		 */
   		function __construct() {
+			$this->custom_presets = get_option( 'stackable_global_custom_preset_controls' );
 			$this->theme_presets = WP_Theme_JSON_Resolver::get_theme_data()->get_settings();
 			$this->default_presets = WP_Theme_JSON_Resolver::get_core_data()->get_settings();
 			$this->stackable_presets = $this->load_presets( __DIR__ . '/presets.json');
@@ -31,16 +33,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			add_filter( 'stackable_inline_editor_styles', array( $this, 'add_preset_controls_styles' ) );
 		}
 
-		/**
-		 * Register the settings we need for preset controls
-		 *
-		 * @return void
-		 */
-		// public function register_preset_controls() {
-			
-		// }
-
-		public function sanitize_array_setting( $input ) {
+		public static function sanitize_array_setting( $input ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
@@ -72,7 +65,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		}
 
 		/**
-		 * Get the value from an array deeply with an array of keys
+		 * Get the value from an array with an array of keys
 		 *
 		 * @param array $array 
 		 * @param array $keys 
@@ -97,7 +90,12 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			$generated_css = ":root {\n";
 
 			foreach ( $preset_keys as $key => $value ) {
-				if ( ! empty( $this->deepGet( $this->theme_presets, $value )[ 'theme' ] ) ) {
+				if ( ! empty( $this->deepGet( $this->custom_presets, [ $value[ 1 ] ] ) ) ) {
+					$generated_css .= $this->generate_css_variables( 
+						$this->deepGet( $this->custom_presets, [ $value[ 1 ] ] ), 
+						$key,
+					);
+				}elseif ( ! empty( $this->deepGet( $this->theme_presets, $value )[ 'theme' ] ) ) {
 					$generated_css .= $this->generate_css_variables( 
 						$this->deepGet( $this->theme_presets, $value )[ 'theme' ], 
 						$key,
