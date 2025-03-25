@@ -120,6 +120,18 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					'default' => '',
 				)
 			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_global_color_scheme_generated_css',
+				array(
+					'type' => 'string',
+					'description' => __( 'Stackable Global Color Scheme Generated CSS', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
 		}
 
 		// Make this function static so it can be used when
@@ -178,6 +190,15 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		 * @return String
 		 */
 		public function add_global_color_schemes_styles( $current_css ) {
+			$cached_color_scheme_css = get_option( 'stackable_global_color_scheme_generated_css' );
+
+			// If there is cached CSS, use it
+			if ( $cached_color_scheme_css ) {
+				$current_css .= $cached_color_scheme_css;
+				return apply_filters( 'stackable_frontend_css' , $current_css );
+			}
+
+			// Generate the CSS for the color schemes if there is no cached CSS
 			$schemes_array = is_array( get_option( 'stackable_global_color_schemes' ) ) ? get_option( 'stackable_global_color_schemes' ) : [];
 
 			// Get all color schemes, including custom color schemes if any
@@ -251,10 +272,11 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				$styles = $this->generate_color_scheme_styles( $styles, $scheme );
 			}
 
+			$color_scheme_css = '';
 			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			if ( $generated_css != '' ) {
-				$current_css .= "\n/* Global Color Schemes */\n";
-				$current_css .= $generated_css;
+				$color_scheme_css .= "\n/* Global Color Schemes */\n";
+				$color_scheme_css .= $generated_css;
 			}
 
 			foreach( $block_color_schemes as $mode => $block_schemes ) {
@@ -263,12 +285,15 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $styles );
 					if ( $generated_css != '' ) {
 						$scheme_key = $scheme[ 'key' ];
-						$current_css .= "\n/* Global Color Schemes ($mode-$scheme_key) */\n";
-						$current_css .= $generated_css;
+						$color_scheme_css .= "\n/* Global Color Schemes ($mode-$scheme_key) */\n";
+						$color_scheme_css .= $generated_css;
 					}
 				}
 			}
+			// Add the generated CSS to the database
+			update_option( 'stackable_global_color_scheme_generated_css', $color_scheme_css );
 
+			$current_css .= $color_scheme_css;
 			return apply_filters( 'stackable_frontend_css' , $current_css );
 		}
 
