@@ -29,8 +29,8 @@ const FontPairPicker = props => {
 	}
 
 	// Use the font family value for styling the buttons
-	const headingFontFamilyValue = getFontFamily( headingStyles.fontFamily ).replace( /"/g, '' ) || ''
-	const paragraphFontFamilyValue = getFontFamily( paragraphStyles.fontFamily ).replace( /"/g, '' ) || ''
+	const headingFontFamilyValue = getFontFamily( headingStyles.fontFamily )?.replaceAll( '"', '' ) || ''
+	const paragraphFontFamilyValue = getFontFamily( paragraphStyles.fontFamily )?.replaceAll( '"', '' ) || ''
 
 	const label = (
 		<div>
@@ -38,13 +38,13 @@ const FontPairPicker = props => {
 				style={ omit( { ...headingStyles, fontFamily: headingFontFamilyValue }, [ 'fontSize', 'lineHeight' ] ) }
 				className="ugb-global-settings-font-pair__label"
 			>
-				{ headingStyles?.fontFamily ? getFontFamilyLabel( headingStyles.fontFamily ) : __( 'Default Heading', i18n ) }
+				{ getFontFamilyLabel( headingStyles?.fontFamily, __( 'Default Heading', i18n ) ) }
 			</span>
 			<span
 				style={ omit( { ...paragraphStyles, fontFamily: paragraphFontFamilyValue }, [ 'fontSize', 'lineHeight' ] ) }
 				className="ugb-global-settings-font-pair__sub-label"
 			>
-				{ paragraphStyles?.fontFamily ? getFontFamilyLabel( paragraphStyles?.fontFamily ) : __( 'Default Body', i18n ) }
+				{ getFontFamilyLabel( paragraphStyles?.fontFamily, __( 'Default Body', i18n ) ) }
 			</span>
 		</div>
 	)
