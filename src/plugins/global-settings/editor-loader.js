@@ -9,6 +9,7 @@ import { GlobalColorStyles } from './colors'
 import { GlobalTypographyStyles } from './typography'
 import { GlobalSpacingAndBordersStyles } from './spacing-and-borders'
 import { GlobalButtonsAndIconsStyles } from './buttons-and-icons'
+import { GlobalPresetControlsStyles } from './preset-controls'
 import './block-defaults'
 
 /**
@@ -48,6 +49,7 @@ const GlobalSettingsLoader = () => {
 			editorBody.appendChild( globalColorWrapper )
 			editorBody.appendChild( globalSpacingAndBorderWrapper )
 			editorBody.appendChild( globalButtonsAndIconsWrapper )
+			editorBody.appendChild( globalPresetControlsWrapper )
 		}
 	}, [ deviceType, editorDom ] )
 
@@ -62,17 +64,21 @@ const globalTypographyWrapper = document?.createElement( 'style' )
 const globalColorWrapper = document?.createElement( 'style' )
 const globalSpacingAndBorderWrapper = document?.createElement( 'style' )
 const globalButtonsAndIconsWrapper = document?.createElement( 'style' )
+const globalPresetControlsWrapper = document?.createElement( 'style' )
 globalTypographyWrapper?.setAttribute( 'id', 'stk-global-typography-styles' )
 globalColorWrapper?.setAttribute( 'id', 'stk-global-color-styles' )
 globalSpacingAndBorderWrapper?.setAttribute( 'id', 'stk-global-spacing-and-borders-styles' )
 globalButtonsAndIconsWrapper?.setAttribute( 'id', 'stk-global-buttons-and-icons-styles' )
+globalPresetControlsWrapper?.setAttribute( 'id', 'stk-global-preset-controls-styles' )
 domReady( () => {
 	document?.body?.appendChild( globalTypographyWrapper )
 	document?.body?.appendChild( globalColorWrapper )
 	document?.body?.appendChild( globalSpacingAndBorderWrapper )
 	document?.body?.appendChild( globalButtonsAndIconsWrapper )
+	document?.body?.appendChild( globalPresetControlsWrapper )
 	createRoot( globalTypographyWrapper ).render( <GlobalTypographyStyles /> )
 	createRoot( globalColorWrapper ).render( <GlobalColorStyles /> )
 	createRoot( globalSpacingAndBorderWrapper ).render( <GlobalSpacingAndBordersStyles /> )
 	createRoot( globalButtonsAndIconsWrapper ).render( <GlobalButtonsAndIconsStyles /> )
+	createRoot( globalPresetControlsWrapper ).render( <GlobalPresetControlsStyles /> )
 } )
