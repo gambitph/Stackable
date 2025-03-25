@@ -1,5 +1,9 @@
+import { i18n } from 'stackable'
+import { kebabCase } from 'lodash'
+
 import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
 
 export const useBlockColorSchemes = () => {
 	const {
@@ -21,7 +25,7 @@ export const useBlockColorSchemes = () => {
 
 		const allColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', colorSchemes, true )
 		const COLOR_SCHEME_OPTIONS = [ {
-			label: 'Scheme unavailable', // This will be displayed when a custom color scheme is deleted or when a license gets deactivated
+			label: __( 'Scheme unavailable', i18n ), // This will be displayed when a custom color scheme is deleted or when a license gets deactivated
 			value: 'scheme-unavailable',
 			hidden: true,
 			disabled: true,
@@ -47,8 +51,8 @@ export const useBlockColorSchemes = () => {
 		// Converts property name to kebab-cased string with scheme key as prefix
 		// (e.g., backgroundColor --> --stk-scheme-default-1-background-color)
 		const toKebab = ( property, slug ) => {
-			const result = property.replace( /([a-z0-9])([A-Z])/g, '$1-$2' )
-			return '--stk-' + slug + '-' + result.toLowerCase()
+			const result = kebabCase( property )
+			return '--stk-' + slug + '-' + result
 		}
 
 		// get color groups for color palette picker.

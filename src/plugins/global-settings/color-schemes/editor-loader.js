@@ -79,18 +79,18 @@ const renderGlobalStyles = (
 
 		decls = getCSS( scheme, currentHoverState, 'background' )
 		if ( decls.desktop.length || decls.desktopHover.length ) {
-			rules.background.push( `.background-${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }` )
+			rules.background.push( `.stk--background-scheme--${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }` )
 		}
 		if ( decls.desktopParentHover.length ) {
-			rules.background.push( `:where(.stk-hover-parent:hover) .background-${ key }{ ${ decls.desktopParentHover.join( '' ) } }` )
+			rules.background.push( `:where(.stk-hover-parent:hover) .stk--background-scheme--${ key }{ ${ decls.desktopParentHover.join( '' ) } }` )
 		}
 
 		decls = getCSS( scheme, currentHoverState, 'container' )
 		if ( decls.desktop.length || decls.desktopHover.length ) {
-			rules.container.push( `.container-${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }` )
+			rules.container.push( `.stk--container-scheme--${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }` )
 		}
 		if ( decls.desktopParentHover.length ) {
-			rules.container.push( `.container-${ key }:where(:hover), :where(.stk-hover-parent:hover) .container-${ key }{ ${ decls.desktopParentHover.join( '' ) } }` )
+			rules.container.push( `.stk--container-scheme--${ key }:where(:hover), :where(.stk-hover-parent:hover) .stk--container-scheme--${ key }{ ${ decls.desktopParentHover.join( '' ) } }` )
 		}
 	} )
 

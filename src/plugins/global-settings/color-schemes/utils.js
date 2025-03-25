@@ -1,3 +1,5 @@
+import { kebabCase } from 'lodash'
+
 import { applyFilters } from '@wordpress/hooks'
 
 /*
@@ -33,10 +35,10 @@ export const schemeHasValue = scheme => {
 }
 
 const camelToKebab = property => {
-	const result = property.replace( /([a-z0-9])([A-Z])/g, '$1-$2' )
+	const result = kebabCase( property )
 
 	// Convert the result to lowercase and return with '--stk-' prefix
-	return '--stk-' + result.toLowerCase()
+	return '--stk-' + result
 }
 
 const getInheritedValue = ( property, currentState, mode ) => {

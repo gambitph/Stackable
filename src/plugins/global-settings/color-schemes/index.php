@@ -122,7 +122,9 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			);
 		}
 
-		public function sanitize_array_setting( $input ) {
+		// Make this function static so it can be used when
+		// registering the custom color schemes in premium
+		public static function sanitize_array_setting( $input ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
@@ -179,7 +181,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			$schemes_array = is_array( get_option( 'stackable_global_color_schemes' ) ) ? get_option( 'stackable_global_color_schemes' ) : [];
 
 			// Get all color schemes, including custom color schemes if any
-			$all_color_schemes = apply_filters( 'stackable_global_color_schemes.get_color_schemes', $schemes_array );
+			$all_color_schemes = apply_filters( 'stackable_global_color_schemes/get_color_schemes', $schemes_array );
 
 			if ( ! is_array( $all_color_schemes ) ) {
 				return $current_css;
@@ -231,16 +233,16 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					'key' => $key,
 					'mode' => 'background',
 					'selectors' => array(
-						'desktop' => ".background-$key",
-						'desktopParentHover' => ":where(.stk-hover-parent:hover) .background-$key"
+						'desktop' => ".stk--background-scheme--$key",
+						'desktopParentHover' => ":where(.stk-hover-parent:hover) .stk--background-scheme--$key"
 					)
 				);
 				$block_color_schemes['container'][] = array(
 					'key' => $key,
 					'mode' => 'container',
 					'selectors' => array(
-						'desktop' => ".container-$key",
-						'desktopParentHover' => array(".container-$key:where(:hover)",":where(.stk-hover-parent:hover) .container-$key")
+						'desktop' => ".stk--container-scheme--$key",
+						'desktopParentHover' => array(".stk--container-scheme--$key:where(:hover)",":where(.stk-hover-parent:hover) .stk--container-scheme--$key")
 					)
 				);
 			}
@@ -281,13 +283,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		 * @return Array
 		 */
 		public function convert_to_assoc_array( $schemes_array ) {
-			$schemes = array();
-
-			foreach( $schemes_array as $scheme ) {
-				$schemes[ $scheme['key'] ] = $scheme[ 'colorScheme' ];
-			}
-
-			return $schemes;
+			return array_column( $schemes_array, 'colorScheme', 'key' );
 		}
 
 		/**
