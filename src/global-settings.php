@@ -353,6 +353,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 									'h6' => $stackable_global_typography_schema,
 									'p' => $stackable_global_typography_schema,
 									'.stk-subtitle' => $stackable_global_typography_schema,
+									'.stk-button__inner-text' => $stackable_global_typography_schema,
 								)
 							)
 						)
@@ -400,6 +401,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 											'h6' => $stackable_global_typography_schema,
 											'p' => $stackable_global_typography_schema,
 											'.stk-subtitle' => $stackable_global_typography_schema,
+											'.stk-button__inner-text' => $stackable_global_typography_schema,
 										)
 									),
 								)

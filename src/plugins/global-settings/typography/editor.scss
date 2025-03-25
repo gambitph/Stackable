@@ -96,7 +96,7 @@
 .ugb-global-settings-font-pair-control {
 	.components-base-control__field {
 		border: 1px solid #ddd;
-		padding: 8px;
+		padding: 12px;
 		margin-bottom: 8px;
 		gap: 8px;
 		cursor: pointer;
@@ -107,7 +107,7 @@
 }
 
 .ugb-global-settings-font-pair__container {
-	max-height: 250px;
+	max-height: 270px;
 	overflow: auto;
 	border: 1px solid #ddd;
 	border: none;
@@ -123,7 +123,7 @@
 	.ugb-global-settings-font-pair__label {
 		font-size: 1.2rem;
 		display: block;
-		margin-bottom: 4px;
+		margin-bottom: 6px;
 		line-height: 1.2;
 	}
 	.ugb-global-settings-font-pair__sub-label {

@@ -20,10 +20,13 @@
             "h6": {
                 "fontFamily": ""
             },
+            "p": {
+                "fontFamily": ""
+            },
             ".stk-subtitle": {
                 "fontFamily": ""
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": ""
             }
         }
@@ -49,10 +52,13 @@
             "h6": {
                 "fontFamily": "DM Serif Display"
             },
+            "p": {
+                "fontFamily": "DM Sans"
+            },
             ".stk-subtitle": {
                 "fontFamily": "DM Sans"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "DM Sans"
             }
         }
@@ -78,10 +84,13 @@
             "h6": {
                 "fontFamily": "Ultra"
             },
+            "p": {
+                "fontFamily": "PT Serif"
+            },
             ".stk-subtitle": {
                 "fontFamily": "PT Serif"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "PT Serif"
             }
         }
@@ -107,10 +116,13 @@
             "h6": {
                 "fontFamily": "IBM Plex Sans Condensed"
             },
+            "p": {
+                "fontFamily": "IBM Plex Sans"
+            },
             ".stk-subtitle": {
                 "fontFamily": "IBM Plex Sans"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "IBM Plex Sans"
             }
         }
@@ -136,10 +148,13 @@
             "h6": {
                 "fontFamily": "Work Sans"
             },
+            "p": {
+                "fontFamily": "Merriweather"
+            },
             ".stk-subtitle": {
                 "fontFamily": "Merriweather"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "Merriweather"
             }
         }
@@ -165,10 +180,13 @@
             "h6": {
                 "fontFamily": "Oswald"
             },
+            "p": {
+                "fontFamily": "Source Sans Pro"
+            },
             ".stk-subtitle": {
                 "fontFamily": "Source Sans Pro"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "Source Sans Pro"
             }
         }
@@ -194,10 +212,13 @@
             "h6": {
                 "fontFamily": "Barlow Condensed"
             },
+            "p": {
+                "fontFamily": "Montserrat"
+            },
             ".stk-subtitle": {
                 "fontFamily": "Montserrat"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "Montserrat"
             }
         }
@@ -223,10 +244,13 @@
             "h6": {
                 "fontFamily": "Alegreya"
             },
+            "p": {
+                "fontFamily": "Alegreya"
+            },
             ".stk-subtitle": {
                 "fontFamily": "Alegreya"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "Alegreya"
             }
         }
@@ -252,10 +276,13 @@
             "h6": {
                 "fontFamily": "Karla"
             },
+            "p": {
+                "fontFamily": "Merriweather"
+            },
             ".stk-subtitle": {
                 "fontFamily": "Merriweather"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "Merriweather"
             }
         }
@@ -281,10 +308,13 @@
             "h6": {
                 "fontFamily": "Roboto Condensed"
             },
+            "p": {
+                "fontFamily": "Roboto"
+            },
             ".stk-subtitle": {
                 "fontFamily": "Roboto"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "Roboto"
             }
         }
@@ -310,10 +340,13 @@
             "h6": {
                 "fontFamily": "Nunito Sans"
             },
+            "p": {
+                "fontFamily": "Nunito Sans"
+            },
             ".stk-subtitle": {
                 "fontFamily": "Nunito Sans"
             },
-            "p": {
+            ".stk-button__inner-text": {
                 "fontFamily": "Nunito Sans"
             }
         }

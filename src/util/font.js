@@ -184,7 +184,7 @@ export const isGoogleFontEnqueued = ( fontName, head = document.querySelector( '
 }
 
 // Outputs the font family name for display purposes.
-export const getFontFamilyLabel = fontName => {
+export const getFontFamilyLabel = ( fontName, defaultLabel = '' ) => {
 	// Modern font stacks.
 	if ( MODERN_FONT_STACKS[ fontName ] ) {
 		return MODERN_FONT_STACKS[ fontName ].label
@@ -195,10 +195,15 @@ export const getFontFamilyLabel = fontName => {
 		return SYSTEM_FONT_STACKS[ fontName ].label
 	}
 
-	return fontName || __( 'Default', i18n )
+	return fontName || defaultLabel || __( 'Default', i18n )
 }
 
 export const getFontFamily = fontName => {
+	const defaultFontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+	if ( ! fontName ) {
+		return defaultFontFamily
+	}
+
 	// If the font is a CSS custom property, return it directly.
 	if ( fontName.match( /^\s*var\(--/ ) ) {
 		return fontName
@@ -219,7 +224,7 @@ export const getFontFamily = fontName => {
 		return SYSTEM_FONT_STACKS[ fontName ].value
 	}
 
-	return '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+	return defaultFontFamily
 }
 
 /** TODO: deprecate this.
