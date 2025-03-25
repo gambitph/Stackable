@@ -204,6 +204,7 @@ const InspectorControls = memo( props => {
 					</> }
 					{ props.videoLink && <>
 						<ControlSeparator />
+						<p>{ __( 'Note: The following attributes are used to generate the video schema.', i18n ) }</p>
 						<AdvancedTextControl
 							label={ __( 'Video name', i18n ) }
 							value={ props.videoName }
