@@ -272,6 +272,7 @@ export const Controls = props => {
 					description: __( 'Sets the size of text characters', i18n ),
 				} }
 				marks={ presetMarks }
+				hasCSSVariableValue={ true }
 			/>
 
 			{ hasColor && (

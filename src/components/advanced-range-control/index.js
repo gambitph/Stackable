@@ -107,7 +107,7 @@ const AdvancedRangeControl = props => {
 	// at the start, or show custom
 	let isMarkValue = !! props.marks
 	if ( props.marks && value ) {
-		const valueToCheck = value + unit
+		const valueToCheck = value + ( props.hasCSSVariableValue ? '' : unit )
 		// Check if the current value exsits in the marks
 		isMarkValue = isMarkValue && props.marks.some( mark => mark.value === valueToCheck )
 	}
