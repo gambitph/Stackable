@@ -125,7 +125,7 @@ const LABELS = {
 		</ul>,
 	},
 	'color-schemes': {
-		title: __( 'Unlock Unlimited Color Schemes', i18n ),
+		title: __( 'Premium Color Schemes', i18n ),
 		description: <ul>
 			<li>{ __( 'Access to 50+ curated color scheme presets', i18n ) }</li>
 			<li>{ __( 'Create your own color schemes', i18n ) }</li>
