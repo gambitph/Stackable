@@ -8,7 +8,9 @@ import { BaseControl, Button } from '~stackable/components'
  */
 import { i18n } from 'stackable'
 import classNames from 'classnames'
-import { loadGoogleFont } from '~stackable/util'
+import {
+	loadGoogleFont, getFontFamilyLabel, getFontFamily,
+} from '~stackable/util'
 import { omit } from 'lodash'
 
 /**
@@ -26,19 +28,23 @@ const FontPairPicker = props => {
 		loadGoogleFont( paragraphStyles.fontFamily )
 	}
 
+	// Use the font family value for styling the buttons
+	const headingFontFamilyValue = getFontFamily( headingStyles.fontFamily ).replace( /"/g, '' ) || ''
+	const paragraphFontFamilyValue = getFontFamily( paragraphStyles.fontFamily ).replace( /"/g, '' ) || ''
+
 	const label = (
 		<div>
 			<span
-				style={ omit( { ...headingStyles }, [ 'fontSize', 'lineHeight' ] ) }
+				style={ omit( { ...headingStyles, fontFamily: headingFontFamilyValue }, [ 'fontSize', 'lineHeight' ] ) }
 				className="ugb-global-settings-font-pair__label"
 			>
-				{ headingStyles?.fontFamily ? headingStyles.fontFamily : __( 'Default Heading', i18n ) }
+				{ headingStyles?.fontFamily ? getFontFamilyLabel( headingStyles.fontFamily ) : __( 'Default Heading', i18n ) }
 			</span>
 			<span
-				style={ omit( { ...paragraphStyles }, [ 'fontSize', 'lineHeight' ] ) }
+				style={ omit( { ...paragraphStyles, fontFamily: paragraphFontFamilyValue }, [ 'fontSize', 'lineHeight' ] ) }
 				className="ugb-global-settings-font-pair__sub-label"
 			>
-				{ paragraphStyles?.fontFamily ? paragraphStyles?.fontFamily : __( 'Default Body', i18n ) }
+				{ paragraphStyles?.fontFamily ? getFontFamilyLabel( paragraphStyles?.fontFamily ) : __( 'Default Body', i18n ) }
 			</span>
 		</div>
 	)
