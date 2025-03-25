@@ -163,7 +163,7 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 [data-type^="stackable/"] .stk--is-hovered.stk-block-background {
 	border-width: cssvar(block-background-border-width-hover);
 	box-shadow: cssvar(block-background-box-shadow-hover);
-	background: var(--stk-block-background-color-hover, cssvar(block-background-color));
+	background: var(--stk-block-background-color-hover, cssvar(block-background-color)) center center;
 }
 
 // Images
