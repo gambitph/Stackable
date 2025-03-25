@@ -122,7 +122,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			);
 		}
 
-		public static function sanitize_array_setting( $input ) {
+		public function sanitize_array_setting( $input ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
