@@ -28,3 +28,21 @@
 .editor-styles-wrapper .stk-block-video-popup [data-block] {
 	max-width: none;
 }
+.ugb-panel--video-popup .components-datetime__date {
+	.components-datetime__date__day[aria-label*="Selected" i] {
+		color: #fff !important;
+		&:hover {
+			color: #fff !important;
+		}
+	}
+	:last-child {
+		row-gap: 8px;
+		column-gap: 4px;
+		div:nth-of-type(7) {
+			justify-self: auto;
+		}
+	}
+}
+.stk-components-datetime__date-input .components-text-control__input {
+	background-color: #fff;
+}
