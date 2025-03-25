@@ -14,11 +14,11 @@ import {
 	ShadowControl,
 	Button,
 	HelpTooltip,
+	SectionSettings,
 } from '~stackable/components'
 import {
 	useBlockLayoutEditorLoader,
 	useBlockLayoutInspectorUtils,
-	LayoutSettings,
 	STATES,
 } from '../utils'
 import { BORDER_CONTROLS, IMAGE_SHADOWS } from '~stackable/block-components'
@@ -99,7 +99,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 					text={ __( 'Reset All', i18n ) }
 				/>
 
-				<LayoutSettings
+				<SectionSettings
 					title={ __( 'Margins', i18n ) }
 					description={ __( 'These styles are applied to all our Blocks.', i18n ) }
 				>
@@ -121,9 +121,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							description: __( 'Sets the block margin bottom, i.e. the space outside the block between the block border and the next block.', i18n ),
 						} }
 					/>
-				</LayoutSettings>
+				</SectionSettings>
 
-				<LayoutSettings
+				<SectionSettings
 					title={ __( 'Columns', i18n ) }
 					description={ __( 'These styles are applied to Inner Column blocks.', i18n ) }
 				>
@@ -175,9 +175,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							description: __( 'Sets the distance between two or more columns', i18n ),
 						} }
 					/>
-				</LayoutSettings>
+				</SectionSettings>
 
-				<LayoutSettings
+				<SectionSettings
 					title={ __( 'Background', i18n ) }
 					description={ __( 'These styles are applied to blocks that have the "Background" option enabled in the Style Tab.', i18n ) }
 				>
@@ -262,9 +262,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						shadowFilterOnChange={ value => onChange( 'block-background-box-shadow', value, STATES.HOVER ) }
 						hasHoverStateValue={ getHasHoverStateValues( 'block-background-box-shadow' ) }
 					/>
-				</LayoutSettings>
+				</SectionSettings>
 
-				<LayoutSettings
+				<SectionSettings
 					title={ __( 'Containers', i18n ) }
 					description={ __( 'These styles are applied to blocks that have the "Container" option enabled in the Layout Tab.', i18n ) }
 				>
@@ -350,9 +350,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						shadowFilterOnChange={ value => onChange( 'container-box-shadow', value, STATES.HOVER ) }
 						hasHoverStateValue={ getHasHoverStateValues( 'container-box-shadow' ) }
 					/>
-				</LayoutSettings>
+				</SectionSettings>
 
-				<LayoutSettings
+				<SectionSettings
 					title={ __( 'Image', i18n ) }
 					description={ __( 'These styles are applied to all images in Stackable Blocks.', i18n ) }
 				>
@@ -392,7 +392,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							description: __( 'Adjusts the intensity of the image shadow', i18n ),
 						} }
 					/>
-				</LayoutSettings>
+				</SectionSettings>
 
 			</PanelAdvancedSettings>
 		</>

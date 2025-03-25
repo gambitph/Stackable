@@ -16,7 +16,7 @@ import rgba from 'color-rgba'
 /**
  * WordPress dependencies
  */
-import { addFilter } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, useSelect } from '@wordpress/data'
@@ -102,6 +102,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 		settings.save()
 	}
 
+	const ColorToggleControls = applyFilters( 'stackable.global-settings.inspector.global-colors.toggle-controls', Fragment )
+
 	return (
 		<Fragment>
 			{ output }
@@ -120,6 +122,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 					label={ __( 'Global Gradients', i18n ) }
 					onReset={ () => onChangeUseStackableColorsOnly( false ) }
 				/> */ }
+				{ ColorToggleControls }
 				<ToggleControl
 					label={ __( 'Show Theme Colors', i18n ) }
 					checked={ ! hideThemeColors }

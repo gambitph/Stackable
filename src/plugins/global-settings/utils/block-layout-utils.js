@@ -26,16 +26,6 @@ export const hoverState = {
 	'parent-hover': 'ParentHover',
 }
 
-export const LayoutSettings = props => {
-	return <>
-		<div className="ugb-global-block-layouts__section-settings">
-			<p className="ugb-global-block-layouts__section-title">{ props.title }</p>
-			<p>{ props.description }</p>
-			{ props.children }
-		</div>
-	</>
-}
-
 export const getDefault = ( defaults, property, device ) => {
 	let defaultValue = defaults[ property ]?.[ device ]
 

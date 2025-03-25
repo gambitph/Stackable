@@ -4,16 +4,19 @@
 		z-index: 5;
 	}
 
-	.ugb-global-block-layouts__section-settings {
+	.ugb-global-settings__section-settings {
 		background: linear-gradient(to bottom, #fbfbfb, transparent);
 		border-top: 1px solid #e0e0e0;
 		margin: 0px -16px;
 		padding: 16px;
 
-		.ugb-global-block-layouts__section-title {
+		.ugb-global-settings__section-title {
 			font-weight: bold;
 			text-transform: uppercase;
 			margin-bottom: 8px;
+		}
+		&:last-of-type {
+			padding: 16px 16px 0px 16px;
 		}
 	}
 }

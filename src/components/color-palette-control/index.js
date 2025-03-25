@@ -31,6 +31,7 @@ import { applyFilters, addFilter } from '@wordpress/hooks'
 import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
+import { useBlockColorSchemes } from '~stackable/hooks'
 
 const popoverProps = {
 	placement: 'left-start',
@@ -39,6 +40,27 @@ const popoverProps = {
 }
 
 const PASSTHRUOP = v => v
+
+addFilter( 'stackable.color-palette-control.colors', 'stackable/global-color-schemes-color-palette-control', ( { colors: _colors, gradients: _gradients } ) => {
+	// Get colors from the color schemes.
+	const { getColorGroups } = useBlockColorSchemes()
+	const { colorSchemeColors, colorSchemeGradients } = getColorGroups()
+
+	let colors = cloneDeep( _colors )
+	let gradients = cloneDeep( _gradients )
+
+	gradients = [
+		...colorSchemeGradients,
+		...gradients,
+	]
+
+	colors = [
+		...colorSchemeColors,
+		..._colors,
+	]
+
+	return { colors, gradients }
+} )
 
 addFilter( 'stackable.color-palette-control.colors', 'stackable/color-palette-control', ( { colors: _colors, gradients: _gradients } ) => {
 	const {
@@ -169,7 +191,8 @@ const ColorPaletteControl = memo( props => {
 
 	const toggleSettings = {
 		colorValue: value,
-		label: colorLabel,
+		label: props.colorLabel || colorLabel,
+		additionalToggleProps: props.additionalToggleProps,
 	}
 
 	const colorPalette = (
@@ -179,6 +202,9 @@ const ColorPaletteControl = memo( props => {
 			preOnChange={ props.preOnChange }
 			colors={ props.isGradient ? gradients : colors }
 			isGradient={ props.isGradient }
+			hasGradientPicker={ props.hasGradientPicker }
+			enableGradient={ props.hasGradientPicker && props.enableGradient }
+			gradients={ gradients }
 		/>
 	)
 
@@ -218,10 +244,15 @@ ColorPaletteControl.defaultProps = {
 	attribute: '',
 
 	value: undefined,
+	colorLabel: undefined,
 	onChange: undefined,
 	preOnChange: PASSTHRUOP,
 	isExpanded: false,
 	isGradient: false,
+
+	hasGradientPicker: false,
+	enableGradient: false,
+	additionalToggleProps: {},
 }
 
 export default ColorPaletteControl
@@ -229,7 +260,11 @@ export default ColorPaletteControl
 const renderToggle =
 	settings =>
 		( { onToggle, isOpen } ) => {
-			const { colorValue, label } = settings
+			const {
+				colorValue,
+				label,
+				additionalToggleProps,
+			} = settings
 
 			const toggleProps = {
 				onClick: onToggle,
@@ -238,6 +273,7 @@ const renderToggle =
 					{ 'is-open': isOpen }
 				),
 				'aria-expanded': isOpen,
+				...additionalToggleProps,
 			}
 
 			return (

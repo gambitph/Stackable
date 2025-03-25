@@ -19,6 +19,7 @@ import {
 } from '@wordpress/components'
 import { useState, useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { ResetButton } from '../base-control2/reset-button'
 
 const addItemPopoverProps = {
 	placement: 'left-start',
@@ -44,6 +45,8 @@ const DRAG_KEYCODES = {
 
 const SortablePicker = props => {
 	const {
+		nonSortableItems = [],
+		editableName = true,
 		items,
 		dropdownOnAdd = false,
 		onChangeItem,
@@ -52,6 +55,7 @@ const SortablePicker = props => {
 		onSortEnd,
 		AddItemPopover = null,
 		ref,
+		enableAddItem = true,
 	} = props
 	const [ isSorting, setIsSorting ] = useState( false )
 
@@ -64,7 +68,7 @@ const SortablePicker = props => {
 
 	return (
 		<BaseControl className={ classNames } label={ props.label }>
-			<Dropdown
+			{ enableAddItem && <Dropdown
 				popoverProps={ addItemPopoverProps }
 				renderToggle={ ( { onToggle, isOpen } ) => (
 					<Button
@@ -77,7 +81,7 @@ const SortablePicker = props => {
 				renderContent={ ( { onClose } ) => (
 					<AddItemPopover onClose={ onClose } onChange={ handleAddItem } />
 				) }
-			/>
+			/> }
 			<div
 				ref={ ref }
 				className={ classnames(
@@ -95,7 +99,23 @@ const SortablePicker = props => {
 					useDragHandle
 					keyCodes={ DRAG_KEYCODES }
 				>
-					{ items.map( ( item, i ) => (
+					{ nonSortableItems?.map( ( item, i ) => (
+						<LabeledItemIndicator
+							key={ i }
+							item={ item }
+							onDelete={ () => onDeleteItem( item ) }
+							onChange={ item => onChangeItem( item ) }
+							ItemPreview={ props.ItemPreview }
+							ItemPicker={ props.ItemPicker }
+							updateOnBlur={ props.updateOnBlur }
+							sortable={ false }
+							editableName={ editableName }
+							className={ props.buttonClassName }
+							onItemClick={ props.onItemClick }
+							showReset={ props.showResetCallback ? props.showResetCallback( item ) : true }
+						/> )
+					 ) }
+					{ items?.map( ( item, i ) => (
 						<SortableItem
 							key={ i }
 							index={ i }
@@ -105,6 +125,9 @@ const SortablePicker = props => {
 							ItemPreview={ props.ItemPreview }
 							ItemPicker={ props.ItemPicker }
 							updateOnBlur={ props.updateOnBlur }
+							editableName={ editableName }
+							className={ props.buttonClassName }
+							onItemClick={ props.onItemClick }
 						/> ) ) }
 				</SortableContainer>
 			</div>
@@ -140,6 +163,9 @@ const LabeledItemIndicator = props => {
 		ItemPreview = null,
 		ItemPicker = null,
 		updateOnBlur = false, // If true, onChange will be called only when the input is blurred.
+		sortable = true,
+		editableName = true,
+		showReset = true,
 	} = props
 
 	const [ isFocused, setIsFocused ] = useState( false )
@@ -152,6 +178,11 @@ const LabeledItemIndicator = props => {
 		}
 	}, [ item.name ] )
 
+	const buttonClassNames = classnames(
+		'block-editor-panel-color-gradient-settings__dropdown',
+		props.className
+	)
+
 	return (
 		<HStack justify="space-between" className="stk-global-settings-color-picker__color-indicator-wrapper">
 			<Dropdown
@@ -161,8 +192,13 @@ const LabeledItemIndicator = props => {
 				renderToggle={ ( { onToggle, isOpen } ) => {
 					return (
 						<Button
-							className="block-editor-panel-color-gradient-settings__dropdown"
+							className={ buttonClassNames }
 							onClick={ () => {
+								if ( props.onItemClick ) {
+									props.onItemClick( item )
+									return
+								}
+
 								if ( ! isFocused ) {
 									onToggle()
 								}
@@ -171,7 +207,7 @@ const LabeledItemIndicator = props => {
 						>
 							<HStack justify="flex-start">
 								<ItemPreview item={ item } />
-								<input
+								{ editableName ? <input
 									className="components-input-control__input"
 									value={ isFocused ? debouncedText : item.name }
 									onChange={ ev => {
@@ -209,13 +245,15 @@ const LabeledItemIndicator = props => {
 										}
 									} }
 									onKeyDown={ ev => {
-										// On enter, blur the input.
+									// On enter, blur the input.
 										if ( ev.keyCode === 13 ) {
 											ev.target.blur()
 										}
 									} }
 								/>
-								<DragHandle />
+									: <p className="stk-sortable-picker__item-name">{ item.name }</p>
+								}
+								{ sortable && <DragHandle /> }
 							</HStack>
 						</Button>
 					)
@@ -224,14 +262,19 @@ const LabeledItemIndicator = props => {
 					<ItemPicker item={ item } onChange={ onChange } />
 				) }
 			/>
-			<Button
+			{ sortable && <Button
 				aria-label="Delete"
 				className="stk-global-settings-color-picker__delete-button"
 				icon="trash"
 				isSmall
 				isTertiary
 				onClick={ onDelete }
+			/> }
+			{ ! sortable && <ResetButton
+				showReset={ showReset }
+				onChange={ onDelete }
 			/>
+			}
 		</HStack>
 	)
 }

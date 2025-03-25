@@ -4,6 +4,7 @@
 	position: relative;
 	height: var(--progress-size, 150px);
 	width: var(--progress-size, 150px);
+	--progress-color-1: var(--stk-accent-color);
 	svg {
 		height: var(--progress-size, 150px);
 		width: var(--progress-size, 150px);

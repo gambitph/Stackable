@@ -19,6 +19,12 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => 24,
 					"mobile" => 16
 				),
+				"link-color" => array(
+					"desktop" => "initial",
+				),
+				"accent-color" => array(
+					"desktop" => "initial",
+				),
 				"column-margin" => array(
 					"desktop" => 12,
 					"mobile" => 8
@@ -84,7 +90,7 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => "0px 4px 24px rgba(0, 0, 0, 0.04)",
 				),
 				"container-background-color" => array(
-					"desktop" => "#fff"
+					"desktop" => "#fff",
 				),
 				"container-color" => array(
 					"desktop" => "#1e1e1e"
@@ -116,7 +122,7 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => "",
 				),
 				"block-background-color" => array(
-					"desktop" => "#f1f1f1"
+					"desktop" => "#f1f1f1",
 				),
 				"image-border-radius" => array(
 					"desktop" => 0
@@ -163,10 +169,13 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => 12
 				),
 				"button-background-color" => array(
-					"desktop" => "#008de4"
+					"desktop" => "#008de4",
 				),
 				"button-text-color" => array(
-					"desktop" => "#fff"
+					"desktop" => "#fff",
+				),
+				"button-outline-color" => array(
+					"desktop" => "var(--stk-button-background-color)",
 				),
 				"icon-button-padding" => array(
 					"desktop" => array(

@@ -19,6 +19,10 @@ export const addAttributes = attrObject => {
 				type: 'boolean',
 				default: false,
 			},
+			backgroundColorScheme: {
+				type: 'string',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

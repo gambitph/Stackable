@@ -13,9 +13,13 @@ div.stk-block-number-box__text {
 	.stk-block-number-box__container,
 	div.stk-block-number-box__text {
 		background: cssvar(button-background-color);
-		color: #fff;
+		color: var(--stk-button-text-color, #fff);
 		border-radius: 100%;
 		width: 96px;
 		height: 96px;
+		&:where(:hover) {
+			#{ '--stk-button-background-color' }: cssvar(button-background-color-hover);
+			#{ '--stk-button-text-color' }: cssvar(button-text-color-hover);
+		}
 	}
 }

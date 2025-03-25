@@ -1,0 +1,32 @@
+.stk-global-color-scheme-picker {
+	.ugb-global-settings-color-picker__color-indicators > div {
+		display: flex;
+		flex-direction: column;
+		row-gap: 8px;
+	}
+}
+
+.stk-global-color-scheme__color-scheme-item.block-editor-panel-color-gradient-settings__dropdown {
+	height: max-content;
+	padding: 0 8px 0 0;
+}
+
+.stk-global-color-scheme__edit-panel-preview {
+	border-bottom: 1px solid #e0e0e0;
+	margin: 0px -16px 16px;
+	padding: 0px 16px;
+}
+
+.stk-global-color-scheme__preview-wrapper {
+	display: flex;
+	justify-content: center;
+	height: 70px;
+	outline: 1px solid #e0e0e0;
+	margin-bottom: 16px;
+	padding: 8px;
+
+	.stk-global-color-scheme__preview__background {
+		padding: 0;
+		transform: scale(1.3);
+	}
+}

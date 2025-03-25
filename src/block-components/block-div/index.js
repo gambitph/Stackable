@@ -57,6 +57,7 @@ export const BlockDiv = memo( props => {
 			{
 				[ uniqueBlockClass ]: withUniqueClass,
 				'stk-block-background': attributes.hasBackground,
+				[ `stk--background-scheme--${ attributes.backgroundColorScheme }` ]: attributes.hasBackground && attributes.backgroundColorScheme,
 				// When the block has auto margins, we need to "add" those margins to
 				// the main block div so we can simulate the effect inside the editor.
 				// This works in conjunction with the styles in
@@ -132,6 +133,7 @@ BlockDiv.Content = props => {
 			uniqueBlockClass,
 			{
 				'stk-block-background': attributes.hasBackground,
+				[ `stk--background-scheme--${ attributes.backgroundColorScheme }` ]: attributes.hasBackground && attributes.backgroundColorScheme,
 				// When the block has auto top/bottom margins, we need to force the
 				// parent container to be 100% height or else the auto won't have any
 				// effect in the frontend. This is okay in the editor-side.

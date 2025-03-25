@@ -15,9 +15,11 @@ import {
 	InspectorBlockControls,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
+	useBlockColorSchemes,
 	useBlockLayoutDefaults,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
@@ -34,9 +36,22 @@ export const Edit = memo( props => {
 		initialOpen,
 		backgroundMediaAllowVideo,
 	} = props
-	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
+
+	const {
+		hasBackground,
+		backgroundColorScheme,
+	} = useBlockAttributesContext( attributes => ( {
+		hasBackground: attributes.hasBackground,
+		backgroundColorScheme: attributes.backgroundColorScheme,
+	} ) )
 	const setAttributes = useBlockSetAttributesContext()
 	const { getPlaceholder } = useBlockLayoutDefaults()
+
+	const {
+		getScheme,
+		COLOR_SCHEME_OPTIONS,
+		backgroundModeColorScheme,
+	} = useBlockColorSchemes()
 
 	return (
 		<>
@@ -75,6 +90,17 @@ export const Edit = memo( props => {
 					onChange={ hasBackground => setAttributes( { hasBackground } ) }
 					initialOpen={ initialOpen === 'background' }
 				>
+					<AdvancedSelectControl
+						label={ __( 'Color Scheme', i18n ) }
+						value={ getScheme( backgroundColorScheme || backgroundModeColorScheme, { mode: 'background', returnFallback: false } ) }
+						options={ COLOR_SCHEME_OPTIONS }
+						attribute="backgroundColorScheme"
+						changeCallback={ newScheme => {
+							const colorScheme = newScheme === backgroundModeColorScheme ? '' : newScheme
+							return colorScheme
+						} }
+						default={ backgroundModeColorScheme }
+					/>
 					<BackgroundControls
 						attrNameTemplate="block%s"
 						onBackgroundEnableAttribute="hasBackground"

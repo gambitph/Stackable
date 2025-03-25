@@ -147,7 +147,6 @@ BaseControl.defaultProps = {
 	// { hover: boolean, 'parent-hover': boolean }
 	// If 'hover' or 'parent-hover' is true, then the hover toggle will be highlighted to show that the hover state value has been set
 	hasHoverStateValue: undefined,
-
 }
 
 const AdvancedControl = props => {
