@@ -330,7 +330,7 @@ const ColorSchemePicker = props => {
 		// 2. Heading Color, Text Color, Accent Color when it is in the hover state
 		if ( property === 'backgroundColor' ) {
 			if ( isGradient( itemInEdit?.colorScheme[ property ]?.desktop ) && currentHoverState !== 'normal' ) {
-				return false
+				return true
 			}
 
 			return currentHoverState === 'parent-hover'
