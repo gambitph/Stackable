@@ -1,6 +1,5 @@
 .stk-block-icon-list-item {
 	list-style-type: none !important;
-	--stk-icon-list-marker-color: var(--stk-accent-color);
 	&:where(:hover) {
 		#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
 	}

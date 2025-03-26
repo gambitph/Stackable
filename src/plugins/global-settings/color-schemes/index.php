@@ -426,7 +426,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					}
 
 					$inherited_value = $this->get_inherited_value( $scheme[ $property ], $state, $mode );
-					if ( $state === 'desktopHover' && ! $this->has_value( $scheme, $property, $state ) ) {
+					if ( $state === 'desktopHover' && ! $this->has_value( $scheme, $property, $state ) && $mode === 'container' ) {
 						$decls[ $state ][ $css_property ] = $inherited_value;
 					}
 

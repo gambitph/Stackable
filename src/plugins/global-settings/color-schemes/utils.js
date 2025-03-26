@@ -98,12 +98,15 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 				decls.desktopHover.push( `${ customProperty }-parent-hover: ${ inheritedValue };` )
 			}
 
-			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue ) {
+			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue && mode === 'container' ) {
 				decls[ state ].push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
 			}
 
 			if ( currentHoverState !== 'normal' ) {
-				const currentHover = mode === '' && currentHoverState === 'parent-hover' ? '' : `-${ currentHoverState }`
+				const currentHover = mode === '' && currentHoverState === 'parent-hover' ? ''
+					: ( currentHoverState === 'hover' && ! scheme[ property ]?.desktopHover ) ? '-parent-hover'
+						: `-${ currentHoverState }`
+
 				decls.desktopHover.push( `${ customProperty }-current-hover: var(${ customProperty }${ currentHover });` )
 			}
 

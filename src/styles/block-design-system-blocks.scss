@@ -135,6 +135,7 @@
 	&:not(.is-style-link, .is-style-ghost) .stk-button::before {
 		border-width: cssvar(button-border-width-parent-hover);
 		box-shadow: cssvar(button-box-shadow-parent-hover);
+
 	}
 	&.is-style-ghost .stk-button::before {
 		border-width: cssvar(button-ghost-border-width-parent-hover);
@@ -204,7 +205,8 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 
 // Block Background
 .stk-block-background {
-	background: cssvar(block-background-color) center center;
+	background-color: cssvar(block-background-color);
+	background-image: cssvar(block-background-color);
 	border-radius: cssvar(block-background-border-radius);
 	box-shadow: cssvar(block-background-box-shadow);
 	&:not(.stk--no-padding) {
@@ -214,7 +216,8 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		}
 	}
 	&:hover {
-		background: var(--stk-block-background-color-hover, cssvar(block-background-color)) center center;
+		background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
+		background-image: var(--stk-block-background-color-hover, cssvar(block-background-color));
 	}
 }
 
@@ -234,6 +237,17 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		padding: cssvar(block-background-padding-parent-hover);
 	}
 }
+// Inherit parent-hover/normal state colors when hovering over a block.
+.stk-block-background {
+	#{ '--stk-button-background-color-hover' }: var(--stk-button-background-color);
+	#{ '--stk-button-text-color-hover' }: var(--stk-button-text-color);
+	#{ '--stk-button-outline-color-hover' }: var(--stk-button-outline-color);
+}
+// :where(.stk-hover-parent:hover) .stk-block-background {
+// 	#{ '--stk-button-background-color-hover' }: var(--stk-button-background-color);
+// 	#{ '--stk-button-text-color-hover' }: var(--stk-button-text-color);
+// 	#{ '--stk-button-outline-color-hover' }: var(--stk-button-outline-color);
+// }
 
 // Images
 .stk-img-wrapper {
