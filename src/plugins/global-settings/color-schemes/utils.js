@@ -110,10 +110,7 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 			}
 
 			if ( currentHoverState !== 'normal' ) {
-				const currentHover = mode === '' && currentHoverState === 'parent-hover' ? ''
-					: ( currentHoverState === 'hover' && ! scheme[ property ]?.desktopHover ) ? '-parent-hover'
-						: `-${ currentHoverState }`
-
+				const currentHover = mode === '' && currentHoverState === 'parent-hover' ? '' : `-${ currentHoverState }`
 				decls.desktopHover.push( `${ customProperty }-current-hover: var(${ customProperty }${ currentHover });` )
 			}
 
