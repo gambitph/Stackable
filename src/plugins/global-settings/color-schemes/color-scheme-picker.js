@@ -90,12 +90,11 @@ const ColorSchemePicker = props => {
 	} = props
 
 	const {
-		colorSchemes, cachedCss,
+		colorSchemes,
 	} = useSelect( select => {
-		const { colorSchemes: _colorSchemes, cachedCss } = select( 'stackable/global-color-schemes' ).getSettings()
+		const { colorSchemes: _colorSchemes } = select( 'stackable/global-color-schemes' ).getSettings()
 		return {
 			colorSchemes: cloneDeep( _colorSchemes ),
-			cachedCss,
 		}
 	} )
 
@@ -128,7 +127,7 @@ const ColorSchemePicker = props => {
 
 	// Add a custom color scheme
 	const handleAddItem = ( event, scheme = null ) => {
-		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', scheme, setItemInEdit, cachedCss, saveTimeout )
+		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', scheme, setItemInEdit, saveTimeout )
 	}
 
 	// For sorting custom color schemes
@@ -140,7 +139,7 @@ const ColorSchemePicker = props => {
 		clearTimeout( saveTimeout )
 
 		// If the color scheme being edited is a custom color scheme, customUpdate will return true
-		const customUpdate = applyFilters( 'stackable.global-settings.global-color-schemes.update-color-schemes', false, currentItem, cachedCss, saveTimeout )
+		const customUpdate = applyFilters( 'stackable.global-settings.global-color-schemes.update-color-schemes', false, currentItem, saveTimeout )
 
 		if ( ! customUpdate ) {
 			// Do this only when the color scheme being edited is the default/fixed color schemes (the first two color schemes)
@@ -152,14 +151,13 @@ const ColorSchemePicker = props => {
 				const settings = new models.Settings( {
 					stackable_global_color_schemes: updatedColorSchemes, // eslint-disable-line camelcase
 					// Clear the cached CSS when the color scheme is updated
-					...( cachedCss ? { stackable_global_color_scheme_generated_css: '' } : {} ), // eslint-disable-line camelcase
+					stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
 				} )
 				settings.save()
 			}, 300 )
 
 			// Update our store.
 			dispatch( 'stackable/global-color-schemes' ).updateColorSchemes( updatedColorSchemes )
-			dispatch( 'stackable/global-color-schemes' ).updateSettings( { cachedCss: '' } )
 		}
 	}
 
@@ -263,7 +261,7 @@ const ColorSchemePicker = props => {
 
 	const onDeleteItem = item => {
 		// If the color scheme to be deleted is a custom color scheme, customDelete will return true
-		const customDelete = applyFilters( 'stackable.global-settings.global-color-schemes.delete-color-scheme', false, item, setItemInEdit, cachedCss, saveTimeout )
+		const customDelete = applyFilters( 'stackable.global-settings.global-color-schemes.delete-color-scheme', false, item, setItemInEdit, saveTimeout )
 
 		if ( ! customDelete ) {
 			// Do not delete if it is not a custom color scheme, reset it to the default value instead.
@@ -330,7 +328,7 @@ const ColorSchemePicker = props => {
 		// 2. Heading Color, Text Color, Accent Color when it is in the hover state
 		if ( property === 'backgroundColor' ) {
 			if ( isGradient( itemInEdit?.colorScheme[ property ]?.desktop ) && currentHoverState !== 'normal' ) {
-				return false
+				return true
 			}
 
 			return currentHoverState === 'parent-hover'

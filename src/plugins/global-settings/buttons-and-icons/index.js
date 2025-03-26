@@ -77,7 +77,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 				<p className="components-base-control__help">
 					{ __( 'Globally style buttons and icons across all our blocks.', i18n ) }
 					&nbsp;
-					<a href="https://docs.wpstackable.com/article/648-how-to-use-global-styles?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+					<a href="https://docs.wpstackable.com/article/648-how-to-use-global-spacing-borders?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
 						{ __( 'Learn more about Global Styles', i18n ) }
 					</a>
 				</p>

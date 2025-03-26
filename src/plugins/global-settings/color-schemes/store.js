@@ -18,7 +18,6 @@ const DEFAULT_STATE = {
 	baseColorScheme: '',
 	backgroundModeColorScheme: '',
 	containerModeColorScheme: '',
-	cachedCss: '',
 }
 
 const STORE_ACTIONS = {
@@ -76,7 +75,6 @@ domReady( () => {
 			stackable_global_base_color_scheme: baseColorScheme,
 			stackable_global_background_mode_color_scheme: backgroundModeColorScheme,
 			stackable_global_container_mode_color_scheme: containerModeColorScheme,
-			stackable_global_color_scheme_generated_css: cachedCss,
 		} = response
 
 		const colorSchemes = Array.isArray( _colorSchemes ) && _colorSchemes.length > 0 ? _colorSchemes : [ {
@@ -115,7 +113,6 @@ domReady( () => {
 			baseColorScheme,
 			backgroundModeColorScheme,
 			containerModeColorScheme,
-			cachedCss,
 		}
 
 		dispatch( 'stackable/global-color-schemes' ).updateSettings( settings )
