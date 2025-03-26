@@ -98,7 +98,7 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 				decls.desktopHover.push( `${ customProperty }-parent-hover: ${ inheritedValue };` )
 			}
 
-			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue ) {
+			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue && mode === 'container' ) {
 				decls[ state ].push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
 			}
 
