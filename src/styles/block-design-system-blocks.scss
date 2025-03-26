@@ -237,17 +237,6 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		padding: cssvar(block-background-padding-parent-hover);
 	}
 }
-// Inherit parent-hover/normal state colors when hovering over a block.
-.stk-block-background {
-	#{ '--stk-button-background-color-hover' }: var(--stk-button-background-color);
-	#{ '--stk-button-text-color-hover' }: var(--stk-button-text-color);
-	#{ '--stk-button-outline-color-hover' }: var(--stk-button-outline-color);
-}
-// :where(.stk-hover-parent:hover) .stk-block-background {
-// 	#{ '--stk-button-background-color-hover' }: var(--stk-button-background-color);
-// 	#{ '--stk-button-text-color-hover' }: var(--stk-button-text-color);
-// 	#{ '--stk-button-outline-color-hover' }: var(--stk-button-outline-color);
-// }
 
 // Images
 .stk-img-wrapper {

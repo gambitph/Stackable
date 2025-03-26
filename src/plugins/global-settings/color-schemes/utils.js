@@ -41,11 +41,11 @@ const camelToKebab = property => {
 	return '--stk-' + result
 }
 
-const getInheritedValue = ( property, currentState, mode ) => {
+const getInheritedValue = ( property, currentState, inheritParentHover = true ) => {
 	let value = property?.[ currentState ]
 
 	// The block should inherit the desktopParentHover value on hover state if it is a container scheme
-	if ( ! value && currentState === 'desktopHover' && mode === 'container' ) {
+	if ( ! value && currentState === 'desktopHover' && inheritParentHover ) {
 		value = property?.desktopParentHover
 	}
 
@@ -93,13 +93,20 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 				decls[ state ].push( `${ customProperty }${ suffix }: ${ scheme[ property ]?.[ state ] };` )
 			}
 
-			const inheritedValue = getInheritedValue( scheme[ property ], state, mode )
+			const inheritedValue = getInheritedValue( scheme[ property ], state )
+			const inheritedNormalValue = getInheritedValue( scheme[ property ], state, false )
 			if ( state === 'desktopParentHover' && currentHoverState !== 'normal' && property !== 'backgroundColor' && inheritedValue ) {
 				decls.desktopHover.push( `${ customProperty }-parent-hover: ${ inheritedValue };` )
 			}
 
-			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue && mode === 'container' ) {
-				decls[ state ].push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
+			// Inherit the normal value on hover state
+			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedNormalValue ) {
+				decls.desktop.push( `${ customProperty }${ suffix }: ${ inheritedNormalValue };` )
+			}
+
+			// Inherit the parent-hover value on hover state
+			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue ) {
+				decls.desktopParentHover.push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
 			}
 
 			if ( currentHoverState !== 'normal' ) {

@@ -68,7 +68,7 @@ const COLOR_SETTINGS = [ {
 	property: 'accentColor',
 	disabledTooltip: {
 		hover: sprintf( __( 'Changing the %s is not allowed for %s state.', i18n ),
-			__( 'Text Color', i18n ), __( 'hover', i18n ) ),
+			__( 'Accent Color', i18n ), __( 'hover', i18n ) ),
 	},
 }, {
 	label: __( 'Button Color', i18n ),
