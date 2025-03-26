@@ -1,5 +1,6 @@
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-icon-list {
+	--stk-icon-list-marker-color: var(--stk-accent-color);
 	.stk-block-icon-list--grid:is(ul, ol) {
 		display: grid;
 		grid-template-columns: repeat(var(--stk-icon-list-column-count, 1), 1fr);

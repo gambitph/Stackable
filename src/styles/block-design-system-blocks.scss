@@ -204,7 +204,8 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 
 // Block Background
 .stk-block-background {
-	background: cssvar(block-background-color) center center;
+	background-color: cssvar(block-background-color);
+	background-image: cssvar(block-background-color);
 	border-radius: cssvar(block-background-border-radius);
 	box-shadow: cssvar(block-background-box-shadow);
 	&:not(.stk--no-padding) {
@@ -214,7 +215,8 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		}
 	}
 	&:hover {
-		background: var(--stk-block-background-color-hover, cssvar(block-background-color)) center center;
+		background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
+		background-image: var(--stk-block-background-color-hover, cssvar(block-background-color));
 	}
 }
 
