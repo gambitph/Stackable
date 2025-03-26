@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { fetchSettings } from '~stackable/util'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -10,6 +11,7 @@ import {
 	register, createReduxStore, dispatch,
 } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
+import { __ } from '@wordpress/i18n'
 
 // Include all the stored state.
 const DEFAULT_STATE = {
@@ -78,7 +80,7 @@ domReady( () => {
 		} = response
 
 		const colorSchemes = Array.isArray( _colorSchemes ) && _colorSchemes.length > 0 ? _colorSchemes : [ {
-			name: 'Default Scheme',
+			name: __( 'Default Scheme', i18n ),
 			key: 'scheme-default-1',
 			colorScheme: {
 				backgroundColor: { desktop: '' },
@@ -92,7 +94,7 @@ domReady( () => {
 			},
 			hideInPicker: false,
 		}, {
-			name: 'Color Scheme 2',
+			name: __( 'Background Scheme', i18n ),
 			key: 'scheme-default-2',
 			colorScheme: {
 				backgroundColor: { desktop: '' },

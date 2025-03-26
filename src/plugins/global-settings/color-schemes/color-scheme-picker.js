@@ -376,6 +376,10 @@ const ColorSchemePicker = props => {
 		}
 	}
 
+	const isNameReadOnly = itemInEdit?.key === 'scheme-default-1' ? true
+		: ! isPro && itemInEdit?.key === 'scheme-default-2' ? true
+			: false
+
 	return ( ! itemInEdit ? <SortablePicker
 		ref={ ref }
 		{ ...props }
@@ -404,7 +408,13 @@ const ColorSchemePicker = props => {
 			onDuplicate={ () => onDuplicate( itemInEdit ) }
 		/>
 		<div className="stk-global-color-scheme__edit-panel-preview">
-			<p> { __( 'Editing this scheme will also change all blocks that currently use this color scheme.', i18n ) } </p>
+			{
+				! isPro && itemInEdit.key === 'scheme-default-1'
+					? <p> { __( 'Change the color scheme used for all blocks, and when the container option is enabled for a block.', i18n ) } </p>
+					: ! isPro && itemInEdit.key === 'scheme-default-2'
+						? <p> { __( 'Change the color scheme applied when the background option is enabled for a block.', i18n ) } </p>
+						: <p> { __( 'Editing this scheme will also change all blocks that currently use this color scheme.', i18n ) } </p>
+			}
 
 			<ItemPreview item={ itemInEdit } withWrapper={ true } />
 			<AdvancedTextControl
@@ -412,10 +422,8 @@ const ColorSchemePicker = props => {
 				hasPanelModifiedIndicator={ false }
 				value={ itemInEdit?.name }
 				allowReset={ false }
-				{ ...{
-					readOnly: itemInEdit?.key === 'scheme-default-1' ? true : false,
-					onChange: itemInEdit?.key === 'scheme-default-1' ? null : name => onChangeName( name ),
-				} }
+				readOnly={ isNameReadOnly }
+				onChange={ onChangeName }
 			/>
 		</div>
 
@@ -443,7 +451,13 @@ const ColorSchemePicker = props => {
 				hover={ getAllowedHover( settings.property ) }
 				forceUpdateHoverState={ true }
 				onChange={ color => onChange( settings.property, color ) }
-				help={ settings.property === 'backgroundColor' ? __( 'Note: Background color is not used for Base Color Scheme.', i18n ) : '' }
+				help={
+					! isPro && itemInEdit.key === 'scheme-default-1' && settings.property === 'backgroundColor'
+						? __( 'Note: This background color is used when the container option of the block is enabled.', i18n )
+						: isPro && settings.property === 'backgroundColor'
+							? __( 'Note: Background color is not used for Base Color Scheme.', i18n )
+							: ''
+				}
 				hasGradientPicker={ hasGradientPicker( settings.property ) }
 				enableGradient={ currentHoverState === 'normal' || settings.property === 'buttonBackgroundColor' }
 				additionalToggleProps={ getToggleProps( settings ) }
