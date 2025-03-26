@@ -55,7 +55,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 				{ ! itemInEdit && <p className="components-base-control__help">
 					{ __( 'Color schemes are applied to all blocks and sections of your entire website.', i18n ) }
 					&nbsp;
-					<a href="https://docs.wpstackable.com/article/362-how-to-use-global-colors?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+					<a href="https://docs.wpstackable.com/article/649-how-to-use-color-schemes?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
 						{ __( 'Learn more about Global Color Schemes', i18n ) }
 					</a>
 				</p>
