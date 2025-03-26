@@ -61,8 +61,8 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 	}
 	&.is-style-plain .stk-button {
 		#{ '--stk-button-background-color' }: var(--stk-button-background-color-parent-hover, #008de4);
-		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-parent-hover, #008de4);
-		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-parent-hover, #008de4);
+		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-parent-hover, cssvar(button-background-color));
+		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-parent-hover, cssvar(button-background-color));
 	}
 }
 .is-selected > .stk--is-hovered:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
@@ -84,9 +84,9 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 	}
 	&.is-style-plain .stk-button {
 		#{ '--stk-button-background-color' }: var(--stk-button-background-color-current-hover, #008de4);
-		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-current-hover, #008de4);
-		#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-current-hover, #008de4);
-		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-current-hover, #008de4);
+		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-current-hover, cssvar(button-background-color));
+		#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-current-hover, cssvar(button-background-color));
+		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-current-hover, cssvar(button-background-color));
 	}
 }
 
