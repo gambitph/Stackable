@@ -109,11 +109,6 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 				decls.desktopParentHover.push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
 			}
 
-			if ( currentHoverState !== 'normal' ) {
-				const currentHover = mode === '' && currentHoverState === 'parent-hover' ? '' : `-${ currentHoverState }`
-				decls.desktopHover.push( `${ customProperty }-current-hover: var(${ customProperty }${ currentHover });` )
-			}
-
 			// If button background color is gradient, plain style buuttons should use the button outline color.
 			if ( property === 'buttonBackgroundColor' && isGradient( scheme[ property ]?.[ state ] ) ) {
 				decls[ state ].push( `:where(.is-style-plain){ --stk-button-plain-text-color${ suffix }: var(--stk-button-outline-color${ suffix }); }` )

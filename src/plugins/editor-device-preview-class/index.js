@@ -7,7 +7,7 @@
 /**
  * External dependencies
  */
-import { useDeviceType } from '~stackable/hooks'
+import { useDeviceType, useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -18,6 +18,7 @@ import { registerPlugin } from '@wordpress/plugins'
 
 const EditorPreviewClass = () => {
 	const deviceType = useDeviceType()
+	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
 	const editorEl = useSelect( select => {
 		return select( 'stackable/editor-dom' ).getEditorDom()
 	}, [] )
@@ -33,6 +34,13 @@ const EditorPreviewClass = () => {
 				editorEl.classList.add( `stk-preview-device-${ deviceType.toLowerCase() }` )
 			}
 
+			// Add hover state class
+			// Dev note: This allows us to easily add CSS rules for each hover state in global styles.
+			if ( editorEl && editorEl.classList.contains( `stk-preview-state--${ currentHoverState }` ) === false ) {
+				editorEl.classList.remove( 'stk-preview-state--normal', 'stk-preview-state--hover', 'stk-preview-state--parent-hover', 'stk-preview-state--collapsed' )
+				editorEl.classList.add( `stk-preview-state--${ currentHoverState }` )
+			}
+
 			// Add theme class
 			if ( document.querySelector( 'body' ).className.match( themeRegex ) && ! editorEl.className.match( themeRegex ) ) {
 				const theme = document.querySelector( 'body' ).className.match( themeRegex )[ 0 ]
@@ -45,6 +53,10 @@ const EditorPreviewClass = () => {
 					editorEl.classList.remove( 'stk-preview-device-desktop', 'stk-preview-device-tablet', 'stk-preview-device-mobile' )
 					editorEl.classList.add( `stk-preview-device-${ deviceType.toLowerCase() }` )
 				}
+				if ( editorEl?.classList.contains( `stk-preview-state--${ currentHoverState }` ) === false ) {
+					editorEl.classList.remove( 'stk-preview-state--normal', 'stk-preview-state--hover', 'stk-preview-state--parent-hover', 'stk-preview-state--collapsed' )
+					editorEl.classList.add( `stk-preview-state--${ currentHoverState }` )
+				}
 				if ( document.querySelector( 'body' ).className.match( themeRegex ) && ! editorEl.className.match( themeRegex ) ) {
 					const theme = document.querySelector( 'body' ).className.match( themeRegex )[ 0 ]
 					editorEl.classList.add( theme )
@@ -53,7 +65,7 @@ const EditorPreviewClass = () => {
 
 			return () => mo.disconnect()
 		}
-	}, [ editorEl, deviceType ] )
+	}, [ editorEl, deviceType, currentHoverState ] )
 
 	return null
 }

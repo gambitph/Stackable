@@ -14,11 +14,12 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 	#{ '--stk-accent-color' }: cssvar(accent-color-parent-hover);
 }
 
-.stk--is-hovered > .stk-hover-parent .stk-block a {
+.stk--is-hovered > .stk-hover-parent .stk-block a,
+.stk-preview-state--parent-hover .is-selected > .stk-block a {
 	color: var(--stk-link-color-parent-hover);
 }
-.is-selected > .stk--is-hovered.stk-block a {
-	color: var(--stk-link-color-current-hover);
+.stk-preview-state--hover .is-selected > .stk-block a {
+	color: var(--stk-link-color-hover);
 }
 
 // Block spacing when horizontally oriented.
@@ -45,7 +46,8 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 	}
 }
 
-.stk--is-hovered > .stk-hover-parent :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+.stk--is-hovered > .stk-hover-parent :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination),
+.stk-preview-state--parent-hover .is-selected > :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 	&:not(.is-style-link, .is-style-ghost, .is-style-plain) .stk-button {
 		background: var(--stk-button-background-color-parent-hover, cssvar(button-background-color));
 		#{ '--stk-button-text-color' }: var(--stk-button-text-color-parent-hover, #fff);
@@ -65,28 +67,28 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-parent-hover, cssvar(button-background-color));
 	}
 }
-.is-selected > .stk--is-hovered:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+.stk-preview-state--hover .is-selected > :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 	&:not(.is-style-link, .is-style-ghost, .is-style-plain) .stk-button {
-		background: var(--stk-button-background-color-current-hover, cssvar(button-background-color));
-		#{ '--stk-button-text-color' }: var(--stk-button-text-color-current-hover, #fff);
-		#{ '--stk-accent-color-hover' }: var(--stk-button-text-color-current-hover, #fff);
-		#{ '--stk-accent-color' }: var(--stk-button-text-color-current-hover, #fff);
+		background: var(--stk-button-background-color-hover, cssvar(button-background-color));
+		#{ '--stk-button-text-color' }: var(--stk-button-text-color-hover, #fff);
+		#{ '--stk-accent-color-hover' }: var(--stk-button-text-color-hover, #fff);
+		#{ '--stk-accent-color' }: var(--stk-button-text-color-hover, #fff);
 	}
 	&.is-style-link .stk-button {
-		#{ '--stk-accent-color-hover' }: var(--stk-link-color-current-hover);
-		#{ '--stk-accent-color' }: var(--stk-link-color-current-hover);
+		#{ '--stk-accent-color-hover' }: var(--stk-link-color-hover);
+		#{ '--stk-accent-color' }: var(--stk-link-color-hover);
 	}
 	&.is-style-ghost .stk-button {
-		#{ '--stk-button-outline-color' }: var(--stk-button-outline-color-current-hover, #008de4);
-		#{ '--stk-button-text-color' }: var(--stk-button-outline-color-current-hover, #008de4);
-		#{ '--stk-accent-color-hover' }: var(--stk-button-outline-color-current-hover, #008de4);
-		#{ '--stk-accent-color' }: var(--stk-button-outline-color-current-hover, #008de4);
+		#{ '--stk-button-outline-color' }: var(--stk-button-outline-color-hover, #008de4);
+		#{ '--stk-button-text-color' }: var(--stk-button-outline-color-hover, #008de4);
+		#{ '--stk-accent-color-hover' }: var(--stk-button-outline-color-hover, #008de4);
+		#{ '--stk-accent-color' }: var(--stk-button-outline-color-hover, #008de4);
 	}
 	&.is-style-plain .stk-button {
-		#{ '--stk-button-background-color' }: var(--stk-button-background-color-current-hover, #008de4);
-		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-current-hover, cssvar(button-background-color));
-		#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-current-hover, cssvar(button-background-color));
-		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-current-hover, cssvar(button-background-color));
+		#{ '--stk-button-background-color' }: var(--stk-button-background-color-hover, #008de4);
+		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
+		#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
+		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
 	}
 }
 
