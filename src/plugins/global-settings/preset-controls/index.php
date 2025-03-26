@@ -14,6 +14,16 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 	 * Size and Spacing Preset Controls
 	 */
     class Stackable_Size_And_Spacing_Preset_Controls {
+		public const PRESET_MAPPING = array(
+			'fontSizes' => array(
+				'settings' => array('typography', 'fontSizes' ),
+				'prefix' => 'font-size',
+			),
+			'spacingSizes' => array(
+				'settings' => array( 'spacing', 'spacingSizes' ),
+				'prefix' => 'spacing-size',
+			),
+		);
 
 		public $custom_presets;
 		public $theme_presets;
@@ -47,18 +57,33 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		}
 
 		/**
-		 * Generate CSS variables based on preset type (e.g., fontSizes, spacing)
-		 *
-		 * @param array $presests 
+		 * Generate CSS variables based on the property (e.g., fontSizes, spacing).
+		 * The given presets will be overriden it match with a preset from custom.
+		 * 
+		 * @param array $property 
+		 * @param array $presets 
 		 * @param array $prefix 
 		 * @return mixed
 		 */
-		public function generate_css_variables( $presets, $prefix ) {
+		public function generate_css_variables( $property, $presets, $prefix ) {
+			$custom_presets = $this->custom_presets[ $property ] ?? [];
+			
 			$css = "";
+
+			// Convert presets into an associative array with key 'slug'
+			$presets_by_slug = [];
 			foreach ( $presets as $preset ) {
+				$presets_by_slug[ $preset[ 'slug' ] ] = $preset;
+			}
+			// Override values in base presets if it exist in custom presets
+			foreach ( $custom_presets as $custom ) {
+				$presets_by_slug[ $custom[ 'slug' ] ] = $custom;
+			}
+			
+			foreach ( $presets_by_slug as $preset ) {
 				$slug = $preset[ 'slug' ];
 				$size = $preset[ 'size' ];
-				$css .= "--stk--preset--$prefix--$slug: $size;\n";
+				$css .= "--stk--preset--$prefix--{$preset['slug']}: {$preset['size']};\n";
 			}
 	
 			return $css;
@@ -82,33 +107,26 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * @return String
 		 */
 		public function add_preset_controls_styles( $current_css ) {
-			$preset_keys = array(
-				'spacing-size' => array( 'spacing', 'spacingSizes' ),
-				'font-size' => array( 'typography', 'fontSizes' ),
-			);
-
 			$generated_css = ":root {\n";
 
-			foreach ( $preset_keys as $key => $value ) {
-				if ( ! empty( $this->deepGet( $this->custom_presets, [ $value[ 1 ] ] ) ) ) {
+			foreach ( self::PRESET_MAPPING as $key => $value ) {
+				if ( ! empty( $this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ] ) ) {
 					$generated_css .= $this->generate_css_variables( 
-						$this->deepGet( $this->custom_presets, [ $value[ 1 ] ] ), 
 						$key,
+						$this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ], 
+						$value[ 'prefix' ],
 					);
-				}elseif ( ! empty( $this->deepGet( $this->theme_presets, $value )[ 'theme' ] ) ) {
+				} elseif ( ! empty( $this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ] ) ) {
 					$generated_css .= $this->generate_css_variables( 
-						$this->deepGet( $this->theme_presets, $value )[ 'theme' ], 
 						$key,
-					);
-				} elseif ( ! empty( $this->deepGet( $this->default_presets, $value )[ 'default' ] ) ) {
-					$generated_css .= $this->generate_css_variables( 
-						$this->deepGet( $this->default_presets, $value )[ 'default' ], 
-						$key,
+						$this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ], 
+						$value[ 'prefix' ],
 					);
 				} else {
 					$generated_css .= $this->generate_css_variables( 
-						$this->deepGet( $this->stackable_presets, $value ), 
 						$key,
+						$this->deepGet( $this->stackable_presets, $value[ 'settings' ] ), 
+						$value[ 'prefix' ],
 					);
 				}
 			}
