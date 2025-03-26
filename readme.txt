@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.4
 Tested up to: 6.7.1
 Requires PHP: 7.3
-Stable tag: 3.14.2
+Stable tag: 3.15.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -184,6 +184,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.15 Global Design System](https://wpstackable.com/blog/introducing-the-new-stackable-global-design-system/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.14 Icon Library & Granular Plugin Settings](https://wpstackable.com/blog/icon-library-granular-plugin-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.13 Improved Stackable Server Performance](https://wpstackable.com/blog/improved-server-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.12 WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -295,6 +296,20 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.15.0 =
+[Global Design System](https://wpstackable.com/blog/introducing-the-new-stackable-global-design-system/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Global Spacing and Layout - adjust spacing and layout across all blocks #3446
+* New: Global Color Scheme - create color schemes and apply it to your entire site #3457 #371
+* New: Global Typography Font Pairs - choose from preset font family pairs #3449 #370
+* New: Added button text in Global Typography #3463
+* New: Added modern font stacks to the font family option #3439
+* Change: Google Fonts are now loaded asynchronously #df0adcc
+* Fixed: Added placeholder text to the font family option #3440
+* Fixed: Prevent multiple fetches in the admin settings page #3441
+* Fixed: Google Fonts loaded with a delay in the editor #df0adcc
+* Fixed: Icon Label Block - Icon Gap Resets to a Different Value When an Icon Size Is Set #3426
 
 = 3.14.2 =
 * New: Added support for Blocksy modern font stacks #3435
