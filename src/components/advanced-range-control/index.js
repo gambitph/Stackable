@@ -121,6 +121,10 @@ const AdvancedRangeControl = props => {
 
 		// On reset, allow overriding the value.
 		if ( newValue === '' ) {
+			// Reset should also change from mark mode
+			if ( isMarkMode ) {
+				setIsMarkMode( false )
+			}
 			const overrideValue = props.onOverrideReset?.()
 			if ( typeof overrideValue !== 'undefined' ) {
 				newValue = overrideValue
@@ -144,18 +148,18 @@ const AdvancedRangeControl = props => {
 		propsToPass.sliderMax = props.marks.length - 1
 		propsToPass.step = 1
 
-		// Show the marks and labels
+		// Show the marks and names
 		propsToPass.marks = props.marks.reduce( ( acc, mark, index ) => {
 			return [
 				{
 					value: index,
-					label: undefined,
+					name: undefined,
 				},
 				...acc,
 			]
 		}, [] )
 		propsToPass.renderTooltipContent = value => {
-			return props.marks[ value ]?.label || ''
+			return props.marks[ value ]?.name || ''
 		}
 
 		// Other necessary props for steps.
@@ -169,6 +173,11 @@ const AdvancedRangeControl = props => {
 		controlProps.className = controlProps.className || ''
 		controlProps.className += 'stk-range-control--with-marks'
 		controlProps.className += isMarkMode ? ' stk-range-control--mark-mode' : ''
+	}
+
+	if ( props.isCustomPreset ) {
+		controlProps.className = controlProps.className || ''
+		controlProps.className += 'stk-preset-controls'
 	}
 
 	// We need to change the way we handle the value and onChange if we're doing marks
@@ -227,10 +236,13 @@ const AdvancedRangeControl = props => {
 				</RangeControl>
 			</DynamicContentControl>
 			<ResetButton
+				// Allow running own reset for custom preset controls since
+				// unit is also needed to be reset
 				allowReset={ props.allowReset }
+				showReset={ props.showReset }
 				value={ derivedValue }
 				default={ props.default }
-				onChange={ _onChange }
+				onChange={ props.onReset ? props.onReset : _onChange }
 			/>
 		</AdvancedControl>
 	)
@@ -238,6 +250,8 @@ const AdvancedRangeControl = props => {
 
 AdvancedRangeControl.defaultProps = {
 	allowReset: true,
+	onReset: undefined,
+	showReset: undefined,
 	isDynamic: false,
 	default: '',
 
@@ -250,9 +264,10 @@ AdvancedRangeControl.defaultProps = {
 	onOverrideReset: undefined,
 	forcePlaceholder: false,
 
-	marks: undefined, // [{ value: '14px', label: 'S' }, { value: '16px', label: 'M' }]
+	marks: undefined, // [{ value: '14px', name: 'S' }, { value: '16px', name: 'M' }]
 	allowCustom: true,
 	hasCSSVariableValue: false,
+	isCustomPreset: false,
 }
 
 export default memo( AdvancedRangeControl, isEqual )
