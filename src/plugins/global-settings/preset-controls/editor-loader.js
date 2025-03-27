@@ -23,7 +23,7 @@ const renderGlobalStyles = ( customPresets, setStyles ) => {
 
 	Object.entries( customPresets ).forEach( ( [ key, presets ] ) => {
 		const styleRules = presets?.map( preset => {
-			return preset 
+			return preset && ( ! preset?.isDiscarded )
 				? `--stk--preset--${ PRESET_MAPPING[ key ]?.prefix }--${ preset?.slug || '' }: ${ preset?.size || '' };`
 				: ''
 		} )
