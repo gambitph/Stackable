@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { hoverState } from '../utils'
+import { schemeHasValue } from './utils'
 import PRESET_COLOR_SCHEMES from './preset-color-schemes.json'
 /**
  * External dependencies
@@ -314,7 +315,8 @@ const ColorSchemePicker = props => {
 			buttonOutlineColor: getInheritedValue( item.colorScheme.buttonOutlineColor ) || defaults.buttonOutlineColor.desktop,
 		}
 
-		const Preview = <ColorSchemePreview colors={ colors } withWrapper={ withWrapper } />
+		const isDisabled = ! schemeHasValue( item.colorScheme ) || withWrapper
+		const Preview = <ColorSchemePreview colors={ colors } withWrapper={ withWrapper } isDisabled={ isDisabled } />
 
 		return withWrapper ? <div
 			className="stk-global-color-scheme__preview-wrapper"
