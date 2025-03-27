@@ -47,6 +47,9 @@
 	grid-template-columns: repeat(2, 1fr);
 	overflow-y: scroll;
 	height: 235px;
+	.stk-global-color-scheme__preview {
+		display: grid;
+	}
 
 	.stk-global-color-scheme__preview__background {
 		outline: 1px solid #e0e0e0;
@@ -55,16 +58,19 @@
 
 .stk-global-color-scheme__preview {
 	position: relative;
-	&::before {
-		content: "\f543";
-		font-family: dashicons;
-		font-size: 22px;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		color: #333;
-	}
+	flex-shrink: 0;
+	display: flex;
+}
+
+.stk-global-color-scheme__preview:has(.stk-scheme--is-disabled)::before {
+	content: "\f543";
+	font-family: dashicons;
+	font-size: 22px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #333;
 }
 
 .stk-scheme--is-disabled {
