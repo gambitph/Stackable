@@ -101,6 +101,14 @@ const renderGlobalStyles = (
 			const hoverState = state.includes( 'ParentHover' ) ? 'parent-hover' : ( state.includes( 'Hover' ) ? 'hover' : 'normal' )
 
 			deviceCss[ device ].push( getValue( property, device, hoverState, value, unit ) )
+
+			// This is for backward compatibility. Add a custom property for the icon size of custom icons.
+			// This is to ensure that for custom icons that don't have iconSize attribute,
+			// their icon size won't change after upgrading.
+			// The custom property allows us to also apply the global icon size setting to custom icons.
+			if ( property === 'button-icon-size' || property === 'icon-size' ) {
+				deviceCss[ device ].push( getValue( `custom-${ property }`, device, hoverState, value, unit ) )
+			}
 		} )
 	} )
 

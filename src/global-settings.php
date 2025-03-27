@@ -1024,6 +1024,14 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					}
 
 					$css[ $device ][ $custom_property ] = $style;
+
+					// This is for backward compatibility. Add a custom property for the icon size of custom icons.
+					// This is to ensure that for custom icons that don't have iconSize attribute,
+					// their icon size won't change after upgrading.
+					// The custom property allows us to also apply the global icon size setting to custom icons.
+					if ( $property === 'button-icon-size' || $property === 'icon-size' ) {
+						$css[ $device ][ '--stk-custom-' . $property ] = $style;
+					}
 				}
 			}
 
