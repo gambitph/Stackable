@@ -58,11 +58,12 @@
 	&::before {
 		content: "\f543";
 		font-family: dashicons;
-		font-size: 16px;
+		font-size: 22px;
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+		color: #333;
 	}
 }
 
