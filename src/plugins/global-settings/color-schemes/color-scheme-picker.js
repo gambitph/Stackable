@@ -398,7 +398,11 @@ const ColorSchemePicker = props => {
 		showResetCallback={ item => showResetButton( item ) }
 	/> : <>
 		<InspectorSubHeader
-			title={ __( 'Edit Color Scheme', i18n ) }
+			title={ ! isPro && itemInEdit.key === 'scheme-default-1'
+				? sprintf( __( 'Editing %s', i18n ), __( 'Default Scheme', i18n ) )
+				: ! isPro && itemInEdit.key === 'scheme-default-2'
+					? sprintf( __( 'Editing %s', i18n ), __( 'Background Scheme', i18n ) )
+					: sprintf( __( 'Editing %s', i18n ), __( 'Color Scheme', i18n ) ) }
 			onBack={ () => setItemInEdit( null ) }
 			showTrash={ subHeaderControls.showTrash }
 			showReset={ subHeaderControls.showReset }
