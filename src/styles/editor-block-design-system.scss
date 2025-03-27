@@ -140,7 +140,8 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 .stk--is-hovered .stk-container:not(.stk--no-background) {
 	box-shadow: cssvar(container-box-shadow-hover);
 	border-width: cssvar(container-border-width-hover);
-	background: var(--stk-container-background-color-hover, cssvar(container-background-color));
+	background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
+	background-image: var(--stk-container-background-color-hover, cssvar(container-background-color));
 }
 
 // Block Backgrounds
