@@ -173,7 +173,7 @@ const Spacing = props => {
 		highlight: 'margin',
 	}
 
-	const presetMarks = usePresetControls( 'spacingSizes' )
+	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
 
 	return (
 		<>
