@@ -39,6 +39,10 @@
 	.stk-control__reset-button {
 		margin-top: 6px;
 	}
+
+	&:has(.components-button[aria-disabled="true"]) {
+		opacity: 0.4;
+	}
 }
 
 // Popover container.
