@@ -1719,6 +1719,52 @@
     ]
   },
   {
+    "family": "Atkinson Hyperlegible Mono",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Atkinson Hyperlegible Next",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Atma",
     "variants": [
       "300",
@@ -2678,7 +2724,7 @@
     ]
   },
   {
-    "family": "Big Shoulders Display",
+    "family": "Big Shoulders",
     "variants": [
       "100",
       "200",
@@ -2697,7 +2743,7 @@
     ]
   },
   {
-    "family": "Big Shoulders Inline Display",
+    "family": "Big Shoulders Inline",
     "variants": [
       "100",
       "200",
@@ -2716,64 +2762,7 @@
     ]
   },
   {
-    "family": "Big Shoulders Inline Text",
-    "variants": [
-      "100",
-      "200",
-      "300",
-      "regular",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
-    "family": "Big Shoulders Stencil Display",
-    "variants": [
-      "100",
-      "200",
-      "300",
-      "regular",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
-    "family": "Big Shoulders Stencil Text",
-    "variants": [
-      "100",
-      "200",
-      "300",
-      "regular",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
-    "family": "Big Shoulders Text",
+    "family": "Big Shoulders Stencil",
     "variants": [
       "100",
       "200",
@@ -3070,6 +3059,16 @@
     ]
   },
   {
+    "family": "Boldonse",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Bona Nova",
     "variants": [
       "regular",
@@ -3287,6 +3286,8 @@
     "family": "Buenard",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700"
     ],
     "subsets": [
@@ -3383,6 +3384,16 @@
   },
   {
     "family": "Butterfly Kids",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Bytesized",
     "variants": [
       "regular"
     ],
@@ -4440,14 +4451,14 @@
     "family": "Cormorant Garamond",
     "variants": [
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -4462,14 +4473,14 @@
     "family": "Cormorant Infant",
     "variants": [
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -7026,6 +7037,19 @@
     ]
   },
   {
+    "family": "Gidole",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Gidugu",
     "variants": [
       "regular"
@@ -8355,6 +8379,18 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Iansui",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chinese-hongkong",
+      "latin",
+      "latin-ext",
+      "symbols2"
     ]
   },
   {
@@ -11592,6 +11628,21 @@
     ]
   },
   {
+    "family": "Material Symbols",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Material Symbols Outlined",
     "variants": [
       "100",
@@ -11764,12 +11815,18 @@
     "family": "Merriweather",
     "variants": [
       "300",
-      "300italic",
       "regular",
-      "italic",
+      "500",
+      "600",
       "700",
-      "700italic",
+      "800",
       "900",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -12311,16 +12368,6 @@
       "latin",
       "latin-ext",
       "vietnamese"
-    ]
-  },
-  {
-    "family": "Montserrat Subrayada",
-    "variants": [
-      "regular",
-      "700"
-    ],
-    "subsets": [
-      "latin"
     ]
   },
   {
@@ -13200,7 +13247,11 @@
       "900"
     ],
     "subsets": [
-      "arabic"
+      "arabic",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -18525,6 +18576,17 @@
     ]
   },
   {
+    "family": "Ponomar",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin"
+    ]
+  },
+  {
     "family": "Pontano Sans",
     "variants": [
       "300",
@@ -23726,6 +23788,29 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Winky Sans",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
