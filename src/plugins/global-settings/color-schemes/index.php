@@ -359,10 +359,10 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			return $properties_per_state;
 		}
 
-		public function get_inherited_value( $property, $current_state, $mode ) {
+		public function get_inherited_value( $property, $current_state, $inheritParentHover = true ) {
 			$value = $property[ $current_state ] ?? false;
 
-			if ( ! $value && $current_state == 'desktopHover' && $mode === 'container' ) {
+			if ( ! $value && $current_state == 'desktopHover' && $inheritParentHover ) {
 				$value = $property[ 'desktopParentHover' ] ?? false;
 			}
 
@@ -425,9 +425,17 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 						$decls[ $state ][ $css_property ] = $scheme[ $property ][ $state ];
 					}
 
-					$inherited_value = $this->get_inherited_value( $scheme[ $property ], $state, $mode );
-					if ( $state === 'desktopHover' && ! $this->has_value( $scheme, $property, $state ) ) {
-						$decls[ $state ][ $css_property ] = $inherited_value;
+					$inherited_value = $this->get_inherited_value( $scheme[ $property ], $state );
+					$inherited_normal_value = $this->get_inherited_value( $scheme[ $property ], $state, false );
+
+					// Inherit the normal value on hover state
+					if ( $state === 'desktopHover' && ! $this->has_value( $scheme, $property, $state ) && $inherited_normal_value) {
+						$decls[ 'desktop' ][ $css_property ] = $inherited_normal_value;
+					}
+
+					// Inherit the parent-hover value on hover state
+					if ( $state === 'desktopHover' && ! $this->has_value( $scheme, $property, $state ) && $inherited_value) {
+						$decls[ 'desktopParentHover' ][ $css_property ] = $inherited_value;
 					}
 
 					// If button background color is gradient, plain style buuttons should use the button outline color.

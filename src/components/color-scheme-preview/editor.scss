@@ -52,3 +52,20 @@
 		outline: 1px solid #e0e0e0;
 	}
 }
+
+.stk-global-color-scheme__preview {
+	position: relative;
+	&::before {
+		content: "\f543";
+		font-family: dashicons;
+		font-size: 16px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+
+.stk-scheme--is-disabled {
+	opacity: 0.1;
+}

@@ -35,7 +35,7 @@ const HOVER_OPTIONS = [
 		icon: <SVGStateHover />,
 	},
 	{
-		label: __( 'Parent Hovered State', i18n ),
+		label: __( 'Parent Container Hovered State', i18n ),
 		value: 'parent-hover',
 		icon: <SVGStateParentHover />,
 	},

@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { hoverState } from '../utils'
+import { schemeHasValue } from './utils'
 import PRESET_COLOR_SCHEMES from './preset-color-schemes.json'
 /**
  * External dependencies
@@ -68,7 +69,7 @@ const COLOR_SETTINGS = [ {
 	property: 'accentColor',
 	disabledTooltip: {
 		hover: sprintf( __( 'Changing the %s is not allowed for %s state.', i18n ),
-			__( 'Text Color', i18n ), __( 'hover', i18n ) ),
+			__( 'Accent Color', i18n ), __( 'hover', i18n ) ),
 	},
 }, {
 	label: __( 'Button Color', i18n ),
@@ -314,7 +315,8 @@ const ColorSchemePicker = props => {
 			buttonOutlineColor: getInheritedValue( item.colorScheme.buttonOutlineColor ) || defaults.buttonOutlineColor.desktop,
 		}
 
-		const Preview = <ColorSchemePreview colors={ colors } withWrapper={ withWrapper } />
+		const isDisabled = ! schemeHasValue( item.colorScheme ) || withWrapper
+		const Preview = <ColorSchemePreview colors={ colors } withWrapper={ withWrapper } isDisabled={ isDisabled } />
 
 		return withWrapper ? <div
 			className="stk-global-color-scheme__preview-wrapper"
@@ -398,7 +400,11 @@ const ColorSchemePicker = props => {
 		showResetCallback={ item => showResetButton( item ) }
 	/> : <>
 		<InspectorSubHeader
-			title={ __( 'Edit Color Scheme', i18n ) }
+			title={ ! isPro && itemInEdit.key === 'scheme-default-1'
+				? sprintf( __( 'Editing %s', i18n ), __( 'Default Scheme', i18n ) )
+				: ! isPro && itemInEdit.key === 'scheme-default-2'
+					? sprintf( __( 'Editing %s', i18n ), __( 'Background Scheme', i18n ) )
+					: sprintf( __( 'Editing %s', i18n ), __( 'Color Scheme', i18n ) ) }
 			onBack={ () => setItemInEdit( null ) }
 			showTrash={ subHeaderControls.showTrash }
 			showReset={ subHeaderControls.showReset }

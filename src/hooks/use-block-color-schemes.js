@@ -5,6 +5,15 @@ import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 
+// Check if the color scheme contains a value for any of the states
+const schemeHasValue = scheme => {
+	const hasValue = Object.values( scheme ).some( states => {
+		return Object.values( states ).some( value => value !== '' )
+	} )
+
+	return hasValue
+}
+
 export const useBlockColorSchemes = () => {
 	const {
 		getScheme,
@@ -32,6 +41,7 @@ export const useBlockColorSchemes = () => {
 		}, ...allColorSchemes?.map( scheme => ( {
 			label: scheme.name,
 			value: scheme.key,
+			disabled: ! schemeHasValue( scheme.colorScheme ),
 		} ) ) ]
 
 		// Returns the color scheme slug if it exists, otherwise return a fallback value
