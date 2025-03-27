@@ -315,7 +315,7 @@ const ColorSchemePicker = props => {
 			buttonOutlineColor: getInheritedValue( item.colorScheme.buttonOutlineColor ) || defaults.buttonOutlineColor.desktop,
 		}
 
-		const isDisabled = ! schemeHasValue( item.colorScheme ) || withWrapper
+		const isDisabled = withWrapper ? false : ! schemeHasValue( item.colorScheme )
 		const Preview = <ColorSchemePreview colors={ colors } withWrapper={ withWrapper } isDisabled={ isDisabled } />
 
 		return withWrapper ? <div
