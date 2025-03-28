@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.4
 Tested up to: 6.7.1
 Requires PHP: 7.3
-Stable tag: 3.15.0
+Stable tag: 3.15.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -94,6 +94,7 @@ You can choose which of these blocks you need, depending on your workflow. You c
 
 Turn the WordPress Block Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
 
+- Global Design System
 - Multiple Block Layouts
 - Flexbox Controls
 - Image and Video Lightbox
@@ -296,6 +297,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.15.1 =
+* Fixed: Hotfix background and container paddings having effects on hover
+* Fixed: Hotfix remove theme compatibility for the time being for global color schemes since they're affecting colors
 
 = 3.15.0 =
 [Global Design System](https://wpstackable.com/blog/introducing-the-new-stackable-global-design-system/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
