@@ -301,7 +301,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						<ControlSeparator />
 
 						<div className="ugb-global-settings-font-pair__heading">
-							<h3>{ __( 'Preset Font Pairs' ) }</h3>
+							<h3>{ __( 'Preset Font Pairs', i18n ) }</h3>
 							{ isPro && applyFilters(
 								'stackable.global-settings.typography.font-pairs.addFontPair',
 								[ ...FONT_PAIRS, ...customFontPairs ],
@@ -364,7 +364,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						{ showProNotice && <ProControlButton type="font-pairs" /> }
 						<ControlSeparator />
 
-						<h3>{ __( 'Typography Settings' ) }</h3>
+						<h3>{ __( 'Typography Settings', i18n ) }</h3>
 						{ TYPOGRAPHY_TAGS.map( ( {
 							label, selector, help,
 						}, index ) => {
