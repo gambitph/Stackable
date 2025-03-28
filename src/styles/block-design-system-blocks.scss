@@ -153,15 +153,15 @@
 .stk-container:not(.stk--no-padding) {
 	padding: cssvar(container-padding);
 
-	&:hover {
-		padding: cssvar(container-padding-hover);
-	}
+	// &:hover {
+	// 	padding: cssvar(container-padding-hover);
+	// }
 }
 
 .stk--container-small .stk-container:not(.stk--no-padding) {
 	#{ '--stk-container-padding' }: cssvar(container-padding-small);
-	#{ '--stk-container-padding-hover' }: cssvar(container-padding-small);
-	#{ '--stk-container-padding-parent-hover' }: cssvar(container-padding-small);
+	// #{ '--stk-container-padding-hover' }: cssvar(container-padding-small);
+	// #{ '--stk-container-padding-parent-hover' }: cssvar(container-padding-small);
 }
 .stk-container:not(.stk--no-background) {
 	background-color: cssvar(container-background-color);
@@ -185,15 +185,15 @@
 }
 .stk-container-padding {
 	padding: cssvar(container-padding);
-	&:hover {
-		padding: cssvar(container-padding-hover);
-	}
+	// &:hover {
+	// 	padding: cssvar(container-padding-hover);
+	// }
 }
 
-:where(.stk-hover-parent:hover) .stk-container:not(.stk--no-padding),
-:where(.stk-hover-parent:hover) .stk-container-padding {
-	padding: cssvar(container-padding-parent-hover);
-}
+// :where(.stk-hover-parent:hover) .stk-container:not(.stk--no-padding),
+// :where(.stk-hover-parent:hover) .stk-container-padding {
+// 	padding: cssvar(container-padding-parent-hover);
+// }
 
 // Columns
 .stk-block:not(.stk-block-column) {
@@ -214,9 +214,9 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 	box-shadow: cssvar(block-background-box-shadow);
 	&:not(.stk--no-padding) {
 		padding: cssvar(block-background-padding);
-		&:hover {
-			padding: cssvar(block-background-padding-hover);
-		}
+		// &:hover {
+		// 	padding: cssvar(block-background-padding-hover);
+		// }
 	}
 	&:hover {
 		background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
@@ -236,9 +236,9 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 :where(.stk-hover-parent:hover) .stk-block.stk-block-background {
 	border-width: cssvar(block-background-border-width-parent-hover);
 	box-shadow: cssvar(block-background-box-shadow-parent-hover);
-	&:not(.stk--no-padding) {
-		padding: cssvar(block-background-padding-parent-hover);
-	}
+	// &:not(.stk--no-padding) {
+	// 	padding: cssvar(block-background-padding-parent-hover);
+	// }
 }
 
 // Images

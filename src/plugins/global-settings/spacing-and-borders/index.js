@@ -185,7 +185,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						label={ __( 'Padding', i18n ) }
 						placeholder="24"
 						responsive="all"
-						hover="all"
+						// hover="all"
 						forceUpdateHoverState={ true }
 						min={ [ 0, 0, 0 ] }
 						sliderMax={ [ 200, 30, 100 ] }
@@ -271,7 +271,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 					<FourRangeControl
 						label={ __( 'Padding', i18n ) }
 						responsive="all"
-						hover="all"
+						// hover="all"
 						forceUpdateHoverState={ true }
 						min={ [ 0, 0, 0 ] }
 						sliderMax={ [ 200, 30, 100 ] }
