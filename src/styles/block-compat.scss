@@ -9,15 +9,15 @@ body.stk--is-blocksy-theme .stk-block { // Need to add .stk-block here, this doe
 	--stk-block-width-wide-detected: var(--theme-block-wide-max-width, var(--block-wide-max-width));
 }
 
-.stk--is-blocksy-theme .stk-block > :is(h1,h2,h3,h4,h5,h6) {
-	color: var(--stk-heading-color, var(--theme-headings-color));
-}
-body.stk--is-blocksy-theme :where(.stk-block.is-style-link, .stk-block:not(.stk-block-button)) a {
-	color: var(--stk-link-color, var(--theme-link-initial-color));
-	&:hover {
-		color: var(--stk-link-color-hover, var(--theme-link-hover-color));
-	}
-}
+// .stk--is-blocksy-theme .stk-block > :is(h1,h2,h3,h4,h5,h6) {
+// 	color: var(--stk-heading-color, var(--theme-headings-color));
+// }
+// body.stk--is-blocksy-theme :where(.stk-block.is-style-link, .stk-block:not(.stk-block-button)) a {
+// 	color: var(--stk-link-color, var(--theme-link-initial-color));
+// 	&:hover {
+// 		color: var(--stk-link-color-hover, var(--theme-link-hover-color));
+// 	}
+// }
 
 // Astra theme
 // Wide block width - used for Content Width of column-type blocks.
@@ -29,9 +29,9 @@ body.stk--is-astra-theme {
 		margin-right: auto;
 	}
 }
-.stk--is-astra-theme .stk-block > :is(h1,h2,h3,h4,h5,h6) {
-	color: var(--stk-heading-color, var(--ast-global-color-2));
-}
+// .stk--is-astra-theme .stk-block > :is(h1,h2,h3,h4,h5,h6) {
+// 	color: var(--stk-heading-color, var(--ast-global-color-2));
+// }
 
 
 // Neve theme
@@ -49,12 +49,12 @@ body.stk--is-kadence-theme :is(.entry-content, .site-content) .stk-block > .stk-
 		margin-right: auto;
 	}
 }
-body.stk--is-kadence-theme .stk-block > :is(h1,h2,h3,h4,h5,h6) {
-	color: var(--stk-heading-color, var(--global-palette3));
-}
-body.stk--is-kadence-theme :where(.stk-block) > :is(p, div) {
-	color: var(--stk-text-color, var(--global-palette4));
-}
+// body.stk--is-kadence-theme .stk-block > :is(h1,h2,h3,h4,h5,h6) {
+// 	color: var(--stk-heading-color, var(--global-palette3));
+// }
+// body.stk--is-kadence-theme :where(.stk-block) > :is(p, div) {
+// 	color: var(--stk-text-color, var(--global-palette4));
+// }
 
 // Storefront theme
 // Storefront adds negative inline margins and paddings inside our blocks.
