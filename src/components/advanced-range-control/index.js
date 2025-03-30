@@ -181,6 +181,7 @@ const AdvancedRangeControl = props => {
 	}
 
 	// We need to change the way we handle the value and onChange if we're doing marks
+	// Convert to float if the attribute is string to work with the slider
 	let rangeValue = propsToPass.isDynamic || props.hasCSSVariableValue ? parseFloat( derivedValue ) : derivedValue
 	let rangeOnChange = _onChange
 	if ( isMarkMode ) {
@@ -266,7 +267,7 @@ AdvancedRangeControl.defaultProps = {
 
 	marks: undefined, // [{ value: '14px', name: 'S' }, { value: '16px', name: 'M' }]
 	allowCustom: true,
-	hasCSSVariableValue: false,
+	hasCSSVariableValue: false, // If the attribute can have CSS variable value (string attribute\)
 	isCustomPreset: false,
 }
 

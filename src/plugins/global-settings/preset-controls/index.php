@@ -107,7 +107,8 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * @return String
 		 */
 		public function add_preset_controls_styles( $current_css ) {
-			$generated_css = ":root {\n";
+			$generated_css = "\n/* Global Preset Controls */\n";
+			$generated_css .= ":root {\n";
 
 			foreach ( self::PRESET_MAPPING as $key => $value ) {
 				if ( ! empty( $this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ] ) ) {
