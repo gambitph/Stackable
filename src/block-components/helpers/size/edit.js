@@ -193,6 +193,7 @@ const Spacing = props => {
 				visualGuide={ paddingVisualGuide }
 				placeholder={ props.paddingPlaceholder }
 				marks={ presetMarks }
+				hasCSSVariableValue={ true }
 			/>
 
 			{ props.enableMargin &&
@@ -211,6 +212,7 @@ const Spacing = props => {
 					} }
 					visualGuide={ marginVisualGuide }
 					marks={ presetMarks }
+					hasCSSVariableValue={ true }
 				/>
 			}
 		</>

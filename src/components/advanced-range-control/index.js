@@ -267,7 +267,7 @@ AdvancedRangeControl.defaultProps = {
 
 	marks: undefined, // [{ value: '14px', name: 'S' }, { value: '16px', name: 'M' }]
 	allowCustom: true,
-	hasCSSVariableValue: false, // If the attribute can have CSS variable value (string attribute\)
+	hasCSSVariableValue: false, // If the attribute can have CSS variable value (string attribute)
 	isCustomPreset: false,
 }
 

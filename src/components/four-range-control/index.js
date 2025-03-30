@@ -206,11 +206,12 @@ const FourRangeControl = memo( props => {
 	}
 	if ( props.marks && value ) {
 		// Check if the current value exsits in the marks
-		isMarkValue.first = isMarkValue.first && props.marks.some( mark => mark.value === firstValue + unit )
-		isMarkValue.top = isMarkValue.top && props.marks.some( mark => mark.value === value.top + unit )
-		isMarkValue.right = isMarkValue.right && props.marks.some( mark => mark.value === value.right + unit )
-		isMarkValue.bottom = isMarkValue.bottom && props.marks.some( mark => mark.value === value.bottom + unit )
-		isMarkValue.left = isMarkValue.left && props.marks.some( mark => mark.value === value.left + unit )
+		const marksUnit = ( props.hasCSSVariableValue ? '' : unit )
+		isMarkValue.first = isMarkValue.first && props.marks.some( mark => mark.value === firstValue + marksUnit )
+		isMarkValue.top = isMarkValue.top && props.marks.some( mark => mark.value === value.top + marksUnit )
+		isMarkValue.right = isMarkValue.right && props.marks.some( mark => mark.value === value.right + marksUnit )
+		isMarkValue.bottom = isMarkValue.bottom && props.marks.some( mark => mark.value === value.bottom + marksUnit )
+		isMarkValue.left = isMarkValue.left && props.marks.some( mark => mark.value === value.left + marksUnit )
 	}
 	const [ isFourMarkMode, setIsFourMarkMode ] = useState( isMarkValue )
 
@@ -288,18 +289,18 @@ const FourRangeControl = memo( props => {
 			newProps.sliderMax = props.marks.length - 1
 			newProps.step = 1
 
-			// Show the marks and labels
+			// Show the marks and names
 			newProps.marks = props.marks.reduce( ( acc, mark, index ) => {
 				return [
 					{
 						value: index,
-						label: undefined,
+						name: undefined,
 					},
 					...acc,
 				]
 			}, [] )
 			newProps.renderTooltipContent = value => {
-				return props.marks[ value ]?.label || ''
+				return props.marks[ value ]?.name || ''
 			}
 
 			// Other necessary props for steps.
@@ -321,7 +322,7 @@ const FourRangeControl = memo( props => {
 		if ( props.marks && isMarkMode ) {
 			rangeValue = props.marks.findIndex( mark => {
 				const [ _value, _unit ] = extractNumberAndUnit( mark.value )
-				return _value === value
+				return _value === initialValue
 			} )
 			rangeOnChange = value => {
 				if ( value === '' ) {
@@ -804,6 +805,7 @@ FourRangeControl.defaultProps = {
 
 	marks: undefined,
 	allowCustom: true,
+	hasCSSVariableValue: false,
 }
 
 export default memo( FourRangeControl )
