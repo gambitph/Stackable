@@ -3,7 +3,7 @@
  */
 import { unescape } from 'lodash'
 import { i18n } from 'stackable'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useAttributeEditHandlers, usePresetControls } from '~stackable/hooks'
 import {
 	AlignButtonsControl,
 	AdvancedRangeControl,
@@ -99,6 +99,8 @@ export const Controls = props => {
 	}, [ updateAttribute, debouncedText, text ] )
 
 	const onChangeContent = useCallback( text => setDebouncedText( escapeHTMLIfInvalid( text ) ), [] )
+
+	const presetMarks = usePresetControls( 'fontSizes' )?.getPresetMarks() || null
 
 	return (
 		<>
@@ -269,6 +271,8 @@ export const Controls = props => {
 					title: __( 'Font size', i18n ),
 					description: __( 'Sets the size of text characters', i18n ),
 				} }
+				marks={ presetMarks }
+				hasCSSVariableValue={ true }
 			/>
 
 			{ hasColor && (

@@ -43,6 +43,7 @@ const StackableRangeControl = memo( props => {
 		isShiftStepEnabled,
 		placeholderRender,
 		defaultValue: _defaultValue, // Don't pass this.
+		children: _children, // Don't pass this.
 		...propsToPass
 	} = props
 
@@ -178,6 +179,7 @@ const StackableRangeControl = memo( props => {
 				type="text"
 			/>
 		) }
+		{ _children }
 		{ allowReset &&
 			<Button
 				className="components-range-control__reset"

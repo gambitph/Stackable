@@ -23,6 +23,7 @@ import {
 	useBlockSetAttributesContext,
 	useDeviceType,
 	useBlockLayoutDefaults,
+	usePresetControls,
 } from '~stackable/hooks'
 import { range } from 'lodash'
 
@@ -123,6 +124,8 @@ export const Controls = props => {
 	const sortValues = deviceType === 'Desktop' ? defaultArrangement
 		: deviceType === 'Tablet' ? ( attributes.columnArrangementTablet || defaultArrangement )
 			: ( attributes.columnArrangementMobile || defaultArrangement )
+
+	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
 
 	return (
 		<>
@@ -284,6 +287,8 @@ export const Controls = props => {
 							video: 'column-gap',
 							description: __( 'Sets the distance between two or more columns', i18n ),
 						} }
+						marks={ presetMarks }
+						hasCSSVariableValue={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -296,6 +301,8 @@ export const Controls = props => {
 							// TODO: Add a working video
 							description: __( 'Sets the distance between two or more columns', i18n ),
 						} }
+						marks={ presetMarks }
+						hasCSSVariableValue={ true }
 					/>
 				</>
 			) }

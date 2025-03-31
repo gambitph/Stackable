@@ -7,7 +7,9 @@ import {
 	AdvancedRangeControl,
 	FourRangeControl,
 } from '~stackable/components'
-import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers, useDeviceType, usePresetControls,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -30,6 +32,8 @@ const Layout = props => {
 		labelVerticalAlign = __( 'Content Vertical Align', i18n ),
 	} = props.labels
 
+	const presetMarks = usePresetControls( 'blockHeights' )?.getPresetMarks() || null
+
 	return (
 		<>
 			{ props.hasMinHeight && <AdvancedRangeControl
@@ -47,6 +51,8 @@ const Layout = props => {
 					description: __( 'Adjusts the minimum allowable height of the block', i18n ),
 				} }
 				visualGuide={ props.visualGuide }
+				marks={ presetMarks }
+				hasCSSVariableValue={ true }
 			/> }
 
 			{ props.hasContentVerticalAlign &&
@@ -133,6 +139,8 @@ const Spacing = props => {
 		highlight: 'margin',
 	}
 
+	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+
 	return (
 		<>
 			<FourRangeControl
@@ -150,6 +158,8 @@ const Spacing = props => {
 				} }
 				visualGuide={ paddingVisualGuide }
 				placeholder={ props.paddingPlaceholder }
+				marks={ presetMarks }
+				hasCSSVariableValue={ true }
 			/>
 
 			{ props.enableMargin &&
@@ -167,6 +177,8 @@ const Spacing = props => {
 						description: __( 'Sets the block margin, i.e. the space outside the block between the block border and the next block.', i18n ),
 					} }
 					visualGuide={ marginVisualGuide }
+					marks={ presetMarks }
+					hasCSSVariableValue={ true }
 				/>
 			}
 		</>

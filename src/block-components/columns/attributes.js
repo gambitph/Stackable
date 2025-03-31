@@ -9,12 +9,12 @@ export const addAttributes = attrObject => {
 			},
 			columnGap: {
 				stkResponsive: true,
-				type: 'number',
+				type: 'string',
 				default: '',
 			},
 			rowGap: {
 				stkResponsive: true,
-				type: 'number',
+				type: 'string',
 				default: '',
 			},
 			columnWrapDesktop: { // Only applies to desktops

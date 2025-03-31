@@ -133,6 +133,12 @@ const LABELS = {
 			<li>{ __( 'Streamline your design workflow', i18n ) }</li>
 		</ul>,
 	},
+	'preset-controls': {
+		title: __( 'Customize the Preset Controls', i18n ),
+		description: <ul>
+			<li>{ __( 'Customize your own Preset Controls', i18n ) }</li>
+		</ul>,
+	},
 }
 
 const ProControl = props => {

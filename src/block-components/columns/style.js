@@ -30,16 +30,27 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		selector: '.%s-column',
 		styleRule: '--stk-column-gap',
 		attrName: 'columnGap',
-		format: '%spx',
 		responsive: 'all',
+		valueCallback: value => {
+			// Substitute with using format to work with preset controls
+			if ( value.startsWith( 'var(--stk' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 	}, {
 		...propsToPass,
 		renderIn: 'edit',
 		selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
 		styleRule: '--stk-column-gap',
 		attrName: 'columnGap',
-		format: '%spx',
 		responsive: 'all',
+		valueCallback: value => {
+			if ( value.startsWith( 'var(--stk' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 	} ] )
 
 	blockStyleGenerator.addBlockStyles( 'columnWrapDesktop', [ {
@@ -78,16 +89,26 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			selector: '.%s-column',
 			styleRule: 'rowGap',
 			attrName: 'rowGap',
-			format: '%spx',
 			responsive: 'all',
+			valueCallback: value => {
+				if ( value.startsWith( 'var(--stk' ) ) {
+					return value
+				}
+				return value + 'px'
+			},
 		}, {
 			...propsToPass,
 			renderIn: 'edit',
 			selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
 			styleRule: 'rowGap',
 			attrName: 'rowGap',
-			format: '%spx',
 			responsive: 'all',
+			valueCallback: value => {
+				if ( value.startsWith( 'var(--stk' ) ) {
+					return value
+				}
+				return value + 'px'
+			},
 		} ] )
 	}
 

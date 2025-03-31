@@ -10,6 +10,7 @@ import {
 	useAttributeName,
 	useBlockAttributesContext,
 	useBlockHoverState,
+	useBlockSetAttributesContext,
 	useDeviceType,
 } from '~stackable/hooks'
 
@@ -21,7 +22,10 @@ import { isEqual } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { memo } from '@wordpress/element'
+import { memo, useState } from '@wordpress/element'
+import { Button } from '@wordpress/components'
+import { settings } from '@wordpress/icons'
+import { dispatch } from '@wordpress/data'
 
 const AdvancedRangeControl = props => {
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
@@ -30,6 +34,7 @@ const AdvancedRangeControl = props => {
 	const deviceType = useDeviceType()
 	const [ currentHoverState ] = useBlockHoverState()
 	const hasUnits = !! props.units?.length
+	const setAttributes = useBlockSetAttributesContext()
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 	const {
 		unitAttribute,
@@ -98,14 +103,28 @@ const AdvancedRangeControl = props => {
 		placeholderRender = null
 	}
 
-	// If this supports dynamic content, then the value should be saved as a String.
+	// Is value at first render the same as a step value? If so, do mark mode
+	// at the start, or show custom
+	let isMarkValue = !! props.marks
+	if ( props.marks && value ) {
+		const valueToCheck = value + ( props.hasCSSVariableValue ? '' : unit )
+		// Check if the current value exsits in the marks
+		isMarkValue = isMarkValue && props.marks.some( mark => mark.value === valueToCheck )
+	}
+	const [ isMarkMode, setIsMarkMode ] = useState( isMarkValue )
+
+	// If this supports dynamic content and can have CSS variables, the value should be saved as a String.
 	// Important, the attribute type for this option should be a string.
 	const _onChange = value => {
 		const onChangeFunc = typeof props.onChange === 'undefined' ? onChange : props.onChange
-		let newValue = props.isDynamic ? value.toString() : value
+		let newValue = props.isDynamic || props.hasCSSVariableValue ? value.toString() : value
 
 		// On reset, allow overriding the value.
 		if ( newValue === '' ) {
+			// Reset should also change from mark mode
+			if ( isMarkMode ) {
+				setIsMarkMode( false )
+			}
 			const overrideValue = props.onOverrideReset?.()
 			if ( typeof overrideValue !== 'undefined' ) {
 				newValue = overrideValue
@@ -121,6 +140,75 @@ const AdvancedRangeControl = props => {
 		onChange: _onChange,
 	} )
 
+	// Support for steps. Modify the props to make the range control show steps.
+	if ( props.marks && isMarkMode ) {
+		// Steps only have 1 increment values
+		propsToPass.min = 0
+		propsToPass.max = props.marks.length - 1
+		propsToPass.sliderMax = props.marks.length - 1
+		propsToPass.step = 1
+
+		// Show the marks and names
+		propsToPass.marks = props.marks.reduce( ( acc, mark, index ) => {
+			return [
+				{
+					value: index,
+					name: undefined,
+				},
+				...acc,
+			]
+		}, [] )
+		propsToPass.renderTooltipContent = value => {
+			return props.marks[ value ]?.name || ''
+		}
+
+		// Other necessary props for steps.
+		propsToPass.withInputField = false
+		controlProps.units = false
+	} else {
+		propsToPass.marks = undefined
+	}
+
+	if ( props.marks ) {
+		controlProps.className = controlProps.className || ''
+		controlProps.className += 'stk-range-control--with-marks'
+		controlProps.className += isMarkMode ? ' stk-range-control--mark-mode' : ''
+	}
+
+	if ( props.isCustomPreset ) {
+		controlProps.className = controlProps.className || ''
+		controlProps.className += 'stk-preset-controls'
+	}
+
+	// We need to change the way we handle the value and onChange if we're doing marks
+	// Convert to float if the attribute is string to work with the slider
+	let rangeValue = propsToPass.isDynamic || props.hasCSSVariableValue ? parseFloat( derivedValue ) : derivedValue
+	let rangeOnChange = _onChange
+	if ( isMarkMode ) {
+		rangeValue = props.marks.findIndex( mark => {
+			const [ _value, _unit ] = extractNumberAndUnit( mark.value )
+			return _value === derivedValue
+		} )
+		rangeOnChange = value => {
+			if ( value === '' ) {
+				return _onChange( value )
+			}
+
+			// Extract the unit and value.
+			const markValue = props.marks[ value ]?.value || '0'
+			const [ _newValue, unit ] = extractNumberAndUnit( markValue )
+			const newValue = _newValue
+
+			// Update the unit.
+			if ( unit ) {
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				setAttributes( { [ unitAttrName ]: unit } )
+			}
+
+			_onChange( newValue )
+		}
+	}
+
 	return (
 		<AdvancedControl { ...controlProps }>
 			<DynamicContentControl
@@ -130,17 +218,32 @@ const AdvancedRangeControl = props => {
 			>
 				<RangeControl
 					{ ...propsToPass }
-					value={ propsToPass.isDynamic ? parseFloat( derivedValue ) : derivedValue }
-					onChange={ _onChange }
+					value={ rangeValue }
+					onChange={ rangeOnChange }
 					allowReset={ false }
 					placeholderRender={ placeholderRender }
-				/>
+					__nextHasNoMarginBottom
+				>
+					{ props.allowCustom && props.marks && (
+						<Button
+							className="stk-range-control__custom-button"
+							size="small"
+							variant="tertiary"
+							onClick={ () => setIsMarkMode( ! isMarkMode ) }
+							icon={ settings }
+						>
+						</Button>
+					) }
+				</RangeControl>
 			</DynamicContentControl>
 			<ResetButton
+				// Allow running own reset for custom preset controls since
+				// unit is also needed to be reset
 				allowReset={ props.allowReset }
+				showReset={ props.showReset }
 				value={ derivedValue }
 				default={ props.default }
-				onChange={ _onChange }
+				onChange={ props.onReset ? props.onReset : _onChange }
 			/>
 		</AdvancedControl>
 	)
@@ -148,6 +251,8 @@ const AdvancedRangeControl = props => {
 
 AdvancedRangeControl.defaultProps = {
 	allowReset: true,
+	onReset: undefined,
+	showReset: undefined,
 	isDynamic: false,
 	default: '',
 
@@ -159,6 +264,22 @@ AdvancedRangeControl.defaultProps = {
 	onChange: undefined,
 	onOverrideReset: undefined,
 	forcePlaceholder: false,
+
+	marks: undefined, // [{ value: '14px', name: 'S' }, { value: '16px', name: 'M' }]
+	allowCustom: true,
+	hasCSSVariableValue: false, // If the attribute can have CSS variable value (string attribute)
+	isCustomPreset: false,
 }
 
 export default memo( AdvancedRangeControl, isEqual )
+
+// The value can be in the format '10px' or '10.0em' or '10rem'.
+// Return an array with the number and the unit.
+const extractNumberAndUnit = value => {
+	// Match the last characters that are not numbers.
+	const matches = value.match( /([\d.]+)(\D*)$/ )
+	if ( ! matches || value.startsWith( 'var(--stk' ) ) {
+		return [ value, '' ]
+	}
+	return [ matches[ 1 ], matches[ 2 ] ]
+}
