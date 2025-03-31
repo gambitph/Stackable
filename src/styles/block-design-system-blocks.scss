@@ -226,6 +226,9 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 	}
 	:where(.stk-hover-parent:hover) .stk-img-wrapper {
 		filter: drop-shadow(var(--stk-image-drop-shadow-parent-hover, cssvar(image-drop-shadow)));
+		&:hover {
+			filter: drop-shadow(var(--stk-image-drop-shadow-hover, var(--stk-image-drop-shadow-parent-hover, cssvar(image-drop-shadow))));
+		}
 	}
 
 	// Icons
