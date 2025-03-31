@@ -16,6 +16,12 @@ const PRESET_MAPPING = {
 	spacingSizes: {
 		prefix: 'spacing-size',
 	},
+	blockHeights: {
+		prefix: 'block-height',
+	},
+	borderRadius: {
+		prefix: 'border-radius',
+	},
 }
 
 const renderGlobalStyles = ( customPresets, setStyles ) => {
