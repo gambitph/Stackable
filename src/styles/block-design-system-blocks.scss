@@ -18,7 +18,7 @@
 	color: var(--stk-heading-color);
 }
 
-.stk-block a {
+:is(.stk-block-text__text, .stk-block-heading__text, .is-style-link) > a {
 	color: var(--stk-link-color);
 	&:hover {
 		color: var(--stk-link-color-hover);

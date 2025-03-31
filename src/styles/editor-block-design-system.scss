@@ -14,11 +14,11 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 	#{ '--stk-accent-color' }: cssvar(accent-color-parent-hover);
 }
 
-.stk--is-hovered > .stk-hover-parent .stk-block a,
-.stk-preview-state--parent-hover .is-selected > .stk-block a {
+.stk--is-hovered > .stk-hover-parent :is(.stk-block-text__text, .stk-block-heading__text, .is-style-link) > a,
+.stk-preview-state--parent-hover .is-selected > :is(.stk-block-text__text, .stk-block-heading__text, .is-style-link) > a {
 	color: var(--stk-link-color-parent-hover);
 }
-.stk-preview-state--hover .is-selected > .stk-block a {
+.stk-preview-state--hover .is-selected > :is(.stk-block-text__text, .stk-block-heading__text, .is-style-link) > a {
 	color: var(--stk-link-color-hover);
 }
 
