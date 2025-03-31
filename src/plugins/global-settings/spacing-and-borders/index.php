@@ -100,8 +100,9 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 				return $current_css;
 			}
 
+			// Add a body class if there are any global spacing and borders styles.
 			if ( $generated_css !== '' ) {
-				add_action( 'body_class', array( $this, 'add_body_class_spacing_and_borders' ) );
+				add_filter( 'body_class', array( $this, 'add_body_class_spacing_and_borders' ) );
 			}
 
 			$current_css .= $generated_css;

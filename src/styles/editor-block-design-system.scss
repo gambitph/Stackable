@@ -20,28 +20,8 @@
 	}
 }
 
+// These are the global styles for spacing and borders, and buttons and icons.
 :where(.stk-has-design-system-spacing-and-borders, .stk-has-design-system-buttons-and-icons) {
-	// Buttons
-	.stk--is-hovered.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
-			border-width: var(--stk-button-border-width-hover, cssvar(button-border-width));
-			box-shadow: var(--stk-button-box-shadow-hover, cssvar(button-box-shadow));
-		}
-		&.is-style-ghost .stk-button::before {
-			border-width: var(--stk-button-ghost-border-width-hover, cssvar(button-ghost-border-width));
-			box-shadow: var(--stk-button-box-shadow-hover, cssvar(button-box-shadow));
-		}
-	}
-	.is-selected .stk--is-hovered :where(.stk-hover-parent [data-type^="stackable/"]) :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
-			border-width: var(--stk-button-border-width-parent-hover, cssvar(button-border-width));
-			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
-		}
-		&.is-style-ghost .stk-button::before {
-			border-width: var(--stk-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width));
-			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
-		}
-	}
 	// Containers
 	[data-type^="stackable/"] .stk-container:not(.stk--no-background) {
 		border-style: cssvar(container-border-style);
@@ -106,6 +86,32 @@
 	}
 }
 
+// These are the global styles for buttons
+:where(.stk-has-design-system-buttons-and-icons) {
+	// Buttons
+	.stk--is-hovered.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
+			border-width: var(--stk-button-border-width-hover, cssvar(button-border-width));
+			box-shadow: var(--stk-button-box-shadow-hover, cssvar(button-box-shadow));
+		}
+		&.is-style-ghost .stk-button::before {
+			border-width: var(--stk-button-ghost-border-width-hover, cssvar(button-ghost-border-width));
+			box-shadow: var(--stk-button-box-shadow-hover, cssvar(button-box-shadow));
+		}
+	}
+	.is-selected .stk--is-hovered :where(.stk-hover-parent [data-type^="stackable/"]) :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
+			border-width: var(--stk-button-border-width-parent-hover, cssvar(button-border-width));
+			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+		}
+		&.is-style-ghost .stk-button::before {
+			border-width: var(--stk-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width));
+			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+		}
+	}
+}
+
+// These are the global styles for color schemes.
 :where(.stk-has-color-schemes) {
 	div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 		color: var(--stk-heading-color);

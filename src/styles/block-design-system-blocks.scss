@@ -136,59 +136,8 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 	}
 }
 
+// These are the global styles for spacing and borders, and buttons and icons.
 :where(.stk-has-design-system-spacing-and-borders, .stk-has-design-system-buttons-and-icons) {
-	.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-		&:not(.is-style-link) {
-			.stk-button {
-				&::before {
-					border-style: cssvar(button-border-style);
-					box-shadow: cssvar(button-box-shadow);
-				}
-				&:hover::before {
-					box-shadow: cssvar(button-box-shadow-hover);
-				}
-			}
-		}
-
-		&:not(.is-style-link, .is-style-ghost) .stk-button {
-			&::before {
-				border-width: cssvar(button-border-width);
-			}
-			&:hover::before {
-				border-width: cssvar(button-border-width-hover);
-			}
-		}
-
-		.stk-button {
-			// Adjust icon color and icon size.
-			#{'--stk-icon-size'}: cssvar(button-icon-size);
-			#{'--stk-custom-icon-size'}: cssvar(custom-button-icon-size);
-			min-height: cssvar(button-min-height);
-		}
-
-		&.is-style-ghost .stk-button {
-			&:hover::before {
-				border-width: var(--stk-button-ghost-border-width-hover, cssvar(button-ghost-border-width));
-			}
-		}
-	}
-
-	:is(.stk-block-button, .stk-block-pagination) .stk-button {
-		border-radius: cssvar(button-border-radius);
-	}
-
-	:where(.stk-hover-parent:hover) .stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
-			border-width: var(--stk-button-border-width-parent-hover, cssvar(button-border-width));
-			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
-
-		}
-		&.is-style-ghost .stk-button::before {
-			border-width: var(--stk-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width));
-			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
-		}
-	}
-
 	// Containers
 	// .stk-container:not(.stk--no-padding) {
 	// 	&:hover {
@@ -285,6 +234,62 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 	}
 }
 
+// These are the global styles for buttons
+:where(.stk-has-design-system-buttons-and-icons) {
+	.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link) {
+			.stk-button {
+				&::before {
+					border-style: cssvar(button-border-style);
+					box-shadow: cssvar(button-box-shadow);
+				}
+				&:hover::before {
+					box-shadow: cssvar(button-box-shadow-hover);
+				}
+			}
+		}
+
+		&:not(.is-style-link, .is-style-ghost) .stk-button {
+			&::before {
+				border-width: cssvar(button-border-width);
+			}
+			&:hover::before {
+				border-width: cssvar(button-border-width-hover);
+			}
+		}
+
+		.stk-button {
+			// Adjust icon color and icon size.
+			#{'--stk-icon-size'}: cssvar(button-icon-size);
+			#{'--stk-custom-icon-size'}: cssvar(custom-button-icon-size);
+			min-height: cssvar(button-min-height);
+		}
+
+		&.is-style-ghost .stk-button {
+			&:hover::before {
+				border-width: var(--stk-button-ghost-border-width-hover, cssvar(button-ghost-border-width));
+			}
+		}
+	}
+
+	:is(.stk-block-button, .stk-block-pagination) .stk-button {
+		border-radius: cssvar(button-border-radius);
+	}
+
+	:where(.stk-hover-parent:hover) .stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
+			border-width: var(--stk-button-border-width-parent-hover, cssvar(button-border-width));
+			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+
+		}
+		&.is-style-ghost .stk-button::before {
+			border-width: var(--stk-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width));
+			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+		}
+	}
+}
+
+// These are the global styles for color schemes.
 :where(.stk-has-color-schemes) {
 	:where(.stk-block) > :is(p, div) {
 		color: var(--stk-text-color);

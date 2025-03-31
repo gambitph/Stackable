@@ -99,8 +99,9 @@ if ( ! class_exists( 'Stackable_Global_Buttons_And_Icons' ) ) {
 				return $current_css;
 			}
 
+			// Add a body class if there are any global buttons and icons styles.
 			if ( $generated_css !== '' ) {
-				add_action( 'body_class', array( $this, 'add_body_class_buttons_and_icons' ) );
+				add_filter( 'body_class', array( $this, 'add_body_class_buttons_and_icons' ) );
 			}
 
 			$current_css .= $generated_css;

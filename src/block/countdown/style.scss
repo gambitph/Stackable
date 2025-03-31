@@ -60,6 +60,7 @@
 	margin: 0;
 }
 
+// These are styles added from the global color schemes.
 :where(.stk-has-color-schemes) {
 	.stk-block-countdown__digit {
 		color: var(--stk-accent-color);

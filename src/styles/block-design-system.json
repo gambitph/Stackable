@@ -173,9 +173,6 @@
 		}
 	},
 	"Icon Lists": {
-		"icon-list-icon-size": {
-			"desktop": 16
-		},
 		"icon-list-row-gap": {
 			"desktop": 0
 		},

@@ -46,6 +46,7 @@
 	}
 }
 
+// These are styles added from the global color schemes.
 :where(.stk-has-color-schemes) {
 	.stk-block-progress-bar {
 		--progress-color-1: var(--stk-accent-color);

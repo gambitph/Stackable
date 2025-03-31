@@ -84,7 +84,9 @@
 		.stk-block-icon-list-item__marker::before {
 			content: counter(stk-icon-list-counter, var(--stk-list-style-type, decimal)) ". ";
 			display: block;
-			font-size: var(--stk-icon-list-icon-size, 16px);
+			// In Global Buttons and Icons, we renamed `--stk-icon-height` to `--stk-icon-list-icon-size`.
+			// Keep the `--stk-icon-height` for backward compatibility.
+			font-size: var(--stk-icon-height, var(--stk-icon-list-icon-size, 16px));
 			color: var(--stk-icon-list-marker-color);
 			transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
 			opacity: var(--stk-icon-list-icon-opacity, 1);

@@ -20,6 +20,7 @@
 	margin-block-start: 0 !important;
 }
 
+// These are styles added from the global color schemes.
 :where(.stk-has-color-schemes) {
 	.stk-block-timeline {
 		--line-accent-bg-color: var(--stk-accent-color, #000);
