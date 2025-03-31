@@ -2,7 +2,7 @@ export const sizeAttributes = {
 	height: {
 		stkResponsive: true,
 		stkUnits: 'px',
-		type: 'number',
+		type: 'string',
 		default: '',
 	},
 	width: {

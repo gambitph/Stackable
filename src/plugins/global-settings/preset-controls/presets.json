@@ -92,6 +92,90 @@
                     "slug": "xxxxx-large"
                 }
             ]
-        }
-   }
+        },
+		"blockHeights": [
+			{
+				"name": "XS",
+				"size": "4rem",
+				"slug": "x-small"
+			},
+			{
+				"name": "S",
+				"size": "8rem",
+				"slug": "small"
+			},
+			{
+				"name": "M",
+				"size": "12rem",
+				"slug": "medium"
+			},
+			{
+				"name": "L",
+				"size": "16rem",
+				"slug": "large"
+			},
+			{
+				"name": "XL",
+				"size": "24rem",
+				"slug": "x-large"
+			},
+			{
+				"name": "2XL",
+				"size": "32rem",
+				"slug": "xx-large"
+			},
+			{
+				"name": "3XL",
+				"size": "40rem",
+				"slug": "xxx-large"
+			},
+			{
+				"name": "Full",
+				"size": "100vh",
+				"slug": "full"
+			}
+    	],
+		"borderRadius": [
+			{
+				"name": "None",
+				"size": "0px",
+				"slug": "none"
+			},
+			{
+				"name": "XS",
+				"size": "2px",
+				"slug": "x-small"
+			},
+			{
+				"name": "S",
+				"size": "4px",
+				"slug": "small"
+			},
+			{
+				"name": "M",
+				"size": "8px",
+				"slug": "medium"
+			},
+			{
+				"name": "L",
+				"size": "16px",
+				"slug": "large"
+			},
+			{
+				"name": "XL",
+				"size": "24px",
+				"slug": "x-large"
+			},
+			{
+				"name": "2XL",
+				"size": "32px",
+				"slug": "xx-large"
+			},
+			{
+				"name": "Full",
+				"size": "9999px",
+				"slug": "full"
+			}
+		]
+	}
 }

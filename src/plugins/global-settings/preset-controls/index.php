@@ -23,6 +23,14 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 				'settings' => array( 'spacing', 'spacingSizes' ),
 				'prefix' => 'spacing-size',
 			),
+			'blockHeights' => array(
+				'settings' => array( 'blockHeights' ),
+				'prefix' => 'block-height',
+			),
+			'borderRadius' => array(
+				'settings' => array( 'borderRadius' ),
+				'prefix' => 'border-radius',
+			),
 		);
 
 		public $custom_presets;

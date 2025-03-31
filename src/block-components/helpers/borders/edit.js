@@ -15,7 +15,7 @@ import {
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import {
-	useAttributeEditHandlers, useBlockLayoutDefaults, useBlockSetAttributesContext,
+	useAttributeEditHandlers, useBlockLayoutDefaults, useBlockSetAttributesContext, usePresetControls,
 } from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -70,6 +70,8 @@ export const BorderControls = props => {
 	const borderControls = getPlaceholder( `${ props.placeholderTemplate }-border-style` ) !== '' ? BORDER_CONTROLS_WITH_NONE_VALUE : BORDER_CONTROLS
 
 	applyFilters( 'stackable.block-component.helpers.borders', null, getAttribute, updateAttributes )
+
+	const presetMarks = usePresetControls( 'borderRadius' )?.getPresetMarks() || null
 
 	return (
 		<Fragment>
@@ -132,6 +134,8 @@ export const BorderControls = props => {
 					isCorner={ true }
 					sliderMax={ props.borderSliderMax }
 					placeholder={ props.borderRadiusPlaceholder }
+					marks={ presetMarks }
+					hasCSSVariableValue={ true }
 				/>
 			}
 			<ShadowControl

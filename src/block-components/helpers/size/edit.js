@@ -17,41 +17,6 @@ import {
 import { __ } from '@wordpress/i18n'
 import { getAttributeNameFunc } from '~stackable/util'
 
-const HEIGHT_PRESET = [
-	{
-		value: '64px',
-		label: 'XS',
-	},
-	{
-		value: '128px',
-		label: 'S',
-	},
-	{
-		value: '192px',
-		label: 'M',
-	},
-	{
-		value: '256px',
-		label: 'L',
-	},
-	{
-		value: '384px',
-		label: 'XL',
-	},
-	{
-		value: '512px',
-		label: '2XL',
-	},
-	{
-		value: '640px',
-		label: '3XL',
-	},
-	{
-		value: '100vh',
-		label: 'Full',
-	},
-]
-
 const Layout = props => {
 	const deviceType = useDeviceType()
 
@@ -67,7 +32,7 @@ const Layout = props => {
 		labelVerticalAlign = __( 'Content Vertical Align', i18n ),
 	} = props.labels
 
-	const heightMarks = HEIGHT_PRESET
+	const presetMarks = usePresetControls( 'blockHeights' )?.getPresetMarks() || null
 
 	return (
 		<>
@@ -86,7 +51,8 @@ const Layout = props => {
 					description: __( 'Adjusts the minimum allowable height of the block', i18n ),
 				} }
 				visualGuide={ props.visualGuide }
-				marks={ heightMarks }
+				marks={ presetMarks }
+				hasCSSVariableValue={ true }
 			/> }
 
 			{ props.hasContentVerticalAlign &&

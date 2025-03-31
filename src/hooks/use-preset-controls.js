@@ -11,6 +11,14 @@ const PRESET_MAPPING = {
 		settings: [ 'spacing', 'spacingSizes' ],
 		prefix: 'spacing-size',
 	},
+	blockHeights: {
+		settings: [ 'blockHeights' ],
+		prefix: 'block-height',
+	},
+	borderRadius: {
+		settings: [ 'borderRadius' ],
+		prefix: 'border-radius',
+	},
 }
 
 export const usePresetControls = property => {
