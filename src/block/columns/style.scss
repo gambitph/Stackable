@@ -17,7 +17,7 @@
 
 // These are styles added from the global spacing and borders.
 :where(.stk-has-design-system-spacing-and-borders) {
-	.stk-blocks-columns > .stk-block-content {
+	.stk-block-columns > .stk-block-content {
 		--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
 		row-gap: var(--stk-columns-row-gap, 0px);
 	}
