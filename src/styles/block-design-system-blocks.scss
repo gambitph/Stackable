@@ -167,11 +167,8 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		}
 
 		&.is-style-ghost .stk-button {
-			&::before {
-				border-width: cssvar(button-ghost-border-width);
-			}
 			&:hover::before {
-				border-width: cssvar(button-ghost-border-width-hover);
+				border-width: var(--stk-button-ghost-border-width-hover, cssvar(button-ghost-border-width));
 			}
 		}
 	}
@@ -182,13 +179,13 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 
 	:where(.stk-hover-parent:hover) .stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
-			border-width: cssvar(button-border-width-parent-hover);
-			box-shadow: cssvar(button-box-shadow-parent-hover);
+			border-width: var(--stk-button-border-width-parent-hover, cssvar(button-border-width));
+			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
 
 		}
 		&.is-style-ghost .stk-button::before {
-			border-width: cssvar(button-ghost-border-width-parent-hover);
-			box-shadow: cssvar(button-box-shadow-parent-hover);
+			border-width: var(--stk-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width));
+			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
 		}
 	}
 
@@ -209,13 +206,13 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		border-width: cssvar(container-border-width);
 
 		&:hover {
-			border-width: cssvar(container-border-width-hover);
-			box-shadow: cssvar(container-box-shadow-hover);
+			border-width: var(--stk-container-border-width-hover, cssvar(container-border-width));
+			box-shadow: var(--stk-container-box-shadow-hover, cssvar(container-box-shadow));
 		}
 	}
 	:where(.stk-hover-parent:hover) .stk-container:not(.stk--no-background) {
-		border-width: cssvar(container-border-width-parent-hover);
-		box-shadow: cssvar(container-box-shadow-parent-hover);
+		border-width: var(--stk-container-border-width-parent-hover, cssvar(container-border-width));
+		box-shadow: var(--stk-container-box-shadow-parent-hover, cssvar(container-box-shadow));
 	}
 	// .stk-container-padding {
 	// &:hover {
@@ -244,14 +241,14 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		border-style: cssvar(block-background-border-style);
 		border-width: cssvar(block-background-border-width);
 		&:hover {
-			border-width: cssvar(block-background-border-width-hover);
-			box-shadow: cssvar(block-background-box-shadow-hover);
+			border-width: var(--stk-block-background-border-width-hover, cssvar(block-background-border-width));
+			box-shadow: var(--stk-block-background-box-shadow-hover, cssvar(block-background-box-shadow));
 		}
 	}
 
 	:where(.stk-hover-parent:hover) .stk-block.stk-block-background {
-		border-width: cssvar(block-background-border-width-parent-hover);
-		box-shadow: cssvar(block-background-box-shadow-parent-hover);
+		border-width: var(--stk-block-background-border-width-parent-hover, cssvar(block-background-border-width));
+		box-shadow: var(--stk-block-background-box-shadow-parent-hover, cssvar(block-background-box-shadow));
 		// &:not(.stk--no-padding) {
 		// 	padding: cssvar(block-background-padding-parent-hover);
 		// }
@@ -262,7 +259,7 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 	.stk-img-wrapper {
 		filter: drop-shadow(cssvar(image-drop-shadow));
 		&:hover {
-			filter: drop-shadow(cssvar(image-drop-shadow-hover));
+			filter: drop-shadow(var(--stk-image-drop-shadow-hover, cssvar(image-drop-shadow)));
 		}
 
 		img {
@@ -270,7 +267,7 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		}
 	}
 	:where(.stk-hover-parent:hover) .stk-img-wrapper {
-		filter: drop-shadow(cssvar(image-drop-shadow-parent-hover));
+		filter: drop-shadow(var(--stk-image-drop-shadow-parent-hover, cssvar(image-drop-shadow)));
 	}
 
 	// Icons

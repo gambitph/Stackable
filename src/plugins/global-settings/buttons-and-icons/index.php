@@ -99,8 +99,17 @@ if ( ! class_exists( 'Stackable_Global_Buttons_And_Icons' ) ) {
 				return $current_css;
 			}
 
+			if ( $generated_css !== '' ) {
+				add_action( 'body_class', array( $this, 'add_body_class_buttons_and_icons' ) );
+			}
+
 			$current_css .= $generated_css;
 			return apply_filters( 'stackable_frontend_css' , $current_css );
+		}
+
+		public function add_body_class_buttons_and_icons( $classes ) {
+			$classes[] = 'stk-has-design-system-buttons-and-icons';
+			return $classes;
 		}
 	}
 

@@ -24,22 +24,22 @@
 	// Buttons
 	.stk--is-hovered.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
-			border-width: cssvar(button-border-width-hover);
-			box-shadow: cssvar(button-box-shadow-hover);
+			border-width: var(--stk-button-border-width-hover, cssvar(button-border-width));
+			box-shadow: var(--stk-button-box-shadow-hover, cssvar(button-box-shadow));
 		}
 		&.is-style-ghost .stk-button::before {
-			border-width: cssvar(button-ghost-border-width-hover);
-			box-shadow: cssvar(button-box-shadow-hover);
+			border-width: var(--stk-button-ghost-border-width-hover, cssvar(button-ghost-border-width));
+			box-shadow: var(--stk-button-box-shadow-hover, cssvar(button-box-shadow));
 		}
 	}
 	.is-selected .stk--is-hovered :where(.stk-hover-parent [data-type^="stackable/"]) :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
-			border-width: cssvar(button-border-width-parent-hover);
-			box-shadow: cssvar(button-box-shadow-parent-hover);
+			border-width: var(--stk-button-border-width-parent-hover, cssvar(button-border-width));
+			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
 		}
 		&.is-style-ghost .stk-button::before {
-			border-width: cssvar(button-ghost-border-width-parent-hover);
-			box-shadow: cssvar(button-box-shadow-parent-hover);
+			border-width: var(--stk-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width));
+			box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
 		}
 	}
 	// Containers
@@ -49,28 +49,28 @@
 	}
 
 	:where(.stk-hover-parent:hover) [data-type^="stackable/"] .stk-container:not(.stk--no-background) {
-		border-width: cssvar(container-border-width-parent-hover);
-		box-shadow: cssvar(container-box-shadow-parent-hover);
+		border-width: var(--stk-container-border-width-parent-hover, cssvar(container-border-width));
+		box-shadow: var(--stk-container-box-shadow-parent-hover, cssvar(container-box-shadow));
 	}
 
 	.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container:not(.stk--no-padding),
 	.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container-padding {
-		padding: cssvar(container-padding-parent-hover);
+		padding: var(--stk-container-padding-parent-hover, cssvar(container-padding));
 	}
 
 	.stk--is-hovered .stk-container:not(.stk--no-padding),
 	.stk--is-hovered .stk-container-padding {
-		padding: cssvar(container-padding-hover);
+		padding: var(--stk-container-padding-hover, cssvar(container-padding));
 	}
 
 	.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container:not(.stk--no-background) {
-		box-shadow: cssvar(container-box-shadow-parent-hover);
-		border-width: cssvar(container-border-width-parent-hover);
+		box-shadow: var(--stk-container-box-shadow-parent-hover, cssvar(container-box-shadow));
+		border-width: var(--stk-container-border-width-parent-hover, cssvar(container-border-width));
 	}
 
 	.stk--is-hovered .stk-container:not(.stk--no-background) {
-		box-shadow: cssvar(container-box-shadow-hover);
-		border-width: cssvar(container-border-width-hover);
+		box-shadow: var(--stk-container-box-shadow-hover, cssvar(container-box-shadow));
+		border-width: var(--stk-container-border-width-hover, cssvar(container-border-width));
 	}
 
 	// Block Backgrounds
@@ -78,31 +78,31 @@
 		border-style: cssvar(block-background-border-style);
 		border-width: cssvar(block-background-border-width);
 		&:hover {
-			border-width: cssvar(block-background-border-width-hover);
-			box-shadow: cssvar(block-background-box-shadow-hover);
+			border-width: var(--stk-block-background-border-width-hover, cssvar(block-background-border-width));
+			box-shadow: var(--stk-block-background-box-shadow-hover, cssvar(block-background-box-shadow));
 		}
 	}
 	.stk-hover-parent:hover .stk-block-background {
-		border-width: cssvar(block-background-border-width-parent-hover);
-		box-shadow: cssvar(block-background-box-shadow-parent-hover);
+		border-width: var(--stk-block-background-border-width-parent-hover, cssvar(block-background-border-width));
+		box-shadow: var(--stk-block-background-box-shadow-parent-hover, cssvar(block-background-box-shadow));
 	}
 
 	.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-block-background {
-		border-width: cssvar(block-background-border-width-parent-hover);
-		box-shadow: cssvar(block-background-box-shadow-parent-hover);
+		border-width: var(--stk-block-background-border-width-parent-hover, cssvar(block-background-border-width));
+		box-shadow: var(--stk-block-background-box-shadow-parent-hover, cssvar(block-background-box-shadow));
 	}
 
 	[data-type^="stackable/"] .stk--is-hovered.stk-block-background {
-		border-width: cssvar(block-background-border-width-hover);
-		box-shadow: cssvar(block-background-box-shadow-hover);
+		border-width: var(--stk-block-background-border-width-hover, cssvar(block-background-border-width));
+		box-shadow: var(--stk-block-background-box-shadow-hover, cssvar(block-background-box-shadow));
 	}
 
 	// Images
 	.stk--is-hovered .stk-img-wrapper {
-		filter: drop-shadow(cssvar(image-drop-shadow-hover));
+		filter: drop-shadow(var(--stk-image-drop-shadow-hover, cssvar(image-drop-shadow)));
 	}
 	.is-selected .stk--is-hovered .stk-hover-parent .stk-img-wrapper {
-		filter: drop-shadow(cssvar(image-drop-shadow-parent-hover));
+		filter: drop-shadow(var(--stk-image-drop-shadow-parent-hover, cssvar(image-drop-shadow)));
 	}
 }
 
