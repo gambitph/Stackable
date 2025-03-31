@@ -176,9 +176,6 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 						"left" => 12
 					)
 				),
-				"icon-list-icon-size" => array(
-					"desktop" => 16
-				),
 				"icon-list-row-gap" => array(
 					"desktop" => 0
 				),
