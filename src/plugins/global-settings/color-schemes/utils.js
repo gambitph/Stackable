@@ -94,20 +94,27 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 			}
 
 			const inheritedValue = getInheritedValue( scheme[ property ], state )
-			const inheritedNormalValue = getInheritedValue( scheme[ property ], state, false )
+			// const inheritedNormalValue = getInheritedValue( scheme[ property ], state, false )
 			if ( state === 'desktopParentHover' && currentHoverState !== 'normal' && property !== 'backgroundColor' && inheritedValue ) {
 				decls.desktopHover.push( `${ customProperty }-parent-hover: ${ inheritedValue };` )
 			}
 
+			/**
+			 * DEV NOTE: The code below is commented out because it is the initial implementation.
+			 * Before, we set the `*-hover` properties to inherit the normal/parent-hover values.
+			 * However, this was causing some issues with the hover states.
+			 *
+			 * The new implementation now relies on CSS variables and fallback values.
+			 */
 			// Inherit the normal value on hover state
-			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedNormalValue ) {
-				decls.desktop.push( `${ customProperty }${ suffix }: ${ inheritedNormalValue };` )
+			/* if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedNormalValue ) {
+			 	decls.desktop.push( `${ customProperty }${ suffix }: ${ inheritedNormalValue };` )
 			}
 
 			// Inherit the parent-hover value on hover state
 			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue ) {
 				decls.desktopParentHover.push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
-			}
+			} */
 
 			// If button background color is gradient, plain style buuttons should use the button outline color.
 			if ( property === 'buttonBackgroundColor' && isGradient( scheme[ property ]?.[ state ] ) ) {
@@ -116,17 +123,24 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 		} )
 	} )
 
+	/**
+	 * DEV NOTE: The code below is commented out because it is the initial implementation.
+	 * Before, we set the `*-hover` properties to inherit the normal/parent-hover values.
+	 * However, this was causing some issues with the hover states.
+	 *
+	 * The new implementation now relies on CSS variables and fallback values.
+	 */
 	// if the button background color is gradient on normal or parent-hover states,
 	// and there's no button background color set on hover,
 	// plain-style buttons will turn black.
 	// To prevent this, use button-outline-color-hover.
-	if ( isGradient( scheme.buttonBackgroundColor?.desktop ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
-		decls.desktopHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
-	}
+	/* if ( isGradient( scheme.buttonBackgroundColor?.desktop ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
+	 	decls.desktopHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
+	 }
 
 	if ( isGradient( scheme.buttonBackgroundColor?.desktopParentHover ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
-		decls.desktopParentHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
-	}
+	 	decls.desktopParentHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
+	} */
 
 	// if the button background color is gradient on normal state and solid on parent-hover state,
 	// we need to unset the --stk-button-plain-text-color,

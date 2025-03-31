@@ -3,9 +3,19 @@
 .stk-block.stk-block-divider {
 	hr.stk-block-divider__hr,
 	.stk-block-divider__dot {
-		background: var(--stk-accent-color, #ddd);
-		&:where(:hover) {
-			#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
+		background: #ddd;
+	}
+}
+
+// These are styles added from the global color schemes.
+:where(.stk-has-color-schemes) {
+	.stk-block.stk-block-divider {
+		hr.stk-block-divider__hr,
+		.stk-block-divider__dot {
+			background: var(--stk-accent-color, #ddd);
+			&:where(:hover) {
+				background: var(--stk-accent-color-hover, var(--stk-accent-color, #ddd));
+			}
 		}
 	}
 }
