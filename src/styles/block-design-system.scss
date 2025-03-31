@@ -13,10 +13,6 @@ $block-design-system: (
 		desktop: 24px,
 		mobile: 16px,
 	),
-	link-color: initial,
-	link-color-hover: cssvar(link-color),
-	accent-color: initial,
-	accent-color-hover: cssvar(accent-color),
 
 	/**
 	 * Columns
@@ -35,8 +31,6 @@ $block-design-system: (
 		desktop: 32px,
 		mobile: 24px,
 	),
-	container-padding-hover: cssvar(container-padding),
-	container-padding-parent-hover: cssvar(container-padding),
 	container-padding-large: (
 		desktop: 64px 80px,
 		mobile: 32px 24px,
@@ -47,14 +41,9 @@ $block-design-system: (
 	),
 	container-border-style: none,
 	container-border-width: 1px,
-	container-border-width-hover: cssvar(container-border-width),
-	container-border-width-parent-hover: cssvar(container-border-width),
 	container-border-radius: 0px,
 	container-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04),
-	container-box-shadow-hover: cssvar(container-box-shadow),
-	container-box-shadow-parent-hover: cssvar(container-box-shadow),
 	container-background-color: #fff,
-	container-background-color-hover: cssvar(container-background-color),
 	container-color: #1e1e1e,
 
 	/**
@@ -64,26 +53,17 @@ $block-design-system: (
 		desktop: 24px,
 		mobile: 16px,
 	),
-	block-background-padding-hover: cssvar(block-background-padding),
-	block-background-padding-parent-hover: cssvar(block-background-padding),
 	block-background-border-style: none,
 	block-background-border-width: 1px,
-	block-background-border-width-hover: cssvar(block-background-border-width),
-	block-background-border-width-parent-hover: cssvar(block-background-border-width),
 	block-background-border-radius: 0px,
 	block-background-box-shadow: none,
-	block-background-box-shadow-hover: cssvar(block-background-box-shadow),
-	block-background-box-shadow-parent-hover: cssvar(block-background-box-shadow),
 	block-background-color: #f1f1f1,
-	block-background-color-hover: cssvar(block-background-color),
 
 	/**
 	 * Images
 	 */
 	image-border-radius: 0px,
 	image-drop-shadow: none,
-	image-drop-shadow-hover: cssvar(image-drop-shadow),
-	image-drop-shadow-parent-hover: cssvar(image-drop-shadow),
 
 	/**
 	 * Buttons
@@ -92,25 +72,15 @@ $block-design-system: (
 	button-padding: 12px 16px,
 	button-border-style: none,
 	button-border-width: 1px,
-	button-border-width-hover: cssvar(button-border-width),
-	button-border-width-parent-hover: cssvar(button-border-width),
 	button-ghost-border-width: 2px,
-	button-ghost-border-width-hover: cssvar(button-ghost-border-width),
-	button-ghost-border-width-parent-hover: cssvar(button-ghost-border-width),
 	button-border-radius: 0px,
 	button-box-shadow: none,
-	button-box-shadow-hover: cssvar(button-box-shadow),
-	button-box-shadow-parent-hover: cssvar(button-box-shadow),
 	button-icon-size: 24px,
 	button-icon-gap: 8px,
 	button-column-gap: 12px,
 	button-row-gap: 12px,
 	button-background-color: #008de4,
-	button-background-color-hover: cssvar(button-background-color),
 	button-text-color: #fff,
-	button-text-color-hover: cssvar(button-text-color),
-	button-outline-color: var(--stk-button-background-color),
-	button-outline-color-hover: cssvar(button-outline-color),
 	icon-button-padding: 12px,
 
 	/**

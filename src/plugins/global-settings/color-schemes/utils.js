@@ -94,20 +94,20 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 			}
 
 			const inheritedValue = getInheritedValue( scheme[ property ], state )
-			const inheritedNormalValue = getInheritedValue( scheme[ property ], state, false )
+			// const inheritedNormalValue = getInheritedValue( scheme[ property ], state, false )
 			if ( state === 'desktopParentHover' && currentHoverState !== 'normal' && property !== 'backgroundColor' && inheritedValue ) {
 				decls.desktopHover.push( `${ customProperty }-parent-hover: ${ inheritedValue };` )
 			}
 
-			// Inherit the normal value on hover state
-			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedNormalValue ) {
-				decls.desktop.push( `${ customProperty }${ suffix }: ${ inheritedNormalValue };` )
-			}
+			// // Inherit the normal value on hover state
+			// if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedNormalValue ) {
+			// 	decls.desktop.push( `${ customProperty }${ suffix }: ${ inheritedNormalValue };` )
+			// }
 
-			// Inherit the parent-hover value on hover state
-			if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue ) {
-				decls.desktopParentHover.push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
-			}
+			// // Inherit the parent-hover value on hover state
+			// if ( state === 'desktopHover' && ! scheme[ property ]?.[ state ] && inheritedValue ) {
+			// 	decls.desktopParentHover.push( `${ customProperty }${ suffix }: ${ inheritedValue };` )
+			// }
 
 			// If button background color is gradient, plain style buuttons should use the button outline color.
 			if ( property === 'buttonBackgroundColor' && isGradient( scheme[ property ]?.[ state ] ) ) {
@@ -120,13 +120,13 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 	// and there's no button background color set on hover,
 	// plain-style buttons will turn black.
 	// To prevent this, use button-outline-color-hover.
-	if ( isGradient( scheme.buttonBackgroundColor?.desktop ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
-		decls.desktopHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
-	}
+	// if ( isGradient( scheme.buttonBackgroundColor?.desktop ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
+	// 	decls.desktopHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
+	// }
 
-	if ( isGradient( scheme.buttonBackgroundColor?.desktopParentHover ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
-		decls.desktopParentHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
-	}
+	// if ( isGradient( scheme.buttonBackgroundColor?.desktopParentHover ) && ! scheme.buttonBackgroundColor?.desktopHover ) {
+	// 	decls.desktopParentHover.push( `:where(.is-style-plain){ --stk-button-plain-text-color-hover: var(--stk-button-outline-color-hover); }` )
+	// }
 
 	// if the button background color is gradient on normal state and solid on parent-hover state,
 	// we need to unset the --stk-button-plain-text-color,

@@ -400,7 +400,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 }, 8 )
 
 export const GlobalSpacingAndBordersStyles = () => {
-	const styles = useBlockLayoutEditorLoader( 'stackable/global-spacing-and-borders' )
+	const styles = useBlockLayoutEditorLoader( 'stackable/global-spacing-and-borders', 'spacing-and-borders' )
 
 	return styles
 }

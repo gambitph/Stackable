@@ -1,8 +1,5 @@
 .stk-block-icon-list-item {
 	list-style-type: none !important;
-	&:where(:hover) {
-		#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
-	}
 }
 .stk-block-icon-list.stk-block {
 	.wp-block-stackable-icon-list-item:not(:last-child)::after {

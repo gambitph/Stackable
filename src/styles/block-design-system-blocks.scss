@@ -11,20 +11,6 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
-:where(.stk-block) > :is(p, div) {
-	color: var(--stk-text-color);
-}
-.stk-block > :is(h1,h2,h3,h4,h5,h6) {
-	color: var(--stk-heading-color);
-}
-
-.stk-block a {
-	color: var(--stk-link-color);
-	&:hover {
-		color: var(--stk-link-color-hover);
-	}
-}
-
 .stk-button-group {
 	row-gap: cssvar(button-row-gap);
 	column-gap: cssvar(button-column-gap);
@@ -32,19 +18,10 @@
 }
 
 .stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-	#{'--stk-accent-color'}: cssvar(button-text-color);
 	&:not(.is-style-link) {
 		.stk-button {
 			background: cssvar(button-background-color);
 			padding: cssvar(button-padding);
-
-			&::before {
-				border-style: cssvar(button-border-style);
-				box-shadow: cssvar(button-box-shadow);
-			}
-			&:hover::before {
-				box-shadow: cssvar(button-box-shadow-hover);
-			}
 
 			// Adjust icon color and icon size.
 			#{ '--stk-icon-color' }: cssvar(button-text-color);
@@ -62,85 +39,31 @@
 		}
 	}
 
-	&:not(.is-style-link, .is-style-ghost) .stk-button {
-		&::before {
-			border-width: cssvar(button-border-width);
-		}
-		&:hover::before {
-			border-width: cssvar(button-border-width-hover);
-		}
-		&:where(:hover) {
-			#{ '--stk-button-background-color' }: cssvar(button-background-color-hover);
-			#{ '--stk-button-text-color' }: cssvar(button-text-color-hover);
-			#{ '--stk-accent-color-hover' }: cssvar(button-text-color-hover);
-			#{ '--stk-accent-color' }: cssvar(button-text-color-hover);
-		}
-
-	}
-
 	.stk-button {
 		// Adjust icon color and icon size.
-		#{'--stk-icon-size'}: cssvar(button-icon-size);
-		#{'--stk-custom-icon-size'}: cssvar(custom-button-icon-size);
-		min-height: cssvar(button-min-height);
+		--stk-icon-size: 1em;
 	}
 
 	// Ghost button color.
 	&.is-style-ghost {
-		#{ '--stk-button-text-color' }: var(--stk-button-outline-color, cssvar(button-background-color));
+		#{ '--stk-button-text-color' }: cssvar(button-background-color);
 		.stk-button {
 			&::before {
 				border-width: cssvar(button-ghost-border-width);
-				border-color: var(--stk-button-outline-color, cssvar(button-background-color));
+				border-color: cssvar(button-background-color);
 			}
-			&:hover::before {
-				border-width: cssvar(button-ghost-border-width-hover);
-			}
-		}
-		&:where(:hover) {
-			#{ '--stk-button-text-color' }: cssvar(button-outline-color-hover);
-			#{ '--stk-button-outline-color' }: cssvar(button-outline-color-hover);
-			#{ '--stk-accent-color-hover' }: cssvar(button-outline-color-hover);
 		}
 	}
 
 	// Plain button color.
 	&.is-style-plain {
-		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color, cssvar(button-background-color));
-		.stk-button:hover {
-			#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
-			#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
-			#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
-
-		}
+		#{ '--stk-button-text-color' }: cssvar(button-background-color);
 	}
-
-	&.is-style-link {
-		#{ '--stk-button-text-color' }: cssvar(link-color);
-		:where(.stk-button:hover) {
-			#{ '--stk-accent-color-hover' }: cssvar(link-color-hover);
-			#{ '--stk-accent-color' }: cssvar(link-color-hover);
-		}
-	}
-}
-:is(.stk-block-button, .stk-block-pagination) .stk-button {
-	border-radius: cssvar(button-border-radius);
 }
 // Ensure buttons use the correct paddings.
 .stk-block-icon-button {
 	.stk-button {
 		#{ '--stk-button-padding' }: cssvar(icon-button-padding);
-	}
-}
-:where(.stk-hover-parent:hover) .stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-	&:not(.is-style-link, .is-style-ghost) .stk-button::before {
-		border-width: cssvar(button-border-width-parent-hover);
-		box-shadow: cssvar(button-box-shadow-parent-hover);
-
-	}
-	&.is-style-ghost .stk-button::before {
-		border-width: cssvar(button-ghost-border-width-parent-hover);
-		box-shadow: cssvar(button-box-shadow-parent-hover);
 	}
 }
 
@@ -152,48 +75,21 @@
 // Containers
 .stk-container:not(.stk--no-padding) {
 	padding: cssvar(container-padding);
-
-	// &:hover {
-	// 	padding: cssvar(container-padding-hover);
-	// }
 }
 
 .stk--container-small .stk-container:not(.stk--no-padding) {
 	#{ '--stk-container-padding' }: cssvar(container-padding-small);
-	// #{ '--stk-container-padding-hover' }: cssvar(container-padding-small);
-	// #{ '--stk-container-padding-parent-hover' }: cssvar(container-padding-small);
 }
 .stk-container:not(.stk--no-background) {
 	background-color: cssvar(container-background-color);
-	background-image: cssvar(container-background-color);
 	border-radius: cssvar(container-border-radius);
-	border-style: cssvar(container-border-style);
-	border-width: cssvar(container-border-width);
 	box-shadow: cssvar(container-box-shadow);
 	color: cssvar(container-color);
+}
 
-	&:hover {
-		border-width: cssvar(container-border-width-hover);
-		box-shadow: cssvar(container-box-shadow-hover);
-		background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
-		background-image: var(--stk-container-background-color-hover, cssvar(container-background-color));
-	}
-}
-:where(.stk-hover-parent:hover) .stk-container:not(.stk--no-background) {
-	border-width: cssvar(container-border-width-parent-hover);
-	box-shadow: cssvar(container-box-shadow-parent-hover);
-}
 .stk-container-padding {
 	padding: cssvar(container-padding);
-	// &:hover {
-	// 	padding: cssvar(container-padding-hover);
-	// }
 }
-
-// :where(.stk-hover-parent:hover) .stk-container:not(.stk--no-padding),
-// :where(.stk-hover-parent:hover) .stk-container-padding {
-// 	padding: cssvar(container-padding-parent-hover);
-// }
 
 // Columns
 .stk-block:not(.stk-block-column) {
@@ -209,90 +105,310 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 // Block Background
 .stk-block-background {
 	background-color: cssvar(block-background-color);
-	background-image: cssvar(block-background-color);
-	border-radius: cssvar(block-background-border-radius);
-	box-shadow: cssvar(block-background-box-shadow);
 	&:not(.stk--no-padding) {
 		padding: cssvar(block-background-padding);
-		// &:hover {
-		// 	padding: cssvar(block-background-padding-hover);
-		// }
 	}
-	&:hover {
-		background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
-		background-image: var(--stk-block-background-color-hover, cssvar(block-background-color));
-	}
-}
-
-.stk-block.stk-block-background {
-	border-style: cssvar(block-background-border-style);
-	border-width: cssvar(block-background-border-width);
-	&:hover {
-		border-width: cssvar(block-background-border-width-hover);
-		box-shadow: cssvar(block-background-box-shadow-hover);
-	}
-}
-
-:where(.stk-hover-parent:hover) .stk-block.stk-block-background {
-	border-width: cssvar(block-background-border-width-parent-hover);
-	box-shadow: cssvar(block-background-box-shadow-parent-hover);
-	// &:not(.stk--no-padding) {
-	// 	padding: cssvar(block-background-padding-parent-hover);
-	// }
-}
-
-// Images
-.stk-img-wrapper {
-	filter: drop-shadow(cssvar(image-drop-shadow));
-	&:hover {
-		filter: drop-shadow(cssvar(image-drop-shadow-hover));
-	}
-
-	img {
-		border-radius: cssvar(image-border-radius);
-	}
-}
-:where(.stk-hover-parent:hover) .stk-img-wrapper {
-	filter: drop-shadow(cssvar(image-drop-shadow-parent-hover));
 }
 
 // Icons
 .stk--inner-svg {
-	border-color: var(--stk-accent-color, cssvar(icon-color));
-	svg:last-child {
-		&:is(.ugb-custom-icon, .stk-custom-icon) {
-			width: cssvar(custom-icon-size);
-			height: cssvar(custom-icon-size);
+	border-color: cssvar(icon-color);
+	svg:last-child:not(.ugb-custom-icon):not(.stk-custom-icon) {
+		width: cssvar(icon-size);
+		height: cssvar(icon-size);
+		&,
+		:is(g, path, rect, polygon, ellipse) {
+			fill: cssvar(icon-color);
 		}
-		&:not(.ugb-custom-icon):not(.stk-custom-icon) {
-			width: cssvar(icon-size);
-			height: cssvar(icon-size);
-			&,
-			:is(g, path, rect, polygon, ellipse) {
-				fill: var(--stk-accent-color, cssvar(icon-color));
-			}
-		}
-	}
-	&:where(:hover) {
-		#{ '--stk-accent-color' }: cssvar(accent-color-hover);
 	}
 }
 
 // Typography
 .stk-subtitle {
 	font-size: cssvar(subtitle-size);
-	color: var(--stk-accent-color, cssvar(subtitle-color));
-	&:where(:hover) {
-		#{ '--stk-accent-color' }: cssvar(accent-color-hover);
-	}
+	color: cssvar(subtitle-color);
 }
 
 // Posts
 .stk-block-posts {
 	&__meta {
+		color: cssvar(subtitle-color);
+	}
+}
+
+:where(.stk-has-design-system-spacing-and-borders, .stk-has-design-system-buttons-and-icons) {
+	.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link) {
+			.stk-button {
+				&::before {
+					border-style: cssvar(button-border-style);
+					box-shadow: cssvar(button-box-shadow);
+				}
+				&:hover::before {
+					box-shadow: cssvar(button-box-shadow-hover);
+				}
+			}
+		}
+
+		&:not(.is-style-link, .is-style-ghost) .stk-button {
+			&::before {
+				border-width: cssvar(button-border-width);
+			}
+			&:hover::before {
+				border-width: cssvar(button-border-width-hover);
+			}
+		}
+
+		.stk-button {
+			// Adjust icon color and icon size.
+			#{'--stk-icon-size'}: cssvar(button-icon-size);
+			#{'--stk-custom-icon-size'}: cssvar(custom-button-icon-size);
+			min-height: cssvar(button-min-height);
+		}
+
+		&.is-style-ghost .stk-button {
+			&::before {
+				border-width: cssvar(button-ghost-border-width);
+			}
+			&:hover::before {
+				border-width: cssvar(button-ghost-border-width-hover);
+			}
+		}
+	}
+
+	:is(.stk-block-button, .stk-block-pagination) .stk-button {
+		border-radius: cssvar(button-border-radius);
+	}
+
+	:where(.stk-hover-parent:hover) .stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
+			border-width: cssvar(button-border-width-parent-hover);
+			box-shadow: cssvar(button-box-shadow-parent-hover);
+
+		}
+		&.is-style-ghost .stk-button::before {
+			border-width: cssvar(button-ghost-border-width-parent-hover);
+			box-shadow: cssvar(button-box-shadow-parent-hover);
+		}
+	}
+
+	// Containers
+	// .stk-container:not(.stk--no-padding) {
+	// 	&:hover {
+	// 		padding: cssvar(container-padding-hover);
+	// 	}
+	// }
+
+	// .stk--container-small .stk-container:not(.stk--no-padding) {
+	// 	#{ '--stk-container-padding-hover' }: cssvar(container-padding-small);
+	// 	#{ '--stk-container-padding-parent-hover' }: cssvar(container-padding-small);
+	// }
+
+	.stk-container:not(.stk--no-background) {
+		border-style: cssvar(container-border-style);
+		border-width: cssvar(container-border-width);
+
+		&:hover {
+			border-width: cssvar(container-border-width-hover);
+			box-shadow: cssvar(container-box-shadow-hover);
+		}
+	}
+	:where(.stk-hover-parent:hover) .stk-container:not(.stk--no-background) {
+		border-width: cssvar(container-border-width-parent-hover);
+		box-shadow: cssvar(container-box-shadow-parent-hover);
+	}
+	// .stk-container-padding {
+	// &:hover {
+	// 	padding: cssvar(container-padding-hover);
+	// }
+	// }
+
+
+	// :where(.stk-hover-parent:hover) .stk-container:not(.stk--no-padding),
+	// :where(.stk-hover-parent:hover) .stk-container-padding {
+	// 	padding: cssvar(container-padding-parent-hover);
+	// }
+
+	// Block Background
+	.stk-block-background {
+		border-radius: cssvar(block-background-border-radius);
+		box-shadow: cssvar(block-background-box-shadow);
+		// &:not(.stk--no-padding) {
+		// &:hover {
+		// 	padding: cssvar(block-background-padding-hover);
+		// }
+		// }
+	}
+
+	.stk-block.stk-block-background {
+		border-style: cssvar(block-background-border-style);
+		border-width: cssvar(block-background-border-width);
+		&:hover {
+			border-width: cssvar(block-background-border-width-hover);
+			box-shadow: cssvar(block-background-box-shadow-hover);
+		}
+	}
+
+	:where(.stk-hover-parent:hover) .stk-block.stk-block-background {
+		border-width: cssvar(block-background-border-width-parent-hover);
+		box-shadow: cssvar(block-background-box-shadow-parent-hover);
+		// &:not(.stk--no-padding) {
+		// 	padding: cssvar(block-background-padding-parent-hover);
+		// }
+	}
+
+
+	// Images
+	.stk-img-wrapper {
+		filter: drop-shadow(cssvar(image-drop-shadow));
+		&:hover {
+			filter: drop-shadow(cssvar(image-drop-shadow-hover));
+		}
+
+		img {
+			border-radius: cssvar(image-border-radius);
+		}
+	}
+	:where(.stk-hover-parent:hover) .stk-img-wrapper {
+		filter: drop-shadow(cssvar(image-drop-shadow-parent-hover));
+	}
+
+	// Icons
+	.stk--inner-svg {
+		svg:last-child {
+			&:is(.ugb-custom-icon, .stk-custom-icon) {
+				width: cssvar(custom-icon-size);
+				height: cssvar(custom-icon-size);
+			}
+			&:not(.ugb-custom-icon):not(.stk-custom-icon) {
+				width: cssvar(icon-size);
+				height: cssvar(icon-size);
+			}
+		}
+	}
+}
+
+:where(.stk-has-color-schemes) {
+	:where(.stk-block) > :is(p, div) {
+		color: var(--stk-text-color);
+	}
+	.stk-block > :is(h1,h2,h3,h4,h5,h6) {
+		color: var(--stk-heading-color);
+	}
+
+	:is(.stk-block-text__text, .stk-block-heading__text, .is-style-link, .stk-table-of-contents__table) a {
+		color: var(--stk-link-color, var(--theme-link-initial-color, unset));
+		&:hover {
+			color: var(--stk-link-color-hover, var(--stk-link-color, var(--theme-link-hover-color, unset)));
+		}
+	}
+	.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		#{'--stk-accent-color'}: cssvar(button-text-color);
+
+		&:not(.is-style-link) .stk-button {
+			&:where(:hover) {
+				background: var(--stk-button-background-color-hover, cssvar(button-background-color));
+
+				// Adjust icon color and icon size.
+				#{ '--stk-icon-color' }: var(--stk-button-text-color-hover, cssvar(button-text-color));
+				#{ '--stk-accent-color-hover' }: var(--stk-button-text-color-hover, cssvar(button-text-color));
+				#{ '--stk-accent-color' }: var(--stk-button-text-color-hover, cssvar(button-text-color));
+
+				.stk--inner-svg {
+					color: var(--stk-button-text-color-hover, cssvar(button-text-color));
+				}
+
+				> .stk-button__inner-text {
+					color: var(--stk-button-text-color-hover, cssvar(button-text-color));
+					&:hover {
+						color: var(--stk-button-text-color-hover, cssvar(button-text-color)); // Override theme's hover text color.
+					}
+				}
+			}
+		}
+
+		&.is-style-ghost {
+			#{ '--stk-button-text-color' }: var(--stk-button-outline-color, cssvar(button-background-color));
+			.stk-button::before {
+				border-color: var(--stk-button-outline-color, cssvar(button-background-color));
+			}
+			&:where(:hover) {
+				#{ '--stk-button-text-color-hover' }: var(--stk-button-outline-color-hover, var(--stk-button-outline-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				#{ '--stk-accent-color-hover' }: var(--stk-button-outline-color-hover, var(--stk-button-outline-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				.stk-button::before {
+					border-color: var(--stk-button-outline-color-hover, var(--stk-button-outline-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				}
+			}
+		}
+
+		&.is-style-plain {
+			#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color, cssvar(button-background-color));
+			.stk-button:hover {
+				#{ '--stk-button-text-color-hover' }: var(--stk-button-plain-text-color-hover, var(--stk-button-plain-text-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-hover, var(--stk-button-plain-text-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-hover, var(--stk-button-plain-text-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+			}
+		}
+
+		&.is-style-link {
+			#{ '--stk-button-text-color' }: cssvar(link-color);
+			:where(.stk-button:hover) {
+				#{ '--stk-accent-color-hover' }: cssvar(link-color-hover);
+				#{ '--stk-accent-color' }: cssvar(link-color-hover);
+			}
+		}
+	}
+
+	.stk-container:not(.stk--no-background) {
+		background-image: cssvar(container-background-color);
+		&:hover {
+			background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
+			background-image: var(--stk-container-background-color-hover, cssvar(container-background-color));
+		}
+	}
+
+	.stk-block-background {
+		background-image: cssvar(block-background-color);
+		&:hover {
+			background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
+			background-image: var(--stk-block-background-color-hover, cssvar(block-background-color));
+		}
+	}
+
+	.stk--inner-svg {
+		border-color: var(--stk-accent-color, cssvar(icon-color));
+		svg:last-child:not(.ugb-custom-icon):not(.stk-custom-icon) {
+			&,
+			:is(g, path, rect, polygon, ellipse) {
+				fill: var(--stk-accent-color, cssvar(icon-color));
+			}
+		}
+		&:where(:hover) {
+			border-color: var(--stk-accent-color-hover, var(--stk-accent-color, cssvar(icon-color)));
+			svg:last-child:not(.ugb-custom-icon):not(.stk-custom-icon) {
+				&,
+				:is(g, path, rect, polygon, ellipse) {
+					fill: var(--stk-accent-color-hover, var(--stk-accent-color, cssvar(icon-color)));
+				}
+			}
+		}
+	}
+
+	// Typography
+	.stk-subtitle {
 		color: var(--stk-accent-color, cssvar(subtitle-color));
 		&:where(:hover) {
-			#{ '--stk-accent-color' }: cssvar(accent-color-hover);
+			color: var(--stk-accent-color-hover, var(--stk-accent-color, cssvar(subtitle-color)));
+		}
+	}
+
+	// Posts
+	.stk-block-posts {
+		&__meta {
+			color: var(--stk-accent-color, cssvar(subtitle-color));
+			&:where(:hover) {
+				color: var(--stk-accent-color-hover, var(--stk-accent-color, cssvar(subtitle-color)));
+			}
 		}
 	}
 }

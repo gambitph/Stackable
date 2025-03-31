@@ -1,27 +1,5 @@
 @import "cssvars";
 
-// Typography
-div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
-	color: var(--stk-heading-color);
-}
-.stk--is-hovered > .stk-hover-parent .stk-block {
-	> :is(p:where(:not(.stk-block-subtitle__text)), div) {
-		color: var(--stk-text-color-parent-hover);
-	}
-	> :is(h1,h2,h3,h4,h5,h6) {
-		color: var(--stk-heading-color-parent-hover);
-	}
-	#{ '--stk-accent-color' }: cssvar(accent-color-parent-hover);
-}
-
-.stk--is-hovered > .stk-hover-parent .stk-block a,
-.stk-preview-state--parent-hover .is-selected > .stk-block a {
-	color: var(--stk-link-color-parent-hover);
-}
-.stk-preview-state--hover .is-selected > .stk-block a {
-	color: var(--stk-link-color-hover);
-}
-
 // Block spacing when horizontally oriented.
 .stk--block-horizontal-flex > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	column-gap: cssvar(block-margin-bottom);
@@ -34,75 +12,6 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 	--stk-columns-spacing: 0;
 }
 
-// Buttons
-.stk--is-hovered.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-	&:not(.is-style-link, .is-style-ghost) .stk-button::before {
-		border-width: cssvar(button-border-width-hover);
-		box-shadow: cssvar(button-box-shadow-hover);
-	}
-	&.is-style-ghost .stk-button::before {
-		border-width: cssvar(button-ghost-border-width-hover);
-		box-shadow: cssvar(button-box-shadow-hover);
-	}
-}
-
-.stk--is-hovered > .stk-hover-parent :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination),
-.stk-preview-state--parent-hover .is-selected > :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-	&:not(.is-style-link, .is-style-ghost, .is-style-plain) .stk-button {
-		background: var(--stk-button-background-color-parent-hover, cssvar(button-background-color));
-		#{ '--stk-button-text-color' }: var(--stk-button-text-color-parent-hover, #fff);
-		#{ '--stk-accent-color' }: var(--stk-button-text-color-parent-hover, #fff);
-	}
-	&.is-style-link .stk-button {
-		#{ '--stk-accent-color' }: var(--stk-link-color-parent-hover);
-	}
-	&.is-style-ghost .stk-button {
-		#{ '--stk-button-outline-color' }: var(--stk-button-outline-color-parent-hover, #008de4);
-		#{ '--stk-button-text-color' }: var(--stk-button-outline-color-parent-hover, #008de4);
-		#{ '--stk-accent-color' }: var(--stk-button-outline-color-parent-hover, #008de4);
-	}
-	&.is-style-plain .stk-button {
-		#{ '--stk-button-background-color' }: var(--stk-button-background-color-parent-hover, #008de4);
-		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-parent-hover, cssvar(button-background-color));
-		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-parent-hover, cssvar(button-background-color));
-	}
-}
-.stk-preview-state--hover .is-selected > :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-	&:not(.is-style-link, .is-style-ghost, .is-style-plain) .stk-button {
-		background: var(--stk-button-background-color-hover, cssvar(button-background-color));
-		#{ '--stk-button-text-color' }: var(--stk-button-text-color-hover, #fff);
-		#{ '--stk-accent-color-hover' }: var(--stk-button-text-color-hover, #fff);
-		#{ '--stk-accent-color' }: var(--stk-button-text-color-hover, #fff);
-	}
-	&.is-style-link .stk-button {
-		#{ '--stk-accent-color-hover' }: var(--stk-link-color-hover);
-		#{ '--stk-accent-color' }: var(--stk-link-color-hover);
-	}
-	&.is-style-ghost .stk-button {
-		#{ '--stk-button-outline-color' }: var(--stk-button-outline-color-hover, #008de4);
-		#{ '--stk-button-text-color' }: var(--stk-button-outline-color-hover, #008de4);
-		#{ '--stk-accent-color-hover' }: var(--stk-button-outline-color-hover, #008de4);
-		#{ '--stk-accent-color' }: var(--stk-button-outline-color-hover, #008de4);
-	}
-	&.is-style-plain .stk-button {
-		#{ '--stk-button-background-color' }: var(--stk-button-background-color-hover, #008de4);
-		#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
-		#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
-		#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
-	}
-}
-
-.is-selected .stk--is-hovered :where(.stk-hover-parent [data-type^="stackable/"]) :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
-	&:not(.is-style-link, .is-style-ghost) .stk-button::before {
-		border-width: cssvar(button-border-width-parent-hover);
-		box-shadow: cssvar(button-box-shadow-parent-hover);
-	}
-	&.is-style-ghost .stk-button::before {
-		border-width: cssvar(button-ghost-border-width-parent-hover);
-		box-shadow: cssvar(button-box-shadow-parent-hover);
-	}
-}
-
 .stk-button-group {
 	.block-editor-block-list__layout {
 		align-items: center;
@@ -111,69 +20,167 @@ div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 	}
 }
 
-// Containers
-[data-type^="stackable/"] .stk-container:not(.stk--no-background) {
-	border-style: cssvar(container-border-style);
-	border-width: cssvar(container-border-width);
-}
+:where(.stk-has-design-system-spacing-and-borders, .stk-has-design-system-buttons-and-icons) {
+	// Buttons
+	.stk--is-hovered.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
+			border-width: cssvar(button-border-width-hover);
+			box-shadow: cssvar(button-box-shadow-hover);
+		}
+		&.is-style-ghost .stk-button::before {
+			border-width: cssvar(button-ghost-border-width-hover);
+			box-shadow: cssvar(button-box-shadow-hover);
+		}
+	}
+	.is-selected .stk--is-hovered :where(.stk-hover-parent [data-type^="stackable/"]) :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .stk-button::before {
+			border-width: cssvar(button-border-width-parent-hover);
+			box-shadow: cssvar(button-box-shadow-parent-hover);
+		}
+		&.is-style-ghost .stk-button::before {
+			border-width: cssvar(button-ghost-border-width-parent-hover);
+			box-shadow: cssvar(button-box-shadow-parent-hover);
+		}
+	}
+	// Containers
+	[data-type^="stackable/"] .stk-container:not(.stk--no-background) {
+		border-style: cssvar(container-border-style);
+		border-width: cssvar(container-border-width);
+	}
 
-:where(.stk-hover-parent:hover) [data-type^="stackable/"] .stk-container:not(.stk--no-background) {
-	border-width: cssvar(container-border-width-parent-hover);
-	box-shadow: cssvar(container-box-shadow-parent-hover);
-}
+	:where(.stk-hover-parent:hover) [data-type^="stackable/"] .stk-container:not(.stk--no-background) {
+		border-width: cssvar(container-border-width-parent-hover);
+		box-shadow: cssvar(container-box-shadow-parent-hover);
+	}
 
-.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container:not(.stk--no-padding),
-.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container-padding {
-	padding: cssvar(container-padding-parent-hover);
-}
+	.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container:not(.stk--no-padding),
+	.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container-padding {
+		padding: cssvar(container-padding-parent-hover);
+	}
 
-.stk--is-hovered .stk-container:not(.stk--no-padding),
-.stk--is-hovered .stk-container-padding {
-	padding: cssvar(container-padding-hover);
-}
+	.stk--is-hovered .stk-container:not(.stk--no-padding),
+	.stk--is-hovered .stk-container-padding {
+		padding: cssvar(container-padding-hover);
+	}
 
-.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container:not(.stk--no-background) {
-	box-shadow: cssvar(container-box-shadow-parent-hover);
-	border-width: cssvar(container-border-width-parent-hover);
-}
+	.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-container:not(.stk--no-background) {
+		box-shadow: cssvar(container-box-shadow-parent-hover);
+		border-width: cssvar(container-border-width-parent-hover);
+	}
 
-.stk--is-hovered .stk-container:not(.stk--no-background) {
-	box-shadow: cssvar(container-box-shadow-hover);
-	border-width: cssvar(container-border-width-hover);
-	background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
-	background-image: var(--stk-container-background-color-hover, cssvar(container-background-color));
-}
+	.stk--is-hovered .stk-container:not(.stk--no-background) {
+		box-shadow: cssvar(container-box-shadow-hover);
+		border-width: cssvar(container-border-width-hover);
+	}
 
-// Block Backgrounds
-[data-type^="stackable/"] .stk-block.stk-block-background {
-	border-style: cssvar(block-background-border-style);
-	border-width: cssvar(block-background-border-width);
-	&:hover {
+	// Block Backgrounds
+	[data-type^="stackable/"] .stk-block.stk-block-background {
+		border-style: cssvar(block-background-border-style);
+		border-width: cssvar(block-background-border-width);
+		&:hover {
+			border-width: cssvar(block-background-border-width-hover);
+			box-shadow: cssvar(block-background-box-shadow-hover);
+		}
+	}
+	.stk-hover-parent:hover .stk-block-background {
+		border-width: cssvar(block-background-border-width-parent-hover);
+		box-shadow: cssvar(block-background-box-shadow-parent-hover);
+	}
+
+	.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-block-background {
+		border-width: cssvar(block-background-border-width-parent-hover);
+		box-shadow: cssvar(block-background-box-shadow-parent-hover);
+	}
+
+	[data-type^="stackable/"] .stk--is-hovered.stk-block-background {
 		border-width: cssvar(block-background-border-width-hover);
 		box-shadow: cssvar(block-background-box-shadow-hover);
 	}
-}
-.stk-hover-parent:hover .stk-block-background {
-	border-width: cssvar(block-background-border-width-parent-hover);
-	box-shadow: cssvar(block-background-box-shadow-parent-hover);
+
+	// Images
+	.stk--is-hovered .stk-img-wrapper {
+		filter: drop-shadow(cssvar(image-drop-shadow-hover));
+	}
+	.is-selected .stk--is-hovered .stk-hover-parent .stk-img-wrapper {
+		filter: drop-shadow(cssvar(image-drop-shadow-parent-hover));
+	}
 }
 
-.is-selected .stk--is-hovered .stk-hover-parent [data-type^="stackable/"] .stk-block-background {
-	border-width: cssvar(block-background-border-width-parent-hover);
-	box-shadow: cssvar(block-background-box-shadow-parent-hover);
-}
+:where(.stk-has-color-schemes) {
+	div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
+		color: var(--stk-heading-color);
+	}
+	.stk--is-hovered > .stk-hover-parent .stk-block {
+		> :is(p:where(:not(.stk-block-subtitle__text)), div) {
+			color: var(--stk-text-color-parent-hover);
+		}
+		> :is(h1,h2,h3,h4,h5,h6) {
+			color: var(--stk-heading-color-parent-hover);
+		}
+		#{ '--stk-accent-color' }: cssvar(accent-color-parent-hover);
+	}
 
-[data-type^="stackable/"] .stk--is-hovered.stk-block-background {
-	border-width: cssvar(block-background-border-width-hover);
-	box-shadow: cssvar(block-background-box-shadow-hover);
-	background-image: var(--stk-block-background-color-hover, cssvar(block-background-color));
-	background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
-}
+	.stk--is-hovered > .stk-hover-parent .stk-block a,
+	&.stk-preview-state--parent-hover .is-selected .stk-block a {
+		color: var(--stk-link-color-parent-hover);
+	}
+	&.stk-preview-state--hover .is-selected > .stk-block a {
+		color: var(--stk-link-color-hover);
+	}
 
-// Images
-.stk--is-hovered .stk-img-wrapper {
-	filter: drop-shadow(cssvar(image-drop-shadow-hover));
-}
-.is-selected .stk--is-hovered .stk-hover-parent .stk-img-wrapper {
-	filter: drop-shadow(cssvar(image-drop-shadow-parent-hover));
+	.stk--is-hovered > .stk-hover-parent :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination),
+	&.stk-preview-state--parent-hover .is-selected > :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost, .is-style-plain) .stk-button {
+			background: var(--stk-button-background-color-parent-hover, cssvar(button-background-color));
+			#{ '--stk-button-text-color' }: var(--stk-button-text-color-parent-hover, #fff);
+			#{ '--stk-accent-color' }: var(--stk-button-text-color-parent-hover, #fff);
+		}
+		&.is-style-link .stk-button {
+			#{ '--stk-accent-color' }: var(--stk-link-color-parent-hover);
+		}
+		&.is-style-ghost .stk-button {
+			#{ '--stk-button-outline-color' }: var(--stk-button-outline-color-parent-hover, #008de4);
+			#{ '--stk-button-text-color' }: var(--stk-button-outline-color-parent-hover, #008de4);
+			#{ '--stk-accent-color' }: var(--stk-button-outline-color-parent-hover, #008de4);
+		}
+		&.is-style-plain .stk-button {
+			#{ '--stk-button-background-color' }: var(--stk-button-background-color-parent-hover, #008de4);
+			#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-parent-hover, cssvar(button-background-color));
+			#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-parent-hover, cssvar(button-background-color));
+		}
+	}
+	&.stk-preview-state--hover .is-selected > :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost, .is-style-plain) .stk-button {
+			background: var(--stk-button-background-color-hover, cssvar(button-background-color));
+			#{ '--stk-button-text-color' }: var(--stk-button-text-color-hover, #fff);
+			#{ '--stk-accent-color-hover' }: var(--stk-button-text-color-hover, #fff);
+			#{ '--stk-accent-color' }: var(--stk-button-text-color-hover, #fff);
+		}
+		&.is-style-link .stk-button {
+			#{ '--stk-accent-color-hover' }: var(--stk-link-color-hover);
+			#{ '--stk-accent-color' }: var(--stk-link-color-hover);
+		}
+		&.is-style-ghost .stk-button {
+			#{ '--stk-button-outline-color' }: var(--stk-button-outline-color-hover, #008de4);
+			#{ '--stk-button-text-color' }: var(--stk-button-outline-color-hover, #008de4);
+			#{ '--stk-accent-color-hover' }: var(--stk-button-outline-color-hover, #008de4);
+			#{ '--stk-accent-color' }: var(--stk-button-outline-color-hover, #008de4);
+		}
+		&.is-style-plain .stk-button {
+			#{ '--stk-button-background-color' }: var(--stk-button-background-color-hover, #008de4);
+			#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
+			#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
+			#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-hover, cssvar(button-background-color));
+		}
+	}
+
+	.stk--is-hovered .stk-container:not(.stk--no-background) {
+		background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
+		background-image: var(--stk-container-background-color-hover, cssvar(container-background-color));
+	}
+
+	[data-type^="stackable/"] .stk--is-hovered.stk-block-background {
+		background-image: var(--stk-block-background-color-hover, cssvar(block-background-color));
+		background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
+	}
 }
