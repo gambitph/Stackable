@@ -73,7 +73,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$typography = get_option( 'stackable_global_typography' );
 				if ( ! empty( $typography ) && is_array( $typography ) ) {
 					$this->force_typography = get_option( 'stackable_global_force_typography' );
-					add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
+					// Add a priority of 11 to ensure this runs after getting the dynamic breakpoints
+					// So that we can correctly adjust the breakpoints if needed.
+					add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ), 11 );
 				}
 
 				// For some native blocks, add a note that they're core blocks.
