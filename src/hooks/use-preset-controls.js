@@ -55,11 +55,12 @@ export const usePresetControls = property => {
 	}
 
 	// Get the merge preset marks with the CSS Variable value
-	const getPresetMarks = () => {
+	// Setting customOnly to true returns the preset marks for custom presets only
+	const getPresetMarks = ( customOnly = false ) => {
 		const prefix = PRESET_MAPPING[ property ].prefix
-		const mergedPresets = getMergedPresets()
+		const presets = customOnly ? allCustomPresets[ property ] ?? [] : getMergedPresets()
 
-		return mergedPresets
+		return presets
 			.filter( preset => ! ( preset?.isDiscarded ) )
 			.map( preset => ( {
 				...preset,

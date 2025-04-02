@@ -30,6 +30,7 @@ import {
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
 
 const TYPOGRAPHY_SHADOWS = [
 	'none',
@@ -80,6 +81,10 @@ export const Controls = props => {
 	const attributeName = getAttrNameFunction( attrNameTemplate )
 	const text = getAttribute( 'text' )
 	const [ debouncedText, setDebouncedText ] = useState( text )
+	const { useTypographyAsPresets } = useSelect( select => {
+		const _useTypographyAsPresets = select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
+		return { useTypographyAsPresets: { ..._useTypographyAsPresets } }
+	}, [] )
 
 	useEffect( () => {
 		if ( text !== debouncedText ) {
@@ -100,7 +105,7 @@ export const Controls = props => {
 
 	const onChangeContent = useCallback( text => setDebouncedText( escapeHTMLIfInvalid( text ) ), [] )
 
-	const presetMarks = usePresetControls( 'fontSizes' )?.getPresetMarks() || null
+	const presetMarks = usePresetControls( 'fontSizes' )?.getPresetMarks( useTypographyAsPresets ) || null
 
 	return (
 		<>

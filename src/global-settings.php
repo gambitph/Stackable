@@ -414,6 +414,18 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			register_setting(
 				'stackable_global_settings',
+				'stackable_use_typography_as_presets',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Use Global Typography font sizes as preset', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
 				'stackable_icon_library',
 				array(
 					'type' => 'array',
