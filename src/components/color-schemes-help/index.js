@@ -13,7 +13,7 @@ export const ColorSchemesHelp = () => {
 
 	return <p>
 		{ __( 'Change the color scheme.', i18n ) }
-		<Button variant="link" onClick={ onClick }> { __( 'Manage', i18n ) } </Button>
+		<Button variant="link" onClick={ onClick }> { __( ' Manage', i18n ) } </Button>
 		{ __( ' your color schemes.', i18n ) }
 	</p>
 }
