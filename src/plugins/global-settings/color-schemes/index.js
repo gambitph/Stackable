@@ -29,15 +29,17 @@ export { GlobalColorSchemeStyles } from './editor-loader'
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-schemes', output => {
 	const [ itemInEdit, setItemInEdit ] = useState( null )
-	const [ isOpen, setIsOpen ] = useState( false )
 	const [ displayHoverNotice, setDisplayHoverNotice ] = useState( false )
+	const isOpen = useSelect( select => select( 'stackable/global-color-schemes' ).getIsOpen() )
 
 	return (
 		<Fragment>
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Color Schemes', i18n ) }
-				onToggle={ isOpen => setIsOpen( isOpen ) }
+				className="ugb-global-color-schemes__panel"
+				onToggle={ isOpen => dispatch( 'stackable/global-color-schemes' ).setIsOpen( isOpen ) }
+				isOpen={ isOpen }
 			>
 				{ isOpen && displayHoverNotice && <span className="stk-global-block-layouts-help-tooltip">
 					<HelpTooltip

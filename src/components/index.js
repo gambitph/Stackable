@@ -124,3 +124,4 @@ export {
 	ColorSchemePresetPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
 } from './color-scheme-preview'
+export { ColorSchemesHelp } from './color-schemes-help'
