@@ -347,6 +347,7 @@ const FourRangeControl = memo( props => {
 		]
 	}
 
+	// Create step supports for each side
 	const [ propsToPassFirst, rangeValueFirst, rangeOnChangeFirst ] = stepSupport(
 		isFourMarkMode.first,
 		firstValue,
@@ -375,6 +376,18 @@ const FourRangeControl = memo( props => {
 		isFourMarkMode.left,
 		value.left,
 		onChangeLeft,
+	)
+
+	const [ propsToPassVertical, rangeValueVertical, rangeOnChangeVertical ] = stepSupport(
+		isFourMarkMode.top,
+		value.top,
+		onChangeVertical,
+	)
+
+	const [ propsToPassHorizontal, rangeValueHorizontal, rangeOnChangeHorizontal ] = stepSupport(
+		isFourMarkMode.left,
+		value.left,
+		onChangeHorizontal,
 	)
 
 	return (
@@ -442,9 +455,9 @@ const FourRangeControl = memo( props => {
 							<span className="ugb-four-range-control__icon"><SVGVerticalImage /></span>
 						</Tooltip>
 						<RangeControl
-							{ ...propsToPass }
-							value={ value.top }
-							onChange={ onChangeVertical }
+							{ ...propsToPassVertical }
+							value={ rangeValueVertical }
+							onChange={ rangeOnChangeVertical }
 							allowReset={ false }
 							initialPosition={ ( () => {
 								if ( currentHoverState !== 'normal' ) {
@@ -472,7 +485,21 @@ const FourRangeControl = memo( props => {
 
 								return typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop
 							} )() }
-						/>
+							__nextHasNoMarginBottom
+						>
+							{ props.allowCustom && props.marks && (
+								<Button
+									className="stk-range-control__custom-button"
+									size="small"
+									variant="tertiary"
+									onClick={ () => setIsFourMarkMode( prev => {
+										return { ...prev, top: ! prev.top }
+									} ) }
+									icon={ settings }
+								>
+								</Button>
+							) }
+						</RangeControl>
 						<ResetButton
 							allowReset={ props.allowReset }
 							value={ value.top }
@@ -485,9 +512,9 @@ const FourRangeControl = memo( props => {
 							<span className="ugb-four-range-control__icon"><SVGHorizontalImage /></span>
 						</Tooltip>
 						<RangeControl
-							{ ...propsToPass }
-							value={ value.left }
-							onChange={ onChangeHorizontal }
+							{ ...propsToPassHorizontal }
+							value={ rangeValueHorizontal }
+							onChange={ rangeOnChangeHorizontal }
 							allowReset={ false }
 							initialPosition={ ( () => {
 								if ( currentHoverState !== 'normal' ) {
@@ -514,7 +541,21 @@ const FourRangeControl = memo( props => {
 								}
 								return typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft
 							} )() }
-						/>
+							__nextHasNoMarginBottom
+						>
+							{ props.allowCustom && props.marks && (
+								<Button
+									className="stk-range-control__custom-button"
+									size="small"
+									variant="tertiary"
+									onClick={ () => setIsFourMarkMode( prev => {
+										return { ...prev, left: ! prev.left }
+									} ) }
+									icon={ settings }
+								>
+								</Button>
+							) }
+						</RangeControl>
 						<ResetButton
 							allowReset={ props.allowReset }
 							value={ value.left }
