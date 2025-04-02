@@ -305,7 +305,6 @@ const FourRangeControl = memo( props => {
 
 			// Other necessary props for steps.
 			newProps.withInputField = false
-			controlProps.units = false
 		} else {
 			newProps.marks = undefined
 		}
@@ -345,6 +344,18 @@ const FourRangeControl = memo( props => {
 		return [
 			newProps, rangeValue, rangeOnChange,
 		]
+	}
+
+	// Remove the unit picker if not in mark mode for every four range mode
+	if ( isLocked && ! props.vhMode ) {
+		controlProps.units = isFourMarkMode.first
+			? false : controlProps.units
+	} else if ( isLocked && props.vhMode ) {
+		controlProps.units = isFourMarkMode.top && isFourMarkMode.left
+			? false : controlProps.units
+	} else {
+		controlProps.units = isFourMarkMode.top && isFourMarkMode.right && isFourMarkMode.bottom && isFourMarkMode.left
+			? false : controlProps.units
 	}
 
 	// Create step supports for each side
