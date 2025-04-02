@@ -157,6 +157,7 @@ export const useBlockLayoutEditorLoader = ( storeName, classSuffix ) => {
 		}
 	}, [ blockLayouts, currentHoverState, SelectedParentHoverBlock ] )
 
+	// Adds a class to the editor body DOM to indicate that there are global styles for `spacing and borders` or `buttons and icons`.
 	useEffect( () => {
 		if ( editorEl ) {
 			const className = `stk-has-design-system-${ classSuffix }`
