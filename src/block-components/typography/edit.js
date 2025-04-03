@@ -81,10 +81,9 @@ export const Controls = props => {
 	const attributeName = getAttrNameFunction( attrNameTemplate )
 	const text = getAttribute( 'text' )
 	const [ debouncedText, setDebouncedText ] = useState( text )
-	const { useTypographyAsPresets } = useSelect( select => {
-		const _useTypographyAsPresets = select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
-		return { useTypographyAsPresets: { ..._useTypographyAsPresets } }
-	}, [] )
+	const useTypographyAsPresets = useSelect( select =>
+		 select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
+	)
 
 	useEffect( () => {
 		if ( text !== debouncedText ) {

@@ -101,7 +101,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const { allCustomPresets, useTypographyAsPresets } = useSelect( select => {
 		const _customPresetControls = select( 'stackable/global-preset-controls.custom' )?.getCustomPresetControls() ?? {}
 		const _useTypographyAsPresets = select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
-		return { allCustomPresets: { ..._customPresetControls }, useTypographyAsPresets: { ..._useTypographyAsPresets } }
+		return { allCustomPresets: { ..._customPresetControls }, useTypographyAsPresets: _useTypographyAsPresets }
 	}, [] )
 
 	const FONT_PAIRS = applyFilters( 'stackable.global-settings.typography.font-pairs.premium-font-pairs', FREE_FONT_PAIRS )
@@ -125,10 +125,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		} )
 	}, [] )
 
-	// When typography styles are changed, trigger our editor style generator to update.
 	useEffect( () => {
+		// When typography styles are changed, trigger our editor style generator to update.
 		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo )
 
+		// Update the custom presets when using typography as presets
 		if ( useTypographyAsPresets ) {
 			const fontSizePresets = TYPOGRAPHY_TAGS
 				.filter( ( { presetSlug } ) => !! presetSlug )
@@ -171,7 +172,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 			dispatch( 'stackable/global-preset-controls.custom' ).updateCustomPresetControls( newSettings )
 		}
-	}, [ JSON.stringify( typographySettings ), applySettingsTo ] )
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, useTypographyAsPresets ] )
 
 	// Scroll to the selected font pair when Global Typography tab is toggled
 	useEffect( () => {
