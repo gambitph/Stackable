@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getDefault } from './block-layout-utils'
+import { getDefault, onClassChange } from './block-layout-utils'
 
 /**
  * WordPress dependencies
@@ -127,7 +127,7 @@ const renderGlobalStyles = (
 	setStyles( css )
 }
 
-export const useBlockLayoutEditorLoader = storeName => {
+export const useBlockLayoutEditorLoader = ( storeName, classSuffix ) => {
 	const {
 		blockLayouts, selectedBlockUniqueId, SelectedParentHoverBlock,
 	} = useSelect( select => ( {
@@ -137,6 +137,9 @@ export const useBlockLayoutEditorLoader = storeName => {
 	} ), [] )
 
 	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
+	const editorEl = useSelect( select => {
+		return select( 'stackable/editor-dom' ).getEditorDom()
+	}, [] )
 	const [ styles, setStyles ] = useState( '' )
 
 	const { defaults: blockLayoutDefaults } = useBlockLayoutDefaults()
@@ -153,6 +156,29 @@ export const useBlockLayoutEditorLoader = storeName => {
 			)
 		}
 	}, [ blockLayouts, currentHoverState, SelectedParentHoverBlock ] )
+
+	useEffect( () => {
+		if ( editorEl ) {
+			const className = `stk-has-design-system-${ classSuffix }`
+			if ( styles !== '' && editorEl.classList.contains( className ) === false ) {
+				editorEl.classList.add( className )
+			}
+			if ( styles === '' ) {
+				editorEl.classList.remove( className )
+			}
+
+			const mo = onClassChange( editorEl, () => {
+				if ( styles !== '' && editorEl?.classList.contains( className ) === false ) {
+					editorEl?.classList.add( className )
+				}
+				if ( styles === '' ) {
+					editorEl?.classList.remove( className )
+				}
+			} )
+
+			return () => mo.disconnect()
+		}
+	}, [ editorEl, styles ] )
 
 	return styles
 }

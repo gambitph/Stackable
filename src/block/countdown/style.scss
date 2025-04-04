@@ -27,10 +27,6 @@
 .stk-block-countdown__digit {
 	font-size: 40px;
 	height: 50%;
-	color: var(--stk-accent-color);
-	&:where(:hover) {
-		#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
-	}
 }
 
 .stk-block-countdown__label,
@@ -43,16 +39,13 @@
 	align-items: center;
 	justify-content: center;
 	.stk-block-countdown__divider-colon {
-		color: var(--stk-accent-color, #000);
+		color: #000;
 		display: flex;
 		position: relative;
 		justify-content: center;
 		line-height: 1;
 		font-size: 45px;
 		top: -12px;
-		&:where(:hover) {
-			#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
-		}
 	}
 
 	.stk-block-countdown__divider-line {
@@ -65,4 +58,28 @@
 .stk-block-countdown__message {
 	display: none;
 	margin: 0;
+}
+
+// These are styles added from the global color schemes.
+:where(.stk-has-color-schemes) {
+	.stk-block-countdown__digit {
+		color: var(--stk-accent-color);
+		&:where(:hover) {
+			color: var(--stk-accent-color-hover, var(--stk-accent-color));
+		}
+	}
+	.stk-block-countdown__divider-wrapper {
+		.stk-block-countdown__divider-colon {
+			color: var(--stk-accent-color);
+			&:where(:hover) {
+				color: var(--stk-accent-color-hover, var(--stk-accent-color));
+			}
+		}
+		.stk-block-countdown__divider-line {
+			background-color: var(--stk-accent-color);
+			&:where(:hover) {
+				background-color: var(--stk-accent-color-hover, var(--stk-accent-color));
+			}
+		}
+	}
 }

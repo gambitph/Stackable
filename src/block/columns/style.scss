@@ -9,11 +9,18 @@
 }
 
 .stk-block-columns > .stk-block-content {
-	--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
+	--stk-column-gap: 0px; // For nested columns, this takes precedence.
 	column-gap: var(--stk-column-gap);
-	row-gap: var(--stk-columns-row-gap, 0px);
 	margin-left: auto;
 	margin-right: auto;
+}
+
+// These are styles added from the global spacing and borders.
+:where(.stk-has-design-system-spacing-and-borders) {
+	.stk-block-columns > .stk-block-content {
+		--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
+		row-gap: var(--stk-columns-row-gap, 0px);
+	}
 }
 
 // Add a 0 specificity style to set the default column order. This is to prevent

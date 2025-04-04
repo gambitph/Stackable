@@ -4,7 +4,6 @@
 	position: relative;
 	height: var(--progress-size, 150px);
 	width: var(--progress-size, 150px);
-	--progress-color-1: var(--stk-accent-color);
 	svg {
 		height: var(--progress-size, 150px);
 		width: var(--progress-size, 150px);
@@ -52,6 +51,13 @@
 		.stk-progress-circle__bar {
 			stroke-dashoffset: var(--progress-dash-offset);
 		}
+	}
+}
+
+// These are styles added from the global color schemes.
+:where(.stk-has-color-schemes) {
+	.stk-block-progress-circle {
+		--progress-color-1: var(--stk-accent-color);
 	}
 }
 

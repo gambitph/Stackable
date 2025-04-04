@@ -16,9 +16,11 @@
 		top: 0;
 		left: 0;
 		height: 1em;
-		width: var(--stk-icon-list-icon-size, 1em);
+		// In Global Buttons and Icons, we renamed `--stk-icon-height` to `--stk-icon-list-icon-size`.
+		// Keep the `--stk-icon-height` for backward compatibility.
+		width: var(--stk-icon-height, var(--stk-icon-list-icon-size, 1em));
 		cursor: copy;
-		margin-left: calc(var(--stk-icon-list-icon-size, 1em) * -1);
+		margin-left: calc(var(--stk-icon-height, var(--stk-icon-list-icon-size, 1em)) * -1);
 	}
 }
 

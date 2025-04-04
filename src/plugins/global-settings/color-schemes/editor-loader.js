@@ -5,6 +5,8 @@ import {
 	convertToObj, getCSS, schemeHasValue,
 } from './utils'
 
+import { onClassChange } from '../utils'
+
 /**
  * External dependencies
  */
@@ -14,7 +16,7 @@ import { useBlockColorSchemes, useBlockHoverState } from '~stackable/hooks'
  * WordPress dependencies
  */
 import { useEffect, useState } from '@wordpress/element'
-
+import { useSelect } from '@wordpress/data'
 const renderGlobalStyles = (
 	setStyles,
 	colorSchemesArray,
@@ -110,6 +112,9 @@ export const GlobalColorSchemeStyles = () => {
 
 	const [ styles, setStyles ] = useState( '' )
 	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
+	const editorEl = useSelect( select => {
+		return select( 'stackable/editor-dom' ).getEditorDom()
+	}, [] )
 
 	useEffect( () => {
 		if ( allColorSchemes && Array.isArray( allColorSchemes ) ) {
@@ -128,6 +133,29 @@ export const GlobalColorSchemeStyles = () => {
 		containerModeColorScheme,
 		currentHoverState,
 	 ] )
+
+	useEffect( () => {
+		if ( editorEl ) {
+			if ( styles !== '' && editorEl.classList.contains( 'stk-has-color-schemes' ) === false ) {
+				editorEl.classList.add( 'stk-has-color-schemes' )
+			}
+			if ( styles === '' ) {
+				editorEl.classList.remove( 'stk-has-color-schemes' )
+			}
+
+			// At first load of the editor, the `stk-preview-device-*` and `stk--is-*-theme` are removed, so we have to re-add it.
+			const mo = onClassChange( editorEl, () => {
+				if ( styles !== '' && editorEl?.classList.contains( 'stk-has-color-schemes' ) === false ) {
+					editorEl?.classList.add( 'stk-has-color-schemes' )
+				}
+				if ( styles === '' ) {
+					editorEl?.classList.remove( 'stk-has-color-schemes' )
+				}
+			} )
+
+			return () => mo.disconnect()
+		}
+	}, [ editorEl, styles ] )
 
 	return styles
 }
