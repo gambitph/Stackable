@@ -92,6 +92,18 @@ const TYPOGRAPHY_TAGS = [
 	},
 ]
 
+const TYPE_SCALE = [
+	{ label: __( 'None / Custom', i18n ), value: 1 },
+	{ label: __( '1.067 - Minor Second', i18n ), value: 1.067 },
+	{ label: __( '1.125 - Major Second', i18n ), value: 1.125 },
+	{ label: __( '1.200 - Minor Third', i18n ), value: 1.2 },
+	{ label: __( '1.250 - Major Third', i18n ), value: 1.25 },
+	{ label: __( '1.333 - Perfect Fourth', i18n ), value: 1.333 },
+	{ label: __( '1.414 - Augmented Fourth', i18n ), value: 1.414 },
+	{ label: __( '1.500 - Perfect Fifth', i18n ), value: 1.5 },
+	{ label: __( '1.618 - Golden Ratio', i18n ), value: 1.618 },
+]
+
 let saveTypographyThrottle = null
 let saveSelectedFontPairThrottle = null
 let saveCustomFontPairsThrottle = null
@@ -112,16 +124,35 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const [ customFontPairs, setCustomFontPairs ] = useState( [] )
 	const [ selectedFontPairName, setSelectedFontPairName ] = useState( '' )
 	const [ isEditingFontPair, setIsEditingFontPair ] = useState( false )
+	const [ selectedTypeScale, setSelectedTypeScale ] = useState( 1 )
 
 	const fontPairContainerRef = useRef( null )
 
 	useEffect( () => {
 		fetchSettings().then( response => {
 			// Get settings.
-			setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
+			const _typographySettings = ( head( response.stackable_global_typography ) ) || {}
+			setTypographySettings( _typographySettings )
 			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 			setCustomFontPairs( response.stackable_custom_font_pairs || [] )
 			setSelectedFontPairName( response.stackable_selected_font_pair || '' )
+
+			// Reversely compute the type scale from the font sizes
+			// Check first if the units are rem
+			if ( Object.values( _typographySettings ).every( setting => setting.fontSizeUnit === 'rem' ) ) {
+				let typeScale = _typographySettings?.h6?.fontSize
+				const computedApplied = getAppliedTypeScale( typeScale )
+
+				const tags = Object.keys( _typographySettings )
+				for ( const tag of tags ) {
+					// If font size mismatch, set typography scale to None / Custom
+					if ( _typographySettings[ tag ].fontSize !== computedApplied[ tag ].fontSize ) {
+						typeScale = 1
+					}
+				}
+
+				setSelectedTypeScale( typeScale )
+			}
 		} )
 	}, [] )
 
@@ -194,6 +225,19 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		return [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
 	}
 
+	const getAppliedTypeScale = typeScale => ( {
+		h1: { fontSize: Number( Math.pow( typeScale, 6 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h2: { fontSize: Number( Math.pow( typeScale, 5 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h3: { fontSize: Number( Math.pow( typeScale, 4 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h4: { fontSize: Number( Math.pow( typeScale, 3 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h5: { fontSize: Number( Math.pow( typeScale, 2 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h6: { fontSize: Number( typeScale.toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		p: { fontSize: 1, fontSizeUnit: 'rem' },
+		'.stk-subtitle': { fontSize: Number( ( 1 / typeScale ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		'.stk-button__inner-text': { fontSize: 1, fontSizeUnit: 'rem' },
+
+	} )
+
 	const updateTypography = newSettings => {
 		setTypographySettings( newSettings )
 
@@ -236,6 +280,21 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			stackable_global_typography_apply_to: value, // eslint-disable-line
 		} )
 		model.save()
+	}
+
+	const updateTypeScale = value => {
+		const typeScale = Number( value )
+		if ( isNaN( typeScale ) ) {
+			return
+		}
+
+		setSelectedTypeScale( typeScale )
+
+		// Only update the typography settings if not None/Custom
+		if ( typeScale !== 1 ) {
+			const newSettings = getAppliedTypeScale( typeScale )
+			changeStyles( newSettings )
+		}
 	}
 
 	const changeStyles = typography => {
@@ -433,6 +492,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						<ControlSeparator />
 
 						<h3>{ __( 'Typography Settings' ) }</h3>
+						<AdvancedSelectControl
+							label={ __( 'Type Scale', i18n ) }
+							options={ TYPE_SCALE }
+							value={ selectedTypeScale }
+							onChange={ updateTypeScale }
+							default={ 1 }
+						/>
 						{ TYPOGRAPHY_TAGS.map( ( {
 							label, selector, help,
 						}, index ) => {
@@ -445,8 +511,16 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									value={ ( typographySettings[ selector ] ) || {} }
 									defaultFontFamily={ getDefaultFontFamily( selector ) }
 									isAllowReset={ getIsAllowReset( selector ) }
-									onChange={ styles => changeStyles( { [ selector ]: styles } ) }
-									onReset={ () => resetStyles( selector ) }
+									onChange={ styles => {
+										changeStyles( { [ selector ]: styles } )
+										// Also set the typescale to None/Custom
+										setSelectedTypeScale( 1 )
+									} }
+									onReset={ () => {
+										resetStyles( selector )
+										// Also set the typescale to None/Custom
+										setSelectedTypeScale( 1 )
+									} }
 								/>
 							)
 						} ) }
