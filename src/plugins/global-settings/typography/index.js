@@ -16,7 +16,9 @@ import { fetchSettings, getDefaultFontSize } from '~stackable/util'
 import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
-import { head, isEqual } from 'lodash'
+import {
+	head, isEqual, cloneDeep,
+} from 'lodash'
 
 /**
  * WordPress dependencies
@@ -93,15 +95,47 @@ const TYPOGRAPHY_TAGS = [
 ]
 
 const TYPE_SCALE = [
-	{ label: __( 'None / Custom', i18n ), value: 1 },
-	{ label: __( '1.067 - Minor Second', i18n ), value: 1.067 },
-	{ label: __( '1.125 - Major Second', i18n ), value: 1.125 },
-	{ label: __( '1.200 - Minor Third', i18n ), value: 1.2 },
-	{ label: __( '1.250 - Major Third', i18n ), value: 1.25 },
-	{ label: __( '1.333 - Perfect Fourth', i18n ), value: 1.333 },
-	{ label: __( '1.414 - Augmented Fourth', i18n ), value: 1.414 },
-	{ label: __( '1.500 - Perfect Fifth', i18n ), value: 1.5 },
-	{ label: __( '1.618 - Golden Ratio', i18n ), value: 1.618 },
+	{
+		label: __( 'None', i18n ),
+		value: 'none',
+	},
+	{
+		label: __( 'Custom', i18n ),
+		value: 'custom',
+		disabled: true,
+	},
+	{
+		label: __( '1.067 - Minor Second', i18n ),
+		value: '1.067',
+	},
+	{
+		label: __( '1.125 - Major Second', i18n ),
+		value: '1.125',
+	},
+	{
+		label: __( '1.200 - Minor Third', i18n ),
+		value: '1.2',
+	},
+	{
+		label: __( '1.250 - Major Third', i18n ),
+		value: '1.25',
+	},
+	{
+		label: __( '1.333 - Perfect Fourth', i18n ),
+		value: '1.333',
+	},
+	{
+		label: __( '1.414 - Augmented Fourth', i18n ),
+		value: '1.414',
+	},
+	{
+		label: __( '1.500 - Perfect Fifth', i18n ),
+		value: '1.5',
+	},
+	{
+		label: __( '1.618 - Golden Ratio', i18n ),
+		value: '1.618',
+	},
 ]
 
 let saveTypographyThrottle = null
@@ -124,7 +158,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const [ customFontPairs, setCustomFontPairs ] = useState( [] )
 	const [ selectedFontPairName, setSelectedFontPairName ] = useState( '' )
 	const [ isEditingFontPair, setIsEditingFontPair ] = useState( false )
-	const [ selectedTypeScale, setSelectedTypeScale ] = useState( 1 )
+	const [ selectedTypeScale, setSelectedTypeScale ] = useState( 'none' )
 
 	const fontPairContainerRef = useRef( null )
 
@@ -135,22 +169,19 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			setTypographySettings( _typographySettings )
 			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 			setCustomFontPairs( response.stackable_custom_font_pairs || [] )
-			setSelectedFontPairName( response.stackable_selected_font_pair || '' )
+			setSelectedFontPairName( response.stackable_selected_font_pair || 'theme-heading-default/theme-body-default' )
 
 			// Reversely compute the type scale from the font sizes
-			// Check first if the units are rem
-			if ( Object.values( _typographySettings ).every( setting => setting.fontSizeUnit === 'rem' ) ) {
-				let typeScale = _typographySettings?.h6?.fontSize
-				const computedApplied = getAppliedTypeScale( typeScale )
-
+			let typeScale = _typographySettings?.h6?.fontSize
+			if ( typeScale ) {
+				const computedApplied = getAppliedTypeScale( typeScale ) ?? {}
 				const tags = Object.keys( _typographySettings )
 				for ( const tag of tags ) {
-					// If font size mismatch, set typography scale to None / Custom
-					if ( _typographySettings[ tag ].fontSize !== computedApplied[ tag ].fontSize ) {
-						typeScale = 1
+				// If font size mismatch, set typography scale to Custom
+					if ( _typographySettings[ tag ]?.fontSize !== computedApplied[ tag ]?.fontSize ) {
+						typeScale = 'custom'
 					}
 				}
-
 				setSelectedTypeScale( typeScale )
 			}
 		} )
@@ -225,18 +256,23 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		return [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
 	}
 
-	const getAppliedTypeScale = typeScale => ( {
-		h1: { fontSize: Number( Math.pow( typeScale, 6 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h2: { fontSize: Number( Math.pow( typeScale, 5 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h3: { fontSize: Number( Math.pow( typeScale, 4 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h4: { fontSize: Number( Math.pow( typeScale, 3 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h5: { fontSize: Number( Math.pow( typeScale, 2 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h6: { fontSize: Number( typeScale.toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		p: { fontSize: 1, fontSizeUnit: 'rem' },
-		'.stk-subtitle': { fontSize: Number( ( 1 / typeScale ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		'.stk-button__inner-text': { fontSize: 1, fontSizeUnit: 'rem' },
-
-	} )
+	const getAppliedTypeScale = value => {
+		const typeScale = Number( value )
+		if ( Number.isNaN( typeScale ) ) {
+			return
+		}
+		return {
+			h1: { fontSize: Number( Math.pow( typeScale, 6 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+			h2: { fontSize: Number( Math.pow( typeScale, 5 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+			h3: { fontSize: Number( Math.pow( typeScale, 4 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+			h4: { fontSize: Number( Math.pow( typeScale, 3 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+			h5: { fontSize: Number( Math.pow( typeScale, 2 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+			h6: { fontSize: Number( typeScale.toFixed( 3 ) ), fontSizeUnit: 'rem' },
+			p: { fontSize: 1, fontSizeUnit: 'rem' },
+			'.stk-subtitle': { fontSize: Number( ( 1 / typeScale ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+			'.stk-button__inner-text': { fontSize: 1, fontSizeUnit: 'rem' },
+		}
+	}
 
 	const updateTypography = newSettings => {
 		setTypographySettings( newSettings )
@@ -283,21 +319,31 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}
 
 	const updateTypeScale = value => {
-		const typeScale = Number( value )
-		if ( isNaN( typeScale ) ) {
+		setSelectedTypeScale( value )
+
+		// If value is custom, do not do anything
+		if ( value === 'custom ' ) {
 			return
 		}
 
-		setSelectedTypeScale( typeScale )
-
-		// Only update the typography settings if not None/Custom
-		if ( typeScale !== 1 ) {
-			const newSettings = getAppliedTypeScale( typeScale )
+		// If value is none, reset the font sizes and units
+		if ( value === 'none' ) {
+			const selectors = TYPOGRAPHY_TAGS.map( tag => tag.selector )
+			const newSettings = selectors.reduce( ( acc, selector, ) => {
+				acc[ selector ] = { fontSize: '', fontSizeUnit: '' }
+				return acc
+			}, {} )
 			changeStyles( newSettings )
+			return
 		}
+
+		// If value is valid type scale, apply to the styles
+		const newSettings = getAppliedTypeScale( value )
+		changeStyles( newSettings )
 	}
 
-	const changeStyles = typography => {
+	const changeStyles = _typography => {
+		const typography = cloneDeep( _typography )
 		const newSettings = { ...typographySettings }
 
 		Object.entries( typography ).forEach( ( [ selector, styles ] ) => {
@@ -497,7 +543,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 							options={ TYPE_SCALE }
 							value={ selectedTypeScale }
 							onChange={ updateTypeScale }
-							default={ 1 }
+							default="none"
 						/>
 						{ TYPOGRAPHY_TAGS.map( ( {
 							label, selector, help,
@@ -513,13 +559,18 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									isAllowReset={ getIsAllowReset( selector ) }
 									onChange={ styles => {
 										changeStyles( { [ selector ]: styles } )
-										// Also set the typescale to None/Custom
-										setSelectedTypeScale( 1 )
+										// Set typeScale to custom when editing font size or units
+										if ( 'fontSize' in styles || 'fontSizeUnit' in styles ) {
+											setSelectedTypeScale( 'custom' )
+										}
 									} }
 									onReset={ () => {
 										resetStyles( selector )
-										// Also set the typescale to None/Custom
-										setSelectedTypeScale( 1 )
+										// Set typeScale to custom when editing font size or units
+										const styles = typographySettings[ selector ]
+										if ( 'fontSize' in styles || 'fontSizeUnit' in styles ) {
+											setSelectedTypeScale( 'custom' )
+										}
 									} }
 								/>
 							)
