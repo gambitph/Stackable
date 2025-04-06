@@ -5,6 +5,7 @@ import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
 import { getThemeStyles } from './get-theme-styles'
 import FREE_FONT_PAIRS from './font-pairs.json'
+import { getAppliedTypeScale } from './utils'
 
 /**
  * External dependencies
@@ -254,24 +255,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	const getCurrentFontPair = () => {
 		return [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
-	}
-
-	const getAppliedTypeScale = value => {
-		const typeScale = Number( value )
-		if ( Number.isNaN( typeScale ) ) {
-			return
-		}
-		return {
-			h1: { fontSize: Number( Math.pow( typeScale, 6 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-			h2: { fontSize: Number( Math.pow( typeScale, 5 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-			h3: { fontSize: Number( Math.pow( typeScale, 4 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-			h4: { fontSize: Number( Math.pow( typeScale, 3 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-			h5: { fontSize: Number( Math.pow( typeScale, 2 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-			h6: { fontSize: Number( typeScale.toFixed( 3 ) ), fontSizeUnit: 'rem' },
-			p: { fontSize: 1, fontSizeUnit: 'rem' },
-			'.stk-subtitle': { fontSize: Number( ( 1 / typeScale ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-			'.stk-button__inner-text': { fontSize: 1, fontSizeUnit: 'rem' },
-		}
 	}
 
 	const updateTypography = newSettings => {
