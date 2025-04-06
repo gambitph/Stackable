@@ -265,9 +265,9 @@ export const Controls = props => {
 				allowReset={ true }
 				attribute={ attributeName( 'fontSize' ) }
 				units={ [ 'px', 'em', 'rem' ] }
-				min={ [ 0, 0 ] }
-				sliderMax={ [ 150, 7 ] }
-				step={ [ 1, 0.05 ] }
+				min={ [ 0, 0, 0 ] }
+				sliderMax={ [ 150, 7, 7 ] }
+				step={ [ 1, 0.05, 0.05 ] }
 				placeholder={ props.sizePlaceholder }
 				responsive="all"
 				helpTooltip={ {

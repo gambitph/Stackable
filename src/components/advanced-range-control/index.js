@@ -230,7 +230,7 @@ const AdvancedRangeControl = props => {
 							variant="tertiary"
 							onClick={ () => {
 								// Set the value when changing from mark mode to custom
-								if ( isMarkMode && rangeValue ) {
+								if ( isMarkMode && rangeValue !== -1 ) {
 									rangeOnChange( rangeValue, 'size' )
 								}
 								setIsMarkMode( ! isMarkMode )
