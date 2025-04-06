@@ -350,6 +350,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			if ( ! selector || typeof styles !== 'object' ) {
 				return
 			}
+
+			// Merge the new styles with the previous, while overwritting similar styles.
+			// This allow adding styles without removing the previous ones.
+			// Check if the object is empty, used for resetting the whole setting.
+			if ( Object.keys( styles ).length !== 0 ) {
+				styles = { ...newSettings[ selector ], ...styles }
+			}
 			/**
 			 * Delete the object keys with empty strings.
 			 * Otherwise, the API will throw an error code 400
