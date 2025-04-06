@@ -20,10 +20,9 @@ import { Dashicon } from '@wordpress/components'
 const TypographyPicker = props => {
 	const { value, help } = props
 
-	// On style change, gather all the styles then trigger the onChange.
+	// On style change, only get the new style then trigger the onChange.
 	const onChange = ( style, value ) => {
 		const newStyles = {
-			...props.value,
 			[ style ]: value,
 		}
 		props.onChange( newStyles )
