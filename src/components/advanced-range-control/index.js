@@ -189,13 +189,12 @@ const AdvancedRangeControl = props => {
 			const [ _value, _unit ] = extractNumberAndUnit( mark.value )
 			return _value === derivedValue
 		} )
-		rangeOnChange = value => {
+		rangeOnChange = ( value, property = 'value' ) => {
 			if ( value === '' ) {
 				return _onChange( value )
 			}
-
 			// Extract the unit and value.
-			const markValue = props.marks[ value ]?.value || '0'
+			const markValue = props.marks[ value ]?.[ property ] || '0'
 			const [ _newValue, unit ] = extractNumberAndUnit( markValue )
 			const newValue = _newValue
 
@@ -229,7 +228,13 @@ const AdvancedRangeControl = props => {
 							className="stk-range-control__custom-button"
 							size="small"
 							variant="tertiary"
-							onClick={ () => setIsMarkMode( ! isMarkMode ) }
+							onClick={ () => {
+								// Set the value when changing from mark mode to custom
+								if ( isMarkMode && rangeValue ) {
+									rangeOnChange( rangeValue, 'size' )
+								}
+								setIsMarkMode( ! isMarkMode )
+							} }
 							icon={ settings }
 						>
 						</Button>
