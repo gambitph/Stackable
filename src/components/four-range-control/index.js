@@ -59,7 +59,7 @@ const isEqualInitial = ( props, value, firstValue ) => {
 const extractNumberAndUnit = value => {
 	// Match the last characters that are not numbers.
 	const matches = value.match( /([\d.]+)(\D*)$/ )
-	if ( ! matches || value.startsWith( 'var(--stk' ) ) {
+	if ( ! matches || value.startsWith( 'var' ) ) {
 		return [ value, '' ]
 	}
 	return [ matches[ 1 ], matches[ 2 ] ]
