@@ -13,6 +13,7 @@ import {
 	useBlockSetAttributesContext,
 	useDeviceType,
 } from '~stackable/hooks'
+import { extractNumbersAndUnits } from '~stackable/util'
 
 /**
  * External dependencies
@@ -186,7 +187,7 @@ const AdvancedRangeControl = props => {
 	let rangeOnChange = _onChange
 	if ( isMarkMode ) {
 		rangeValue = props.marks.findIndex( mark => {
-			const [ _value, _unit ] = extractNumberAndUnit( mark.value )
+			const [ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
 			return _value === derivedValue
 		} )
 		rangeOnChange = ( value, property = 'value' ) => {
@@ -195,7 +196,7 @@ const AdvancedRangeControl = props => {
 			}
 			// Extract the unit and value.
 			const markValue = props.marks[ value ]?.[ property ] || '0'
-			const [ _newValue, unit ] = extractNumberAndUnit( markValue )
+			const [ _newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
 			const newValue = _newValue
 
 			// Update the unit.
@@ -277,14 +278,3 @@ AdvancedRangeControl.defaultProps = {
 }
 
 export default memo( AdvancedRangeControl, isEqual )
-
-// The value can be in the format '10px' or '10.0em' or '10rem'.
-// Return an array with the number and the unit.
-const extractNumberAndUnit = value => {
-	// Match the last characters that are not numbers.
-	const matches = value.match( /([\d.]+)(\D*)$/ )
-	if ( ! matches || value.startsWith( 'var' ) ) {
-		return [ value, '' ]
-	}
-	return [ matches[ 1 ], matches[ 2 ] ]
-}

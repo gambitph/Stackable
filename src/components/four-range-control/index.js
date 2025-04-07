@@ -18,6 +18,7 @@ import RangeControl from '../advanced-range-control/range-control'
 import { ResetButton } from '../base-control2/reset-button'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import { useControlHandlers } from '../base-control2/hooks'
+import { extractNumbersAndUnits } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -52,17 +53,6 @@ const isEqualInitial = ( props, value, firstValue ) => {
 	isEqual = props.enableBottom && value.bottom !== firstValue ? false : isEqual
 	isEqual = props.enableLeft && value.left !== firstValue ? false : isEqual
 	return isEqual
-}
-
-// The value can be in the format '10px' or '10.0em' or '10rem'.
-// Return an array with the number and the unit.
-const extractNumberAndUnit = value => {
-	// Match the last characters that are not numbers.
-	const matches = value.match( /([\d.]+)(\D*)$/ )
-	if ( ! matches || value.startsWith( 'var' ) ) {
-		return [ value, '' ]
-	}
-	return [ matches[ 1 ], matches[ 2 ] ]
 }
 
 const FourRangeControl = memo( props => {
@@ -294,8 +284,8 @@ const FourRangeControl = memo( props => {
 		} )
 		setIsFourMarkMode( prev => ( {
 			...prev,
-			right: prev.right,
-			left: prev.right,
+			right: prev.left,
+			left: prev.left,
 		} ) )
 	}
 	// Support for steps. Modify the props to make the range control show steps.
@@ -341,17 +331,17 @@ const FourRangeControl = memo( props => {
 		let rangeOnChange = initialOnChange
 		if ( props.marks && isMarkMode ) {
 			rangeValue = props.marks.findIndex( mark => {
-				const [ _value, _unit ] = extractNumberAndUnit( mark.value )
+				const [ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
 				return _value === initialValue
 			} )
-			rangeOnChange = value => {
+			rangeOnChange = ( value, property = 'value' ) => {
 				if ( value === '' ) {
 					return initialOnChange( value )
 				}
 
 				// Extract the unit and value.
-				const markValue = props.marks[ value ]?.value || '0'
-				const [ _newValue, unit ] = extractNumberAndUnit( markValue )
+				const markValue = props.marks[ value ]?.[ property ] || '0'
+				const [ _newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
 				const newValue = _newValue
 
 				// Update the unit.
@@ -417,8 +407,8 @@ const FourRangeControl = memo( props => {
 	)
 
 	const [ propsToPassHorizontal, rangeValueHorizontal, rangeOnChangeHorizontal ] = stepSupport(
-		isFourMarkMode.right,
-		value.right,
+		isFourMarkMode.left,
+		value.left,
 		onChangeHorizontal,
 	)
 
@@ -464,7 +454,13 @@ const FourRangeControl = memo( props => {
 								className="stk-range-control__custom-button"
 								size="small"
 								variant="tertiary"
-								onClick={ () => setIsFourMarkMode( prev => ( { ...prev, first: ! prev.first } ) ) }
+								onClick={ () => {
+									// Set the value when changing from mark mode to custom
+									if ( isFourMarkMode.first && rangeValueFirst !== -1 ) {
+										rangeOnChangeFirst( rangeValueFirst, 'size' )
+									}
+									setIsFourMarkMode( prev => ( { ...prev, first: ! prev.first } ) )
+								} }
 								icon={ settings }
 							>
 							</Button>
@@ -522,7 +518,12 @@ const FourRangeControl = memo( props => {
 									className="stk-range-control__custom-button"
 									size="small"
 									variant="tertiary"
-									onClick={ () => setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) ) }
+									onClick={ () => {
+										if ( isFourMarkMode.top && rangeValueTop !== -1 ) {
+											rangeOnChangeTop( rangeValueTop, 'size' )
+										}
+										setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
+									} }
 									icon={ settings }
 								>
 								</Button>
@@ -576,7 +577,12 @@ const FourRangeControl = memo( props => {
 									className="stk-range-control__custom-button"
 									size="small"
 									variant="tertiary"
-									onClick={ () => setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) ) }
+									onClick={ () => {
+										if ( isFourMarkMode.left && rangeValueLeft !== -1 ) {
+											rangeOnChangeLeft( rangeValueLeft, 'size' )
+										}
+										setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
+									} }
 									icon={ settings }
 								>
 								</Button>
@@ -636,7 +642,12 @@ const FourRangeControl = memo( props => {
 										className="stk-range-control__custom-button"
 										size="small"
 										variant="tertiary"
-										onClick={ () => setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) ) }
+										onClick={ () => {
+											if ( isFourMarkMode.top && rangeValueTop !== -1 ) {
+												rangeOnChangeTop( rangeValueTop, 'size' )
+											}
+											setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
+										} }
 										icon={ settings }
 									>
 									</Button>
@@ -693,7 +704,12 @@ const FourRangeControl = memo( props => {
 										className="stk-range-control__custom-button"
 										size="small"
 										variant="tertiary"
-										onClick={ () => setIsFourMarkMode( prev => ( { ...prev, right: ! prev.right } ) ) }
+										onClick={ () => {
+											if ( isFourMarkMode.right && rangeValueRight !== -1 ) {
+												rangeOnChangeRight( rangeValueRight, 'size' )
+											}
+											setIsFourMarkMode( prev => ( { ...prev, right: ! prev.right } ) )
+										} }
 										icon={ settings }
 									>
 									</Button>
@@ -750,7 +766,12 @@ const FourRangeControl = memo( props => {
 										className="stk-range-control__custom-button"
 										size="small"
 										variant="tertiary"
-										onClick={ () => setIsFourMarkMode( prev => ( { ...prev, bottom: ! prev.bottom } ) ) }
+										onClick={ () => {
+											if ( isFourMarkMode.bottom && rangeValueBottom !== -1 ) {
+												rangeOnChangeBottom( rangeValueBottom, 'size' )
+											}
+											setIsFourMarkMode( prev => ( { ...prev, bottom: ! prev.bottom } ) )
+										} }
 										icon={ settings }
 									>
 									</Button>
@@ -807,7 +828,12 @@ const FourRangeControl = memo( props => {
 										className="stk-range-control__custom-button"
 										size="small"
 										variant="tertiary"
-										onClick={ () => setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) ) }
+										onClick={ () => {
+											if ( isFourMarkMode.left && rangeValueLeft !== -1 ) {
+												rangeOnChangeLeft( rangeValueLeft, 'size' )
+											}
+											setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
+										} }
 										icon={ settings }
 									>
 									</Button>
