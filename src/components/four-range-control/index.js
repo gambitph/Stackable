@@ -204,7 +204,7 @@ const FourRangeControl = memo( props => {
 		bottom: !! props.marks,
 		left: !! props.marks,
 	}
-	if ( props.marks && value ) {
+	if ( props.marks && firstValue ) {
 		// Check if the current value exsits in the marks
 		const marksUnit = ( props.hasCSSVariableValue ? '' : unit )
 		isMarkValue.first = isMarkValue.first && props.marks.some( mark => mark.value === firstValue + marksUnit )
@@ -222,6 +222,13 @@ const FourRangeControl = memo( props => {
 			bottom: props.enableBottom ? newValue : value.bottom,
 			left: props.enableLeft ? newValue : value.left,
 		} )
+		setIsFourMarkMode( prev => ( {
+			...prev,
+			top: prev.first,
+			right: prev.first,
+			bottom: prev.first,
+			left: prev.first,
+		} ) )
 	}
 
 	const onChangeTop = newValue => {
@@ -231,6 +238,7 @@ const FourRangeControl = memo( props => {
 			bottom: value.bottom,
 			left: value.left,
 		} )
+		setIsFourMarkMode( prev => ( { ...prev, first: prev.top } ) )
 	}
 
 	const onChangeRight = newValue => {
@@ -240,6 +248,7 @@ const FourRangeControl = memo( props => {
 			bottom: value.bottom,
 			left: value.left,
 		} )
+		setIsFourMarkMode( prev => ( { ...prev, first: prev.right } ) )
 	}
 
 	const onChangeBottom = newValue => {
@@ -249,6 +258,7 @@ const FourRangeControl = memo( props => {
 			bottom: newValue,
 			left: value.left,
 		} )
+		setIsFourMarkMode( prev => ( { ...prev, first: prev.bottom } ) )
 	}
 
 	const onChangeLeft = newValue => {
@@ -258,6 +268,7 @@ const FourRangeControl = memo( props => {
 			bottom: value.bottom,
 			left: newValue,
 		} )
+		setIsFourMarkMode( prev => ( { ...prev, first: prev.left } ) )
 	}
 
 	const onChangeVertical = newValue => {
@@ -267,6 +278,11 @@ const FourRangeControl = memo( props => {
 			bottom: newValue,
 			left: value.left,
 		} )
+		setIsFourMarkMode( prev => ( {
+			...prev,
+			top: prev.top,
+			bottom: prev.top,
+		} ) )
 	}
 
 	const onChangeHorizontal = newValue => {
@@ -276,6 +292,11 @@ const FourRangeControl = memo( props => {
 			bottom: value.bottom,
 			left: newValue,
 		} )
+		setIsFourMarkMode( prev => ( {
+			...prev,
+			right: prev.right,
+			left: prev.right,
+		} ) )
 	}
 	// Support for steps. Modify the props to make the range control show steps.
 	const stepSupport = ( isMarkMode, initialValue, initialOnChange ) => {
@@ -351,7 +372,7 @@ const FourRangeControl = memo( props => {
 		controlProps.units = isFourMarkMode.first
 			? false : controlProps.units
 	} else if ( isLocked && props.vhMode ) {
-		controlProps.units = isFourMarkMode.top && isFourMarkMode.left
+		controlProps.units = isFourMarkMode.top && isFourMarkMode.right
 			? false : controlProps.units
 	} else {
 		controlProps.units = isFourMarkMode.top && isFourMarkMode.right && isFourMarkMode.bottom && isFourMarkMode.left
@@ -396,8 +417,8 @@ const FourRangeControl = memo( props => {
 	)
 
 	const [ propsToPassHorizontal, rangeValueHorizontal, rangeOnChangeHorizontal ] = stepSupport(
-		isFourMarkMode.left,
-		value.left,
+		isFourMarkMode.right,
+		value.right,
 		onChangeHorizontal,
 	)
 
@@ -443,9 +464,7 @@ const FourRangeControl = memo( props => {
 								className="stk-range-control__custom-button"
 								size="small"
 								variant="tertiary"
-								onClick={ () => setIsFourMarkMode( prev => {
-									return { ...prev, first: ! prev.first }
-								} ) }
+								onClick={ () => setIsFourMarkMode( prev => ( { ...prev, first: ! prev.first } ) ) }
 								icon={ settings }
 							>
 							</Button>
@@ -503,9 +522,7 @@ const FourRangeControl = memo( props => {
 									className="stk-range-control__custom-button"
 									size="small"
 									variant="tertiary"
-									onClick={ () => setIsFourMarkMode( prev => {
-										return { ...prev, top: ! prev.top }
-									} ) }
+									onClick={ () => setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) ) }
 									icon={ settings }
 								>
 								</Button>
@@ -559,9 +576,7 @@ const FourRangeControl = memo( props => {
 									className="stk-range-control__custom-button"
 									size="small"
 									variant="tertiary"
-									onClick={ () => setIsFourMarkMode( prev => {
-										return { ...prev, left: ! prev.left }
-									} ) }
+									onClick={ () => setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) ) }
 									icon={ settings }
 								>
 								</Button>
@@ -621,9 +636,7 @@ const FourRangeControl = memo( props => {
 										className="stk-range-control__custom-button"
 										size="small"
 										variant="tertiary"
-										onClick={ () => setIsFourMarkMode( prev => {
-											return { ...prev, top: ! prev.top }
-										} ) }
+										onClick={ () => setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) ) }
 										icon={ settings }
 									>
 									</Button>
@@ -680,9 +693,7 @@ const FourRangeControl = memo( props => {
 										className="stk-range-control__custom-button"
 										size="small"
 										variant="tertiary"
-										onClick={ () => setIsFourMarkMode( prev => {
-											return { ...prev, right: ! prev.right }
-										} ) }
+										onClick={ () => setIsFourMarkMode( prev => ( { ...prev, right: ! prev.right } ) ) }
 										icon={ settings }
 									>
 									</Button>
@@ -739,9 +750,7 @@ const FourRangeControl = memo( props => {
 										className="stk-range-control__custom-button"
 										size="small"
 										variant="tertiary"
-										onClick={ () => setIsFourMarkMode( prev => {
-											return { ...prev, bottom: ! prev.bottom }
-										} ) }
+										onClick={ () => setIsFourMarkMode( prev => ( { ...prev, bottom: ! prev.bottom } ) ) }
 										icon={ settings }
 									>
 									</Button>
@@ -798,9 +807,7 @@ const FourRangeControl = memo( props => {
 										className="stk-range-control__custom-button"
 										size="small"
 										variant="tertiary"
-										onClick={ () => setIsFourMarkMode( prev => {
-											return { ...prev, left: ! prev.left }
-										} ) }
+										onClick={ () => setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) ) }
 										icon={ settings }
 									>
 									</Button>
