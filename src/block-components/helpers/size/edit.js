@@ -139,7 +139,14 @@ const Spacing = props => {
 		highlight: 'margin',
 	}
 
-	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+	// Add additional presets for setting margins and paddings to None
+	const nonePreset = {
+		name: 'None',
+		size: '0rem',
+		slug: 'none',
+	}
+	const presetMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { additionalPresets: [ nonePreset ] } ) || null
 
 	return (
 		<>
