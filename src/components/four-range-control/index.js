@@ -327,7 +327,7 @@ const FourRangeControl = memo( props => {
 		}
 
 		// We need to change the way we handle the value and onChange if we're doing marks
-		let rangeValue = initialValue
+		let rangeValue = props.hasCSSVariableValue ? parseFloat( initialValue ) : initialValue
 		let rangeOnChange = initialOnChange
 		if ( props.marks && isMarkMode ) {
 			rangeValue = props.marks.findIndex( mark => {

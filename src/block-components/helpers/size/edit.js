@@ -40,10 +40,10 @@ const Layout = props => {
 				label={ labelHeight }
 				attribute={ getAttrName( 'height' ) }
 				responsive="all"
-				units={ [ 'px', 'vh' ] }
-				min={ [ 0, 0 ] }
-				sliderMax={ [ 1000, 100 ] }
-				step={ [ 1, 1 ] }
+				units={ [ 'px', 'rem', 'vh' ] }
+				min={ [ 0, 0, 0 ] }
+				sliderMax={ [ 1000, 60, 100 ] }
+				step={ [ 1, 1, 1 ] }
 				allowReset={ true }
 				placeholder="0"
 				helpTooltip={ {
@@ -155,10 +155,10 @@ const Spacing = props => {
 				attribute={ getAttrName( 'padding' ) }
 				responsive="all"
 				hover="all"
-				units={ [ 'px', 'em', '%' ] }
+				units={ [ 'px', 'em', 'rem', '%' ] }
 				defaultLocked={ true }
-				min={ [ 0, 0, 0 ] }
-				sliderMax={ [ 200, 30, 100 ] }
+				min={ [ 0, 0, 0, 0 ] }
+				sliderMax={ [ 200, 30, 30, 100 ] }
 				helpTooltip={ {
 					video: 'inner-block-padding',
 					description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
@@ -174,10 +174,10 @@ const Spacing = props => {
 					label={ labelMargins }
 					attribute={ getAttrName( 'margin' ) }
 					responsive="all"
-					units={ [ 'px', '%' ] }
+					units={ [ 'px', 'rem', '%' ] }
 					defaultLocked={ false }
-					sliderMin={ [ -200, -100 ] }
-					sliderMax={ [ 200, 100 ] }
+					sliderMin={ [ -200, -15, -100 ] }
+					sliderMax={ [ 200, 15, 100 ] }
 					placeholder="0"
 					helpTooltip={ {
 						video: 'advanced-block-margin',

@@ -196,8 +196,14 @@ const AdvancedRangeControl = props => {
 			}
 			// Extract the unit and value.
 			const markValue = props.marks[ value ]?.[ property ] || '0'
-			const [ _newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
-			const newValue = _newValue
+			let [ newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
+
+			// If the attribute has no units (only support px), and the
+			// preset units are rem or em, convert to px
+			if ( ! hasUnits && ( unit === 'rem' || unit === 'em' ) ) {
+				newValue = `${ parseFloat( newValue ) * 16 }`
+				unit = 'px'
+			}
 
 			// Update the unit.
 			if ( unit ) {
