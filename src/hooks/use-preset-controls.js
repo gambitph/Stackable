@@ -9,7 +9,7 @@ const PRESET_MAPPING = {
 	},
 	spacingSizes: {
 		settings: [ 'spacing', 'spacingSizes' ],
-		prefix: 'spacing-size',
+		prefix: 'spacing',
 	},
 	blockHeights: {
 		settings: [ 'blockHeights' ],
