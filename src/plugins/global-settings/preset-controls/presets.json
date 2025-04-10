@@ -1,98 +1,98 @@
-{   
-   "settings": {
-        "spacing": {
+{
+	"settings": {
+		"spacing": {
 			"spacingSizes": [
-                {
-                  "name": "XS",
-                  "size": "0.25rem",
-                  "slug": "x-small"
-                },
-                {
-                  "name": "S",
-                  "size": "0.5rem",
-                  "slug": "small"
-                },
-                {
-                  "name": "M",
-                  "size": "1rem",
-                  "slug": "medium"
-                },
-                {
-                  "name": "L",
-                  "size": "1.5rem",
-                  "slug": "large"
-                },
-                {
-                  "name": "XL",
-                  "size": "2rem",
-                  "slug": "x-large"
-                },
-                {
-                  "name": "2XL",
-                  "size": "3rem",
-                  "slug": "xx-large"
-                },
-                {
-                  "name": "3XL",
-                  "size": "4rem",
-                  "slug": "xxx-large"
-                },
-                {
-                  "name": "4XL",
-                  "size": "6rem",
-                  "slug": "xxxx-large"
-                }
-            ] 
-        },
-        "typography": {
+				{
+					"name": "XS",
+					"size": "0.25rem",
+					"slug": "x-small"
+				},
+				{
+					"name": "S",
+					"size": "0.5rem",
+					"slug": "small"
+				},
+				{
+					"name": "M",
+					"size": "1rem",
+					"slug": "medium"
+				},
+				{
+					"name": "L",
+					"size": "1.5rem",
+					"slug": "large"
+				},
+				{
+					"name": "XL",
+					"size": "2rem",
+					"slug": "x-large"
+				},
+				{
+					"name": "2XL",
+					"size": "3rem",
+					"slug": "xx-large"
+				},
+				{
+					"name": "3XL",
+					"size": "4rem",
+					"slug": "xxx-large"
+				},
+				{
+					"name": "4XL",
+					"size": "6rem",
+					"slug": "xxxx-large"
+				}
+			]
+		},
+		"typography": {
 			"fontSizes": [
-                {
-                    "name": "XS",
-                    "size": "0.75rem",
-                    "slug": "x-small"
-                },
-                {
-                    "name": "S",
-                    "size": "0.875rem",
-                    "slug": "small"
-                },
-                {
-                    "name": "M",
-                    "size": "1rem",
-                    "slug": "medium"
-                },
-                {
-                    "name": "L",
-                    "size": "1.125rem",
-                    "slug": "large"
-                },
-                {
-                    "name": "XL",
-                    "size": "1.5rem",
-                    "slug": "x-large"
-                },
-                {
-                    "name": "2XL",
-                    "size": "2rem",
-                    "slug": "xx-large"
-                },
-                {
-                    "name": "3XL",
-                    "size": "2.5rem",
-                    "slug": "xxx-large"
-                },
-                {
-                    "name": "4XL",
-                    "size": "3rem",
-                    "slug": "xxxx-large"
-                },
-                {
-                    "name": "5XL",
-                    "size": "4rem",
-                    "slug": "xxxxx-large"
-                }
-            ]
-        },
+				{
+					"name": "XS",
+					"size": "0.75rem",
+					"slug": "x-small"
+				},
+				{
+					"name": "S",
+					"size": "0.875rem",
+					"slug": "small"
+				},
+				{
+					"name": "M",
+					"size": "1rem",
+					"slug": "medium"
+				},
+				{
+					"name": "L",
+					"size": "1.125rem",
+					"slug": "large"
+				},
+				{
+					"name": "XL",
+					"size": "1.5rem",
+					"slug": "x-large"
+				},
+				{
+					"name": "2XL",
+					"size": "2rem",
+					"slug": "xx-large"
+				},
+				{
+					"name": "3XL",
+					"size": "2.5rem",
+					"slug": "xxx-large"
+				},
+				{
+					"name": "4XL",
+					"size": "3rem",
+					"slug": "xxxx-large"
+				},
+				{
+					"name": "5XL",
+					"size": "4rem",
+					"slug": "xxxxx-large"
+				}
+			]
+		},
 		"blockHeights": [
 			{
 				"name": "XS",
@@ -134,7 +134,7 @@
 				"size": "100vh",
 				"slug": "full"
 			}
-    	],
+		],
 		"borderRadius": [
 			{
 				"name": "None",
