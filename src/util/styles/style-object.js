@@ -336,7 +336,7 @@ class StyleObject {
 
 			if ( unit ) { // Note: this will only work for non-objects.
 				// If the value is `auto` or a CSS variable, don't add units.
-				if ( ! ( value === 'auto' || ( typeof value === 'string' && value.startsWith( 'var(--stk' ) ) ) ) {
+				if ( ! ( value === 'auto' || ( typeof value === 'string' && value.startsWith( 'var' ) ) ) ) {
 					value = `${ value }${ unit }`
 				}
 			}

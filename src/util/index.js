@@ -388,3 +388,32 @@ export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
 export const semverCompare = ( version1, operator, version2 ) => {
 	return compare( version1, version2, operator )
 }
+
+/**
+ * Extracts all number-unit pairs from a CSS value.
+ *
+ * @param { string } value - The CSS value to extract from.
+ * @return { Array } An array of tuples, each containing a number and its corresponding unit.
+ *
+ * @example
+ * extractNumbersAndUnits( "min(1.5rem, 2vw)" )
+ * // Returns: [["1.5", "rem"], ["2", "vw"]]
+ */
+export const extractNumbersAndUnits = value => {
+	if ( value.startsWith( 'var' ) ) {
+		return [ [ value, '' ] ]
+	}
+	// Match numbers followed by a unit, including decimals and negative values.
+	const regex = /(-?\d*\.?\d+)([a-zA-Z%]*)/g
+	const matches = [ ...value.matchAll( regex ) ]
+
+	if ( matches.length ) {
+		return matches.map( match => [ match[ 1 ], match[ 2 ] || 'px' ] )
+	}
+
+	// If the input is purely numeric (e.g., "10"), assume "px"
+	if ( /^-?\d*\.?\d+$/.test( value ) ) {
+		return [ [ value, 'px' ] ]
+	}
+	return [ [ '0', 'px' ] ]
+}

@@ -13,6 +13,7 @@ import {
 	useBlockSetAttributesContext,
 	useDeviceType,
 } from '~stackable/hooks'
+import { extractNumbersAndUnits } from '~stackable/util'
 
 /**
  * External dependencies
@@ -186,18 +187,23 @@ const AdvancedRangeControl = props => {
 	let rangeOnChange = _onChange
 	if ( isMarkMode ) {
 		rangeValue = props.marks.findIndex( mark => {
-			const [ _value, _unit ] = extractNumberAndUnit( mark.value )
+			const [ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
 			return _value === derivedValue
 		} )
-		rangeOnChange = value => {
+		rangeOnChange = ( value, property = 'value' ) => {
 			if ( value === '' ) {
 				return _onChange( value )
 			}
-
 			// Extract the unit and value.
-			const markValue = props.marks[ value ]?.value || '0'
-			const [ _newValue, unit ] = extractNumberAndUnit( markValue )
-			const newValue = _newValue
+			const markValue = props.marks[ value ]?.[ property ] || '0'
+			let [ newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
+
+			// If the attribute has no units (only support px), and the
+			// preset units are rem or em, convert to px
+			if ( ! hasUnits && ( unit === 'rem' || unit === 'em' ) ) {
+				newValue = `${ parseFloat( newValue ) * 16 }`
+				unit = 'px'
+			}
 
 			// Update the unit.
 			if ( unit ) {
@@ -229,7 +235,13 @@ const AdvancedRangeControl = props => {
 							className="stk-range-control__custom-button"
 							size="small"
 							variant="tertiary"
-							onClick={ () => setIsMarkMode( ! isMarkMode ) }
+							onClick={ () => {
+								// Set the value when changing from mark mode to custom
+								if ( isMarkMode && rangeValue !== -1 ) {
+									rangeOnChange( rangeValue, 'size' )
+								}
+								setIsMarkMode( ! isMarkMode )
+							} }
 							icon={ settings }
 						>
 						</Button>
@@ -272,14 +284,3 @@ AdvancedRangeControl.defaultProps = {
 }
 
 export default memo( AdvancedRangeControl, isEqual )
-
-// The value can be in the format '10px' or '10.0em' or '10rem'.
-// Return an array with the number and the unit.
-const extractNumberAndUnit = value => {
-	// Match the last characters that are not numbers.
-	const matches = value.match( /([\d.]+)(\D*)$/ )
-	if ( ! matches || value.startsWith( 'var(--stk' ) ) {
-		return [ value, '' ]
-	}
-	return [ matches[ 1 ], matches[ 2 ] ]
-}

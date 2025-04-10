@@ -39,7 +39,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		valueCallback: value => {
 			// Substitute with using format to work with preset controls
 			value = typeof value === 'number' ? value.toString() : value
-			if ( value.startsWith( 'var(--stk' ) ) {
+			if ( value.startsWith( 'var' ) ) {
 				return value
 			}
 			return value + 'px'
@@ -57,7 +57,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrNameTemplate,
 		valueCallback: value => {
 			value = typeof value === 'number' ? value.toString() : value
-			if ( value.startsWith( 'var(--stk' ) ) {
+			if ( value.startsWith( 'var' ) ) {
 				return value
 			}
 			return value + 'px'
@@ -75,7 +75,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrNameTemplate,
 		valueCallback: value => {
 			value = typeof value === 'number' ? value.toString() : value
-			if ( value.startsWith( 'var(--stk' ) ) {
+			if ( value.startsWith( 'var' ) ) {
 				return value
 			}
 			return value + 'px'
@@ -93,7 +93,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrNameTemplate,
 		valueCallback: value => {
 			value = typeof value === 'number' ? value.toString() : value
-			if ( value.startsWith( 'var(--stk' ) ) {
+			if ( value.startsWith( 'var' ) ) {
 				return value
 			}
 			return value + 'px'

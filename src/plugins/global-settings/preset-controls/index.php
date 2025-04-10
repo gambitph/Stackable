@@ -21,7 +21,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			),
 			'spacingSizes' => array(
 				'settings' => array( 'spacing', 'spacingSizes' ),
-				'prefix' => 'spacing-size',
+				'prefix' => 'spacing',
 			),
 			'blockHeights' => array(
 				'settings' => array( 'blockHeights' ),
@@ -71,27 +71,41 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * @param array $property 
 		 * @param array $presets 
 		 * @param array $prefix 
+		 * @param bool $isTheme
 		 * @return mixed
 		 */
-		public function generate_css_variables( $property, $presets, $prefix ) {
+		public function generate_css_variables( $property, $presets, $prefix, $isTheme = false ) {
+			$filter_name =  current_filter();
 			$custom_presets = $this->custom_presets[ $property ] ?? [];
 			
 			$css = "";
 
-			// Convert presets into an associative array with key 'slug'
+			
 			$presets_by_slug = [];
+			// Convert presets into an associative array with key 'slug'
 			foreach ( $presets as $preset ) {
 				$presets_by_slug[ $preset[ 'slug' ] ] = $preset;
 			}
-			// Override values in base presets if it exist in custom presets
-			foreach ( $custom_presets as $custom ) {
-				$presets_by_slug[ $custom[ 'slug' ] ] = $custom;
+
+			if ( $filter_name !== 'stackable_inline_editor_styles' ) {
+				// Override values in base presets if it exist in custom presets
+				foreach ( $custom_presets as $custom ) {
+					$custom[ '__is_custom' ] = true;
+					$presets_by_slug[ $custom[ 'slug' ] ] = $custom;
+				}
 			}
-			
-			foreach ( $presets_by_slug as $preset ) {
-				$slug = $preset[ 'slug' ];
-				$size = $preset[ 'size' ];
-				$css .= "--stk--preset--$prefix--{$preset['slug']}: {$preset['size']};\n";
+
+			// If custom presets or using stackable presets, use the given size.
+			// If using theme presets, use WP generated --wp-preset to support theme.json specific
+			// configuration (fluid, clamping, etc.)
+			foreach ( $presets_by_slug as $slug => $preset ) {
+				$is_custom = $preset[ '__is_custom' ] ?? false;
+		
+				$value = $is_custom || ! $isTheme
+					? $preset['size']
+					: "var(--wp--preset--$prefix--$slug)";
+		
+				$css .= "--stk--preset--$prefix--$slug: $value;\n";
 			}
 	
 			return $css;
@@ -124,12 +138,14 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 						$key,
 						$this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ], 
 						$value[ 'prefix' ],
+						true
 					);
 				} elseif ( ! empty( $this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ] ) ) {
 					$generated_css .= $this->generate_css_variables( 
 						$key,
 						$this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ], 
 						$value[ 'prefix' ],
+						true
 					);
 				} else {
 					$generated_css .= $this->generate_css_variables( 

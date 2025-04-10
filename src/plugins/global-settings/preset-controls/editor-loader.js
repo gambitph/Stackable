@@ -14,7 +14,7 @@ const PRESET_MAPPING = {
 		prefix: 'font-size',
 	},
 	spacingSizes: {
-		prefix: 'spacing-size',
+		prefix: 'spacing',
 	},
 	blockHeights: {
 		prefix: 'block-height',

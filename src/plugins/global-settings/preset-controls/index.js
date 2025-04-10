@@ -31,7 +31,7 @@ if ( showProNotice || isPro ) {
 				{ output }
 
 				<PanelAdvancedSettings
-					title={ __( 'Preset Controls', i18n ) }
+					title={ __( 'Global Preset Controls', i18n ) }
 					id="preset-controls-settings"
 					isPremiumPanel={ ! isPro }
 				>
