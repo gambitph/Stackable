@@ -426,6 +426,18 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			register_setting(
 				'stackable_global_settings',
+				'stackable_is_apply_body_to_html',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Stackable global typography apply to setting', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
 				'stackable_icon_library',
 				array(
 					'type' => 'array',
@@ -650,11 +662,19 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		}
 
 		public function form_paragraph_selector() {
-			return array_merge(
-				$this->form_tag_selector( 'p' ), // Core text.
-				$this->form_tag_selector( 'li' ), // Core lists.
-				$this->form_tag_selector( 'td' ) // Core table cells.
+			$is_apply_body_to_html = get_option( 'stackable_is_apply_body_to_html' ) ?? false;
+			$selectors = array_merge(
+				$this->form_tag_selector( 'p' ), // Core text
+				$this->form_tag_selector( 'li' ), // Core lists
+				$this->form_tag_selector( 'td' )  // Core table cells
 			);
+		
+			// Add 'html' only if is_apply_body_to_html is true
+			if ( $is_apply_body_to_html ) {
+				$selectors[] = 'html';
+			}
+		
+			return $selectors;
 		}
 
 		/**

@@ -11,7 +11,7 @@ import { getAppliedTypeScale } from './utils'
  * External dependencies
  */
 import {
-	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControlButton,
+	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControlButton, AdvancedToggleControl,
 } from '~stackable/components'
 import { fetchSettings, getDefaultFontSize } from '~stackable/util'
 import {
@@ -160,6 +160,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const [ selectedFontPairName, setSelectedFontPairName ] = useState( '' )
 	const [ isEditingFontPair, setIsEditingFontPair ] = useState( false )
 	const [ selectedTypeScale, setSelectedTypeScale ] = useState( 'none' )
+	const [ isApplyBodyToHTML, setIsApplyBodyToHTML ] = useState( false )
 
 	const fontPairContainerRef = useRef( null )
 
@@ -171,6 +172,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 			setCustomFontPairs( response.stackable_custom_font_pairs || [] )
 			setSelectedFontPairName( response.stackable_selected_font_pair || 'theme-heading-default/theme-body-default' )
+			setIsApplyBodyToHTML( response.stackable_is_apply_body_to_html || false )
 
 			// Reversely compute the type scale from the font sizes
 			let typeScale = _typographySettings?.h6?.fontSize
@@ -190,7 +192,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	useEffect( () => {
 		// When typography styles are changed, trigger our editor style generator to update.
-		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo )
+		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo, isApplyBodyToHTML )
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, isApplyBodyToHTML ] )
+
+	useEffect( () => {
+		// When typography styles are changed, trigger our editor style generator to update.
+		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo, isApplyBodyToHTML )
 
 		// Update the custom presets when using typography as presets
 		if ( useTypographyAsPresets ) {
@@ -235,7 +242,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 			dispatch( 'stackable/global-preset-controls.custom' ).updateCustomPresetControls( newSettings )
 		}
-	}, [ JSON.stringify( typographySettings ), applySettingsTo, useTypographyAsPresets ] )
+	}, [ JSON.stringify( typographySettings ), useTypographyAsPresets ] )
 
 	// Scroll to the selected font pair when Global Typography tab is toggled
 	useEffect( () => {
@@ -297,6 +304,14 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		setApplySettingsTo( value )
 		const model = new models.Settings( {
 			stackable_global_typography_apply_to: value, // eslint-disable-line
+		} )
+		model.save()
+	}
+
+	const changeIsApplyBodyToHTML = value => {
+		setIsApplyBodyToHTML( value )
+		const model = new models.Settings( {
+			stackable_is_apply_body_to_html: value, // eslint-disable-line
 		} )
 		model.save()
 	}
@@ -587,6 +602,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						getIsAllowReset={ getIsAllowReset }
 					/>
 				}
+				<AdvancedToggleControl
+					label={ __( 'Apply Body to HTML Tag', i18n ) }
+					help={ __( 'Adds the body text settings to the main HTML tag.', i18n ) }
+					defaultValue={ false }
+					checked={ isApplyBodyToHTML }
+					onChange={ changeIsApplyBodyToHTML }
+				/>
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

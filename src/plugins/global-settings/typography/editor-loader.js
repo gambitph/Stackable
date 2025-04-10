@@ -29,6 +29,7 @@ import { useSelect } from '@wordpress/data'
 export const GlobalTypographyStyles = () => {
 	const [ typographySettings, setTypographySettings ] = useState( [] )
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
+	const [ isApplyBodyToHTML, setIsApplyBodyToHTML ] = useState( false )
 
 	// These are for debouncing the style generation to make things faster.
 	const [ styles, setStyles ] = useState( '' )
@@ -54,12 +55,16 @@ export const GlobalTypographyStyles = () => {
 		fetchSettings().then( response => {
 			setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
 			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
+			setIsApplyBodyToHTML( response.stackable_is_apply_body_to_html || false )
 		} )
 
 		// Allow actions to trigger styles to update.
-		addAction( 'stackable.global-settings.typography.update-trigger', 'stackable/typography-styles', ( newTypographySettings, newAapplySettingsTo ) => {
+		addAction( 'stackable.global-settings.typography.update-trigger', 'stackable/typography-styles', (
+			newTypographySettings, newAapplySettingsTo, newIsApplyBodyToHTML
+		) => {
 			setTypographySettings( newTypographySettings )
 			setApplySettingsTo( newAapplySettingsTo )
+			setIsApplyBodyToHTML( newIsApplyBodyToHTML )
 		} )
 		return () => {
 			removeAction( 'stackable.global-settings.typography.update-trigger', 'stackable/typography-styles' )
@@ -71,7 +76,7 @@ export const GlobalTypographyStyles = () => {
 		addAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles', typographySettings => {
 			// Generate all the typography styles.
 			const styleObject = Object.keys( typographySettings ).map( tag => {
-				const selectors = formSelectors( tag, applySettingsTo )
+				const selectors = formSelectors( tag, applySettingsTo, isApplyBodyToHTML )
 
 				// Build our selector, target h2.block or .block h2.
 				// Some blocks may output the heading tag right away.
@@ -118,16 +123,16 @@ export const GlobalTypographyStyles = () => {
 		setStyleTimeout( setTimeout( () => doAction( 'stackable.global-settings.typography-update-global-styles', typographySettings ), 200 ) )
 
 		return () => removeAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles' )
-	}, [ JSON.stringify( typographySettings ), applySettingsTo, device, editorMode ] )
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, isApplyBodyToHTML, device, editorMode ] )
 
 	return styles
 }
 
-export const formSelectors = ( selector, applyTo ) => {
+export const formSelectors = ( selector, applyTo, isApplyBodyToHTML ) => {
 	if ( [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ].includes( selector ) || selector.startsWith( '.' ) ) {
 		return formClassOrTagSelectors( selector, applyTo )
 	}
-	return formParagraphSelectors( applyTo )
+	return formParagraphSelectors( applyTo, isApplyBodyToHTML )
 }
 
 export const formClassOrTagSelectors = ( selector, applyTo ) => {
@@ -152,8 +157,8 @@ export const formClassOrTagSelectors = ( selector, applyTo ) => {
 	return applyFilters( 'stackable.global-settings.typography-selectors', selectors, selector )
 }
 
-export const formParagraphSelectors = applyTo => {
-	return applyFilters( 'stackable.global-settings.typography-selectors', [
+export const formParagraphSelectors = ( applyTo, isApplyBodyToHTML ) => {
+	const selectors = [
 		...formClassOrTagSelectors( 'p', applyTo ),
 		...formClassOrTagSelectors( 'li', applyTo ),
 		`.editor-styles-wrapper p.block-editor-block-list__block[data-type^="core/"]`,
@@ -162,7 +167,13 @@ export const formParagraphSelectors = applyTo => {
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] td`,
 		// Apply the font styles to the content placeholder text when the post is blank.
 		'.block-editor-default-block-appender.has-visible-prompt',
-	], '' )
+	]
+
+	// Add 'html' only if is_apply_body_to_html is true
+	if ( isApplyBodyToHTML ) {
+		selectors.push( 'html' )
+	}
+	return applyFilters( 'stackable.global-settings.typography-selectors', selectors, '' )
 }
 
 // Make sure that this isn't applied to the native query loop block, otherwise
