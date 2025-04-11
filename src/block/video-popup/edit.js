@@ -18,6 +18,7 @@ import {
 	AdvancedToggleControl,
 	useBlockCssGenerator,
 	ControlSeparator,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -39,6 +40,8 @@ import {
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 
+import { timezones as TIMEZONE_OPTIONS } from '../countdown'
+
 /**
  * WordPress dependencies
  */
@@ -47,7 +50,8 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
-import { DatePicker } from '@wordpress/components'
+import { DateTimePicker } from '@wordpress/components'
+import { getSettings as getDateSettings } from '@wordpress/date'
 
 export const defaultIcon = '<svg data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>'
 
@@ -109,6 +113,7 @@ const Edit = props => {
 				videoName={ attributes.videoName }
 				videoUploadDate={ attributes.videoUploadDate }
 				videoDescription={ attributes.videoDescription }
+				videoUploadDateTimezone={ attributes.videoUploadDateTimezone }
 			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
@@ -133,6 +138,28 @@ const Edit = props => {
 }
 
 const InspectorControls = memo( props => {
+	const getUploadDate = ( uploadDate, timezone ) => {
+		// If it uses local timezone, get offset from WordPress settings
+		if ( ! timezone ) {
+			const { timezone: localTimezone } = getDateSettings()
+			const offset = Number( localTimezone.offset )
+			const hours = Math.floor( Math.abs( offset ) )
+			const minutes = Math.round( ( Math.abs( offset ) % 1 ) * 60 )
+
+			return uploadDate + ( offset >= 0 ? '+' : '-' ) +
+				String( hours ).padStart( 2, '0' ) + ':' +
+				String( minutes ).padStart( 2, '0' )
+		}
+
+		const date = new Date( uploadDate )
+		const offset = new Intl.DateTimeFormat( 'en-US', {
+			timeZone: timezone,
+			timeZoneName: 'longOffset',
+		} ).format( date ).slice( -6 )
+
+		return uploadDate + offset
+	}
+
 	return (
 		<>
 			<InspectorTabs hasLayoutPanel={ false } />
@@ -221,15 +248,21 @@ const InspectorControls = memo( props => {
 							// This text control allows users to see if a date has been set/removed
 							className="stk-components-datetime__date-input"
 							label={ __( 'Video upload date', i18n ) }
-							value={ props.videoUploadDate ? new Date( props.videoUploadDate ).toISOString().slice( 0, 10 ) : '' }
+							value={ props.videoUploadDate ? getUploadDate( props.videoUploadDate, props.videoUploadDateTimezone ) : '' }
+							onChange={ videoUploadDate => props.setAttributes( { videoUploadDate } ) }
 							inputType="date"
 							readOnly={ true }
 						/>
-						<DatePicker
+						<DateTimePicker
 							currentDate={ props.videoUploadDate }
-							onChange={ videoUploadDate => {
-								props.setAttributes( { videoUploadDate } )
-							} }
+							is12Hour={ true }
+							onChange={ videoUploadDate => props.setAttributes( { videoUploadDate } ) }
+						/>
+						<AdvancedSelectControl
+							label={ __( 'Timezone', i18n ) }
+							options={ TIMEZONE_OPTIONS }
+							attribute="videoUploadDateTimezone"
+							allowReset={ false }
 						/>
 					</> }
 

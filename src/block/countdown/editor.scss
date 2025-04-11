@@ -1,4 +1,4 @@
-.ugb-panel--countdown .components-datetime__time-wrapper {
+:is(.ugb-panel--countdown, .ugb-panel--video-popup) .components-datetime__time-wrapper {
 	.components-base-control {
 		margin-bottom: 0px !important;
 	}
@@ -8,7 +8,7 @@
 	}
 }
 
-.ugb-panel--countdown .components-datetime__date {
+:is(.ugb-panel--countdown, .ugb-panel--video-popup) .components-datetime__date {
 	.components-datetime__date__day[aria-label*="Selected" i] {
 		color: #fff;
 		&:hover {

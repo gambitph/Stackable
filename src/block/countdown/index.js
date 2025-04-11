@@ -17,6 +17,8 @@ import metadata from './block.json'
 import deprecated from './deprecated'
 import substitute from './substitute'
 
+export { timezones } from './timezones'
+
 export const settings = {
 	...metadata,
 	icon: CountdownIcon,
