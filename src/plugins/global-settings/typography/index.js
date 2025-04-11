@@ -106,35 +106,35 @@ const TYPE_SCALE = [
 		disabled: true,
 	},
 	{
-		label: __( '1.067 - Minor Second', i18n ),
+		label: sprintf( __( '%s - %s', i18n ), '1.067', __( 'Minor Second', i18n ) ),
 		value: '1.067',
 	},
 	{
-		label: __( '1.125 - Major Second', i18n ),
+		label: sprintf( __( '%s - %s', i18n ), '1.125', __( 'Major Second', i18n ) ),
 		value: '1.125',
 	},
 	{
-		label: __( '1.200 - Minor Third', i18n ),
+		label: sprintf( __( '%s - %s', i18n ), '1.2', __( 'Minor Third', i18n ) ),
 		value: '1.2',
 	},
 	{
-		label: __( '1.250 - Major Third', i18n ),
+		label: sprintf( __( '%s - %s', i18n ), '1.25', __( 'Major Third', i18n ) ),
 		value: '1.25',
 	},
 	{
-		label: __( '1.333 - Perfect Fourth', i18n ),
+		label: sprintf( __( '%s - %s', i18n ), '1.333', __( 'Perfect Fourth', i18n ) ),
 		value: '1.333',
 	},
 	{
-		label: __( '1.414 - Augmented Fourth', i18n ),
+		label: sprintf( __( '%s - %s', i18n ), '1.414', __( 'Augmented Fourth', i18n ) ),
 		value: '1.414',
 	},
 	{
-		label: __( '1.500 - Perfect Fifth', i18n ),
+		label: sprintf( __( '%s - %s', i18n ), '1.5', __( 'Perfect Fifth', i18n ) ),
 		value: '1.5',
 	},
 	{
-		label: __( '1.618 - Golden Ratio', i18n ),
+		label: sprintf( __( '%s - %s', i18n ), '1.618', __( 'Golden Ratio', i18n ) ),
 		value: '1.618',
 	},
 ]

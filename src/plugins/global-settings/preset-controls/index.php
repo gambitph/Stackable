@@ -68,7 +68,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		}
 
 		/**
-		 * Generate CSS variable style defintions based on the property (e.g., fontSizes, spacing).
+		 * Generate CSS variable style definitions based on the property (e.g., fontSizes, spacing).
 		 * The given presets will be overriden it match with a preset from custom.
 		 * 
 		 * @param array $property 
