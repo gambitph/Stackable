@@ -42,13 +42,15 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * Initialize
 		 */
   		function __construct() {
+			add_filter( 'stackable_inline_styles_nodep', array( $this, 'add_preset_controls_styles' ) );
+			add_filter( 'stackable_inline_editor_styles', array( $this, 'add_preset_controls_styles' ) );
+		}
+
+		public function load_presets() {
 			$this->custom_presets = get_option( 'stackable_global_custom_preset_controls' );
 			$this->theme_presets = WP_Theme_JSON_Resolver::get_theme_data()->get_settings();
 			$this->default_presets = WP_Theme_JSON_Resolver::get_core_data()->get_settings();
 			$this->stackable_presets = $this->load_json_file( __DIR__ . '/presets.json');
-
-			add_filter( 'stackable_inline_styles_nodep', array( $this, 'add_preset_controls_styles' ) );
-			add_filter( 'stackable_inline_editor_styles', array( $this, 'add_preset_controls_styles' ) );
 		}
 
 		public static function sanitize_array_setting( $input ) {
@@ -130,6 +132,8 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * @return String
 		 */
 		public function add_preset_controls_styles( $current_css ) {
+			$this->load_presets();
+
 			$generated_css = "\n/* Global Preset Controls */\n";
 			$generated_css .= ":root {\n";
 
