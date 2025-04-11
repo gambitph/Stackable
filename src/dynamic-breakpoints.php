@@ -36,9 +36,6 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 			add_action( 'rest_api_init', array( $this, 'register_settings' ) );
 
 			if ( is_frontend() ) {
-				// Get the dynamic breakpoints after the theme has loaded.
-				add_action( 'after_setup_theme', array( $this, 'get_dynamic_breakpoints' ) );
-
 				// Add a filter for replacing shortcut media queries before the breakpoint adjustment.
 				add_filter( 'stackable_frontend_css', array( $this, 'replace_shortcut_media_queries' ), 9 );
 
@@ -139,18 +136,17 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
-		// /**
-		//  * True if there are any custom breakpoints assigned by the user.
-		//  *
-		//  * @return boolean
-		//  */
-		// public function has_custom_breakpoints( $count = 2 ) {
-		// 	$breakpoints = $this->dynamic_breakpoints;
-		// 	if ( $breakpoints === false ) {
-		// 		$this->get_dynamic_breakpoints( $count );
-		// 	}
-		// 	return $this->has_dynamic_breakpoints;
-		// }
+		/**
+		 * True if there are any custom breakpoints assigned by the user.
+		 *
+		 * @return boolean
+		 */
+		public function has_custom_breakpoints() {
+			if ( $this->dynamic_breakpoints === false ) {
+				$this->get_dynamic_breakpoints();
+			}
+			return $this->has_custom_breakpoints;
+		}
 
 		/**
 		 * Replace shortcut media queries in the given CSS.
@@ -172,7 +168,7 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return String adjusted CSS
 		 */
 		public function adjust_breakpoints( $css ) {
-			if ( ! $this->has_custom_breakpoints ) {
+			if ( ! $this->has_custom_breakpoints() ) {
 				return $css;
 			}
 
@@ -230,7 +226,7 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return void
 		 */
 		public function enqueue_adjusted_responsive_css() {
-			if ( ! $this->has_custom_breakpoints ) {
+			if ( ! $this->has_custom_breakpoints() ) {
 				return;
 			}
 
@@ -249,7 +245,7 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return void
 		 */
 		public function adjust_block_styles( $block_content, $block ) {
-			if ( ! $this->has_custom_breakpoints ) {
+			if ( ! $this->has_custom_breakpoints() ) {
 				return $block_content;
 			}
 
