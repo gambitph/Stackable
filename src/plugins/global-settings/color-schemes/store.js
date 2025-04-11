@@ -32,10 +32,6 @@ const STORE_ACTIONS = {
 		type: 'UPDATE_SETTINGS',
 		settings,
 	} ),
-	setIsOpen: isOpen => ( {
-		type: 'SET_IS_OPEN',
-		isOpen,
-	} ),
 }
 
 const STORE_SELECTORS = {
@@ -45,7 +41,6 @@ const STORE_SELECTORS = {
 		backgroundModeColorScheme: state.backgroundModeColorScheme || 'scheme-default-2',
 		containerModeColorScheme: state.containerModeColorScheme || 'scheme-default-1',
 	} ),
-	getIsOpen: state => state.isOpen,
 }
 
 const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
@@ -60,12 +55,6 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 			return {
 				...state,
 				...action.settings,
-			}
-		}
-		case 'SET_IS_OPEN': {
-			return {
-				...state,
-				isOpen: action.isOpen,
 			}
 		}
 		default: {
