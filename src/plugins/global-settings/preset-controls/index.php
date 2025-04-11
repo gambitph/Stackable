@@ -68,7 +68,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		}
 
 		/**
-		 * Generate CSS variables based on the property (e.g., fontSizes, spacing).
+		 * Generate CSS variable style defintions based on the property (e.g., fontSizes, spacing).
 		 * The given presets will be overriden it match with a preset from custom.
 		 * 
 		 * @param array $property 
@@ -77,19 +77,18 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * @param bool $isTheme
 		 * @return mixed
 		 */
-		public function generate_css_variables( $property, $presets, $prefix, $isTheme = false ) {
+		public function generate_css_variables_styles( $property, $presets, $prefix, $isTheme = false ) {
 			$filter_name =  current_filter();
 			$custom_presets = $this->custom_presets[ $property ] ?? [];
-			
-			$css = "";
 
-			
 			$presets_by_slug = [];
 			// Convert presets into an associative array with key 'slug'
 			foreach ( $presets as $preset ) {
 				$presets_by_slug[ $preset[ 'slug' ] ] = $preset;
 			}
 
+			// There is no need to generate custom presets in the editor.
+			// The custom presets are generated dynamically.
 			if ( $filter_name !== 'stackable_inline_editor_styles' ) {
 				// Override values in base presets if it exist in custom presets
 				foreach ( $custom_presets as $custom ) {
@@ -98,20 +97,25 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 				}
 			}
 
+			// Build the CSS variables array.
 			// If custom presets or using stackable presets, use the given size.
 			// If using theme presets, use WP generated --wp-preset to support theme.json specific
 			// configuration (fluid, clamping, etc.)
+			$css_vars = [];
 			foreach ( $presets_by_slug as $slug => $preset ) {
-				$is_custom = $preset[ '__is_custom' ] ?? false;
+				$is_custom = $preset['__is_custom'] ?? false;
 		
 				$value = $is_custom || ! $isTheme
 					? $preset['size']
 					: "var(--wp--preset--$prefix--$slug)";
 		
-				$css .= "--stk--preset--$prefix--$slug: $value;\n";
+				$css_vars[ "--stk--preset--$prefix--$slug" ] = $value;
 			}
 	
-			return $css;
+			return array(
+				'selector' => ':root',
+				'declarations' => $css_vars,
+			);
 		}
 
 		/**
@@ -133,40 +137,42 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 */
 		public function add_preset_controls_styles( $current_css ) {
 			$this->load_presets();
-
-			$generated_css = "\n/* Global Preset Controls */\n";
-			$generated_css .= ":root {\n";
+			$generated_styles = array();
 
 			foreach ( self::PRESET_MAPPING as $key => $value ) {
 				if ( ! empty( $this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ] ) ) {
-					$generated_css .= $this->generate_css_variables( 
+					$styles = $this->generate_css_variables_styles( 
 						$key,
 						$this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ], 
 						$value[ 'prefix' ],
 						true
 					);
+					$generated_styles[] = $styles;
+
 				} elseif ( ! empty( $this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ] ) ) {
-					$generated_css .= $this->generate_css_variables( 
+					$styles = $this->generate_css_variables_styles( 
 						$key,
 						$this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ], 
 						$value[ 'prefix' ],
 						true
 					);
+					$generated_styles[] = $styles;
 				} else {
-					$generated_css .= $this->generate_css_variables( 
+					$styles = $this->generate_css_variables_styles( 
 						$key,
 						$this->deepGet( $this->stackable_presets, $value[ 'settings' ] ), 
 						$value[ 'prefix' ],
 					);
+					$generated_styles[] = $styles;
 				}
 			}
 
-			$generated_css .= "}\n";
-
+			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $generated_styles );
 			if ( ! $generated_css ) {
 				return $current_css;
 			}
-	
+
+			$current_css .= "\n/* Global Preset Controls */\n";
 			$current_css .= $generated_css;
 			
 			return apply_filters( 'stackable_frontend_css' , $current_css );
