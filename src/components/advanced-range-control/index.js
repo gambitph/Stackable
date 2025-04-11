@@ -114,11 +114,12 @@ const AdvancedRangeControl = props => {
 	}
 	const [ isMarkMode, setIsMarkMode ] = useState( isMarkValue )
 
-	// If this supports dynamic content and can have CSS variables, the value should be saved as a String.
+	// If this supports dynamic content, the value should be saved as a String.
+	// Similar if using marks to accomodate CSS variable
 	// Important, the attribute type for this option should be a string.
 	const _onChange = value => {
 		const onChangeFunc = typeof props.onChange === 'undefined' ? onChange : props.onChange
-		let newValue = props.isDynamic || props.hasCSSVariableValue ? value.toString() : value
+		let newValue = props.isDynamic || props.marks ? value.toString() : value
 
 		// On reset, allow overriding the value.
 		if ( newValue === '' ) {
@@ -183,7 +184,7 @@ const AdvancedRangeControl = props => {
 
 	// We need to change the way we handle the value and onChange if we're doing marks
 	// Convert to float if the attribute is string to work with the slider
-	let rangeValue = propsToPass.isDynamic || props.hasCSSVariableValue ? parseFloat( derivedValue ) : derivedValue
+	let rangeValue = propsToPass.isDynamic || props.marks ? parseFloat( derivedValue ) : derivedValue
 	let rangeOnChange = _onChange
 	if ( isMarkMode ) {
 		rangeValue = props.marks.findIndex( mark => {
@@ -277,9 +278,8 @@ AdvancedRangeControl.defaultProps = {
 	onOverrideReset: undefined,
 	forcePlaceholder: false,
 
-	marks: undefined, // [{ value: '14px', name: 'S' }, { value: '16px', name: 'M' }]
+	marks: undefined, // [{ value: 'var(--stk-preset-font-size-small', name: 'S' }]
 	allowCustom: true,
-	hasCSSVariableValue: false, // If the attribute can have CSS variable value (string attribute)
 	isCustomPreset: false,
 }
 
