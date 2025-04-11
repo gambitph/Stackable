@@ -51,7 +51,7 @@ export const GlobalPresetControlsStyles = () => {
 		if ( customPresets && typeof customPresets === 'object' ) {
 			renderGlobalStyles( customPresets, setStyles )
 		}
-	}, [ JSON.stringify( customPresets ) ] )
+	}, [ customPresets ] )
 
 	return styles
 }
