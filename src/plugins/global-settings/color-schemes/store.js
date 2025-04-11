@@ -20,7 +20,6 @@ const DEFAULT_STATE = {
 	baseColorScheme: '',
 	backgroundModeColorScheme: '',
 	containerModeColorScheme: '',
-	isOpen: false,
 }
 
 const STORE_ACTIONS = {
