@@ -662,7 +662,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		}
 
 		public function form_paragraph_selector() {
-			$is_apply_body_to_html = get_option( 'stackable_is_apply_body_to_html' ) ?? false;
 			$selectors = array_merge(
 				$this->form_tag_selector( 'p' ), // Core text
 				$this->form_tag_selector( 'li' ), // Core lists
@@ -670,6 +669,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			);
 		
 			// Add 'html' only if is_apply_body_to_html is true
+			$is_apply_body_to_html = get_option( 'stackable_is_apply_body_to_html' );
 			if ( $is_apply_body_to_html ) {
 				$selectors[] = 'html';
 			}
