@@ -45,7 +45,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			$this->custom_presets = get_option( 'stackable_global_custom_preset_controls' );
 			$this->theme_presets = WP_Theme_JSON_Resolver::get_theme_data()->get_settings();
 			$this->default_presets = WP_Theme_JSON_Resolver::get_core_data()->get_settings();
-			$this->stackable_presets = $this->load_presets( __DIR__ . '/presets.json');
+			$this->stackable_presets = $this->load_json_file( __DIR__ . '/presets.json');
 
 			add_filter( 'stackable_inline_styles_nodep', array( $this, 'add_preset_controls_styles' ) );
 			add_filter( 'stackable_inline_editor_styles', array( $this, 'add_preset_controls_styles' ) );
@@ -55,10 +55,11 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
-		private function load_presets( $json_path ) {
+		private function load_json_file( $json_path ) {
 			if ( file_exists( $json_path ) ) {
-				$json_data = file_get_contents( $json_path );
-				$decoded_data = json_decode( $json_data, true );
+				$decoded_data = wp_json_file_decode( $json_path, [
+					'associative' => true,
+				] );
 				return $decoded_data[ 'settings' ] ?? [];
 			}
 			return [];
