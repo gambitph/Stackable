@@ -1,6 +1,9 @@
 /**
  * Loads all the typography styles for the blocks in the editor.
  */
+/**
+ * Internal dependencies
+ */
 
 /**
  * External dependencies
@@ -9,6 +12,7 @@ import {
 	createTypographyStyles,
 	fetchSettings,
 	loadGoogleFont,
+	getDefaultFontSize,
 } from '~stackable/util'
 import { generateStyles } from '~stackable/block-components'
 import deepmerge from 'deepmerge'
@@ -24,9 +28,17 @@ import {
 import {
 	addAction, removeAction, applyFilters, doAction, addFilter,
 } from '@wordpress/hooks'
-import { useSelect } from '@wordpress/data'
+import { useSelect, dispatch } from '@wordpress/data'
+import { models } from '@wordpress/api'
+
+let saveTypographyAsPresetsThrottle = null
 
 export const GlobalTypographyStyles = () => {
+	const { allCustomPresets } = useSelect( select => {
+		const _customPresetControls = select( 'stackable/global-preset-controls.custom' )?.getCustomPresetControls() ?? {}
+		return { allCustomPresets: { ..._customPresetControls } }
+	}, [] )
+
 	const [ typographySettings, setTypographySettings ] = useState( [] )
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
 	const [ isApplyBodyToHTML, setIsApplyBodyToHTML ] = useState( false )
@@ -50,6 +62,53 @@ export const GlobalTypographyStyles = () => {
 		return select( 'core/edit-site' )?.getEditorMode() || select( 'core/edit-post' )?.getEditorMode()
 	} )
 
+	// Update the custom presets when using typography as presets
+	const updatePresetsWithTypography = ( useTypographyAsPresets, typographySettings, tags ) => {
+		if ( useTypographyAsPresets ) {
+			const fontSizePresets = tags
+				.filter( ( { presetSlug } ) => !! presetSlug )
+				.map( ( {
+					selector, presetName, presetSlug,
+				} ) => {
+					// If no fontSize available, the unit should default to px
+					const size = typographySettings[ selector ]?.fontSize
+					const unit = size ? typographySettings[ selector ]?.fontSizeUnit : 'px'
+					return {
+						name: presetName,
+						slug: presetSlug,
+						size: `${ size ?? getDefaultFontSize( selector ) ?? 16 }${ unit ?? 'px' }`,
+					}
+				} )
+			// Add the preset for extra small
+			let xSmallSize = typographySettings[ '.stk-subtitle' ]?.fontSize ?? getDefaultFontSize( '.stk-subtitle' ) ?? 16
+			let xSmallUnit = typographySettings[ '.stk-subtitle' ]?.fontSizeUnit ?? 'px'
+			if ( xSmallUnit === 'px' ) {
+				xSmallSize = Math.pow( xSmallSize / 16, 2 )
+				xSmallUnit = 'rem'
+			} else {
+				xSmallSize = Math.pow( xSmallSize, 2 )
+			}
+
+			fontSizePresets.push( {
+				name: 'XS',
+				slug: 'x-small',
+				size: `${ xSmallSize }${ xSmallUnit ?? 'px' }`,
+			} )
+			// Reverse the presets so it's from smallest to biggest
+			fontSizePresets.reverse()
+
+			const newSettings = { ...allCustomPresets, fontSizes: fontSizePresets }
+
+			clearTimeout( saveTypographyAsPresetsThrottle )
+			saveTypographyAsPresetsThrottle = setTimeout( () => {
+				const settings = new models.Settings( { stackable_global_custom_preset_controls: newSettings } ) // eslint-disable-line camelcase
+				settings.save()
+			}, 300 )
+
+			dispatch( 'stackable/global-preset-controls.custom' ).updateCustomPresetControls( newSettings )
+		}
+	}
+
 	useEffect( () => {
 		// Get settings.
 		fetchSettings().then( response => {
@@ -60,8 +119,10 @@ export const GlobalTypographyStyles = () => {
 
 		// Allow actions to trigger styles to update.
 		addAction( 'stackable.global-settings.typography.update-trigger', 'stackable/typography-styles', (
-			newTypographySettings, newAapplySettingsTo, newIsApplyBodyToHTML
+			newTypographySettings, newAapplySettingsTo, newUseTypographyAsPresets, newIsApplyBodyToHTML, tags
 		) => {
+			updatePresetsWithTypography( newUseTypographyAsPresets, newTypographySettings, tags )
+
 			setTypographySettings( newTypographySettings )
 			setApplySettingsTo( newAapplySettingsTo )
 			setIsApplyBodyToHTML( newIsApplyBodyToHTML )

@@ -13,7 +13,7 @@ import { getAppliedTypeScale } from './utils'
 import {
 	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControlButton, AdvancedToggleControl,
 } from '~stackable/components'
-import { fetchSettings, getDefaultFontSize } from '~stackable/util'
+import { fetchSettings } from '~stackable/util'
 import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
@@ -32,7 +32,7 @@ import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
-import { dispatch, useSelect } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 
 export { GlobalTypographyStyles }
 
@@ -142,13 +142,11 @@ const TYPE_SCALE = [
 let saveTypographyThrottle = null
 let saveSelectedFontPairThrottle = null
 let saveCustomFontPairsThrottle = null
-let saveTypographyAsPresetsThrottle = null
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography', output => {
-	const { allCustomPresets, useTypographyAsPresets } = useSelect( select => {
-		const _customPresetControls = select( 'stackable/global-preset-controls.custom' )?.getCustomPresetControls() ?? {}
+	const { useTypographyAsPresets } = useSelect( select => {
 		const _useTypographyAsPresets = select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
-		return { allCustomPresets: { ..._customPresetControls }, useTypographyAsPresets: _useTypographyAsPresets }
+		return { useTypographyAsPresets: _useTypographyAsPresets }
 	}, [] )
 
 	const FONT_PAIRS = applyFilters( 'stackable.global-settings.typography.font-pairs.premium-font-pairs', FREE_FONT_PAIRS )
@@ -192,57 +190,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	useEffect( () => {
 		// When typography styles are changed, trigger our editor style generator to update.
-		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo, isApplyBodyToHTML )
-	}, [ JSON.stringify( typographySettings ), applySettingsTo, isApplyBodyToHTML ] )
-
-	useEffect( () => {
-		// When typography styles are changed, trigger our editor style generator to update.
-		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo, isApplyBodyToHTML )
-
-		// Update the custom presets when using typography as presets
-		if ( useTypographyAsPresets ) {
-			const fontSizePresets = TYPOGRAPHY_TAGS
-				.filter( ( { presetSlug } ) => !! presetSlug )
-				.map( ( {
-					selector, presetName, presetSlug,
-				} ) => {
-					const size = typographySettings[ selector ]?.fontSize ?? getDefaultFontSize( selector ) ?? 16
-					const unit = typographySettings[ selector ]?.fontSizeUnit ?? 'px'
-					return {
-						name: presetName,
-						slug: presetSlug,
-						size: `${ size }${ unit }`,
-					}
-				} )
-			// Add the preset for extra small
-			let xSmallSize = typographySettings[ '.stk-subtitle' ]?.fontSize ?? getDefaultFontSize( '.stk-subtitle' ) ?? 16
-			let xSmallUnit = typographySettings[ '.stk-subtitle' ]?.fontSizeUnit ?? 'px'
-			if ( xSmallUnit === 'px' ) {
-				xSmallSize = Math.pow( xSmallSize / 16, 2 )
-				xSmallUnit = 'rem'
-			} else {
-				xSmallSize = Math.pow( xSmallSize, 2 )
-			}
-
-			fontSizePresets.push( {
-				name: 'XS',
-				slug: 'x-small',
-				size: `${ xSmallSize }${ xSmallUnit ?? 'px' }`,
-			} )
-			// Reverse the presets so it's from smallest to biggest
-			fontSizePresets.reverse()
-
-			const newSettings = { ...allCustomPresets, fontSizes: fontSizePresets }
-
-			clearTimeout( saveTypographyAsPresetsThrottle )
-			saveTypographyAsPresetsThrottle = setTimeout( () => {
-				const settings = new models.Settings( { stackable_global_custom_preset_controls: newSettings } ) // eslint-disable-line camelcase
-				settings.save()
-			}, 300 )
-
-			dispatch( 'stackable/global-preset-controls.custom' ).updateCustomPresetControls( newSettings )
-		}
-	}, [ JSON.stringify( typographySettings ), useTypographyAsPresets ] )
+		// This also triggers updating presets with typography, and applying body font size to html.
+		doAction( 'stackable.global-settings.typography.update-trigger',
+			typographySettings, applySettingsTo, useTypographyAsPresets, isApplyBodyToHTML, TYPOGRAPHY_TAGS,
+		)
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, useTypographyAsPresets, isApplyBodyToHTML ] )
 
 	// Scroll to the selected font pair when Global Typography tab is toggled
 	useEffect( () => {
