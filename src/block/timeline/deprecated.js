@@ -1,6 +1,7 @@
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
 	deprecateTypographyShadowColor, deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyFontSize,
+	deprecateBlockHeight,
 } from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
@@ -13,7 +14,9 @@ const deprecated = [
 		attributes: attributes( '3.15.2' ),
 		save: withVersion( '3.15.2' )( Save ),
 		isEligible: attributes => {
-			return deprecateTypographyFontSize.isEligible( '%s' )( attributes )
+			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( '%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+			return hasNumberFontSize || hasNumberBlockHeight
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -25,6 +28,7 @@ const deprecated = [
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 			newAttributes = deprecateTypographyShadowColor.migrate( '%s' )( newAttributes )
 			newAttributes = deprecateTypographyFontSize.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
 
 			return newAttributes
 		},

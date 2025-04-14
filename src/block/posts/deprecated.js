@@ -13,7 +13,7 @@ import {
 	Image, deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
 	deprecateTypographyGradientColor, deprecationImageOverlayOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
-	deprecateTypographyFontSize,
+	deprecateTypographyFontSize, deprecateBlockHeight,
 } from '~stackable/block-components'
 
 /**
@@ -43,14 +43,20 @@ addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureI
 
 const deprecated = [
 	{
-		// Support the new shadow color.
+		// Support the change of type for fontSize and blockHeight
 		attributes: attributes( '3.15.2' ),
 		save: withVersion( '3.15.2' )( Save ),
 		isEligible: attributes => {
-			const hasFontSize = deprecateTypographyFontSize.isEligible( '%s' )( attributes )
+			const hasNumberFontSizeTitle = deprecateTypographyFontSize.isEligible( 'title%s' )( attributes )
+			const hasNumberFontSizeCategory = deprecateTypographyFontSize.isEligible( 'category%s' )( attributes )
+			const hasNumberFontSizeExcerpt = deprecateTypographyFontSize.isEligible( 'excerpt%s' )( attributes )
+			const hasNumberFontSizeMeta = deprecateTypographyFontSize.isEligible( 'meta%s' )( attributes )
+			const hasNumberFontSizeReadmore = deprecateTypographyFontSize.isEligible( 'readmore%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasFontSize || isNotV4
+			return hasNumberFontSizeTitle || hasNumberFontSizeCategory || hasNumberFontSizeExcerpt ||
+				hasNumberFontSizeMeta || hasNumberFontSizeReadmore || hasNumberBlockHeight || isNotV4
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -99,7 +105,13 @@ const deprecated = [
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
 
-			newAttributes = deprecateTypographyFontSize.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'readmore%s' )( newAttributes )
+
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
 
 			return newAttributes
 		},

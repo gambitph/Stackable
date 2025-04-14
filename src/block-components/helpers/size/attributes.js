@@ -1,10 +1,6 @@
+import { deprecatedAddAttributes } from './deprecated'
+
 export const sizeAttributes = {
-	height: {
-		stkResponsive: true,
-		stkUnits: 'px',
-		type: 'string',
-		default: '',
-	},
 	width: {
 		stkResponsive: true,
 		stkUnits: 'px',
@@ -37,10 +33,26 @@ export const sizeAttributes = {
 }
 
 export const addSizeAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
+	deprecatedAddAttributes( attrObject, attrNameTemplate )
+
 	attrObject.add( {
 		attributes: sizeAttributes,
 		attrNameTemplate,
 		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.add( {
+		attributes: {
+			height: {
+				stkResponsive: true,
+				stkUnits: 'px',
+				type: 'string',
+				default: '',
+			},
+		},
+		attrNameTemplate,
+		versionAdded: '3.15.3',
 		versionDeprecated: '',
 	} )
 }

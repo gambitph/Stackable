@@ -7,7 +7,7 @@ import { withVersion } from '~stackable/higher-order'
 import { semverCompare, createElementFromHTMLString } from '~stackable/util'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
-	deprecateBlockShadowColor, deprecateContainerShadowColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateBlockHeight,
 } from '~stackable/block-components'
 
 import { addFilter } from '@wordpress/hooks'
@@ -35,6 +35,25 @@ addFilter( 'stackable.map.icon-options', 'stackable/3.13.0', ( output, attribute
 } )
 
 const deprecated = [
+	{
+		// Support the change of type for block height
+		attributes: attributes( '3.15.2' ),
+		save: withVersion( '3.15.2' )( Save ),
+		isEligible: attributes => {
+			return deprecateBlockHeight.isEligible( attributes )
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),

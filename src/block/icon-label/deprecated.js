@@ -4,10 +4,25 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
-	deprecateBlockShadowColor, deprecateContainerShadowColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateBlockHeight,
 } from '~stackable/block-components'
 
 const deprecated = [
+	{
+		// Support the change of type for block height
+		attributes: attributes( '3.15.2' ),
+		save: withVersion( '3.15.2' )( Save ),
+		isEligible: attributes => {
+			return deprecateBlockHeight.isEligible( attributes )
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		attributes: attributes( '3.13.1' ),
 		save: withVersion( '3.13.1' )( Save ),

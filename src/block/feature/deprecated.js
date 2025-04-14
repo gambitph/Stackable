@@ -14,6 +14,7 @@ import {
 	deprecateContainerBackgroundColorOpacity,
 	getAlignmentClasses, getContentAlignmentClasses, getRowClasses,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
+	deprecateBlockHeight,
 } from '~stackable/block-components'
 
 /**
@@ -62,6 +63,43 @@ addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.8.0', ( output
 } )
 
 const deprecated = [
+	{
+		// Support the change of type for block height
+		attributes: attributes( '3.15.2' ),
+		save: withVersion( '3.15.2' )( Save ),
+		isEligible: attributes => {
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+			return isNotV4 || hasNumberBlockHeight
+		},
+		migrate: attributes => {
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
+
+			// Update the old column fit into flexbox
+			const hasOldColumnFit = !! attributes.columnFit
+			if ( hasOldColumnFit ) {
+				newAttributes = {
+					...newAttributes,
+					columnFit: '',
+					columnFitAlign: '',
+					columnJustify: attributes.columnFitAlign,
+				}
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'topSeparator%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'bottomSeparator%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),

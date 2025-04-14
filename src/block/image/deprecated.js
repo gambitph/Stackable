@@ -5,6 +5,7 @@ import { withVersion } from '~stackable/higher-order'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecationImageOverlayOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor, deprecateTypographyFontSize,
+	deprecateBlockHeight,
 } from '~stackable/block-components'
 
 import { RichText } from '@wordpress/block-editor'
@@ -64,7 +65,9 @@ const deprecated = [
 		attributes: attributes( '3.15.2' ),
 		save: withVersion( '3.15.2' )( Save ),
 		isEligible: attributes => {
-			return deprecateTypographyFontSize.isEligible( 'figcaption%s' )( attributes )
+			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( 'figcaption%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+			return hasNumberFontSize || hasNumberBlockHeight
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -76,6 +79,7 @@ const deprecated = [
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
 			newAttributes = deprecateTypographyFontSize.migrate( 'figcaption%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
 
 			return newAttributes
 		},

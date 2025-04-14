@@ -6,7 +6,7 @@ import {
 	deprecateBlockBackgroundColorOpacity, deprecateButtonGradientColor,
 	deprecateContainerBackgroundColorOpacity, deprecateShadowColor,
 	deprecateContainerShadowColor, deprecateBlockShadowColor,
-	deprecateTypographyFontSize,
+	deprecateTypographyFontSize, deprecateBlockHeight,
 } from '~stackable/block-components'
 
 const deprecated = [
@@ -15,7 +15,9 @@ const deprecated = [
 		attributes: attributes( '3.15.2' ),
 		save: withVersion( '3.15.2' )( Save ),
 		isEligible: attributes => {
-			return deprecateTypographyFontSize.isEligible( 'button%s' )( attributes )
+			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( '%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+			return hasNumberFontSize || hasNumberBlockHeight
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -27,6 +29,7 @@ const deprecated = [
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateButtonGradientColor.migrate( 'button%s' )( newAttributes )
 			newAttributes = deprecateTypographyFontSize.migrate( 'button%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
 
 			return newAttributes
 		},

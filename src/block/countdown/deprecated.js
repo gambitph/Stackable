@@ -1,6 +1,6 @@
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
-	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyFontSize,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyFontSize, deprecateBlockHeight,
 } from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
@@ -9,16 +9,17 @@ import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
 	{
-		// Support the change of type for fontSize
+		// Support the change of type for fontSize and blockHeight
 		attributes: attributes( '3.15.2' ),
 		save: withVersion( '3.15.2' )( Save ),
 		isEligible: attributes => {
 			const hasDigitFontSize = deprecateTypographyFontSize.isEligible( 'digit%s' )( attributes )
 			const hasLabelFontSize = deprecateTypographyFontSize.isEligible( 'label%s' )( attributes )
 			const hasMessageFontSize = deprecateTypographyFontSize.isEligible( 'message%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasDigitFontSize || hasLabelFontSize || hasMessageFontSize || isNotV4
+			return hasDigitFontSize || hasLabelFontSize || hasMessageFontSize || hasNumberBlockHeight || isNotV4
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -33,6 +34,7 @@ const deprecated = [
 			newAttributes = deprecateTypographyFontSize.migrate( 'digit%s' )( newAttributes )
 			newAttributes = deprecateTypographyFontSize.migrate( 'label%s' )( newAttributes )
 			newAttributes = deprecateTypographyFontSize.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
 
 			return newAttributes
 		},
