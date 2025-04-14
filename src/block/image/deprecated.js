@@ -4,7 +4,7 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecationImageOverlayOpacity,
-	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor, deprecateTypographyFontSize,
 } from '~stackable/block-components'
 
 import { RichText } from '@wordpress/block-editor'
@@ -59,6 +59,27 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( 
 } )
 
 const deprecated = [
+	{
+		// Support the change of type for fontSize
+		attributes: attributes( '3.15.2' ),
+		save: withVersion( '3.15.2' )( Save ),
+		isEligible: attributes => {
+			return deprecateTypographyFontSize.isEligible( 'figcaption%s' )( attributes )
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'figcaption%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),

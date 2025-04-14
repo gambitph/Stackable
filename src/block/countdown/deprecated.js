@@ -1,6 +1,6 @@
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
-	deprecateBlockShadowColor, deprecateContainerShadowColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyFontSize,
 } from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
@@ -8,6 +8,35 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
+	{
+		// Support the change of type for fontSize
+		attributes: attributes( '3.15.2' ),
+		save: withVersion( '3.15.2' )( Save ),
+		isEligible: attributes => {
+			const hasDigitFontSize = deprecateTypographyFontSize.isEligible( 'digit%s' )( attributes )
+			const hasLabelFontSize = deprecateTypographyFontSize.isEligible( 'label%s' )( attributes )
+			const hasMessageFontSize = deprecateTypographyFontSize.isEligible( 'message%s' )( attributes )
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			return hasDigitFontSize || hasLabelFontSize || hasMessageFontSize || isNotV4
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'digit%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'label%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'digit%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'label%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'message%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),

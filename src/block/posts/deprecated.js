@@ -13,6 +13,7 @@ import {
 	Image, deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
 	deprecateTypographyGradientColor, deprecationImageOverlayOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
+	deprecateTypographyFontSize,
 } from '~stackable/block-components'
 
 /**
@@ -41,6 +42,68 @@ addFilter( 'stackable.posts.title.readmore-content', 'stackable/3_0_2', addUndef
 addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureImage )
 
 const deprecated = [
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.15.2' ),
+		save: withVersion( '3.15.2' )( Save ),
+		isEligible: attributes => {
+			const hasFontSize = deprecateTypographyFontSize.isEligible( '%s' )( attributes )
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			return hasFontSize || isNotV4
+		},
+		migrate: attributes => {
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
+
+			// We used to have an "Inner content width" which is now just the block width
+			const hasOldInnerContentWidth = attributes.innerBlockContentWidth || attributes.innerBlockContentWidthTablet || attributes.innerBlockContentWidthMobile
+
+			if ( hasOldInnerContentWidth ) {
+				newAttributes = {
+					...newAttributes,
+					innerBlockContentWidth: '',
+					innerBlockContentWidthTablet: '',
+					innerBlockContentWidthMobile: '',
+					innerBlockContentWidthUnit: 'px',
+					innerBlockContentWidthUnitTablet: '',
+					innerBlockContentWidthUnitMobile: '',
+					blockWidth: attributes.innerBlockContentWidth,
+					blockWidthTablet: attributes.innerBlockContentWidthTablet,
+					blockWidthMobile: attributes.innerBlockContentWidthMobile,
+					blockWidthUnit: attributes.innerBlockContentWidthUnit,
+					blockWidthUnitTablet: attributes.innerBlockContentWidthUnitTablet,
+					blockWidthUnitMobile: attributes.innerBlockContentWidthUnitMobile,
+					innerBlockAlign: '',
+					innerBlockAlignTablet: '',
+					innerBlockAlignMobile: '',
+					blockHorizontalAlign: attributes.innerBlockAlign,
+					blockHorizontalAlignTablet: attributes.innerBlockAlignTablet,
+					blockHorizontalAlignMobile: attributes.innerBlockAlignMobile,
+				}
+			}
+
+			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'readmore%s' )( newAttributes )
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
+
+			newAttributes = deprecateTypographyFontSize.migrate( '%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),
