@@ -33,7 +33,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		responsive: 'all',
 		valueCallback: value => {
 			// Substitute with using format to work with preset controls
-			if ( value.startsWith( 'var' ) ) {
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
 				return value
 			}
 			return value + 'px'
@@ -46,7 +46,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		attrName: 'columnGap',
 		responsive: 'all',
 		valueCallback: value => {
-			if ( value.startsWith( 'var' ) ) {
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
 				return value
 			}
 			return value + 'px'
@@ -91,7 +91,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			attrName: 'rowGap',
 			responsive: 'all',
 			valueCallback: value => {
-				if ( value.startsWith( 'var' ) ) {
+				if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
 					return value
 				}
 				return value + 'px'
@@ -104,7 +104,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			attrName: 'rowGap',
 			responsive: 'all',
 			valueCallback: value => {
-				if ( value.startsWith( 'var' ) ) {
+				if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
 					return value
 				}
 				return value + 'px'

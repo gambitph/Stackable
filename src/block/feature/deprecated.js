@@ -14,7 +14,7 @@ import {
 	deprecateContainerBackgroundColorOpacity,
 	getAlignmentClasses, getContentAlignmentClasses, getRowClasses,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
-	deprecateBlockHeight,
+	deprecateBlockHeight, deprecateColumnAndRowGap,
 } from '~stackable/block-components'
 
 /**
@@ -64,13 +64,14 @@ addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.8.0', ( output
 
 const deprecated = [
 	{
-		// Support the change of type for block height
+		// Support the change of type for block height and gaps
 		attributes: attributes( '3.15.2' ),
 		save: withVersion( '3.15.2' )( Save ),
 		isEligible: attributes => {
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
-			return isNotV4 || hasNumberBlockHeight
+			const hasNumberGaps = deprecateColumnAndRowGap.isEligible( '%s' )( attributes )
+			return isNotV4 || hasNumberBlockHeight || hasNumberGaps
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -96,6 +97,7 @@ const deprecated = [
 			newAttributes = deprecateShadowColor.migrate( 'topSeparator%s' )( newAttributes )
 			newAttributes = deprecateShadowColor.migrate( 'bottomSeparator%s' )( newAttributes )
 			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+			newAttributes = deprecateColumnAndRowGap.migrate( '%s' )( newAttributes )
 
 			return newAttributes
 		},

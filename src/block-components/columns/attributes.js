@@ -1,4 +1,8 @@
-export const addAttributes = attrObject => {
+import { deprecatedAddAttributes } from './deprecated/index'
+
+export const addAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
+	deprecatedAddAttributes( attrObject, attrNameTemplate )
+
 	attrObject.add( {
 		attributes: {
 			columnSpacing: {
@@ -7,6 +11,17 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
+			columnWrapDesktop: { // Only applies to desktops
+				type: 'boolean',
+				default: false,
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.add( {
+		attributes: {
 			columnGap: {
 				stkResponsive: true,
 				type: 'string',
@@ -17,12 +32,9 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
-			columnWrapDesktop: { // Only applies to desktops
-				type: 'boolean',
-				default: false,
-			},
 		},
-		versionAdded: '3.0.0',
+		attrNameTemplate,
+		versionAdded: '3.15.3',
 		versionDeprecated: '',
 	} )
 }
