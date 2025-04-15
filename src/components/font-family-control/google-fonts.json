@@ -12823,6 +12823,23 @@
     ]
   },
   {
+    "family": "National Park",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Neonderthaw",
     "variants": [
       "regular"
@@ -21913,6 +21930,36 @@
     ]
   },
   {
+    "family": "Special Gothic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Special Gothic Condensed One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Special Gothic Expanded One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Spectral",
     "variants": [
       "200",
@@ -23788,6 +23835,29 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Winky Rough",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {

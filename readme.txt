@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.4
 Tested up to: 6.7.1
 Requires PHP: 7.3
-Stable tag: 3.15.2
+Stable tag: 3.15.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -297,6 +297,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.15.3 =
+* Fixed: Disabling Show Global Color Schemes can cause block errors #3481
+* Fixed: Block settings may not show up in the Theme Customizer #3484
+* Fixed: Post block - sometimes the post date does not follow the timezone #3458
 
 = 3.15.2 =
 * Fixed: Hotfix new styles will not be applied now unless global color schemes and global styling are used
