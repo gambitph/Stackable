@@ -178,3 +178,32 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 		padding: 2px;
 	}
 }
+
+// Adjust the styles of †he datetime picker.
+.ugb-toggle-panel-body {
+	.components-datetime__time-wrapper {
+		.components-base-control {
+			margin-bottom: 0px !important;
+		}
+
+		.components-datetime__timezone {
+			display: none;
+		}
+	}
+
+	.components-datetime__date {
+		.components-datetime__date__day[aria-label*="Selected" i] {
+			color: #fff;
+			&:hover {
+				color: #fff !important;
+			}
+		}
+		:last-child {
+			row-gap: 8px;
+			column-gap: 4px;
+			div:nth-of-type(7) {
+				justify-self: auto;
+			}
+		}
+	}
+}
