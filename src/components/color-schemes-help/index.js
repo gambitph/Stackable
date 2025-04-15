@@ -31,7 +31,8 @@ export const ColorSchemesHelp = () => {
 	}
 
 	return <>
-		<span>{ __( 'Change the color scheme. ', i18n ) }</span>
+		<span>{ __( 'Change the color scheme.', i18n ) }</span>
+		&nbsp;
 		<Link onClick={ onClick }> { __( 'Manage your color schemes.', i18n ) } </Link>
 	</>
 }
