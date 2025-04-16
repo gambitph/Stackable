@@ -30,6 +30,13 @@
 	column-gap: var(--stk-column-gap, 0px);
 }
 
+// These are styles added from the global spacing and borders.
+:where(.stk-has-design-system-spacing-and-borders) {
+	.stk-block-columns > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		row-gap: var(--stk-columns-row-gap, 0px);
+	}
+}
+
 // For Firefox polyfill
 [data-type="stackable/columns"] .stk-block.stk-block-columns.stk-block-columns--has-single-block-polyfill {
 	--stk-columns-spacing: 0;

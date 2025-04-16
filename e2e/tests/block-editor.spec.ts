@@ -24,7 +24,14 @@ test.describe( 'Block Editor', () => {
 	} ) => {
 		// Insert Stackable Text Block through block inserter
 		// Also checks if Stackable Block is in the list of blocks in the Editor
-		await page.getByLabel( 'Toggle block inserter' ).click()
+		if ( await page.getByLabel( 'Toggle block inserter' ).isVisible() ) {
+			// For WP version 6.7 and below
+			await page.getByLabel( 'Toggle block inserter' ).click()
+		} else {
+			// For WP version 6.8
+			await page.getByLabel( 'Block Inserter' ).click()
+		}
+
 		await page.locator( '.editor-block-list-item-stackable-text' ).click()
 
 		await expect( editor.canvas.getByLabel( 'Block: Text' ) ).toBeVisible()
@@ -39,6 +46,13 @@ test.describe( 'Block Editor', () => {
 		} )
 
 		await editor.selectBlocks( editor.canvas.getByLabel( 'Block: Text' ) )
+
+		const settings = page.getByLabel( 'Settings', { exact: true } )
+
+		if ( await settings.getAttribute( 'aria-pressed' ) === 'false' ) {
+			await settings.click()
+		}
+
 		await expect( page.getByLabel( 'Layout Tab' ) ).toBeVisible()
 		await expect( page.getByLabel( 'Style Tab' ) ).toBeVisible()
 		await expect( page.getByLabel( 'Advanced Tab' ) ).toBeVisible()
@@ -51,6 +65,12 @@ test.describe( 'Block Editor', () => {
 		await editor.insertBlock( {
 			name: 'stackable/text',
 		} )
+
+		const settings = page.getByLabel( 'Settings', { exact: true } )
+
+		if ( await settings.getAttribute( 'aria-pressed' ) === 'false' ) {
+			await settings.click()
+		}
 
 		// Add content and color to Stackable Text Block
 		await editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ).fill( 'test' )
@@ -79,7 +99,7 @@ test.describe( 'Block Editor', () => {
 	} )
 
 	test( 'The Stackable block added in the editor should be visible in the frontend', async ( {
-		page, editor,
+		page, editor, admin,
 	} ) => {
 		await editor.insertBlock( {
 			name: 'stackable/text',
@@ -111,5 +131,9 @@ test.describe( 'Block Editor', () => {
 		await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toBeVisible()
 		await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toContainText( 'test' )
 		await expect( preview.locator( `[data-block-id="${ uniqueId }"] p` ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+
+		// There should be no PHP errors on frontend
+		const pageError = await admin.getPageError()
+		expect( pageError ).toBeNull()
 	} )
 } )

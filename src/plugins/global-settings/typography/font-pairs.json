@@ -1,0 +1,354 @@
+[
+	{
+        "name": "theme-heading-default/theme-body-default",
+        "typography": {
+            "h1": {
+                "fontFamily": ""
+            },
+            "h2": {
+                "fontFamily": ""
+            },
+            "h3": {
+                "fontFamily": ""
+            },
+            "h4": {
+                "fontFamily": ""
+            },
+            "h5": {
+                "fontFamily": ""
+            },
+            "h6": {
+                "fontFamily": ""
+            },
+            "p": {
+                "fontFamily": ""
+            },
+            ".stk-subtitle": {
+                "fontFamily": ""
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": ""
+            }
+        }
+    },
+    {
+        "name": "dm-serif-display/dm-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h2": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h3": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h4": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h5": {
+                "fontFamily": "DM Serif Display"
+            },
+            "h6": {
+                "fontFamily": "DM Serif Display"
+            },
+            "p": {
+                "fontFamily": "DM Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "DM Sans"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "DM Sans"
+            }
+        }
+    },
+    {
+        "name": "ultra/pt-serif",
+        "typography": {
+            "h1": {
+                "fontFamily": "Ultra"
+            },
+            "h2": {
+                "fontFamily": "Ultra"
+            },
+            "h3": {
+                "fontFamily": "Ultra"
+            },
+            "h4": {
+                "fontFamily": "Ultra"
+            },
+            "h5": {
+                "fontFamily": "Ultra"
+            },
+            "h6": {
+                "fontFamily": "Ultra"
+            },
+            "p": {
+                "fontFamily": "PT Serif"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "PT Serif"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "PT Serif"
+            }
+        }
+    },
+    {
+        "name": "ibm-plex-sans-condensed/ibm-plex-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h2": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h3": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h4": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h5": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "h6": {
+                "fontFamily": "IBM Plex Sans Condensed"
+            },
+            "p": {
+                "fontFamily": "IBM Plex Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "IBM Plex Sans"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "IBM Plex Sans"
+            }
+        }
+    },
+    {
+        "name": "work-sans/merriweather",
+        "typography": {
+            "h1": {
+                "fontFamily": "Work Sans"
+            },
+            "h2": {
+                "fontFamily": "Work Sans"
+            },
+            "h3": {
+                "fontFamily": "Work Sans"
+            },
+            "h4": {
+                "fontFamily": "Work Sans"
+            },
+            "h5": {
+                "fontFamily": "Work Sans"
+            },
+            "h6": {
+                "fontFamily": "Work Sans"
+            },
+            "p": {
+                "fontFamily": "Merriweather"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Merriweather"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "Merriweather"
+            }
+        }
+    },
+    {
+        "name": "oswald/source-sans-pro",
+        "typography": {
+            "h1": {
+                "fontFamily": "Oswald"
+            },
+            "h2": {
+                "fontFamily": "Oswald"
+            },
+            "h3": {
+                "fontFamily": "Oswald"
+            },
+            "h4": {
+                "fontFamily": "Oswald"
+            },
+            "h5": {
+                "fontFamily": "Oswald"
+            },
+            "h6": {
+                "fontFamily": "Oswald"
+            },
+            "p": {
+                "fontFamily": "Source Sans Pro"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Source Sans Pro"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "Source Sans Pro"
+            }
+        }
+    },
+    {
+        "name": "barlow-condensed/montserrat",
+        "typography": {
+            "h1": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h2": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h3": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h4": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h5": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "h6": {
+                "fontFamily": "Barlow Condensed"
+            },
+            "p": {
+                "fontFamily": "Montserrat"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Montserrat"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "Montserrat"
+            }
+        }
+    },
+    {
+        "name": "alegreya/alegreya",
+        "typography": {
+            "h1": {
+                "fontFamily": "Alegreya"
+            },
+            "h2": {
+                "fontFamily": "Alegreya"
+            },
+            "h3": {
+                "fontFamily": "Alegreya"
+            },
+            "h4": {
+                "fontFamily": "Alegreya"
+            },
+            "h5": {
+                "fontFamily": "Alegreya"
+            },
+            "h6": {
+                "fontFamily": "Alegreya"
+            },
+            "p": {
+                "fontFamily": "Alegreya"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Alegreya"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "Alegreya"
+            }
+        }
+    },
+    {
+        "name": "karla/merriweather",
+        "typography": {
+            "h1": {
+                "fontFamily": "Karla"
+            },
+            "h2": {
+                "fontFamily": "Karla"
+            },
+            "h3": {
+                "fontFamily": "Karla"
+            },
+            "h4": {
+                "fontFamily": "Karla"
+            },
+            "h5": {
+                "fontFamily": "Karla"
+            },
+            "h6": {
+                "fontFamily": "Karla"
+            },
+            "p": {
+                "fontFamily": "Merriweather"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Merriweather"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "Merriweather"
+            }
+        }
+    },
+    {
+        "name": "roboto-condensed/roboto",
+        "typography": {
+            "h1": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h2": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h3": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h4": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h5": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "h6": {
+                "fontFamily": "Roboto Condensed"
+            },
+            "p": {
+                "fontFamily": "Roboto"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Roboto"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "Roboto"
+            }
+        }
+    },
+    {
+        "name": "nunito-sans/nunito-sans",
+        "typography": {
+            "h1": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h2": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h3": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h4": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h5": {
+                "fontFamily": "Nunito Sans"
+            },
+            "h6": {
+                "fontFamily": "Nunito Sans"
+            },
+            "p": {
+                "fontFamily": "Nunito Sans"
+            },
+            ".stk-subtitle": {
+                "fontFamily": "Nunito Sans"
+            },
+            ".stk-button__inner-text": {
+                "fontFamily": "Nunito Sans"
+            }
+        }
+    }
+]

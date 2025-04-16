@@ -50,9 +50,10 @@ blockStyles.addBlockStyles( 'buttonAlign', [ {
 	valuePreCallback: value => {
 		if ( value === 'vertical' ) {
 			return 'column'
+		} else if ( value === 'horizontal' ) {
+			return 'row'
 		}
-
-		return 'row'
+		return value
 	},
 }, {
 	renderIn: 'edit',

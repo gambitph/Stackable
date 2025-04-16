@@ -13,11 +13,11 @@
 
 .stk-button-group {
 	row-gap: cssvar(button-row-gap);
-	column-gap: cssvar(button-gap);
+	column-gap: cssvar(button-column-gap);
 	justify-content: var(--stk-alignment-justify-content);
 }
 
-:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 	&:not(.is-style-link) {
 		.stk-button {
 			background: cssvar(button-background-color);
@@ -76,6 +76,7 @@
 .stk-container:not(.stk--no-padding) {
 	padding: cssvar(container-padding);
 }
+
 .stk--container-small .stk-container:not(.stk--no-padding) {
 	#{ '--stk-container-padding' }: cssvar(container-padding-small);
 }
@@ -85,6 +86,7 @@
 	box-shadow: cssvar(container-box-shadow);
 	color: cssvar(container-color);
 }
+
 .stk-container-padding {
 	padding: cssvar(container-padding);
 }
@@ -131,5 +133,307 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 .stk-block-posts {
 	&__meta {
 		color: cssvar(subtitle-color);
+	}
+}
+
+// These are the global styles for spacing and borders, and buttons and icons.
+:where(.stk-has-design-system-spacing-and-borders, .stk-has-design-system-buttons-and-icons) {
+	// Containers
+	// .stk-container:not(.stk--no-padding) {
+	// 	&:hover {
+	// 		padding: cssvar(container-padding-hover);
+	// 	}
+	// }
+
+	// .stk--container-small .stk-container:not(.stk--no-padding) {
+	// 	#{ '--stk-container-padding-hover' }: cssvar(container-padding-small);
+	// 	#{ '--stk-container-padding-parent-hover' }: cssvar(container-padding-small);
+	// }
+
+	.stk-container:not(.stk--no-background) {
+		border-style: cssvar(container-border-style);
+		border-width: cssvar(container-border-width);
+
+		&:hover {
+			border-width: var(--stk-container-border-width-hover, cssvar(container-border-width));
+			box-shadow: var(--stk-container-box-shadow-hover, cssvar(container-box-shadow));
+		}
+	}
+	:where(.stk-hover-parent:hover) .stk-container:not(.stk--no-background) {
+		border-width: var(--stk-container-border-width-parent-hover, cssvar(container-border-width));
+		box-shadow: var(--stk-container-box-shadow-parent-hover, cssvar(container-box-shadow));
+
+		&:hover {
+			border-width: var(--stk-container-border-width-hover, var(--stk-container-border-width-parent-hover, cssvar(container-border-width)));
+			box-shadow: var(--stk-container-box-shadow-hover, var(--stk-container-box-shadow-parent-hover, cssvar(container-box-shadow)));
+		}
+	}
+	// .stk-container-padding {
+	// &:hover {
+	// 	padding: cssvar(container-padding-hover);
+	// }
+	// }
+
+
+	// :where(.stk-hover-parent:hover) .stk-container:not(.stk--no-padding),
+	// :where(.stk-hover-parent:hover) .stk-container-padding {
+	// 	padding: cssvar(container-padding-parent-hover);
+	// }
+
+	// Block Background
+	.stk-block-background {
+		border-radius: cssvar(block-background-border-radius);
+		box-shadow: cssvar(block-background-box-shadow);
+		// &:not(.stk--no-padding) {
+		// &:hover {
+		// 	padding: cssvar(block-background-padding-hover);
+		// }
+		// }
+	}
+
+	.stk-block.stk-block-background {
+		border-style: cssvar(block-background-border-style);
+		border-width: cssvar(block-background-border-width);
+		&:hover {
+			border-width: var(--stk-block-background-border-width-hover, cssvar(block-background-border-width));
+			box-shadow: var(--stk-block-background-box-shadow-hover, cssvar(block-background-box-shadow));
+		}
+	}
+
+	:where(.stk-hover-parent:hover) .stk-block.stk-block-background {
+		border-width: var(--stk-block-background-border-width-parent-hover, cssvar(block-background-border-width));
+		box-shadow: var(--stk-block-background-box-shadow-parent-hover, cssvar(block-background-box-shadow));
+		&:hover {
+			border-width: var(--stk-block-background-border-width-hover, var(--stk-block-background-border-width-parent-hover, cssvar(block-background-border-width)));
+			box-shadow: var(--stk-block-background-box-shadow-hover, var(--stk-block-background-box-shadow-parent-hover, cssvar(block-background-box-shadow)));
+		}
+		// &:not(.stk--no-padding) {
+		// 	padding: cssvar(block-background-padding-parent-hover);
+		// }
+	}
+
+
+	// Images
+	.stk-img-wrapper {
+		filter: drop-shadow(cssvar(image-drop-shadow));
+		&:hover {
+			filter: drop-shadow(var(--stk-image-drop-shadow-hover, cssvar(image-drop-shadow)));
+		}
+
+		img {
+			border-radius: cssvar(image-border-radius);
+		}
+	}
+	:where(.stk-hover-parent:hover) .stk-img-wrapper {
+		filter: drop-shadow(var(--stk-image-drop-shadow-parent-hover, cssvar(image-drop-shadow)));
+		&:hover {
+			filter: drop-shadow(var(--stk-image-drop-shadow-hover, var(--stk-image-drop-shadow-parent-hover, cssvar(image-drop-shadow))));
+		}
+	}
+
+	// Icons
+	.stk--inner-svg {
+		svg:last-child {
+			&:is(.ugb-custom-icon, .stk-custom-icon) {
+				width: cssvar(custom-icon-size);
+				height: cssvar(custom-icon-size);
+			}
+			&:not(.ugb-custom-icon):not(.stk-custom-icon) {
+				width: cssvar(icon-size);
+				height: cssvar(icon-size);
+			}
+		}
+	}
+}
+
+// These are the global styles for buttons
+:where(.stk-has-design-system-buttons-and-icons) {
+	.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link) {
+			.stk-button {
+				&::before {
+					border-style: cssvar(button-border-style);
+					box-shadow: cssvar(button-box-shadow);
+				}
+				&:hover::before {
+					box-shadow: var(--stk-button-box-shadow-hover, cssvar(button-box-shadow));
+				}
+			}
+		}
+
+		&:not(.is-style-link, .is-style-ghost) .stk-button {
+			&::before {
+				border-width: cssvar(button-border-width);
+			}
+			&:hover::before {
+				border-width: var(--stk-button-border-width-hover, cssvar(button-border-width));
+			}
+		}
+
+		.stk-button {
+			// Adjust icon color and icon size.
+			#{'--stk-icon-size'}: cssvar(button-icon-size);
+			#{'--stk-custom-icon-size'}: cssvar(custom-button-icon-size);
+			min-height: cssvar(button-min-height);
+		}
+
+		&.is-style-ghost .stk-button {
+			&:hover::before {
+				border-width: var(--stk-button-ghost-border-width-hover, cssvar(button-ghost-border-width));
+			}
+		}
+	}
+
+	:is(.stk-block-button, .stk-block-pagination) .stk-button {
+		border-radius: cssvar(button-border-radius);
+	}
+
+	:where(.stk-hover-parent:hover) .stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .stk-button {
+			&::before {
+				border-width: var(--stk-button-border-width-parent-hover, cssvar(button-border-width));
+				box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+			}
+			&:hover::before {
+				border-width: var(--stk-button-border-width-hover, var(--stk-button-border-width-parent-hover, cssvar(button-border-width)));
+				box-shadow: var(--stk-button-box-shadow-hover, var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow)));
+			}
+		}
+		&.is-style-ghost .stk-button {
+			&::before {
+				border-width: var(--stk-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width));
+				box-shadow: var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+			}
+			&:hover::before {
+				border-width: var(--stk-button-ghost-border-width-hover, var(--stk-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width)));
+				box-shadow: var(--stk-button-box-shadow-hover, var(--stk-button-box-shadow-parent-hover, cssvar(button-box-shadow)));
+			}
+		}
+	}
+}
+
+// These are the global styles for color schemes.
+:where(.stk-has-color-schemes) {
+	:where(.stk-block) > :is(p, div) {
+		color: var(--stk-text-color);
+	}
+	.stk-block > :is(h1,h2,h3,h4,h5,h6) {
+		color: var(--stk-heading-color);
+	}
+
+	:is(.stk-block-text__text, .stk-block-heading__text, .is-style-link, .stk-table-of-contents__table) a {
+		color: var(--stk-link-color, var(--theme-link-initial-color, unset));
+		&:hover {
+			color: var(--stk-link-color-hover, var(--stk-link-color, var(--theme-link-hover-color, unset)));
+		}
+	}
+	.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		#{'--stk-accent-color'}: cssvar(button-text-color);
+
+		&:not(.is-style-link) .stk-button {
+			&:where(:hover) {
+				background: var(--stk-button-background-color-hover, cssvar(button-background-color));
+
+				// Adjust icon color and icon size.
+				#{ '--stk-icon-color' }: var(--stk-button-text-color-hover, cssvar(button-text-color));
+				#{ '--stk-accent-color-hover' }: var(--stk-button-text-color-hover, cssvar(button-text-color));
+				#{ '--stk-accent-color' }: var(--stk-button-text-color-hover, cssvar(button-text-color));
+
+				.stk--inner-svg {
+					color: var(--stk-button-text-color-hover, cssvar(button-text-color));
+				}
+
+				> .stk-button__inner-text {
+					color: var(--stk-button-text-color-hover, cssvar(button-text-color));
+					&:hover {
+						color: var(--stk-button-text-color-hover, cssvar(button-text-color)); // Override theme's hover text color.
+					}
+				}
+			}
+		}
+
+		&.is-style-ghost {
+			#{ '--stk-button-text-color' }: var(--stk-button-outline-color, cssvar(button-background-color));
+			.stk-button::before {
+				border-color: var(--stk-button-outline-color, cssvar(button-background-color));
+			}
+			&:where(:hover) {
+				#{ '--stk-button-text-color-hover' }: var(--stk-button-outline-color-hover, var(--stk-button-outline-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				#{ '--stk-accent-color-hover' }: var(--stk-button-outline-color-hover, var(--stk-button-outline-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				.stk-button::before {
+					border-color: var(--stk-button-outline-color-hover, var(--stk-button-outline-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				}
+			}
+		}
+
+		&.is-style-plain {
+			#{ '--stk-button-text-color' }: var(--stk-button-plain-text-color, cssvar(button-background-color));
+			.stk-button:hover {
+				#{ '--stk-button-text-color-hover' }: var(--stk-button-plain-text-color-hover, var(--stk-button-plain-text-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				#{ '--stk-accent-color-hover' }: var(--stk-button-plain-text-color-hover, var(--stk-button-plain-text-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+				#{ '--stk-accent-color' }: var(--stk-button-plain-text-color-hover, var(--stk-button-plain-text-color, var(--stk-button-background-color-hover, cssvar(button-background-color))));
+			}
+		}
+
+		&.is-style-link {
+			#{ '--stk-button-text-color' }: cssvar(link-color);
+			:where(.stk-button:hover) {
+				#{ '--stk-accent-color-hover' }: cssvar(link-color-hover);
+				#{ '--stk-accent-color' }: cssvar(link-color-hover);
+			}
+		}
+	}
+
+	.stk-container:not(.stk--no-background) {
+		background-image: cssvar(container-background-color);
+		&:hover {
+			background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
+			background-image: var(--stk-container-background-color-hover, cssvar(container-background-color));
+		}
+	}
+
+	.stk-block-background {
+		background-image: cssvar(block-background-color);
+		&:hover {
+			background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
+			background-image: var(--stk-block-background-color-hover, cssvar(block-background-color));
+		}
+	}
+
+	.stk--inner-svg {
+		border-color: var(--stk-accent-color, cssvar(icon-color));
+		svg:last-child:not(.ugb-custom-icon):not(.stk-custom-icon) {
+			&,
+			:is(g, path, rect, polygon, ellipse) {
+				fill: var(--stk-accent-color, cssvar(icon-color));
+			}
+		}
+		&:where(:hover) {
+			border-color: var(--stk-accent-color-hover, var(--stk-accent-color, cssvar(icon-color)));
+			svg:last-child:not(.ugb-custom-icon):not(.stk-custom-icon) {
+				&,
+				:is(g, path, rect, polygon, ellipse) {
+					fill: var(--stk-accent-color-hover, var(--stk-accent-color, cssvar(icon-color)));
+				}
+			}
+		}
+	}
+
+	// Typography
+	.stk-subtitle {
+		color: var(--stk-accent-color, cssvar(subtitle-color));
+		&:where(:hover) {
+			color: var(--stk-accent-color-hover, var(--stk-accent-color, cssvar(subtitle-color)));
+		}
+	}
+
+	// Posts
+	.stk-block-posts {
+		&__meta {
+			color: var(--stk-accent-color, cssvar(subtitle-color));
+			&:where(:hover) {
+				color: var(--stk-accent-color-hover, var(--stk-accent-color, cssvar(subtitle-color)));
+			}
+		}
 	}
 }

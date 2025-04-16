@@ -494,18 +494,25 @@ if ( ! function_exists( 'stackable_init_animations' ) ) {
 
 if ( ! function_exists( 'stackable_check_block_animation' ) ) {
 
+	function stackable_css_has_hover_effects_or_animation( $css_string ) {
+		if ( strpos( $css_string, ':hover' ) !== false || // Hover effects
+			 strpos( $css_string, '--entrance-' ) !== false || // Entrance animations
+			 strpos( $css_string, 'stk-anim' ) !== false || // Scroll animations
+			 strpos( $css_string, '--stk-tran' ) !== false || // Transition duration
+			 strpos( $css_string, 'stk-entrance' ) !== false || // Entrance class
+			strpos( $css_string, '-hover' ) !== false // has CSS custom property for hover effects
+		) {
+			return true;
+		}
+		return false;
+	}
+
 	function stackable_check_block_animation( $block_content, $block ) {
 		if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
 			return $block_content;
 		}
 
-		if ( strpos( $block_content, ':hover' ) !== false || // Hover effects
-			 strpos( $block_content, '--entrance-' ) !== false || // Entrance animations
-			 strpos( $block_content, 'stk-anim' ) !== false || // Scroll animations
-			 strpos( $block_content, '--stk-tran' ) !== false || // Transition duration
-			 strpos( $block_content, 'stk-entrance' ) !== false // Entrance class
-
-		) {
+		if ( stackable_css_has_hover_effects_or_animation( $block_content )	) {
 			// Adds a special class to the body tag, to indicate we can now run animations.
 			add_action( 'wp_footer', 'stackable_init_animations' );
 			remove_filter( 'render_block', 'stackable_check_block_animation', 10, 2 );
@@ -514,7 +521,17 @@ if ( ! function_exists( 'stackable_check_block_animation' ) ) {
 		return $block_content;
 	}
 
+	function stackable_check_block_animation_on_global_styles( $css ) {
+		if ( stackable_css_has_hover_effects_or_animation( $css )	) {
+			// Adds a special class to the body tag, to indicate we can now run animations.
+			add_action( 'wp_footer', 'stackable_init_animations' );
+		}
+
+		return $css;
+	}
+
 	if ( is_frontend() ) {
 		add_filter( 'render_block', 'stackable_check_block_animation', 1, 2 );
+		add_filter( 'stackable_frontend_css', 'stackable_check_block_animation_on_global_styles', 999 );
 	}
 }

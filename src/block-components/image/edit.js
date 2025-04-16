@@ -26,6 +26,7 @@ import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 	useDeviceType,
+	useBlockLayoutDefaults,
 } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
 
@@ -39,7 +40,7 @@ import { useMemo } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 // Note: image drop shadows do not accept negative spread.
-const IMAGE_SHADOWS = [
+export const IMAGE_SHADOWS = [
 	'none',
 	'0px 0 1px rgba(120, 120, 120, 0.5)',
 	'0px 0 2px rgba(120, 120, 120, 0.5)',
@@ -79,7 +80,7 @@ const Controls = props => {
 	} )
 	const setAttributes = useBlockSetAttributesContext()
 	const deviceType = useDeviceType()
-
+	const { getPlaceholder } = useBlockLayoutDefaults()
 	// Get the width of the image block, this is needed for resizing the image
 	// when replacing, and for resetting the width.
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
@@ -392,6 +393,7 @@ const Controls = props => {
 					attribute="imageShadow"
 					hover="all"
 					isFilter={ true }
+					placeholder={ getPlaceholder( 'image-drop-shadow' ) }
 					helpTooltip={ {
 						video: 'image-shadow',
 						title: __( 'Image Shadow', i18n ),
@@ -429,7 +431,7 @@ const Controls = props => {
 					attribute="imageBorderRadius"
 					min="0"
 					sliderMax={ borderRadiusSliderMax }
-					placeholder="0"
+					placeholder={ getPlaceholder( 'image-border-radius' ) || '0' }
 					defaultValue={ 0 }
 					allowReset={ true }
 					helpTooltip={ {

@@ -29,10 +29,14 @@ export const Save = props => {
 		className,
 		'stk-block-number-box',
 		responsiveClass,
-		blockAlignmentClass,
 	], {
 		'stk--has-shape': attributes.hasShape,
 	} )
+
+	const containerClassNames = classnames( [
+		'stk-block-number-box__container',
+		blockAlignmentClass,
+	] )
 
 	const textClassNames = classnames( [
 		'stk-block-number-box__text',
@@ -47,12 +51,14 @@ export const Save = props => {
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<CustomCSS.Content attributes={ attributes } />
-			<Typography.Content
-				tagName="div"
-				attributes={ attributes }
-				className={ textClassNames }
-				role="presentation"
-			/>
+			<div className={ containerClassNames }>
+				<Typography.Content
+					tagName="span"
+					attributes={ attributes }
+					className={ textClassNames }
+					role="presentation"
+				/>
+			</div>
 		</BlockDiv.Content>
 	)
 }

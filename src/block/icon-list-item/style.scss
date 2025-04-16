@@ -25,7 +25,7 @@
 }
 
 .stk-block-icon-list-item__content {
-	gap: 8px;
+	gap: var(--stk-icon-list-icon-gap, 8px);
 }
 
 .stk-block-icon-list .stk-block-icon-list__ul .stk-block-icon-list-item {
@@ -42,8 +42,10 @@
 		position: relative;
 		.stk--svg-wrapper {
 			.stk--inner-svg svg {
-				height: var(--stk-icon-height, 16px);
-				width: var(--stk-icon-height, 16px);
+				// In Global Buttons and Icons, we renamed `--stk-icon-height` to `--stk-icon-list-icon-size`.
+				// Keep the `--stk-icon-height` for backward compatibility.
+				height: var(--stk-icon-height, var(--stk-icon-list-icon-size, 16px));
+				width: var(--stk-icon-height, var(--stk-icon-list-icon-size, 16px));
 				transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
 				opacity: var(--stk-icon-list-icon-opacity, 1);
 				fill: var(--stk-icon-list-marker-color);
@@ -82,7 +84,9 @@
 		.stk-block-icon-list-item__marker::before {
 			content: counter(stk-icon-list-counter, var(--stk-list-style-type, decimal)) ". ";
 			display: block;
-			font-size: var(--stk-icon-height, 16px);
+			// In Global Buttons and Icons, we renamed `--stk-icon-height` to `--stk-icon-list-icon-size`.
+			// Keep the `--stk-icon-height` for backward compatibility.
+			font-size: var(--stk-icon-height, var(--stk-icon-list-icon-size, 16px));
 			color: var(--stk-icon-list-marker-color);
 			transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
 			opacity: var(--stk-icon-list-icon-opacity, 1);
@@ -95,4 +99,15 @@
 
 li.wp-block-stackable-icon-list-item.stk-block-icon-list-item {
 	margin-bottom: 0;
+}
+
+// If single text color is added (not gradient), reset text-fill-color.
+// Icon list marker is only limited to single text color.
+// These ensure that having gradient in parent icon list still allows
+// modification in icon list items.
+.stk-block-icon-list-item__text:is(.has-text-color):not(.stk--is-gradient),
+.stk-block-icon-list-item__marker {
+	-webkit-text-fill-color: initial !important;
+	-moz-text-fill-color: initial !important;
+	-o-text-fill-color: initial !important;
 }

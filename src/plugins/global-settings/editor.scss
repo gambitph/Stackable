@@ -1,5 +1,33 @@
 .ugb-global-settings__inspector.components-panel {
 	.components-panel__body  .components-panel__body-title {
-		top: 48px;
+		top: 47px;
+		z-index: 5;
 	}
+
+	.ugb-global-settings__section-settings {
+		background: linear-gradient(to bottom, #fbfbfb, transparent);
+		border-top: 1px solid #e0e0e0;
+		margin: 0px -16px;
+		padding: 16px;
+
+		.ugb-global-settings__section-title {
+			font-weight: bold;
+			text-transform: uppercase;
+			margin-bottom: 8px;
+		}
+		&:last-of-type {
+			padding: 16px 16px 0px 16px;
+		}
+	}
+}
+
+.stk-reset-all-block-layout-settings {
+	display: flex;
+	justify-self: flex-end;
+	margin-bottom: 12px;
+}
+
+.stk-global-block-layouts-help-tooltip {
+	position: sticky;
+	top: 75px;
 }

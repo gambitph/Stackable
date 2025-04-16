@@ -39,7 +39,7 @@
 	}
 	ul.stk-block-icon-list__ul,
 	ol.stk-block-icon-list__ol {
-		padding-inline-start: 0;
+		padding-inline-start: var(--stk-icon-list-indentation, 0);
 	}
 
 	.stk-block-icon-list__ol {
@@ -85,5 +85,16 @@
 
 	li:last-child {
 		margin-bottom: 0;
+	}
+}
+
+:where(.stk-has-color-schemes) {
+	.stk-block-icon-list {
+		--stk-icon-list-marker-color: var(--stk-accent-color);
+		:where(.stk-block-icon-list-item) {
+			&:where(:hover) {
+				--stk-icon-list-marker-color: var(--stk-accent-color-hover, var(--stk-accent-color));
+			}
+		}
 	}
 }

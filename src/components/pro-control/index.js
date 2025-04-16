@@ -117,6 +117,22 @@ const LABELS = {
 			<li>{ __( 'Organize your custom icons in your library', i18n ) }</li>
 		</ul>,
 	},
+	'font-pairs': {
+		title: __( 'Premium Typography', i18n ),
+		description: <ul>
+			<li>{ __( 'Access to 90+ curated font pairs', i18n ) }</li>
+			<li>{ __( 'Create your own custom font pairs', i18n ) }</li>
+		</ul>,
+	},
+	'color-schemes': {
+		title: __( 'Premium Color Schemes', i18n ),
+		description: <ul>
+			<li>{ __( 'Access to 50+ curated color scheme presets', i18n ) }</li>
+			<li>{ __( 'Create your own color schemes', i18n ) }</li>
+			<li>{ __( 'Set default color schemes for blocks and sections', i18n ) }</li>
+			<li>{ __( 'Streamline your design workflow', i18n ) }</li>
+		</ul>,
+	},
 }
 
 const ProControl = props => {

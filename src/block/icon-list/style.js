@@ -97,7 +97,7 @@ blockStyles.addBlockStyles( 'iconRotation', [ {
 
 blockStyles.addBlockStyles( 'iconSize', [ {
 	selector: '',
-	styleRule: '--stk-icon-height',
+	styleRule: '--stk-icon-list-icon-size',
 	attrName: 'iconSize',
 	key: 'iconSize',
 	responsive: 'all',
@@ -212,6 +212,9 @@ Typography.addStyles( blockStyles, {
 	selector: [
 		'ul li',
 		'ol li',
+		// Apply directly to span for gradient text color
+		'ul li span',
+		'ol li span',
 	],
 	hoverSelector: [
 		'.%s:hover ul li',

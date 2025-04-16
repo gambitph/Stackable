@@ -223,9 +223,10 @@ class AdvancedAutosuggestControl extends Component {
 				label={ this.props.label }
 				screens={ this.props.screens }
 				value={ this.props.value }
+				defaultValue={ this.props?.defaultValue ?? '' }
 				onChange={ value => { // Will be used to reset.
-					if ( value === '' ) {
-						this.onChange( null, { newValue: '' } )
+					if ( value === '' || this.props?.defaultValue ) {
+						this.onChange( null, { newValue: value } )
 					}
 				} }
 				allowReset={ this.props.allowReset }

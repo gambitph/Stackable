@@ -96,7 +96,7 @@ const InspectorControls = memo( () => {
 				hasIconColor={ true }
 			/>
 			<Button.InspectorControls.Icon hasColor={ false } defaultValue={ defaultIcon } />
-			<Button.InspectorControls.Size hasWidth={ true } />
+			<Button.InspectorControls.Size hasWidth={ true } paddingPlaceholderName="icon-button-padding" />
 			<Button.InspectorControls.Borders
 				borderSelector=".stk-button"
 				placeholder="24"

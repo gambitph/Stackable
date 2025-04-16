@@ -21,7 +21,7 @@ const VisualGuideer = props => {
 
 	const computedStyles = useMemo( () => {
 		const firstElSelector = highlightSelector.split( ',' )[ 0 ]
-		const el = getEditorDom().querySelector( firstElSelector )
+		const el = getEditorDom()?.querySelector( firstElSelector )
 
 		// We can sometimes not find the element when we switched device types,
 		// just try again when that happens.

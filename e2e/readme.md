@@ -32,7 +32,16 @@ WP_BASE_URL=http://local.local/
 WP_AUTH_STORAGE=wp-auth.json
 WP_USERNAME=admin
 WP_PASSWORD=password
+STACKABLE_SLUG={ STACKABLE SLUG }
+WP_TEST_POSTID={ POST_ID }
+WP_STK_LICENSE={ STACKABLE LICENSE }
 ```
+
+In Freemius, make sure the license key is:
+- new
+- lifetime unlimited quota
+- has an owner
+- non-blocking and white-labeled
 
 Run this command to run e2e:
 

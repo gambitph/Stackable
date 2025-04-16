@@ -38,3 +38,16 @@
 		margin-block-end: 0;
 	}
 }
+
+// These are styles added from the global color schemes.
+:where(.stk-has-color-schemes) {
+	.stk-block-table-of-contents {
+		// Add this so that it inherits the color from global color schemes.
+		::marker {
+			color: var(--stk-accent-color);
+			&:where(:hover) {
+				#{ '--stk-accent-color' }: var(--stk-accent-color-hover);
+			}
+		}
+	}
+}

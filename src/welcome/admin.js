@@ -17,7 +17,7 @@ import domReady from '@wordpress/dom-ready'
 import {
 	Button, Flex, FlexItem, Spinner, CheckboxControl, Modal,
 } from '@wordpress/components'
-import { loadPromise, models } from '@wordpress/api'
+import { models } from '@wordpress/api'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
@@ -28,9 +28,10 @@ import {
 	showProNoticesOption,
 	isPro,
 	v2disabledBlocks,
+	defaultBreakpoints,
 } from 'stackable'
 import classnames from 'classnames'
-import { importBlocks } from '~stackable/util/admin'
+import { fetchSettings, importBlocks } from '~stackable/util/admin'
 import { createRoot } from '~stackable/util/element'
 import AdminSelectSetting from '~stackable/components/admin-select-setting'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
@@ -308,11 +309,8 @@ const RestSettingsNotice = () => {
 	const [ error, setError ] = useState( null )
 
 	useEffect( () => {
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().catch( error => {
-				setError( error )
-			} )
+		fetchSettings().catch( error => {
+			setError( error )
 		} )
 	}, [] )
 
@@ -535,13 +533,10 @@ const Settings = () => {
 	}, [ unsavedChanges, settings ] )
 
 	useEffect( () => {
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setSettings( response )
-				// Should only be set initially since we have to reload after setting for it to work with the backend
-				setHasV2Tab( hasV2Compatibility( response ) )
-			} )
+		fetchSettings().then( response => {
+			setSettings( response )
+			// Should only be set initially since we have to reload after setting for it to work with the backend
+			setHasV2Tab( hasV2Compatibility( response ) )
 		} )
 	}, [] )
 
@@ -829,31 +824,31 @@ const Responsiveness = props => {
 								label={ __( 'Tablet Breakpoint', i18n ) }
 								searchedSettings={ dynamicBreakpoints.children }
 								type="number"
-								value={ settings.stackable_dynamic_breakpoints.tablet || '' } // eslint-disable-line camelcase
+								value={ settings.stackable_dynamic_breakpoints?.tablet || '' } // eslint-disable-line camelcase
 								onChange={ value => {
 									handleSettingsChange( {
 										stackable_dynamic_breakpoints: { // eslint-disable-line camelcase
 											tablet: value,
-											mobile: settings.stackable_dynamic_breakpoints.mobile || '', // eslint-disable-line camelcase
+											mobile: settings.stackable_dynamic_breakpoints?.mobile || '', // eslint-disable-line camelcase
 										},
 									} )
 								} }
-								placeholder="1024"
+								placeholder={ defaultBreakpoints.tablet || '1024' }
 							> px</AdminTextSetting>
 							<AdminTextSetting
 								label={ __( 'Mobile Breakpoint', i18n ) }
 								searchedSettings={ dynamicBreakpoints.children }
 								type="number"
-								value={ settings.stackable_dynamic_breakpoints.mobile || '' } // eslint-disable-line camelcase
+								value={ settings.stackable_dynamic_breakpoints?.mobile || '' } // eslint-disable-line camelcase
 								onChange={ value => {
 									handleSettingsChange( {
 										stackable_dynamic_breakpoints: { // eslint-disable-line camelcase
-											tablet: settings.stackable_dynamic_breakpoints.tablet || '', // eslint-disable-line camelcase
+											tablet: settings.stackable_dynamic_breakpoints?.tablet || '', // eslint-disable-line camelcase
 											mobile: value,
 										},
 									} )
 								} }
-								placeholder="768"
+								placeholder={ defaultBreakpoints.mobile || '768' }
 							> px</AdminTextSetting>
 						</div>
 					}

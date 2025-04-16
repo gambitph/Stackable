@@ -26,8 +26,8 @@ const HelpTooltip = props => {
 		placement="left"
 		offset={ 28 }
 		noArrow={ false }
-		onFocusOutside={ props.onClose }
-		onEscape={ props.onClose }
+		onFocusOutside={ props.closeOnEscape ? props.onClose : NOOP }
+		onEscape={ props.closeOnEscape ? props.onClose : NOOP }
 	>
 		<PanelBody>
 			<button
@@ -48,12 +48,14 @@ const HelpTooltip = props => {
 			}
 			<h4>{ props.title }</h4>
 			<p>{ props.description }</p>
-			<CheckboxControl
-				label={ __( 'Stop showing tooltips', i18n ) }
-				className="ugb-help-tooltip__checkbox"
-				checked={ ! props.tooltipsEnabled }
-				onChange={ checked => props.onTooltipsEnabledChange( ! checked ) }
-			/>
+			{ props.showTooltipCheckbox &&
+				<CheckboxControl
+					label={ __( 'Stop showing tooltips', i18n ) }
+					className="ugb-help-tooltip__checkbox"
+					checked={ ! props.tooltipsEnabled }
+					onChange={ checked => props.onTooltipsEnabledChange( ! checked ) }
+				/>
+			}
 		</PanelBody>
 	</Popover>
 }
@@ -62,7 +64,9 @@ HelpTooltip.defaultProps = {
 	title: '',
 	video: '',
 	description: '',
+	closeOnEscape: true,
 	onClose: NOOP,
+	showTooltipCheckbox: true,
 	tooltipsEnabled: true,
 	onTooltipsEnabledChange: NOOP,
 }

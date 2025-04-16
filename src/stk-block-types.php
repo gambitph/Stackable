@@ -223,6 +223,7 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				],
 				'parent' => [
 					'stackable/columns',
+					'stackable/carousel',
 					'stackable/feature',
 					'stackable/feature-grid',
 					'stackable/horizontal-scroller',

@@ -2,7 +2,9 @@
  * External dependencies
  */
 import { Tooltip, TypographyControl } from '~stackable/components'
-import { createTypographyStyles, loadGoogleFont } from '~stackable/util'
+import {
+	createTypographyStyles, getFontFamilyLabel, loadGoogleFont,
+} from '~stackable/util'
 import { i18n } from 'stackable'
 import { upperFirst, omit } from 'lodash'
 import classnames from 'classnames'
@@ -55,6 +57,7 @@ const TypographyPicker = props => {
 			showSecondFontSize={ false }
 			allowReset={ true }
 			fontFamily={ value.fontFamily }
+			defaultFontFamily={ props?.defaultFontFamily }
 			fontSize={ value.fontSize }
 			htmlTag={ props.selector }
 			tabletFontSize={ value.tabletFontSize }
@@ -94,6 +97,7 @@ const TypographyPicker = props => {
 			onReset={ () => props.onReset( props.selector ) }
 			resetPopoverTitle={ sprintf( __( 'Reset %s Global Typography Style', i18n ), props.selector === 'p' ? __( 'Body Text', i18n ) : props.selector.toUpperCase() ) }
 			resetPopoverDescription={ __( 'Resetting this typography style will revert all typography to its original style. Proceed?', i18n ) }
+			isAllowReset={ props?.isAllowReset }
 		/>
 	)
 }
@@ -118,7 +122,7 @@ export default TypographyPicker
 const createDescription = ( styleObject, device = 'desktop' ) => {
 	const description = []
 	if ( styleObject.fontFamily ) {
-		description.push( styleObject.fontFamily )
+		description.push( getFontFamilyLabel( styleObject.fontFamily ) )
 	}
 	if ( styleObject.fontSize ) {
 		description.push( `${ styleObject.fontSize }${ styleObject.fontSizeUnit || 'px' }` )

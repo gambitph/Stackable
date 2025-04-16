@@ -26,7 +26,6 @@ const AdvancedTextControl = memo( props => {
 		isDynamic,
 		isMultiline,
 		changeDynamicContent: _changeDynamicContent,
-		allowReset,
 		isFormatType,
 		...inputProps
 	} = propsToPass
@@ -70,7 +69,7 @@ const AdvancedTextControl = memo( props => {
 				/>
 			</DynamicContentControl>
 			<ResetButton
-				allowReset={ allowReset && ! props.isDynamic }
+				allowReset={ controlProps.allowReset && ! props.isDynamic }
 				value={ internalValue }
 				default={ props.default }
 				onChange={ internalOnChange }

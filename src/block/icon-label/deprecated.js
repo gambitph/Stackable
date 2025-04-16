@@ -18,8 +18,8 @@ const deprecated = [
 
 			const iconBlockAttributes = innerBlocks[ 0 ].attributes
 			const hasIconSize = iconBlockAttributes.iconSize || iconBlockAttributes.iconSizeTablet || iconBlockAttributes.iconSizeMobile ? true : false
-			const hasIconGap = attributes.iconGap || attributes.iconGapTablet || attributes.iconGapMobile ? true : false
-			const hasIconGap2 = attributes.iconGap2 || attributes.iconGap2Tablet || attributes.iconGap2Mobile ? true : false
+			const hasIconGap = attributes.iconGap || attributes.iconGap === 0 || attributes.iconGapTablet || attributes.iconGapMobile ? true : false
+			const hasIconGap2 = attributes.iconGap2 || attributes.iconGap2 === 0 || attributes.iconGap2Tablet || attributes.iconGap2Mobile ? true : false
 			return hasIconGap || ( hasIconSize && ! hasIconGap2 )
 		},
 		migrate: ( attributes, innerBlocks ) => {

@@ -59,3 +59,27 @@
 	display: none;
 	margin: 0;
 }
+
+// These are styles added from the global color schemes.
+:where(.stk-has-color-schemes) {
+	.stk-block-countdown__digit {
+		color: var(--stk-accent-color);
+		&:where(:hover) {
+			color: var(--stk-accent-color-hover, var(--stk-accent-color));
+		}
+	}
+	.stk-block-countdown__divider-wrapper {
+		.stk-block-countdown__divider-colon {
+			color: var(--stk-accent-color);
+			&:where(:hover) {
+				color: var(--stk-accent-color-hover, var(--stk-accent-color));
+			}
+		}
+		.stk-block-countdown__divider-line {
+			background-color: var(--stk-accent-color);
+			&:where(:hover) {
+				background-color: var(--stk-accent-color-hover, var(--stk-accent-color));
+			}
+		}
+	}
+}

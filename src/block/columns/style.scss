@@ -10,9 +10,27 @@
 
 .stk-block-columns > .stk-block-content {
 	--stk-column-gap: 0px; // For nested columns, this takes precedence.
-	column-gap: var(--stk-column-gap, 0px);
+	column-gap: var(--stk-column-gap);
 	margin-left: auto;
 	margin-right: auto;
+}
+
+// These are styles added from the global spacing and borders.
+:where(.stk-has-design-system-spacing-and-borders) {
+	.stk-block-columns > .stk-block-content {
+		--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
+		row-gap: var(--stk-columns-row-gap, 0px);
+	}
+}
+
+// Add a 0 specificity style to set the default column order. This is to prevent
+// the column order from spilling to nested blocks.
+// Target the stk-column-wrapper to also include blocks with column innerblocks
+// but are not columns (no stk-block-columns), like accordion and horizontal scroller.
+:where(.stk-block-columns) {
+	@for $i from 1 through 20 {
+		--stk-col-order-#{ $i }: #{ $i };
+	}
 }
 
 // Column order.

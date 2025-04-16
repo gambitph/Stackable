@@ -26,11 +26,6 @@ module.exports = [
 		},
 		// Admin settings script.
 		'admin_welcome': path.resolve( __dirname, '../src/welcome/admin.js' ),
-		// V2 deprecated script, we build this here since that's how we did it before.
-		'admin_welcome_v2': {
-			import: path.resolve( __dirname, '../src/deprecated/v2/welcome/admin.js' ),
-			filename: 'deprecated/[name].js'
-		},
 		'frontend_blocks_deprecated_v2': {
 			import: path.resolve( __dirname, '../src/deprecated/v2/block-frontend.js' ),
 			filename: 'deprecated/[name].js'
@@ -39,6 +34,7 @@ module.exports = [
 
 	output: {
 		filename: '[name].js',
+		chunkFilename: '[name].[contenthash].json', // Output filename for dynamically imported chunks
     },
 
     // Externals are only WordPress loaded libraries.

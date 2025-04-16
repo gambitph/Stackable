@@ -16,9 +16,12 @@ import {
 	PanelAdvancedSettings,
 	AdvancedToggleControl,
 	InspectorBlockControls,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
+	useBlockColorSchemes,
+	useBlockLayoutDefaults,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 
@@ -32,8 +35,21 @@ export const Edit = props => {
 		hasContentVerticalAlign = false,
 	} = props
 
-	const hasContainer = useBlockAttributesContext( attributes => attributes.hasContainer )
+	const {
+		hasContainer,
+		containerColorScheme,
+	} = useBlockAttributesContext( attributes => ( {
+		hasContainer: attributes.hasContainer,
+		containerColorScheme: attributes.containerColorScheme,
+	} ) )
 	const setAttributes = useBlockSetAttributesContext()
+	const { getPlaceholder } = useBlockLayoutDefaults()
+
+	const {
+		getScheme,
+		COLOR_SCHEME_OPTIONS,
+		containerModeColorScheme,
+	} = useBlockColorSchemes()
 
 	return (
 		<>
@@ -44,8 +60,18 @@ export const Edit = props => {
 					hasToggle={ true }
 					checked={ hasContainer }
 					onChange={ hasContainer => setAttributes( { hasContainer } ) }
-
 				>
+					<AdvancedSelectControl
+						label={ __( 'Color Scheme', i18n ) }
+						value={ getScheme( containerColorScheme || containerModeColorScheme, { returnFallback: false } ) }
+						options={ COLOR_SCHEME_OPTIONS }
+						attribute="containerColorScheme"
+						changeCallback={ newScheme => {
+							const colorScheme = newScheme === containerModeColorScheme ? '' : newScheme
+							return colorScheme
+						} }
+						default={ containerModeColorScheme }
+					/>
 					<SizeControls.Layout
 						attrNameTemplate="container%s"
 						enableMargin={ false }
@@ -64,7 +90,7 @@ export const Edit = props => {
 					<SizeControls.Spacing
 						attrNameTemplate="container%s"
 						enableMargin={ false }
-						paddingPlaceholder="32"
+						paddingPlaceholder={ getPlaceholder( 'container-padding' ) }
 						visualGuide={ {
 							selector: '.stk-%s-container',
 						} }
@@ -91,6 +117,9 @@ export const Edit = props => {
 					>
 						<BorderControls
 							attrNameTemplate="container%s"
+							placeholderTemplate="container"
+							borderTypeValue={ getPlaceholder( 'container-border-style' ) }
+							borderRadiusPlaceholder={ getPlaceholder( 'container-border-radius' ) }
 						/>
 					</PanelAdvancedSettings>
 				</InspectorStyleControls>

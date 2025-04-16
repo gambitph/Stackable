@@ -79,7 +79,7 @@ export { default as AdvancedFocalPointControl } from './advanced-focal-point-con
 export { default as AdvancedTokenField } from './advanced-token-field'
 export { default as ImageFilterControl } from './image-filter-control'
 export { default as GroupPlaceholder } from './group-placeholder'
-export { default as ShadowControl } from './shadow-control'
+export { default as ShadowControl, getShadows } from './shadow-control'
 export { default as LinkControl } from './link-control'
 export { default as ColumnInserter } from './column-inserter'
 export { default as StyleControl } from './style-control'
@@ -116,3 +116,11 @@ export { default as Popover } from './popover'
 export { default as HelpTooltip } from './help-tooltip'
 export { default as RichText } from './rich-text'
 export { default as SortablePicker } from './sortable-picker'
+export { default as InspectorSubHeader } from './inspector-sub-header'
+export { default as FontPairPicker } from './font-pair-picker'
+export { SectionSettings } from './section-settings'
+export {
+	default as ColorSchemePreview,
+	ColorSchemePresetPicker,
+	DEFAULT_COLOR_SCHEME_COLORS,
+} from './color-scheme-preview'

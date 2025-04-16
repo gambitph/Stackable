@@ -40,6 +40,10 @@ test( 'Stackable settings should be saved', async ( {
 	// Make sure all Stackable settings are loaded
 	await settings
 
+	// There should be no PHP errors
+	const pageError = await admin.getPageError()
+	expect( pageError ).toBeNull()
+
 	// Retrieves the value of the first option, toggles it and check if the value changed
 	const option = page.locator( '.ugb-admin-toggle-setting' ).first().getByRole( 'switch' )
 	const val = await option.getAttribute( 'aria-checked' )

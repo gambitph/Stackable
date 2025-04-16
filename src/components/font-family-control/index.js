@@ -6,44 +6,65 @@ import { i18n } from 'stackable'
 /**
  * Internal dependencies
  */
-import fonts from './google-fonts.json'
-import { loadGoogleFont } from '~stackable/util'
+import {
+	loadGoogleFont,
+	MODERN_FONT_STACKS,
+	SYSTEM_FONT_STACKS,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo } from '@wordpress/element'
+import {
+	useMemo, useState, useEffect,
+} from '@wordpress/element'
 import AdvancedAutosuggestControl from '../advanced-autosuggest-control'
 
 import { select } from '@wordpress/data'
 
-const fontOptions = fonts.map( font => {
-	return { label: font.family, value: font.family }
-} )
+const loadGoogleFonts = async () => {
+	const { default: fonts } =
+		await import( /* webpackChunkName: "data/google-fonts" */ './google-fonts.json' )
+	return fonts.map( font => ( { label: font.family, value: font.family } ) )
+}
 
 const FontFamilyControl = props => {
 	const {
 		loadingThemeFont, themeFonts, themeFontOptions,
 	} = select( 'stackable/theme-fonts' ).getThemeFonts()
 
+	const [ googleFontOptions, setGoogleFontOptions ] = useState( [] )
+
+	useEffect( () => {
+		loadGoogleFonts().then( fontOptions => {
+			setGoogleFontOptions( fontOptions )
+		} )
+	}, [] )
+
 	const options = useMemo( () => {
 		const allFontOptions = [
 			{
 				id: 'system-fonts',
 				title: __( 'System Fonts', i18n ),
-				options: [
-					{ label: __( 'Sans-Serif', i18n ), value: 'Sans-Serif' },
-					{ label: __( 'Serif', i18n ), value: 'Serif' },
-					{ label: __( 'Serif Alternative', i18n ), value: 'Serif-Alt' },
-					{ label: __( 'Monospace', i18n ), value: 'Monospace' },
-				],
+				options: Object.keys( SYSTEM_FONT_STACKS ).map( key => {
+					const font = SYSTEM_FONT_STACKS[ key ]
+					return { label: font.label, value: key }
+				} ),
+			},
+			{
+				id: 'modern-font-stacks',
+				title: __( 'Modern Font Stacks', i18n ),
+				options: Object.keys( MODERN_FONT_STACKS ).map( key => {
+					const font = MODERN_FONT_STACKS[ key ]
+					return { label: font.label, value: key }
+				} ),
 			},
 			{
 				id: 'google-fonts',
 				title: __( 'Google Fonts', i18n ),
-				options: fontOptions,
+				options: googleFontOptions,
 			},
 		]
 		if ( themeFonts.length ) {
@@ -54,7 +75,7 @@ const FontFamilyControl = props => {
 			} )
 		}
 		return applyFilters( 'stackable.font-family-control.options', allFontOptions )
-	}, [ loadingThemeFont ] )
+	}, [ loadingThemeFont, googleFontOptions ] )
 
 	return (
 		<AdvancedAutosuggestControl
@@ -64,7 +85,7 @@ const FontFamilyControl = props => {
 			onChange={ fontFamily => {
 				if ( ! themeFonts.includes( fontFamily ) ) {
 					// Load font if it's a Google font.
-					fontOptions.some( font => {
+					googleFontOptions.some( font => {
 						if ( font.value === fontFamily ) {
 							loadGoogleFont( fontFamily )
 							return true

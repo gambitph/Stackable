@@ -11,7 +11,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrNameTemplate = '%s',
 		hoverSelector,
 		borderRadiusSelector,
-		borderEnabledCallback = getAttribute => getAttribute( 'borderType' ),
+		// borderEnabledCallback = getAttribute => getAttribute( 'borderType' ) !== '',
 	} = props
 
 	// The style below is deprecated. We have to keep it because users who have
@@ -153,7 +153,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrName: 'borderColor',
 		key: 'borderColor',
 		attrNameTemplate,
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		hover: 'all',
 		hoverSelector,
 		dependencies: [ 'borderType' ],
@@ -170,7 +170,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		hover: 'all',
 		hoverSelector,
 		format: '%spx',
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		valuePreCallback: value => value?.top,
 		dependencies: [ 'borderType' ],
 	}, {
@@ -184,7 +184,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		hover: 'all',
 		hoverSelector,
 		format: '%spx',
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		valuePreCallback: value => value?.right,
 		dependencies: [ 'borderType' ],
 	}, {
@@ -198,7 +198,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		hover: 'all',
 		hoverSelector,
 		format: '%spx',
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		valuePreCallback: value => value?.bottom,
 		dependencies: [ 'borderType' ],
 	}, {
@@ -212,7 +212,7 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		hover: 'all',
 		hoverSelector,
 		format: '%spx',
-		enabledCallback: borderEnabledCallback,
+		// enabledCallback: borderEnabledCallback,
 		valuePreCallback: value => value?.left,
 		dependencies: [ 'borderType' ],
 	} ] )

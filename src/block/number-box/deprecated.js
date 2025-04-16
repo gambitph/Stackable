@@ -5,9 +5,58 @@ import { withVersion } from '~stackable/higher-order'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateTypographyGradientColor, deprecationBackgrounColorOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
+	BlockDiv, CustomCSS, Typography,
+	getResponsiveClasses, getTypographyClasses, getAlignmentClasses,
 } from '~stackable/block-components'
+import classnames from 'classnames'
+
+const depecatedSave_3_13_11 = props => {
+	const {
+		className,
+		attributes,
+	} = props
+
+	const responsiveClass = getResponsiveClasses( props.attributes )
+	const textClasses = getTypographyClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+
+	const blockClassNames = classnames( [
+		className,
+		'stk-block-number-box',
+		responsiveClass,
+		blockAlignmentClass,
+	], {
+		'stk--has-shape': attributes.hasShape,
+	} )
+
+	const textClassNames = classnames( [
+		'stk-block-number-box__text',
+		textClasses,
+	] )
+
+	return (
+		<BlockDiv.Content
+			className={ blockClassNames }
+			attributes={ attributes }
+			version={ props.version }
+		>
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
+			<CustomCSS.Content attributes={ attributes } />
+			<Typography.Content
+				tagName="div"
+				attributes={ attributes }
+				className={ textClassNames }
+				role="presentation"
+			/>
+		</BlockDiv.Content>
+	)
+}
 
 const deprecated = [
+	{
+		attributes: attributes( '3.13.11' ),
+		save: depecatedSave_3_13_11,
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),

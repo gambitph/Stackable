@@ -7,6 +7,19 @@
 	}
 }
 
+// These are styles added from the global color schemes.
+:where(.stk-has-color-schemes) {
+	.stk-block.stk-block-divider {
+		hr.stk-block-divider__hr,
+		.stk-block-divider__dot {
+			background: var(--stk-accent-color, #ddd);
+			&:where(:hover) {
+				background: var(--stk-accent-color-hover, var(--stk-accent-color, #ddd));
+			}
+		}
+	}
+}
+
 @include desktop {
 	:where(.has-text-align-left) .stk-block-divider {
 		--stk-dots-margin-left: 0;
