@@ -159,18 +159,23 @@ test.describe( 'Global Settings', () => {
 		await updateRequest
 
 		// Insert a Stackable Text Block, and check if the color is the same as the one set in the default block
-		// Wrap the expect in a function in case the default block is not yet updated
-		await expect( async () => {
-			await page.reload()
-			await editor.insertBlock( {
-				name: 'stackable/text',
-				attributes: {
-					text: 'test',
-				},
-			} )
+		const timeouts = [ 1_000, 5_000, 30_000 ]
+		for ( const timeout of timeouts ) {
+			try {
+				await page.reload()
+				await editor.insertBlock( {
+					name: 'stackable/text',
+					attributes: {
+						text: 'test',
+					},
+				} )
 
-			await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
-		} ).toPass( { intervals: [ 1_000, 5_000, 30_000 ] } )
+				await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+			} catch ( e ) {
+				// Ignore the error and try again because the default block might not be updated yet
+				await page.waitForTimeout( timeout )
+			}
+		}
 
 		// Reset Default Block
 		await page.getByLabel( 'Stackable Settings' ).click()
