@@ -24,7 +24,14 @@ test.describe( 'Block Editor', () => {
 	} ) => {
 		// Insert Stackable Text Block through block inserter
 		// Also checks if Stackable Block is in the list of blocks in the Editor
-		await page.getByLabel( 'Toggle block inserter' ).click()
+		if ( await page.getByLabel( 'Toggle block inserter' ).isVisible() ) {
+			// For WP version 6.7 and below
+			await page.getByLabel( 'Toggle block inserter' ).click()
+		} else {
+			// For WP version 6.8
+			await page.getByLabel( 'Block Inserter' ).click()
+		}
+
 		await page.locator( '.editor-block-list-item-stackable-text' ).click()
 
 		await expect( editor.canvas.getByLabel( 'Block: Text' ) ).toBeVisible()

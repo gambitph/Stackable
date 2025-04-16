@@ -13,6 +13,9 @@ jobs:
       matrix:
         include:
           - php_version: '7.3'
+            wp_version: 6.5.5
+
+          - php_version: '7.3'
             wp_version: null
 
           - php_version: '8.2'

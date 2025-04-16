@@ -51,10 +51,15 @@ test.describe( 'Global Settings', () => {
 
 		// Verify the newly added global color is in the color picker
 		await expect( page.getByRole( 'heading', { name: 'Global Colors' } ) ).toBeVisible()
-		await expect( page.getByLabel( `Color: Custom Color ${ count }` ) ).toBeVisible()
+
+		// For WP 6.7 and below, the label for colors has a prefix `Color: `
+		// For WP 6.8 the prefix was removed.
+		const regex = new RegExp( `^(?:Color:\\s*)?Custom Color ${ count }$` )
+
+		await expect( page.getByLabel( regex ) ).toBeVisible()
 
 		// Verify the color value
-		await page.getByLabel( `Color: Custom Color ${ count }` ).click()
+		await page.getByLabel( regex ).click()
 		await expect( page.getByLabel( 'Hex color' ) ).toHaveValue( hexValue )
 
 		// Click on the color picker button to close the popup
