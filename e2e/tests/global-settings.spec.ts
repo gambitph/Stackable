@@ -51,10 +51,15 @@ test.describe( 'Global Settings', () => {
 
 		// Verify the newly added global color is in the color picker
 		await expect( page.getByRole( 'heading', { name: 'Global Colors' } ) ).toBeVisible()
-		await expect( page.getByLabel( `Color: Custom Color ${ count }` ) ).toBeVisible()
+
+		// For WP 6.7 and below, the label for colors has a prefix `Color: `
+		// For WP 6.8 the prefix was removed.
+		const regex = new RegExp( `^(?:Color:\\s*)?Custom Color ${ count }$` )
+
+		await expect( page.getByLabel( regex ) ).toBeVisible()
 
 		// Verify the color value
-		await page.getByLabel( `Color: Custom Color ${ count }` ).click()
+		await page.getByLabel( regex ).click()
 		await expect( page.getByLabel( 'Hex color' ) ).toHaveValue( hexValue )
 
 		// Click on the color picker button to close the popup
@@ -139,7 +144,7 @@ test.describe( 'Global Settings', () => {
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
 		// The default timeout is 30s, extend it to 90s
-		const updateRequest = defaultBlockPage.waitForRequest( request => request.url().includes( 'update_block_style' ) && request.method() === 'POST', { timeout: 90_000 } )
+		const updateRequest = defaultBlockPage.waitForResponse( response => response.url().includes( 'update_block_style' ) && response.request().method() === 'POST', { timeout: 90_000 } )
 
 		// In older WP versions, the button text is 'Update' instead of 'Save'
 		if ( await defaultBlockPage.getByRole( 'button', {
@@ -150,20 +155,28 @@ test.describe( 'Global Settings', () => {
 			await defaultBlockPage.getByRole( 'button', { name: 'Update' } ).click()
 		}
 
-		// Make sure default block has been updated before closing the tab
-		await updateRequest
-		await defaultBlockPage.close()
+		// Make sure default block has been updated
+		await ( await updateRequest ).finished()
 
 		// Insert a Stackable Text Block, and check if the color is the same as the one set in the default block
-		await page.reload()
-		await editor.insertBlock( {
-			name: 'stackable/text',
-			attributes: {
-				text: 'test',
-			},
-		} )
+		const timeouts = [ 1_000, 5_000, 30_000 ]
+		for ( const timeout of timeouts ) {
+			try {
+				await page.reload()
+				await editor.insertBlock( {
+					name: 'stackable/text',
+					attributes: {
+						text: 'test',
+					},
+				} )
 
-		await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+				await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+				break
+			} catch ( e ) {
+				// Ignore the error and try again because the default block might not be updated yet
+				await page.waitForTimeout( timeout )
+			}
+		}
 
 		// Reset Default Block
 		await page.getByLabel( 'Stackable Settings' ).click()
