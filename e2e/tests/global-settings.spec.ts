@@ -155,20 +155,22 @@ test.describe( 'Global Settings', () => {
 			await defaultBlockPage.getByRole( 'button', { name: 'Update' } ).click()
 		}
 
-		// Make sure default block has been updated before closing the tab
+		// Make sure default block has been updated
 		await updateRequest
-		await defaultBlockPage.close()
 
 		// Insert a Stackable Text Block, and check if the color is the same as the one set in the default block
-		await page.reload()
-		await editor.insertBlock( {
-			name: 'stackable/text',
-			attributes: {
-				text: 'test',
-			},
-		} )
+		// Wrap the expect in a function in case the default block is not yet updated
+		await expect( async () => {
+			await page.reload()
+			await editor.insertBlock( {
+				name: 'stackable/text',
+				attributes: {
+					text: 'test',
+				},
+			} )
 
-		await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+			await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+		} ).toPass( { intervals: [ 1_000, 5_000, 30_000 ] } )
 
 		// Reset Default Block
 		await page.getByLabel( 'Stackable Settings' ).click()
