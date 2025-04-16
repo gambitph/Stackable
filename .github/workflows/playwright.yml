@@ -13,19 +13,16 @@ jobs:
       matrix:
         include:
           - php_version: '7.3'
-            wp_version: 6.4.5
-
-          - php_version: '7.3'
             wp_version: null
-
-          - php_version: '8.2'
-            wp_version: 6.4.5
 
           - php_version: '8.2'
             wp_version: 6.5.5
 
           - php_version: '8.2'
             wp_version: 6.6.2
+
+          - php_version: '8.2'
+            wp_version: 6.7.2
 
           - php_version: '8.2'
             wp_version: null
@@ -71,6 +68,8 @@ jobs:
         npm install -g @wordpress/env
     - name: Start wp-env
       run: wp-env start
+    - name: Print current WP version
+      run: wp-env run tests-cli wp core version
     - name: Create post with existing blocks
       run: |
         POST_ID=$(wp-env run tests-cli wp post create wp-content/plugins/Stackable/e2e/config/post-content.txt --post_title="Existing Blocks" --post_status=publish --porcelain)
