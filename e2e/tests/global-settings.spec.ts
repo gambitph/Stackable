@@ -144,7 +144,7 @@ test.describe( 'Global Settings', () => {
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
 		// The default timeout is 30s, extend it to 90s
-		const updateRequest = defaultBlockPage.waitForRequest( request => request.url().includes( 'update_block_style' ) && request.method() === 'POST', { timeout: 90_000 } )
+		const updateRequest = defaultBlockPage.waitForResponse( response => response.url().includes( 'update_block_style' ) && response.request().method() === 'POST', { timeout: 90_000 } )
 
 		// In older WP versions, the button text is 'Update' instead of 'Save'
 		if ( await defaultBlockPage.getByRole( 'button', {
@@ -156,7 +156,7 @@ test.describe( 'Global Settings', () => {
 		}
 
 		// Make sure default block has been updated
-		await updateRequest
+		await ( await updateRequest ).finished()
 
 		// Insert a Stackable Text Block, and check if the color is the same as the one set in the default block
 		const timeouts = [ 1_000, 5_000, 30_000 ]
@@ -171,6 +171,7 @@ test.describe( 'Global Settings', () => {
 				} )
 
 				await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+				break
 			} catch ( e ) {
 				// Ignore the error and try again because the default block might not be updated yet
 				await page.waitForTimeout( timeout )
