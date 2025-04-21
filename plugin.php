@@ -230,6 +230,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/kses.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/styles/block-design-system.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/theme-block-style-inheritance/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/spacing-and-borders/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/buttons-and-icons/index.php' );

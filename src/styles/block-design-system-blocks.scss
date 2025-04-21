@@ -437,3 +437,12 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		}
 	}
 }
+
+// These are the global styles applied when theme block styles are inherited and when there are color schemes.
+:where(.stk-has-block-style-inheritance.stk-has-color-schemes) {
+	.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+		&:not(.is-style-link) .stk-button {
+			color: var(--stk-button-text-color-hover, cssvar(button-text-color));
+		}
+	}
+}

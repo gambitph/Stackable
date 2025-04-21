@@ -216,6 +216,7 @@ const SEARCH_TREE = [
 				children: [
 					__( 'Show Go premium notices', i18n ),
 					__( 'Generate Global Colors for native blocks', i18n ),
+					__( 'Inherit Block Styles from theme.json', i18n ),
 				],
 			},
 			{
@@ -1416,6 +1417,15 @@ const AdditionalOptions = props => {
 								checked={ !! settings.stackable_global_colors_native_compatibility }
 								onChange={ checked => {
 									handleSettingsChange( { stackable_global_colors_native_compatibility: checked } ) // eslint-disable-line camelcase
+								} }
+							/>
+							<CheckboxControl
+								label={ __( 'Inherit Block Styles from theme.json', i18n ) }
+								className={ searchClassname( __( 'Inherit Block Styles from theme.json', i18n ), miscellaneous ) }
+								help={ __( `When enabled, Stackable blocks will inherit styles from the theme.json file.`, i18n ) }
+								checked={ ! settings.stackable_disable_block_style_inheritance }
+								onChange={ checked => {
+									handleSettingsChange( { stackable_disable_block_style_inheritance: ! checked } ) // eslint-disable-line camelcase
 								} }
 							/>
 						</div>

@@ -51,6 +51,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 			add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_assets_admin' ) );
 
+			if ( is_admin() ) {
+				// Use enqueue_block_assets so it gets loaded in the editor's iframe <head> tag
+				add_action( 'enqueue_block_assets', array( $this, 'enqueue_style_in_editor' ), 50 );
+			}
+
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
 			add_action( 'wp_footer', array( $this, 'init_stackable_vars' ) );
@@ -123,6 +128,13 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
 			if ( ! empty( $inline_css ) ) {
 				wp_add_inline_style( 'ugb-style-css-nodep', $inline_css );
+			}
+
+			// Register inline frontend styles for theme.json block style inheritance
+			wp_register_style( 'ugb-block-style-inheritance-nodep', false );
+			$block_style_inline_css = apply_filters( 'stackable_block_style_inheritance_inline_styles_nodep', '' );
+			if ( ! empty( $block_style_inline_css ) ) {
+				wp_add_inline_style( 'ugb-block-style-inheritance-nodep', $block_style_inline_css );
 			}
 
 			// This is needed for the translation strings in our UI.
@@ -246,6 +258,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		public function block_enqueue_frontend_assets() {
 			$this->register_frontend_assets();
 			wp_enqueue_style( 'ugb-style-css' );
+			if ( is_frontend() ) {
+				wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
+			}
 			wp_enqueue_style( 'ugb-style-css-nodep' );
 			wp_enqueue_script( 'ugb-block-frontend-js' );
 			do_action( 'stackable_block_enqueue_frontend_assets' );
@@ -356,6 +371,12 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'blockCategoryIndex' => apply_filters( 'stackable_block_category_index', 0 ),
 			) );
 			wp_localize_script( 'wp-blocks', 'stackable', $args );
+		}
+
+		// Ensure that block style inheritance styles comes after the editor block styles.
+		function enqueue_style_in_editor() {
+			wp_enqueue_style( 'ugb-block-editor-css' );
+			wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
 		}
 
 		/**
