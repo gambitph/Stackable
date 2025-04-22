@@ -41,12 +41,12 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 		}
 
 		/**
-		 * When upgrading to v3.15.4 and above, set option to true for backward compatibility
+		 * When upgrading to v3.15.3 and above, set option to true for backward compatibility
 		 * so that for old users, existing stackable blocks won't inherit the styles from theme.json
 		 * unless they change it in the settings.
 		 */
 		function block_style_inheritance_set_default( $old_version, $new_version ) {
-			if ( ! empty( $old_version ) && version_compare( $old_version, "3.15.4", "<" ) ) {
+			if ( ! empty( $old_version ) && version_compare( $old_version, "3.15.3", "<=" ) ) {
 				if ( ! get_option( 'stackable_disable_block_style_inheritance' ) ) {
 					update_option( 'stackable_disable_block_style_inheritance', 'true' );
 				}
