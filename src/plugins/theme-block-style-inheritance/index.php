@@ -310,13 +310,24 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 		/**
 		 * Some themes uses color-mix in their theme.json file.
 		 * This allows us to inherit the styles that uses color-mix.
+		 *
+		 * Below is the identical test performed in wp-includes/kses.php:2659
+		 * @see wp-includes/kses.php
 		 */
 		function allow_css( $allow_css, $css_test_string ) {
+			/**
+			 * Allow CSS functions like color-mix(). by removing them from the test string.
+			 * Nested functions and parentheses are also removed, so long as the parentheses are balanced.
+			 */
 			$css_test_string = preg_replace(
 				'/\b(?:color-mix)(\((?:[^()]|(?1))*\))/',
 				'',
 				$css_test_string
 			);
+			/*
+			 * Disallow CSS containing \ ( & } = or comments, except for within url(), var(), calc(), etc.
+			 * which were removed from the test string above.
+			 */
 			$allow_css = ! preg_match( '%[\\\(&=}]|/\*%', $css_test_string );
 			return $allow_css;
 		}

@@ -1422,7 +1422,7 @@ const AdditionalOptions = props => {
 							<CheckboxControl
 								label={ __( 'Inherit Block Styles from theme.json', i18n ) }
 								className={ searchClassname( __( 'Inherit Block Styles from theme.json', i18n ), miscellaneous ) }
-								help={ __( `When enabled, Stackable blocks will inherit styles from the theme.json file.`, i18n ) }
+								help={ __( `When enabled, Stackable blocks will inherit styles from the theme.json file of your Block Theme.`, i18n ) }
 								checked={ ! settings.stackable_disable_block_style_inheritance }
 								onChange={ checked => {
 									handleSettingsChange( { stackable_disable_block_style_inheritance: ! checked } ) // eslint-disable-line camelcase
