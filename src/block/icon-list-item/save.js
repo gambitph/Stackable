@@ -16,6 +16,7 @@ import { getUseSvgDef } from '../icon-list/util'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -67,11 +68,10 @@ export const Save = props => {
 						hasLinearGradient={ false }
 					/> }
 				{ attributes.ordered && <span className="stk-block-icon-list-item__marker" aria-hidden="true"></span> }
-				<Typography.Content
+				{ applyFilters( 'stackable.icon-list-item.save.typography.content', <Typography.Content
 					attributes={ attributes }
-					tagName="span"
 					className={ textClassNames }
-				/>
+				/>, props, attributes, textClassNames ) }
 			</div>
 		</BlockDiv.Content>
 	)

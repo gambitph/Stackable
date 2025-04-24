@@ -1,6 +1,12 @@
 .stk-block-icon-list-item {
 	list-style-type: none !important;
+
+	.stk-block-icon-list-item__text {
+		margin-block: 0;
+		margin: 0;
+	}
 }
+
 .stk-block-icon-list.stk-block {
 	.wp-block-stackable-icon-list-item:not(:last-child)::after {
 		content: "" !important;
