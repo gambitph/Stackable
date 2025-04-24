@@ -11,7 +11,7 @@ import { addFilter } from '@wordpress/hooks'
 
 // Change tag from <span> to <p> to inherit theme link styles.
 addFilter( 'stackable.icon-list-item.save.typography.content', 'stackable/inheritThemeLinkStyles', ( output, props, attrs, textClassNames ) => {
-	if ( semverCompare( props.version, '<', '3.13.11' ) ) {
+	if ( semverCompare( props.version, '<=', '3.15.3' ) ) {
 		return (
 			<Typography.Content
 				attributes={ attrs }

@@ -14,7 +14,7 @@ import { useBlockProps } from '@wordpress/block-editor'
 
 // If button style is link, change BlockDiv tag from <div> to <p> to inherit theme link styles.
 addFilter( 'stackable.button.save.blockDiv.content', 'stackable/inheritThemeLinkStyles', ( output, props, propsToPass, blockClassNames, customAttributes, typographyInnerClassNames ) => {
-	if ( semverCompare( props.version, '<', '3.13.11' ) ) {
+	if ( semverCompare( props.version, '<=', '3.15.3' ) ) {
 		return (
 			<BlockDiv.Content
 				{ ...useBlockProps.save( { className: blockClassNames } ) }
