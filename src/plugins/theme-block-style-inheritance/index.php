@@ -74,7 +74,14 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				$styles_data = new WP_Theme_JSON();
 				$styles_data->merge( WP_Theme_JSON_Resolver::get_theme_data() );
 				$styles_data->merge( WP_Theme_JSON_Resolver::get_user_data() );
-				$styles = $styles_data->get_raw_data()['styles'];
+				$raw_data = $styles_data->get_raw_data();
+
+				// Don't generate styles if it's not a block theme/there's no theme.json
+				if ( ! isset( $raw_data[ 'styles' ] ) ) {
+					return;
+				}
+
+				$styles = $raw_data['styles'];
 			} else {
 				// This gets the merged styles from core, theme, and user data
 				$styles = wp_get_global_styles();
