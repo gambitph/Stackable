@@ -80,6 +80,16 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				$styles = wp_get_global_styles();
 			}
 
+			// Caching since this can be expensive.
+			$hash = md5( serialize( $styles ) );
+			if ( $hash === get_transient( 'stackable_block_style_inheritance_hash' ) ) {
+				$generated_css = get_transient( 'stackable_block_style_inheritance_css' );
+				if ( $generated_css ) {
+					$current_css .= $generated_css;
+					return apply_filters( 'stackable_frontend_css' , $current_css );
+				}
+			}
+
 			// This consists of the selectors and declarations
 			// to be used in wp_style_engine_get_stylesheet_from_css_rules
 			$style_declarations = array(
@@ -289,9 +299,14 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 
 			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			if ( $generated_css ) {
-				$current_css .= "/* Block style inheritance */\n";
-				$current_css .= $generated_css;
+				$generated_css = "/* Block style inheritance */\n" . $generated_css;
 			}
+
+			// Keep the hash and block style inheritance CSS in the cache.
+			set_transient( 'stackable_block_style_inheritance_hash', $hash, 60 * 60 * 24 );
+			set_transient( 'stackable_block_style_inheritance_css', $generated_css, 60 * 60 * 24 );
+
+			$current_css .= $generated_css;
 
 			return apply_filters( 'stackable_frontend_css' , $current_css );
 		}
