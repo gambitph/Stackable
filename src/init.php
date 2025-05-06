@@ -458,6 +458,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-twentytwentyone-theme';
 			} else if ( function_exists( 'twentytwentytwo_support' ) ) {
 				$classes[] = 'stk--is-twentytwentytwo-theme';
+			} else if ( function_exists( 'twentytwentyfive_post_format_setup' ) ) {
+				$classes[] = 'stk--is-twentytwentyfive-theme';
 			} else if ( function_exists( 'hello_elementor_setup' ) ) { // Taken from https://github.com/elementor/hello-theme/blob/master/functions.php
 				$classes[] = 'stk--is-helloelementor-theme';
 			}

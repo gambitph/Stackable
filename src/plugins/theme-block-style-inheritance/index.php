@@ -41,12 +41,12 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 		}
 
 		/**
-		 * When upgrading to v3.15.4 and above, set option to true for backward compatibility
+		 * When upgrading to v3.15.3 and above, set option to true for backward compatibility
 		 * so that for old users, existing stackable blocks won't inherit the styles from theme.json
 		 * unless they change it in the settings.
 		 */
 		function block_style_inheritance_set_default( $old_version, $new_version ) {
-			if ( ! empty( $old_version ) && version_compare( $old_version, "3.15.4", "<" ) ) {
+			if ( ! empty( $old_version ) && version_compare( $old_version, "3.15.3", "<=" ) ) {
 				if ( ! get_option( 'stackable_disable_block_style_inheritance' ) ) {
 					update_option( 'stackable_disable_block_style_inheritance', 'true' );
 				}
@@ -74,7 +74,14 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				$styles_data = new WP_Theme_JSON();
 				$styles_data->merge( WP_Theme_JSON_Resolver::get_theme_data() );
 				$styles_data->merge( WP_Theme_JSON_Resolver::get_user_data() );
-				$styles = $styles_data->get_raw_data()['styles'];
+				$raw_data = $styles_data->get_raw_data();
+
+				// Don't generate styles if it's not a block theme/there's no theme.json
+				if ( ! isset( $raw_data[ 'styles' ] ) ) {
+					return;
+				}
+
+				$styles = $raw_data['styles'];
 			} else {
 				// This gets the merged styles from core, theme, and user data
 				$styles = wp_get_global_styles();
