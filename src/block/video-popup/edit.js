@@ -17,6 +17,8 @@ import {
 	InspectorBottomTip,
 	AdvancedToggleControl,
 	useBlockCssGenerator,
+	ControlSeparator,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -38,6 +40,8 @@ import {
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 
+import { timezones as TIMEZONE_OPTIONS } from '../countdown'
+
 /**
  * WordPress dependencies
  */
@@ -46,6 +50,8 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
+import { DateTimePicker } from '@wordpress/components'
+import { getSettings as getDateSettings } from '@wordpress/date'
 
 export const defaultIcon = '<svg data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>'
 
@@ -104,7 +110,10 @@ const Edit = props => {
 				setAttributes={ setAttributes }
 				videoLink={ attributes.videoLink }
 				videoId={ attributes.videoId }
-
+				videoName={ attributes.videoName }
+				videoUploadDate={ attributes.videoUploadDate }
+				videoDescription={ attributes.videoDescription }
+				videoUploadDateTimezone={ attributes.videoUploadDateTimezone }
 			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
@@ -129,6 +138,28 @@ const Edit = props => {
 }
 
 const InspectorControls = memo( props => {
+	const getUploadDate = ( uploadDate, timezone ) => {
+		// If it uses local timezone, get offset from WordPress settings
+		if ( ! timezone ) {
+			const { timezone: localTimezone } = getDateSettings()
+			const offset = Number( localTimezone.offset )
+			const hours = Math.floor( Math.abs( offset ) )
+			const minutes = Math.round( ( Math.abs( offset ) % 1 ) * 60 )
+
+			return uploadDate + ( offset >= 0 ? '+' : '-' ) +
+				String( hours ).padStart( 2, '0' ) + ':' +
+				String( minutes ).padStart( 2, '0' )
+		}
+
+		const date = new Date( uploadDate )
+		const offset = new Intl.DateTimeFormat( 'en-US', {
+			timeZone: timezone,
+			timeZoneName: 'longOffset',
+		} ).format( date ).slice( -6 )
+
+		return uploadDate + offset
+	}
+
 	return (
 		<>
 			<InspectorTabs hasLayoutPanel={ false } />
@@ -136,7 +167,7 @@ const InspectorControls = memo( props => {
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
-					id="general"
+					id="video-popup"
 					initialOpen={ true }
 				>
 					<ImageControl2
@@ -146,11 +177,17 @@ const InspectorControls = memo( props => {
 						onRemove={ () => props.setAttributes( {
 							videoLink: '',
 							videoId: '',
+							videoName: '',
+							videoDescription: '',
+							videoUploadDate: '',
 						} ) }
 						onChange={ media => {
 							props.setAttributes( {
 								videoLink: media.url,
 								videoId: media.url,
+								videoName: media.title, // Use title, description and date from media library for video schema
+								videoDescription: media.description,
+								videoUploadDate: media.date.toISOString(),
 							} )
 						} }
 						imageId={ urlIsVideo( props.videoLink ) ? props.videoId : '' }
@@ -164,10 +201,16 @@ const InspectorControls = memo( props => {
 						isFormatType={ false }
 						placeholder="https://"
 						value={ ! urlIsVideo( props.videoLink ) ? props.videoLink : '' }
-						onChange={ videoLink => props.setAttributes( {
-							videoLink,
-							videoId: getVideoProviderFromURL( videoLink ).id,
-						} ) }
+						onChange={ videoLink => {
+							const videoProvider = getVideoProviderFromURL( videoLink )
+							props.setAttributes( {
+								videoLink,
+								videoId: videoProvider.id,
+								videoName: '',
+								videoDescription: '',
+								videoUploadDate: '',
+							} )
+						} }
 					/>
 					{ isVideoFile( props.videoLink ) && <>
 						<AdvancedToggleControl
@@ -186,6 +229,43 @@ const InspectorControls = memo( props => {
 							defaultValue={ false }
 						/>
 					</> }
+					{ props.videoLink && <>
+						<ControlSeparator />
+						<p>{ __( 'Note: The following attributes are used to create the video schema.', i18n ) }</p>
+						<AdvancedTextControl
+							label={ __( 'Video name', i18n ) }
+							value={ props.videoName }
+							onChange={ videoName => props.setAttributes( { videoName } ) }
+						/>
+						<AdvancedTextControl
+							label={ __( 'Video description', i18n ) }
+							value={ props.videoDescription }
+							onChange={ videoDescription => props.setAttributes( { videoDescription } ) }
+							isMultiline={ true }
+						/>
+						<AdvancedTextControl
+							// The date picker below always highlights a date even if there is no `videoUploadDate` attribute
+							// This text control allows users to see if a date has been set/removed
+							className="stk-components-datetime__date-input"
+							label={ __( 'Video upload date', i18n ) }
+							value={ props.videoUploadDate ? getUploadDate( props.videoUploadDate, props.videoUploadDateTimezone ) : '' }
+							onChange={ videoUploadDate => props.setAttributes( { videoUploadDate } ) }
+							inputType="date"
+							readOnly={ true }
+						/>
+						<DateTimePicker
+							currentDate={ props.videoUploadDate }
+							is12Hour={ true }
+							onChange={ videoUploadDate => props.setAttributes( { videoUploadDate } ) }
+						/>
+						<AdvancedSelectControl
+							label={ __( 'Timezone', i18n ) }
+							options={ TIMEZONE_OPTIONS }
+							attribute="videoUploadDateTimezone"
+							allowReset={ false }
+						/>
+					</> }
+
 				</PanelAdvancedSettings>
 
 			</InspectorStyleControls>
