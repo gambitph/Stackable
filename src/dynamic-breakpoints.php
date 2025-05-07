@@ -25,6 +25,7 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 
 		// Holds the value of the saved or default breakpoints
 		private $dynamic_breakpoints = false;
+		private $has_custom_breakpoints = false;
 
 		/**
 		 * Add our hooks.
@@ -78,7 +79,7 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 			}
 
 			$this->dynamic_breakpoints = $breakpoints;
-			return $this->dynamic_breakpoints;
+			$this->has_custom_breakpoints = ! empty( $breakpoints['tablet'] ) || ! empty( $breakpoints['mobile'] );
 		}
 
 		/**
@@ -141,11 +142,10 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return boolean
 		 */
 		public function has_custom_breakpoints() {
-			$breakpoints = $this->dynamic_breakpoints;
-			if ( $breakpoints == false ) {
-				$breakpoints = $this->get_dynamic_breakpoints();
+			if ( $this->dynamic_breakpoints === false ) {
+				$this->get_dynamic_breakpoints();
 			}
-			return ! empty( $breakpoints['tablet'] ) || ! empty( $breakpoints['mobile'] );
+			return $this->has_custom_breakpoints;
 		}
 
 		/**
