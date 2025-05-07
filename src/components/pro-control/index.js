@@ -136,7 +136,7 @@ const LABELS = {
 	'preset-controls': {
 		title: __( 'Premium Preset Controls', i18n ),
 		description: <ul>
-			<li>{ __( 'Customize your own presets', i18n ) }</li>
+			<li>{ __( 'Customize your own presets like small, medium, large & x-large', i18n ) }</li>
 			<li>{ __( 'Use Global Typography sizes as presets', i18n ) }</li>
 		</ul>,
 	},
