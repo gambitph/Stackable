@@ -134,6 +134,7 @@ export const GlobalColorSchemeStyles = () => {
 		currentHoverState,
 	 ] )
 
+	// Adds a class to the editor body DOM to indicate that there are global styles for `color schemes`.
 	useEffect( () => {
 		if ( editorEl ) {
 			if ( styles !== '' && editorEl.classList.contains( 'stk-has-color-schemes' ) === false ) {
@@ -143,7 +144,7 @@ export const GlobalColorSchemeStyles = () => {
 				editorEl.classList.remove( 'stk-has-color-schemes' )
 			}
 
-			// At first load of the editor, the `stk-preview-device-*` and `stk--is-*-theme` are removed, so we have to re-add it.
+			// At first load of the editor, the `stk-has-color-schemes` is removed, so we have to re-add it.
 			const mo = onClassChange( editorEl, () => {
 				if ( styles !== '' && editorEl?.classList.contains( 'stk-has-color-schemes' ) === false ) {
 					editorEl?.classList.add( 'stk-has-color-schemes' )

@@ -37,6 +37,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Color Schemes', i18n ) }
+				className="ugb-global-color-schemes__panel"
 				onToggle={ isOpen => setIsOpen( isOpen ) }
 			>
 				{ isOpen && displayHoverNotice && <span className="stk-global-block-layouts-help-tooltip">

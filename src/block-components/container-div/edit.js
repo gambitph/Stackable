@@ -17,6 +17,7 @@ import {
 	AdvancedToggleControl,
 	InspectorBlockControls,
 	AdvancedSelectControl,
+	ColorSchemesHelp,
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
@@ -71,6 +72,7 @@ export const Edit = props => {
 							return colorScheme
 						} }
 						default={ containerModeColorScheme }
+						help={ <ColorSchemesHelp /> }
 					/>
 					<SizeControls.Layout
 						attrNameTemplate="container%s"
