@@ -68,7 +68,7 @@ export const useBlockColorSchemes = () => {
 		// get color groups for color palette picker.
 		const getColorGroups = () => {
 			if ( hideColorSchemeColors ) {
-				return []
+				return { colorSchemeColors: [], colorSchemeGradients: [] }
 			}
 
 			const colorSchemeColors = []

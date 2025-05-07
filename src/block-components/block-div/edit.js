@@ -16,6 +16,7 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedSelectControl,
+	ColorSchemesHelp,
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
@@ -100,6 +101,7 @@ export const Edit = memo( props => {
 							return colorScheme
 						} }
 						default={ backgroundModeColorScheme }
+						help={ <ColorSchemesHelp /> }
 					/>
 					<BackgroundControls
 						attrNameTemplate="block%s"

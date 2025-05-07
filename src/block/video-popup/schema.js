@@ -62,6 +62,22 @@ export const attributes = ( version = VERSION ) => {
 				type: 'boolean',
 				default: false,
 			},
+			videoName: {
+				type: 'string',
+				default: '',
+			},
+			videoDescription: {
+				type: 'string',
+				default: '',
+			},
+			videoUploadDate: {
+				type: 'string',
+				default: '',
+			},
+			videoUploadDateTimezone: {
+				type: 'string',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

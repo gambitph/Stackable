@@ -13,6 +13,7 @@
 	],
 	"parent": [
 		"stackable/columns",
+		"stackable/carousel",
 		"stackable/feature",
 		"stackable/feature-grid",
 		"stackable/horizontal-scroller",
