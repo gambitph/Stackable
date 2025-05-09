@@ -13,7 +13,7 @@ import {
 	useBlockSetAttributesContext,
 	useDeviceType,
 } from '~stackable/hooks'
-import { extractNumbersAndUnits } from '~stackable/util'
+import { extractNumbersAndUnits, getCSSVarName } from '~stackable/util'
 
 /**
  * External dependencies
@@ -106,13 +106,18 @@ const AdvancedRangeControl = props => {
 
 	// Is value at first render the same as a step value? If so, do mark mode
 	// at the start, or show custom
-	let isMarkValue = !! props.marks
+	let currentMark = null
 	if ( props.marks && value ) {
 		const valueToCheck = value + ( props.hasCSSVariableValue ? '' : unit )
-		// Check if the current value exsits in the marks
-		isMarkValue = isMarkValue && props.marks.some( mark => mark.value === valueToCheck )
+		// Check if the current value exists in the marks only by their CSS variable name
+		// to match in case the fallback size changes.
+		props.marks.forEach( mark => {
+			if ( getCSSVarName( mark.value ) === getCSSVarName( valueToCheck ) ) {
+				currentMark = mark
+			}
+		} )
 	}
-	const [ isMarkMode, setIsMarkMode ] = useState( isMarkValue )
+	const [ isMarkMode, setIsMarkMode ] = useState( !! currentMark )
 
 	// If this supports dynamic content, the value should be saved as a String.
 	// Similar if using marks to accomodate CSS variable
@@ -135,7 +140,10 @@ const AdvancedRangeControl = props => {
 		onChangeFunc( newValue )
 	}
 
-	const derivedValue = typeof props.value === 'undefined' ? value : props.value
+	const derivedValue = typeof props.value === 'undefined'
+		// Use the value from the provided marks
+		? currentMark ? currentMark.value : value
+		: props.value
 
 	const dynamicContentProps = useDynamicContentControlProps( {
 		value: derivedValue,
