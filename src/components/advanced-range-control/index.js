@@ -104,20 +104,22 @@ const AdvancedRangeControl = props => {
 		placeholderRender = null
 	}
 
+	let derivedValue = typeof props.value === 'undefined'
+		? value : props.value
+
 	// Is value at first render the same as a step value? If so, do mark mode
 	// at the start, or show custom
-	let currentMark = null
-	if ( props.marks && value ) {
-		const valueToCheck = value + ( props.hasCSSVariableValue ? '' : unit )
+	let isMarkValue = !! props.marks
+	if ( props.marks && derivedValue ) {
 		// Check if the current value exists in the marks only by their CSS variable name
 		// to match in case the fallback size changes.
-		props.marks.forEach( mark => {
-			if ( getCSSVarName( mark.value ) === getCSSVarName( valueToCheck ) ) {
-				currentMark = mark
-			}
-		} )
+		const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === getCSSVarName( derivedValue ) )
+		isMarkValue = !! matchedMark
+		if ( matchedMark ) {
+			derivedValue = matchedMark.value
+		}
 	}
-	const [ isMarkMode, setIsMarkMode ] = useState( !! currentMark )
+	const [ isMarkMode, setIsMarkMode ] = useState( isMarkValue )
 
 	// If this supports dynamic content, the value should be saved as a String.
 	// Similar if using marks to accomodate CSS variable
@@ -139,11 +141,6 @@ const AdvancedRangeControl = props => {
 		}
 		onChangeFunc( newValue )
 	}
-
-	const derivedValue = typeof props.value === 'undefined'
-		// Use the value from the provided marks
-		? currentMark ? currentMark.value : value
-		: props.value
 
 	const dynamicContentProps = useDynamicContentControlProps( {
 		value: derivedValue,
@@ -207,9 +204,9 @@ const AdvancedRangeControl = props => {
 			const markValue = props.marks[ value ]?.[ property ] || '0'
 			let [ newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
 
-			// If the attribute has no units (only support px), and the
-			// preset units are rem or em, convert to px
-			if ( ! hasUnits && ( unit === 'rem' || unit === 'em' ) ) {
+			// If the attribute has no support for rem, and the
+			// preset units is rem, convert to px
+			if ( ( ! hasUnits || ( hasUnits && ! props.units.includes( 'rem' ) ) ) && unit === 'rem' ) {
 				newValue = `${ parseFloat( newValue ) * 16 }`
 				unit = 'px'
 			}
@@ -218,6 +215,9 @@ const AdvancedRangeControl = props => {
 			if ( unit ) {
 				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 				setAttributes( { [ unitAttrName ]: unit } )
+				if ( props.onChangeUnit ) {
+					props.onChangeUnit( unit )
+				}
 			}
 
 			_onChange( newValue )

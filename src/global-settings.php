@@ -144,6 +144,26 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			return Stackable_Global_Settings::create_global_schema( $four_range_type );
 		}
+		
+		/**
+		 * This function defines a schema for a string four-range type and utilizes the
+		 * `create_global_schema` function to generate the complete schema.
+		 *
+		 * @return array The generated schema for four-range type.
+		 */
+		public static function get_string_four_range_properties() {
+			$string_four_range_type  = array(
+				'type' => 'object',
+				'properties' => array(
+					'top' => array( 'type' => 'string', 'default' => '' ),
+					'right' => array( 'type' => 'string', 'default' => '' ),
+					'bottom' => array( 'type' => 'string', 'default' => '' ),
+					'left' => array( 'type' => 'string', 'default' => '' ),
+				)
+			);
+
+			return Stackable_Global_Settings::create_global_schema( $string_four_range_type );
+		}
 
 		/**
 		 * This function defines a schema for a string type and utilizes the
@@ -1019,7 +1039,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						$custom_property .= '-' . $hover_state;
 					}
 
-					if ( is_string( $value ) ) {
+					if ( is_string( $value ) && ! is_numeric( $value ) ) {
 						if ( strpos( $value, 'rgb' ) ) {
 							// Convert rgba colors to hex alpha colors because
 							// the function wp_style_engine_get_stylesheet_from_css_rules() doesn't allow css values to have '('
@@ -1050,7 +1070,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						$bottom = isset( $value[ 'bottom' ] ) ? $value[ 'bottom' ] : $default_value[ 'bottom' ];
 						$left = isset( $value[ 'left' ] ) ? $value[ 'left' ] : $default_value[ 'left' ];
 
-						$style = $top . $unit . ' ' . $right . $unit . ' ' .  $bottom . $unit . ' ' .  $left  . $unit;
+						$style  = Stackable_Global_Settings::append_unit_if_needed( $top, $unit ) . ' '
+								. Stackable_Global_Settings::append_unit_if_needed( $right, $unit ) . ' '
+								. Stackable_Global_Settings::append_unit_if_needed( $bottom, $unit ) . ' '
+								. Stackable_Global_Settings::append_unit_if_needed( $left, $unit );
 					} else {
 						$style = $value . $unit;
 					}
@@ -1099,6 +1122,14 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			$generated_css .= wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			return $generated_css;
 		}
+
+		public static function append_unit_if_needed( $value, $unit ) {
+			if ( is_string( $value ) && str_starts_with( trim( $value ), 'var(' ) ) {
+				return $value;
+			}
+			return $value . $unit;
+		}
+
 
 		public static function extract_rgba($value) {
 			$options = $value;

@@ -18,7 +18,6 @@ import RangeControl from '../advanced-range-control/range-control'
 import { ResetButton } from '../base-control2/reset-button'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import { useControlHandlers } from '../base-control2/hooks'
-import { extractNumbersAndUnits } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -45,6 +44,7 @@ import {
 	useBlockHoverState,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
+import { extractNumbersAndUnits, getCSSVarName } from '~stackable/util'
 
 const isEqualInitial = ( props, value, firstValue ) => {
 	let isEqual = true
@@ -81,7 +81,7 @@ const FourRangeControl = memo( props => {
 		( props.enableBottom && value.bottom === '' ) &&
 		( props.enableLeft && value.left === '' )
 
-	const firstValue = props.enableTop ? value.top
+	let firstValue = props.enableTop ? value.top
 		: props.enableRight ? value.right
 			: props.enableBottom ? value.bottom
 				: value.left
@@ -195,17 +195,26 @@ const FourRangeControl = memo( props => {
 		left: !! props.marks,
 	}
 	if ( props.marks && firstValue ) {
-		// Check if the current value exsits in the marks
-		const marksUnit = ( props.hasCSSVariableValue ? '' : unit )
-		isMarkValue.first = isMarkValue.first && props.marks.some( mark => mark.value === firstValue + marksUnit )
-		isMarkValue.top = isMarkValue.top && props.marks.some( mark => mark.value === value.top + marksUnit )
-		isMarkValue.right = isMarkValue.right && props.marks.some( mark => mark.value === value.right + marksUnit )
-		isMarkValue.bottom = isMarkValue.bottom && props.marks.some( mark => mark.value === value.bottom + marksUnit )
-		isMarkValue.left = isMarkValue.left && props.marks.some( mark => mark.value === value.left + marksUnit )
+		// Check if the current value exists in the marks only by their CSS variable name
+		// to match in case the fallback size changes.
+		const firstMatchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === getCSSVarName( firstValue ) )
+		isMarkValue.first = !! firstMatchedMark
+		if ( firstMatchedMark ) {
+			firstValue = firstMatchedMark.value
+		}
+
+		[ 'top', 'right', 'bottom', 'left' ].forEach( side => {
+			const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === getCSSVarName( value[ side ] ) )
+			isMarkValue[ side ] = !! matchedMark
+			if ( matchedMark ) {
+				value[ side ] = matchedMark.value
+			}
+		} )
 	}
 	const [ isFourMarkMode, setIsFourMarkMode ] = useState( isMarkValue )
 
-	const onChangeAll = newValue => {
+	const onChangeAll = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: props.enableTop ? newValue : value.top,
 			right: props.enableRight ? newValue : value.right,
@@ -221,7 +230,8 @@ const FourRangeControl = memo( props => {
 		} ) )
 	}
 
-	const onChangeTop = newValue => {
+	const onChangeTop = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: newValue,
 			right: value.right,
@@ -231,7 +241,8 @@ const FourRangeControl = memo( props => {
 		setIsFourMarkMode( prev => ( { ...prev, first: prev.top } ) )
 	}
 
-	const onChangeRight = newValue => {
+	const onChangeRight = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: value.top,
 			right: newValue,
@@ -241,7 +252,8 @@ const FourRangeControl = memo( props => {
 		setIsFourMarkMode( prev => ( { ...prev, first: prev.right } ) )
 	}
 
-	const onChangeBottom = newValue => {
+	const onChangeBottom = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: value.top,
 			right: value.right,
@@ -251,7 +263,8 @@ const FourRangeControl = memo( props => {
 		setIsFourMarkMode( prev => ( { ...prev, first: prev.bottom } ) )
 	}
 
-	const onChangeLeft = newValue => {
+	const onChangeLeft = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: value.top,
 			right: value.right,
@@ -261,7 +274,8 @@ const FourRangeControl = memo( props => {
 		setIsFourMarkMode( prev => ( { ...prev, first: prev.left } ) )
 	}
 
-	const onChangeVertical = newValue => {
+	const onChangeVertical = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: newValue,
 			right: value.right,
@@ -275,7 +289,8 @@ const FourRangeControl = memo( props => {
 		} ) )
 	}
 
-	const onChangeHorizontal = newValue => {
+	const onChangeHorizontal = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: value.top,
 			right: newValue,
@@ -327,7 +342,7 @@ const FourRangeControl = memo( props => {
 		}
 
 		// We need to change the way we handle the value and onChange if we're doing marks
-		let rangeValue = props.hasCSSVariableValue ? parseFloat( initialValue ) : initialValue
+		let rangeValue = props.marks ? parseFloat( initialValue ) : initialValue
 		let rangeOnChange = initialOnChange
 		if ( props.marks && isMarkMode ) {
 			rangeValue = props.marks.findIndex( mark => {
@@ -341,12 +356,23 @@ const FourRangeControl = memo( props => {
 
 				// Extract the unit and value.
 				const markValue = props.marks[ value ]?.[ property ] || '0'
-				const [ _newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
-				const newValue = _newValue
+				let [ newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
+
+				// If the attribute has no support for rem, and the
+				// preset units is rem, convert to px
+				if ( ( ! hasUnits || ( hasUnits && ! props.units.includes( 'rem' ) ) ) && unit === 'rem' ) {
+					newValue = `${ parseFloat( newValue ) * 16 }`
+					unit = 'px'
+				}
 
 				// Update the unit.
-				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-				setAttributes( { [ unitAttrName ]: unit } )
+				if ( unit ) {
+					dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+					setAttributes( { [ unitAttrName ]: unit } )
+					if ( props.onChangeUnit ) {
+						props.onChangeUnit( unit )
+					}
+				}
 
 				initialOnChange( newValue )
 			}
@@ -890,7 +916,6 @@ FourRangeControl.defaultProps = {
 
 	marks: undefined,
 	allowCustom: true,
-	hasCSSVariableValue: false,
 }
 
 export default memo( FourRangeControl )

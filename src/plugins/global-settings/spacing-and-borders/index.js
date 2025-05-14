@@ -23,7 +23,9 @@ import {
 } from '../utils'
 import { BORDER_CONTROLS, IMAGE_SHADOWS } from '~stackable/block-components'
 import { i18n } from 'stackable'
-import { useDeviceType, useBlockLayoutDefaults } from '~stackable/hooks'
+import {
+	useDeviceType, useBlockLayoutDefaults, usePresetControls,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -54,6 +56,16 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 		setDisplayHoverNotice,
 		saveTimeout
 	)
+	// Add additional presets for setting margins and paddings to None
+	const nonePreset = {
+		name: 'None',
+		size: '0rem',
+		slug: 'none',
+	}
+	const sizePresetMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { additionalPresets: [ nonePreset ] } ) || null
+	const gapPresetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+	const borderRadiusPresetMarks = usePresetControls( 'borderRadius' )?.getPresetMarks() || null
 
 	return (
 		<>
@@ -120,6 +132,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							video: 'advanced-block-margin',
 							description: __( 'Sets the block margin bottom, i.e. the space outside the block between the block border and the next block.', i18n ),
 						} }
+						marks={ sizePresetMarks }
 					/>
 				</SectionSettings>
 
@@ -159,6 +172,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							video: 'column-gap',
 							description: __( 'Sets the distance between two or more columns', i18n ),
 						} }
+						marks={ sizePresetMarks }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -174,6 +188,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							// TODO: Add a working video
 							description: __( 'Sets the distance between two or more columns', i18n ),
 						} }
+						marks={ gapPresetMarks }
 					/>
 				</SectionSettings>
 
@@ -187,9 +202,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						responsive="all"
 						// hover="all"
 						forceUpdateHoverState={ true }
-						min={ [ 0, 0, 0 ] }
-						sliderMax={ [ 200, 30, 100 ] }
-						units={ [ 'px', 'em', '%' ] }
+						min={ [ 0, 0, 0, 0 ] }
+						sliderMax={ [ 200, 30, 30, 100 ] }
+						units={ [ 'px', 'em', 'rem', '%' ] }
 						unit={ getValue( 'block-background-padding', STATES.ALL_UNIT ) || 'px' }
 						onChangeUnit={ value => onChange( 'block-background-padding', value, STATES.ALL_UNIT ) }
 						top={ getValue( 'block-background-padding', STATES.ALL )?.top }
@@ -204,6 +219,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							video: 'inner-block-padding',
 							description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
 						} }
+						marks={ sizePresetMarks }
 					/>
 					<AdvancedToolbarControl
 						label={ __( 'Borders', i18n ) }
@@ -251,6 +267,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							video: 'general-border-radius',
 							description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
 						} }
+						marks={ borderRadiusPresetMarks }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
@@ -273,9 +290,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						responsive="all"
 						// hover="all"
 						forceUpdateHoverState={ true }
-						min={ [ 0, 0, 0 ] }
-						sliderMax={ [ 200, 30, 100 ] }
-						units={ [ 'px', 'em', '%' ] }
+						min={ [ 0, 0, 0, 0 ] }
+						sliderMax={ [ 200, 30, 30, 100 ] }
+						units={ [ 'px', 'em', 'rem', '%' ] }
 						unit={ getValue( 'container-padding', STATES.ALL_UNIT ) || 'px' }
 						onChangeUnit={ value => onChange( 'container-padding', value, STATES.ALL_UNIT ) }
 						top={ getValue( 'container-padding', STATES.ALL )?.top }
@@ -291,7 +308,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							video: 'inner-block-padding',
 							description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
 						} }
-
+						marks={ sizePresetMarks }
 					/>
 					<AdvancedToolbarControl
 						label={ __( 'Borders', i18n ) }
@@ -339,6 +356,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							video: 'general-border-radius',
 							description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
 						} }
+						marks={ borderRadiusPresetMarks }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
@@ -374,6 +392,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 							video: 'image-border-radius',
 							description: __( 'Adjusts the radius of image corners to make them more rounded', i18n ),
 						} }
+						marks={ borderRadiusPresetMarks }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
