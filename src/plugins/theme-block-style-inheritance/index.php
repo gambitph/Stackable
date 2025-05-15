@@ -46,7 +46,7 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 		 * unless they change it in the settings.
 		 */
 		function block_style_inheritance_set_default( $old_version, $new_version ) {
-			if ( ! empty( $old_version ) && version_compare( $old_version, "3.15.3", "<=" ) ) {
+			if ( ! empty( $old_version ) && version_compare( $old_version, "3.16.0", "<" ) ) {
 				if ( ! get_option( 'stackable_disable_block_style_inheritance' ) ) {
 					update_option( 'stackable_disable_block_style_inheritance', 'true' );
 				}
