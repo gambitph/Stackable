@@ -9,6 +9,7 @@ import { i18n } from 'stackable'
 import { upperFirst, omit } from 'lodash'
 import classnames from 'classnames'
 import { generateStyles } from '~stackable/block-components'
+import { usePresetControls } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -45,9 +46,22 @@ const TypographyPicker = props => {
 		'ugb-global-settings-typography-control--with-description': createDescription( value ),
 	} )
 
+	const useTypographyAsPresets = useSelect( select =>
+		select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
+	)
+
+	const presetMarks = usePresetControls( 'fontSizes' )
+		?.getPresetMarks( { customOnly: useTypographyAsPresets } ) || null
+
 	return (
 		<TypographyControl
-			fontSizeProps={ { units: [ 'px', 'em', 'rem' ] } }
+			fontSizeProps={ {
+				units: [ 'px', 'em', 'rem' ],
+				min: [ 0, 0, 0 ],
+				sliderMax: [ 150, 7, 7 ],
+				step: [ 1, 0.05, 0.05 ],
+				marks: presetMarks,
+			} }
 			lineHeightUnits={ [ 'px', 'em', 'rem' ] }
 			className={ mainClasses }
 			label={ label }

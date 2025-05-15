@@ -299,13 +299,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						'type' => 'string',
 					),
 					'fontSize' => array(
-						'type' => 'number',
+						'type' => 'string',
 					),
 					'tabletFontSize' => array(
-						'type' => 'number',
+						'type' => 'string',
 					),
 					'mobileFontSize' => array(
-						'type' => 'number',
+						'type' => 'string',
 					),
 					'fontSizeUnit' => array(
 						'type' => 'string',
