@@ -320,6 +320,14 @@ class _StackableCarousel {
 		this.setDotActive( slide )
 		this.currentSlide = slide
 
+		// Dispatch an event when the carousel change slide
+		this.el.dispatchEvent( new CustomEvent( 'stackable-carousel-slide-change', {
+			detail: {
+				element: this.el,
+				currentSlide: slide,
+			},
+		} ) )
+
 		try {
 			this.liveregion.textContent = this.sliderEl.dataset.labelSlideOf.replace( /%+d/, slide ).replace( /%+d/, this.maxSlides() )
 		} catch ( err ) {
