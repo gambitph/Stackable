@@ -6,7 +6,9 @@ import {
 	createTypographyStyles, getFontFamilyLabel, loadGoogleFont,
 } from '~stackable/util'
 import { i18n } from 'stackable'
-import { upperFirst, omit } from 'lodash'
+import {
+	upperFirst, omit, startCase, last,
+} from 'lodash'
 import classnames from 'classnames'
 import { generateStyles } from '~stackable/block-components'
 import { usePresetControls } from '~stackable/hooks'
@@ -165,7 +167,14 @@ const createDescription = ( styleObject, device = 'desktop' ) => {
 		description.push( upperFirst( styleObject.textTransform ) )
 	}
 
-	return description.join( ', ' )
+	// If a css custom property, get just the name names
+	return description.map( value => {
+		if ( value.includes( 'var(' ) ) {
+			const propName = value.match( /var\(([^\),]*)/ )?.[ 1 ]
+			return startCase( last( propName.split( '--' ) ) )
+		}
+		return value
+	} ).join( ', ' )
 }
 
 const TypographyPreview = props => {
