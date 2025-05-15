@@ -39,7 +39,7 @@ const FontSizeControl = props => {
 			placeholder={ passedPlaceholder }
 			onChangeUnit={ value => {
 				// Change font-size so as not to surprise the user.
-				if ( props.value !== '' ) {
+				if ( props.value !== '' && ! isNaN( Number( value ) ) ) {
 					if ( value === 'em' || value === 'rem' ) {
 						props.onChange( String( pxToEm( props.value ) ) )
 					} else if ( value === 'px' ) {
