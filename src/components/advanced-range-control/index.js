@@ -130,10 +130,6 @@ const AdvancedRangeControl = props => {
 
 		// On reset, allow overriding the value.
 		if ( newValue === '' ) {
-			// Reset should also change from mark mode
-			if ( isMarkMode ) {
-				setIsMarkMode( false )
-			}
 			const overrideValue = props.onOverrideReset?.()
 			if ( typeof overrideValue !== 'undefined' ) {
 				newValue = overrideValue
