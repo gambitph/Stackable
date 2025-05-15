@@ -9,7 +9,11 @@ import counterUp from 'counterup2'
 import domReady from '@wordpress/dom-ready'
 
 const ACTIVE = 'stk--count-up-active'
-class StackableCountUp {
+class _StackableCountUp {
+	constructor( el ) {
+		this.el = el
+	}
+
 	callback = entries => {
 		entries.forEach( entry => {
 			const el = entry.target
@@ -25,15 +29,12 @@ class StackableCountUp {
 	}
 
 	init = () => {
-		const els = document.querySelectorAll( '.stk-block-count-up__text' )
-
+		this.el.classList.remove( ACTIVE )
 		// If reduce motion is on, don't animate.
 		const reduceMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches
 		// If IntersectionObserver is not supported, just show the blocks.
 		if ( ! ( 'IntersectionObserver' in window ) || reduceMotion ) {
-			els.forEach( el => {
-				el.classList.add( ACTIVE )
-			} )
+			this.el.classList.add( ACTIVE )
 			return
 		}
 
@@ -43,8 +44,20 @@ class StackableCountUp {
 		// Don't use threshold 1 because if a small part of the text is hidden,
 		// the IO won't trigger.
 		this.io = new IntersectionObserver( this.callback, { threshold: 0.25 } ) // eslint-disable-line compat/compat
+		this.io.observe( this.el )
+	}
+}
+
+class StackableCountUp {
+	init = () => {
+		const els = document.querySelectorAll( '.stk-block-count-up__text' )
 		els.forEach( el => {
-			this.io.observe( el )
+			if ( ! el._StackableHasInitCountUp ) {
+				const countUp = new _StackableCountUp( el )
+				el.countUp = countUp
+				countUp.init()
+				el.StackableHasInitCountUp = true
+			}
 		} )
 	}
 }

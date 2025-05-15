@@ -216,6 +216,7 @@ const SEARCH_TREE = [
 				children: [
 					__( 'Show Go premium notices', i18n ),
 					__( 'Generate Global Colors for native blocks', i18n ),
+					__( 'Inherit Block Styles from theme.json', i18n ),
 				],
 			},
 			{
@@ -1171,8 +1172,11 @@ const GlobalSettings = props => {
 
 const RoleManager = props => {
 	const groups = props.filteredSearchTree.find( tab => tab.id === 'role-manager' ).groups
-	props.roleManager = groups.find( group => group.id === 'role-manager' )
 	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const propsToPass = {
+		...props,
+		roleManager: groups.find( group => group.id === 'role-manager' ),
+	}
 
 	const EditorModeSettings = applyFilters( 'stackable.admin.settings.editorModeSettings', Fragment )
 
@@ -1182,7 +1186,7 @@ const RoleManager = props => {
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ props.roleManager.children.length > 0 &&
+					{ propsToPass.roleManager.children.length > 0 &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Role Manager', i18n ) }</h2>
 							<p className="s-settings-subtitle">
@@ -1200,7 +1204,7 @@ const RoleManager = props => {
 							{ isPro
 								? <Suspense fallback={ <Spinner /> }>
 									<div className="s-editing-mode-settings">
-										<EditorModeSettings { ...props } />
+										<EditorModeSettings { ...propsToPass } />
 									</div>
 								</Suspense>
 								: <p className="s-settings-pro">
@@ -1220,8 +1224,11 @@ const RoleManager = props => {
 
 const CustomFields = props => {
 	const groups = props.filteredSearchTree.find( tab => tab.id === 'custom-fields-settings' ).groups
-	props.customFields = groups.find( group => group.id === 'custom-fields-settings' )
 	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const propsToPass = {
+		...props,
+		customFields: groups.find( group => group.id === 'custom-fields-settings' ),
+	}
 
 	const CustomFieldsEnableSettings = applyFilters( 'stackable.admin.settings.customFieldsEnableSettings', Fragment )
 	const CustomFieldsManagerSettings = applyFilters( 'stackable.admin.settings.customFieldsManagerSettings', Fragment )
@@ -1232,14 +1239,14 @@ const CustomFields = props => {
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ props.customFields.children.length > 0 &&
+					{ propsToPass.customFields.children.length > 0 &&
 						<div className="s-setting-group">
 							<div className="s-custom-fields-settings-header">
 								<h2>{ __( 'Custom Fields', i18n ) }</h2>
 								{ isPro &&
 									<Suspense fallback={ <Spinner /> }>
 										<div className="s-custom-fields-enable">
-											<CustomFieldsEnableSettings { ...props } />
+											<CustomFieldsEnableSettings { ...propsToPass } />
 										</div>
 									</Suspense>
 								}
@@ -1253,7 +1260,7 @@ const CustomFields = props => {
 							{ isPro
 								? <Suspense fallback={ <Spinner /> }>
 									<div className="s-custom-fields-manager">
-										<CustomFieldsManagerSettings { ...props } />
+										<CustomFieldsManagerSettings { ...propsToPass } />
 									</div>
 								</Suspense>
 								: <p className="s-settings-pro">
@@ -1279,8 +1286,11 @@ const Integrations = props => {
 	} = props
 
 	const groups = filteredSearchTree.find( tab => tab.id === 'integrations' ).groups
-	props.integrations = groups.find( group => group.id === 'integrations' )
 	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const propsToPass = {
+		...props,
+		integrations: groups.find( group => group.id === 'integrations' ),
+	}
 
 	const IconSettings = applyFilters( 'stackable.admin.settings.iconSettings', Fragment )
 
@@ -1290,13 +1300,13 @@ const Integrations = props => {
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ props.integrations.children.length > 0 &&
+					{ propsToPass.integrations.children.length > 0 &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Integrations', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'Here are settings for the different integrations available in Stackable.', i18n ) }</p>
 							<AdminTextSetting
 								label={ __( 'Google Maps API Key', i18n ) }
-								searchedSettings={ props.integrations.children }
+								searchedSettings={ propsToPass.integrations.children }
 								value={ settings.stackable_google_maps_api_key }
 								type="text"
 								onChange={ value => {
@@ -1316,7 +1326,7 @@ const Integrations = props => {
 							{ isPro
 								? <Suspense fallback={ <Spinner /> }>
 									<div className="ugb-admin-setting">
-										<IconSettings { ...props } />
+										<IconSettings { ...propsToPass } />
 									</div>
 								</Suspense>
 								: <>
@@ -1347,7 +1357,7 @@ const Integrations = props => {
 								<div className="s-icon-settings-fa-free-version">
 									<AdminSelectSetting
 										label={ __( 'FontAwesome Icon Library Version', i18n ) }
-										searchedSettings={ props.integrations.children }
+										searchedSettings={ propsToPass.integrations.children }
 										value={ settings.stackable_icons_fa_free_version }
 										options={ [
 											{
@@ -1416,6 +1426,15 @@ const AdditionalOptions = props => {
 								checked={ !! settings.stackable_global_colors_native_compatibility }
 								onChange={ checked => {
 									handleSettingsChange( { stackable_global_colors_native_compatibility: checked } ) // eslint-disable-line camelcase
+								} }
+							/>
+							<CheckboxControl
+								label={ __( 'Inherit Block Styles from theme.json', i18n ) }
+								className={ searchClassname( __( 'Inherit Block Styles from theme.json', i18n ), miscellaneous ) }
+								help={ __( `When enabled, Stackable blocks will inherit styles from the theme.json file of your Block Theme.`, i18n ) }
+								checked={ ! settings.stackable_disable_block_style_inheritance }
+								onChange={ checked => {
+									handleSettingsChange( { stackable_disable_block_style_inheritance: ! checked } ) // eslint-disable-line camelcase
 								} }
 							/>
 						</div>

@@ -8,6 +8,7 @@ import './layout-picker-reset'
 // import './v2-migration-popup' // Probably 1.5yrs of checking for backward compatibility is enough.
 import './save-block'
 import './editor-device-preview-class'
+import './theme-block-style-inheritance'
 import { BlockLinking } from './block-linking'
 import { BlockHoverState } from './block-hover-state'
 import { ContentAlign } from './content-align'
