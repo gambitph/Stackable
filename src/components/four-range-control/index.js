@@ -35,7 +35,7 @@ import { dispatch } from '@wordpress/data'
  */
 import { isEqual } from 'lodash'
 import classnames from 'classnames'
-import { i18n } from 'stackable'
+import { i18n, settings as stackableSettings } from 'stackable'
 import { Button } from '~stackable/components'
 import {
 	useAttributeName,
@@ -122,6 +122,8 @@ const FourRangeControl = memo( props => {
 		}
 	} )
 
+	const isMarkModeDefault = !! ( stackableSettings?.stackable_use_size_presets_by_default ?? true )
+
 	// Change the min, max & step values depending on the unit used.
 	if ( hasUnits ) {
 		const i = props.units.indexOf( unit ) < 0 ? 0 : props.units.indexOf( unit )
@@ -187,12 +189,13 @@ const FourRangeControl = memo( props => {
 
 	// Is value at first render the same as a step value? If so, do mark mode
 	// at the start, or show custom
+	// If no initial value, use the given default from the settings
 	const isMarkValue = {
-		first: !! props.marks,
-		top: !! props.marks,
-		right: !! props.marks,
-		bottom: !! props.marks,
-		left: !! props.marks,
+		first: !! props.marks && isMarkModeDefault,
+		top: !! props.marks && isMarkModeDefault,
+		right: !! props.marks && isMarkModeDefault,
+		bottom: !! props.marks && isMarkModeDefault,
+		left: !! props.marks && isMarkModeDefault,
 	}
 	if ( props.marks && firstValue ) {
 		// Check if the current value exists in the marks only by their CSS variable name

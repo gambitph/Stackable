@@ -6,6 +6,10 @@ import { useControlHandlers } from '../base-control2/hooks'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 import { ResetButton } from '../base-control2/reset-button'
+/**
+ * External dependencies
+ */
+import { isEqual } from 'lodash'
 import {
 	useAttributeName,
 	useBlockAttributesContext,
@@ -14,11 +18,7 @@ import {
 	useDeviceType,
 } from '~stackable/hooks'
 import { extractNumbersAndUnits, getCSSVarName } from '~stackable/util'
-
-/**
- * External dependencies
- */
-import { isEqual } from 'lodash'
+import { settings as stackableSettings } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -56,6 +56,8 @@ const AdvancedRangeControl = props => {
 	const unit = typeof props.unit === 'string'
 		? ( props.unit || props.units?.[ 0 ] || 'px' )
 		: ( unitAttribute || '' )
+
+	const isMarkModeDefault = !! ( stackableSettings?.stackable_use_size_presets_by_default ?? true )
 
 	// Change the min, max & step values depending on the unit used.
 	if ( hasUnits ) {
@@ -109,7 +111,8 @@ const AdvancedRangeControl = props => {
 
 	// Is value at first render the same as a step value? If so, do mark mode
 	// at the start, or show custom
-	let isMarkValue = !! props.marks
+	// If no initial value, use the given default from the settings
+	let isMarkValue = !! props.marks && isMarkModeDefault
 	if ( props.marks && derivedValue ) {
 		// Check if the current value exists in the marks only by their CSS variable name
 		// to match in case the fallback size changes.
@@ -285,6 +288,7 @@ AdvancedRangeControl.defaultProps = {
 	marks: undefined, // [{ value: 'var(--stk-preset-font-size-small', name: 'S' }]
 	allowCustom: true,
 	isCustomPreset: false,
+	isMarkModeDefault: true,
 }
 
 export default memo( AdvancedRangeControl, isEqual )

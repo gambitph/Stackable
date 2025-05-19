@@ -42,10 +42,54 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * Initialize
 		 */
   		function __construct() {
+			add_action( 'register_stackable_global_settings', array( $this, 'register_use_size_presets_by_default' ) );
+			add_action( 'stackable_early_version_upgraded',  array( $this, 'use_size_presets_by_default_set_default' ), 10, 2 );
+			add_filter( 'stackable_js_settings', array( $this, 'add_setting' ) );
+
 			add_filter( 'stackable_inline_styles_nodep', array( $this, 'add_preset_controls_styles' ) );
 			add_filter( 'stackable_inline_editor_styles', array( $this, 'add_preset_controls_styles' ) );
 		}
 
+		// Register the setting for using presets by default
+		function register_use_size_presets_by_default() {
+			register_setting(
+				'stackable_global_settings',
+				'stackable_use_size_presets_by_default',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'If enabled, range controls will be on preset mode by default', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+		}
+
+		/**
+		 * When upgrading to v3.16.0 and above, set option to false.
+		 * If new installation, set option to true.
+		 *
+		 * @since 3.16.0
+		 */
+		public function use_size_presets_by_default_set_default( $old_version, $new_version ) {
+			if ( ! empty( $old_version ) && version_compare( $old_version, "3.16.0", "<" ) ) {
+				if ( ! get_option( 'stackable_use_size_presets_by_default' ) ) {
+					update_option( 'stackable_use_size_presets_by_default', '' );
+				}
+			}
+		}
+
+		// Make the setting available in the editor
+		public function add_setting( $settings ) {
+			$settings['stackable_use_size_presets_by_default'] = get_option( 'stackable_use_size_presets_by_default' );
+			return $settings;
+		}
+		
+		/**
+		 * Loads the different preset values.
+		 *
+		 * @return void
+		 */
 		public function load_presets() {
 			$this->custom_presets = get_option( 'stackable_global_custom_preset_controls' );
 			$this->theme_presets = WP_Theme_JSON_Resolver::get_theme_data()->get_settings();
@@ -57,6 +101,12 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
+		/**
+		 * Loads and decodes a JSON file, returning the settings array if available.
+		 *
+		 * @param string $json_path Absolute path to the JSON file.
+		 * @return array The settings array from the decoded JSON file, or an empty array.
+		 */
 		private function load_json_file( $json_path ) {
 			if ( file_exists( $json_path ) ) {
 				$decoded_data = wp_json_file_decode( $json_path, [

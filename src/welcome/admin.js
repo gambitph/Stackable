@@ -77,12 +77,12 @@ const SEARCH_TREE = [
 				children: [
 					__( 'Nested Block Width', i18n ),
 					__( 'Nested Wide Block Width', i18n ),
-					__( 'Stackable Text as Default Block', i18n ),
 				],
 			},
 			{
 				id: 'editor',
 				children: [
+					__( 'Stackable Text as Default Block', i18n ),
 					__( 'Design Library', i18n ),
 					__( 'Stackable Settings', i18n ),
 					__( 'Block Linking (Beta)', i18n ),
@@ -155,6 +155,7 @@ const SEARCH_TREE = [
 				id: 'global-settings',
 				children: [
 					__( 'Force Typography Styles', i18n ),
+					__( 'Use Size Presets by Default', i18n ),
 				],
 			},
 		],
@@ -672,7 +673,7 @@ const EditorSettings = props => {
 							<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
 							<AdminToggleSetting
 								label={ __( 'Stackable Text as Default Block', i18n ) }
-								searchedSettings={ blocks.children }
+								searchedSettings={ editor.children }
 								value={ settings.stackable_enable_text_default_block }
 								onChange={ value => {
 									handleSettingsChange( { stackable_enable_text_default_block: value } ) // eslint-disable-line camelcase
@@ -1161,6 +1162,15 @@ const GlobalSettings = props => {
 								} }
 								disabled={ __( 'Not forced', i18n ) }
 								enabled={ __( 'Force styles', i18n ) }
+							/>
+							<AdminToggleSetting
+								label={ __( 'Use Size Presets by Default', i18n ) }
+								searchedSettings={ globalSettings.children }
+								value={ props.settings.stackable_use_size_presets_by_default }
+								onChange={ value => {
+									props.handleSettingsChange( { stackable_use_size_presets_by_default: value } ) // eslint-disable-line camelcase
+								} }
+								help={ __( 'If enabled, range controls will be on preset mode by default.', i18n ) }
 							/>
 						</div>
 					}
