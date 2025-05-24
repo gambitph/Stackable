@@ -35,13 +35,13 @@
 // Target the stk-column-wrapper to also include blocks with column innerblocks
 // but are not columns (no stk-block-columns), like accordion and horizontal scroller.
 :where(.stk-block-columns) {
-	@for $i from 1 through 20 {
+	@for $i from 1 through 40 {
 		--stk-col-order-#{ $i }: #{ $i };
 	}
 }
 
 // Column order.
-@for $i from 1 through 20 {
+@for $i from 1 through 40 {
 	.stk-block-column:nth-child(#{ $i }) {
 		order: var(--stk-col-order-#{ $i }, initial);
 	}
