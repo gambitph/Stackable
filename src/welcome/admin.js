@@ -1171,6 +1171,8 @@ const GlobalSettings = props => {
 									props.handleSettingsChange( { stackable_use_size_presets_by_default: value } ) // eslint-disable-line camelcase
 								} }
 								help={ __( 'If enabled, range controls will be on preset mode by default.', i18n ) }
+								disabled={ __( 'Use custom values', i18n ) }
+								enabled={ __( 'Use presets', i18n ) }
 							/>
 						</div>
 					}
