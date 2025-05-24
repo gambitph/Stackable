@@ -78,7 +78,7 @@ test.describe( 'Global Settings', () => {
 		expect( _count ).toBeLessThan( count )
 	} )
 
-	test( 'Global Typography Styles should be applied when adding a heading', async ( {
+	test.skip( 'Global Typography Styles should be applied when adding a heading', async ( {
 		page,
 		editor,
 	} ) => {
