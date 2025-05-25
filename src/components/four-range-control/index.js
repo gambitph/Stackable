@@ -349,8 +349,15 @@ const FourRangeControl = memo( props => {
 		let rangeOnChange = initialOnChange
 		if ( props.marks && isMarkMode ) {
 			rangeValue = props.marks.findIndex( mark => {
-				const [ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
-				return _value === initialValue
+				let _unit, _value
+				// If the initialValue is a CSS variable, compare with mark's CSS variable.
+				// Otherwise, the initialValue is custom, so compare with raw size and units
+				if ( typeof initialValue === 'string' && initialValue.startsWith( 'var' ) ) {
+					[ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
+				} else {
+					[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+				}
+				return _value === initialValue && ( _unit === '' || _unit === unit )
 			} )
 			rangeOnChange = ( value, property = 'value' ) => {
 				if ( value === '' ) {

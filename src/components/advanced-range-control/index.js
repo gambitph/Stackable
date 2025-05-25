@@ -192,8 +192,15 @@ const AdvancedRangeControl = props => {
 	let rangeOnChange = _onChange
 	if ( isMarkMode ) {
 		rangeValue = props.marks.findIndex( mark => {
-			const [ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
-			return _value === derivedValue
+			let _unit, _value
+			// If the derivedValue is a CSS variable, compare with mark's CSS variable.
+			// Otherwise, the derivedValue is custom, so compare with raw size and units
+			if ( typeof derivedValue === 'string' && derivedValue.startsWith( 'var' ) ) {
+				[ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
+			} else {
+				[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+			}
+			return _value === derivedValue && ( _unit === '' || _unit === unit )
 		} )
 		rangeOnChange = ( value, property = 'value' ) => {
 			if ( value === '' ) {
