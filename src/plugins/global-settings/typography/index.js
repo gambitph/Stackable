@@ -302,10 +302,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 					return
 				}
 
+				// Merge the new styles with the previous, while overwritting similar styles.
+				// This allow adding styles without removing the previous ones.
+				// Check if the object is empty, used for resetting the whole setting.
 				if ( Object.keys( styles ).length !== 0 ) {
 					styles = { ...newSettings[ selector ], ...styles }
 				}
-
+				/**
+				 * Delete the object keys with empty strings.
+				 * Otherwise, the API will throw an error code 400
+				 * because of incompatible schema type.
+				 */
 				Object.keys( styles ).forEach( key => {
 					if ( styles[ key ] === '' ) {
 						delete styles[ key ]
@@ -319,6 +326,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			if ( Object.values( typography ).some( styles => styles && ! styles.fontSize ) ) {
 				doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
 			}
+
+			updateTypography( newSettings )
 
 			return newSettings
 		} )

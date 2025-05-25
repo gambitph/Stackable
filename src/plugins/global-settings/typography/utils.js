@@ -16,14 +16,14 @@ export const getAppliedTypeScale = value => {
 		return
 	}
 	return {
-		h1: { fontSize: Number( Math.pow( typeScale, 6 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h2: { fontSize: Number( Math.pow( typeScale, 5 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h3: { fontSize: Number( Math.pow( typeScale, 4 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h4: { fontSize: Number( Math.pow( typeScale, 3 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h5: { fontSize: Number( Math.pow( typeScale, 2 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h6: { fontSize: Number( typeScale.toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		p: { fontSize: 1, fontSizeUnit: 'rem' },
-		'.stk-subtitle': { fontSize: Number( ( 1 / typeScale ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		'.stk-button__inner-text': { fontSize: 1, fontSizeUnit: 'rem' },
+		h1: { fontSize: String( Math.pow( typeScale, 6 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h2: { fontSize: String( Math.pow( typeScale, 5 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h3: { fontSize: String( Math.pow( typeScale, 4 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h4: { fontSize: String( Math.pow( typeScale, 3 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h5: { fontSize: String( Math.pow( typeScale, 2 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		h6: { fontSize: String( typeScale.toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		p: { fontSize: '1', fontSizeUnit: 'rem' },
+		'.stk-subtitle': { fontSize: String( ( 1 / typeScale ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
+		'.stk-button__inner-text': { fontSize: '1', fontSizeUnit: 'rem' },
 	}
 }
