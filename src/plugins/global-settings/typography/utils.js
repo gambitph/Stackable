@@ -27,3 +27,19 @@ export const getAppliedTypeScale = value => {
 		'.stk-button__inner-text': { fontSize: '1', fontSizeUnit: 'rem' },
 	}
 }
+
+/**
+ * Remove empty string properties from the given styles object
+ *
+ * @param {Object} styles - The typography styles object
+ * @return {Object} An object with removed empty string properties
+ */
+
+export const cleanTypographyStyle = styles => {
+	if ( ! styles ) {
+		return {}
+	}
+	return Object.fromEntries(
+		Object.entries( styles ).filter( ( [ , value ] ) => value !== '' )
+	)
+}

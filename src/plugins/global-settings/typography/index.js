@@ -5,7 +5,7 @@ import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
 import { getThemeStyles } from './get-theme-styles'
 import FREE_FONT_PAIRS from './font-pairs.json'
-import { getAppliedTypeScale } from './utils'
+import { getAppliedTypeScale, cleanTypographyStyle } from './utils'
 
 /**
  * External dependencies
@@ -313,13 +313,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 				 * Otherwise, the API will throw an error code 400
 				 * because of incompatible schema type.
 				 */
-				Object.keys( styles ).forEach( key => {
-					if ( styles[ key ] === '' ) {
-						delete styles[ key ]
-					}
-				} )
+				const cleanStyles = cleanTypographyStyle( styles ) || {}
 
-				newSettings[ selector ] = styles
+				newSettings[ selector ] = cleanStyles
 			} )
 
 			// Update the global styles immediately when reset font size is triggered.
@@ -353,9 +349,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	const getIsAllowReset = selector => {
 		const currentFontPair = getCurrentFontPair()
-		const typographyStyle = typographySettings[ selector ]
+		const typographyStyle = typographySettings[ selector ] || {}
 		if ( ! isEditingFontPair && currentFontPair ) {
-			const fontPairStyle = currentFontPair.typography[ selector ]
+			// Clean style object to be consistent with changeStyles operation
+			const fontPairStyle = cleanTypographyStyle( currentFontPair.typography?.[ selector ] ) || {}
 			if ( ! isEqual( fontPairStyle, typographyStyle ) && ! Array.isArray( typographyStyle ) ) {
 				return true
 			}
@@ -385,8 +382,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			if ( isEditingFontPair || ! currentFontPair ) {
 				return false
 			}
-			const fontPairStyle = currentFontPair.typography[ selector ]
-			const typographyStyle = typographySettings[ selector ]
+			// Clean style object to be consistent with changeStyles operation
+			const fontPairStyle = cleanTypographyStyle( currentFontPair.typography?.[ selector ] ) || {}
+			const typographyStyle = typographySettings[ selector ] || {}
 
 			if ( ! Array.isArray( typographyStyle ) &&
 				fontPairStyle.fontFamily &&
