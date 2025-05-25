@@ -420,6 +420,9 @@ export const extractNumbersAndUnits = value => {
 
 // Return only the CSS variable name given a CSS variable
 export const getCSSVarName = value => {
+	if ( typeof value !== 'string' ) {
+		return null
+	}
 	const match = value?.match( /var\(\s*([^,)\s]+)/ )
 	return match ? match[ 1 ] : null
 }
