@@ -328,7 +328,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			}
 
 			updateTypography( newSettings )
-
 			return newSettings
 		} )
 	}
@@ -372,15 +371,29 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		return false
 	}
 
-	const getIsChangeConfirmed = () => {
+	const getIsFontPairChangeConfirmed = () => {
 		// No need to confirm when the current font pair is custom
 		// since changes are saved
 		if ( customFontPairs.find( fontPair => fontPair.name === selectedFontPairName ) ) {
 			return true
 		}
 
+		// The confirmation should only occur if the font family has been edited
+		// since selecting font pair only changes font family
+		const currentFontPair = getCurrentFontPair()
 		const isDirty = TYPOGRAPHY_TAGS.some( ( { selector } ) => {
-			return getIsAllowReset( selector )
+			if ( isEditingFontPair || ! currentFontPair ) {
+				return false
+			}
+			const fontPairStyle = currentFontPair.typography[ selector ]
+			const typographyStyle = typographySettings[ selector ]
+
+			if ( ! Array.isArray( typographyStyle ) &&
+				fontPairStyle.fontFamily &&
+				fontPairStyle.fontFamily !== typographyStyle.fontFamily ) {
+				return true
+			}
+			return false
 		} )
 
 		if ( isDirty ) {
@@ -455,7 +468,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 								fontPair={ FONT_PAIRS[ 0 ] }
 								isSelected={ selectedFontPairName === FONT_PAIRS[ 0 ].name }
 								onClick={ () => {
-									if ( ! getIsChangeConfirmed() ) {
+									if ( ! getIsFontPairChangeConfirmed() ) {
 										return
 									}
 									updateSelectedFontPair( FONT_PAIRS[ 0 ].name )
@@ -467,7 +480,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 								customFontPairs={ customFontPairs }
 								selected={ selectedFontPairName }
 								onClick={ ( name, typography ) => {
-									if ( ! getIsChangeConfirmed() ) {
+									if ( ! getIsFontPairChangeConfirmed() ) {
 										return
 									}
 									updateSelectedFontPair( name )
@@ -486,7 +499,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									fontPair={ fontPair }
 									isSelected={ selectedFontPairName === fontPair.name }
 									onClick={ () => {
-										if ( ! getIsChangeConfirmed() ) {
+										if ( ! getIsFontPairChangeConfirmed() ) {
 											return
 										}
 										updateSelectedFontPair( fontPair.name )
