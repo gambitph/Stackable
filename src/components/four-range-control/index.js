@@ -25,7 +25,7 @@ import { useControlHandlers } from '../base-control2/hooks'
 import { Tooltip } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
-	Fragment, useState, memo,
+	Fragment, useState, memo, useEffect,
 } from '@wordpress/element'
 import { settings } from '@wordpress/icons'
 import { dispatch } from '@wordpress/data'
@@ -187,36 +187,42 @@ const FourRangeControl = memo( props => {
 				: props.enableBottom ? { desktop: _valueDesktop?.bottom, tablet: _valueTablet?.bottom }
 					: { desktop: _valueDesktop?.left, tablet: _valueTablet?.left }
 
-	// Is value at first render the same as a step value? If so, do mark mode
-	// at the start, or show custom
-	// If no initial value, use the given default from the settings
-	const isMarkValue = {
-		first: !! props.marks && isMarkModeDefault,
-		top: !! props.marks && isMarkModeDefault,
-		right: !! props.marks && isMarkModeDefault,
-		bottom: !! props.marks && isMarkModeDefault,
-		left: !! props.marks && isMarkModeDefault,
-	}
-	if ( props.marks && firstValue ) {
-		// Check if the current value exists in the marks only by their CSS variable name
-		// to match in case the fallback size changes.
-		const firstValueCssVarName = getCSSVarName( firstValue )
-		const firstMatchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === firstValueCssVarName )
-		isMarkValue.first = !! firstMatchedMark
-		if ( firstMatchedMark ) {
-			firstValue = firstMatchedMark.value
+	const [ isFourMarkMode, setIsFourMarkMode ] = useState( false )
+
+	// Set the markMode when at first render and when device type changes
+	useEffect( () => {
+		// Is value at first render the same as a step value? If so, do mark mode
+		// at the start, or show custom
+		// If no initial value, use the given default from the settings
+		const isMarkValue = {
+			first: !! props.marks && isMarkModeDefault,
+			top: !! props.marks && isMarkModeDefault,
+			right: !! props.marks && isMarkModeDefault,
+			bottom: !! props.marks && isMarkModeDefault,
+			left: !! props.marks && isMarkModeDefault,
 		}
 
-		[ 'top', 'right', 'bottom', 'left' ].forEach( side => {
-			const sideCssVarName = getCSSVarName( value[ side ] )
-			const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === sideCssVarName )
-			isMarkValue[ side ] = !! matchedMark
-			if ( matchedMark ) {
-				value[ side ] = matchedMark.value
+		if ( props.marks && firstValue ) {
+			// Check if the current value exists in the marks only by their CSS variable name
+			// to match in case the fallback size changes.
+			const firstValueCssVarName = getCSSVarName( firstValue )
+			const firstMatchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === firstValueCssVarName )
+			isMarkValue.first = !! firstMatchedMark
+			if ( firstMatchedMark ) {
+				firstValue = firstMatchedMark.value
 			}
-		} )
-	}
-	const [ isFourMarkMode, setIsFourMarkMode ] = useState( isMarkValue )
+
+			[ 'top', 'right', 'bottom', 'left' ].forEach( side => {
+				const sideCssVarName = getCSSVarName( value[ side ] )
+				const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === sideCssVarName )
+				isMarkValue[ side ] = !! matchedMark
+				if ( matchedMark ) {
+					value[ side ] = matchedMark.value
+				}
+			} )
+			setIsFourMarkMode( isMarkValue )
+		}
+	}, [ deviceType ] )
 
 	const onChangeAll = _newValue => {
 		const newValue = props.marks ? String( _newValue ) : _newValue

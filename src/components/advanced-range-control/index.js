@@ -23,7 +23,9 @@ import { settings as stackableSettings } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { memo, useState } from '@wordpress/element'
+import {
+	memo, useState, useEffect,
+} from '@wordpress/element'
 import { Button } from '@wordpress/components'
 import { settings } from '@wordpress/icons'
 import { dispatch } from '@wordpress/data'
@@ -112,18 +114,23 @@ const AdvancedRangeControl = props => {
 	// Is value at first render the same as a step value? If so, do mark mode
 	// at the start, or show custom
 	// If no initial value, use the given default from the settings
-	let isMarkValue = !! props.marks && isMarkModeDefault
-	if ( props.marks && derivedValue ) {
+	const [ isMarkMode, setIsMarkMode ] = useState( false )
+
+	// Set the markMode when at first render and when device type changes
+	useEffect( () => {
+		let isMarkValue = !! props.marks && isMarkModeDefault
+		if ( props.marks && derivedValue ) {
 		// Check if the current value exists in the marks only by their CSS variable name
 		// to match in case the fallback size changes.
-		const derivedValueCssVarName = getCSSVarName( derivedValue )
-		const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === derivedValueCssVarName )
-		isMarkValue = !! matchedMark
-		if ( matchedMark ) {
-			derivedValue = matchedMark.value
+			const derivedValueCssVarName = getCSSVarName( derivedValue )
+			const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === derivedValueCssVarName )
+			isMarkValue = !! matchedMark
+			if ( matchedMark ) {
+				derivedValue = matchedMark.value
+			}
 		}
-	}
-	const [ isMarkMode, setIsMarkMode ] = useState( isMarkValue )
+		setIsMarkMode( isMarkValue )
+	}, [ deviceType ] )
 
 	// If this supports dynamic content, the value should be saved as a String.
 	// Similar if using marks to accomodate CSS variable
