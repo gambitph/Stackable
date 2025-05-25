@@ -85,6 +85,7 @@ const SEARCH_TREE = [
 					__( 'Stackable Text as Default Block', i18n ),
 					__( 'Design Library', i18n ),
 					__( 'Stackable Settings', i18n ),
+					__( 'Use Size Presets by Default', i18n ),
 					__( 'Block Linking (Beta)', i18n ),
 				],
 			},
@@ -155,7 +156,6 @@ const SEARCH_TREE = [
 				id: 'global-settings',
 				children: [
 					__( 'Force Typography Styles', i18n ),
-					__( 'Use Size Presets by Default', i18n ),
 				],
 			},
 		],
@@ -699,6 +699,17 @@ const EditorSettings = props => {
 								help={ __( 'Adds a button on the top of the editor which gives access to Stackable settings. Note: You won\'t be able to access Stackable settings when this is disabled.', i18n ) }
 							/>
 							<AdminToggleSetting
+								label={ __( 'Use Size Presets by Default', i18n ) }
+								searchedSettings={ editor.children }
+								value={ props.settings.stackable_use_size_presets_by_default }
+								onChange={ value => {
+									props.handleSettingsChange( { stackable_use_size_presets_by_default: value } ) // eslint-disable-line camelcase
+								} }
+								help={ __( 'If enabled, range controls will be on preset mode by default.', i18n ) }
+								disabled={ __( 'Use custom values', i18n ) }
+								enabled={ __( 'Use presets', i18n ) }
+							/>
+							<AdminToggleSetting
 								label={ __( 'Block Linking (Beta)', i18n ) }
 								searchedSettings={ editor.children }
 								value={ settings.stackable_enable_block_linking }
@@ -1162,17 +1173,6 @@ const GlobalSettings = props => {
 								} }
 								disabled={ __( 'Not forced', i18n ) }
 								enabled={ __( 'Force styles', i18n ) }
-							/>
-							<AdminToggleSetting
-								label={ __( 'Use Size Presets by Default', i18n ) }
-								searchedSettings={ globalSettings.children }
-								value={ props.settings.stackable_use_size_presets_by_default }
-								onChange={ value => {
-									props.handleSettingsChange( { stackable_use_size_presets_by_default: value } ) // eslint-disable-line camelcase
-								} }
-								help={ __( 'If enabled, range controls will be on preset mode by default.', i18n ) }
-								disabled={ __( 'Use custom values', i18n ) }
-								enabled={ __( 'Use presets', i18n ) }
 							/>
 						</div>
 					}
