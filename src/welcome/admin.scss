@@ -69,7 +69,6 @@ body[class*="page_stk-"] {
 		border-radius: 4px;
 		font-weight: 600;
 		text-transform: unset !important;
-		width: 200px;
 		text-align: center;
 		position: absolute;
 		right: 50px;
@@ -77,9 +76,9 @@ body[class*="page_stk-"] {
 		text-decoration: none;
 		border: none;
 		color: #fff;
+		letter-spacing: 0.5px;
 		padding: 12px 20px;
 		text-transform: uppercase;
-		letter-spacing: 1px;
 		font-size: 14px;
 		cursor: pointer;
 		box-sizing: border-box !important;
@@ -423,7 +422,7 @@ body.toplevel_page_stk-custom-fields {
 		color: #fff;
 		padding: 12px 20px;
 		text-transform: uppercase;
-		letter-spacing: 1px;
+		letter-spacing: 0.5px;
 		font-size: 14px;
 		cursor: pointer;
 		box-sizing: border-box !important;
