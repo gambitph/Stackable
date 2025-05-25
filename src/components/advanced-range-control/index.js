@@ -116,7 +116,8 @@ const AdvancedRangeControl = props => {
 	if ( props.marks && derivedValue ) {
 		// Check if the current value exists in the marks only by their CSS variable name
 		// to match in case the fallback size changes.
-		const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === getCSSVarName( derivedValue ) )
+		const derivedValueCssVarName = getCSSVarName( derivedValue )
+		const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === derivedValueCssVarName )
 		isMarkValue = !! matchedMark
 		if ( matchedMark ) {
 			derivedValue = matchedMark.value

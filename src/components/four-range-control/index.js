@@ -200,14 +200,16 @@ const FourRangeControl = memo( props => {
 	if ( props.marks && firstValue ) {
 		// Check if the current value exists in the marks only by their CSS variable name
 		// to match in case the fallback size changes.
-		const firstMatchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === getCSSVarName( firstValue ) )
+		const firstValueCssVarName = getCSSVarName( firstValue )
+		const firstMatchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === firstValueCssVarName )
 		isMarkValue.first = !! firstMatchedMark
 		if ( firstMatchedMark ) {
 			firstValue = firstMatchedMark.value
 		}
 
 		[ 'top', 'right', 'bottom', 'left' ].forEach( side => {
-			const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === getCSSVarName( value[ side ] ) )
+			const sideCssVarName = getCSSVarName( value[ side ] )
+			const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === sideCssVarName )
 			isMarkValue[ side ] = !! matchedMark
 			if ( matchedMark ) {
 				value[ side ] = matchedMark.value
