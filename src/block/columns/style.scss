@@ -15,12 +15,13 @@
 	margin-right: auto;
 }
 
+// DEV NOTE: Let's not add this theme.json inheritance since it destroys the normal behavior of our blocks.
 // These are styles added from the block style inheritance.
-:where(.stk-has-block-style-inheritance) {
-	.stk-block-columns > .stk-block-content {
-		--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
-	}
-}
+// :where(.stk-has-block-style-inheritance) {
+// 	.stk-block-columns > .stk-block-content {
+// 		--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
+// 	}
+// }
 
 // These are styles added from the global spacing and borders.
 :where(.stk-has-design-system-spacing-and-borders) {
