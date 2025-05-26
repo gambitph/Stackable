@@ -426,3 +426,36 @@ export const getCSSVarName = value => {
 	const match = value?.match( /var\(\s*([^,)\s]+)/ )
 	return match ? match[ 1 ] : null
 }
+
+/**
+ * Convert a value from rem/em to px if the units array doesn't support it.
+ *
+ * @param {string[]} units - The list of supported units.
+ * @param {string} currentUnit - The current unit of the value.
+ * @param {string|number} currentValue - The current value to convert.
+ *
+ * @return {Object} An object containing the converted value and unit.
+ */
+export function convertToPxIfUnsupported( units, currentUnit, currentValue ) {
+	const unitMultipliers = {
+		rem: 16,
+		em: 16,
+	}
+
+	const normalizedUnit = currentUnit?.toLowerCase()
+
+	if (
+		( ! units?.length || ! units.includes( normalizedUnit ) ) &&
+		unitMultipliers[ normalizedUnit ]
+	) {
+		return {
+			value: `${ parseFloat( currentValue ) * unitMultipliers[ normalizedUnit ] }`,
+			unit: 'px',
+		}
+	}
+
+	return {
+		value: currentValue,
+		unit: currentUnit,
+	}
+}
