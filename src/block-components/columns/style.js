@@ -20,8 +20,14 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		selector: '.%s-column',
 		styleRule: '--stk-columns-spacing',
 		attrName: 'columnSpacing',
-		hasUnits: 'px',
 		responsive: 'all',
+		valueCallback: value => {
+			// Substitute with using format to work with preset controls
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 	} ] )
 
 	blockStyleGenerator.addBlockStyles( 'columnGap', [ {

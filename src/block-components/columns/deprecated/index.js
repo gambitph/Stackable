@@ -13,6 +13,12 @@ export const deprecatedAddAttributes = ( attrObject, attrNameTemplate = '%s' ) =
 				type: 'number',
 				default: '',
 			},
+			columnSpacing: {
+				stkResponsive: true,
+				stkUnits: 'px',
+				type: 'number',
+				default: '',
+			},
 		},
 		attrNameTemplate,
 		versionAdded: '3.0.0',
@@ -25,20 +31,23 @@ export const deprecateColumnAndRowGap = {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
+		const columnSpacing = getAttribute( 'columnSpacing' )
 		const columnGap = getAttribute( 'columnGap' )
 		const rowGap = getAttribute( 'rowGap' )
 
-		return typeof columnGap === 'number' || typeof rowGap === 'number'
+		return typeof columnSpacing === 'number' || typeof columnGap === 'number' || typeof rowGap === 'number'
 	},
 	migrate: attrNameTemplate => attributes => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
+		const columnSpacing = getAttribute( 'columnSpacing' )
 		const columnGap = getAttribute( 'columnGap' )
 		const rowGap = getAttribute( 'rowGap' )
 
 		const newAttributes = {
 			...attributes,
+			[ getAttrName( 'columnSpacing' ) ]: String( columnSpacing ),
 			[ getAttrName( 'columnGap' ) ]: String( columnGap ),
 			[ getAttrName( 'rowGap' ) ]: String( rowGap ),
 		}

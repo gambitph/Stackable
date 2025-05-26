@@ -5,12 +5,6 @@ export const addAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
 
 	attrObject.add( {
 		attributes: {
-			columnSpacing: {
-				stkResponsive: true,
-				stkUnits: 'px',
-				type: 'number',
-				default: '',
-			},
 			columnWrapDesktop: { // Only applies to desktops
 				type: 'boolean',
 				default: false,
@@ -29,6 +23,12 @@ export const addAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
 			},
 			rowGap: {
 				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
+			columnSpacing: {
+				stkResponsive: true,
+				stkUnits: 'px',
 				type: 'string',
 				default: '',
 			},

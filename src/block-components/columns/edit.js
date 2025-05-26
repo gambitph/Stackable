@@ -270,6 +270,7 @@ export const Controls = props => {
 							// Add a working video
 							description: __( 'Sets column paddings, the space inside the block between the block elements and the column container border', i18n ),
 						} }
+						marks={ presetMarks }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
