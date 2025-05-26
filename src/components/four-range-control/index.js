@@ -44,7 +44,9 @@ import {
 	useBlockHoverState,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
-import { extractNumbersAndUnits, getCSSVarName } from '~stackable/util'
+import {
+	extractNumbersAndUnits, getCSSVarName, convertToPxIfUnsupported,
+} from '~stackable/util'
 
 const isEqualInitial = ( props, value, firstValue ) => {
 	let isEqual = true
@@ -364,6 +366,9 @@ const FourRangeControl = memo( props => {
 					[ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
 				} else {
 					[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+					const converted = convertToPxIfUnsupported( props.units, _unit, _value )
+					_value = converted.value
+					_unit = converted.unit
 				}
 				return _value === initialValue && ( _unit === '' || _unit === unit )
 			} )
@@ -376,12 +381,11 @@ const FourRangeControl = memo( props => {
 				const markValue = props.marks[ value ]?.[ property ] || '0'
 				let [ newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
 
-				// If the attribute has no support for rem, and the
-				// preset units is rem, convert to px
-				if ( ( ! hasUnits || ( hasUnits && ! props.units.includes( 'rem' ) ) ) && unit === 'rem' ) {
-					newValue = `${ parseFloat( newValue ) * 16 }`
-					unit = 'px'
-				}
+				// If the attribute has no support for rem or em, and the
+				// preset units is rem or em, convert to px
+				const converted = convertToPxIfUnsupported( props.units, unit, newValue )
+				newValue = converted.value
+				unit = converted.unit
 
 				// Update the unit.
 				if ( unit ) {
