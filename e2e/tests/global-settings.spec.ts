@@ -78,25 +78,25 @@ test.describe( 'Global Settings', () => {
 		expect( _count ).toBeLessThan( count )
 	} )
 
-	test.skip( 'Global Typography Styles should be applied when adding a heading', async ( {
+	test( 'Global Typography Styles should be applied when adding a heading', async ( {
 		page,
 		editor,
 	} ) => {
 		await page.getByLabel( 'Stackable Settings' ).click()
 		await page.getByRole( 'button', { name: 'Global Typography' } ).click()
 
-		// Set Global Typography Styles of Heading 2 to have a font-size of 32
+		// Set Global Typography Styles of Heading 2 to have a text-transform uppercase
 		await page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' ).click()
-		await page.locator( '.stk-popover .components-base-control:nth-of-type(2)', { hasText: /Size/ } ).getByRole( 'textbox' ).fill( '32' )
+		await page.locator( '.stk-popover .components-base-control:nth-of-type(4)', { hasText: /Transform/ } ).getByRole( 'listbox' ).selectOption( 'uppercase' )
 		await page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' ).click()
 
-		// Verify if the Heading 2 in Global Typography Styles has correct font size
-		await expect( page.getByRole( 'heading', { name: 'Heading 2' } ) ).toHaveCSS( 'font-size', '32px' )
+		// Verify if the Heading 2 in Global Typography Styles has correct text-transform
+		await expect( page.getByRole( 'heading', { name: 'Heading 2' } ) ).toHaveCSS( 'text-transform', 'uppercase' )
 
 		// Open Block Settings
 		await page.getByLabel( 'Settings', { exact: true } ).click()
 
-		// Check if the added Stackable Heading Block has a font-size of 32
+		// Check if the added Stackable Heading Block has a text-transform uppercase
 		editor.insertBlock( {
 			name: 'stackable/heading',
 			attributes: {
@@ -104,7 +104,7 @@ test.describe( 'Global Settings', () => {
 			},
 		} )
 
-		await expect( editor.canvas.locator( '[data-type="stackable/heading"] > .stk-block-heading > h2[role="textbox"]' ) ).toHaveCSS( 'font-size', '32px' )
+		await expect( editor.canvas.locator( '[data-type="stackable/heading"] > .stk-block-heading > h2[role="textbox"]' ) ).toHaveCSS( 'text-transform', 'uppercase' )
 
 		// Reset Global Typography Styles
 		await page.getByLabel( 'Stackable Settings' ).click()
