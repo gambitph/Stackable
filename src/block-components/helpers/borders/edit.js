@@ -135,7 +135,6 @@ export const BorderControls = props => {
 					sliderMax={ props.borderSliderMax }
 					placeholder={ props.borderRadiusPlaceholder }
 					marks={ presetMarks }
-					hasCSSVariableValue={ true }
 				/>
 			}
 			<ShadowControl

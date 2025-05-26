@@ -234,7 +234,6 @@ const SizeControls = props => {
 				description: __( 'Adjusts the space between the button text and button borders', i18n ),
 			} }
 			marks={ presetMarks }
-			hasCSSVariableValue={ true }
 		/>
 	</> )
 }

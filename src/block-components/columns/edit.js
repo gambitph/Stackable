@@ -288,7 +288,6 @@ export const Controls = props => {
 							description: __( 'Sets the distance between two or more columns', i18n ),
 						} }
 						marks={ presetMarks }
-						hasCSSVariableValue={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -302,7 +301,6 @@ export const Controls = props => {
 							description: __( 'Sets the distance between two or more columns', i18n ),
 						} }
 						marks={ presetMarks }
-						hasCSSVariableValue={ true }
 					/>
 				</>
 			) }
