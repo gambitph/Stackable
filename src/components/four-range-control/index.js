@@ -339,7 +339,7 @@ const FourRangeControl = memo( props => {
 				]
 			}, [] )
 			newProps.renderTooltipContent = value => {
-				return props.marks[ value ]?.name || ''
+				return props.marks[ value ]?.name || props.marks[ value ]?.slug || ''
 			}
 
 			// Other necessary props for steps.
