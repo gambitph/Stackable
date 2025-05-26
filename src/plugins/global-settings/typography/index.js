@@ -349,7 +349,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	const getIsAllowReset = selector => {
 		const currentFontPair = getCurrentFontPair()
-		const typographyStyle = typographySettings[ selector ] || {}
+		const typographyStyle = cleanTypographyStyle( typographySettings[ selector ] ) || {}
 		if ( ! isEditingFontPair && currentFontPair ) {
 			// Clean style object to be consistent with changeStyles operation
 			const fontPairStyle = cleanTypographyStyle( currentFontPair.typography?.[ selector ] ) || {}
@@ -384,7 +384,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			}
 			// Clean style object to be consistent with changeStyles operation
 			const fontPairStyle = cleanTypographyStyle( currentFontPair.typography?.[ selector ] ) || {}
-			const typographyStyle = typographySettings[ selector ] || {}
+			const typographyStyle = cleanTypographyStyle( typographySettings[ selector ] ) || {}
 
 			if ( ! Array.isArray( typographyStyle ) &&
 				fontPairStyle.fontFamily &&
