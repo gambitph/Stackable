@@ -118,19 +118,20 @@ const AdvancedRangeControl = props => {
 	// If no initial value, use the given default from the settings
 	const [ isMarkMode, setIsMarkMode ] = useState( false )
 
-	// Set the markMode when at first render and when device type changes
-	useEffect( () => {
-		let isMarkValue = !! props.marks && isMarkModeDefault
-		if ( props.marks && derivedValue ) {
+	let isMarkValue = !! props.marks && isMarkModeDefault
+	if ( props.marks && derivedValue ) {
 		// Check if the current value exists in the marks only by their CSS variable name
 		// to match in case the fallback size changes.
-			const derivedValueCssVarName = getCSSVarName( derivedValue )
-			const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === derivedValueCssVarName )
-			isMarkValue = !! matchedMark
-			if ( matchedMark ) {
-				derivedValue = matchedMark.value
-			}
+		const derivedValueCssVarName = getCSSVarName( derivedValue )
+		const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === derivedValueCssVarName )
+		isMarkValue = !! matchedMark
+		if ( matchedMark ) {
+			derivedValue = matchedMark.value
 		}
+	}
+
+	// Set the markMode when device type changes
+	useEffect( () => {
 		setIsMarkMode( isMarkValue )
 	}, [ deviceType ] )
 
@@ -202,18 +203,8 @@ const AdvancedRangeControl = props => {
 	let rangeOnChange = _onChange
 	if ( isMarkMode ) {
 		rangeValue = props.marks.findIndex( mark => {
-			let _unit, _value
-			// If the derivedValue is a CSS variable, compare with mark's CSS variable.
-			// Otherwise, the derivedValue is custom, so compare with raw size and units
-			if ( typeof derivedValue === 'string' && derivedValue.startsWith( 'var' ) ) {
-				[ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
-			} else {
-				[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-				const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-				_value = converted.value
-				_unit = converted.unit
-			}
-			return _value === derivedValue && ( _unit === '' || _unit === unit )
+			const [ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
+			return _value === derivedValue
 		} )
 		rangeOnChange = ( value, property = 'value' ) => {
 			if ( value === '' ) {
@@ -266,6 +257,19 @@ const AdvancedRangeControl = props => {
 								// Set the value when changing from mark mode to custom
 								if ( isMarkMode && rangeValue !== -1 ) {
 									rangeOnChange( rangeValue, 'size' )
+								} else {
+									const rangeValue = props.marks.findIndex( mark => {
+										let _unit, _value
+
+										[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+										const converted = convertToPxIfUnsupported( props.units, _unit, _value )
+										_value = converted.value
+										_unit = converted.unit
+
+										return _value === derivedValue && ( _unit === '' || _unit === unit )
+									} )
+									const markValue = props.marks[ rangeValue ]?.value || '0'
+									_onChange( markValue )
 								}
 								setIsMarkMode( ! isMarkMode )
 							} }

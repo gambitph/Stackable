@@ -697,6 +697,14 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			return $selectors;
 		}
 
+		public function clean_font_size( $font_size, $font_size_unit = '' ) {
+			if ( is_string( $font_size ) && str_starts_with( $font_size, 'var' ) ) {
+				return $font_size;
+			}
+
+			return $font_size . $font_size_unit;
+		}
+
 		/**
 		 * Creates a CSS style rule with an added !important if necessary.
 		 *
@@ -753,7 +761,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$css['desktop'][] = $this->create_style( 'font-family', $this->get_font_family( $styles['fontFamily'] ) );
 			}
 			if ( isset( $styles['fontSize'] ) ) {
-				$css['desktop'][] = $this->create_style( 'font-size', $styles['fontSize'] . $styles['fontSizeUnit'] );
+				$css['desktop'][] = $this->create_style( 'font-size', $this->clean_font_size( $styles['fontSize'], $styles['fontSizeUnit'] ) );
 			}
 			if ( isset( $styles['fontWeight'] ) ) {
 				$css['desktop'][] = $this->create_style( 'font-weight', $styles['fontWeight'] );
@@ -782,12 +790,12 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( isset( $styles['fontSize'] ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( ! empty( $clamp_desktop_value ) ) {
-						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
+						$font_size = $this->create_style( 'font-size', $this->clean_font_size( $clamp_desktop_value . $styles['fontSizeUnit'] ) );
 					}
 				}
 			}
 			if ( isset( $styles['tabletFontSize'] ) ) {
-				$font_size = $this->create_style( 'font-size', $styles['tabletFontSize'] . $styles['tabletFontSizeUnit'] );
+				$font_size = $this->create_style( 'font-size', $this->clean_font_size( $styles['tabletFontSize'], $styles['tabletFontSizeUnit'] ) );
 			}
 			if ( ! empty( $font_size ) ) {
 				$css['tablet'][] = $font_size;
@@ -810,7 +818,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( isset( $styles['fontSize'] ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( ! empty( $clamp_desktop_value ) ) {
-						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
+						$font_size = $this->create_style( 'font-size', $this->clean_font_size( $clamp_desktop_value, $styles['fontSizeUnit'] ) );
 					}
 				}
 
@@ -818,7 +826,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( isset( $styles['tabletFontSize'] ) ) {
 					$clamp_tablet_value = $this->clamp_inherited_style( $styles['tabletFontSize'], $inherit_max );
 					if ( ! empty( $clamp_tablet_value ) ) {
-						$font_size = $this->create_style( 'font-size', $clamp_tablet_value . $styles['tabletFontSizeUnit'] );
+						$font_size = $this->create_style( $this->clean_font_size( 'font-size', $clamp_tablet_value, $styles['tabletFontSizeUnit'] ) );
 					}
 				}
 				if ( empty( $clamp_tablet_value ) ) {
@@ -831,7 +839,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 			}
 			if ( isset( $styles['mobileFontSize'] ) ) {
-				$font_size = $this->create_style( 'font-size', $styles['mobileFontSize'] . $styles['mobileFontSizeUnit'] );
+				$font_size = $this->create_style( 'font-size', $this->clean_font_size( $styles['mobileFontSize'], $styles['mobileFontSizeUnit'] ) );
 			}
 			if ( ! empty( $font_size ) ) {
 				$css['mobile'][] = $font_size;

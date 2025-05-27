@@ -191,39 +191,40 @@ const FourRangeControl = memo( props => {
 
 	const [ isFourMarkMode, setIsFourMarkMode ] = useState( false )
 
-	// Set the markMode when at first render and when device type changes
-	useEffect( () => {
-		// Is value at first render the same as a step value? If so, do mark mode
-		// at the start, or show custom
-		// If no initial value, use the given default from the settings
-		const isMarkValue = {
-			first: !! props.marks && isMarkModeDefault,
-			top: !! props.marks && isMarkModeDefault,
-			right: !! props.marks && isMarkModeDefault,
-			bottom: !! props.marks && isMarkModeDefault,
-			left: !! props.marks && isMarkModeDefault,
+	// Is value at first render the same as a step value? If so, do mark mode
+	// at the start, or show custom
+	// If no initial value, use the given default from the settings
+	const isMarkValue = {
+		first: !! props.marks && isMarkModeDefault,
+		top: !! props.marks && isMarkModeDefault,
+		right: !! props.marks && isMarkModeDefault,
+		bottom: !! props.marks && isMarkModeDefault,
+		left: !! props.marks && isMarkModeDefault,
+	}
+
+	if ( props.marks && firstValue ) {
+		// Check if the current value exists in the marks only by their CSS variable name
+		// to match in case the fallback size changes.
+		const firstValueCssVarName = getCSSVarName( firstValue )
+		const firstMatchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === firstValueCssVarName )
+		isMarkValue.first = !! firstMatchedMark
+		if ( firstMatchedMark ) {
+			firstValue = firstMatchedMark.value
 		}
 
-		if ( props.marks && firstValue ) {
-			// Check if the current value exists in the marks only by their CSS variable name
-			// to match in case the fallback size changes.
-			const firstValueCssVarName = getCSSVarName( firstValue )
-			const firstMatchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === firstValueCssVarName )
-			isMarkValue.first = !! firstMatchedMark
-			if ( firstMatchedMark ) {
-				firstValue = firstMatchedMark.value
+		[ 'top', 'right', 'bottom', 'left' ].forEach( side => {
+			const sideCssVarName = getCSSVarName( value[ side ] )
+			const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === sideCssVarName )
+			isMarkValue[ side ] = !! matchedMark
+			if ( matchedMark ) {
+				value[ side ] = matchedMark.value
 			}
+		} )
+	}
 
-			[ 'top', 'right', 'bottom', 'left' ].forEach( side => {
-				const sideCssVarName = getCSSVarName( value[ side ] )
-				const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === sideCssVarName )
-				isMarkValue[ side ] = !! matchedMark
-				if ( matchedMark ) {
-					value[ side ] = matchedMark.value
-				}
-			} )
-			setIsFourMarkMode( isMarkValue )
-		}
+	// Set the markMode when device type changes
+	useEffect( () => {
+		setIsFourMarkMode( isMarkValue )
 	}, [ deviceType ] )
 
 	const onChangeAll = _newValue => {
@@ -359,18 +360,8 @@ const FourRangeControl = memo( props => {
 		let rangeOnChange = initialOnChange
 		if ( props.marks && isMarkMode ) {
 			rangeValue = props.marks.findIndex( mark => {
-				let _unit, _value
-				// If the initialValue is a CSS variable, compare with mark's CSS variable.
-				// Otherwise, the initialValue is custom, so compare with raw size and units
-				if ( typeof initialValue === 'string' && initialValue.startsWith( 'var' ) ) {
-					[ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
-				} else {
-					[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-					const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-					_value = converted.value
-					_unit = converted.unit
-				}
-				return _value === initialValue && ( _unit === '' || _unit === unit )
+				const [ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
+				return _value === initialValue
 			} )
 			rangeOnChange = ( value, property = 'value' ) => {
 				if ( value === '' ) {
@@ -506,6 +497,17 @@ const FourRangeControl = memo( props => {
 									// Set the value when changing from mark mode to custom
 									if ( isFourMarkMode.first && rangeValueFirst !== -1 ) {
 										rangeOnChangeFirst( rangeValueFirst, 'size' )
+									} else {
+										const rangeValue = props.marks.findIndex( mark => {
+											let _unit, _value
+											[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+											const converted = convertToPxIfUnsupported( props.units, _unit, _value )
+											_value = converted.value
+											_unit = converted.unit
+											return _value === firstValue && ( ! unit || _unit === '' || _unit === unit )
+										} )
+										const markValue = props.marks[ rangeValue ]?.value || '0'
+										onChangeAll( markValue )
 									}
 									setIsFourMarkMode( prev => ( { ...prev, first: ! prev.first } ) )
 								} }
@@ -569,6 +571,17 @@ const FourRangeControl = memo( props => {
 									onClick={ () => {
 										if ( isFourMarkMode.top && rangeValueTop !== -1 ) {
 											rangeOnChangeTop( rangeValueTop, 'size' )
+										} else {
+											const rangeValue = props.marks.findIndex( mark => {
+												let _unit, _value
+												[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+												const converted = convertToPxIfUnsupported( props.units, _unit, _value )
+												_value = converted.value
+												_unit = converted.unit
+												return _value === value.top && ( ! unit || _unit === '' || _unit === unit )
+											} )
+											const markValue = props.marks[ rangeValue ]?.value || '0'
+											onChangeVertical( markValue )
 										}
 										setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
 									} }
@@ -628,6 +641,17 @@ const FourRangeControl = memo( props => {
 									onClick={ () => {
 										if ( isFourMarkMode.left && rangeValueLeft !== -1 ) {
 											rangeOnChangeLeft( rangeValueLeft, 'size' )
+										} else {
+											const rangeValue = props.marks.findIndex( mark => {
+												let _unit, _value
+												[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+												const converted = convertToPxIfUnsupported( props.units, _unit, _value )
+												_value = converted.value
+												_unit = converted.unit
+												return _value === value.left && ( ! unit || _unit === '' || _unit === unit )
+											} )
+											const markValue = props.marks[ rangeValue ]?.value || '0'
+											onChangeHorizontal( markValue )
 										}
 										setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
 									} }
@@ -693,6 +717,17 @@ const FourRangeControl = memo( props => {
 										onClick={ () => {
 											if ( isFourMarkMode.top && rangeValueTop !== -1 ) {
 												rangeOnChangeTop( rangeValueTop, 'size' )
+											} else {
+												const rangeValue = props.marks.findIndex( mark => {
+													let _unit, _value
+													[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+													const converted = convertToPxIfUnsupported( props.units, _unit, _value )
+													_value = converted.value
+													_unit = converted.unit
+													return _value === value.top && ( ! unit || _unit === '' || _unit === unit )
+												} )
+												const markValue = props.marks[ rangeValue ]?.value || '0'
+												onChangeTop( markValue )
 											}
 											setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
 										} }
@@ -755,6 +790,17 @@ const FourRangeControl = memo( props => {
 										onClick={ () => {
 											if ( isFourMarkMode.right && rangeValueRight !== -1 ) {
 												rangeOnChangeRight( rangeValueRight, 'size' )
+											} else {
+												const rangeValue = props.marks.findIndex( mark => {
+													let _unit, _value
+													[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+													const converted = convertToPxIfUnsupported( props.units, _unit, _value )
+													_value = converted.value
+													_unit = converted.unit
+													return _value === value.right && ( ! unit || _unit === '' || _unit === unit )
+												} )
+												const markValue = props.marks[ rangeValue ]?.value || '0'
+												onChangeRight( markValue )
 											}
 											setIsFourMarkMode( prev => ( { ...prev, right: ! prev.right } ) )
 										} }
@@ -817,6 +863,17 @@ const FourRangeControl = memo( props => {
 										onClick={ () => {
 											if ( isFourMarkMode.bottom && rangeValueBottom !== -1 ) {
 												rangeOnChangeBottom( rangeValueBottom, 'size' )
+											} else {
+												const rangeValue = props.marks.findIndex( mark => {
+													let _unit, _value
+													[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+													const converted = convertToPxIfUnsupported( props.units, _unit, _value )
+													_value = converted.value
+													_unit = converted.unit
+													return _value === value.bottom && ( ! unit || _unit === '' || _unit === unit )
+												} )
+												const markValue = props.marks[ rangeValue ]?.value || '0'
+												onChangeBottom( markValue )
 											}
 											setIsFourMarkMode( prev => ( { ...prev, bottom: ! prev.bottom } ) )
 										} }
@@ -879,6 +936,17 @@ const FourRangeControl = memo( props => {
 										onClick={ () => {
 											if ( isFourMarkMode.left && rangeValueLeft !== -1 ) {
 												rangeOnChangeLeft( rangeValueLeft, 'size' )
+											} else {
+												const rangeValue = props.marks.findIndex( mark => {
+													let _unit, _value
+													[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+													const converted = convertToPxIfUnsupported( props.units, _unit, _value )
+													_value = converted.value
+													_unit = converted.unit
+													return _value === value.left && ( ! unit || _unit === '' || _unit === unit )
+												} )
+												const markValue = props.marks[ rangeValue ]?.value || '0'
+												onChangeLeft( markValue )
 											}
 											setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
 										} }
