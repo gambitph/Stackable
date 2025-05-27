@@ -790,7 +790,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( isset( $styles['fontSize'] ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( ! empty( $clamp_desktop_value ) ) {
-						$font_size = $this->create_style( 'font-size', $this->clean_font_size( $clamp_desktop_value . $styles['fontSizeUnit'] ) );
+						$font_size = $this->create_style( 'font-size', $this->clean_font_size( $clamp_desktop_value, $styles['fontSizeUnit'] ) );
 					}
 				}
 			}
@@ -898,7 +898,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @param {Object} options
 		 */
 		public function clamp_inherited_style( $value, $max = 999999, $min = -999999 ) {
-			if ( isset( $value ) ) {
+			if ( isset( $value ) && is_numeric( $value ) ) {
 				$clamped_value = max( $min, min( $max, $value ) );
 				return $clamped_value !== $value ? $clamped_value : null;
 			}
