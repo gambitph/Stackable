@@ -494,8 +494,10 @@ const FourRangeControl = memo( props => {
 								size="small"
 								variant="tertiary"
 								onClick={ () => {
-									// Set the value when changing from mark mode to custom
-									if ( isFourMarkMode.first && rangeValueFirst !== -1 ) {
+									const previousMarkMode = isFourMarkMode.first
+									setIsFourMarkMode( prev => ( { ...prev, first: ! prev.first } ) )
+
+									if ( previousMarkMode && rangeValueFirst !== -1 ) {
 										rangeOnChangeFirst( rangeValueFirst, 'size' )
 									} else {
 										const rangeValue = props.marks.findIndex( mark => {
@@ -509,7 +511,6 @@ const FourRangeControl = memo( props => {
 										const markValue = props.marks[ rangeValue ]?.value || '0'
 										onChangeAll( markValue )
 									}
-									setIsFourMarkMode( prev => ( { ...prev, first: ! prev.first } ) )
 								} }
 								icon={ settings }
 							>
@@ -569,7 +570,10 @@ const FourRangeControl = memo( props => {
 									size="small"
 									variant="tertiary"
 									onClick={ () => {
-										if ( isFourMarkMode.top && rangeValueTop !== -1 ) {
+										const previousMarkMode = isFourMarkMode.top
+										setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
+
+										if ( previousMarkMode && rangeValueTop !== -1 ) {
 											rangeOnChangeTop( rangeValueTop, 'size' )
 										} else {
 											const rangeValue = props.marks.findIndex( mark => {
@@ -583,7 +587,6 @@ const FourRangeControl = memo( props => {
 											const markValue = props.marks[ rangeValue ]?.value || '0'
 											onChangeVertical( markValue )
 										}
-										setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
 									} }
 									icon={ settings }
 								>
@@ -639,7 +642,10 @@ const FourRangeControl = memo( props => {
 									size="small"
 									variant="tertiary"
 									onClick={ () => {
-										if ( isFourMarkMode.left && rangeValueLeft !== -1 ) {
+										const previousMarkMode = isFourMarkMode.left
+										setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
+
+										if ( previousMarkMode && rangeValueLeft !== -1 ) {
 											rangeOnChangeLeft( rangeValueLeft, 'size' )
 										} else {
 											const rangeValue = props.marks.findIndex( mark => {
@@ -653,7 +659,6 @@ const FourRangeControl = memo( props => {
 											const markValue = props.marks[ rangeValue ]?.value || '0'
 											onChangeHorizontal( markValue )
 										}
-										setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
 									} }
 									icon={ settings }
 								>
@@ -715,7 +720,10 @@ const FourRangeControl = memo( props => {
 										size="small"
 										variant="tertiary"
 										onClick={ () => {
-											if ( isFourMarkMode.top && rangeValueTop !== -1 ) {
+											const previousMarkMode = isFourMarkMode.top
+											setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
+
+											if ( previousMarkMode && rangeValueTop !== -1 ) {
 												rangeOnChangeTop( rangeValueTop, 'size' )
 											} else {
 												const rangeValue = props.marks.findIndex( mark => {
@@ -729,7 +737,6 @@ const FourRangeControl = memo( props => {
 												const markValue = props.marks[ rangeValue ]?.value || '0'
 												onChangeTop( markValue )
 											}
-											setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
 										} }
 										icon={ settings }
 									>
@@ -788,7 +795,10 @@ const FourRangeControl = memo( props => {
 										size="small"
 										variant="tertiary"
 										onClick={ () => {
-											if ( isFourMarkMode.right && rangeValueRight !== -1 ) {
+											const previousMarkMode = isFourMarkMode.right
+											setIsFourMarkMode( prev => ( { ...prev, right: ! prev.right } ) )
+
+											if ( previousMarkMode && rangeValueRight !== -1 ) {
 												rangeOnChangeRight( rangeValueRight, 'size' )
 											} else {
 												const rangeValue = props.marks.findIndex( mark => {
@@ -802,7 +812,6 @@ const FourRangeControl = memo( props => {
 												const markValue = props.marks[ rangeValue ]?.value || '0'
 												onChangeRight( markValue )
 											}
-											setIsFourMarkMode( prev => ( { ...prev, right: ! prev.right } ) )
 										} }
 										icon={ settings }
 									>
@@ -861,7 +870,10 @@ const FourRangeControl = memo( props => {
 										size="small"
 										variant="tertiary"
 										onClick={ () => {
-											if ( isFourMarkMode.bottom && rangeValueBottom !== -1 ) {
+											const previousMarkMode = isFourMarkMode.bottom
+											setIsFourMarkMode( prev => ( { ...prev, bottom: ! prev.bottom } ) )
+
+											if ( previousMarkMode && rangeValueBottom !== -1 ) {
 												rangeOnChangeBottom( rangeValueBottom, 'size' )
 											} else {
 												const rangeValue = props.marks.findIndex( mark => {
@@ -875,7 +887,6 @@ const FourRangeControl = memo( props => {
 												const markValue = props.marks[ rangeValue ]?.value || '0'
 												onChangeBottom( markValue )
 											}
-											setIsFourMarkMode( prev => ( { ...prev, bottom: ! prev.bottom } ) )
 										} }
 										icon={ settings }
 									>
@@ -934,7 +945,10 @@ const FourRangeControl = memo( props => {
 										size="small"
 										variant="tertiary"
 										onClick={ () => {
-											if ( isFourMarkMode.left && rangeValueLeft !== -1 ) {
+											const previousMarkMode = isFourMarkMode.left
+											setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
+
+											if ( previousMarkMode && rangeValueLeft !== -1 ) {
 												rangeOnChangeLeft( rangeValueLeft, 'size' )
 											} else {
 												const rangeValue = props.marks.findIndex( mark => {
@@ -948,7 +962,6 @@ const FourRangeControl = memo( props => {
 												const markValue = props.marks[ rangeValue ]?.value || '0'
 												onChangeLeft( markValue )
 											}
-											setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
 										} }
 										icon={ settings }
 									>
