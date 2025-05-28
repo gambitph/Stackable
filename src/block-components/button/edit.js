@@ -12,7 +12,9 @@ import {
 	AdvancedSelectControl,
 } from '~stackable/components'
 import { i18n } from 'stackable'
-import { useBlockAttributesContext, useBlockLayoutDefaults } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useBlockLayoutDefaults, usePresetControls,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -185,6 +187,9 @@ const SizeControls = props => {
 	const { getPlaceholder } = useBlockLayoutDefaults()
 
 	const buttonPaddingPlaceholder = getPlaceholder( paddingPlaceholderName, { single: false } )
+
+	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+
 	return ( <>
 		{ props.hasFullWidth && (
 			<AdvancedToggleControl
@@ -228,6 +233,7 @@ const SizeControls = props => {
 				title: __( 'Button padding', i18n ),
 				description: __( 'Adjusts the space between the button text and button borders', i18n ),
 			} }
+			marks={ presetMarks }
 		/>
 	</> )
 }

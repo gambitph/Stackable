@@ -22,6 +22,20 @@ export const deprecatedAddAttributes = ( attrObject, options ) => {
 		versionDeprecated: '3.12.0',
 		attrNameTemplate,
 	} )
+
+	attrObject.add( {
+		attributes: {
+			fontSize: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+				stkUnits: 'px',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '3.15.3',
+		attrNameTemplate,
+	} )
 }
 
 export const deprecateTypographyGradientColor = {
@@ -91,6 +105,30 @@ export const deprecateTypographyShadowColor = {
 			const { options, color } = extractRgba( shadowParentHover )
 			const hex = rgbaToHexAlpha( color )
 			newAttributes[ getAttrName( 'textShadowParentHover' ) ] = `${ options } ${ hex }`
+		}
+
+		return newAttributes
+	},
+}
+
+export const deprecateTypographyFontSize = {
+	isEligible: attrNameTemplate => attributes => {
+		const getAttrName = getAttrNameFunction( attrNameTemplate )
+		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
+
+		const fontSize = getAttribute( 'fontSize' )
+
+		return typeof fontSize === 'number'
+	},
+	migrate: attrNameTemplate => attributes => {
+		const getAttrName = getAttrNameFunction( attrNameTemplate )
+		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
+
+		const fontSize = getAttribute( 'fontSize' )
+
+		const newAttributes = {
+			...attributes,
+			[ getAttrName( 'fontSize' ) ]: String( fontSize ),
 		}
 
 		return newAttributes

@@ -1,6 +1,7 @@
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateButtonGradientColor, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
-	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor, deprecateTypographyShadowColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor, deprecateTypographyShadowColor, deprecateTypographyFontSize,
+	deprecateBlockHeight,
 } from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
@@ -8,6 +9,34 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
+	{
+		// Support the change of type for fontSize and blockHeight
+		attributes: attributes( '3.15.2' ),
+		save: withVersion( '3.15.2' )( Save ),
+		isEligible: attributes => {
+			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( 'tab%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+			return hasNumberFontSize || hasNumberBlockHeight
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'activeTab%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyShadowColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'activeTab%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),

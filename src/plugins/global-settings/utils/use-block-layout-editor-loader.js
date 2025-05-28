@@ -15,6 +15,10 @@ import { useEffect, useState } from '@wordpress/element'
 import { compact } from 'lodash'
 import { useBlockHoverState, useBlockLayoutDefaults } from '~stackable/hooks'
 
+function appendUnitIfNeeded( value, unit ) {
+	return ( typeof value === 'string' && value.trim().startsWith( 'var' ) ) ? value : `${ value }${ unit }`
+}
+
 const renderGlobalStyles = (
 	blockLayouts,
 	blockLayoutDefaults,
@@ -51,7 +55,7 @@ const renderGlobalStyles = (
 		}
 
 		let style = ''
-		if ( typeof value === 'string' ) {
+		if ( typeof value === 'string' && isNaN( Number( value ) ) ) {
 			style = `${ property }: ${ value };`
 		} else if ( typeof value === 'object' ) {
 			let defaultValue = getDefault( blockLayoutDefaults, _property, device )
@@ -72,7 +76,7 @@ const renderGlobalStyles = (
 			const bottom = value.bottom !== undefined ? value.bottom : defaultValue.bottom
 			const left = value.left !== undefined ? value.left : defaultValue.left
 
-			style = `${ property }: ${ top }${ unit } ${ right }${ unit } ${ bottom }${ unit } ${ left }${ unit };`
+			style = `${ property }: ${ appendUnitIfNeeded( top, unit ) } ${ appendUnitIfNeeded( right, unit ) } ${ appendUnitIfNeeded( bottom, unit ) } ${ appendUnitIfNeeded( left, unit ) };`
 		} else {
 			style = `${ property }: ${ value }${ unit };`
 		}

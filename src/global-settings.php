@@ -144,6 +144,26 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			return Stackable_Global_Settings::create_global_schema( $four_range_type );
 		}
+		
+		/**
+		 * This function defines a schema for a string four-range type and utilizes the
+		 * `create_global_schema` function to generate the complete schema.
+		 *
+		 * @return array The generated schema for four-range type.
+		 */
+		public static function get_string_four_range_properties() {
+			$string_four_range_type  = array(
+				'type' => 'object',
+				'properties' => array(
+					'top' => array( 'type' => 'string', 'default' => '' ),
+					'right' => array( 'type' => 'string', 'default' => '' ),
+					'bottom' => array( 'type' => 'string', 'default' => '' ),
+					'left' => array( 'type' => 'string', 'default' => '' ),
+				)
+			);
+
+			return Stackable_Global_Settings::create_global_schema( $string_four_range_type );
+		}
 
 		/**
 		 * This function defines a schema for a string type and utilizes the
@@ -279,13 +299,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						'type' => 'string',
 					),
 					'fontSize' => array(
-						'type' => 'number',
+						'type' => 'string',
 					),
 					'tabletFontSize' => array(
-						'type' => 'number',
+						'type' => 'string',
 					),
 					'mobileFontSize' => array(
-						'type' => 'number',
+						'type' => 'string',
 					),
 					'fontSizeUnit' => array(
 						'type' => 'string',
@@ -408,6 +428,30 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 							)
 						)
 					),
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_use_typography_as_presets',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Use Global Typography font sizes as preset', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_is_apply_body_to_html',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Stackable global typography apply to setting', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
 					'default' => '',
 				)
 			);
@@ -638,11 +682,27 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		}
 
 		public function form_paragraph_selector() {
-			return array_merge(
-				$this->form_tag_selector( 'p' ), // Core text.
-				$this->form_tag_selector( 'li' ), // Core lists.
-				$this->form_tag_selector( 'td' ) // Core table cells.
+			$selectors = array_merge(
+				$this->form_tag_selector( 'p' ), // Core text
+				$this->form_tag_selector( 'li' ), // Core lists
+				$this->form_tag_selector( 'td' )  // Core table cells
 			);
+		
+			// Add 'html' only if is_apply_body_to_html is true
+			$is_apply_body_to_html = get_option( 'stackable_is_apply_body_to_html' );
+			if ( $is_apply_body_to_html ) {
+				$selectors[] = 'html';
+			}
+		
+			return $selectors;
+		}
+
+		public function clean_font_size( $font_size, $font_size_unit = '' ) {
+			if ( is_string( $font_size ) && str_starts_with( $font_size, 'var' ) ) {
+				return $font_size;
+			}
+
+			return $font_size . $font_size_unit;
 		}
 
 		/**
@@ -701,7 +761,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$css['desktop'][] = $this->create_style( 'font-family', $this->get_font_family( $styles['fontFamily'] ) );
 			}
 			if ( isset( $styles['fontSize'] ) ) {
-				$css['desktop'][] = $this->create_style( 'font-size', $styles['fontSize'] . $styles['fontSizeUnit'] );
+				$css['desktop'][] = $this->create_style( 'font-size', $this->clean_font_size( $styles['fontSize'], $styles['fontSizeUnit'] ) );
 			}
 			if ( isset( $styles['fontWeight'] ) ) {
 				$css['desktop'][] = $this->create_style( 'font-weight', $styles['fontWeight'] );
@@ -730,12 +790,12 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( isset( $styles['fontSize'] ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( ! empty( $clamp_desktop_value ) ) {
-						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
+						$font_size = $this->create_style( 'font-size', $this->clean_font_size( $clamp_desktop_value, $styles['fontSizeUnit'] ) );
 					}
 				}
 			}
 			if ( isset( $styles['tabletFontSize'] ) ) {
-				$font_size = $this->create_style( 'font-size', $styles['tabletFontSize'] . $styles['tabletFontSizeUnit'] );
+				$font_size = $this->create_style( 'font-size', $this->clean_font_size( $styles['tabletFontSize'], $styles['tabletFontSizeUnit'] ) );
 			}
 			if ( ! empty( $font_size ) ) {
 				$css['tablet'][] = $font_size;
@@ -758,7 +818,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( isset( $styles['fontSize'] ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( ! empty( $clamp_desktop_value ) ) {
-						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
+						$font_size = $this->create_style( 'font-size', $this->clean_font_size( $clamp_desktop_value, $styles['fontSizeUnit'] ) );
 					}
 				}
 
@@ -766,7 +826,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( isset( $styles['tabletFontSize'] ) ) {
 					$clamp_tablet_value = $this->clamp_inherited_style( $styles['tabletFontSize'], $inherit_max );
 					if ( ! empty( $clamp_tablet_value ) ) {
-						$font_size = $this->create_style( 'font-size', $clamp_tablet_value . $styles['tabletFontSizeUnit'] );
+						$font_size = $this->create_style( $this->clean_font_size( 'font-size', $clamp_tablet_value, $styles['tabletFontSizeUnit'] ) );
 					}
 				}
 				if ( empty( $clamp_tablet_value ) ) {
@@ -779,7 +839,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 			}
 			if ( isset( $styles['mobileFontSize'] ) ) {
-				$font_size = $this->create_style( 'font-size', $styles['mobileFontSize'] . $styles['mobileFontSizeUnit'] );
+				$font_size = $this->create_style( 'font-size', $this->clean_font_size( $styles['mobileFontSize'], $styles['mobileFontSizeUnit'] ) );
 			}
 			if ( ! empty( $font_size ) ) {
 				$css['mobile'][] = $font_size;
@@ -838,7 +898,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @param {Object} options
 		 */
 		public function clamp_inherited_style( $value, $max = 999999, $min = -999999 ) {
-			if ( isset( $value ) ) {
+			if ( isset( $value ) && is_numeric( $value ) ) {
 				$clamped_value = max( $min, min( $max, $value ) );
 				return $clamped_value !== $value ? $clamped_value : null;
 			}
@@ -987,7 +1047,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						$custom_property .= '-' . $hover_state;
 					}
 
-					if ( is_string( $value ) ) {
+					if ( is_string( $value ) && ! is_numeric( $value ) ) {
 						if ( strpos( $value, 'rgb' ) ) {
 							// Convert rgba colors to hex alpha colors because
 							// the function wp_style_engine_get_stylesheet_from_css_rules() doesn't allow css values to have '('
@@ -1018,7 +1078,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						$bottom = isset( $value[ 'bottom' ] ) ? $value[ 'bottom' ] : $default_value[ 'bottom' ];
 						$left = isset( $value[ 'left' ] ) ? $value[ 'left' ] : $default_value[ 'left' ];
 
-						$style = $top . $unit . ' ' . $right . $unit . ' ' .  $bottom . $unit . ' ' .  $left  . $unit;
+						$style  = Stackable_Global_Settings::append_unit_if_needed( $top, $unit ) . ' '
+								. Stackable_Global_Settings::append_unit_if_needed( $right, $unit ) . ' '
+								. Stackable_Global_Settings::append_unit_if_needed( $bottom, $unit ) . ' '
+								. Stackable_Global_Settings::append_unit_if_needed( $left, $unit );
 					} else {
 						$style = $value . $unit;
 					}
@@ -1067,6 +1130,14 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			$generated_css .= wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			return $generated_css;
 		}
+
+		public static function append_unit_if_needed( $value, $unit ) {
+			if ( is_string( $value ) && str_starts_with( trim( $value ), 'var(' ) ) {
+				return $value;
+			}
+			return $value . $unit;
+		}
+
 
 		public static function extract_rgba($value) {
 			$options = $value;

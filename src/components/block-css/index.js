@@ -182,8 +182,10 @@ const BlockCss = props => {
 		}
 
 		if ( unit ) { // Note: this will only work for non-objects.
-			// If the value is `auto`, don't add units.
-			value = value === 'auto' ? value : `${ value }${ unit }`
+			// If the value is `auto` or a CSS variable, don't add units.
+			if ( ! ( value === 'auto' || ( typeof value === 'string' && value.startsWith( 'var' ) ) ) ) {
+				value = `${ value }${ unit }`
+			}
 		}
 		if ( format !== '%s' && format !== '' ) {
 			value = sprintf(

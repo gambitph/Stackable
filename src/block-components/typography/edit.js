@@ -3,7 +3,7 @@
  */
 import { unescape } from 'lodash'
 import { i18n } from 'stackable'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useAttributeEditHandlers, usePresetControls } from '~stackable/hooks'
 import {
 	AlignButtonsControl,
 	AdvancedRangeControl,
@@ -30,6 +30,7 @@ import {
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
 
 const TYPOGRAPHY_SHADOWS = [
 	'none',
@@ -80,6 +81,9 @@ export const Controls = props => {
 	const attributeName = getAttrNameFunction( attrNameTemplate )
 	const text = getAttribute( 'text' )
 	const [ debouncedText, setDebouncedText ] = useState( text )
+	const useTypographyAsPresets = useSelect( select =>
+		 select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
+	)
 
 	useEffect( () => {
 		if ( text !== debouncedText ) {
@@ -99,6 +103,9 @@ export const Controls = props => {
 	}, [ updateAttribute, debouncedText, text ] )
 
 	const onChangeContent = useCallback( text => setDebouncedText( escapeHTMLIfInvalid( text ) ), [] )
+
+	const presetMarks = usePresetControls( 'fontSizes' )
+		?.getPresetMarks( { customOnly: useTypographyAsPresets } ) || null
 
 	return (
 		<>
@@ -259,9 +266,9 @@ export const Controls = props => {
 				allowReset={ true }
 				attribute={ attributeName( 'fontSize' ) }
 				units={ [ 'px', 'em', 'rem' ] }
-				min={ [ 0, 0 ] }
-				sliderMax={ [ 150, 7 ] }
-				step={ [ 1, 0.05 ] }
+				min={ [ 0, 0, 0 ] }
+				sliderMax={ [ 150, 7, 7 ] }
+				step={ [ 1, 0.05, 0.05 ] }
 				placeholder={ props.sizePlaceholder }
 				responsive="all"
 				helpTooltip={ {
@@ -269,6 +276,7 @@ export const Controls = props => {
 					title: __( 'Font size', i18n ),
 					description: __( 'Sets the size of text characters', i18n ),
 				} }
+				marks={ presetMarks }
 			/>
 
 			{ hasColor && (

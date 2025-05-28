@@ -11,7 +11,7 @@ import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
-	deprecateBlockShadowColor, deprecateContainerShadowColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyFontSize, deprecateBlockHeight,
 } from '~stackable/block-components'
 
 /**
@@ -36,6 +36,31 @@ addFilter( 'stackable.table-of-contents.save.tableOfContentsClasses', 'stackable
 } )
 
 const deprecated = [
+	{
+		// Support the change of type for fontSize and blockHeight
+		attributes: attributes( '3.15.2' ),
+		save: withVersion( '3.15.2' )( Save ),
+		isEligible: attributes => {
+			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( 'title%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+			return hasNumberFontSize || hasNumberBlockHeight
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),

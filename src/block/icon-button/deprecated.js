@@ -5,10 +5,31 @@ import { withVersion } from '~stackable/higher-order'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateButtonGradientColor,
 	deprecateContainerBackgroundColorOpacity, deprecateShadowColor,
-	deprecateContainerShadowColor, deprecateBlockShadowColor,
+	deprecateContainerShadowColor, deprecateBlockShadowColor, deprecateBlockHeight,
 } from '~stackable/block-components'
 
 const deprecated = [
+	{
+		// Support the change of type for block height
+		attributes: attributes( '3.15.2' ),
+		save: withVersion( '3.15.2' )( Save ),
+		isEligible: attributes => {
+			return deprecateBlockHeight.isEligible( attributes )
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'button%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'button%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),

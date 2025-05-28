@@ -1,12 +1,6 @@
 import { deprecatedAddAttributes } from './deprecated'
 
 const typographyAttributes = {
-	fontSize: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-		stkUnits: 'px',
-	},
 	lineHeight: {
 		stkResponsive: true,
 		type: 'number',
@@ -101,6 +95,20 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 			} : {} ),
 		},
 		versionAdded: '3.0.0',
+		versionDeprecated: '',
+		attrNameTemplate,
+	} )
+
+	attrObject.add( {
+		attributes: {
+			fontSize: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+				stkUnits: 'px',
+			},
+		},
+		versionAdded: '3.15.3',
 		versionDeprecated: '',
 		attrNameTemplate,
 	} )

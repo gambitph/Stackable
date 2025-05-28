@@ -388,3 +388,74 @@ export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
 export const semverCompare = ( version1, operator, version2 ) => {
 	return compare( version1, version2, operator )
 }
+
+/**
+ * Extracts all number-unit pairs from a CSS value.
+ *
+ * @param { string } value - The CSS value to extract from.
+ * @return { Array } An array of tuples, each containing a number and its corresponding unit.
+ *
+ * @example
+ * extractNumbersAndUnits( "min(1.5rem, 2vw)" )
+ * // Returns: [["1.5", "rem"], ["2", "vw"]]
+ */
+export const extractNumbersAndUnits = value => {
+	if ( value.startsWith( 'var' ) ) {
+		return [ [ value, '' ] ]
+	}
+	// Match numbers followed by a unit, including decimals and negative values.
+	const regex = /(-?\d*\.?\d+)([a-zA-Z%]*)/g
+	const matches = [ ...value.matchAll( regex ) ]
+
+	if ( matches.length ) {
+		return matches.map( match => [ match[ 1 ], match[ 2 ] || 'px' ] )
+	}
+
+	// If the input is purely numeric (e.g., "10"), assume "px"
+	if ( /^-?\d*\.?\d+$/.test( value ) ) {
+		return [ [ value, 'px' ] ]
+	}
+	return [ [ '0', 'px' ] ]
+}
+
+// Return only the CSS variable name given a CSS variable
+export const getCSSVarName = value => {
+	if ( typeof value !== 'string' ) {
+		return null
+	}
+	const match = value?.match( /var\(\s*([^,)\s]+)/ )
+	return match ? match[ 1 ] : null
+}
+
+/**
+ * Convert a value from rem/em to px if the units array doesn't support it.
+ *
+ * @param {string[]} units - The list of supported units.
+ * @param {string} currentUnit - The current unit of the value.
+ * @param {string|number} currentValue - The current value to convert.
+ *
+ * @return {Object} An object containing the converted value and unit.
+ */
+export function convertToPxIfUnsupported( units, currentUnit, currentValue ) {
+	const unitMultipliers = {
+		rem: 16,
+		em: 16,
+	}
+
+	const normalizedUnit = currentUnit?.toLowerCase()
+
+	if (
+		( ! units?.length || ! units.includes( normalizedUnit ) ) &&
+		unitMultipliers[ normalizedUnit ]
+	) {
+		return {
+			value: `${ parseFloat( currentValue ) * unitMultipliers[ normalizedUnit ] }`,
+			unit: 'px',
+		}
+	}
+
+	return {
+		value: currentValue,
+		unit: currentUnit,
+	}
+}

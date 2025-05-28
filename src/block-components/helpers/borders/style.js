@@ -36,7 +36,14 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrName: 'borderRadius2',
 		key: 'borderTopLeftRadius2',
 		attrNameTemplate,
-		format: '%spx',
+		valueCallback: value => {
+			// Substitute with using format to work with preset controls
+			value = typeof value === 'number' ? value.toString() : value
+			if ( value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 		responsive: 'all',
 		hover: 'all',
 		valuePreCallback: value => value?.top,
@@ -48,7 +55,13 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrName: 'borderRadius2',
 		key: 'borderTopRightRadius2',
 		attrNameTemplate,
-		format: '%spx',
+		valueCallback: value => {
+			value = typeof value === 'number' ? value.toString() : value
+			if ( value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 		responsive: 'all',
 		hover: 'all',
 		valuePreCallback: value => value?.right,
@@ -60,7 +73,13 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrName: 'borderRadius2',
 		key: 'borderBottomRightRadius2',
 		attrNameTemplate,
-		format: '%spx',
+		valueCallback: value => {
+			value = typeof value === 'number' ? value.toString() : value
+			if ( value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 		responsive: 'all',
 		hover: 'all',
 		valuePreCallback: value => value?.left,
@@ -72,7 +91,13 @@ export const addBorderStyles = ( blockStyleGenerator, props = {} ) => {
 		attrName: 'borderRadius2',
 		key: 'borderBottomLeftRadius2',
 		attrNameTemplate,
-		format: '%spx',
+		valueCallback: value => {
+			value = typeof value === 'number' ? value.toString() : value
+			if ( value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 		responsive: 'all',
 		hover: 'all',
 		valuePreCallback: value => value?.bottom,

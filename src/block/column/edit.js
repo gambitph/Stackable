@@ -8,7 +8,7 @@ import blockStyles from './style'
  */
 import classnames from 'classnames'
 import { i18n, version as VERSION } from 'stackable'
-import { useBlockLayoutDefaults } from '~stackable/hooks'
+import { useBlockLayoutDefaults, usePresetControls } from '~stackable/hooks'
 import {
 	AdvancedToggleControl,
 	FourRangeControl,
@@ -164,6 +164,8 @@ const Edit = props => {
 // props used by controls to prevent rerenders of all the inspector controls.
 const InspectorControls = memo( props => {
 	const { getPlaceholder } = useBlockLayoutDefaults()
+	const presets = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+
 	return (
 		<>
 			<InspectorTabs />
@@ -187,6 +189,7 @@ const InspectorControls = memo( props => {
 						highlight: 'column-spacing',
 						defaultValue: '12px',
 					} }
+					marks={ presets }
 				/>
 			</InspectorLayoutControls>
 

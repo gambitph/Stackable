@@ -16,6 +16,10 @@ import { camelCase } from 'lodash'
  */
 import { sprintf } from '@wordpress/i18n'
 
+const isCSSVarValue = value => {
+	return typeof value === 'string' && value.startsWith( 'var' )
+}
+
 export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = __getValue( blockAttributes, getAttrName, '' )
@@ -34,10 +38,14 @@ export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'deskt
 	const tabletFontSize = getValue( 'TabletFontSize' )
 	const mobileFontSize = getValue( 'MobileFontSize' )
 
+	const desktopFontSizeUnit = isCSSVarValue( desktopFontSize ) ? '' : getValue( 'FontSizeUnit' ) || 'px'
+	const tabletFontSizeUnit = isCSSVarValue( tabletFontSize ) ? '' : getValue( 'FontSizeUnit' ) || 'px'
+	const mobileFontSizeUnit = isCSSVarValue( mobileFontSize ) ? '' : getValue( 'FontSizeUnit' ) || 'px'
+
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		styles = {
 			fontFamily: getValue( 'FontFamily' ) !== '' ? getFontFamily( getValue( 'FontFamily' ) ) : undefined,
-			fontSize: desktopFontSize !== '' ? appendImportant( `${ desktopFontSize }${ getValue( 'FontSizeUnit' ) || 'px' }`, importantSize ) : undefined,
+			fontSize: desktopFontSize !== '' ? appendImportant( `${ desktopFontSize }${ desktopFontSizeUnit }`, importantSize ) : undefined,
 			fontWeight: getValue( 'FontWeight' ) !== '' ? getValue( 'FontWeight' ) : undefined,
 			textTransform: getValue( 'TextTransform' ) !== '' ? getValue( 'TextTransform' ) : undefined,
 			letterSpacing: getValue( 'LetterSpacing' ) !== '' ? `${ getValue( 'LetterSpacing' ) }px` : undefined,
@@ -56,7 +64,7 @@ export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'deskt
 			}
 		}
 		if ( tabletFontSize ) {
-			styles.fontSize = getValue( 'TabletFontSize', `%s${ getValue( 'TabletFontSizeUnit' ) || 'px' }` )
+			styles.fontSize = getValue( 'TabletFontSize', `%s${ tabletFontSizeUnit }` )
 		}
 	} else { // Mobile.
 		styles = {
@@ -79,7 +87,7 @@ export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'deskt
 			}
 		}
 		if ( mobileFontSize ) {
-			styles.fontSize = getValue( 'MobileFontSize', `%s${ getValue( 'MobileFontSizeUnit' ) || 'px' }` )
+			styles.fontSize = getValue( 'MobileFontSize', `%s${ mobileFontSizeUnit }` )
 		}
 	}
 
