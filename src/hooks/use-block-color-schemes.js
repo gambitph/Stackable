@@ -1,5 +1,5 @@
 import { i18n } from 'stackable'
-import { kebabCase } from 'lodash'
+import { cloneDeep, kebabCase } from 'lodash'
 
 import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
@@ -19,6 +19,7 @@ export const useBlockColorSchemes = () => {
 		getScheme,
 		getColorGroups,
 		allColorSchemes,
+		colorSchemesCollection,
 		COLOR_SCHEME_OPTIONS,
 		baseColorScheme,
 		backgroundModeColorScheme,
@@ -43,6 +44,26 @@ export const useBlockColorSchemes = () => {
 			value: scheme.key,
 			disabled: ! schemeHasValue( scheme.colorScheme ),
 		} ) ) ]
+
+		const colorSchemesCollection = allColorSchemes.reduce( ( obj, _scheme ) => {
+			const scheme = cloneDeep( _scheme )
+
+			if ( ! schemeHasValue( scheme.colorScheme ) ) {
+				return obj
+			}
+			// if ( scheme.key === 'scheme-default-2' && ! schemeHasValue( scheme.colorScheme ) ) {
+			// 	scheme.colorScheme.backgroundColor.desktop = 'var(--stk-block-background-color)'
+			// }
+
+			const desktopColors = Object.fromEntries(
+				Object.entries( scheme.colorScheme ).map( ( [ key, value ] ) => [ key, value.desktop ] )
+			)
+
+			obj[ scheme.key ] = scheme
+			obj[ scheme.key ].desktopColors = desktopColors
+
+			return obj
+		}, {} )
 
 		// Returns the color scheme slug if it exists, otherwise return a fallback value
 		const getScheme = ( key, { mode = '', returnFallback = true } = {} ) => {
@@ -131,6 +152,7 @@ export const useBlockColorSchemes = () => {
 			getScheme,
 			getColorGroups,
 			allColorSchemes,
+			colorSchemesCollection,
 			COLOR_SCHEME_OPTIONS,
 			baseColorScheme: getScheme( _baseColorScheme ),
 			backgroundModeColorScheme: getScheme( _backgroundModeColorScheme, 'background' ),
@@ -142,6 +164,7 @@ export const useBlockColorSchemes = () => {
 		getScheme,
 		getColorGroups,
 		allColorSchemes,
+		colorSchemesCollection,
 		COLOR_SCHEME_OPTIONS,
 		baseColorScheme,
 		backgroundModeColorScheme,

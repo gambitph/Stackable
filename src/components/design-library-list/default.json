@@ -1,0 +1,30 @@
+{
+	"FAQ": {
+		"heading_placeholder": "Frequently Asked Questions (FAQs)",
+		"description_placeholder": "Find answers to the most common questions about [Your Product/Service]. If you can't find what you're looking for here, please contact us.",
+
+		"question-1_placeholder": "What features does your service offer?",
+    	"answer-1_placeholder": "Our service offers a comprehensive set of features designed to help you manage your tasks. Key features include Feature A, Feature B, and Feature C. You can find a full list and details on our Features Page.",
+
+		"question-2_placeholder": "Is our Service integrated with other products?",
+    	"answer-2_placeholder": "Yes, our Service offers integrations with various popular products and services to streamline your workflow. We currently integrate with Product A, Product B, and Product C. You can find more information about our current integrations and how to set them up on our [Integrations Page Link]. We are continuously working on adding more integrations.",
+
+		"question-3_placeholder": "What are the pricing options involved?",
+		"answer-3_placeholder": "We offer several pricing options to suit different needs. You can view a detailed breakdown of our plans and features on our Pricing Page. We have a free tier, monthly subscriptions, and annual plans.",
+
+		"question-4_placeholder": "What payment methods do you accept?",
+    	"answer-4_placeholder": "We accept various convenient payment methods, including major credit cards (Visa, MasterCard, American Express), and in some cases, bank transfers. You can select your preferred payment method during the checkout or subscription process.",
+
+		"question-5_placeholder": "What is your cancellation/refund policy?",
+    	"answer-5_placeholder": "Our cancellation policy allows you to cancel your subscription at any time through your account settings. Regarding refunds, our policy is we offer a 30-day money-back guarantee. Please refer to our Terms of Service Page for complete details.",
+
+		"question-6_placeholder": "What are your hours of operation?",
+		"answer-6_placeholder": "Our standard hours of operation are Monday to Friday, 9:00 AM to 5:00 PM in Pacific Standard Time (PST).",
+
+		"question-7_placeholder": "How can I contact customer support?",
+    	"answer-7_placeholder": "You can contact our customer support team through several channels: Submit a request via our Support Contact Form. Email us directly at support@email.com. Use our live chat feature available on our website during business hours. Our support hours are Monday-Friday, 9 AM - 5 PM Pacific Standard Time (PST).",
+
+		"question-8_placeholder": "How can I provide feedback?",
+    	"answer-8_placeholder": "We highly value your feedback as it helps us improve. You can provide feedback through several methods: Use the feedback form on our website, or email your suggestions or comments to feedback@email.com. You can also participate in surveys. We review all feedback submitted."
+	}
+}

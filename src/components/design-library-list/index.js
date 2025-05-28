@@ -14,67 +14,118 @@ import classnames from 'classnames'
  */
 import { Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import {
+	useState, useEffect, useRef,
+} from '@wordpress/element'
 
 const DesignLibraryList = props => {
 	const {
 		className = '',
 		designs,
 		isBusy,
-		onSelect,
 		onSelectMulti,
-		apiVersion,
-		isMultiSelectMode = false,
 		selectedDesigns = [],
 	} = props
+	const containerRef = useRef( null )
+
+	const [ scrollTop, setScrollTop ] = useState( 0 )
+	const [ forceUpdate, setForceUpdate ] = useState( 0 )
 
 	const listClasses = classnames( [
 		'ugb-design-library-items',
 		className,
-	], {
-		[ `ugb-design-library-items--columns-${ props.columns }` ]: ! isBusy && props.columns,
-	} )
+	] )
 
-	return <div className={ listClasses }>
-		{ ( designs || [] ).map( ( design, i ) => {
-			const selectedNum = isMultiSelectMode ? selectedDesigns.indexOf( design.id ) + 1 : false
-			return (
-				<DesignLibraryListItem
-					key={ i }
-					type={ design.type }
-					block={ design.block }
-					template={ design.template }
-					plan={ design.plan }
-					designId={ design.id }
-					image={ design.image }
-					label={ design.label }
-					apiVersion={ apiVersion }
-					isMultiSelectMode={ isMultiSelectMode }
-					selectedNum={ selectedNum }
-					onClick={ ( designData, callback = null ) => {
-						if ( ! isMultiSelectMode ) {
-							onSelect( designData, design, callback )
-						} else if ( onSelectMulti ) {
-							onSelectMulti( designData, callback )
-						}
-					} }
-				/>
-			)
-		} ) }
+	useEffect( () => {
+		setForceUpdate( v => v + 1 )
+		containerRef.current.scrollTop = 0
+	}, [ designs ] )
 
-		{ isBusy && <div className="ugb-design-library-search__spinner" data-testid="spinner"><Spinner /></div> }
+	return <div
+		className="ugb-modal-design-library__designs"
+		ref={ containerRef }
+		onScroll={ e => {
+			setScrollTop( e.currentTarget.scrollTop )
+		} }
+	>
+		<div className={ listClasses }>
+			{ ( designs || [] ).map( ( design, i ) => {
+				const selectedNum = selectedDesigns.indexOf( design.designId ) + 1
+				return (
+					<DesignLibraryItem
+						key={ i }
+						template={ design.content }
+						plan={ design.plan }
+						designId={ design.designId }
+						label={ design.title }
+						category={ design.categories[ 0 ] }
+						containerScheme={ props.containerScheme }
+						backgroundScheme={ props.backgroundScheme }
+						enableBackground={ props.enableBackground }
+						selectedNum={ selectedNum }
+						testId={ design.testId }
+						testKey={ i }
+						isBusy={ isBusy }
+						forceUpdate={ forceUpdate }
+						onClick={ ( designId, parsedBlocks, hasDisabledBlocks ) => onSelectMulti( designId, parsedBlocks, hasDisabledBlocks ) }
+						scrollTop={ scrollTop }
+					/>
+				)
+			} ) }
 
-		{ ! isBusy && ! ( designs || [] ).length &&
-			<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
-		}
+			{ isBusy && <div className="ugb-design-library-search__spinner" data-testid="spinner"><Spinner /></div> }
+
+			{ ! isBusy && ! ( designs || [] ).length &&
+				<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
+			}
+		</div>
 	</div>
 }
 
 DesignLibraryList.defaultProps = {
 	designs: [],
-	columns: 1,
+	columns: 3,
 	onSelect: () => {},
 	isBusy: false,
-	apiVersion: '',
 }
 
 export default DesignLibraryList
+
+const DesignLibraryItem = props => {
+	const { scrollTop, ...propsToPass } = props
+	const itemRef = useRef( null )
+	const [ cardHeight, setCardHeight ] = useState( {} )
+	const [ previewSize, setPreviewSize ] = useState( {} )
+	const [ shouldRender, setShouldRender ] = useState( props.testKey < 9 )
+
+	useEffect( () => {
+		if ( ! itemRef.current ) {
+			return
+		}
+
+		const containerRect = document.querySelector( '.ugb-modal-design-library__designs' ).getBoundingClientRect()
+		const itemRect = itemRef.current.getBoundingClientRect()
+
+		const render = ( itemRect.top > containerRect.top - 250 && itemRect.top < containerRect.bottom + 250 ) ||
+		( itemRect.bottom > containerRect.top - 250 && itemRect.bottom < containerRect.bottom + 250 )
+
+		setShouldRender( render )
+	}, [ scrollTop, props.enableBackground ] )
+
+	const getCardHeight = () => {
+		const key = props.enableBackground ? 'background' : 'noBackground'
+		return cardHeight?.[ key ] || 250
+	}
+
+	if ( ! shouldRender && ! props.selectedNum ) {
+		return <div ref={ itemRef } data-stk-design-id={ props.testId } style={ { height: `${ getCardHeight() }px` } } />
+	}
+
+	return <DesignLibraryListItem
+		ref={ itemRef }
+		previewSize={ previewSize }
+		setPreviewSize={ previewSize => setPreviewSize( previewSize ) }
+		setCardHeight={ height => setCardHeight( height ) }
+		{ ...propsToPass }
+	/>
+}

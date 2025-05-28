@@ -14,13 +14,18 @@ export const DEFAULT_COLOR_SCHEME_COLORS = {
 const NOOP = () => {}
 
 const ColorSchemePreview = ( {
-	colors, withWrapper = false, onClick = NOOP, isDisabled = false,
+	colors,
+	withWrapper = false,
+	onClick = NOOP,
+	isDisabled = false,
+	isCollapsed = false,
 } ) => {
 	const TagName = onClick === NOOP ? 'div' : Button
 	const additionalProps = onClick === NOOP ? {} : { onClick }
 
 	const classNames = classnames( 'stk-global-color-scheme__preview__background', {
 		'stk-scheme--is-disabled': isDisabled,
+		'stk-scheme--is-collapsed': isCollapsed,
 	} )
 
 	return (

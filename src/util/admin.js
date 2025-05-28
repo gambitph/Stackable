@@ -12,6 +12,7 @@ import { loadPromise, models } from '@wordpress/api'
 // them by type.
 export const importBlocks = r => {
 	const blocks = {}
+	const blockDependencies = {}
 	r.keys().forEach( key => {
 		const meta = r( key )
 		const type = meta[ 'stk-type' ]
@@ -35,11 +36,16 @@ export const importBlocks = r => {
 				} )
 			}
 		} )
+
+		if ( meta[ 'stk-block-dependency' ] ) {
+			blockDependencies[ meta.name ] = meta[ 'stk-block-dependency' ]
+		}
 	} )
+
 	Object.keys( blocks ).forEach( type => {
 		blocks[ type ] = sortBy( blocks[ type ], 'name' )
 	} )
-	return blocks
+	return [ blocks, blockDependencies ]
 }
 
 let fetchingPromise = null

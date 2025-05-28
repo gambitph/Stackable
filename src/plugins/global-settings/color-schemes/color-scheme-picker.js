@@ -106,6 +106,12 @@ const ColorSchemePicker = props => {
 
 	const currentState = `desktop${ hoverState[ currentHoverState ] }`
 
+	const changeDefaultName = ! itemInEdit?.key.startsWith( 'scheme-default' ) ? false
+		: ( itemInEdit?.key === 'scheme-default-1'
+			? itemInEdit?.name === __( 'Default Scheme', i18n )
+			: itemInEdit?.name === __( 'Background Scheme', i18n )
+		)
+
 	const showResetButton = item => {
 		return ! isEqual( item.colorScheme, DEFAULT_COLOR_SCHEME_COLORS )
 	}
@@ -197,6 +203,11 @@ const ColorSchemePicker = props => {
 		}
 
 		const currentItem = cloneDeep( itemInEdit )
+
+		if ( ! schemeHasValue( currentItem.colorScheme ) && changeDefaultName ) {
+			currentItem.name = currentItem?.key === 'scheme-default-1' ? 'Color Scheme 1' : 'Color Scheme 2'
+		}
+
 		currentItem.colorScheme[ property ][ currentState ] = color
 
 		if ( property === 'backgroundColor' && isGradient( color ) ) {
@@ -227,6 +238,11 @@ const ColorSchemePicker = props => {
 			return
 		}
 		const currentItem = cloneDeep( itemInEdit )
+
+		if ( ! schemeHasValue( currentItem.colorScheme ) && changeDefaultName ) {
+			currentItem.name = currentItem?.key === 'scheme-default-1' ? __( 'Color Scheme 1', i18n ) : __( 'Color Scheme 2', i18n )
+		}
+
 		if ( currentHoverState === 'normal' ) {
 			currentItem.colorScheme = cloneDeep( DEFAULT_COLOR_SCHEME_COLORS )
 		}
@@ -252,6 +268,14 @@ const ColorSchemePicker = props => {
 		}
 
 		const currentItem = cloneDeep( item )
+		if ( currentItem.key === 'scheme-default-1' && currentItem.name === __( 'Color Scheme 1', i18n ) ) {
+			currentItem.name = __( 'Default Scheme', i18n )
+		}
+
+		if ( currentItem.key === 'scheme-default-2' && currentItem.name === __( 'Color Scheme 2', i18n ) ) {
+			currentItem.name = __( 'Background Scheme', i18n )
+		}
+
 		currentItem.colorScheme = cloneDeep( DEFAULT_COLOR_SCHEME_COLORS )
 
 		if ( itemInEdit ) {

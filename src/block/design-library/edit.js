@@ -6,15 +6,13 @@ import {
 	i18n,
 	srcUrl,
 	settings,
+	cdnUrl,
 } from 'stackable'
 import {
 	Button,
 	ModalDesignLibrary,
 } from '~stackable/components'
 import { SVGStackableIcon } from '~stackable/icons'
-import {
-	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
-} from '~stackable/block-components'
 import { substituteCoreIfDisabled, BLOCK_STATE } from '~stackable/util'
 import { substitutionRules } from '../../blocks'
 
@@ -24,17 +22,61 @@ import { substitutionRules } from '../../blocks'
 import { __ } from '@wordpress/i18n'
 import { dispatch } from '@wordpress/data'
 import {
-	createBlock, parse, createBlocksFromInnerBlocksTemplate, getBlockVariations, getBlockType,
+	createBlock, createBlocksFromInnerBlocksTemplate, getBlockVariations, getBlockType,
 } from '@wordpress/blocks'
-import { useState } from '@wordpress/element'
-import { addFilter, applyFilters } from '@wordpress/hooks'
-import { Placeholder } from '@wordpress/components'
+import { useRef, useState } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
+import {
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	Placeholder, Modal, __experimentalVStack as VStack, Flex,
+} from '@wordpress/components'
 import { useBlockProps } from '@wordpress/block-editor'
+import apiFetch from '@wordpress/api-fetch'
+const convertBlocksToArray = block => {
+	const innerBlocks = block.innerBlocks.map( innerBlock => convertBlocksToArray( innerBlock ) )
+	return [ block.name, block.attributes, innerBlocks ]
+}
+
+const checkIfImageUrl = async value => {
+	if ( typeof value !== 'string' ) {
+		return value
+	}
+
+	let attributeUrl, libraryUrl
+
+	try {
+		attributeUrl = new URL( value )
+		libraryUrl = new URL( cdnUrl )
+	} catch ( error ) {
+		return value
+	}
+
+	if ( attributeUrl.origin !== libraryUrl.origin || ! attributeUrl.pathname.startsWith( libraryUrl.pathname ) ) {
+		return value
+	}
+
+	const matches = attributeUrl.pathname.match( /\/([^/]+\.(jpe?g|gif|png|mp4|webp))$/i )
+
+	if ( matches ) {
+		const result = await apiFetch( {
+			path: '/stackable/v3/design_library_image',
+			method: 'POST',
+			// eslint-disable-next-line camelcase
+			data: { image_url: attributeUrl.href },
+		} )
+		if ( result.success ) {
+			return result.new_url
+		}
+
+		console.error( 'Stackable Design Library:', result.message ) // eslint-disable-line no-console
+		return value
+	}
+	return value
+}
 
 // Replaces the current block with a block made out of attributes.
-const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design ) => {
+const createBlockWithAttributes = async ( blockName, attributes, innerBlocks, substituteBlocks ) => {
 	const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
-	let hasSubstituted = false
 
 	// Recursively substitute core blocks to disabled Stackable blocks
 	const traverseBlocksAndSubstitute = blocks => {
@@ -45,13 +87,9 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 
 			// Check if the new substituted block is still disabled
 			while ( isDisabled && attempts > 0 ) {
-				const previousBlockName = block[ 0 ]
-				block = substituteCoreIfDisabled( ...block, substitutionRules )
+				const _blockName = block[ 1 ].originalName || block[ 0 ]
+				block = substituteCoreIfDisabled( _blockName, block[ 1 ], block[ 2 ], substitutionRules )
 				isDisabled = block[ 0 ] in disabledBlocks && disabledBlocks[ block[ 0 ] ] === BLOCK_STATE.DISABLED
-				// If the previous block is different from the new block, substitution has been made
-				if ( ! hasSubstituted && previousBlockName !== block[ 0 ] ) {
-					hasSubstituted = true
-				}
 				attempts--
 			}
 
@@ -63,83 +101,68 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 			if ( ! Array.isArray( block[ 2 ] ) ) {
 				block[ 2 ] = []
 			}
-			return block
-		} )
-	}
 
-	// Substitute from the root of the design
-	[ blockName, attributes, innerBlocks ] = traverseBlocksAndSubstitute( [ [ blockName, attributes, innerBlocks ] ] )[ 0 ]
-
-	if ( hasSubstituted ) {
-		// eslint-disable-next-line no-alert
-		alert( 'Notice: Disabled blocks in the design will be substituted with other Stackable or core blocks' )
-	}
-
-	// const { replaceBlock } = dispatch( 'core/block-editor' )
-
-	// For wireframes, we'll need to apply any default block attributes to
-	// the blocks. We do this by ensuring that all uniqueIds are removed,
-	// this prompts the block to generate a new one and give itself a
-	// default styling.
-	if ( design.uikit === 'Wireframes' ) {
-		const hasVariations = getBlockVariations( blockName ).length > 0
-		if ( ! hasVariations ) {
-			attributes.uniqueId = ''
-		}
-
-		// Recursively remove all uniqueIds from all inner blocks.
-		const removeUniqueId = blocks => {
-			blocks.forEach( block => {
-				const blockName = block[ 0 ]
-
-				// For blocks with variations, do not remove the uniqueId
-				// since that will prompt the layout picker to show.
-				const hasVariations = !! getBlockType( blockName ) && getBlockVariations( blockName ).length > 0
-				if ( ! hasVariations && block[ 1 ].uniqueId ) {
-					delete block[ 1 ].uniqueId
-				}
-
-				removeUniqueId( block[ 2 ] )
-			} )
-		}
-
-		removeUniqueId( innerBlocks )
-	}
-
-	const shortBlockName = blockName.replace( /^\w+\//g, '' )
-
-	// Recursively update the attributes of all inner blocks for the new Color Picker
-	const migrateToNewColorPicker = blocks => {
-		blocks?.forEach( block => {
-			try {
-				let newAttributes = block[ 1 ]
-				newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
-				newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
-				newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
-				block[ 1 ] = newAttributes
-				migrateToNewColorPicker( block[ 2 ] )
-			} catch ( error ) {
+			const _block = {
+				name: block[ 0 ],
+				attributes: block[ 1 ],
+				innerBlocks: block[ 2 ],
+				isValid: true,
 			}
+			return _block
 		} )
 	}
 
-	migrateToNewColorPicker( innerBlocks )
+	if ( ! Array.isArray( disabledBlocks ) && substituteBlocks ) {
+		let block = convertBlocksToArray( {
+			name: blockName, attributes, innerBlocks,
+		} )
 
-	addFilter( `stackable.${ shortBlockName }.design.filtered-block-attributes`, 'stackable.design-library.attributes--migrate-to-new-color-picker', attributes => {
-		let newAttributes = { ...attributes }
-		newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
-		newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
-		newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
-		return newAttributes
-	} )
+		block = traverseBlocksAndSubstitute( [ block ] )[ 0 ]
+		blockName = block.name
+		attributes = block.attributes
+		innerBlocks = block.innerBlocks
+	}
 
-	const blockAttributes = applyFilters( `stackable.${ shortBlockName }.design.filtered-block-attributes`, attributes )
+	const cleanBlockAttributes = async blocks => {
+		for ( const block of blocks ) {
+			const blockName = block.name
 
-	return createBlock( blockName, blockAttributes, createBlocksFromInnerBlocksTemplate( innerBlocks ) )
-}
+			// For blocks with variations, do not remove the uniqueId
+			// since that will prompt the layout picker to show.
+			const hasVariations = !! getBlockType( blockName ) && getBlockVariations( blockName ).length > 0
+			if ( ! hasVariations && block.attributes.uniqueId ) {
+				delete block.attributes.uniqueId
+			}
 
-const createBlockWithContent = serializedBlock => {
-	return parse( serializedBlock )
+			const customAttributes = block.attributes.customAttributes
+
+			const indexToDelete = customAttributes?.findIndex( attribute => attribute[ 0 ] === 'stk-design-library__bg-target' )
+			if ( customAttributes && indexToDelete !== -1 ) {
+				block.attributes.customAttributes.splice( indexToDelete, 1 )
+			}
+
+			for ( const attributeName in block.attributes ) {
+				if ( typeof block.attributes[ attributeName ] === 'string' ) {
+					const value = String( block.attributes[ attributeName ] )
+					block.attributes[ attributeName ] = await checkIfImageUrl( value )
+				}
+			}
+
+			block.innerBlocks = await cleanBlockAttributes( block.innerBlocks )
+		}
+
+		return blocks
+	}
+
+	const block = await cleanBlockAttributes( [ {
+		name: blockName, attributes, innerBlocks,
+	} ] )
+
+	blockName = block[ 0 ].name
+	attributes = block[ 0 ].attributes
+	innerBlocks = block[ 0 ].innerBlocks
+
+	return createBlock( blockName, attributes, createBlocksFromInnerBlocksTemplate( innerBlocks ) )
 }
 
 const Edit = props => {
@@ -149,10 +172,75 @@ const Edit = props => {
 	} = props
 
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false )
+	const [ isDialogOpen, setIsDialogOpen ] = useState( false )
+
+	const designsRef = useRef( [] )
+	const disabledBlocksRef = useRef( [] )
+	const callbackRef = useRef( null )
 
 	const blockProps = useBlockProps( {
 		className: 'ugb-design-library-block',
 	} )
+
+	const addDesigns = async substituteBlocks => {
+		if ( ! designsRef.current?.length ) {
+			console.error( 'Design library selection failed: No designs found' ) // eslint-disable-line no-console
+		}
+
+		const designs = designsRef.current
+		const blocks = []
+
+		for ( const designData of designs ) {
+			const {
+				name, attributes, innerBlocks,
+			} = designData
+			if ( name && attributes ) {
+				const block = await createBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [], substituteBlocks )
+				blocks.push( block )
+			} else {
+				console.error( 'Design library selection failed: No block data found' ) // eslint-disable-line no-console
+			}
+		}
+
+		if ( blocks.length ) {
+			dispatch( 'core/block-editor' ).replaceBlocks( clientId, blocks )
+			if ( callbackRef.current ) {
+				callbackRef.current()
+			}
+		}
+	}
+
+	const onClickTertiary = () => {
+		const disabledBlocks = disabledBlocksRef.current
+
+		const settingsPageUrl = `/wp-admin/options-general.php?page=stackable`
+		const newWindow = window.open( settingsPageUrl, '_blank' )
+
+		if ( newWindow ) {
+			newWindow.onload = () => { // Wait for the new page to fully load
+				setTimeout( () => {
+					try {
+						const blocksTab = newWindow.document.getElementById( 'stk-tab__blocks' )
+						if ( blocksTab ) {
+							blocksTab.click()
+
+							newWindow.postMessage( {
+								type: 'STK_ENABLE_BLOCKS', blocks: disabledBlocks, source: 'STK_DESIGN_LIBRARY',
+							}, window.location.origin )
+						}
+					} catch ( error ) {}
+				}, 5 )
+			}
+			newWindow.focus()
+		}
+	}
+
+	const onClickSecondary = async () => {
+		await addDesigns( false )
+	}
+	const onClickPrimary = async () => {
+		await addDesigns( true )
+	}
 
 	if ( attributes.previewMode ) {
 		const src = previewImage.match( /https?:/i ) ? previewImage
@@ -187,34 +275,73 @@ const Edit = props => {
 					onClose={ () => {
 						setIsLibraryOpen( false )
 					} }
-					onSelect={ ( _designData, _design, callback = null ) => {
-						const designData = ! Array.isArray( _designData ) ? [ _designData ] : _designData
-						const designs = ! Array.isArray( _design ) ? [ _design ] : _design
+					onSelect={ async ( _designs, callback ) => {
+						const designs = []
+						let disabledBlocks = new Set()
 
-						const blocks = designData.reduce( ( blocks, designData, i ) => {
-							const design = designs[ i ]
-							const {
-								name, attributes, innerBlocks, serialized,
-							} = designData
-							if ( name && attributes ) {
-								const block = createBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [], design )
-								blocks.push( block )
-							} else if ( serialized ) {
-								blocks.push( createBlockWithContent( serialized ) )
-							} else {
-								console.error( 'Design library selection failed: No block data found' ) // eslint-disable-line no-console
-							}
-							return blocks
-						}, [] )
+						_designs.forEach( design => {
+							const { designData, blocksForSubstitution } = design
 
-						if ( blocks.length ) {
-							dispatch( 'core/block-editor' ).replaceBlocks( clientId, blocks )
-							if ( callback ) {
-								callback()
+							if ( blocksForSubstitution.size ) {
+								disabledBlocks = disabledBlocks.union( blocksForSubstitution )
 							}
+
+							designs.push( designData )
+						} )
+
+						designsRef.current = designs
+						disabledBlocksRef.current = disabledBlocks
+						callbackRef.current = callback
+
+						if ( disabledBlocks.size ) {
+							setIsDialogOpen( true )
+							return
 						}
+
+						await addDesigns( false )
 					} }
 				/>
+			}
+			{ isDialogOpen &&
+				<Modal
+					className="ugb-design-library__confirm-dialog"
+					__experimentalHideHeader
+					onRequestClose={ () => setIsDialogOpen( false ) }
+				>
+					<VStack spacing={ 8 }>
+						<div>
+							<span>{ __( 'The designs you have selected contain the following disabled blocks:', i18n ) }</span>
+							<ul>
+								{ disabledBlocksRef.current && [ ...disabledBlocksRef.current ].map( ( block, i ) => <li key={ i }>{ block }</li> ) }
+							</ul>
+							<span> { __( 'These blocks can be enabled in the Stackable settings page. Do you want to keep the disabled blocks or substitute them with other Stackable or core blocks?', i18n ) }</span>
+						</div>
+						<Flex direction="column" align="flex-end">
+							<Button
+								__next40pxDefaultSize
+								variant="tertiary"
+								onClick={ () => onClickTertiary() }
+							>
+								{ __( 'Visit the settings page and enable the blocks', i18n ) }
+							</Button>
+							<Button
+								__next40pxDefaultSize
+								variant="primary"
+								onClick={ () => onClickPrimary() }
+							>
+								{ __( 'Add patterns and substitute missing blocks', i18n ) }
+							</Button>
+							<Button
+								__next40pxDefaultSize
+								variant="secondary"
+								onClick={ () => onClickSecondary() }
+							>
+								{ __( 'Add patterns without substituting missing blocks', i18n ) }
+							</Button>
+						</Flex>
+					</VStack>
+
+				</Modal>
 			}
 		</div>
 	)
