@@ -26,7 +26,7 @@ import { settings as stackableSettings } from 'stackable'
  * WordPress dependencies
  */
 import {
-	memo, useState, useEffect,
+	memo, useState, useEffect, useRef,
 } from '@wordpress/element'
 import { Button } from '@wordpress/components'
 import { settings } from '@wordpress/icons'
@@ -117,6 +117,8 @@ const AdvancedRangeControl = props => {
 	// at the start, or show custom
 	// If no initial value, use the given default from the settings
 	const [ isMarkMode, setIsMarkMode ] = useState( false )
+	// Ensure the convesion of value from preset to custom with regards to the unit is donce once.
+	const isConversionDone = useRef( false )
 
 	let isMarkValue = !! props.marks && isMarkModeDefault
 	if ( props.marks && derivedValue ) {
@@ -203,8 +205,16 @@ const AdvancedRangeControl = props => {
 	let rangeOnChange = _onChange
 	if ( isMarkMode ) {
 		rangeValue = props.marks.findIndex( mark => {
-			const [ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
-			return _value === derivedValue
+			let _unit, _value
+			// If the derivedValue is a CSS variable, compare with mark's CSS variable.
+			// Otherwise, the derivedValue is custom from the previous switch from custom to preset mode,
+			// so compare with raw size and units to convert to preset.
+			if ( typeof derivedValue === 'string' && derivedValue.startsWith( 'var' ) ) {
+				[ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
+			} else {
+				[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+			}
+			return _value === derivedValue && ( _unit === '' || _unit === unit )
 		} )
 		rangeOnChange = ( value, property = 'value' ) => {
 			if ( value === '' ) {
@@ -230,6 +240,30 @@ const AdvancedRangeControl = props => {
 			}
 
 			_onChange( newValue )
+			isConversionDone.current = false
+		}
+	} else if ( typeof derivedValue === 'string' && derivedValue.startsWith( 'var' ) ) {
+		// If the derivedValue is a preset and currently not in mark mode, the derivedValue is from
+		// the previous switch from preset to custom mode. Convert to custom.
+		const currentSize = props.marks.find( mark => {
+			return derivedValue === mark.value
+		} )?.size
+		const [ _newValue, _unit ] = extractNumbersAndUnits( currentSize )[ 0 ]
+		rangeValue = _newValue
+
+		if ( _unit && ! isConversionDone.current ) {
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			setAttributes( { [ unitAttrName ]: _unit } )
+			if ( props.onChangeUnit ) {
+				props.onChangeUnit( _unit )
+			}
+			isConversionDone.current = true
+		}
+		// Since the actual previous value is a preset, force the new custom value
+		// when changing unit
+		controlProps.onChangeUnit = ( unit, unitAttrName ) => {
+			setAttributes( { [ unitAttrName ]: unit } )
+			_onChange( _newValue )
 		}
 	}
 
@@ -254,23 +288,6 @@ const AdvancedRangeControl = props => {
 							size="small"
 							variant="tertiary"
 							onClick={ () => {
-								// Set the value when changing from mark mode to custom
-								if ( isMarkMode && rangeValue !== -1 ) {
-									rangeOnChange( rangeValue, 'size' )
-								} else {
-									const rangeValue = props.marks.findIndex( mark => {
-										let _unit, _value
-
-										[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-										const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-										_value = converted.value
-										_unit = converted.unit
-
-										return _value === derivedValue && ( _unit === '' || _unit === unit )
-									} )
-									const markValue = props.marks[ rangeValue ]?.value || '0'
-									_onChange( markValue )
-								}
 								setIsMarkMode( ! isMarkMode )
 							} }
 							icon={ settings }
