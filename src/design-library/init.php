@@ -38,7 +38,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'rest_api_init', array( $this, 'register_route' ) );
-			add_filter( 'stackable_design_library_retreive_body', array( $this, 'replace_dev_mode_urls' ) );
 
 			add_filter( 'stackable_design_library_get_premium_designs', array( $this, 'get_designs_with_disabled_blocks' ) );
 			add_filter( 'stackable_design_library_get_premium_designs', array( $this, 'get_premium_designs' ) );
