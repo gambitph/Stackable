@@ -25,7 +25,7 @@ import { useControlHandlers } from '../base-control2/hooks'
 import { Tooltip } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
-	Fragment, useState, memo, useEffect,
+	Fragment, useState, memo, useEffect, useRef,
 } from '@wordpress/element'
 import { settings } from '@wordpress/icons'
 import { dispatch } from '@wordpress/data'
@@ -190,6 +190,16 @@ const FourRangeControl = memo( props => {
 					: { desktop: _valueDesktop?.left, tablet: _valueTablet?.left }
 
 	const [ isFourMarkMode, setIsFourMarkMode ] = useState( false )
+	// Ensure the convesion of value from preset to custom with regards to the unit is donce once.
+	const isConversionDone = useRef( {
+		first: false,
+		top: false,
+		right: false,
+		bottom: false,
+		left: false,
+		vertical: false,
+		horizontal: false,
+	} )
 
 	// Is value at first render the same as a step value? If so, do mark mode
 	// at the start, or show custom
@@ -318,7 +328,7 @@ const FourRangeControl = memo( props => {
 		} ) )
 	}
 	// Support for steps. Modify the props to make the range control show steps.
-	const stepSupport = ( isMarkMode, initialValue, initialOnChange ) => {
+	const stepSupport = ( isMarkMode, initialValue, initialOnChange, conversionKey = null ) => {
 		const newProps = { ...propsToPass }
 
 		if ( props.marks && isMarkMode ) {
@@ -360,8 +370,16 @@ const FourRangeControl = memo( props => {
 		let rangeOnChange = initialOnChange
 		if ( props.marks && isMarkMode ) {
 			rangeValue = props.marks.findIndex( mark => {
-				const [ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
-				return _value === initialValue
+				let _unit, _value
+				// If the initialValue is a CSS variable, compare with mark's CSS variable.
+				// Otherwise, the initialValue is custom from the previous switch from custom to preset mode,
+				// so compare with raw size and units to convert to preset.
+				if ( typeof initialValue === 'string' && initialValue.startsWith( 'var' ) ) {
+					[ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
+				} else {
+					[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+				}
+				return _value === initialValue && ( _unit === '' || _unit === unit )
 			} )
 			rangeOnChange = ( value, property = 'value' ) => {
 				if ( value === '' ) {
@@ -388,11 +406,39 @@ const FourRangeControl = memo( props => {
 				}
 
 				initialOnChange( newValue )
+				isConversionDone.current[ conversionKey ] = false
+			}
+		} else if ( typeof initialValue === 'string' && initialValue.startsWith( 'var' ) &&
+			( ( isLocked && conversionKey === 'first' ) ||
+			( ! isLocked && [ 'top', 'right', 'left', 'bottom' ].includes( conversionKey ) ) ||
+			( isLocked && props.vhMode && [ 'vertical', 'horizontal' ].includes( conversionKey ) ) )
+		) {
+			// If the derivedValue is a preset and currently not in mark mode, the derivedValue is from
+			// the previous switch from preset to custom mode. Convert to custom.
+			const currentSize = props.marks.find( mark => {
+				return initialValue === mark.value
+			} )?.size
+			const [ _newValue, _unit ] = extractNumbersAndUnits( currentSize )[ 0 ]
+			rangeValue = _newValue
+
+			if ( _unit && conversionKey && ! isConversionDone.current[ conversionKey ] ) {
+				isConversionDone.current[ conversionKey ] = true
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				setAttributes( { [ unitAttrName ]: _unit } )
+				if ( props.onChangeUnit ) {
+					props.onChangeUnit( _unit )
+				}
+			}
+			// Since the actual previous value is a preset, force the new custom value
+			// when changing unit
+			controlProps.onChangeUnit = ( unit, unitAttrName ) => {
+				initialOnChange( _newValue )
+				setAttributes( { [ unitAttrName ]: unit } )
 			}
 		}
 
 		return [
-			newProps, rangeValue, rangeOnChange,
+			newProps, parseFloat( rangeValue ), rangeOnChange,
 		]
 	}
 
@@ -413,42 +459,49 @@ const FourRangeControl = memo( props => {
 		isFourMarkMode.first,
 		firstValue,
 		onChangeAll,
+		'first',
 	)
 
 	const [ propsToPassTop, rangeValueTop, rangeOnChangeTop ] = stepSupport(
 		isFourMarkMode.top,
 		value.top,
 		onChangeTop,
+		'top'
 	)
 
 	const [ propsToPassRight, rangeValueRight, rangeOnChangeRight ] = stepSupport(
 		isFourMarkMode.right,
 		value.right,
 		onChangeRight,
+		'right'
 	)
 
 	const [ propsToPassBottom, rangeValueBottom, rangeOnChangeBottom ] = stepSupport(
 		isFourMarkMode.bottom,
 		value.bottom,
 		onChangeBottom,
+		'bottom'
 	)
 
 	const [ propsToPassLeft, rangeValueLeft, rangeOnChangeLeft ] = stepSupport(
 		isFourMarkMode.left,
 		value.left,
 		onChangeLeft,
+		'left'
 	)
 
 	const [ propsToPassVertical, rangeValueVertical, rangeOnChangeVertical ] = stepSupport(
 		isFourMarkMode.top,
 		value.top,
 		onChangeVertical,
+		'vertical'
 	)
 
 	const [ propsToPassHorizontal, rangeValueHorizontal, rangeOnChangeHorizontal ] = stepSupport(
 		isFourMarkMode.left,
 		value.left,
 		onChangeHorizontal,
+		'horizontal'
 	)
 
 	return (
@@ -494,23 +547,7 @@ const FourRangeControl = memo( props => {
 								size="small"
 								variant="tertiary"
 								onClick={ () => {
-									const previousMarkMode = isFourMarkMode.first
 									setIsFourMarkMode( prev => ( { ...prev, first: ! prev.first } ) )
-
-									if ( previousMarkMode && rangeValueFirst !== -1 ) {
-										rangeOnChangeFirst( rangeValueFirst, 'size' )
-									} else {
-										const rangeValue = props.marks.findIndex( mark => {
-											let _unit, _value
-											[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-											const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-											_value = converted.value
-											_unit = converted.unit
-											return _value === firstValue && ( ! unit || _unit === '' || _unit === unit )
-										} )
-										const markValue = props.marks[ rangeValue ]?.value || '0'
-										onChangeAll( markValue )
-									}
 								} }
 								icon={ settings }
 							>
@@ -570,23 +607,7 @@ const FourRangeControl = memo( props => {
 									size="small"
 									variant="tertiary"
 									onClick={ () => {
-										const previousMarkMode = isFourMarkMode.top
 										setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
-
-										if ( previousMarkMode && rangeValueTop !== -1 ) {
-											rangeOnChangeTop( rangeValueTop, 'size' )
-										} else {
-											const rangeValue = props.marks.findIndex( mark => {
-												let _unit, _value
-												[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-												const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-												_value = converted.value
-												_unit = converted.unit
-												return _value === value.top && ( ! unit || _unit === '' || _unit === unit )
-											} )
-											const markValue = props.marks[ rangeValue ]?.value || '0'
-											onChangeVertical( markValue )
-										}
 									} }
 									icon={ settings }
 								>
@@ -642,23 +663,7 @@ const FourRangeControl = memo( props => {
 									size="small"
 									variant="tertiary"
 									onClick={ () => {
-										const previousMarkMode = isFourMarkMode.left
 										setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
-
-										if ( previousMarkMode && rangeValueLeft !== -1 ) {
-											rangeOnChangeLeft( rangeValueLeft, 'size' )
-										} else {
-											const rangeValue = props.marks.findIndex( mark => {
-												let _unit, _value
-												[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-												const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-												_value = converted.value
-												_unit = converted.unit
-												return _value === value.left && ( ! unit || _unit === '' || _unit === unit )
-											} )
-											const markValue = props.marks[ rangeValue ]?.value || '0'
-											onChangeHorizontal( markValue )
-										}
 									} }
 									icon={ settings }
 								>
@@ -720,23 +725,7 @@ const FourRangeControl = memo( props => {
 										size="small"
 										variant="tertiary"
 										onClick={ () => {
-											const previousMarkMode = isFourMarkMode.top
 											setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
-
-											if ( previousMarkMode && rangeValueTop !== -1 ) {
-												rangeOnChangeTop( rangeValueTop, 'size' )
-											} else {
-												const rangeValue = props.marks.findIndex( mark => {
-													let _unit, _value
-													[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-													const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-													_value = converted.value
-													_unit = converted.unit
-													return _value === value.top && ( ! unit || _unit === '' || _unit === unit )
-												} )
-												const markValue = props.marks[ rangeValue ]?.value || '0'
-												onChangeTop( markValue )
-											}
 										} }
 										icon={ settings }
 									>
@@ -795,23 +784,7 @@ const FourRangeControl = memo( props => {
 										size="small"
 										variant="tertiary"
 										onClick={ () => {
-											const previousMarkMode = isFourMarkMode.right
 											setIsFourMarkMode( prev => ( { ...prev, right: ! prev.right } ) )
-
-											if ( previousMarkMode && rangeValueRight !== -1 ) {
-												rangeOnChangeRight( rangeValueRight, 'size' )
-											} else {
-												const rangeValue = props.marks.findIndex( mark => {
-													let _unit, _value
-													[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-													const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-													_value = converted.value
-													_unit = converted.unit
-													return _value === value.right && ( ! unit || _unit === '' || _unit === unit )
-												} )
-												const markValue = props.marks[ rangeValue ]?.value || '0'
-												onChangeRight( markValue )
-											}
 										} }
 										icon={ settings }
 									>
@@ -870,23 +843,7 @@ const FourRangeControl = memo( props => {
 										size="small"
 										variant="tertiary"
 										onClick={ () => {
-											const previousMarkMode = isFourMarkMode.bottom
 											setIsFourMarkMode( prev => ( { ...prev, bottom: ! prev.bottom } ) )
-
-											if ( previousMarkMode && rangeValueBottom !== -1 ) {
-												rangeOnChangeBottom( rangeValueBottom, 'size' )
-											} else {
-												const rangeValue = props.marks.findIndex( mark => {
-													let _unit, _value
-													[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-													const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-													_value = converted.value
-													_unit = converted.unit
-													return _value === value.bottom && ( ! unit || _unit === '' || _unit === unit )
-												} )
-												const markValue = props.marks[ rangeValue ]?.value || '0'
-												onChangeBottom( markValue )
-											}
 										} }
 										icon={ settings }
 									>
@@ -945,23 +902,7 @@ const FourRangeControl = memo( props => {
 										size="small"
 										variant="tertiary"
 										onClick={ () => {
-											const previousMarkMode = isFourMarkMode.left
 											setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
-
-											if ( previousMarkMode && rangeValueLeft !== -1 ) {
-												rangeOnChangeLeft( rangeValueLeft, 'size' )
-											} else {
-												const rangeValue = props.marks.findIndex( mark => {
-													let _unit, _value
-													[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
-													const converted = convertToPxIfUnsupported( props.units, _unit, _value )
-													_value = converted.value
-													_unit = converted.unit
-													return _value === value.left && ( ! unit || _unit === '' || _unit === unit )
-												} )
-												const markValue = props.marks[ rangeValue ]?.value || '0'
-												onChangeLeft( markValue )
-											}
 										} }
 										icon={ settings }
 									>
