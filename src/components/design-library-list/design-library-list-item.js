@@ -312,9 +312,9 @@ const DesignPreview = ( {
 	useEffect( () => {
 		if ( prevEnableBackground !== enableBackground ) {
 			// Adjust scale if the background was toggled
-			setTimeout( adjustScale, 50 )
+			adjustScale()
 		}
-	}, [ blocks ] )
+	}, [ blocks, enableBackground ] )
 
 	return (
 		<body
