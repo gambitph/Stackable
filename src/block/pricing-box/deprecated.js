@@ -12,6 +12,7 @@ import compareVersions from 'compare-versions'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateBlockHeight,
+	deprecateInnerBlockRowGapAndContainerHeight,
 } from '~stackable/block-components'
 /**
  * WordPress dependencies
@@ -39,9 +40,10 @@ const deprecated = [
 		attributes: attributes( '3.15.2' ),
 		save: withVersion( '3.15.2' )( Save ),
 		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
-			return isNotV4 || hasNumberBlockHeight
+			const hasNumberInnerBlockRowGapAndContainerHeight = deprecateInnerBlockRowGapAndContainerHeight.isEligible( '%s' )( attributes )
+
+			return hasNumberBlockHeight || hasNumberInnerBlockRowGapAndContainerHeight
 		},
 		migrate: ( attributes, innerBlocks ) => {
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
@@ -99,6 +101,7 @@ const deprecated = [
 			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+			newAttributes = deprecateInnerBlockRowGapAndContainerHeight.migrate( '%s' )( newAttributes )
 
 			return newAttributes
 		},
@@ -110,9 +113,8 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasBlockShadow || hasContainerShadow || isNotV4
+			return hasBlockShadow || hasContainerShadow
 		},
 		migrate: ( attributes, innerBlocks ) => {
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
@@ -180,9 +182,8 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasContainerOpacity || hasBlockOpacity || isNotV4
+			return hasContainerOpacity || hasBlockOpacity
 		},
 		migrate: ( attributes, innerBlocks ) => {
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
@@ -248,11 +249,6 @@ const deprecated = [
 		// layout & containers work.
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
-		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
-
-			return isNotV4
-		},
 		migrate: ( attributes, innerBlocks ) => {
 			let newAttributes = {
 				...attributes,
