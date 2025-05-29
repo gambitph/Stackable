@@ -11,7 +11,7 @@ export const deprecatedAddAttributes = ( attrObject, attrNameTemplate = '%s' ) =
 		},
 		attrNameTemplate,
 		versionAdded: '3.0.0',
-		versionDeprecated: '3.15.3',
+		versionDeprecated: '3.16.0',
 	} )
 }
 

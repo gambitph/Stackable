@@ -108,7 +108,7 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 				stkUnits: 'px',
 			},
 		},
-		versionAdded: '3.15.3',
+		versionAdded: '3.16.0',
 		versionDeprecated: '',
 		attrNameTemplate,
 	} )

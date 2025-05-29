@@ -89,8 +89,8 @@ addFilter( 'stackable.card.save.innerClassNames', 'stackable/3.0.2', ( output, p
 const deprecated = [
 	{
 		// Support the change of type for block height
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
 			const hasNumberInnerBlockRowGapAndContainerHeight = deprecateInnerBlockRowGapAndContainerHeight.isEligible( '%s' )( attributes )

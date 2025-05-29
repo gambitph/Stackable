@@ -10,8 +10,8 @@ import { withVersion } from '~stackable/higher-order'
 const deprecated = [
 	{
 		// Support the change of type for fontSize and blockHeight
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			const hasDigitFontSize = deprecateTypographyFontSize.isEligible( 'digit%s' )( attributes )
 			const hasLabelFontSize = deprecateTypographyFontSize.isEligible( 'label%s' )( attributes )

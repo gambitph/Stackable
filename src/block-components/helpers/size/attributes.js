@@ -52,7 +52,7 @@ export const addSizeAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
 			},
 		},
 		attrNameTemplate,
-		versionAdded: '3.15.3',
+		versionAdded: '3.16.0',
 		versionDeprecated: '',
 	} )
 }

@@ -36,8 +36,8 @@ addFilter( 'stackable.heading.save.blockClassNames', 'stackable/3.6.1', ( output
 const deprecated = [
 	{
 		// Support the change of type for fontSize and blockHeight
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( '%s' )( attributes )
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )

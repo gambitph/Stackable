@@ -44,8 +44,8 @@ addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureI
 const deprecated = [
 	{
 		// Support the change of type for fontSize and blockHeight
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			const hasNumberFontSizeTitle = deprecateTypographyFontSize.isEligible( 'title%s' )( attributes )
 			const hasNumberFontSizeCategory = deprecateTypographyFontSize.isEligible( 'category%s' )( attributes )

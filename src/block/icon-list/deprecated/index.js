@@ -70,8 +70,8 @@ const getEquivalentIconSize = iconSize => {
 const deprecated = [
 	{
 		// Support the change of type for font size and  block height
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( '%s' )( attributes )
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )

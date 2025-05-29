@@ -63,8 +63,8 @@ addFilter( 'stackable.feature-grid.save.blockClassNames', 'stackable/3.1.0', ( o
 const deprecated = [
 	{
 		// Support the change of type for block height and gaps
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			const hasColumnFit = !! attributes.columnFit
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )

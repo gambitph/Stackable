@@ -10,8 +10,8 @@ import {
 const deprecated = [
 	{
 		// Support the change of type for block height
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )

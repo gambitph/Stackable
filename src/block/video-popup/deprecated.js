@@ -30,8 +30,8 @@ addFilter( 'stackable.video-popup.save.div.content', 'stackable/3.12.14', ( outp
 const deprecated = [
 	{
 		// Support the change of type for block height
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			return deprecateBlockHeight.isEligible( attributes )
 		},
