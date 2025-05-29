@@ -211,8 +211,14 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		styleRule: 'columnGap',
 		attrName: 'innerBlockColumnGap',
 		key: 'innerBlockColumnGapEdit',
-		format: `%spx`,
 		responsive: 'all',
+		valueCallback: value => {
+			// Substitute with using format to work with preset controls
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
 		dependencies: [
 			'innerBlockOrientation',
@@ -225,8 +231,14 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		styleRule: 'columnGap',
 		attrName: 'innerBlockColumnGap',
 		key: 'innerBlockColumnGapSave',
-		format: `%spx`,
 		responsive: 'all',
+		valueCallback: value => {
+			// Substitute with using format to work with preset controls
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
 		dependencies: [
 			'innerBlockOrientation',
@@ -241,11 +253,17 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		styleRule: 'rowGap',
 		attrName: 'innerBlockRowGap',
 		key: 'innerBlockRowGapEdit',
-		format: `%spx`,
 		responsive: 'all',
 		enabledCallback: getAttribute => {
 			return getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ||
 				( getAttribute( 'innerBlockOrientation' ) === 'horizontal' && getAttribute( 'innerBlockWrap' ) === 'wrap' )
+		},
+		valueCallback: value => {
+			// Substitute with using format to work with preset controls
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
 		},
 		dependencies: [
 			'innerBlockOrientation',
@@ -259,8 +277,14 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		styleRule: 'rowGap',
 		attrName: 'innerBlockRowGap',
 		key: 'innerBlockRowGapSave',
-		format: `%spx`,
 		responsive: 'all',
+		valueCallback: value => {
+			// Substitute with using format to work with preset controls
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 		enabledCallback: getAttribute => {
 			return getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ||
 			( getAttribute( 'innerBlockOrientation' ) === 'horizontal' && getAttribute( 'innerBlockWrap' ) === 'wrap' )

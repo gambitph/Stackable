@@ -248,8 +248,15 @@ const AdvancedRangeControl = props => {
 		const currentSize = props.marks.find( mark => {
 			return derivedValue === mark.value
 		} )?.size
-		const [ _newValue, _unit ] = extractNumbersAndUnits( currentSize )[ 0 ]
-		rangeValue = _newValue
+		let [ _newValue, _unit ] = extractNumbersAndUnits( currentSize )[ 0 ]
+
+		// If the attribute has no support for rem or em, and the
+		// preset units is rem or em, convert to px
+		const converted = convertToPxIfUnsupported( props.units, _unit, _newValue )
+		_newValue = converted.value
+		_unit = converted.unit
+
+		rangeValue = parseFloat( _newValue )
 
 		if ( _unit && ! isConversionDone.current ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
