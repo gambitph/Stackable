@@ -140,7 +140,7 @@ const Spacing = props => {
 
 	// Add additional presets for setting margins and paddings to None
 	const nonePreset = {
-		name: 'None',
+		name: __( 'None', i18n ),
 		size: '0rem',
 		slug: 'none',
 	}
