@@ -1,4 +1,8 @@
-export const addAttributes = attrObject => {
+import { deprecatedAddAttributes } from './deprecated/index'
+
+export const addAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
+	deprecatedAddAttributes( attrObject, attrNameTemplate )
+
 	// Assume that the block uses the BlockDiv Block Component and has a
 	// uniqueId attribute
 	attrObject.add( {
@@ -53,13 +57,26 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.add( {
+		attributes: {
 			innerBlockRowGap: {
 				stkResponsive: true,
-				type: 'number',
+				type: 'string',
+				default: '',
+			},
+			containerHeight: {
+				stkResponsive: true,
+				type: 'string',
 				default: '',
 			},
 		},
-		versionAdded: '3.0.0',
+		attrNameTemplate,
+		versionAdded: '3.16.0',
 		versionDeprecated: '',
 	} )
 }

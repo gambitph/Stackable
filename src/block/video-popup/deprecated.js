@@ -6,7 +6,7 @@ import { semverCompare } from '~stackable/util'
 import { i18n } from 'stackable'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
-	deprecateBlockShadowColor, deprecateContainerShadowColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateBlockHeight,
 } from '~stackable/block-components'
 
 /**
@@ -28,6 +28,21 @@ addFilter( 'stackable.video-popup.save.div.content', 'stackable/3.12.14', ( outp
 } )
 
 const deprecated = [
+	{
+		// Support the change of type for block height
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
+		isEligible: attributes => {
+			return deprecateBlockHeight.isEligible( attributes )
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		attributes: attributes( '3.12.14' ),
 		save: withVersion( '3.12.14' )( Save ),

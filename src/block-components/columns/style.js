@@ -20,8 +20,14 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		selector: '.%s-column',
 		styleRule: '--stk-columns-spacing',
 		attrName: 'columnSpacing',
-		hasUnits: 'px',
 		responsive: 'all',
+		valueCallback: value => {
+			// Substitute with using format to work with preset controls
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 	} ] )
 
 	blockStyleGenerator.addBlockStyles( 'columnGap', [ {
@@ -30,16 +36,27 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		selector: '.%s-column',
 		styleRule: '--stk-column-gap',
 		attrName: 'columnGap',
-		format: '%spx',
 		responsive: 'all',
+		valueCallback: value => {
+			// Substitute with using format to work with preset controls
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 	}, {
 		...propsToPass,
 		renderIn: 'edit',
 		selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
 		styleRule: '--stk-column-gap',
 		attrName: 'columnGap',
-		format: '%spx',
 		responsive: 'all',
+		valueCallback: value => {
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 	} ] )
 
 	blockStyleGenerator.addBlockStyles( 'columnWrapDesktop', [ {
@@ -78,16 +95,26 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			selector: '.%s-column',
 			styleRule: 'rowGap',
 			attrName: 'rowGap',
-			format: '%spx',
 			responsive: 'all',
+			valueCallback: value => {
+				if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+					return value
+				}
+				return value + 'px'
+			},
 		}, {
 			...propsToPass,
 			renderIn: 'edit',
 			selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
 			styleRule: 'rowGap',
 			attrName: 'rowGap',
-			format: '%spx',
 			responsive: 'all',
+			valueCallback: value => {
+				if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+					return value
+				}
+				return value + 'px'
+			},
 		} ] )
 	}
 

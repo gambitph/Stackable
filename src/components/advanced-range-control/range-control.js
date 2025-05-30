@@ -43,6 +43,7 @@ const StackableRangeControl = memo( props => {
 		isShiftStepEnabled,
 		placeholderRender,
 		defaultValue: _defaultValue, // Don't pass this.
+		children: _children, // Don't pass this.
 		...propsToPass
 	} = props
 
@@ -143,6 +144,11 @@ const StackableRangeControl = memo( props => {
 		placeholderValue = initialPosition
 	}
 
+	// Remove placeholder if it's a custom CSS
+	if ( typeof placeholderValue === 'string' && placeholderValue.startsWith( 'var' ) ) {
+		placeholderValue = ''
+	}
+
 	return <div
 		className={ classNames }
 		style={ { '--ugb-advanced-range-control--width': percentageValue } }
@@ -178,6 +184,7 @@ const StackableRangeControl = memo( props => {
 				type="text"
 			/>
 		) }
+		{ _children }
 		{ allowReset &&
 			<Button
 				className="components-range-control__reset"

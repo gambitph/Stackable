@@ -11,7 +11,8 @@ import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
-	deprecateBlockShadowColor, deprecateContainerShadowColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateBlockHeight,
+	deprecateInnerBlockRowGapAndContainerHeight,
 } from '~stackable/block-components'
 
 /**
@@ -36,15 +37,85 @@ addFilter( 'stackable.team-member.save.innerClassNames', 'stackable/3.8.0', ( ou
 
 const deprecated = [
 	{
+		// Support the change of type for block height
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
+		isEligible: attributes => {
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+			const hasNumberInnerBlockRowGapAndContainerHeight = deprecateInnerBlockRowGapAndContainerHeight.isEligible( '%s' )( attributes )
+
+			return hasNumberBlockHeight || hasNumberInnerBlockRowGapAndContainerHeight
+		},
+		migrate: ( attributes, innerBlocks ) => {
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			let newAttributes = {
+				...attributes,
+			}
+
+			if ( isNotV4 ) {
+				newAttributes = {
+					...newAttributes,
+					version: 2,
+				}
+
+				// Update the vertical align into flexbox
+				const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
+
+				if ( hasOldVerticalAlign ) {
+					newAttributes = {
+						...newAttributes,
+						containerVerticalAlign: '',
+						innerBlockAlign: attributes.containerVerticalAlign,
+					}
+				}
+
+				// If the inner blocks are horizontal, adjust to accomodate the new
+				// column gap, it will modify blocks because people used block
+				// margins before instead of a proper column gap.
+				if ( attributes.innerBlockOrientation === 'horizontal' ) {
+					innerBlocks.forEach( ( block, index ) => {
+						if ( index ) {
+							if ( ! block.attributes.blockMargin ) {
+								block.attributes.blockMargin = {
+									top: '',
+									right: '',
+									bottom: '',
+									left: '',
+								}
+							}
+							if ( block.attributes.blockMargin.left === '' ) {
+								block.attributes.blockMargin.left = 24
+							}
+						}
+					} )
+
+					newAttributes = {
+						...newAttributes,
+						innerBlockColumnGap: 0,
+					}
+				}
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+			newAttributes = deprecateInnerBlockRowGapAndContainerHeight.migrate( '%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
+	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),
 		save: withVersion( '3.12.11' )( Save ),
 		isEligible: attributes => {
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasBlockShadow || hasContainerShadow || isNotV4
+			return hasBlockShadow || hasContainerShadow
 		},
 		migrate: ( attributes, innerBlocks ) => {
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
@@ -112,9 +183,8 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasContainerOpacity || hasBlockOpacity || isNotV4
+			return hasContainerOpacity || hasBlockOpacity
 		},
 		migrate: ( attributes, innerBlocks ) => {
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
@@ -180,11 +250,6 @@ const deprecated = [
 		// layout & containers work.
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
-		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
-
-			return isNotV4
-		},
 		migrate: ( attributes, innerBlocks ) => {
 			let newAttributes = {
 				...attributes,

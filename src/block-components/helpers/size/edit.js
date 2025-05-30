@@ -7,7 +7,9 @@ import {
 	AdvancedRangeControl,
 	FourRangeControl,
 } from '~stackable/components'
-import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers, useDeviceType, usePresetControls,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -30,16 +32,18 @@ const Layout = props => {
 		labelVerticalAlign = __( 'Content Vertical Align', i18n ),
 	} = props.labels
 
+	const presetMarks = usePresetControls( 'blockHeights' )?.getPresetMarks() || null
+
 	return (
 		<>
 			{ props.hasMinHeight && <AdvancedRangeControl
 				label={ labelHeight }
 				attribute={ getAttrName( 'height' ) }
 				responsive="all"
-				units={ [ 'px', 'vh' ] }
-				min={ [ 0, 0 ] }
-				sliderMax={ [ 1000, 100 ] }
-				step={ [ 1, 1 ] }
+				units={ [ 'px', 'rem', 'vh' ] }
+				min={ [ 0, 0, 0 ] }
+				sliderMax={ [ 1000, 60, 100 ] }
+				step={ [ 1, 1, 1 ] }
 				allowReset={ true }
 				placeholder="0"
 				helpTooltip={ {
@@ -47,6 +51,7 @@ const Layout = props => {
 					description: __( 'Adjusts the minimum allowable height of the block', i18n ),
 				} }
 				visualGuide={ props.visualGuide }
+				marks={ presetMarks }
 			/> }
 
 			{ props.hasContentVerticalAlign &&
@@ -133,6 +138,15 @@ const Spacing = props => {
 		highlight: 'margin',
 	}
 
+	// Add additional presets for setting margins and paddings to None
+	const nonePreset = {
+		name: __( 'None', i18n ),
+		size: '0rem',
+		slug: 'none',
+	}
+	const presetMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { additionalPresets: [ nonePreset ] } ) || null
+
 	return (
 		<>
 			<FourRangeControl
@@ -140,16 +154,17 @@ const Spacing = props => {
 				attribute={ getAttrName( 'padding' ) }
 				responsive="all"
 				hover="all"
-				units={ [ 'px', 'em', '%' ] }
+				units={ [ 'px', 'em', 'rem', '%' ] }
 				defaultLocked={ true }
-				min={ [ 0, 0, 0 ] }
-				sliderMax={ [ 200, 30, 100 ] }
+				min={ [ 0, 0, 0, 0 ] }
+				sliderMax={ [ 200, 30, 30, 100 ] }
 				helpTooltip={ {
 					video: 'inner-block-padding',
 					description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
 				} }
 				visualGuide={ paddingVisualGuide }
 				placeholder={ props.paddingPlaceholder }
+				marks={ presetMarks }
 			/>
 
 			{ props.enableMargin &&
@@ -157,16 +172,17 @@ const Spacing = props => {
 					label={ labelMargins }
 					attribute={ getAttrName( 'margin' ) }
 					responsive="all"
-					units={ [ 'px', '%' ] }
+					units={ [ 'px', 'rem', '%' ] }
 					defaultLocked={ false }
-					sliderMin={ [ -200, -100 ] }
-					sliderMax={ [ 200, 100 ] }
+					sliderMin={ [ -200, -15, -100 ] }
+					sliderMax={ [ 200, 15, 100 ] }
 					placeholder="0"
 					helpTooltip={ {
 						video: 'advanced-block-margin',
 						description: __( 'Sets the block margin, i.e. the space outside the block between the block border and the next block.', i18n ),
 					} }
 					visualGuide={ marginVisualGuide }
+					marks={ presetMarks }
 				/>
 			}
 		</>
