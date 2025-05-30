@@ -53,10 +53,9 @@ const deprecated = [
 			const hasNumberFontSizeMeta = deprecateTypographyFontSize.isEligible( 'meta%s' )( attributes )
 			const hasNumberFontSizeReadmore = deprecateTypographyFontSize.isEligible( 'readmore%s' )( attributes )
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
 			return hasNumberFontSizeTitle || hasNumberFontSizeCategory || hasNumberFontSizeExcerpt ||
-				hasNumberFontSizeMeta || hasNumberFontSizeReadmore || hasNumberBlockHeight || isNotV4
+				hasNumberFontSizeMeta || hasNumberFontSizeReadmore || hasNumberBlockHeight
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -124,9 +123,8 @@ const deprecated = [
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
 			const hasImageShadow = deprecateShadowColor.isEligible( 'image%s' )( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasBlockShadow || hasContainerShadow || hasImageShadow || isNotV4
+			return hasBlockShadow || hasContainerShadow || hasImageShadow
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -194,12 +192,10 @@ const deprecated = [
 			const hasExcerptGradient = deprecateTypographyGradientColor.isEligible( 'excerpt%s' )( attributes )
 			const hasMetaGradient = deprecateTypographyGradientColor.isEligible( 'meta%s' )( attributes )
 			const hasReadmoreGradient = deprecateTypographyGradientColor.isEligible( 'readmore%s' )( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
 			return hasContainerOpacity ||
 				hasBlockOpacity ||
 				hasImageOpacity ||
-				isNotV4 ||
 				hasTitleGradient ||
 				hasCategoryGradient ||
 				hasExcerptGradient ||
@@ -261,11 +257,6 @@ const deprecated = [
 		// layout & containers work.
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
-		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
-
-			return isNotV4
-		},
 		migrate: attributes => {
 			let newAttributes = {
 				...attributes,

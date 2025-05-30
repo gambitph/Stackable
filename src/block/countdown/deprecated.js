@@ -17,9 +17,8 @@ const deprecated = [
 			const hasLabelFontSize = deprecateTypographyFontSize.isEligible( 'label%s' )( attributes )
 			const hasMessageFontSize = deprecateTypographyFontSize.isEligible( 'message%s' )( attributes )
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasDigitFontSize || hasLabelFontSize || hasMessageFontSize || hasNumberBlockHeight || isNotV4
+			return hasDigitFontSize || hasLabelFontSize || hasMessageFontSize || hasNumberBlockHeight
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -46,9 +45,8 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasBlockShadow || hasContainerShadow || isNotV4
+			return hasBlockShadow || hasContainerShadow
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -71,12 +69,11 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 			const hasDigitGradient = deprecateTypographyGradientColor.isEligible( 'digit%s' )( attributes )
 			const hasLabelGradient = deprecateTypographyGradientColor.isEligible( 'label%s' )( attributes )
 			const hasMessageGradient = deprecateTypographyGradientColor.isEligible( 'message%s' )( attributes )
 
-			return hasContainerOpacity || hasBlockOpacity || isNotV4 || hasDigitGradient || hasLabelGradient || hasMessageGradient
+			return hasContainerOpacity || hasBlockOpacity || hasDigitGradient || hasLabelGradient || hasMessageGradient
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -97,11 +94,6 @@ const deprecated = [
 		// layout & containers work.
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
-		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
-
-			return isNotV4
-		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
 
