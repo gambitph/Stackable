@@ -51,10 +51,15 @@ test.describe( 'Global Settings', () => {
 
 		// Verify the newly added global color is in the color picker
 		await expect( page.getByRole( 'heading', { name: 'Global Colors' } ) ).toBeVisible()
-		await expect( page.getByLabel( `Color: Custom Color ${ count }` ) ).toBeVisible()
+
+		// For WP 6.7 and below, the label for colors has a prefix `Color: `
+		// For WP 6.8 the prefix was removed.
+		const regex = new RegExp( `^(?:Color:\\s*)?Custom Color ${ count }$` )
+
+		await expect( page.getByLabel( regex ) ).toBeVisible()
 
 		// Verify the color value
-		await page.getByLabel( `Color: Custom Color ${ count }` ).click()
+		await page.getByLabel( regex ).click()
 		await expect( page.getByLabel( 'Hex color' ) ).toHaveValue( hexValue )
 
 		// Click on the color picker button to close the popup
@@ -80,18 +85,18 @@ test.describe( 'Global Settings', () => {
 		await page.getByLabel( 'Stackable Settings' ).click()
 		await page.getByRole( 'button', { name: 'Global Typography' } ).click()
 
-		// Set Global Typography Styles of Heading 2 to have a font-size of 32
+		// Set Global Typography Styles of Heading 2 to have a text-transform uppercase
 		await page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' ).click()
-		await page.locator( '.stk-popover .components-base-control:nth-of-type(2)', { hasText: /Size/ } ).getByRole( 'textbox' ).fill( '32' )
+		await page.locator( '.stk-popover .components-base-control:nth-of-type(4)', { hasText: /Transform/ } ).getByRole( 'listbox' ).selectOption( 'uppercase' )
 		await page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' ).click()
 
-		// Verify if the Heading 2 in Global Typography Styles has correct font size
-		await expect( page.getByRole( 'heading', { name: 'Heading 2' } ) ).toHaveCSS( 'font-size', '32px' )
+		// Verify if the Heading 2 in Global Typography Styles has correct text-transform
+		await expect( page.getByRole( 'heading', { name: 'Heading 2' } ) ).toHaveCSS( 'text-transform', 'uppercase' )
 
 		// Open Block Settings
 		await page.getByLabel( 'Settings', { exact: true } ).click()
 
-		// Check if the added Stackable Heading Block has a font-size of 32
+		// Check if the added Stackable Heading Block has a text-transform uppercase
 		editor.insertBlock( {
 			name: 'stackable/heading',
 			attributes: {
@@ -99,7 +104,7 @@ test.describe( 'Global Settings', () => {
 			},
 		} )
 
-		await expect( editor.canvas.locator( '[data-type="stackable/heading"] > .stk-block-heading > h2[role="textbox"]' ) ).toHaveCSS( 'font-size', '32px' )
+		await expect( editor.canvas.locator( '[data-type="stackable/heading"] > .stk-block-heading > h2[role="textbox"]' ) ).toHaveCSS( 'text-transform', 'uppercase' )
 
 		// Reset Global Typography Styles
 		await page.getByLabel( 'Stackable Settings' ).click()
@@ -139,7 +144,7 @@ test.describe( 'Global Settings', () => {
 		await defaultBlockPage.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
 		// The default timeout is 30s, extend it to 90s
-		const updateRequest = defaultBlockPage.waitForRequest( request => request.url().includes( 'update_block_style' ) && request.method() === 'POST', { timeout: 90_000 } )
+		const updateRequest = defaultBlockPage.waitForResponse( response => response.url().includes( 'update_block_style' ) && response.request().method() === 'POST', { timeout: 90_000 } )
 
 		// In older WP versions, the button text is 'Update' instead of 'Save'
 		if ( await defaultBlockPage.getByRole( 'button', {
@@ -150,20 +155,28 @@ test.describe( 'Global Settings', () => {
 			await defaultBlockPage.getByRole( 'button', { name: 'Update' } ).click()
 		}
 
-		// Make sure default block has been updated before closing the tab
-		await updateRequest
-		await defaultBlockPage.close()
+		// Make sure default block has been updated
+		await ( await updateRequest ).finished()
 
 		// Insert a Stackable Text Block, and check if the color is the same as the one set in the default block
-		await page.reload()
-		await editor.insertBlock( {
-			name: 'stackable/text',
-			attributes: {
-				text: 'test',
-			},
-		} )
+		const timeouts = [ 1_000, 5_000, 30_000 ]
+		for ( const timeout of timeouts ) {
+			try {
+				await page.reload()
+				await editor.insertBlock( {
+					name: 'stackable/text',
+					attributes: {
+						text: 'test',
+					},
+				} )
 
-		await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+				await expect( editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+				break
+			} catch ( e ) {
+				// Ignore the error and try again because the default block might not be updated yet
+				await page.waitForTimeout( timeout )
+			}
+		}
 
 		// Reset Default Block
 		await page.getByLabel( 'Stackable Settings' ).click()

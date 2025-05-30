@@ -3,20 +3,6 @@
 		"block-margin-bottom": {
 			"desktop": 24,
 			"mobile": 16
-		},
-		"link-color": {
-			"desktop": "initial",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": false
-			}
-		},
-		"accent-color": {
-			"desktop": "initial",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": false
-			}
 		}
 	},
 	"Columns": {
@@ -44,10 +30,6 @@
 				"right": 24,
 				"bottom": 24,
 				"left": 24
-			},
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
 			}
 		},
 		"container-padding-large": {
@@ -82,28 +64,16 @@
 			"desktop": ""
 		},
 		"container-border-width": {
-			"desktop": 1,
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
-			}
+			"desktop": 1
 		},
 		"container-border-radius": {
 			"desktop": 0
 		},
 		"container-box-shadow": {
-			"desktop": "0px 4px 24px rgba(0, 0, 0, 0.04)",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
-			}
+			"desktop": "0px 4px 24px rgba(0, 0, 0, 0.04)"
 		},
 		"container-background-color": {
-			"desktop": "#fff",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": false
-			}
+			"desktop": "#fff"
 		},
 		"container-color": {
 			"desktop": "#1e1e1e"
@@ -122,38 +92,22 @@
 				"right": 16,
 				"bottom": 16,
 				"left": 16
-			},
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
 			}
 		},
 		"block-background-border-style": {
 			"desktop": ""
 		},
 		"block-background-border-width": {
-			"desktop": 1,
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
-			}
+			"desktop": 1
 		},
 		"block-background-border-radius": {
 			"desktop": 0
 		},
 		"block-background-box-shadow": {
-			"desktop": "",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
-			}
+			"desktop": ""
 		},
 		"block-background-color": {
-			"desktop": "#f1f1f1",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": false
-			}
+			"desktop": "#f1f1f1"
 		}
 	},
 	"Images": {
@@ -161,11 +115,7 @@
 			"desktop": 0
 		},
 		"image-drop-shadow": {
-			"desktop": "",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
-			}
+			"desktop": ""
 		}
 	},
 	"Buttons": {
@@ -184,28 +134,16 @@
 			"desktop": ""
 		},
 		"button-border-width": {
-			"desktop": 1,
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
-			}
+			"desktop": 1
 		},
 		"button-ghost-border-width": {
-			"desktop": 2,
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
-			}
+			"desktop": 2
 		},
 		"button-border-radius": {
 			"desktop": 0
 		},
 		"button-box-shadow": {
-			"desktop": "",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": true
-			}
+			"desktop": ""
 		},
 		"button-icon-size": {
 			"desktop": 24
@@ -220,25 +158,10 @@
 			"desktop": 12
 		},
 		"button-background-color": {
-			"desktop": "#008de4",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": false
-			}
+			"desktop": "#008de4"
 		},
 		"button-text-color": {
-			"desktop": "#fff",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": false
-			}
-		},
-		"button-outline-color": {
-			"desktop": "var(--stk-button-background-color)",
-			"hoverStates": {
-				"hover": true,
-				"parent-hover": false
-			}
+			"desktop": "#fff"
 		},
 		"icon-button-padding": {
 			"desktop": {
@@ -250,9 +173,6 @@
 		}
 	},
 	"Icon Lists": {
-		"icon-list-icon-size": {
-			"desktop": 16
-		},
 		"icon-list-row-gap": {
 			"desktop": 0
 		},

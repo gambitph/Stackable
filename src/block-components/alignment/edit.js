@@ -13,6 +13,7 @@ import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 	useDeviceType,
+	usePresetControls,
 } from '~stackable/hooks'
 
 /**
@@ -86,6 +87,9 @@ export const Edit = memo( props => {
 		enableContentAlign = true,
 	} = props
 
+	const blockHeightMarks = usePresetControls( 'blockHeights' )?.getPresetMarks() || null
+	const spacingSizeMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+
 	const containerSize = props.hasContainerSize && <>
 		<ControlSeparator />
 		{ props.hasContainerHeight &&
@@ -100,6 +104,7 @@ export const Edit = memo( props => {
 				allowReset={ true }
 				placeholder="0"
 				visualGuide={ { selector: '.stk-%s-container', highlight: 'outline' } }
+				marks={ blockHeightMarks }
 			/>
 		}
 		<AdvancedRangeControl
@@ -331,6 +336,7 @@ export const Edit = memo( props => {
 							highlight: 'row-gap',
 							value: innerBlockRowGap,
 						} }
+						marks={ spacingSizeMarks }
 					/>
 				}
 				{ ( innerBlockOrientation && innerBlockWrap === 'wrap' ) &&

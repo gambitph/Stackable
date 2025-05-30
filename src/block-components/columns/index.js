@@ -6,6 +6,8 @@ export const Columns = () => {
 	return null
 }
 
+export { deprecateColumnAndRowGap } from './deprecated/index'
+
 Columns.InspectorControls = Edit
 
 Columns.addStyles = addStyles

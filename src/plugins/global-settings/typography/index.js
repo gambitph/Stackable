@@ -5,18 +5,21 @@ import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
 import { getThemeStyles } from './get-theme-styles'
 import FREE_FONT_PAIRS from './font-pairs.json'
+import { getAppliedTypeScale, cleanTypographyStyle } from './utils'
 
 /**
  * External dependencies
  */
 import {
-	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControlButton,
+	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControlButton, AdvancedToggleControl,
 } from '~stackable/components'
 import { fetchSettings } from '~stackable/util'
 import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
-import { head, isEqual } from 'lodash'
+import {
+	head, isEqual, cloneDeep,
+} from 'lodash'
 
 /**
  * WordPress dependencies
@@ -29,6 +32,7 @@ import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
+import { useSelect } from '@wordpress/data'
 
 export { GlobalTypographyStyles }
 
@@ -36,34 +40,50 @@ const TYPOGRAPHY_TAGS = [
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 1 ),
 		selector: 'h1',
+		presetName: '5XL',
+		presetSlug: 'xxxxx-large',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 2 ),
 		selector: 'h2',
+		presetName: '4XL',
+		presetSlug: 'xxxx-large',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 3 ),
 		selector: 'h3',
+		presetName: '3XL',
+		presetSlug: 'xxx-large',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 4 ),
 		selector: 'h4',
+		presetName: '2XL',
+		presetSlug: 'xx-large',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 5 ),
 		selector: 'h5',
+		presetName: 'XL',
+		presetSlug: 'x-large',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 6 ),
 		selector: 'h6',
+		presetName: 'L',
+		presetSlug: 'large',
 	},
 	{
 		label: __( 'Body Text', i18n ),
 		selector: 'p',
+		presetName: 'M',
+		presetSlug: 'medium',
 	},
 	{
 		label: __( 'Subtitle', i18n ),
 		selector: '.stk-subtitle',
+		presetName: 'S',
+		presetSlug: 'small',
 		help: (
 			<>
 				{ sprintf( __( "To apply this typography style, just add `%s` in your block\'s Additional CSS classes. Also make sure that `%s` tag is set to avoid conflict with other typography styles", i18n ), 'stk-subtitle', 'p' ) }
@@ -75,11 +95,60 @@ const TYPOGRAPHY_TAGS = [
 	},
 ]
 
+const TYPE_SCALE = [
+	{
+		label: __( 'None', i18n ),
+		value: 'none',
+	},
+	{
+		label: __( 'Custom', i18n ),
+		value: 'custom',
+		disabled: true,
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.067', __( 'Minor Second', i18n ) ),
+		value: '1.067',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.125', __( 'Major Second', i18n ) ),
+		value: '1.125',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.2', __( 'Minor Third', i18n ) ),
+		value: '1.2',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.25', __( 'Major Third', i18n ) ),
+		value: '1.25',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.333', __( 'Perfect Fourth', i18n ) ),
+		value: '1.333',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.414', __( 'Augmented Fourth', i18n ) ),
+		value: '1.414',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.5', __( 'Perfect Fifth', i18n ) ),
+		value: '1.5',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.618', __( 'Golden Ratio', i18n ) ),
+		value: '1.618',
+	},
+]
+
 let saveTypographyThrottle = null
 let saveSelectedFontPairThrottle = null
 let saveCustomFontPairsThrottle = null
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography', output => {
+	const { useTypographyAsPresets } = useSelect( select => {
+		const _useTypographyAsPresets = select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
+		return { useTypographyAsPresets: _useTypographyAsPresets }
+	}, [] )
+
 	const FONT_PAIRS = applyFilters( 'stackable.global-settings.typography.font-pairs.premium-font-pairs', FREE_FONT_PAIRS )
 
 	const [ isPanelOpen, setIsPanelOpen ] = useState( false )
@@ -88,23 +157,44 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const [ customFontPairs, setCustomFontPairs ] = useState( [] )
 	const [ selectedFontPairName, setSelectedFontPairName ] = useState( '' )
 	const [ isEditingFontPair, setIsEditingFontPair ] = useState( false )
+	const [ selectedTypeScale, setSelectedTypeScale ] = useState( 'none' )
+	const [ isApplyBodyToHTML, setIsApplyBodyToHTML ] = useState( false )
 
 	const fontPairContainerRef = useRef( null )
 
 	useEffect( () => {
 		fetchSettings().then( response => {
 			// Get settings.
-			setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
+			const _typographySettings = ( head( response.stackable_global_typography ) ) || {}
+			setTypographySettings( _typographySettings )
 			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 			setCustomFontPairs( response.stackable_custom_font_pairs || [] )
-			setSelectedFontPairName( response.stackable_selected_font_pair || '' )
+			setSelectedFontPairName( response.stackable_selected_font_pair || 'theme-heading-default/theme-body-default' )
+			setIsApplyBodyToHTML( response.stackable_is_apply_body_to_html || false )
+
+			// Reversely compute the type scale from the font sizes
+			let typeScale = _typographySettings?.h6?.fontSize
+			if ( typeScale ) {
+				const computedApplied = getAppliedTypeScale( typeScale ) ?? {}
+				const tags = Object.keys( _typographySettings )
+				for ( const tag of tags ) {
+				// If font size mismatch, set typography scale to Custom
+					if ( _typographySettings[ tag ]?.fontSize !== computedApplied[ tag ]?.fontSize ) {
+						typeScale = 'custom'
+					}
+				}
+				setSelectedTypeScale( typeScale )
+			}
 		} )
 	}, [] )
 
-	// When typography styles are changed, trigger our editor style generator to update.
 	useEffect( () => {
-		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo )
-	}, [ JSON.stringify( typographySettings ), applySettingsTo ] )
+		// When typography styles are changed, trigger our editor style generator to update.
+		// This also triggers updating presets with typography, and applying body font size to html.
+		doAction( 'stackable.global-settings.typography.update-trigger',
+			typographySettings, applySettingsTo, useTypographyAsPresets, isApplyBodyToHTML, TYPOGRAPHY_TAGS,
+		)
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, useTypographyAsPresets, isApplyBodyToHTML ] )
 
 	// Scroll to the selected font pair when Global Typography tab is toggled
 	useEffect( () => {
@@ -170,33 +260,72 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		model.save()
 	}
 
-	const changeStyles = typography => {
-		const newSettings = { ...typographySettings }
-
-		Object.entries( typography ).forEach( ( [ selector, styles ] ) => {
-			if ( ! selector || typeof styles !== 'object' ) {
-				return
-			}
-			/**
-			 * Delete the object keys with empty strings.
-			 * Otherwise, the API will throw an error code 400
-			 * because of incompatible schema type.
-			 */
-			Object.keys( styles ).forEach( key => {
-				if ( styles[ key ] === '' ) {
-					delete styles[ key ]
-				}
-			} )
-
-			newSettings[ selector ] = styles
+	const changeIsApplyBodyToHTML = value => {
+		setIsApplyBodyToHTML( value )
+		const model = new models.Settings( {
+			stackable_is_apply_body_to_html: value, // eslint-disable-line
 		} )
+		model.save()
+	}
 
-		// Update the global styles immediately when reset font size is triggered.
-		if ( Object.values( typography ).some( styles => styles && ! styles.fontSize ) ) {
-			doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
+	const updateTypeScale = value => {
+		setSelectedTypeScale( value )
+
+		// If value is custom, do not do anything
+		if ( value === 'custom ' ) {
+			return
 		}
 
-		updateTypography( newSettings )
+		// If value is none, reset the font sizes and units
+		if ( value === 'none' ) {
+			const selectors = TYPOGRAPHY_TAGS.map( tag => tag.selector )
+			const newSettings = selectors.reduce( ( acc, selector, ) => {
+				acc[ selector ] = { fontSize: '', fontSizeUnit: '' }
+				return acc
+			}, {} )
+			changeStyles( newSettings )
+			return
+		}
+
+		// If value is valid type scale, apply to the styles
+		const newSettings = getAppliedTypeScale( value )
+		changeStyles( newSettings )
+	}
+
+	const changeStyles = _typography => {
+		setTypographySettings( prevTypographySettings => {
+			const typography = cloneDeep( _typography )
+			const newSettings = { ...prevTypographySettings }
+
+			Object.entries( typography ).forEach( ( [ selector, styles ] ) => {
+				if ( ! selector || typeof styles !== 'object' ) {
+					return
+				}
+
+				// Merge the new styles with the previous, while overwritting similar styles.
+				// This allow adding styles without removing the previous ones.
+				// Check if the object is empty, used for resetting the whole setting.
+				if ( Object.keys( styles ).length !== 0 ) {
+					styles = { ...newSettings[ selector ], ...styles }
+				}
+				/**
+				 * Delete the object keys with empty strings.
+				 * Otherwise, the API will throw an error code 400
+				 * because of incompatible schema type.
+				 */
+				const cleanStyles = cleanTypographyStyle( styles ) || {}
+
+				newSettings[ selector ] = cleanStyles
+			} )
+
+			// Update the global styles immediately when reset font size is triggered.
+			if ( Object.values( typography ).some( styles => styles && ! styles.fontSize ) ) {
+				doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
+			}
+
+			updateTypography( newSettings )
+			return newSettings
+		} )
 	}
 
 	const resetStyles = selector => {
@@ -220,9 +349,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	const getIsAllowReset = selector => {
 		const currentFontPair = getCurrentFontPair()
-		const typographyStyle = typographySettings[ selector ]
+		const typographyStyle = cleanTypographyStyle( typographySettings[ selector ] ) || {}
 		if ( ! isEditingFontPair && currentFontPair ) {
-			const fontPairStyle = currentFontPair.typography[ selector ]
+			// Clean style object to be consistent with changeStyles operation
+			const fontPairStyle = cleanTypographyStyle( currentFontPair.typography?.[ selector ] ) || {}
 			if ( ! isEqual( fontPairStyle, typographyStyle ) && ! Array.isArray( typographyStyle ) ) {
 				return true
 			}
@@ -238,15 +368,30 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		return false
 	}
 
-	const getIsChangeConfirmed = () => {
+	const getIsFontPairChangeConfirmed = () => {
 		// No need to confirm when the current font pair is custom
 		// since changes are saved
 		if ( customFontPairs.find( fontPair => fontPair.name === selectedFontPairName ) ) {
 			return true
 		}
 
+		// The confirmation should only occur if the font family has been edited
+		// since selecting font pair only changes font family
+		const currentFontPair = getCurrentFontPair()
 		const isDirty = TYPOGRAPHY_TAGS.some( ( { selector } ) => {
-			return getIsAllowReset( selector )
+			if ( isEditingFontPair || ! currentFontPair ) {
+				return false
+			}
+			// Clean style object to be consistent with changeStyles operation
+			const fontPairStyle = cleanTypographyStyle( currentFontPair.typography?.[ selector ] ) || {}
+			const typographyStyle = cleanTypographyStyle( typographySettings[ selector ] ) || {}
+
+			if ( ! Array.isArray( typographyStyle ) &&
+				fontPairStyle.fontFamily &&
+				fontPairStyle.fontFamily !== typographyStyle.fontFamily ) {
+				return true
+			}
+			return false
 		} )
 
 		if ( isDirty ) {
@@ -321,7 +466,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 								fontPair={ FONT_PAIRS[ 0 ] }
 								isSelected={ selectedFontPairName === FONT_PAIRS[ 0 ].name }
 								onClick={ () => {
-									if ( ! getIsChangeConfirmed() ) {
+									if ( ! getIsFontPairChangeConfirmed() ) {
 										return
 									}
 									updateSelectedFontPair( FONT_PAIRS[ 0 ].name )
@@ -333,7 +478,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 								customFontPairs={ customFontPairs }
 								selected={ selectedFontPairName }
 								onClick={ ( name, typography ) => {
-									if ( ! getIsChangeConfirmed() ) {
+									if ( ! getIsFontPairChangeConfirmed() ) {
 										return
 									}
 									updateSelectedFontPair( name )
@@ -352,7 +497,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									fontPair={ fontPair }
 									isSelected={ selectedFontPairName === fontPair.name }
 									onClick={ () => {
-										if ( ! getIsChangeConfirmed() ) {
+										if ( ! getIsFontPairChangeConfirmed() ) {
 											return
 										}
 										updateSelectedFontPair( fontPair.name )
@@ -365,6 +510,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						<ControlSeparator />
 
 						<h3>{ __( 'Typography Settings', i18n ) }</h3>
+						<AdvancedSelectControl
+							label={ __( 'Type Scale', i18n ) }
+							options={ TYPE_SCALE }
+							value={ selectedTypeScale }
+							onChange={ updateTypeScale }
+							default="none"
+						/>
 						{ TYPOGRAPHY_TAGS.map( ( {
 							label, selector, help,
 						}, index ) => {
@@ -377,8 +529,21 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									value={ ( typographySettings[ selector ] ) || {} }
 									defaultFontFamily={ getDefaultFontFamily( selector ) }
 									isAllowReset={ getIsAllowReset( selector ) }
-									onChange={ styles => changeStyles( { [ selector ]: styles } ) }
-									onReset={ () => resetStyles( selector ) }
+									onChange={ styles => {
+										changeStyles( { [ selector ]: styles } )
+										// Set typeScale to custom when editing font size or units
+										if ( 'fontSize' in styles || 'fontSizeUnit' in styles ) {
+											setSelectedTypeScale( 'custom' )
+										}
+									} }
+									onReset={ () => {
+										resetStyles( selector )
+										// Set typeScale to custom when editing font size or units
+										const styles = typographySettings[ selector ]
+										if ( 'fontSize' in styles || 'fontSizeUnit' in styles ) {
+											setSelectedTypeScale( 'custom' )
+										}
+									} }
 								/>
 							)
 						} ) }
@@ -404,6 +569,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						getIsAllowReset={ getIsAllowReset }
 					/>
 				}
+				<AdvancedToggleControl
+					label={ __( 'Apply Body to HTML Tag', i18n ) }
+					help={ __( 'Adds the body text settings to the main HTML tag.', i18n ) }
+					defaultValue={ false }
+					checked={ isApplyBodyToHTML }
+					onChange={ changeIsApplyBodyToHTML }
+				/>
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

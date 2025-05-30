@@ -91,12 +91,15 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 
 		// Date.
 		if ( strpos( $new_template, '!#dateTime!#' ) !== false || strpos( $new_template, '!#date!#' ) !== false ) {
-			$datetime = wp_date( 'c', strtotime( $post['post_date'] ) );
+			$timezone = new DateTimeZone( wp_timezone_string() );
+			$post_date = new DateTime( $post['post_date'], $timezone );
+
+			$datetime = wp_date( 'c', $post_date->getTimestamp() );
 			$date_format = get_option( 'date_format' );
 			if ( empty( $date_format ) ) {
 				$date_format = 'F j, Y';
 			}
-			$date = wp_date( $date_format, strtotime( $post['post_date'] ) );
+			$date = wp_date( $date_format, $post_date->getTimestamp() );
 			$new_template = str_replace( '!#dateTime!#', $datetime, $new_template );
 			$new_template = str_replace( '!#date!#', $date, $new_template );
 		}

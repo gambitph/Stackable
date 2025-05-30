@@ -1,4 +1,6 @@
-import { deprecationBackgrounColorOpacity, deprecateShadowColor } from '../helpers'
+import {
+	deprecationBackgrounColorOpacity, deprecateShadowColor, deprecateSizeControlHeight,
+} from '../helpers'
 
 import { addFilter } from '@wordpress/hooks'
 import { semverCompare } from '~stackable/util'
@@ -36,5 +38,14 @@ export const deprecateBlockShadowColor = {
 	},
 	migrate: attributes => {
 		return deprecateShadowColor.migrate( 'block%s' )( attributes )
+	},
+}
+
+export const deprecateBlockHeight = {
+	isEligible: attributes => {
+		return deprecateSizeControlHeight.isEligible( 'block%s' )( attributes )
+	},
+	migrate: attributes => {
+		return deprecateSizeControlHeight.migrate( 'block%s' )( attributes )
 	},
 }

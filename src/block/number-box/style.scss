@@ -3,7 +3,7 @@
 .stk-block-number-box__container,
 div.stk-block-number-box__text {
 	display: inline-flex;
-	justify-content: center;
+	justify-content: var(--stk-alignment-justify-content, center);
 	align-items: center;
 	font-weight: bold;
 	font-size: 56px;
@@ -13,13 +13,21 @@ div.stk-block-number-box__text {
 	.stk-block-number-box__container,
 	div.stk-block-number-box__text {
 		background: cssvar(button-background-color);
-		color: var(--stk-button-text-color, #fff);
+		color: #fff;
 		border-radius: 100%;
 		width: 96px;
 		height: 96px;
+	}
+}
+
+// These are styles added from the global color schemes.
+:where(.stk-has-color-schemes) .stk-block-number-box.stk--has-shape {
+	.stk-block-number-box__container,
+	div.stk-block-number-box__text {
+		color: var(--stk-button-text-color, #fff);
 		&:where(:hover) {
-			#{ '--stk-button-background-color' }: cssvar(button-background-color-hover);
-			#{ '--stk-button-text-color' }: cssvar(button-text-color-hover);
+			background: var(--stk-button-background-color-hover, cssvar(button-background-color));
+			color: var(--stk-button-text-color-hover, var(--stk-button-text-color, #fff));
 		}
 	}
 }

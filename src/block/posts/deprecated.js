@@ -13,6 +13,7 @@ import {
 	Image, deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
 	deprecateTypographyGradientColor, deprecationImageOverlayOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
+	deprecateTypographyFontSize, deprecateBlockHeight,
 } from '~stackable/block-components'
 
 /**
@@ -42,6 +43,79 @@ addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureI
 
 const deprecated = [
 	{
+		// Support the change of type for fontSize and blockHeight
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
+		isEligible: attributes => {
+			const hasNumberFontSizeTitle = deprecateTypographyFontSize.isEligible( 'title%s' )( attributes )
+			const hasNumberFontSizeCategory = deprecateTypographyFontSize.isEligible( 'category%s' )( attributes )
+			const hasNumberFontSizeExcerpt = deprecateTypographyFontSize.isEligible( 'excerpt%s' )( attributes )
+			const hasNumberFontSizeMeta = deprecateTypographyFontSize.isEligible( 'meta%s' )( attributes )
+			const hasNumberFontSizeReadmore = deprecateTypographyFontSize.isEligible( 'readmore%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+
+			return hasNumberFontSizeTitle || hasNumberFontSizeCategory || hasNumberFontSizeExcerpt ||
+				hasNumberFontSizeMeta || hasNumberFontSizeReadmore || hasNumberBlockHeight
+		},
+		migrate: attributes => {
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
+
+			// We used to have an "Inner content width" which is now just the block width
+			const hasOldInnerContentWidth = attributes.innerBlockContentWidth || attributes.innerBlockContentWidthTablet || attributes.innerBlockContentWidthMobile
+
+			if ( hasOldInnerContentWidth ) {
+				newAttributes = {
+					...newAttributes,
+					innerBlockContentWidth: '',
+					innerBlockContentWidthTablet: '',
+					innerBlockContentWidthMobile: '',
+					innerBlockContentWidthUnit: 'px',
+					innerBlockContentWidthUnitTablet: '',
+					innerBlockContentWidthUnitMobile: '',
+					blockWidth: attributes.innerBlockContentWidth,
+					blockWidthTablet: attributes.innerBlockContentWidthTablet,
+					blockWidthMobile: attributes.innerBlockContentWidthMobile,
+					blockWidthUnit: attributes.innerBlockContentWidthUnit,
+					blockWidthUnitTablet: attributes.innerBlockContentWidthUnitTablet,
+					blockWidthUnitMobile: attributes.innerBlockContentWidthUnitMobile,
+					innerBlockAlign: '',
+					innerBlockAlignTablet: '',
+					innerBlockAlignMobile: '',
+					blockHorizontalAlign: attributes.innerBlockAlign,
+					blockHorizontalAlignTablet: attributes.innerBlockAlignTablet,
+					blockHorizontalAlignMobile: attributes.innerBlockAlignMobile,
+				}
+			}
+
+			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'readmore%s' )( newAttributes )
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
+
+			newAttributes = deprecateTypographyFontSize.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'readmore%s' )( newAttributes )
+
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
+	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),
 		save: withVersion( '3.12.11' )( Save ),
@@ -49,9 +123,8 @@ const deprecated = [
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
 			const hasImageShadow = deprecateShadowColor.isEligible( 'image%s' )( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasBlockShadow || hasContainerShadow || hasImageShadow || isNotV4
+			return hasBlockShadow || hasContainerShadow || hasImageShadow
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -119,12 +192,10 @@ const deprecated = [
 			const hasExcerptGradient = deprecateTypographyGradientColor.isEligible( 'excerpt%s' )( attributes )
 			const hasMetaGradient = deprecateTypographyGradientColor.isEligible( 'meta%s' )( attributes )
 			const hasReadmoreGradient = deprecateTypographyGradientColor.isEligible( 'readmore%s' )( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
 			return hasContainerOpacity ||
 				hasBlockOpacity ||
 				hasImageOpacity ||
-				isNotV4 ||
 				hasTitleGradient ||
 				hasCategoryGradient ||
 				hasExcerptGradient ||
@@ -186,11 +257,6 @@ const deprecated = [
 		// layout & containers work.
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
-		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
-
-			return isNotV4
-		},
 		migrate: attributes => {
 			let newAttributes = {
 				...attributes,

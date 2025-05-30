@@ -127,6 +127,14 @@ class _StackableTabs {
 		} )
 
 		this.activeTab = tabIndex
+
+		// Dispatch an event when the tab is changed
+		this.parentEl.dispatchEvent( new CustomEvent( 'stackable-tabs-change', {
+			detail: {
+				element: this.parentEl,
+				activeTab: tabIndex,
+			},
+		} ) )
 	}
 
 	initWindowEventListeners = () => {
@@ -157,7 +165,8 @@ class StackableTabs {
 		document.querySelectorAll( '.stk-block-tabs' )
 			.forEach( el => {
 				if ( ! el._StackableHasInitTabs ) {
-					new _StackableTabs( el )
+					const tabs = new _StackableTabs( el )
+					el.tabs = tabs
 					el._StackableHasInitTabs = true
 				}
 			} )

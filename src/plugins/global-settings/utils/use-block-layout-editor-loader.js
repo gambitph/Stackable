@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getDefault } from './block-layout-utils'
+import { getDefault, onClassChange } from './block-layout-utils'
 
 /**
  * WordPress dependencies
@@ -14,6 +14,10 @@ import { useEffect, useState } from '@wordpress/element'
  */
 import { compact } from 'lodash'
 import { useBlockHoverState, useBlockLayoutDefaults } from '~stackable/hooks'
+
+function appendUnitIfNeeded( value, unit ) {
+	return ( typeof value === 'string' && value.trim().startsWith( 'var' ) ) ? value : `${ value }${ unit }`
+}
 
 const renderGlobalStyles = (
 	blockLayouts,
@@ -51,7 +55,7 @@ const renderGlobalStyles = (
 		}
 
 		let style = ''
-		if ( typeof value === 'string' ) {
+		if ( typeof value === 'string' && isNaN( Number( value ) ) ) {
 			style = `${ property }: ${ value };`
 		} else if ( typeof value === 'object' ) {
 			let defaultValue = getDefault( blockLayoutDefaults, _property, device )
@@ -72,7 +76,7 @@ const renderGlobalStyles = (
 			const bottom = value.bottom !== undefined ? value.bottom : defaultValue.bottom
 			const left = value.left !== undefined ? value.left : defaultValue.left
 
-			style = `${ property }: ${ top }${ unit } ${ right }${ unit } ${ bottom }${ unit } ${ left }${ unit };`
+			style = `${ property }: ${ appendUnitIfNeeded( top, unit ) } ${ appendUnitIfNeeded( right, unit ) } ${ appendUnitIfNeeded( bottom, unit ) } ${ appendUnitIfNeeded( left, unit ) };`
 		} else {
 			style = `${ property }: ${ value }${ unit };`
 		}
@@ -127,7 +131,7 @@ const renderGlobalStyles = (
 	setStyles( css )
 }
 
-export const useBlockLayoutEditorLoader = storeName => {
+export const useBlockLayoutEditorLoader = ( storeName, classSuffix ) => {
 	const {
 		blockLayouts, selectedBlockUniqueId, SelectedParentHoverBlock,
 	} = useSelect( select => ( {
@@ -137,6 +141,9 @@ export const useBlockLayoutEditorLoader = storeName => {
 	} ), [] )
 
 	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
+	const editorEl = useSelect( select => {
+		return select( 'stackable/editor-dom' ).getEditorDom()
+	}, [] )
 	const [ styles, setStyles ] = useState( '' )
 
 	const { defaults: blockLayoutDefaults } = useBlockLayoutDefaults()
@@ -153,6 +160,30 @@ export const useBlockLayoutEditorLoader = storeName => {
 			)
 		}
 	}, [ blockLayouts, currentHoverState, SelectedParentHoverBlock ] )
+
+	// Adds a class to the editor body DOM to indicate that there are global styles for `spacing and borders` or `buttons and icons`.
+	useEffect( () => {
+		if ( editorEl ) {
+			const className = `stk-has-design-system-${ classSuffix }`
+			if ( styles !== '' && editorEl.classList.contains( className ) === false ) {
+				editorEl.classList.add( className )
+			}
+			if ( styles === '' ) {
+				editorEl.classList.remove( className )
+			}
+
+			const mo = onClassChange( editorEl, () => {
+				if ( styles !== '' && editorEl?.classList.contains( className ) === false ) {
+					editorEl?.classList.add( className )
+				}
+				if ( styles === '' ) {
+					editorEl?.classList.remove( className )
+				}
+			} )
+
+			return () => mo.disconnect()
+		}
+	}, [ editorEl, styles ] )
 
 	return styles
 }

@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.4
-Tested up to: 6.7.1
+Requires at least: 6.5.5
+Tested up to: 6.8.1
 Requires PHP: 7.3
-Stable tag: 3.15.1
+Stable tag: 3.16.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -14,7 +14,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 **The Ultimate Companion to the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, global design system, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
@@ -23,6 +23,17 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 ## Transform Gutenberg into a Page Builder.
 
 Stackable is the all-in-one block plugin for creating stunning websites by transforming the WordPress Block Editor into a Page Builder. Stackable has helped thousands of bloggers, merchants, marketers, designers and web development professionals make the most out of the WordPress Block Editor through fast, powerful and intuitive features.
+
+## Global Design System
+
+Design faster and more efficiently with our global controls, which make designing in one place and applying it to your entire site a breeze.
+
+- Inherit styles from your Block Theme
+- Theme.json Support
+- Global Design System
+- Global Color Schemes
+- Global Typography
+- Global Spacing, Borders, Buttons and Icons
 
 ## Ready Made Templates, Block Designs and Wireframes
 
@@ -94,6 +105,7 @@ You can choose which of these blocks you need, depending on your workflow. You c
 
 Turn the WordPress Block Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
 
+- Block Theme & Theme.json Support
 - Global Design System
 - Multiple Block Layouts
 - Flexbox Controls
@@ -185,6 +197,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.16 Theme.json Support, Global Value Presets, Type Scale](https://wpstackable.com/blog/introducing-theme-json-support-global-value-presets-and-type-scale/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.15 Global Design System](https://wpstackable.com/blog/introducing-the-new-stackable-global-design-system/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.14 Icon Library & Granular Plugin Settings](https://wpstackable.com/blog/icon-library-granular-plugin-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.13 Improved Stackable Server Performance](https://wpstackable.com/blog/improved-server-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -297,6 +310,34 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.16.0 =
+[Introducing: Theme.json Support, Global Value Presets, Type Scale](https://wpstackable.com/blog/introducing-theme-json-support-global-value-presets-and-type-scale/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Theme.json support - relevant blocks now inherit styles from your block theme #3490
+* New: Theme.json support - block theme preset values are now used by Stackable blocks #3474
+* New: Typography Type Scale - choose from preset type scales for your typography #3474
+* New: Global Value Presets - adjust preset values for font sizes, margins, paddings and more #3474 (premium)
+* New: Added options to enable/disable block style inheritance and preset values #3474 #3490
+* New: Video popup block - now outputs video schema #3402
+* New: Dynamic Content - added User metadata #3129
+* New: Added help links to manage global color schemes #3471
+* New: Added integrations for WP Interactions #3497
+* Fixed: Number box block - content alignment now works properly #3456
+* Fixed: Dynamic content - date format is now translated properly #3464
+* Fixed: Column order now supports up to max 20 inner columns #3491
+* Fixed: Role Manager Settings - can appear blank #3494
+* Fixed: Minor performance improvements on custom breakpoints #3477 #3496
+* Fixed: Posts block - taxonomies for some post types may not query correctly #380
+
+= 3.15.3 =
+* Fixed: WordPress 6.8 compatibility
+* Fixed: Disabling Show Global Color Schemes can cause block errors #3481
+* Fixed: Block settings may not show up in the Theme Customizer #3484
+* Fixed: Post block - sometimes the post date does not follow the timezone #3458
+
+= 3.15.2 =
+* Fixed: Hotfix new styles will not be applied now unless global color schemes and global styling are used
 
 = 3.15.1 =
 * Fixed: Hotfix background and container paddings having effects on hover
@@ -611,174 +652,3 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Global settings get removed when switching between code view and visual view #2855
 * Fixed: Posts block, added missing note about extra options #2879
 * Fixed: Global typography preview now reflects the theme's default font family #2858
-
-= 3.11.6 =
-* Fixed: Design Library not loading, changed CDN
-
-= 3.11.5 =
-* Fixed: Fixed styles not loading the the Getting Started page in Firefox #2901
-* Fixed: Remote URLs in lightbox gallery now work correctly #2864
-* Fixed: PHP warning in PHP 8.2 #2897
-* Fixed: Possible PHP warning in admin from Freemius SDK
-
-= 3.11.4 =
-* New: Added Video Popup block options: disable video download, no full screen & enable/disable loop for self-hosted videos #2876
-* New: Range controls now show the inherited value from larger screen sizes as placeholders #2859
-* Fixed: Responsive column widths now reset when decreasing columns to one ##2792
-* Fixed: Parent hover state cannot be selected without reselecting a recently moved block 3573c51
-* Fixed: Accordion toggle animation is now works when inside columns #2728
-* Fixed: Firefox fixes for alignments, removed polyfill script for :has selector #2824
-* Fixed: Spacer block dragging again fails to update the editor #2866
-* Fixed: Single columns block spacing looks different in Firefox #2862
-* Fixed: Column arrangement's responsive values do not disappear on refresh #2706
-* Fixed: Timeline block - if background is enabled, dot is not aligned on mobile #2863
-* Fixed: JetEngine PHP warning
-
-= 3.11.3 =
-* Fixed: Compatibility issues with WordPress 6.1
-* Fixed: Dynamic Content now display in the editor correctly when used in a Query Loop block
-* Fixed: Typing on a field will turn "current post" Dynamic Content source source to a specific post ID
-
-= 3.11.2 =
-* Fixed: Dynamic Content did not show up when used inside a native Query Loop block
-
-= 3.11.1 =
-* Fixed: (Hotfix update) PHP error missing function encountered sometimes when updating
-
-= 3.11.0 =
-[Introducing: New Timeline Block](https://wpstackable.com/blog/introducing-new-timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-
-* New: Timeline block
-* New: Various performance optimizations, lesser memory usage and better script loading #2835
-* New: Page now scrolls to the opened Accordion if it's not in the viewport #2726
-* New: Added a tip when incorrectly using a Google Map in a lightbox #2807
-* New: Added some new getting started videos
-* Change: Removed settings wizard
-* Fixed: Normal or centered block widths are not visible in the editor in WP 6.3
-* Fixed: Blocks were not being loaded in the Customizer for classic themes #2846
-* Fixed: Global colors and typography not showing in the editor if Content Editing Mode is enabled
-* Fixed: Custom Fields admin menu UI
-* Fixed: Blocks can encounter an error when dragging inside or from a reusable block #2768 #2791
-* Fixed: Picking an icon from the icon picker inside the editor area doesn't work #2772
-* Fixed: Block link now correctly occupies the entire container block if it has a background #2743
-* Fixed: Removed ReactDom.render console error messages #2786
-* Fixed: Native spacing tabs appear in WP < 6.3 #2837 #2828
-* Fixed: Design Library block cannot be selected
-* Fixed: Columns content max width unit resets after saving #2826
-* Fixed: Icon gap responsive settings resets after saving #2670
-* Fixed: Carousel now uses passive listeners to improve scrolling performance #2831
-* Fixed: Sometimes inactive tabs can still get mouse focus
-
-= 3.10.3 =
-* Fixed: (Hotfix update) PHP error incompatibility with some plugins
-
-= 3.10.2 =
-* New: Compatibility with WordPress 6.3
-* New: Updated all blocks to use the new Block API Version 3 - now all Stackable blocks can be iframed in the editor. [Learn about the benefits of an iframed editor](https://make.wordpress.org/core/2021/06/29/blocks-in-an-iframed-template-editor/)
-* New: Improved editor loading performance #2797
-* New: Support for the Navite Group block flexbox options when nesting Stackable blocks #2773 #2774
-* Change: The Navigation Panel is now disabled by default #2789
-* Fixed: When duplicating or transforming blocks, sometimes changes get applied to multiple blocks ##2749
-* Fixed: Added Safari <= 15.3 and Firefox support for some flexbox options #2784
-* Fixed: Link picker UI issue where the reset button overlapped #2761
-* Fixed: WooCommerce compatibility where the Stackable settings button was not showing up #2793
-* Fixed: Inspector panels did not auto-collapse in the Site Editor #2759
-* Fixed: Resolved a few console warnings #2787 #2788
-
-= 3.10.1 =
-* New: Improved Block Theme & Site Editor color compatibility #2599 #2601 #2641
-* New: Improved Color palette popup - now has built-in color picker, and color categories for global colors, theme colors, default colors, and custom Site Editor colors. #2600
-* New: Improved Global Color panel UI, includes reoredring of global colors and new options to show/hide color categories in the color palette popup
-* New: Added vw and vh units to some block options #2735
-* New: Added a new `stackable_activation_screen_enabled` PHP filter that when false bypasses the welcome and wizard screen. #2676
-* New: Added new "Fixed Icon Position" option in Tab Labels block for better text alignment #2739
-* Change: Stackable global colors now are no longer included in the color picker of Native blocks to prevent confusion and possible conflicts.
-* Fixed: Bug when you have a custom color in the Site Editor, it stops displaying the other colors in the color picker  #2599 #2601
-* Fixed: Column resize doesn't snap correctly when the Columns block has a background enabled #2579
-* Fixed: Columns block content max width and horizontal align options reset upon save #2742
-* Fixed: Resolved missing dependencies warning in Query Monitor #2562
-* Fixed: Divider block tablet and mobile alignments not working #2733
-* Fixed: Some embedded content do not show up in lightbox #2658
-* Fixed: Added support for WP Rocket's Image Lazy Loading feature in the lightbox #2724
-* Fixed: Enabling template locking on a container can cause inner blocks to overlap #2672
-* Fixed: A scrollbar was visible on the carousel block in Firefox #2701
-* Fixed: Better accessibility: pressing the escape key will close popovers #2766
-* Fixed: Colors not working for the collapsed state of accordion blocks (need to edit the block for it to take effect) #2723
-* Fixed: Carousel block aria warning #2722
-* Fixed: Design library tab focus outline #2727
-* Fixed: Map block JS callback warning is now resolved #2734
-* Fixed: Progress bar and cirlce blocks can now handle dynamic content that has commas #2688
-* Fixed: V2 Feature Grid encounters an error when using the advanced tab #2707
-
-= 3.10.0 =
-[Introducing: New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-
-* New: Tabs Block
-* New: Revamped Getting Started page with new videos and links
-* New: Added new inset option for shadows
-* Fixed: Table of Contents block font family not being applied
-* Fixed: Some block options did not show correctly in Safari
-
-= 3.9.1 =
-* New: Inspector UI improvements and reskin
-* New: New help tooltips UI
-* New: Better inspector accessibility
-* New: PHP filter stackable_block_category_index to adjust the block category index
-* FIxed: All Dynamic Content Fields from ACF, Metabox and JetEngine are now shown in the field picker
-* Fixed: Dynamic Content issues with the Site Editor
-* Fixed: Added missing help tooltips
-* Fixed: Focal point picker going outside the inspector panels
-* Fixed: Expand block accessibility improvements
-* Fixed: Progress bar block fullwidth issues
-* Fixed: Updated Freemius SDK to 2.5.10
-
-= 3.9.0 =
-[Introducing: New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-
-* New: Carousel block
-* New: Typography Letter Spacing is now responsive #2674
-* Fixed: The first entry in the Icon list block can get misaligned #2636
-
-= 3.8.2 =
-* Fixed: Dynamic Content sometimes not displaying in the frontend
-* Fixed: Dynamic Content backend field picker issues with ACF
-* Fixed: Lightbox now works with PerfMatter's Image Lazy Loading option
-* Fixed: Lightbox compatibility issues with Twenty Twenty One theme
-* Fixed: Feature Grid Column gap option resets
-
-= 3.8.1 =
-* New: Added orange modified indicators to panels and controls - know which options you've modified in your blocks!
-* New: Added justify text option for the Advanced Text block #2528
-* Fixed: Better backspace handling when typing in the number of columns #2675
-* Fixed: Scrolling the Horizontal Scroller block now doesn't open links #2657
-* Fixed: When adding background color or a background image, it now auto-enables the block's background option #2673
-* Fixed: Better Dynamic Content support for template/layout CPTs
-* Fixed: Lightbox now works with NitroPack's Image Lazy Loading option
-* Fixed: Reset button in Global Typography now resets correctly #2667
-* Fixed: Subtitle help icon alignment issue in Global Typography #1903
-* Fixed: Handled case when the responsive toggle button doesn't work when site editor files are loaded in the post editor
-* Fixed: Minor translation issues #2596
-
-= 3.8.0 =
-[Introducing: New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-
-* New: New Block Inspector UI - reorganized and added new options
-* New: Visual Guides - helps visualize layout options like justify and paddings
-* New: Flexbox options
-* New: Lightbox option in Image blocks and in containers with links - check the Advanced tab > Link panel. Lightbox supports: images, videos, YouTube, Vimeo and web pages.
-* New: Typing 'auto' in block margins now works visually in the block editor
-* Change: Renamed to "Adv. Copy and Paste" styles to make it different from the native copy and paste option
-* Change: Removed "Fit all columns to content" option in Columns, this has been replaced with flexbox controls
-* Fixed: Some blocks encounter a block error when inside a Query Loop block #2577
-* Fixed: Some textarea Dynamic Content fields do not show line breaks correctly #2602
-* Fixed: Better inspector panel scrolling when opening and closing panels
-* Fixed: Inner Column blocks with paddings made the column widths uneven
-* Fixed: Missing meta option in the Posts Block content order option #2646
-* Fixed: Video backgrounds now show up as one network request
-* Fixed: Block titles and descriptions are now translated correctly in the Getting Started page #2597
-* Fixed: Navigation panel cannot be resized properly #2640
-* Fixed: Navigation panel closes when selecting another block
-* Fixed: Dragging the margin bottom of blocks quickly will stop the current drag
-* Fixed: The Block Linking learn more link redirects to the wrong page #2564
-* Fixed: In the free version, premium notices have lower priority
-* Fixed: Dynamic Content can now be used in the Progress Bar and Progress Circle percentage value #2647

@@ -18,7 +18,9 @@ import { CustomAttributes } from '../custom-attributes'
 import { version as VERSION } from 'stackable'
 
 export { useUniqueId }
-export { deprecateBlockBackgroundColorOpacity, deprecateBlockShadowColor } from './deprecated'
+export {
+	deprecateBlockBackgroundColorOpacity, deprecateBlockShadowColor, deprecateBlockHeight,
+} from './deprecated'
 
 export const BlockDiv = memo( props => {
 	const {

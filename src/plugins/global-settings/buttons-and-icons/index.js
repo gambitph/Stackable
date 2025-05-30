@@ -23,6 +23,7 @@ import {
 } from '../utils'
 import { BORDER_CONTROLS } from '~stackable/block-components'
 import { i18n } from 'stackable'
+import { usePresetControls } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -53,6 +54,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 		setDisplayHoverNotice,
 		saveTimeout
 	)
+
+	// Add additional presets for setting margins and paddings to None
+	const nonePreset = {
+		name: 'None',
+		size: '0rem',
+		slug: 'none',
+	}
+	const sizePresetMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { additionalPresets: [ nonePreset ] } ) || null
+	const gapPresetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+	const borderRadiusPresetMarks = usePresetControls( 'borderRadius' )?.getPresetMarks() || null
 
 	return (
 		<>
@@ -112,6 +124,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						onChange={ value => onChange( 'button-min-height', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( 'button-min-height', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'button-min-height', 'mobile' ) }
+						marks={ sizePresetMarks }
 					/>
 					<FourRangeControl
 						label={ __( 'Button Padding', i18n ) }
@@ -138,6 +151,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 							title: __( 'Button padding', i18n ),
 							description: __( 'Adjusts the space between the button text and button borders', i18n ),
 						} }
+						marks={ sizePresetMarks }
 					/>
 					<AdvancedToolbarControl
 						label={ __( 'Borders', i18n ) }
@@ -205,6 +219,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 							video: 'general-border-radius',
 							description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
 						} }
+						marks={ borderRadiusPresetMarks }
 					/>
 					<ShadowControl
 						label={ __( 'Shadow / Outline', i18n ) }
@@ -251,6 +266,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						onChange={ value => onChange( 'button-column-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( 'button-column-gap', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'button-column-gap', 'mobile' ) }
+						marks={ gapPresetMarks }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -262,6 +278,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						onChange={ value => onChange( 'button-row-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( 'button-row-gap', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'button-row-gap', 'mobile' ) }
+						marks={ gapPresetMarks }
 					/>
 				</SectionSettings>
 
@@ -294,6 +311,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 							title: __( 'Button padding', i18n ),
 							description: __( 'Adjusts the space between the button text and button borders', i18n ),
 						} }
+						marks={ sizePresetMarks }
 					/>
 				</SectionSettings>
 				<SectionSettings
@@ -322,6 +340,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						onChange={ value => onChange( 'icon-list-row-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( 'icon-list-row-gap', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'icon-list-row-gap', 'mobile' ) }
+						marks={ gapPresetMarks }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Icon Gap', i18n ) }
@@ -371,7 +390,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 }, 10 )
 
 export const GlobalButtonsAndIconsStyles = () => {
-	const styles = useBlockLayoutEditorLoader( 'stackable/global-buttons-and-icons' )
+	const styles = useBlockLayoutEditorLoader( 'stackable/global-buttons-and-icons', 'buttons-and-icons' )
 
 	return styles
 }

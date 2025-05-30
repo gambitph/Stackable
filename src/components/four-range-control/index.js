@@ -25,22 +25,28 @@ import { useControlHandlers } from '../base-control2/hooks'
 import { Tooltip } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
-	Fragment, useState, memo,
+	Fragment, useState, memo, useEffect, useRef,
 } from '@wordpress/element'
+import { settings } from '@wordpress/icons'
+import { dispatch } from '@wordpress/data'
 
 /**
  * External dependencies
  */
 import { isEqual } from 'lodash'
 import classnames from 'classnames'
-import { i18n } from 'stackable'
+import { i18n, settings as stackableSettings } from 'stackable'
 import { Button } from '~stackable/components'
 import {
 	useAttributeName,
 	useBlockAttributesContext,
 	useDeviceType,
 	useBlockHoverState,
+	useBlockSetAttributesContext,
 } from '~stackable/hooks'
+import {
+	extractNumbersAndUnits, getCSSVarName, convertToPxIfUnsupported,
+} from '~stackable/util'
 
 const isEqualInitial = ( props, value, firstValue ) => {
 	let isEqual = true
@@ -77,7 +83,7 @@ const FourRangeControl = memo( props => {
 		( props.enableBottom && value.bottom === '' ) &&
 		( props.enableLeft && value.left === '' )
 
-	const firstValue = props.enableTop ? value.top
+	let firstValue = props.enableTop ? value.top
 		: props.enableRight ? value.right
 			: props.enableBottom ? value.bottom
 				: value.left
@@ -98,6 +104,7 @@ const FourRangeControl = memo( props => {
 		label={ isLocked ? __( 'Individual sides', i18n ) : __( 'All sides', i18n ) }
 	/>
 
+	const setAttributes = useBlockSetAttributesContext()
 	const hasUnits = !! props.units?.length
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 
@@ -116,6 +123,8 @@ const FourRangeControl = memo( props => {
 			_unitTablet: attributes[ `${ props.attribute }UnitTablet` ],
 		}
 	} )
+
+	const isMarkModeDefault = !! ( stackableSettings?.stackable_use_size_presets_by_default ?? true )
 
 	// Change the min, max & step values depending on the unit used.
 	if ( hasUnits ) {
@@ -180,77 +189,336 @@ const FourRangeControl = memo( props => {
 				: props.enableBottom ? { desktop: _valueDesktop?.bottom, tablet: _valueTablet?.bottom }
 					: { desktop: _valueDesktop?.left, tablet: _valueTablet?.left }
 
-	const onChangeAll = newValue => {
+	const [ isFourMarkMode, setIsFourMarkMode ] = useState( false )
+	// Ensure the convesion of value from preset to custom with regards to the unit is donce once.
+	const isConversionDone = useRef( {
+		first: false,
+		top: false,
+		right: false,
+		bottom: false,
+		left: false,
+		vertical: false,
+		horizontal: false,
+	} )
+
+	// Is value at first render the same as a step value? If so, do mark mode
+	// at the start, or show custom
+	// If no initial value, use the given default from the settings
+	const isMarkValue = {
+		first: !! props.marks && isMarkModeDefault,
+		top: !! props.marks && isMarkModeDefault,
+		right: !! props.marks && isMarkModeDefault,
+		bottom: !! props.marks && isMarkModeDefault,
+		left: !! props.marks && isMarkModeDefault,
+	}
+
+	if ( props.marks && firstValue ) {
+		// Check if the current value exists in the marks only by their CSS variable name
+		// to match in case the fallback size changes.
+		const firstValueCssVarName = getCSSVarName( firstValue )
+		const firstMatchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === firstValueCssVarName )
+		isMarkValue.first = !! firstMatchedMark
+		if ( firstMatchedMark ) {
+			firstValue = firstMatchedMark.value
+		}
+
+		[ 'top', 'right', 'bottom', 'left' ].forEach( side => {
+			const sideCssVarName = getCSSVarName( value[ side ] )
+			const matchedMark = props.marks.find( mark => getCSSVarName( mark.value ) === sideCssVarName )
+			isMarkValue[ side ] = !! matchedMark
+			if ( matchedMark ) {
+				value[ side ] = matchedMark.value
+			}
+		} )
+	}
+
+	// Set the markMode when device type changes
+	useEffect( () => {
+		setIsFourMarkMode( isMarkValue )
+	}, [ deviceType ] )
+
+	const onChangeAll = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: props.enableTop ? newValue : value.top,
 			right: props.enableRight ? newValue : value.right,
 			bottom: props.enableBottom ? newValue : value.bottom,
 			left: props.enableLeft ? newValue : value.left,
 		} )
+		setIsFourMarkMode( prev => ( {
+			...prev,
+			top: prev.first,
+			right: prev.first,
+			bottom: prev.first,
+			left: prev.first,
+		} ) )
 	}
 
-	const onChangeTop = newValue => {
+	const onChangeTop = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: newValue,
 			right: value.right,
 			bottom: value.bottom,
 			left: value.left,
 		} )
+		setIsFourMarkMode( prev => ( { ...prev, first: prev.top } ) )
 	}
 
-	const onChangeRight = newValue => {
+	const onChangeRight = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: value.top,
 			right: newValue,
 			bottom: value.bottom,
 			left: value.left,
 		} )
+		setIsFourMarkMode( prev => ( { ...prev, first: prev.right } ) )
 	}
 
-	const onChangeBottom = newValue => {
+	const onChangeBottom = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: value.top,
 			right: value.right,
 			bottom: newValue,
 			left: value.left,
 		} )
+		setIsFourMarkMode( prev => ( { ...prev, first: prev.bottom } ) )
 	}
 
-	const onChangeLeft = newValue => {
+	const onChangeLeft = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: value.top,
 			right: value.right,
 			bottom: value.bottom,
 			left: newValue,
 		} )
+		setIsFourMarkMode( prev => ( { ...prev, first: prev.left } ) )
 	}
 
-	const onChangeVertical = newValue => {
+	const onChangeVertical = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: newValue,
 			right: value.right,
 			bottom: newValue,
 			left: value.left,
 		} )
+		setIsFourMarkMode( prev => ( {
+			...prev,
+			top: prev.top,
+			bottom: prev.top,
+		} ) )
 	}
 
-	const onChangeHorizontal = newValue => {
+	const onChangeHorizontal = _newValue => {
+		const newValue = props.marks ? String( _newValue ) : _newValue
 		onChange( {
 			top: value.top,
 			right: newValue,
 			bottom: value.bottom,
 			left: newValue,
 		} )
+		setIsFourMarkMode( prev => ( {
+			...prev,
+			right: prev.left,
+			left: prev.left,
+		} ) )
 	}
+	// Support for steps. Modify the props to make the range control show steps.
+	const stepSupport = ( isMarkMode, initialValue, initialOnChange, conversionKey = null ) => {
+		const newProps = { ...propsToPass }
+
+		if ( props.marks && isMarkMode ) {
+		// Steps only have 1 increment values
+			newProps.min = 0
+			newProps.max = props.marks.length - 1
+			newProps.sliderMin = 0
+			newProps.sliderMax = props.marks.length - 1
+			newProps.step = 1
+
+			// Show the marks and names
+			newProps.marks = props.marks.reduce( ( acc, mark, index ) => {
+				return [
+					{
+						value: index,
+						name: undefined,
+					},
+					...acc,
+				]
+			}, [] )
+			newProps.renderTooltipContent = value => {
+				return props.marks[ value ]?.name || props.marks[ value ]?.slug || ''
+			}
+
+			// Other necessary props for steps.
+			newProps.withInputField = false
+		} else {
+			newProps.marks = undefined
+		}
+
+		if ( props.marks ) {
+			controlProps.className = controlProps.className || ''
+			controlProps.className += 'stk-range-control--with-marks'
+			controlProps.className += isMarkMode ? ' stk-range-control--mark-mode' : ''
+		}
+
+		// We need to change the way we handle the value and onChange if we're doing marks
+		let rangeValue = props.marks ? parseFloat( initialValue ) : initialValue
+		let rangeOnChange = initialOnChange
+		if ( props.marks && isMarkMode ) {
+			rangeValue = props.marks.findIndex( mark => {
+				let _unit, _value
+				// If the initialValue is a CSS variable, compare with mark's CSS variable.
+				// Otherwise, the initialValue is custom from the previous switch from custom to preset mode,
+				// so compare with raw size and units to convert to preset.
+				if ( typeof initialValue === 'string' && initialValue.startsWith( 'var' ) ) {
+					[ _value, _unit ] = extractNumbersAndUnits( mark.value )[ 0 ]
+				} else {
+					[ _value, _unit ] = extractNumbersAndUnits( mark.size )[ 0 ]
+				}
+				return _value === initialValue && ( _unit === '' || _unit === unit )
+			} )
+			rangeOnChange = ( value, property = 'value' ) => {
+				if ( value === '' ) {
+					return initialOnChange( value )
+				}
+
+				// Extract the unit and value.
+				const markValue = props.marks[ value ]?.[ property ] || '0'
+				let [ newValue, unit ] = extractNumbersAndUnits( markValue )[ 0 ]
+
+				// If the attribute has no support for rem or em, and the
+				// preset units is rem or em, convert to px
+				const converted = convertToPxIfUnsupported( props.units, unit, newValue )
+				newValue = converted.value
+				unit = converted.unit
+
+				// Update the unit.
+				if ( unit ) {
+					dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+					setAttributes( { [ unitAttrName ]: unit } )
+					if ( props.onChangeUnit ) {
+						props.onChangeUnit( unit )
+					}
+				}
+
+				initialOnChange( newValue )
+				isConversionDone.current[ conversionKey ] = false
+			}
+		} else if ( typeof initialValue === 'string' && initialValue.startsWith( 'var' ) &&
+			( ( isLocked && conversionKey === 'first' ) ||
+			( ! isLocked && [ 'top', 'right', 'left', 'bottom' ].includes( conversionKey ) ) ||
+			( isLocked && props.vhMode && [ 'vertical', 'horizontal' ].includes( conversionKey ) ) )
+		) {
+			// If the derivedValue is a preset and currently not in mark mode, the derivedValue is from
+			// the previous switch from preset to custom mode. Convert to custom.
+			const currentSize = props.marks.find( mark => {
+				return initialValue === mark.value
+			} )?.size
+			let [ _newValue, _unit ] = extractNumbersAndUnits( currentSize )[ 0 ]
+
+			// If the attribute has no support for rem or em, and the
+			// preset units is rem or em, convert to px
+			const converted = convertToPxIfUnsupported( props.units, _unit, _newValue )
+			_newValue = converted.value
+			_unit = converted.unit
+
+			rangeValue = parseFloat( _newValue )
+
+			if ( _unit && conversionKey && ! isConversionDone.current[ conversionKey ] ) {
+				isConversionDone.current[ conversionKey ] = true
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				setAttributes( { [ unitAttrName ]: _unit } )
+				if ( props.onChangeUnit ) {
+					props.onChangeUnit( _unit )
+				}
+			}
+			// Since the actual previous value is a preset, force the new custom value
+			// when changing unit
+			controlProps.onChangeUnit = ( unit, unitAttrName ) => {
+				initialOnChange( _newValue )
+				setAttributes( { [ unitAttrName ]: unit } )
+			}
+		}
+
+		return [
+			newProps, parseFloat( rangeValue ), rangeOnChange,
+		]
+	}
+
+	// Remove the unit picker if not in mark mode for every four range mode
+	if ( isLocked && ! props.vhMode ) {
+		controlProps.units = isFourMarkMode.first
+			? false : controlProps.units
+	} else if ( isLocked && props.vhMode ) {
+		controlProps.units = isFourMarkMode.top && isFourMarkMode.right
+			? false : controlProps.units
+	} else {
+		controlProps.units = isFourMarkMode.top && isFourMarkMode.right && isFourMarkMode.bottom && isFourMarkMode.left
+			? false : controlProps.units
+	}
+
+	// Create step supports for each side
+	const [ propsToPassFirst, rangeValueFirst, rangeOnChangeFirst ] = stepSupport(
+		isFourMarkMode.first,
+		firstValue,
+		onChangeAll,
+		'first',
+	)
+
+	const [ propsToPassTop, rangeValueTop, rangeOnChangeTop ] = stepSupport(
+		isFourMarkMode.top,
+		value.top,
+		onChangeTop,
+		'top'
+	)
+
+	const [ propsToPassRight, rangeValueRight, rangeOnChangeRight ] = stepSupport(
+		isFourMarkMode.right,
+		value.right,
+		onChangeRight,
+		'right'
+	)
+
+	const [ propsToPassBottom, rangeValueBottom, rangeOnChangeBottom ] = stepSupport(
+		isFourMarkMode.bottom,
+		value.bottom,
+		onChangeBottom,
+		'bottom'
+	)
+
+	const [ propsToPassLeft, rangeValueLeft, rangeOnChangeLeft ] = stepSupport(
+		isFourMarkMode.left,
+		value.left,
+		onChangeLeft,
+		'left'
+	)
+
+	const [ propsToPassVertical, rangeValueVertical, rangeOnChangeVertical ] = stepSupport(
+		isFourMarkMode.top,
+		value.top,
+		onChangeVertical,
+		'vertical'
+	)
+
+	const [ propsToPassHorizontal, rangeValueHorizontal, rangeOnChangeHorizontal ] = stepSupport(
+		isFourMarkMode.left,
+		value.left,
+		onChangeHorizontal,
+		'horizontal'
+	)
 
 	return (
 		<AdvancedControl { ...controlProps }>
 			{ isLocked && ! props.vhMode && (
 				<Fragment>
 					<RangeControl
-						{ ...propsToPass }
-						value={ firstValue }
-						onChange={ onChangeAll }
+						{ ...propsToPassFirst }
+						value={ rangeValueFirst }
+						onChange={ rangeOnChangeFirst }
 						allowReset={ false }
 						initialPosition={ ( () => {
 							if ( currentHoverState !== 'normal' ) {
@@ -278,7 +546,21 @@ const FourRangeControl = memo( props => {
 
 							return propsToPass.placeholder
 						} )() }
-					/>
+						__nextHasNoMarginBottom
+					>
+						{ props.allowCustom && props.marks && (
+							<Button
+								className="stk-range-control__custom-button"
+								size="small"
+								variant="tertiary"
+								onClick={ () => {
+									setIsFourMarkMode( prev => ( { ...prev, first: ! prev.first } ) )
+								} }
+								icon={ settings }
+							>
+							</Button>
+						) }
+					</RangeControl>
 					<ResetButton
 						allowReset={ props.allowReset }
 						value={ firstValue }
@@ -294,9 +576,9 @@ const FourRangeControl = memo( props => {
 							<span className="ugb-four-range-control__icon"><SVGVerticalImage /></span>
 						</Tooltip>
 						<RangeControl
-							{ ...propsToPass }
-							value={ value.top }
-							onChange={ onChangeVertical }
+							{ ...propsToPassVertical }
+							value={ rangeValueVertical }
+							onChange={ rangeOnChangeVertical }
 							allowReset={ false }
 							initialPosition={ ( () => {
 								if ( currentHoverState !== 'normal' ) {
@@ -324,7 +606,21 @@ const FourRangeControl = memo( props => {
 
 								return typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop
 							} )() }
-						/>
+							__nextHasNoMarginBottom
+						>
+							{ props.allowCustom && props.marks && (
+								<Button
+									className="stk-range-control__custom-button"
+									size="small"
+									variant="tertiary"
+									onClick={ () => {
+										setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
+									} }
+									icon={ settings }
+								>
+								</Button>
+							) }
+						</RangeControl>
 						<ResetButton
 							allowReset={ props.allowReset }
 							value={ value.top }
@@ -337,9 +633,9 @@ const FourRangeControl = memo( props => {
 							<span className="ugb-four-range-control__icon"><SVGHorizontalImage /></span>
 						</Tooltip>
 						<RangeControl
-							{ ...propsToPass }
-							value={ value.left }
-							onChange={ onChangeHorizontal }
+							{ ...propsToPassHorizontal }
+							value={ rangeValueHorizontal }
+							onChange={ rangeOnChangeHorizontal }
 							allowReset={ false }
 							initialPosition={ ( () => {
 								if ( currentHoverState !== 'normal' ) {
@@ -366,7 +662,21 @@ const FourRangeControl = memo( props => {
 								}
 								return typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft
 							} )() }
-						/>
+							__nextHasNoMarginBottom
+						>
+							{ props.allowCustom && props.marks && (
+								<Button
+									className="stk-range-control__custom-button"
+									size="small"
+									variant="tertiary"
+									onClick={ () => {
+										setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
+									} }
+									icon={ settings }
+								>
+								</Button>
+							) }
+						</RangeControl>
 						<ResetButton
 							allowReset={ props.allowReset }
 							value={ value.left }
@@ -384,9 +694,9 @@ const FourRangeControl = memo( props => {
 								<span className="ugb-four-range-control__icon">{ props.isCorner ? <SVGUpperLeftImage /> : <SVGTopImage /> }</span>
 							</Tooltip>
 							<RangeControl
-								{ ...propsToPass }
-								value={ value.top }
-								onChange={ onChangeTop }
+								{ ...propsToPassTop }
+								value={ rangeValueTop }
+								onChange={ rangeOnChangeTop }
 								allowReset={ false }
 								initialPosition={ ( () => {
 									if ( currentHoverState !== 'normal' ) {
@@ -414,7 +724,21 @@ const FourRangeControl = memo( props => {
 
 									return typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop
 								} )() }
-							/>
+								__nextHasNoMarginBottom
+							>
+								{ props.allowCustom && props.marks && (
+									<Button
+										className="stk-range-control__custom-button"
+										size="small"
+										variant="tertiary"
+										onClick={ () => {
+											setIsFourMarkMode( prev => ( { ...prev, top: ! prev.top } ) )
+										} }
+										icon={ settings }
+									>
+									</Button>
+								) }
+							</RangeControl>
 							<ResetButton
 								allowReset={ props.allowReset }
 								value={ value.top }
@@ -429,9 +753,9 @@ const FourRangeControl = memo( props => {
 								<span className="ugb-four-range-control__icon">{ props.isCorner ? <SVGUpperRightImage /> : <SVGRightImage /> }</span>
 							</Tooltip>
 							<RangeControl
-								{ ...propsToPass }
-								value={ value.right }
-								onChange={ onChangeRight }
+								{ ...propsToPassRight }
+								value={ rangeValueRight }
+								onChange={ rangeOnChangeRight }
 								allowReset={ false }
 								initialPosition={ ( () => {
 									if ( currentHoverState !== 'normal' ) {
@@ -459,7 +783,21 @@ const FourRangeControl = memo( props => {
 
 									return typeof props.placeholderRight === 'undefined' ? propsToPass.placeholder : props.placeholderRight
 								} )() }
-							/>
+								__nextHasNoMarginBottom
+							>
+								{ props.allowCustom && props.marks && (
+									<Button
+										className="stk-range-control__custom-button"
+										size="small"
+										variant="tertiary"
+										onClick={ () => {
+											setIsFourMarkMode( prev => ( { ...prev, right: ! prev.right } ) )
+										} }
+										icon={ settings }
+									>
+									</Button>
+								) }
+							</RangeControl>
 							<ResetButton
 								allowReset={ props.allowReset }
 								value={ value.right }
@@ -474,9 +812,9 @@ const FourRangeControl = memo( props => {
 								<span className="ugb-four-range-control__icon">{ props.isCorner ? <SVGLowerLeftImage /> : <SVGBottomImage /> }</span>
 							</Tooltip>
 							<RangeControl
-								{ ...propsToPass }
-								value={ value.bottom }
-								onChange={ onChangeBottom }
+								{ ...propsToPassBottom }
+								value={ rangeValueBottom }
+								onChange={ rangeOnChangeBottom }
 								allowReset={ false }
 								initialPosition={ ( () => {
 									if ( currentHoverState !== 'normal' ) {
@@ -504,7 +842,21 @@ const FourRangeControl = memo( props => {
 
 									return typeof props.placeholderBottom === 'undefined' ? propsToPass.placeholder : props.placeholderBottom
 								} )() }
-							/>
+								__nextHasNoMarginBottom
+							>
+								{ props.allowCustom && props.marks && (
+									<Button
+										className="stk-range-control__custom-button"
+										size="small"
+										variant="tertiary"
+										onClick={ () => {
+											setIsFourMarkMode( prev => ( { ...prev, bottom: ! prev.bottom } ) )
+										} }
+										icon={ settings }
+									>
+									</Button>
+								) }
+							</RangeControl>
 							<ResetButton
 								allowReset={ props.allowReset }
 								value={ value.bottom }
@@ -519,9 +871,9 @@ const FourRangeControl = memo( props => {
 								<span className="ugb-four-range-control__icon">{ props.isCorner ? <SVGLowerRightImage /> : <SVGLeftImage /> }</span>
 							</Tooltip>
 							<RangeControl
-								{ ...propsToPass }
-								value={ value.left }
-								onChange={ onChangeLeft }
+								{ ...propsToPassLeft }
+								value={ rangeValueLeft }
+								onChange={ rangeOnChangeLeft }
 								allowReset={ false }
 								initialPosition={ ( () => {
 									if ( currentHoverState !== 'normal' ) {
@@ -549,7 +901,21 @@ const FourRangeControl = memo( props => {
 
 									return typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft
 								} )() }
-							/>
+								__nextHasNoMarginBottom
+							>
+								{ props.allowCustom && props.marks && (
+									<Button
+										className="stk-range-control__custom-button"
+										size="small"
+										variant="tertiary"
+										onClick={ () => {
+											setIsFourMarkMode( prev => ( { ...prev, left: ! prev.left } ) )
+										} }
+										icon={ settings }
+									>
+									</Button>
+								) }
+							</RangeControl>
 							<ResetButton
 								allowReset={ props.allowReset }
 								value={ value.left }
@@ -598,6 +964,9 @@ FourRangeControl.defaultProps = {
 	onChange: undefined,
 
 	isCorner: false,
+
+	marks: undefined,
+	allowCustom: true,
 }
 
 export default memo( FourRangeControl )

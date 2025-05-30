@@ -1,6 +1,9 @@
 /**
  * Loads all the typography styles for the blocks in the editor.
  */
+/**
+ * Internal dependencies
+ */
 
 /**
  * External dependencies
@@ -9,6 +12,7 @@ import {
 	createTypographyStyles,
 	fetchSettings,
 	loadGoogleFont,
+	getDefaultFontSize,
 } from '~stackable/util'
 import { generateStyles } from '~stackable/block-components'
 import deepmerge from 'deepmerge'
@@ -24,11 +28,20 @@ import {
 import {
 	addAction, removeAction, applyFilters, doAction, addFilter,
 } from '@wordpress/hooks'
-import { useSelect } from '@wordpress/data'
+import { useSelect, dispatch } from '@wordpress/data'
+import { models } from '@wordpress/api'
+
+let saveTypographyAsPresetsThrottle = null
 
 export const GlobalTypographyStyles = () => {
+	const { allCustomPresets } = useSelect( select => {
+		const _customPresetControls = select( 'stackable/global-preset-controls.custom' )?.getCustomPresetControls() ?? {}
+		return { allCustomPresets: { ..._customPresetControls } }
+	}, [] )
+
 	const [ typographySettings, setTypographySettings ] = useState( [] )
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
+	const [ isApplyBodyToHTML, setIsApplyBodyToHTML ] = useState( false )
 
 	// These are for debouncing the style generation to make things faster.
 	const [ styles, setStyles ] = useState( '' )
@@ -49,17 +62,70 @@ export const GlobalTypographyStyles = () => {
 		return select( 'core/edit-site' )?.getEditorMode() || select( 'core/edit-post' )?.getEditorMode()
 	} )
 
+	// Update the custom presets when using typography as presets
+	const updatePresetsWithTypography = ( useTypographyAsPresets, typographySettings, tags ) => {
+		if ( useTypographyAsPresets ) {
+			const fontSizePresets = tags
+				.filter( ( { presetSlug } ) => !! presetSlug )
+				.map( ( {
+					selector, presetName, presetSlug,
+				} ) => {
+					// If no fontSize available, the unit should default to px
+					const size = typographySettings[ selector ]?.fontSize
+					const unit = size ? typographySettings[ selector ]?.fontSizeUnit : 'px'
+					return {
+						name: presetName,
+						slug: presetSlug,
+						size: `${ size ?? getDefaultFontSize( selector ) ?? 16 }${ unit ?? 'px' }`,
+					}
+				} )
+			// Add the preset for extra small
+			let xSmallSize = typographySettings[ '.stk-subtitle' ]?.fontSize ?? getDefaultFontSize( '.stk-subtitle' ) ?? 16
+			let xSmallUnit = typographySettings[ '.stk-subtitle' ]?.fontSizeUnit ?? 'px'
+			if ( xSmallUnit === 'px' ) {
+				xSmallSize = Math.pow( xSmallSize / 16, 2 )
+				xSmallUnit = 'rem'
+			} else {
+				xSmallSize = Math.pow( xSmallSize, 2 )
+			}
+
+			fontSizePresets.push( {
+				name: 'XS',
+				slug: 'x-small',
+				size: `${ xSmallSize }${ xSmallUnit ?? 'px' }`,
+			} )
+			// Reverse the presets so it's from smallest to biggest
+			fontSizePresets.reverse()
+
+			const newSettings = { ...allCustomPresets, fontSizes: fontSizePresets }
+
+			clearTimeout( saveTypographyAsPresetsThrottle )
+			saveTypographyAsPresetsThrottle = setTimeout( () => {
+				const settings = new models.Settings( { stackable_global_custom_preset_controls: newSettings } ) // eslint-disable-line camelcase
+				settings.save()
+			}, 300 )
+
+			dispatch( 'stackable/global-preset-controls.custom' ).updateCustomPresetControls( newSettings )
+		}
+	}
+
 	useEffect( () => {
 		// Get settings.
 		fetchSettings().then( response => {
 			setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
 			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
+			setIsApplyBodyToHTML( response.stackable_is_apply_body_to_html || false )
 		} )
 
 		// Allow actions to trigger styles to update.
-		addAction( 'stackable.global-settings.typography.update-trigger', 'stackable/typography-styles', ( newTypographySettings, newAapplySettingsTo ) => {
+		addAction( 'stackable.global-settings.typography.update-trigger', 'stackable/typography-styles', (
+			newTypographySettings, newAapplySettingsTo, newUseTypographyAsPresets, newIsApplyBodyToHTML, tags
+		) => {
+			updatePresetsWithTypography( newUseTypographyAsPresets, newTypographySettings, tags )
+
 			setTypographySettings( newTypographySettings )
 			setApplySettingsTo( newAapplySettingsTo )
+			setIsApplyBodyToHTML( newIsApplyBodyToHTML )
 		} )
 		return () => {
 			removeAction( 'stackable.global-settings.typography.update-trigger', 'stackable/typography-styles' )
@@ -71,7 +137,7 @@ export const GlobalTypographyStyles = () => {
 		addAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles', typographySettings => {
 			// Generate all the typography styles.
 			const styleObject = Object.keys( typographySettings ).map( tag => {
-				const selectors = formSelectors( tag, applySettingsTo )
+				const selectors = formSelectors( tag, applySettingsTo, isApplyBodyToHTML )
 
 				// Build our selector, target h2.block or .block h2.
 				// Some blocks may output the heading tag right away.
@@ -118,16 +184,16 @@ export const GlobalTypographyStyles = () => {
 		setStyleTimeout( setTimeout( () => doAction( 'stackable.global-settings.typography-update-global-styles', typographySettings ), 200 ) )
 
 		return () => removeAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles' )
-	}, [ JSON.stringify( typographySettings ), applySettingsTo, device, editorMode ] )
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, isApplyBodyToHTML, device, editorMode ] )
 
 	return styles
 }
 
-export const formSelectors = ( selector, applyTo ) => {
+export const formSelectors = ( selector, applyTo, isApplyBodyToHTML ) => {
 	if ( [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ].includes( selector ) || selector.startsWith( '.' ) ) {
 		return formClassOrTagSelectors( selector, applyTo )
 	}
-	return formParagraphSelectors( applyTo )
+	return formParagraphSelectors( applyTo, isApplyBodyToHTML )
 }
 
 export const formClassOrTagSelectors = ( selector, applyTo ) => {
@@ -152,8 +218,8 @@ export const formClassOrTagSelectors = ( selector, applyTo ) => {
 	return applyFilters( 'stackable.global-settings.typography-selectors', selectors, selector )
 }
 
-export const formParagraphSelectors = applyTo => {
-	return applyFilters( 'stackable.global-settings.typography-selectors', [
+export const formParagraphSelectors = ( applyTo, isApplyBodyToHTML ) => {
+	const selectors = [
 		...formClassOrTagSelectors( 'p', applyTo ),
 		...formClassOrTagSelectors( 'li', applyTo ),
 		`.editor-styles-wrapper p.block-editor-block-list__block[data-type^="core/"]`,
@@ -162,7 +228,13 @@ export const formParagraphSelectors = applyTo => {
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] td`,
 		// Apply the font styles to the content placeholder text when the post is blank.
 		'.block-editor-default-block-appender.has-visible-prompt',
-	], '' )
+	]
+
+	// Add 'html' only if is_apply_body_to_html is true
+	if ( isApplyBodyToHTML ) {
+		selectors.push( 'html' )
+	}
+	return applyFilters( 'stackable.global-settings.typography-selectors', selectors, '' )
 }
 
 // Make sure that this isn't applied to the native query loop block, otherwise

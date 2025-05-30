@@ -39,6 +39,7 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 		 */
 		public function register_spacing_and_borders() {
 			$four_range_properties = Stackable_Global_Settings::get_four_range_properties();
+			$string_four_range_properties = Stackable_Global_Settings::get_string_four_range_properties();
 			$string_properties = Stackable_Global_Settings::get_string_properties();
 			$number_properties = Stackable_Global_Settings::get_number_properties();
 
@@ -54,24 +55,24 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 							'properties' => array(
 								'container-border-style' => $string_properties,
 								'container-border-width' => $four_range_properties,
-								'container-border-radius' => $four_range_properties,
+								'container-border-radius' => $string_four_range_properties,
 								'container-box-shadow' => $string_properties,
-								'container-padding' => $four_range_properties,
+								'container-padding' => $string_four_range_properties,
 
 								'block-background-border-style' => $string_properties,
 								'block-background-border-width' => $four_range_properties,
-								'block-background-border-radius' => $four_range_properties,
+								'block-background-border-radius' => $string_four_range_properties,
 								'block-background-box-shadow' => $string_properties,
-								'block-background-padding' => $four_range_properties,
+								'block-background-padding' => $string_four_range_properties,
 
-								'block-margin-bottom' => $number_properties,
+								'block-margin-bottom' => $string_properties,
 
 								'column-margin' => $number_properties,
-								'columns-column-gap' => $number_properties,
-								'columns-row-gap' => $number_properties,
+								'columns-column-gap' => $string_properties,
+								'columns-row-gap' => $string_properties,
 
 								'image-drop-shadow' => $string_properties,
-								'image-border-radius' => $four_range_properties,
+								'image-border-radius' => $string_four_range_properties,
 							)
 						)
 					),
@@ -100,8 +101,18 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 				return $current_css;
 			}
 
+			// Add a body class if there are any global spacing and borders styles.
+			if ( $generated_css !== '' ) {
+				add_filter( 'body_class', array( $this, 'add_body_class_spacing_and_borders' ) );
+			}
+
 			$current_css .= $generated_css;
 			return apply_filters( 'stackable_frontend_css' , $current_css );
+		}
+
+		public function add_body_class_spacing_and_borders( $classes ) {
+			$classes[] = 'stk-has-design-system-spacing-and-borders';
+			return $classes;
 		}
 	}
 

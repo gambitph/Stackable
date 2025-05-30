@@ -9,11 +9,26 @@
 }
 
 .stk-block-columns > .stk-block-content {
-	--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
+	--stk-column-gap: 0px; // For nested columns, this takes precedence.
 	column-gap: var(--stk-column-gap);
-	row-gap: var(--stk-columns-row-gap, 0px);
 	margin-left: auto;
 	margin-right: auto;
+}
+
+// DEV NOTE: Let's not add this theme.json inheritance since it destroys the normal behavior of our blocks.
+// These are styles added from the block style inheritance.
+// :where(.stk-has-block-style-inheritance) {
+// 	.stk-block-columns > .stk-block-content {
+// 		--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
+// 	}
+// }
+
+// These are styles added from the global spacing and borders.
+:where(.stk-has-design-system-spacing-and-borders) {
+	.stk-block-columns > .stk-block-content {
+		--stk-column-gap: var(--stk-columns-column-gap, 0px); // For nested columns, this takes precedence.
+		row-gap: var(--stk-columns-row-gap, 0px);
+	}
 }
 
 // Add a 0 specificity style to set the default column order. This is to prevent
@@ -21,13 +36,13 @@
 // Target the stk-column-wrapper to also include blocks with column innerblocks
 // but are not columns (no stk-block-columns), like accordion and horizontal scroller.
 :where(.stk-block-columns) {
-	@for $i from 1 through 20 {
+	@for $i from 1 through 40 {
 		--stk-col-order-#{ $i }: #{ $i };
 	}
 }
 
 // Column order.
-@for $i from 1 through 20 {
+@for $i from 1 through 40 {
 	.stk-block-column:nth-child(#{ $i }) {
 		order: var(--stk-col-order-#{ $i }, initial);
 	}

@@ -6,9 +6,12 @@ import {
 	createTypographyStyles, getFontFamilyLabel, loadGoogleFont,
 } from '~stackable/util'
 import { i18n } from 'stackable'
-import { upperFirst, omit } from 'lodash'
+import {
+	upperFirst, omit, startCase, last,
+} from 'lodash'
 import classnames from 'classnames'
 import { generateStyles } from '~stackable/block-components'
+import { usePresetControls } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -20,10 +23,9 @@ import { Dashicon } from '@wordpress/components'
 const TypographyPicker = props => {
 	const { value, help } = props
 
-	// On style change, gather all the styles then trigger the onChange.
+	// On style change, only get the new style then trigger the onChange.
 	const onChange = ( style, value ) => {
 		const newStyles = {
-			...props.value,
 			[ style ]: value,
 		}
 		props.onChange( newStyles )
@@ -46,9 +48,22 @@ const TypographyPicker = props => {
 		'ugb-global-settings-typography-control--with-description': createDescription( value ),
 	} )
 
+	const useTypographyAsPresets = useSelect( select =>
+		select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
+	)
+
+	const presetMarks = usePresetControls( 'fontSizes' )
+		?.getPresetMarks( { customOnly: useTypographyAsPresets } ) || null
+
 	return (
 		<TypographyControl
-			fontSizeProps={ { units: [ 'px', 'em', 'rem' ] } }
+			fontSizeProps={ {
+				units: [ 'px', 'em', 'rem' ],
+				min: [ 0, 0, 0 ],
+				sliderMax: [ 150, 7, 7 ],
+				step: [ 1, 0.05, 0.05 ],
+				marks: presetMarks,
+			} }
 			lineHeightUnits={ [ 'px', 'em', 'rem' ] }
 			className={ mainClasses }
 			label={ label }
@@ -152,7 +167,14 @@ const createDescription = ( styleObject, device = 'desktop' ) => {
 		description.push( upperFirst( styleObject.textTransform ) )
 	}
 
-	return description.join( ', ' )
+	// If a css custom property, get just the name names
+	return description.map( value => {
+		if ( value.includes( 'var(' ) ) {
+			const propName = value.match( /var\(([^\),]*)/ )?.[ 1 ]
+			return startCase( last( propName.split( '--' ) ) )
+		}
+		return value
+	} ).join( ', ' )
 }
 
 const TypographyPreview = props => {

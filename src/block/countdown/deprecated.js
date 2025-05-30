@@ -1,6 +1,6 @@
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
-	deprecateBlockShadowColor, deprecateContainerShadowColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyFontSize, deprecateBlockHeight,
 } from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
@@ -9,15 +9,44 @@ import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
 	{
+		// Support the change of type for fontSize and blockHeight
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
+		isEligible: attributes => {
+			const hasDigitFontSize = deprecateTypographyFontSize.isEligible( 'digit%s' )( attributes )
+			const hasLabelFontSize = deprecateTypographyFontSize.isEligible( 'label%s' )( attributes )
+			const hasMessageFontSize = deprecateTypographyFontSize.isEligible( 'message%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+
+			return hasDigitFontSize || hasLabelFontSize || hasMessageFontSize || hasNumberBlockHeight
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'digit%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'label%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'digit%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'label%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
+	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),
 		save: withVersion( '3.12.11' )( Save ),
 		isEligible: attributes => {
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasBlockShadow || hasContainerShadow || isNotV4
+			return hasBlockShadow || hasContainerShadow
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -40,12 +69,11 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 			const hasDigitGradient = deprecateTypographyGradientColor.isEligible( 'digit%s' )( attributes )
 			const hasLabelGradient = deprecateTypographyGradientColor.isEligible( 'label%s' )( attributes )
 			const hasMessageGradient = deprecateTypographyGradientColor.isEligible( 'message%s' )( attributes )
 
-			return hasContainerOpacity || hasBlockOpacity || isNotV4 || hasDigitGradient || hasLabelGradient || hasMessageGradient
+			return hasContainerOpacity || hasBlockOpacity || hasDigitGradient || hasLabelGradient || hasMessageGradient
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -66,11 +94,6 @@ const deprecated = [
 		// layout & containers work.
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
-		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
-
-			return isNotV4
-		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
 

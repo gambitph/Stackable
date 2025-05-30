@@ -19,12 +19,6 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => 24,
 					"mobile" => 16
 				),
-				"link-color" => array(
-					"desktop" => "initial",
-				),
-				"accent-color" => array(
-					"desktop" => "initial",
-				),
 				"column-margin" => array(
 					"desktop" => 12,
 					"mobile" => 8
@@ -47,7 +41,7 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 						"right" => 24,
 						"bottom" => 24,
 						"left" => 24
-					),
+					)
 				),
 				"container-padding-large" => array(
 					"desktop" => array(
@@ -81,16 +75,16 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => ""
 				),
 				"container-border-width" => array(
-					"desktop" => 1,
+					"desktop" => 1
 				),
 				"container-border-radius" => array(
 					"desktop" => 0
 				),
 				"container-box-shadow" => array(
-					"desktop" => "0px 4px 24px rgba(0, 0, 0, 0.04)",
+					"desktop" => "0px 4px 24px rgba(0, 0, 0, 0.04)"
 				),
 				"container-background-color" => array(
-					"desktop" => "#fff",
+					"desktop" => "#fff"
 				),
 				"container-color" => array(
 					"desktop" => "#1e1e1e"
@@ -107,28 +101,28 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 						"right" => 16,
 						"bottom" => 16,
 						"left" => 16
-					),
+					)
 				),
 				"block-background-border-style" => array(
 					"desktop" => ""
 				),
 				"block-background-border-width" => array(
-					"desktop" => 1,
+					"desktop" => 1
 				),
 				"block-background-border-radius" => array(
 					"desktop" => 0
 				),
 				"block-background-box-shadow" => array(
-					"desktop" => "",
+					"desktop" => ""
 				),
 				"block-background-color" => array(
-					"desktop" => "#f1f1f1",
+					"desktop" => "#f1f1f1"
 				),
 				"image-border-radius" => array(
 					"desktop" => 0
 				),
 				"image-drop-shadow" => array(
-					"desktop" => "",
+					"desktop" => ""
 				),
 				"button-min-height" => array(
 					"desktop" => 0
@@ -145,16 +139,16 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => ""
 				),
 				"button-border-width" => array(
-					"desktop" => 1,
+					"desktop" => 1
 				),
 				"button-ghost-border-width" => array(
-					"desktop" => 2,
+					"desktop" => 2
 				),
 				"button-border-radius" => array(
 					"desktop" => 0
 				),
 				"button-box-shadow" => array(
-					"desktop" => "",
+					"desktop" => ""
 				),
 				"button-icon-size" => array(
 					"desktop" => 24
@@ -169,13 +163,10 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => 12
 				),
 				"button-background-color" => array(
-					"desktop" => "#008de4",
+					"desktop" => "#008de4"
 				),
 				"button-text-color" => array(
-					"desktop" => "#fff",
-				),
-				"button-outline-color" => array(
-					"desktop" => "var(--stk-button-background-color)",
+					"desktop" => "#fff"
 				),
 				"icon-button-padding" => array(
 					"desktop" => array(
@@ -184,9 +175,6 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 						"bottom" => 12,
 						"left" => 12
 					)
-				),
-				"icon-list-icon-size" => array(
-					"desktop" => 16
 				),
 				"icon-list-row-gap" => array(
 					"desktop" => 0

@@ -194,6 +194,8 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 
 			// If there is cached CSS, use it
 			if ( $cached_color_scheme_css ) {
+				// Add a body class if there are any global color schemes styles.
+				add_filter( 'body_class', array( $this, 'add_body_class_color_schemes' ) );
 				$current_css .= $cached_color_scheme_css;
 				return apply_filters( 'stackable_frontend_css' , $current_css );
 			}
@@ -290,11 +292,22 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					}
 				}
 			}
+
+			// Add a body class if there are any global color schemes styles.
+			if ( $color_scheme_css !== '' ) {
+				add_filter( 'body_class', array( $this, 'add_body_class_color_schemes' ) );
+			}
+
 			// Add the generated CSS to the database
 			update_option( 'stackable_global_color_scheme_generated_css', $color_scheme_css );
 
 			$current_css .= $color_scheme_css;
 			return apply_filters( 'stackable_frontend_css' , $current_css );
+		}
+
+		public function add_body_class_color_schemes( $classes ) {
+			$classes[] = 'stk-has-color-schemes';
+			return $classes;
 		}
 
 		/**
@@ -425,7 +438,14 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 						$decls[ $state ][ $css_property ] = $scheme[ $property ][ $state ];
 					}
 
-					$inherited_value = $this->get_inherited_value( $scheme[ $property ], $state );
+					/**
+					 * DEV NOTE: The code below is commented out because it is the initial implementation.
+					 * Before, we set the `*-hover` properties to inherit the normal/parent-hover values.
+					 * However, this was causing some issues with the hover states.
+					 *
+					 * The new implementation now relies on CSS variables and fallback values.
+					 */
+					/* $inherited_value = $this->get_inherited_value( $scheme[ $property ], $state );
 					$inherited_normal_value = $this->get_inherited_value( $scheme[ $property ], $state, false );
 
 					// Inherit the normal value on hover state
@@ -436,7 +456,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					// Inherit the parent-hover value on hover state
 					if ( $state === 'desktopHover' && ! $this->has_value( $scheme, $property, $state ) && $inherited_value) {
 						$decls[ 'desktopParentHover' ][ $css_property ] = $inherited_value;
-					}
+					} */
 
 					// If button background color is gradient, plain style buuttons should use the button outline color.
 					if ( $property == 'buttonBackgroundColor' && $this->is_gradient( $scheme, $property, $state ) ) {
@@ -446,21 +466,28 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				}
 			}
 
+			/**
+			 * DEV NOTE: The code below is commented out because it is the initial implementation.
+			 * Before, we set the `*-hover` properties to inherit the normal/parent-hover values.
+			 * However, this was causing some issues with the hover states.
+			 *
+			 * The new implementation now relies on CSS variables and fallback values.
+			 */
 			// if the button background color is gradient on normal or parent-hover states,
 			// and there's no button background color set on hover,
 			// plain-style buttons will turn black.
 			// To prevent this, use button-outline-color-hover.
-			if ( $this->is_gradient( $scheme, 'buttonBackgroundColor', 'desktop' )
-				&& ! $this->has_value( $scheme, 'buttonBackgroundColor', 'desktopHover' )
+			/* if ( $this->is_gradient( $scheme, 'buttonBackgroundColor', 'desktop' )
+			 	&& ! $this->has_value( $scheme, 'buttonBackgroundColor', 'desktopHover' )
 			) {
-				$button_plain_decls[ 'desktopHover' ][ '--stk-button-plain-text-color-hover' ] = 'var(--stk-button-outline-color-hover)';
+			 	$button_plain_decls[ 'desktopHover' ][ '--stk-button-plain-text-color-hover' ] = 'var(--stk-button-outline-color-hover)';
 			}
 
 			if ( $this->is_gradient( $scheme, 'buttonBackgroundColor', 'desktopParentHover' )
 				&& ! $this->has_value( $scheme, 'buttonBackgroundColor', 'desktopHover' )
 			) {
-				$button_plain_decls[ 'desktopParentHover' ][ '--stk-button-plain-text-color-hover' ] = 'var(--stk-button-outline-color-hover)';
-			}
+			 	$button_plain_decls[ 'desktopParentHover' ][ '--stk-button-plain-text-color-hover' ] = 'var(--stk-button-outline-color-hover)';
+			} */
 
 			// if the button background color is gradient on normal state and solid on parent-hover state,
 			// we need to unset the --stk-button-plain-text-color,

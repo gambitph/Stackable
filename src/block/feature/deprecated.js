@@ -14,6 +14,7 @@ import {
 	deprecateContainerBackgroundColorOpacity,
 	getAlignmentClasses, getContentAlignmentClasses, getRowClasses,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
+	deprecateBlockHeight, deprecateColumnAndRowGap,
 } from '~stackable/block-components'
 
 /**
@@ -63,6 +64,44 @@ addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.8.0', ( output
 
 const deprecated = [
 	{
+		// Support the change of type for block height and gaps
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
+		isEligible: attributes => {
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+			const hasNumberGaps = deprecateColumnAndRowGap.isEligible( '%s' )( attributes )
+			return hasNumberBlockHeight || hasNumberGaps
+		},
+		migrate: attributes => {
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
+
+			// Update the old column fit into flexbox
+			const hasOldColumnFit = !! attributes.columnFit
+			if ( hasOldColumnFit ) {
+				newAttributes = {
+					...newAttributes,
+					columnFit: '',
+					columnFitAlign: '',
+					columnJustify: attributes.columnFitAlign,
+				}
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'topSeparator%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'bottomSeparator%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+			newAttributes = deprecateColumnAndRowGap.migrate( '%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
+	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),
 		save: withVersion( '3.12.11' )( Save ),
@@ -71,9 +110,8 @@ const deprecated = [
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
 			const hasTopSeparatorShadow = deprecateShadowColor.isEligible( 'topSeparator%s' )( attributes )
 			const hasBottomSeparatorShadow = deprecateShadowColor.isEligible( 'bottomSeparator%s' )( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasBlockShadow || hasContainerShadow || hasTopSeparatorShadow || hasBottomSeparatorShadow || isNotV4
+			return hasBlockShadow || hasContainerShadow || hasTopSeparatorShadow || hasBottomSeparatorShadow
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -109,9 +147,8 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasContainerOpacity || hasBlockOpacity || isNotV4
+			return hasContainerOpacity || hasBlockOpacity
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -145,11 +182,6 @@ const deprecated = [
 		// layout & containers work.
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
-		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
-
-			return isNotV4
-		},
 		migrate: attributes => {
 			let newAttributes = {
 				...attributes,
