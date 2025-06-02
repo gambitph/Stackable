@@ -279,7 +279,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 				<div>
 					<h4> { label } </h4>
 					{ blocksForSubstitutionRef.current !== false && blocksForSubstitutionRef.current.size !== 0 &&
-						<Tooltip text={ __( 'This design contains disabled blocks.', i18n ) }>
+						<Tooltip text={ __( 'This design contains disabled blocks. You can still insert this design with blocks substituted with other enabled blocks.', i18n ) }>
 							<Dashicon icon="warning" size={ 16 } />
 						</Tooltip>
 					}
@@ -317,10 +317,12 @@ const DesignPreview = ( {
 		setTimeout( adjustScale, 50 )
 	}, [ blocks, enableBackground ] )
 
+	const shadowBodyClasses = classnames( applyFilters( 'stackable.global-styles.classnames', [ 'entry-content' ] ) )
+
 	return (
 		<body
 			dangerouslySetInnerHTML={ { __html: blocks } }
-			className="entry-content stk-has-color-schemes stk-has-block-style-inheritance stk-has-design-system-spacing-and-borders stk-has-design-system-buttons-and-icons"
+			className={ shadowBodyClasses }
 			style={ { pointerEvents: 'none' } }	// prevent blocks from being clicked
 		/>
 	)

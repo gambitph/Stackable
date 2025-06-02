@@ -6,7 +6,7 @@ import { dispatch } from '@wordpress/data'
 
 export const ColorSchemesHelp = props => {
 	const {
-		customText, callback, renderComponent,
+		customText, callback, className,
 	} = props
 	const onClick = () => {
 		if ( callback ) {
@@ -37,15 +37,11 @@ export const ColorSchemesHelp = props => {
 		}, 10 )
 	}
 
-	if ( renderComponent ) {
-		return renderComponent( onClick )
-	}
-
 	return <>
-		{ customText ? customText
+		{ customText || customText === '' ? customText
 			: <span>{ __( 'Change the color scheme.', i18n ) }</span> }
-		&nbsp;
-		<Link onClick={ onClick }> { __( 'Manage your color schemes.', i18n ) } </Link>
+		{ customText !== '' && <>&nbsp;</> }
+		<Link className={ className } onClick={ onClick }> { __( 'Manage your color schemes.', i18n ) } </Link>
 	</>
 }
 

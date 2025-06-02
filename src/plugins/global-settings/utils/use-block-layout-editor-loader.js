@@ -8,6 +8,7 @@ import { getDefault, onClassChange } from './block-layout-utils'
  */
 import { useSelect } from '@wordpress/data'
 import { useEffect, useState } from '@wordpress/element'
+import { addFilter } from '@wordpress/hooks'
 
 /**
  * External dependencies
@@ -167,6 +168,10 @@ export const useBlockLayoutEditorLoader = ( storeName, classSuffix ) => {
 			const className = `stk-has-design-system-${ classSuffix }`
 			if ( styles !== '' && editorEl.classList.contains( className ) === false ) {
 				editorEl.classList.add( className )
+				addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.${ classSuffix }`, classnames => {
+					classnames.push( className )
+					return classnames
+				} )
 			}
 			if ( styles === '' ) {
 				editorEl.classList.remove( className )

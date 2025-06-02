@@ -32,6 +32,7 @@ import { sprintf, __ } from '@wordpress/i18n'
 import { useBlockColorSchemes } from '~stackable/hooks'
 import ColorSchemePreview from '../color-scheme-preview'
 import { ColorSchemesHelp } from '../color-schemes-help'
+import Tooltip from '../tooltip'
 
 const PLAN_OPTIONS = [ { key: '', label: __( 'All', i18n ) }, { key: 'free', label: __( 'Free', i18n ) }, { key: 'premium', label: __( 'Premium', i18n ) } ]
 const popoverProps = {
@@ -197,13 +198,22 @@ export const ModalDesignLibrary = props => {
 						<h4 style={ { margin: '0 0 1em ' } }>{ __( 'Style Options', i18n ) }</h4>
 						<ToggleControl
 							className="ugb-modal-design-library__enable-background"
-							label="Section Background"
+							label={ <Tooltip placement="top" text={ <a href="https://docs.wpstackable.com/article/343-using-the-design-library#Section-Background-KYOys" target="_docs">
+								{ __( 'Learn more about section background here.', i18n ) }
+							</a> }>
+								<span className="stk-control__label--has-tooltip"> { __( 'Section Background', i18n ) }</span>
+							</Tooltip> }
 							checked={ enableBackground }
 							onChange={ value => {
 								setEnableBackground( value )
 							} }
 						/>
-						<BaseControl label={ `${ __( 'Background Scheme', i18n ) }` }
+						<BaseControl
+							label={ <Tooltip placement="top" text={ <a href="https://docs.wpstackable.com/article/343-using-the-design-library#Background-Scheme-Wn_CV" target="_docs">
+								{ __( 'Learn more about background schemes here.', i18n ) }
+							</a> }>
+								<span className="stk-control__label--has-tooltip">{ __( 'Background Scheme', i18n ) }</span>
+							</Tooltip> }
 							className="ugb-modal-design-library__color-scheme-label"
 						>
 							<Dropdown
@@ -226,7 +236,6 @@ export const ModalDesignLibrary = props => {
 											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedBackgroundScheme || backgroundModeColorScheme ].desktopColors } />
 											: <ColorSchemeTextItem label={ __( 'Default', i18n ) } />
 										}
-
 									</Button>
 								) }
 								renderContent={ ( { onClose } ) => (
@@ -264,17 +273,7 @@ export const ModalDesignLibrary = props => {
 												</Button>
 											} ) }
 											{ Object.keys( colorSchemesCollection ).length
-												? <ColorSchemesHelp renderComponent={ onClick => (
-													<Button
-														className="ugb-modal-design-library__stk-color-scheme"
-														onClick={ () => {
-															props.onClose()
-															onClick()
-														} }
-													>
-														<span className="stk-color-scheme-name stk-color-scheme__none"> { __( 'Add Color Scheme', i18n ) } </span>
-													</Button>
-												) } />
+												? <ColorSchemesHelp customText="" callback={ props.onClose } className="ugb-design-library__manage-scheme" />
 												: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ props.onClose } />
 											}
 										</div>
@@ -282,9 +281,14 @@ export const ModalDesignLibrary = props => {
 								) }
 							/>
 						</BaseControl>
-						<BaseControl label={ `${ __( 'Container Scheme', i18n ) }` }
-
-							className="ugb-modal-design-library__color-scheme-label">
+						<BaseControl
+							label={ <Tooltip placement="top" text={ <a href="https://docs.wpstackable.com/article/343-using-the-design-library#Container-Scheme-HyK91" target="_docs">
+								{ __( 'Learn more about container schemes here.', i18n ) }
+							</a> }>
+								<span className="stk-control__label--has-tooltip">{ __( 'Container Scheme', i18n ) }</span>
+							</Tooltip> }
+							className="ugb-modal-design-library__color-scheme-label"
+						>
 							<Dropdown
 								popoverProps={ popoverProps }
 								focusOnMount={ false }
@@ -334,17 +338,7 @@ export const ModalDesignLibrary = props => {
 												</Button>
 											} ) }
 											{ Object.keys( colorSchemesCollection ).length
-												? <ColorSchemesHelp renderComponent={ onClick => (
-													<Button
-														className="ugb-modal-design-library__stk-color-scheme"
-														onClick={ () => {
-															props.onClose()
-															onClick()
-														} }
-													>
-														<span className="stk-color-scheme-name stk-color-scheme__none"> { __( 'Add Color Scheme', i18n ) } </span>
-													</Button>
-												) } />
+												? <ColorSchemesHelp customText="" callback={ props.onClose } className="ugb-design-library__manage-scheme" />
 												: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ props.onClose } />
 											}
 										</div>
