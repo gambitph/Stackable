@@ -216,6 +216,8 @@ const AdvancedRangeControl = props => {
 			}
 			return _value === derivedValue && ( _unit === '' || _unit === unit )
 		} )
+		rangeValue = rangeValue === -1 ? '' : rangeValue
+
 		rangeOnChange = ( value, property = 'value' ) => {
 			if ( value === '' ) {
 				return _onChange( value )
