@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
-Tested up to: 6.8
+Tested up to: 6.8.1
 Requires PHP: 7.3
-Stable tag: 3.15.3
+Stable tag: 3.16.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -23,6 +23,17 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 ## Transform Gutenberg into a Page Builder.
 
 Stackable is the all-in-one block plugin for creating stunning websites by transforming the WordPress Block Editor into a Page Builder. Stackable has helped thousands of bloggers, merchants, marketers, designers and web development professionals make the most out of the WordPress Block Editor through fast, powerful and intuitive features.
+
+## Global Design System
+
+Design faster and more efficiently with our global controls, which make designing in one place and applying it to your entire site a breeze.
+
+- Inherit styles from your Block Theme
+- Theme.json Support
+- Global Design System
+- Global Color Schemes
+- Global Typography
+- Global Spacing, Borders, Buttons and Icons
 
 ## Ready Made Templates, Block Designs and Wireframes
 
@@ -94,6 +105,7 @@ You can choose which of these blocks you need, depending on your workflow. You c
 
 Turn the WordPress Block Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
 
+- Block Theme & Theme.json Support
 - Global Design System
 - Multiple Block Layouts
 - Flexbox Controls
@@ -185,6 +197,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.16 Theme.json Support, Global Value Presets, Type Scale](https://wpstackable.com/blog/introducing-theme-json-support-global-value-presets-and-type-scale/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.15 Global Design System](https://wpstackable.com/blog/introducing-the-new-stackable-global-design-system/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.14 Icon Library & Granular Plugin Settings](https://wpstackable.com/blog/icon-library-granular-plugin-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.13 Improved Stackable Server Performance](https://wpstackable.com/blog/improved-server-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -297,6 +310,25 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.16.0 =
+[Introducing: Theme.json Support, Global Value Presets, Type Scale](https://wpstackable.com/blog/introducing-theme-json-support-global-value-presets-and-type-scale/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Theme.json support - relevant blocks now inherit styles from your block theme #3490
+* New: Theme.json support - block theme preset values are now used by Stackable blocks #3474
+* New: Typography Type Scale - choose from preset type scales for your typography #3474
+* New: Global Value Presets - adjust preset values for font sizes, margins, paddings and more #3474 (premium)
+* New: Added options to enable/disable block style inheritance and preset values #3474 #3490
+* New: Video popup block - now outputs video schema #3402
+* New: Dynamic Content - added User metadata #3129
+* New: Added help links to manage global color schemes #3471
+* New: Added integrations for WP Interactions #3497
+* Fixed: Number box block - content alignment now works properly #3456
+* Fixed: Dynamic content - date format is now translated properly #3464
+* Fixed: Column order now supports up to max 20 inner columns #3491
+* Fixed: Role Manager Settings - can appear blank #3494
+* Fixed: Minor performance improvements on custom breakpoints #3477 #3496
+* Fixed: Posts block - taxonomies for some post types may not query correctly #380
 
 = 3.15.3 =
 * Fixed: WordPress 6.8 compatibility

@@ -33,7 +33,7 @@ export const deprecatedAddAttributes = ( attrObject, options ) => {
 			},
 		},
 		versionAdded: '3.0.0',
-		versionDeprecated: '3.15.3',
+		versionDeprecated: '3.16.0',
 		attrNameTemplate,
 	} )
 }

@@ -62,8 +62,8 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( 
 const deprecated = [
 	{
 		// Support the change of type for fontSize
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( 'figcaption%s' )( attributes )
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )

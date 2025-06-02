@@ -3,9 +3,8 @@ import { getAttrNameFunction } from '~stackable/util'
 export const deprecatedAddAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
 	attrObject.add( {
 		attributes: {
-			height: {
+			innerBlockRowGap: {
 				stkResponsive: true,
-				stkUnits: 'px',
 				type: 'number',
 				default: '',
 			},
@@ -16,26 +15,30 @@ export const deprecatedAddAttributes = ( attrObject, attrNameTemplate = '%s' ) =
 	} )
 }
 
-export const deprecateSizeControlHeight = {
+export const deprecateInnerBlockRowGapAndContainerHeight = {
 	isEligible: attrNameTemplate => attributes => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
-		const height = getAttribute( 'height' )
+		const containerHeight = getAttribute( 'containerHeight' )
+		const innerBlockRowGap = getAttribute( 'innerBlockRowGap' )
 
-		return typeof height === 'number'
+		return typeof containerHeight === 'number' || typeof innerBlockRowGap === 'number'
 	},
 	migrate: attrNameTemplate => attributes => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
-		const height = getAttribute( 'height' )
+		const containerHeight = getAttribute( 'containerHeight' )
+		const innerBlockRowGap = getAttribute( 'innerBlockRowGap' )
 
 		const newAttributes = {
 			...attributes,
-			[ getAttrName( 'height' ) ]: String( height ),
+			[ getAttrName( 'containerHeight' ) ]: String( containerHeight ),
+			[ getAttrName( 'innerBlockRowGap' ) ]: String( innerBlockRowGap ),
 		}
 
 		return newAttributes
 	},
 }
+

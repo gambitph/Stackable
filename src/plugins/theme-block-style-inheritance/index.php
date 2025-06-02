@@ -176,7 +176,8 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 			 *  so we manually retrieve them and add to the `:root` declarations
 			 */
 			$root_properties = array(
-				'columns-gap' => $this->get_value( $styles, ['blocks', 'core/columns', 'spacing', 'blockGap'] ),
+				// DEV NOTE: Remove column gap from inheritance since it breaks our design library.
+				// 'columns-gap' => $this->get_value( $styles, ['blocks', 'core/columns', 'spacing', 'blockGap'] ),
 				'button-group-gap' =>  $this->get_value( $styles, ['blocks', 'core/buttons', 'spacing', 'blockGap'] ),
 				'default-gap' => $this->get_value( $styles, ['spacing', 'blockGap'] ),
 				'container-color' => $this->get_value( $styles, ['color', 'text'] ),
@@ -187,9 +188,10 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				$style_declarations['root']['declarations'][ '--stk-button-row-gap' ] = $root_properties[ 'button-group-gap' ] ?? $root_properties[ 'default-gap' ];
 			}
 
-			if ( $root_properties[ 'columns-gap' ] || $root_properties[ 'default-gap' ] ) {
-				$style_declarations['root']['declarations'][ '--stk-columns-column-gap' ] = $root_properties[ 'columns-gap' ] ?? $root_properties[ 'default-gap' ];
-			}
+			// DEV NOTE: Remove column gap from inheritance since it breaks our design library.
+			// if ( $root_properties[ 'columns-gap' ] || $root_properties[ 'default-gap' ] ) {
+			// 	$style_declarations['root']['declarations'][ '--stk-columns-column-gap' ] = $root_properties[ 'columns-gap' ] ?? $root_properties[ 'default-gap' ];
+			// }
 
 			if ( $root_properties[ 'container-color' ] ) {
 				$style_declarations['root']['declarations'][ '--stk-container-color' ] = $root_properties[ 'container-color' ];

@@ -11,8 +11,8 @@ import { withVersion } from '~stackable/higher-order'
 const deprecated = [
 	{
 		// Support the change of type for fontSize and blockHeight
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
 			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( 'tab%s' )( attributes )
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )

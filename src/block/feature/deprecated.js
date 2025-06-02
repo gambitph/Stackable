@@ -65,13 +65,12 @@ addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.8.0', ( output
 const deprecated = [
 	{
 		// Support the change of type for block height and gaps
-		attributes: attributes( '3.15.2' ),
-		save: withVersion( '3.15.2' )( Save ),
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
 		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
 			const hasNumberGaps = deprecateColumnAndRowGap.isEligible( '%s' )( attributes )
-			return isNotV4 || hasNumberBlockHeight || hasNumberGaps
+			return hasNumberBlockHeight || hasNumberGaps
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -111,9 +110,8 @@ const deprecated = [
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
 			const hasTopSeparatorShadow = deprecateShadowColor.isEligible( 'topSeparator%s' )( attributes )
 			const hasBottomSeparatorShadow = deprecateShadowColor.isEligible( 'bottomSeparator%s' )( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasBlockShadow || hasContainerShadow || hasTopSeparatorShadow || hasBottomSeparatorShadow || isNotV4
+			return hasBlockShadow || hasContainerShadow || hasTopSeparatorShadow || hasBottomSeparatorShadow
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -149,9 +147,8 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasContainerOpacity || hasBlockOpacity || isNotV4
+			return hasContainerOpacity || hasBlockOpacity
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -185,11 +182,6 @@ const deprecated = [
 		// layout & containers work.
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
-		isEligible: attributes => {
-			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
-
-			return isNotV4
-		},
 		migrate: attributes => {
 			let newAttributes = {
 				...attributes,

@@ -4,6 +4,8 @@ import { addStyles } from './style'
 
 export * from './use-alignment'
 
+export { deprecateInnerBlockRowGapAndContainerHeight } from './deprecated/index'
+
 export const Alignment = () => {
 	return null
 }
