@@ -20,7 +20,7 @@ import { substitutionRules } from '../../blocks'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { dispatch } from '@wordpress/data'
+import { dispatch, select } from '@wordpress/data'
 import {
 	createBlock, createBlocksFromInnerBlocksTemplate, getBlockVariations, getBlockType,
 } from '@wordpress/blocks'
@@ -75,7 +75,7 @@ const checkIfImageUrl = async value => {
 }
 
 // Replaces the current block with a block made out of attributes.
-const createBlockWithAttributes = async ( blockName, attributes, innerBlocks, substituteBlocks ) => {
+const createBlockWithAttributes = async ( blockName, attributes, innerBlocks, substituteBlocks, parentClientId ) => {
 	const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
 
 	// Recursively substitute core blocks to disabled Stackable blocks
@@ -162,14 +162,14 @@ const createBlockWithAttributes = async ( blockName, attributes, innerBlocks, su
 	attributes = block[ 0 ].attributes
 	innerBlocks = block[ 0 ].innerBlocks
 
-	if ( attributes.hasBackground ) {
+	if ( ! parentClientId && attributes.hasBackground ) {
 		attributes.blockMargin = {
 			top: '',
 			right: '',
 			bottom: '0',
 			left: '',
 		}
-	} else {
+	} else if ( ! parentClientId ) {
 		attributes.blockMargin = {
 			top: '120',
 			right: '',
@@ -199,6 +199,9 @@ const Edit = props => {
 	} )
 
 	const addDesigns = async substituteBlocks => {
+		const { getBlockRootClientId } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+
 		if ( ! designsRef.current?.length ) {
 			console.error( 'Design library selection failed: No designs found' ) // eslint-disable-line no-console
 		}
@@ -211,7 +214,7 @@ const Edit = props => {
 				name, attributes, innerBlocks,
 			} = designData
 			if ( name && attributes ) {
-				const block = await createBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [], substituteBlocks )
+				const block = await createBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [], substituteBlocks, parentClientId )
 				blocks.push( block )
 			} else {
 				console.error( 'Design library selection failed: No block data found' ) // eslint-disable-line no-console

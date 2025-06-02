@@ -128,10 +128,6 @@ export const addBackgroundScheme = (
 		return block
 	}
 
-	if ( block.attributes.hasBackground ) {
-		return block
-	}
-
 	const customAttributes = block.attributes.customAttributes
 
 	if ( ! customAttributes?.length ) {

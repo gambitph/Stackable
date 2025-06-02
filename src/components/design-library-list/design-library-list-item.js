@@ -138,7 +138,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		let _content = template
 		if ( defaultValues ) {
 			Object.keys( defaultValues ).forEach( key => {
-				_content = _content.replace( key, defaultValues[ key ] )
+				_content = _content.replaceAll( key, defaultValues[ key ] )
 			} )
 		}
 
