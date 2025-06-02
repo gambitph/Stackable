@@ -63,8 +63,6 @@ const DesignLibraryList = props => {
 						backgroundScheme={ props.backgroundScheme }
 						enableBackground={ props.enableBackground }
 						selectedNum={ selectedNum }
-						testId={ design.testId }
-						testKey={ i }
 						isBusy={ isBusy }
 						forceUpdate={ forceUpdate }
 						onClick={ ( designId, parsedBlocks, hasDisabledBlocks ) => onSelectMulti( designId, parsedBlocks, hasDisabledBlocks ) }

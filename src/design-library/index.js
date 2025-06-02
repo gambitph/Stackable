@@ -1,6 +1,5 @@
 import apiFetch from '@wordpress/api-fetch'
 import { doAction, applyFilters } from '@wordpress/hooks'
-// import TEST_DESIGN from './test.json'
 
 const LATEST_API_VERSION = 'v4'
 
@@ -54,13 +53,7 @@ export const setDevModeDesignLibrary = async ( devMode = false ) => {
 export const getDesigns = async ( {
 	reset = false,
 } ) => {
-	let library = Object.values( await fetchDesignLibrary( reset ) )
-	library = library.map( ( item, index ) => {
-		return {
-			...item,
-			testId: `stk-design-${ index + 1 }`,
-		}
-	} )
+	const library = Object.values( await fetchDesignLibrary( reset ) )
 	return library
 }
 

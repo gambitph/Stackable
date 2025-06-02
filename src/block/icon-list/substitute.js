@@ -1,14 +1,16 @@
 export const substitute = {
 	from: 'stackable/icon-list',
-	transform: () => {
+	transform: ( oldAttributes, innerBlocks ) => {
+		const newInnerBlocks = innerBlocks.reduce( ( newInnerBlocks, innerBlock ) => {
+			const attributes = innerBlock[ 1 ]
+
+			newInnerBlocks.push( [ 'core/list-item', { content: attributes.text } ] )
+			return newInnerBlocks
+		}, [] )
 		return [
 			'core/list',
 			{},
-			[
-				[ 'core/list-item', { content: 'First item list' } ],
-				[ 'core/list-item', { content: 'Second item list' } ],
-				[ 'core/list-item', { content: 'Third item list' } ],
-			],
+			newInnerBlocks,
 		]
 	},
 }

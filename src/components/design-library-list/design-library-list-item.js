@@ -230,7 +230,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		<button
 			className={ mainClasses }
 			ref={ ref }
-			data-stk-design-id={ props.testId }
+			data-stk-design-id={ props.designId }
 			onClick={ () => {
 				if ( ! isPro && plan !== 'free' ) {
 					return

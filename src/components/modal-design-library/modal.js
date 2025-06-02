@@ -1,12 +1,9 @@
 /**
  * Internal deprendencies
  */
-// import SVGViewSingle from './images/view-single.svg'
-// import SVGViewMany from './images/view-many.svg'
-// import SVGViewFew from './images/view-few.svg'
 import BlockList from './block-list'
 import Button from '../button'
-import AdvancedToolbarControl from '../advanced-toolbar-control'
+// import AdvancedToolbarControl from '../advanced-toolbar-control'
 import DesignLibraryList from '~stackable/components/design-library-list'
 import { getDesigns, filterDesigns } from '~stackable/design-library'
 
@@ -54,7 +51,7 @@ export const ModalDesignLibrary = props => {
 
 	const [ isMultiSelectBusy, setIsMultiSelectBusy ] = useState( false )
 
-	const [ selectedTab, setSelectedTab ] = useLocalStorage( 'stk__design_library__block-list__view_by', 'patterns' )
+	const [ selectedTab, _setSelectedTab ] = useLocalStorage( 'stk__design_library__block-list__view_by', 'patterns' )
 	const [ selectedCategory, setSelectedCategory ] = useLocalStorage( 'stk__design_library__block-list__selected', '' )
 	const [ selectedPlan, setSelectedPlan ] = useLocalStorage( 'stk__design_library__view-plan', PLAN_OPTIONS[ 0 ] )
 
@@ -104,6 +101,7 @@ export const ModalDesignLibrary = props => {
 			title={ __( 'Stackable Design Library', i18n ) }
 			headerActions={ (
 				<>
+					{ /* DEV NOTE: hide for now
 					<AdvancedToolbarControl
 						className="stk-design-library-tabs"
 						fullwidth={ false }
@@ -129,7 +127,7 @@ export const ModalDesignLibrary = props => {
 						onChange={ setSelectedTab }
 						isToggleOnly={ true }
 						allowReset={ false }
-					/>
+					/> */ }
 
 					<div className="stk-design-library__header-settings">
 						<Button
@@ -196,7 +194,7 @@ export const ModalDesignLibrary = props => {
 						/>
 					</div>
 					<div className="ugb-modal-design-library__style-options">
-						<h4 style={ { margin: '0' } }>{ __( 'Style Options', i18n ) }</h4>
+						<h4 style={ { margin: '0 0 1em ' } }>{ __( 'Style Options', i18n ) }</h4>
 						<ToggleControl
 							className="ugb-modal-design-library__enable-background"
 							label="Section Background"

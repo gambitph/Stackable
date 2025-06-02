@@ -146,7 +146,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			$temp_filepath = download_url( $url );
 
 			if ( is_wp_error( $temp_filepath ) ) {
-				@unlink( $temp_filepath );
 				return new WP_REST_Response( array(
 					'success' => false,
 					'message' => 'Failed to retrieve image from the provided URL.'

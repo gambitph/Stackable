@@ -162,6 +162,22 @@ const createBlockWithAttributes = async ( blockName, attributes, innerBlocks, su
 	attributes = block[ 0 ].attributes
 	innerBlocks = block[ 0 ].innerBlocks
 
+	if ( attributes.hasBackground ) {
+		attributes.blockMargin = {
+			top: '',
+			right: '',
+			bottom: '0',
+			left: '',
+		}
+	} else {
+		attributes.blockMargin = {
+			top: '120',
+			right: '',
+			bottom: '120',
+			left: '',
+		}
+	}
+
 	return createBlock( blockName, attributes, createBlocksFromInnerBlocksTemplate( innerBlocks ) )
 }
 
@@ -305,7 +321,7 @@ const Edit = props => {
 			{ isDialogOpen &&
 				<Modal
 					className="ugb-design-library__confirm-dialog"
-					__experimentalHideHeader
+					title={ __( 'Stackable Design Library', i18n ) }
 					onRequestClose={ () => setIsDialogOpen( false ) }
 				>
 					<VStack spacing={ 8 }>
@@ -319,24 +335,24 @@ const Edit = props => {
 						<Flex direction="column" align="flex-end">
 							<Button
 								__next40pxDefaultSize
-								variant="tertiary"
-								onClick={ () => onClickTertiary() }
-							>
-								{ __( 'Visit the settings page and enable the blocks', i18n ) }
-							</Button>
-							<Button
-								__next40pxDefaultSize
 								variant="primary"
 								onClick={ () => onClickPrimary() }
 							>
-								{ __( 'Add patterns and substitute missing blocks', i18n ) }
+								{ __( 'Add patterns and substitute blocks', i18n ) }
 							</Button>
 							<Button
 								__next40pxDefaultSize
 								variant="secondary"
 								onClick={ () => onClickSecondary() }
 							>
-								{ __( 'Add patterns without substituting missing blocks', i18n ) }
+								{ __( 'Add patterns only (no substitutes)', i18n ) }
+							</Button>
+							<Button
+								__next40pxDefaultSize
+								variant="tertiary"
+								onClick={ () => onClickTertiary() }
+							>
+								{ __( 'Enable blocks in settings', i18n ) }
 							</Button>
 						</Flex>
 					</VStack>
