@@ -25,7 +25,7 @@ const PRESET_MAPPING = {
 
 const nonePreset = {
 	name: __( 'None', i18n ),
-	size: '0rem',
+	size: '0px',
 	slug: 'none',
 }
 
