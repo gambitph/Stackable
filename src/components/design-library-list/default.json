@@ -37,6 +37,7 @@
 	"FAQ": {
 		"heading_placeholder": "Frequently Asked Questions (FAQs)",
 		"description_placeholder": "Find answers to the most common questions about [Your Product/Service]. If you can't find what you're looking for here, please contact us.",
+		"kicker_placeholder": "Quick Answers to Your Top Questions",
 
 		"question-1_placeholder": "What features does your service offer?",
     	"answer-1_placeholder": "Our service offers a comprehensive set of features designed to help you manage your tasks. Key features include Feature A, Feature B, and Feature C. You can find a full list and details on our Features Page.",
