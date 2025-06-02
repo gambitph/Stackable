@@ -125,8 +125,8 @@ export const Controls = props => {
 		: deviceType === 'Tablet' ? ( attributes.columnArrangementTablet || defaultArrangement )
 			: ( attributes.columnArrangementMobile || defaultArrangement )
 
-	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
-
+	const presetMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
 	return (
 		<>
 			{ props.hasColumnsControl && <ColumnsControl /> }

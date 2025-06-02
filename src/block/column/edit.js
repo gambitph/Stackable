@@ -164,7 +164,8 @@ const Edit = props => {
 // props used by controls to prevent rerenders of all the inspector controls.
 const InspectorControls = memo( props => {
 	const { getPlaceholder } = useBlockLayoutDefaults()
-	const presets = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+	const presets = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
 
 	return (
 		<>
