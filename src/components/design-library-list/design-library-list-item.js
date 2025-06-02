@@ -87,12 +87,12 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			const newCardHeight = { ...cardHeight }
 			const cardRect = ref.current.getBoundingClientRect()
 
-			const cardWidth = cardRect.width // Get width of the card
-			const scaleFactor = cardWidth > 0 ? cardWidth / 1200 : 1 	// Divide by 1200, which is the width of preview in the shadow DOM
-			newPreviewSize.scale = scaleFactor
-
 			const shadowBody = hostRef.current.shadowRoot.querySelector( 'body' )
 			if ( shadowBody ) {
+				const cardWidth = cardRect.width // Get width of the card
+				const scaleFactor = cardWidth > 0 ? cardWidth / shadowBody.offsetWidth : 1 	// Divide by 1200, which is the width of preview in the shadow DOM
+				newPreviewSize.scale = scaleFactor
+
 				const _height = parseFloat( shadowBody.offsetHeight ) * scaleFactor	// Also adjust the height
 
 				const heightKey = enableBackground ? 'heightBackground' : 'heightNoBackground'
@@ -127,7 +127,6 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		previewRef.current.render( <DesignPreview
 			blocks={ cleanedBlock }
 			adjustScale={ adjustScale }
-			prevEnableBackground={ prevEnableBackgroundRef.current }
 			enableBackground={ enableBackground }
 			designId={ designId }
 		/> )
@@ -193,6 +192,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			hostStyles.innerHTML = ! hasBackgroundTargetRef.current
 				? `body > .stk-block-columns { padding: 75px; } body > .stk-block-background:not(.stk--no-padding) { padding: calc(75px + var(--stk-block-background-padding)); }`
 				: `[stk-design-library__bg-target="true"] { padding: 25px; } [stk-design-library__bg-target="true"].stk-block-background:not(.stk--no-padding) { padding: calc(25px + var(--stk-block-background-padding)); }`
+			hostStyles.innerHTML += `.stk-block-count-up__text:not(.stk--count-up-active) { opacity: 1; }`
 			styleNodes.push( hostStyles )
 
 			styleNodes.forEach( node => {
@@ -212,7 +212,9 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 	}, [ content, containerScheme, backgroundScheme, enableBackground ] )
 
 	useEffect( () => {
-		setTimeout( adjustScale, 50 )
+		if ( selectedNum === 0 && content ) {
+			setTimeout( adjustScale, 50 )
+		}
 	}, [ forceUpdate ] )
 
 	useEffect( () => {
@@ -307,13 +309,12 @@ DesignLibraryListItem.defaultProps = {
 export default DesignLibraryListItem
 
 const DesignPreview = ( {
-	blocks, adjustScale, prevEnableBackground, enableBackground,
+	blocks, adjustScale, enableBackground,
 } ) => {
 	useEffect( () => {
-		if ( prevEnableBackground !== enableBackground ) {
-			// Adjust scale if the background was toggled
-			adjustScale()
-		}
+		// Adjust scale if the background was toggled
+		adjustScale()
+		setTimeout( adjustScale, 50 )
 	}, [ blocks, enableBackground ] )
 
 	return (
