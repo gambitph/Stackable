@@ -87,8 +87,10 @@ export const Edit = memo( props => {
 		enableContentAlign = true,
 	} = props
 
-	const blockHeightMarks = usePresetControls( 'blockHeights' )?.getPresetMarks() || null
-	const spacingSizeMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+	const blockHeightMarks = usePresetControls( 'blockHeights' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
+	const spacingSizeMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
 
 	const containerSize = props.hasContainerSize && <>
 		<ControlSeparator />

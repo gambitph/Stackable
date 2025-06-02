@@ -1,6 +1,8 @@
+import { i18n } from 'stackable'
+import DEFAULT_PRESETS from '~stackable/plugins/global-settings/preset-controls/presets.json'
 import { useSettings } from '@wordpress/block-editor'
 import { useSelect } from '@wordpress/data'
-import DEFAULT_PRESETS from '~stackable/plugins/global-settings/preset-controls/presets.json'
+import { __ } from '@wordpress/i18n'
 
 const PRESET_MAPPING = {
 	fontSizes: {
@@ -19,6 +21,12 @@ const PRESET_MAPPING = {
 		settings: [ 'borderRadius' ],
 		prefix: 'border-radius',
 	},
+}
+
+const nonePreset = {
+	name: __( 'None', i18n ),
+	size: '0rem',
+	slug: 'none',
 }
 
 export const usePresetControls = property => {
@@ -56,10 +64,12 @@ export const usePresetControls = property => {
 
 	// Get the merge preset marks with the CSS Variable value
 	// Setting customOnly to true returns the preset marks for custom presets only
-	const getPresetMarks = ( { customOnly = false, additionalPresets = [] } = {} ) => {
+	// Setting addNonePreset to true adds a none preset with a value of 0
+	const getPresetMarks = ( { customOnly = false, addNonePreset = false } = {} ) => {
 		const prefix = PRESET_MAPPING[ property ].prefix
 		let presets = customOnly ? allCustomPresets[ property ] ?? [] : getMergedPresets()
-		presets = [ ...additionalPresets, ...presets ]
+		// Add the none preset
+		presets = [ ...( addNonePreset ? [ nonePreset ] : [] ), ...presets ]
 
 		return presets
 			.filter( preset => ! ( preset?.isDiscarded ) )

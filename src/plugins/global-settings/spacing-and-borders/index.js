@@ -56,16 +56,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 		setDisplayHoverNotice,
 		saveTimeout
 	)
-	// Add additional presets for setting margins and paddings to None
-	const nonePreset = {
-		name: 'None',
-		size: '0rem',
-		slug: 'none',
-	}
+
 	const sizePresetMarks = usePresetControls( 'spacingSizes' )
-		?.getPresetMarks( { additionalPresets: [ nonePreset ] } ) || null
-	const gapPresetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
-	const borderRadiusPresetMarks = usePresetControls( 'borderRadius' )?.getPresetMarks() || null
+		?.getPresetMarks( { addNonePreset: true } ) || null
+	const gapPresetMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
+	const borderRadiusPresetMarks = usePresetControls( 'borderRadius' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
 
 	return (
 		<>

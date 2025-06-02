@@ -137,11 +137,6 @@
     	],
 		"borderRadius": [
 			{
-				"name": "None",
-				"size": "0px",
-				"slug": "none"
-			},
-			{
 				"name": "XS",
 				"size": "2px",
 				"slug": "x-small"
