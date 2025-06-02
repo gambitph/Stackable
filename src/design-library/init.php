@@ -333,6 +333,11 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 		public function get_disabled_blocks() {
 			$disabled_blocks = get_option( 'stackable_block_states' );
+
+			if ( $disabled_blocks == false ) {
+				return false;
+			}
+
 			$disabled_blocks = array_filter( $disabled_blocks, function ( $block_state ) { return $block_state == 3; } );
 			if ( count( $disabled_blocks ) ) {
 				$disabled_blocks = array_keys( $disabled_blocks );
