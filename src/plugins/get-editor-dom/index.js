@@ -38,6 +38,11 @@ export const EditorDom = () => {
 		return select( 'core/edit-site' )?.getEditedPostId?.()
 	} )
 
+	// If in FSE, switching between the editor canvas and the navigation recreates the editor.
+	const currentPage = useSelect( select => {
+		return select( 'core/edit-site' )?.getPage?.()
+	} )
+
 	// When switching between visual editor and code editor, the editor is recreated
 	const editorMode = useSelect( select => {
 		return select( 'core/edit-site' )?.getEditorMode() || select( 'core/edit-post' )?.getEditorMode()
@@ -98,7 +103,7 @@ export const EditorDom = () => {
 			clearInterval( interval.current )
 			clearTimeout( timeout.current )
 		}
-	}, [ deviceType, editorMode, editedSitePostId ] )
+	}, [ deviceType, editorMode, editedSitePostId, currentPage ] )
 
 	useMemo( () => {
 		const iframeEl = document.querySelector( `iframe[name="editor-canvas"]` )
