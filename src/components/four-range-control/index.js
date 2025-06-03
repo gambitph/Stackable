@@ -439,8 +439,12 @@ const FourRangeControl = memo( props => {
 			// Since the actual previous value is a preset, force the new custom value
 			// when changing unit
 			controlProps.onChangeUnit = ( unit, unitAttrName ) => {
-				initialOnChange( _newValue )
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 				setAttributes( { [ unitAttrName ]: unit } )
+				if ( props.onChangeUnit ) {
+					props.onChangeUnit( unit )
+				}
+				initialOnChange( _newValue )
 			}
 		}
 
