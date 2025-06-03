@@ -188,7 +188,8 @@ const SizeControls = props => {
 
 	const buttonPaddingPlaceholder = getPlaceholder( paddingPlaceholderName, { single: false } )
 
-	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
+	const presetMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
 
 	return ( <>
 		{ props.hasFullWidth && (

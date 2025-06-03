@@ -32,7 +32,8 @@ const Layout = props => {
 		labelVerticalAlign = __( 'Content Vertical Align', i18n ),
 	} = props.labels
 
-	const presetMarks = usePresetControls( 'blockHeights' )?.getPresetMarks() || null
+	const presetMarks = usePresetControls( 'blockHeights' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
 
 	return (
 		<>
@@ -139,13 +140,8 @@ const Spacing = props => {
 	}
 
 	// Add additional presets for setting margins and paddings to None
-	const nonePreset = {
-		name: __( 'None', i18n ),
-		size: '0rem',
-		slug: 'none',
-	}
 	const presetMarks = usePresetControls( 'spacingSizes' )
-		?.getPresetMarks( { additionalPresets: [ nonePreset ] } ) || null
+		?.getPresetMarks( { addNonePreset: true } ) || null
 
 	return (
 		<>

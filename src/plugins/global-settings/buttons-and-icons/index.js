@@ -55,16 +55,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 		saveTimeout
 	)
 
-	// Add additional presets for setting margins and paddings to None
-	const nonePreset = {
-		name: 'None',
-		size: '0rem',
-		slug: 'none',
-	}
 	const sizePresetMarks = usePresetControls( 'spacingSizes' )
-		?.getPresetMarks( { additionalPresets: [ nonePreset ] } ) || null
-	const gapPresetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
-	const borderRadiusPresetMarks = usePresetControls( 'borderRadius' )?.getPresetMarks() || null
+		?.getPresetMarks( { addNonePreset: true } ) || null
+	const borderRadiusPresetMarks = usePresetControls( 'borderRadius' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
 
 	return (
 		<>
@@ -266,7 +260,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						onChange={ value => onChange( 'button-column-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( 'button-column-gap', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'button-column-gap', 'mobile' ) }
-						marks={ gapPresetMarks }
+						marks={ sizePresetMarks }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -278,7 +272,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						onChange={ value => onChange( 'button-row-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( 'button-row-gap', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'button-row-gap', 'mobile' ) }
-						marks={ gapPresetMarks }
+						marks={ sizePresetMarks }
 					/>
 				</SectionSettings>
 
@@ -340,7 +334,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 						onChange={ value => onChange( 'icon-list-row-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( 'icon-list-row-gap', 'tablet' ) }
 						hasMobileValue={ getHasDeviceValue( 'icon-list-row-gap', 'mobile' ) }
-						marks={ gapPresetMarks }
+						marks={ sizePresetMarks }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Icon Gap', i18n ) }

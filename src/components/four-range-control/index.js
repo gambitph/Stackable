@@ -381,6 +381,7 @@ const FourRangeControl = memo( props => {
 				}
 				return _value === initialValue && ( _unit === '' || _unit === unit )
 			} )
+			rangeValue = rangeValue === -1 ? '' : rangeValue
 			rangeOnChange = ( value, property = 'value' ) => {
 				if ( value === '' ) {
 					return initialOnChange( value )
