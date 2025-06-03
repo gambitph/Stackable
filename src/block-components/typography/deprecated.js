@@ -58,8 +58,14 @@ export const deprecateTypographyGradientColor = {
 		if ( getAttribute( 'textColorType' ) === 'gradient' && getAttribute( 'textColor2' ) ) {
 			const textColor1 = getAttribute( 'textColor1' ) || getAttribute( 'textColor2' )
 			const textColor2 = getAttribute( 'textColor2' ) || getAttribute( 'textColor1' )
-			const textGradientDirection = getAttribute( 'textGradientDirection' ) || getAttribute( 'textGradientDirection' ) === 0 ? getAttribute( 'textGradientDirection' ) : 180
-			newAttributes[ getAttrName( 'textColor1' ) ] = `linear-gradient(${ textGradientDirection }deg, ${ textColor1 } 0%, ${ textColor2 } 100%)`
+
+			const isTextColor1Gradient = textColor1 && textColor1.includes( '-gradient' )
+			const isTextColor2Gradient = textColor2 && textColor2.includes( '-gradient' )
+
+			if ( ! isTextColor1Gradient && ! isTextColor2Gradient ) {
+				const textGradientDirection = getAttribute( 'textGradientDirection' ) || getAttribute( 'textGradientDirection' ) === 0 ? getAttribute( 'textGradientDirection' ) : 180
+				newAttributes[ getAttrName( 'textColor1' ) ] = `linear-gradient(${ textGradientDirection }deg, ${ textColor1 } 0%, ${ textColor2 } 100%)`
+			}
 		}
 
 		return newAttributes
