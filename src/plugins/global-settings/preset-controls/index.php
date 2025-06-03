@@ -133,8 +133,10 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 
 			$presets_by_slug = [];
 			// Convert presets into an associative array with key 'slug'
-			foreach ( $presets as $preset ) {
-				$presets_by_slug[ $preset[ 'slug' ] ] = $preset;
+			if ( is_array( $presets ) ) {
+				foreach ( $presets as $preset ) {
+					$presets_by_slug[ $preset[ 'slug' ] ] = $preset;
+				}
 			}
 
 			// There is no need to generate custom presets in the editor.
@@ -176,9 +178,10 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * @return mixed
 		 */
 		public function deepGet( $array, $keys ) {
-			return array_reduce( $keys, fn( $value, $key ) => $value[ $key ] ?? null, $array );
+			return array_reduce( $keys, function( $value, $key ) {
+				return $value[ $key ] ?? null;
+			}, $array );
 		}
-
 		/**
 		 * Add our global preset control styles.
 		 *
