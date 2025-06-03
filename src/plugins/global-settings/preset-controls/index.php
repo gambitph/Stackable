@@ -91,29 +91,28 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 				$typography_option = get_option( 'stackable_global_typography' );
 
 				if ( ! empty( $typography_option ) && isset( $typography_option[ 0 ] ) && is_array( $typography_option[ 0 ] ) ) {
-					$typography = $typography_option[ 0 ];
 					$updated = false;
 
-					foreach ( $typography as $key => $item ) {
+					foreach ( $typography_option[ 0 ] as $key => $item ) {
 						if ( ! is_array( $item ) ) {
 							continue;
 						}
 
 						foreach ( [ 'fontSize', 'tabletFontSize', 'mobileFontSize' ] as $size_key ) {
 							if ( isset( $item[ $size_key ] ) && is_numeric( $item[ $size_key ] ) ) {
-								$typography[ $key ][ $size_key ] = strval( $item[ $size_key ] );
+								$typography_option[ 0 ][ $key ][ $size_key ] = strval( $item[ $size_key ] );
 								$updated = true;
 							}
 						}
 					}
 
 					if ( $updated ) {
-						$typography_option[ 0 ] = $typography;
 						update_option( 'stackable_global_typography', $typography_option );
 					}
 				}
 			}
 		}
+
 
 		// Make the setting available in the editor
 		public function add_setting( $settings ) {
