@@ -32,11 +32,6 @@ export const deprecateButtonGradientColor = {
 		return getAttribute( 'backgroundColorType' ) === 'gradient' && getAttribute( 'backgroundColor2' )
 	},
 	migrate: attrNameTemplate => attributes => {
-		// Do not migrate if the attributes are not eligible.
-		if ( ! deprecateButtonGradientColor.isEligible( attrNameTemplate )( attributes ) ) {
-			return attributes
-		}
-
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
@@ -59,13 +54,21 @@ export const deprecateButtonGradientColor = {
 			const color2ParentHover = getAttribute( 'backgroundColor2ParentHover' ) || color1ParentHover
 			const gradientDirectionParentHover = getAttribute( 'backgroundGradientDirectionParentHover' ) || getAttribute( 'backgroundGradientDirectionParentHover' ) === 0 ? getAttribute( 'backgroundGradientDirectionParentHover' ) : 90
 
-			if ( color1 && color2 ) {
+			const isColor1Gradient = color1 && color1.includes( 'linear-gradient' )
+			const isColor2Gradient = color2 && color2.includes( 'linear-gradient' )
+			if ( color1 && color2 && ! isColor1Gradient && ! isColor2Gradient ) {
 				newAttributes[ getAttrName( 'backgroundColor' ) ] = `linear-gradient(${ gradientDirection }deg, ${ color1 } 0%, ${ color2 } 100%)`
 			}
-			if ( color1Hover && color2Hover ) {
+
+			const isColor1HoverGradient = color1Hover && color1Hover.includes( 'linear-gradient' )
+			const isColor2HoverGradient = color2Hover && color2Hover.includes( 'linear-gradient' )
+			if ( color1Hover && color2Hover && ! isColor1HoverGradient && ! isColor2HoverGradient ) {
 				newAttributes[ getAttrName( 'backgroundColorHover' ) ] = `linear-gradient(${ gradientDirectionHover }deg, ${ color1Hover } 0%, ${ color2Hover } 100%)`
 			}
-			if ( color1ParentHover && color2ParentHover ) {
+
+			const isColor1ParentHoverGradient = color1ParentHover && color1ParentHover.includes( 'linear-gradient' )
+			const isColor2ParentHoverGradient = color2ParentHover && color2ParentHover.includes( 'linear-gradient' )
+			if ( color1ParentHover && color2ParentHover && ! isColor1ParentHoverGradient && ! isColor2ParentHoverGradient ) {
 				newAttributes[ getAttrName( 'backgroundColorParentHover' ) ] = `linear-gradient(${ gradientDirectionParentHover }deg, ${ color1ParentHover } 0%, ${ color2ParentHover } 100%)`
 			}
 		}
