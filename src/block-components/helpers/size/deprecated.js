@@ -29,11 +29,14 @@ export const deprecateSizeControlHeight = {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
-		const height = getAttribute( 'height' )
-
 		const newAttributes = {
 			...attributes,
-			[ getAttrName( 'height' ) ]: String( height ),
+		}
+
+		const height = getAttribute( 'height' )
+
+		if ( typeof height === 'number' ) {
+			newAttributes[ getAttrName( 'height' ) ] = String( height )
 		}
 
 		return newAttributes
