@@ -87,11 +87,10 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * @since 3.16.0
 		 */
 		public function migrate_global_typography_font_size( $old_version, $new_version ) {
-			$typography_option = get_option( 'stackable_global_typography' );
-
 			if ( ! empty( $old_version ) && version_compare( $old_version, "3.16.0", "<" )
 				&& ! empty( $typography_option ) && isset( $typography_option[ 0 ] )
 			) {
+				$typography_option = get_option( 'stackable_global_typography' );
 				$typography = $typography_option[ 0 ];
 				$updated = false;
 
