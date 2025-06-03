@@ -71,6 +71,7 @@ export const getAppliedTypeScale = ( value, deviceType = '' ) => {
 		return
 	}
 
+	// These values are the exponent for the typeScale value
 	const headings = {
 		h1: 6,
 		h2: 5,
