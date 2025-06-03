@@ -1,3 +1,10 @@
+/**
+ * Returns the reversely computed typescale based on the typography settings and device type
+ *
+ * @param {Object} typographySettings - The typography settings object
+ * @param {string} deviceType - The device type
+ * @return {string} The computed typescale. Values can be none, custom, or the numeric scale.
+ */
 export const getTypographyTypeScale = ( typographySettings, deviceType ) => {
 	const fontSizeKey = getDevicePropertyKey( 'fontSize', deviceType )
 	const fontSizeUnitKey = getDevicePropertyKey( 'fontSizeUnit', deviceType )
