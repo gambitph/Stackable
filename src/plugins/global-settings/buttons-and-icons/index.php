@@ -21,6 +21,7 @@ if ( ! class_exists( 'Stackable_Global_Buttons_And_Icons' ) ) {
   		function __construct() {
 			// Register our settings.
 			add_action( 'register_stackable_global_settings', array( $this, 'register_buttons_and_icons' ) );
+			add_action( 'stackable_early_version_upgraded',  array( $this, 'migrate_buttons_and_icons_schema_changes' ), 10, 2 );
 
 			if ( is_frontend() ) {
 
@@ -112,6 +113,67 @@ if ( ! class_exists( 'Stackable_Global_Buttons_And_Icons' ) ) {
 		public function add_body_class_buttons_and_icons( $classes ) {
 			$classes[] = 'stk-has-design-system-buttons-and-icons';
 			return $classes;
+		}
+
+		public function migrate_buttons_and_icons_schema_changes( $old_version, $new_version ) {
+			if ( empty( $old_version ) || version_compare( $old_version, "3.16.0", ">=" ) ) {
+				return;
+			}
+			
+			$option_name = 'stackable_global_buttons_and_icons';
+			$settings = get_option( $option_name );
+
+			if ( empty( $settings ) || ! is_array( $settings ) ) {
+				return;
+			}
+
+			$number_to_string_properties = [
+				'button-min-height',
+				'button-icon-gap',
+				'button-column-gap',
+				'button-row-gap',
+				'icon-list-row-gap',
+			];
+
+			$four_range_to_string_properties = [
+				'button-padding',
+				'icon-button-padding',
+				'button-border-radius',
+			];
+
+			$updated = false;
+
+			// Migrate number_properties to string_properties
+			foreach ( $number_to_string_properties as $property ) {
+				if ( isset( $settings[ $property ] ) && is_array( $settings[ $property ] ) ) {
+					foreach ( $settings[ $property ] as $key => $value ) {
+						if ( is_numeric( $value ) ) {
+							$settings[ $property ][ $key ] = strval( $value );
+							$updated = true;
+						}
+					}
+				}
+			}
+
+			// Migrate four_range_properties to string_four_range_properties
+			foreach ( $four_range_to_string_properties as $property ) {
+				if ( isset( $settings[ $property ] ) && is_array( $settings[ $property ] ) ) {
+					foreach ( $settings[ $property ] as $viewport => $sides ) {
+						if ( is_array( $sides ) ) {
+							foreach ( $sides as $side => $value ) {
+								if ( is_numeric( $value ) ) {
+									$settings[ $property ][ $viewport ][ $side ] = strval( $value );
+									$updated = true;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if ( $updated ) {
+				update_option( $option_name, $settings );
+			}
 		}
 	}
 
