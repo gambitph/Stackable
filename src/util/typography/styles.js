@@ -39,8 +39,8 @@ export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'deskt
 	const mobileFontSize = getValue( 'MobileFontSize' )
 
 	const desktopFontSizeUnit = isCSSVarValue( desktopFontSize ) ? '' : getValue( 'FontSizeUnit' ) || 'px'
-	const tabletFontSizeUnit = isCSSVarValue( tabletFontSize ) ? '' : getValue( 'FontSizeUnit' ) || 'px'
-	const mobileFontSizeUnit = isCSSVarValue( mobileFontSize ) ? '' : getValue( 'FontSizeUnit' ) || 'px'
+	const tabletFontSizeUnit = isCSSVarValue( tabletFontSize ) ? '' : getValue( 'TabletFontSizeUnit' ) || 'px'
+	const mobileFontSizeUnit = isCSSVarValue( mobileFontSize ) ? '' : getValue( 'MobileFontSizeUnit' ) || 'px'
 
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		styles = {

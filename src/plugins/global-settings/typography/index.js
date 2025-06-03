@@ -5,15 +5,26 @@ import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
 import { getThemeStyles } from './get-theme-styles'
 import FREE_FONT_PAIRS from './font-pairs.json'
-import { getAppliedTypeScale, cleanTypographyStyle } from './utils'
+import {
+	getDevicePropertyKey,
+	getAppliedTypeScale,
+	cleanTypographyStyle,
+	getTypographyTypeScale,
+} from './utils'
 
 /**
  * External dependencies
  */
 import {
-	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator, FontPairPicker, ProControlButton, AdvancedToggleControl,
+	PanelAdvancedSettings,
+	AdvancedSelectControl,
+	ControlSeparator,
+	FontPairPicker,
+	ProControlButton,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import { fetchSettings } from '~stackable/util'
+import { useDeviceType } from '~stackable/hooks'
 import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
@@ -148,6 +159,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		const _useTypographyAsPresets = select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
 		return { useTypographyAsPresets: _useTypographyAsPresets }
 	}, [] )
+	const deviceType = useDeviceType()?.toLowerCase() || 'desktop'
 
 	const FONT_PAIRS = applyFilters( 'stackable.global-settings.typography.font-pairs.premium-font-pairs', FREE_FONT_PAIRS )
 
@@ -157,7 +169,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const [ customFontPairs, setCustomFontPairs ] = useState( [] )
 	const [ selectedFontPairName, setSelectedFontPairName ] = useState( '' )
 	const [ isEditingFontPair, setIsEditingFontPair ] = useState( false )
-	const [ selectedTypeScale, setSelectedTypeScale ] = useState( 'none' )
+	const [ selectedTypeScale, setSelectedTypeScale ] = useState( {
+		desktop: 'none',
+		tablet: 'none',
+		mobile: 'none',
+	} )
 	const [ isApplyBodyToHTML, setIsApplyBodyToHTML ] = useState( false )
 
 	const fontPairContainerRef = useRef( null )
@@ -172,21 +188,20 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			setSelectedFontPairName( response.stackable_selected_font_pair || 'theme-heading-default/theme-body-default' )
 			setIsApplyBodyToHTML( response.stackable_is_apply_body_to_html || false )
 
-			// Reversely compute the type scale from the font sizes
-			let typeScale = _typographySettings?.h6?.fontSize
-			if ( typeScale ) {
-				const computedApplied = getAppliedTypeScale( typeScale ) ?? {}
-				const tags = Object.keys( _typographySettings )
-				for ( const tag of tags ) {
-				// If font size mismatch, set typography scale to Custom
-					if ( _typographySettings[ tag ]?.fontSize !== computedApplied[ tag ]?.fontSize ) {
-						typeScale = 'custom'
-					}
-				}
-				setSelectedTypeScale( typeScale )
-			}
+			// Reversely compute initial typescale for highlighting
+			const typeScaleDesktop = getTypographyTypeScale( _typographySettings, 'desktop' )
+			const typeScaleTablet = getTypographyTypeScale( _typographySettings, 'tablet' )
+			const typeScaleMobile = getTypographyTypeScale( _typographySettings, 'mobile' )
+			setSelectedTypeScale( {
+				desktop: typeScaleDesktop, tablet: typeScaleTablet, mobile: typeScaleMobile,
+			} )
 		} )
 	}, [] )
+
+	useEffect( () => {
+		const typeScale = getTypographyTypeScale( typographySettings, deviceType )
+		setSelectedTypeScale( prev => ( { ...prev, [ deviceType ]: typeScale } ) )
+	}, [ deviceType, typographySettings ] )
 
 	useEffect( () => {
 		// When typography styles are changed, trigger our editor style generator to update.
@@ -269,26 +284,25 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}
 
 	const updateTypeScale = value => {
-		setSelectedTypeScale( value )
-
-		// If value is custom, do not do anything
-		if ( value === 'custom ' ) {
-			return
-		}
-
-		// If value is none, reset the font sizes and units
 		if ( value === 'none' ) {
 			const selectors = TYPOGRAPHY_TAGS.map( tag => tag.selector )
-			const newSettings = selectors.reduce( ( acc, selector, ) => {
-				acc[ selector ] = { fontSize: '', fontSizeUnit: '' }
+			const fontSizeKey = getDevicePropertyKey( 'fontSize', deviceType )
+			const fontSizeUnitKey = getDevicePropertyKey( 'fontSizeUnit', deviceType )
+
+			const newSettings = selectors.reduce( ( acc, selector ) => {
+				acc[ selector ] = {
+					[ fontSizeKey ]: '',
+					[ fontSizeUnitKey ]: '',
+				}
 				return acc
 			}, {} )
+
 			changeStyles( newSettings )
 			return
 		}
 
 		// If value is valid type scale, apply to the styles
-		const newSettings = getAppliedTypeScale( value )
+		const newSettings = getAppliedTypeScale( value, deviceType )
 		changeStyles( newSettings )
 	}
 
@@ -513,9 +527,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						<AdvancedSelectControl
 							label={ __( 'Type Scale', i18n ) }
 							options={ TYPE_SCALE }
-							value={ selectedTypeScale }
+							value={ selectedTypeScale[ deviceType ] }
 							onChange={ updateTypeScale }
+							responsive="all"
 							default="none"
+							hasTabletValue={ selectedTypeScale.tablet !== 'none' }
+							hasMobileValue={ selectedTypeScale.mobile !== 'none' }
 						/>
 						{ TYPOGRAPHY_TAGS.map( ( {
 							label, selector, help,
@@ -531,18 +548,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 									isAllowReset={ getIsAllowReset( selector ) }
 									onChange={ styles => {
 										changeStyles( { [ selector ]: styles } )
-										// Set typeScale to custom when editing font size or units
-										if ( 'fontSize' in styles || 'fontSizeUnit' in styles ) {
-											setSelectedTypeScale( 'custom' )
-										}
 									} }
 									onReset={ () => {
 										resetStyles( selector )
-										// Set typeScale to custom when editing font size or units
-										const styles = typographySettings[ selector ]
-										if ( 'fontSize' in styles || 'fontSizeUnit' in styles ) {
-											setSelectedTypeScale( 'custom' )
-										}
 									} }
 								/>
 							)

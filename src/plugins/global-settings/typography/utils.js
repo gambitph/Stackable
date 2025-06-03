@@ -1,3 +1,50 @@
+export const getTypographyTypeScale = ( typographySettings, deviceType ) => {
+	const fontSizeKey = getDevicePropertyKey( 'fontSize', deviceType )
+	const fontSizeUnitKey = getDevicePropertyKey( 'fontSizeUnit', deviceType )
+	const tags = Object.keys( typographySettings )
+
+	// Reversely compute the type scale from the font sizes
+	let typeScale = typographySettings?.h6?.[ fontSizeKey ]
+	typeScale = typeScale && parseFloat( typeScale ).toString()
+
+	if ( typeScale ) {
+		const computedApplied = getAppliedTypeScale( typeScale, deviceType ) ?? {}
+		for ( const tag of tags ) {
+			// console.log( typographySettings[ tag ]?.[ fontSizeKey ], computedApplied[ tag ]?.[ fontSizeKey ] )
+			// If font size mismatch, set typography scale to Custom
+			if ( typographySettings[ tag ]?.[ fontSizeKey ] !== computedApplied[ tag ]?.[ fontSizeKey ] ||
+					typographySettings[ tag ]?.[ fontSizeUnitKey ] !== computedApplied[ tag ]?.[ fontSizeUnitKey ]
+			) {
+				typeScale = 'custom'
+			}
+		}
+	} else {
+		typeScale = 'none'
+		for ( const tag of tags ) {
+			if ( typographySettings[ tag ]?.[ fontSizeKey ] ) {
+				typeScale = 'custom'
+			}
+		}
+	}
+	return typeScale
+}
+
+/**
+ * Returns the property key adjusted for the given device type.
+ *
+ * @param {string} baseProperty - The base property name
+ * @param {string} deviceType - The device type
+ * @return {string} The adjusted property key based on the device type.
+ *
+ */
+export const getDevicePropertyKey = ( baseProperty, deviceType ) => {
+	deviceType = deviceType.toLowerCase()
+	if ( deviceType && deviceType !== 'desktop' ) {
+		return `${ deviceType }${ baseProperty.charAt( 0 ).toUpperCase() }${ baseProperty.slice( 1 ) }`
+	}
+	return baseProperty
+}
+
 /**
  * Generates a typographic scale based on the given value.
  *
@@ -6,26 +53,51 @@
  * calculated using an exponential scale.
  *
  * @param {string|number} value - The base number to use for the typographic scale.
+ * @param {string} deviceType - The device type
  * @return {Object|undefined} An object mapping CSS selectors to their corresponding
  *                              font size settings. Returns `undefined` if input is invalid.
  */
 
-export const getAppliedTypeScale = value => {
+export const getAppliedTypeScale = ( value, deviceType = '' ) => {
 	const typeScale = Number( value )
 	if ( Number.isNaN( typeScale ) ) {
 		return
 	}
-	return {
-		h1: { fontSize: String( Math.pow( typeScale, 6 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h2: { fontSize: String( Math.pow( typeScale, 5 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h3: { fontSize: String( Math.pow( typeScale, 4 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h4: { fontSize: String( Math.pow( typeScale, 3 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h5: { fontSize: String( Math.pow( typeScale, 2 ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		h6: { fontSize: String( typeScale.toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		p: { fontSize: '1', fontSizeUnit: 'rem' },
-		'.stk-subtitle': { fontSize: String( ( 1 / typeScale ).toFixed( 3 ) ), fontSizeUnit: 'rem' },
-		'.stk-button__inner-text': { fontSize: '1', fontSizeUnit: 'rem' },
+
+	const headings = {
+		h1: 6,
+		h2: 5,
+		h3: 4,
+		h4: 3,
+		h5: 2,
+		h6: 1,
+		p: 0,
+		'.stk-subtitle': -1,
+		'.stk-button__inner-text': 0,
 	}
+
+	const result = {}
+
+	Object.entries( headings ).forEach( ( [ key, power ] ) => {
+		let fontSize
+		if ( power > 0 ) {
+			fontSize = String( Math.pow( typeScale, power ).toFixed( 3 ) )
+		} else if ( power === 0 ) {
+			fontSize = '1'
+		} else {
+			fontSize = String( ( 1 / typeScale ).toFixed( 3 ) )
+		}
+
+		const fontSizeKey = getDevicePropertyKey( 'fontSize', deviceType )
+		const fontSizeUnitKey = getDevicePropertyKey( 'fontSizeUnit', deviceType )
+
+		result[ key ] = {
+			[ fontSizeKey ]: fontSize,
+			[ fontSizeUnitKey ]: 'rem',
+		}
+	} )
+
+	return result
 }
 
 /**
