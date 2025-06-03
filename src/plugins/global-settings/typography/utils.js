@@ -23,6 +23,7 @@ export const getTypographyTypeScale = ( typographySettings, deviceType ) => {
 					typographySettings[ tag ]?.[ fontSizeUnitKey ] !== computedApplied[ tag ]?.[ fontSizeUnitKey ]
 			) {
 				typeScale = 'custom'
+				break
 			}
 		}
 	} else {
@@ -30,6 +31,7 @@ export const getTypographyTypeScale = ( typographySettings, deviceType ) => {
 		for ( const tag of tags ) {
 			if ( typographySettings[ tag ]?.[ fontSizeKey ] ) {
 				typeScale = 'custom'
+				break
 			}
 		}
 	}
