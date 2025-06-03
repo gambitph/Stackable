@@ -184,6 +184,7 @@ const AdvancedRangeControl = props => {
 		// Other necessary props for steps.
 		propsToPass.withInputField = false
 		controlProps.units = false
+		propsToPass.placeholder = ''
 	} else {
 		propsToPass.marks = undefined
 	}

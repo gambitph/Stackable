@@ -355,6 +355,7 @@ const FourRangeControl = memo( props => {
 
 			// Other necessary props for steps.
 			newProps.withInputField = false
+			propsToPass.placeholder = ''
 		} else {
 			newProps.marks = undefined
 		}
