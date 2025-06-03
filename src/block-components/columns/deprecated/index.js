@@ -41,15 +41,24 @@ export const deprecateColumnAndRowGap = {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
+		const newAttributes = {
+			...attributes,
+		}
+
 		const columnSpacing = getAttribute( 'columnSpacing' )
 		const columnGap = getAttribute( 'columnGap' )
 		const rowGap = getAttribute( 'rowGap' )
 
-		const newAttributes = {
-			...attributes,
-			[ getAttrName( 'columnSpacing' ) ]: String( columnSpacing ),
-			[ getAttrName( 'columnGap' ) ]: String( columnGap ),
-			[ getAttrName( 'rowGap' ) ]: String( rowGap ),
+		if ( typeof columnSpacing === 'number' ) {
+			newAttributes[ getAttrName( 'columnSpacing' ) ] = String( columnSpacing )
+		}
+
+		if ( typeof columnGap === 'number' ) {
+			newAttributes[ getAttrName( 'columnGap' ) ] = String( columnGap )
+		}
+
+		if ( typeof rowGap === 'number' ) {
+			newAttributes[ getAttrName( 'rowGap' ) ] = String( rowGap )
 		}
 
 		return newAttributes

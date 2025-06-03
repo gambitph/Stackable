@@ -29,13 +29,19 @@ export const deprecateInnerBlockRowGapAndContainerHeight = {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
+		const newAttributes = {
+			...attributes,
+		}
+
 		const containerHeight = getAttribute( 'containerHeight' )
 		const innerBlockRowGap = getAttribute( 'innerBlockRowGap' )
 
-		const newAttributes = {
-			...attributes,
-			[ getAttrName( 'containerHeight' ) ]: String( containerHeight ),
-			[ getAttrName( 'innerBlockRowGap' ) ]: String( innerBlockRowGap ),
+		if ( typeof containerHeight === 'number' ) {
+			newAttributes[ getAttrName( 'containerHeight' ) ] = String( containerHeight )
+		}
+
+		if ( typeof innerBlockRowGap === 'number' ) {
+			newAttributes[ getAttrName( 'innerBlockRowGap' ) ] = String( innerBlockRowGap )
 		}
 
 		return newAttributes

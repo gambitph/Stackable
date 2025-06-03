@@ -130,11 +130,14 @@ export const deprecateTypographyFontSize = {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
-		const fontSize = getAttribute( 'fontSize' )
-
 		const newAttributes = {
 			...attributes,
-			[ getAttrName( 'fontSize' ) ]: String( fontSize ),
+		}
+
+		const fontSize = getAttribute( 'fontSize' )
+
+		if ( typeof fontSize === 'number' ) {
+			newAttributes[ getAttrName( 'fontSize' ) ] = String( fontSize )
 		}
 
 		return newAttributes
