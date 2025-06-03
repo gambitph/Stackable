@@ -32,6 +32,11 @@ export const deprecateButtonGradientColor = {
 		return getAttribute( 'backgroundColorType' ) === 'gradient' && getAttribute( 'backgroundColor2' )
 	},
 	migrate: attrNameTemplate => attributes => {
+		// Do not migrate if the attributes are not eligible.
+		if ( ! deprecateButtonGradientColor.isEligible( attrNameTemplate )( attributes ) ) {
+			return attributes
+		}
+
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
