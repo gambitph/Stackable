@@ -176,9 +176,10 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * @return mixed
 		 */
 		public function deepGet( $array, $keys ) {
-			return array_reduce( $keys, fn( $value, $key ) => $value[ $key ] ?? null, $array );
+			return array_reduce( $keys, function( $value, $key ) {
+				return $value[ $key ] ?? null;
+			}, $array );
 		}
-
 		/**
 		 * Add our global preset control styles.
 		 *
