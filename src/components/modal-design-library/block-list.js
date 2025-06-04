@@ -28,7 +28,7 @@ const BlockList = props => {
 	useEffect( () => {
 		let total = 0
 		const _categories = designs.reduce( ( output, design ) => {
-			const category = design.categories[ 0 ]
+			const category = design.category
 
 			if ( plan && plan !== design.plan ) {
 				return output

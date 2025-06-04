@@ -143,6 +143,37 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		public function get_design_library_image( $request ) {
 			$url = $request->get_param( 'image_url' );
 
+			$basename = sanitize_file_name( wp_basename( parse_url( $url, PHP_URL_PATH ) ) );
+
+			$args = array(
+				'post_type' 		=> 'attachment',
+				'post_status'		=> 'inherit',
+				'posts_per_page'	=> 1,
+				'meta_query'		=> array(
+					array(
+						'key' => '_wp_attached_file',
+						'value' => $basename,
+						'compare' => 'LIKE'
+					)
+				)
+			);
+
+			$attachments = new WP_Query( $args );
+
+			if ( $attachments->have_posts() ) {
+				$attachments->the_post();
+				$media_id = get_the_ID();
+				$media_url = wp_get_attachment_url( $media_id );
+
+				wp_reset_postdata();
+
+				return new WP_REST_Response( array(
+					'success' => true,
+					'new_url' => $media_url,
+					'old_url' => $url
+				), 200 );
+			}
+
 			$temp_filepath = download_url( $url );
 
 			if ( is_wp_error( $temp_filepath ) ) {
@@ -160,42 +191,10 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				), 400 );
 			}
 
-			$image_hash = hash_file( 'md5', $temp_filepath );
-
-			$args = array(
-				'post_type' 		=> 'attachment',
-				'post_status'		=> 'inherit',
-				'posts_per_page'	=> 1,
-				'meta_query'		=> array(
-					array(
-						'key' => 'stk_image_hash',
-						'value' => $image_hash,
-						'compare' => '='
-					)
-				)
-			);
-
-			$attachments = new WP_Query( $args );
-
-			if ( $attachments->have_posts() ) {
-				$attachments->the_post();
-				$media_id = get_the_ID();
-				$media_url = wp_get_attachment_url( $media_id );
-
-				wp_reset_postdata();
-				@unlink( $temp_filepath );
-
-				return new WP_REST_Response( array(
-					'success' => true,
-					'new_url' => $media_url,
-					'old_url' => $url
-				), 200 );
-			}
-
 			$valid_mimes = [ 'image/jpeg' => 1, 'image/jpg' => 1, 'image/png' => 1, 'image/gif' => 1, 'image/webp' => 1, 'video/mp4' => 1 ];
 
 			$file_array = array(
-				'name' => sanitize_file_name( wp_basename( parse_url( $url, PHP_URL_PATH ) ) ),
+				'name' => $basename,
 				'type' => mime_content_type( $temp_filepath ),
 				'tmp_name' => $temp_filepath,
 				'size' => wp_filesize( $temp_filepath )
@@ -230,7 +229,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				), 500 );
 			}
 
-			update_post_meta( $media_id, 'stk_image_hash', $image_hash );
 			$media_url = wp_get_attachment_url( $media_id );
 
 			return new WP_REST_Response( array(
@@ -297,7 +295,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				$block_patterns = WP_Block_Patterns_Registry::get_instance()->get_all_registered( $outside_init );
 				foreach ( $block_patterns as $pattern ) {
 					if ( strpos( $pattern[ 'name' ], 'stackable/' ) !== false ) {
-						$pattern[ 'categories' ][ 0 ] = str_replace( 'stackable/', '', $pattern[ 'categories' ][ 0 ] );
+						$pattern[ 'title' ] = str_replace( sprintf( __( 'Stackable ', STACKABLE_I18N ) ), '', $pattern[ 'title' ] );
 						$content[ $pattern[ 'designId' ] ] = $pattern;
 					}
 				}
@@ -369,9 +367,9 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				}
 
 				$premium_designs[ $design_id ] = array(
-					'title'			=> sprintf( __( 'Stackable %s', STACKABLE_I18N ), $design[ 'label' ] ),
+					'title'			=> $design[ 'label' ],
 					'content' 		=> $design[ 'template' ],
-					'categories' 	=> array( $design[ 'category' ], 'stackable' ),
+					'category'	 	=> $design[ 'category' ],
 					'description'	=> $design[ 'description' ],
 					'plan'			=> $design[ 'plan' ],
 					'designId'		=> $design_id
@@ -399,9 +397,9 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				}
 
 				$designs_with_disabled[ $design_id ] = array(
-					'title'			=> sprintf( __( 'Stackable %s', STACKABLE_I18N ), $design[ 'label' ] ),
+					'title'			=> $design[ 'label' ],
 					'content' 		=> $design[ 'template' ],
-					'categories' 	=> array( $design[ 'category' ], 'stackable' ),
+					'category' 		=> $design[ 'category' ],
 					'description'	=> $design[ 'description' ],
 					'plan'			=> $design[ 'plan' ],
 					'designId'		=> $design_id,
@@ -415,6 +413,11 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			});
 
 			return $merged;
+		}
+
+		public function get_category_kebab_case( $category ) {
+			$category = trim( strtolower( $category ) );
+			return preg_replace( '/[^a-z0-9-]+/', '-', $category );
 		}
 
 		public function register_design_pattern() {
@@ -441,7 +444,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					if ( $has_disabled ) continue;
 				}
 
-				register_block_pattern_category( 'stackable/' . $design[ 'category' ], [
+				register_block_pattern_category( 'stackable/' . $this->get_category_kebab_case( $design[ 'category' ] ), [
 					'label' => sprintf( __( 'Stackable %s', STACKABLE_I18N ), $design[ 'category' ] ),
 					'description' => sprintf( __( '%s patterns for Stackable Design Library', STACKABLE_I18N ), $design[ 'category' ] ),
 				] );
@@ -451,7 +454,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 						array(
 							'title'			=> sprintf( __( 'Stackable %s', STACKABLE_I18N ), $design[ 'label' ] ),
 							'content' 		=> $design[ 'template' ],
-							'categories' 	=> array( 'stackable/' . $design[ 'category' ], 'stackable' ),
+							'categories' 	=> array( 'stackable/' . $this->get_category_kebab_case( $design[ 'category' ] ), 'stackable' ), // used in Patterns
+							'category'		=> $design[ 'category' ], // used in Design Library
 							'description'	=> $design[ 'description' ],
 							'plan'			=> $design[ 'plan' ],
 							'designId'		=> $design_id

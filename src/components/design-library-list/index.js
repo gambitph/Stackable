@@ -58,7 +58,7 @@ const DesignLibraryList = props => {
 						plan={ design.plan }
 						designId={ design.designId }
 						label={ design.title }
-						category={ design.categories[ 0 ] }
+						category={ design.category }
 						containerScheme={ props.containerScheme }
 						backgroundScheme={ props.backgroundScheme }
 						enableBackground={ props.enableBackground }

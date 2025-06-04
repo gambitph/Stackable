@@ -66,6 +66,20 @@
 		background: #fff;
 		border-top: 1px solid #eee;
 
+		> div:first-child {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			margin-bottom: 1em;
+			h4 {
+				margin: 0;
+			}
+			svg {
+				fill: #bbb;
+				cursor: pointer;
+			}
+		}
+
 		.components-base-control__field {
 			display: flex;
 			justify-content: space-between;
@@ -438,4 +452,8 @@ div.ugb-modal-design-library__enable-background {
 .ugb-design-library__manage-scheme {
 	display: block;
 	text-align: center;
+}
+
+.ugb-modal-design-library__style-options-tooltip .stk-tooltip__text a {
+	display: inline;
 }

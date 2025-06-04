@@ -67,7 +67,7 @@ export const filterDesigns = async ( {
 	}
 
 	if ( isCategory ) {
-		library = library.filter( ( { categories } ) => categories[ 0 ] === isCategory )
+		library = library.filter( ( { category } ) => category === isCategory )
 	}
 
 	return library

@@ -1,6 +1,7 @@
 /**
  * Internal deprendencies
  */
+import HelpSVG from './images/help.svg'
 import BlockList from './block-list'
 import Button from '../button'
 // import AdvancedToolbarControl from '../advanced-toolbar-control'
@@ -195,25 +196,28 @@ export const ModalDesignLibrary = props => {
 						/>
 					</div>
 					<div className="ugb-modal-design-library__style-options">
-						<h4 style={ { margin: '0 0 1em ' } }>{ __( 'Style Options', i18n ) }</h4>
+						<div>
+							<h4>{ __( 'Style Options', i18n ) }</h4>
+							<Tooltip className="ugb-modal-design-library__style-options-tooltip" placement="top" text={ <>
+								{ __( 'Customize patterns using the options below.', i18n ) }
+								&nbsp;
+								<a href="https://docs.wpstackable.com/article/343-using-the-design-library#Design-Library-Style-Options-Pswi5" target="_docs">
+									{ __( 'Learn how to use style options.', i18n ) }
+								</a>
+							</> }>
+								<HelpSVG height="14px" width="14px" />
+							</Tooltip>
+						</div>
 						<ToggleControl
 							className="ugb-modal-design-library__enable-background"
-							label={ <Tooltip placement="top" text={ <a href="https://docs.wpstackable.com/article/343-using-the-design-library#Section-Background-KYOys" target="_docs">
-								{ __( 'Learn more about section background here.', i18n ) }
-							</a> }>
-								<span className="stk-control__label--has-tooltip"> { __( 'Section Background', i18n ) }</span>
-							</Tooltip> }
+							label={ __( 'Section Background', i18n ) }
 							checked={ enableBackground }
 							onChange={ value => {
 								setEnableBackground( value )
 							} }
 						/>
 						<BaseControl
-							label={ <Tooltip placement="top" text={ <a href="https://docs.wpstackable.com/article/343-using-the-design-library#Background-Scheme-Wn_CV" target="_docs">
-								{ __( 'Learn more about background schemes here.', i18n ) }
-							</a> }>
-								<span className="stk-control__label--has-tooltip">{ __( 'Background Scheme', i18n ) }</span>
-							</Tooltip> }
+							label={ __( 'Background Scheme', i18n ) }
 							className="ugb-modal-design-library__color-scheme-label"
 						>
 							<Dropdown
@@ -282,11 +286,7 @@ export const ModalDesignLibrary = props => {
 							/>
 						</BaseControl>
 						<BaseControl
-							label={ <Tooltip placement="top" text={ <a href="https://docs.wpstackable.com/article/343-using-the-design-library#Container-Scheme-HyK91" target="_docs">
-								{ __( 'Learn more about container schemes here.', i18n ) }
-							</a> }>
-								<span className="stk-control__label--has-tooltip">{ __( 'Container Scheme', i18n ) }</span>
-							</Tooltip> }
+							label={ __( 'Container Scheme', i18n ) }
 							className="ugb-modal-design-library__color-scheme-label"
 						>
 							<Dropdown
