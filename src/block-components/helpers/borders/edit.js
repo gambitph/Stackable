@@ -71,7 +71,8 @@ export const BorderControls = props => {
 
 	applyFilters( 'stackable.block-component.helpers.borders', null, getAttribute, updateAttributes )
 
-	const presetMarks = usePresetControls( 'borderRadius' )?.getPresetMarks() || null
+	const presetMarks = usePresetControls( 'borderRadius' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
 
 	return (
 		<Fragment>

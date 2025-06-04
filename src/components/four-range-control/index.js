@@ -355,6 +355,7 @@ const FourRangeControl = memo( props => {
 
 			// Other necessary props for steps.
 			newProps.withInputField = false
+			propsToPass.placeholder = ''
 		} else {
 			newProps.marks = undefined
 		}
@@ -381,6 +382,7 @@ const FourRangeControl = memo( props => {
 				}
 				return _value === initialValue && ( _unit === '' || _unit === unit )
 			} )
+			rangeValue = rangeValue === -1 ? '' : rangeValue
 			rangeOnChange = ( value, property = 'value' ) => {
 				if ( value === '' ) {
 					return initialOnChange( value )
@@ -439,8 +441,12 @@ const FourRangeControl = memo( props => {
 			// Since the actual previous value is a preset, force the new custom value
 			// when changing unit
 			controlProps.onChangeUnit = ( unit, unitAttrName ) => {
-				initialOnChange( _newValue )
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 				setAttributes( { [ unitAttrName ]: unit } )
+				if ( props.onChangeUnit ) {
+					props.onChangeUnit( unit )
+				}
+				initialOnChange( _newValue )
 			}
 		}
 

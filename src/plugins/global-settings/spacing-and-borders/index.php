@@ -21,6 +21,7 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
   		function __construct() {
 			// Register our settings.
 			add_action( 'register_stackable_global_settings', array( $this, 'register_spacing_and_borders' ) );
+			add_action( 'stackable_early_version_upgraded',  array( $this, 'migrate_spacing_and_borders_schema_changes' ), 10, 2 );
 
 			if ( is_frontend() ) {
 
@@ -114,6 +115,68 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 			$classes[] = 'stk-has-design-system-spacing-and-borders';
 			return $classes;
 		}
+
+		public function migrate_spacing_and_borders_schema_changes( $old_version, $new_version ) {
+			if ( empty( $old_version ) || version_compare( $old_version, "3.16.0", ">=" ) ) {
+				return;
+			}
+
+			$option_name = 'stackable_global_spacing_and_borders';
+			$settings = get_option( $option_name );
+
+			if ( empty( $settings ) || ! is_array( $settings ) ) {
+				return;
+			}
+
+			$number_to_string_properties = [
+				'block-margin-bottom',
+				'columns-column-gap',
+				'columns-row-gap',
+			];
+
+			$four_range_to_string_properties = [
+				'container-border-radius',
+				'container-padding',
+				'block-background-border-radius',
+				'block-background-padding',
+				'image-border-radius',
+			];
+
+			$updated = false;
+
+			// Migrate number_properties to string_properties
+			foreach ( $number_to_string_properties as $property ) {
+				if ( isset( $settings[ $property ] ) && is_array( $settings[ $property ] ) ) {
+					foreach ( $settings[ $property ] as $key => $value ) {
+						if ( is_numeric( $value ) ) {
+							$settings[ $property ][ $key ] = strval( $value );
+							$updated = true;
+						}
+					}
+				}
+			}
+
+			// Migrate four_range_properties to string_four_range_properties
+			foreach ( $four_range_to_string_properties as $property ) {
+				if ( isset( $settings[ $property ] ) && is_array( $settings[ $property ] ) ) {
+					foreach ( $settings[ $property ] as $viewport => $sides ) {
+						if ( is_array( $sides ) ) {
+							foreach ( $sides as $side => $value ) {
+								if ( is_numeric( $value ) ) {
+									$settings[ $property ][ $viewport ][ $side ] = strval( $value );
+									$updated = true;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if ( $updated ) {
+				update_option( $option_name, $settings );
+			}
+		}
+
 	}
 
 	new Stackable_Global_Spacing_And_Borders();

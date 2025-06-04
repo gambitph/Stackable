@@ -28,7 +28,7 @@ const deprecated = [
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateButtonGradientColor.migrate( 'button%s' )( newAttributes )
-			newAttributes = deprecateTypographyFontSize.migrate( 'button%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( '%s' )( newAttributes )
 			newAttributes = deprecateBlockHeight.migrate( newAttributes )
 
 			return newAttributes

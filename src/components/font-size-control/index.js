@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 
 const FontSizeControl = props => {
-	let passedPlaceholder = props.placeholder
+	const passedPlaceholder = props.placeholder
 
 	const pxToEm = ( value = '', baseValue = 21 ) => {
 		if ( value === '' ) {
@@ -28,18 +28,13 @@ const FontSizeControl = props => {
 		return Math.round( parseFloat( value ) * baseValue )
 	}
 
-	if ( typeof passedPlaceholder === 'string' ) {
-		// Add a converted EM unit whenever the user changes the unit.
-		passedPlaceholder = [ passedPlaceholder, pxToEm( passedPlaceholder ) ]
-	}
-
 	return (
 		<AdvancedRangeControl
 			{ ...props }
 			placeholder={ passedPlaceholder }
 			onChangeUnit={ value => {
 				// Change font-size so as not to surprise the user.
-				if ( props.value !== '' && ! isNaN( Number( value ) ) ) {
+				if ( props.value !== '' && ! isNaN( Number( props.value ) ) ) {
 					if ( value === 'em' || value === 'rem' ) {
 						props.onChange( String( pxToEm( props.value ) ) )
 					} else if ( value === 'px' ) {

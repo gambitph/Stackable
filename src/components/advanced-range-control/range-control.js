@@ -144,11 +144,6 @@ const StackableRangeControl = memo( props => {
 		placeholderValue = initialPosition
 	}
 
-	// Remove placeholder if it's a custom CSS
-	if ( typeof placeholderValue === 'string' && placeholderValue.startsWith( 'var' ) ) {
-		placeholderValue = ''
-	}
-
 	return <div
 		className={ classNames }
 		style={ { '--ugb-advanced-range-control--width': percentageValue } }

@@ -44,6 +44,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
   		function __construct() {
 			add_action( 'register_stackable_global_settings', array( $this, 'register_use_size_presets_by_default' ) );
 			add_action( 'stackable_early_version_upgraded',  array( $this, 'use_size_presets_by_default_set_default' ), 10, 2 );
+			add_action( 'stackable_early_version_upgraded',  array( $this, 'migrate_global_typography_font_size' ), 10, 2 );
 			add_filter( 'stackable_js_settings', array( $this, 'add_setting' ) );
 
 			add_filter( 'stackable_inline_styles_nodep', array( $this, 'add_preset_controls_styles' ) );
@@ -78,6 +79,40 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 				}
 			}
 		}
+
+		/**
+		 * Migrates global typography font sizes from numbers to strings 
+		 * when upgrading to v3.16.0 and above
+		 *
+		 * @since 3.16.0
+		 */
+		public function migrate_global_typography_font_size( $old_version, $new_version ) {
+			if ( ! empty( $old_version ) && version_compare( $old_version, "3.16.0", "<" ) ) {
+				$typography_option = get_option( 'stackable_global_typography' );
+
+				if ( ! empty( $typography_option ) && isset( $typography_option[ 0 ] ) && is_array( $typography_option[ 0 ] ) ) {
+					$updated = false;
+
+					foreach ( $typography_option[ 0 ] as $key => $item ) {
+						if ( ! is_array( $item ) ) {
+							continue;
+						}
+
+						foreach ( [ 'fontSize', 'tabletFontSize', 'mobileFontSize' ] as $size_key ) {
+							if ( isset( $item[ $size_key ] ) && is_numeric( $item[ $size_key ] ) ) {
+								$typography_option[ 0 ][ $key ][ $size_key ] = strval( $item[ $size_key ] );
+								$updated = true;
+							}
+						}
+					}
+
+					if ( $updated ) {
+						update_option( 'stackable_global_typography', $typography_option );
+					}
+				}
+			}
+		}
+
 
 		// Make the setting available in the editor
 		public function add_setting( $settings ) {
@@ -133,8 +168,10 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 
 			$presets_by_slug = [];
 			// Convert presets into an associative array with key 'slug'
-			foreach ( $presets as $preset ) {
-				$presets_by_slug[ $preset[ 'slug' ] ] = $preset;
+			if ( is_array( $presets ) ) {
+				foreach ( $presets as $preset ) {
+					$presets_by_slug[ $preset[ 'slug' ] ] = $preset;
+				}
 			}
 
 			// There is no need to generate custom presets in the editor.
@@ -176,9 +213,10 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 * @return mixed
 		 */
 		public function deepGet( $array, $keys ) {
-			return array_reduce( $keys, fn( $value, $key ) => $value[ $key ] ?? null, $array );
+			return array_reduce( $keys, function( $value, $key ) {
+				return $value[ $key ] ?? null;
+			}, $array );
 		}
-
 		/**
 		 * Add our global preset control styles.
 		 *

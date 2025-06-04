@@ -184,6 +184,7 @@ const AdvancedRangeControl = props => {
 		// Other necessary props for steps.
 		propsToPass.withInputField = false
 		controlProps.units = false
+		propsToPass.placeholder = ''
 	} else {
 		propsToPass.marks = undefined
 	}
@@ -216,6 +217,8 @@ const AdvancedRangeControl = props => {
 			}
 			return _value === derivedValue && ( _unit === '' || _unit === unit )
 		} )
+		rangeValue = rangeValue === -1 ? '' : rangeValue
+
 		rangeOnChange = ( value, property = 'value' ) => {
 			if ( value === '' ) {
 				return _onChange( value )
@@ -269,7 +272,11 @@ const AdvancedRangeControl = props => {
 		// Since the actual previous value is a preset, force the new custom value
 		// when changing unit
 		controlProps.onChangeUnit = ( unit, unitAttrName ) => {
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { [ unitAttrName ]: unit } )
+			if ( props.onChangeUnit ) {
+				props.onChangeUnit( unit )
+			}
 			_onChange( _newValue )
 		}
 	}
