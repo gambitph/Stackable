@@ -39,7 +39,7 @@
 	.ugb-modal-design-library__wrapper {
 		display: grid;
 		grid-template-columns: 300px auto;
-		grid-template-rows: auto;
+		grid-template-rows: auto auto 80px;
 		flex: 1;
 		height: 100%;
 	}

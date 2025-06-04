@@ -53,7 +53,7 @@ export const ModalDesignLibrary = props => {
 
 	const [ isMultiSelectBusy, setIsMultiSelectBusy ] = useState( false )
 
-	const [ selectedTab, _setSelectedTab ] = useLocalStorage( 'stk__design_library__block-list__view_by', 'patterns' )
+	const [ selectedTab, setSelectedTab ] = useLocalStorage( 'stk__design_library__block-list__view_by', 'patterns' )
 	const [ selectedCategory, setSelectedCategory ] = useLocalStorage( 'stk__design_library__block-list__selected', '' )
 	const [ selectedPlan, setSelectedPlan ] = useLocalStorage( 'stk__design_library__view-plan', PLAN_OPTIONS[ 0 ] )
 
@@ -67,6 +67,17 @@ export const ModalDesignLibrary = props => {
 	const [ selectedBackgroundScheme, setSelectedBackgroundScheme ] = useState( '' )
 
 	const openDropdownRef = useRef( null )
+
+	// For version 4, the default tab is now 'patterns' and for category, we use '' instead of 'All'.
+	// So we need to update the local storage values here.
+	useEffect( () => {
+		const version = window.localStorage.getItem( 'stk__design_library__version' )
+		if ( ! version ) {
+			window.localStorage.setItem( 'stk__design_library__version', 'v4' )
+			setSelectedTab( 'patterns' )
+			setSelectedCategory( '' )
+		}
+	}, [] )
 
 	// Update the designs on the sidebar. (this will trigger the display designs update next)
 	useEffect( () => {
