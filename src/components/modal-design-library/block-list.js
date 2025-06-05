@@ -18,6 +18,7 @@ import classnames from 'classnames'
  */
 import { useEffect, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { Spinner } from '@wordpress/components'
 
 const BlockList = props => {
 	const [ categoryList, setCategoryList ] = useState( [] )
@@ -88,6 +89,10 @@ const BlockList = props => {
 
 		setCategoryList( sortedCategories )
 	}, [ designs, viewBy, plan ] )
+
+	if ( props.isBusy ) {
+		return <Spinner style={ { display: 'block', margin: '0 auto' } } />
+	}
 
 	return (
 		<ul className="ugb-block-list">

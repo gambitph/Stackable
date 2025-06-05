@@ -81,6 +81,7 @@ export const ModalDesignLibrary = props => {
 
 	// Update the designs on the sidebar. (this will trigger the display designs update next)
 	useEffect( () => {
+		setIsBusy( true )
 		if ( doReset ) {
 			setSidebarDesigns( [] )
 			// setDisplayDesigns( [] )
@@ -92,20 +93,18 @@ export const ModalDesignLibrary = props => {
 			setSidebarDesigns( designs )
 		} ).finally( () => {
 			setDoReset( false )
+			setIsBusy( false )
 		} )
 	}, [ doReset, selectedTab ] )
 
 	// This updates the displayed designs the user can pick.
 	useEffect( () => {
-		setIsBusy( true )
 		filterDesigns( {
 			library: sidebarDesigns,
 			category: selectedCategory,
 			plan: selectedPlan.key,
 		} ).then( designs => {
 			setDisplayDesigns( designs )
-		} ).finally( () => {
-			setIsBusy( false )
 		} )
 	}, [ sidebarDesigns, selectedPlan, selectedCategory ] )
 
@@ -204,6 +203,7 @@ export const ModalDesignLibrary = props => {
 							plan={ selectedPlan.key }
 							selected={ selectedCategory }
 							onSelect={ id => setSelectedCategory( id ) }
+							isBusy={ isBusy }
 						/>
 					</div>
 					<div className="ugb-modal-design-library__style-options">

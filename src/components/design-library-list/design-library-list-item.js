@@ -24,7 +24,7 @@ import {
 	forwardRef, useEffect, useRef, useState,
 } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
-import { Dashicon, Spinner } from '@wordpress/components'
+import { Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { serialize } from '@wordpress/blocks'
 import { applyFilters } from '@wordpress/hooks'
@@ -41,7 +41,6 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		category = '',
 		plan,
 		selectedNum = false,
-		isBusy,
 		containerScheme,
 		backgroundScheme,
 		enableBackground,
@@ -68,7 +67,6 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		'ugb-design-library-item',
 		'ugb-design-library-item--toggle',
 	], {
-		'ugb--is-busy': isBusy,
 		[ `ugb--is-${ plan }` ]: ! isPro && plan !== 'free',
 		'ugb--is-toggled': selectedNum,
 	} )
@@ -250,7 +248,6 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 				onClick( designId, parsedBlocks, blocksForSubstitutionRef.current )
 			} }
 		>
-			{ isBusy && <span className="ugb-design-library-item__spinner" data-testid="spinner"><Spinner /></span> }
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
 			<div style={ { position: 'relative' } }>
 				{ ! isPro && plan !== 'free' && (
@@ -267,14 +264,13 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 					} }
 				>
 
-					<div className="stk-block-design__host" ref={ hostRef } style={ { visibility: isBusy ? 'hidden' : 'visible', opacity: isBusy ? '0' : '' } } />
+					<div className="stk-block-design__host" ref={ hostRef } />
 				</div>
 			</div>
 
 			<footer
 				// Add the number if isToggle is a number, signifying an order instead of just an on/off.
 				data-selected-num={ selectedNum }
-				style={ { visibility: isBusy ? 'hidden' : 'visible' } }
 			>
 				<div>
 					<h4> { label } </h4>

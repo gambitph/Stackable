@@ -48,35 +48,35 @@ const DesignLibraryList = props => {
 			setScrollTop( e.currentTarget.scrollTop )
 		} }
 	>
-		<div className={ listClasses }>
-			{ ( designs || [] ).map( ( design, i ) => {
-				const selectedNum = selectedDesigns.indexOf( design.designId ) + 1
-				return (
-					<DesignLibraryItem
-						key={ i }
-						template={ design.content }
-						plan={ design.plan }
-						designId={ design.designId }
-						label={ design.title }
-						category={ design.category }
-						containerScheme={ props.containerScheme }
-						backgroundScheme={ props.backgroundScheme }
-						enableBackground={ props.enableBackground }
-						selectedNum={ selectedNum }
-						isBusy={ isBusy }
-						forceUpdate={ forceUpdate }
-						onClick={ ( designId, parsedBlocks, hasDisabledBlocks ) => onSelectMulti( designId, parsedBlocks, hasDisabledBlocks ) }
-						scrollTop={ scrollTop }
-					/>
-				)
-			} ) }
+		{ isBusy && <Spinner style={ { display: 'block', margin: '0 auto' } } /> }
+		{ ! isBusy && <>
+			<div className={ listClasses }>
+				{ ( designs || [] ).map( ( design, i ) => {
+					const selectedNum = selectedDesigns.indexOf( design.designId ) + 1
+					return (
+						<DesignLibraryItem
+							key={ i }
+							template={ design.content }
+							plan={ design.plan }
+							designId={ design.designId }
+							label={ design.title }
+							category={ design.category }
+							containerScheme={ props.containerScheme }
+							backgroundScheme={ props.backgroundScheme }
+							enableBackground={ props.enableBackground }
+							selectedNum={ selectedNum }
+							forceUpdate={ forceUpdate }
+							onClick={ ( designId, parsedBlocks, hasDisabledBlocks ) => onSelectMulti( designId, parsedBlocks, hasDisabledBlocks ) }
+							scrollTop={ scrollTop }
+						/>
+					)
+				} ) }
 
-			{ isBusy && <div className="ugb-design-library-search__spinner" data-testid="spinner"><Spinner /></div> }
-
-			{ ! isBusy && ! ( designs || [] ).length &&
-				<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
-			}
-		</div>
+				{ ! ( designs || [] ).length &&
+					<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
+				}
+			</div>
+		</> }
 	</div>
 }
 
