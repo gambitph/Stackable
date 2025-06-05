@@ -355,7 +355,6 @@ const FourRangeControl = memo( props => {
 
 			// Other necessary props for steps.
 			newProps.withInputField = false
-			propsToPass.placeholder = ''
 		} else {
 			newProps.marks = undefined
 		}
@@ -527,6 +526,10 @@ const FourRangeControl = memo( props => {
 						onChange={ rangeOnChangeFirst }
 						allowReset={ false }
 						initialPosition={ ( () => {
+							if ( isFourMarkMode.first ) {
+								return ''
+							}
+
 							if ( currentHoverState !== 'normal' ) {
 								return ''
 							}
@@ -540,6 +543,10 @@ const FourRangeControl = memo( props => {
 							return propsToPass.initialPosition
 						} )() }
 						placeholder={ ( () => {
+							if ( isFourMarkMode.first ) {
+								return ''
+							}
+
 							if ( currentHoverState !== 'normal' ) {
 								return ''
 							}
@@ -549,7 +556,6 @@ const FourRangeControl = memo( props => {
 							} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.firstValue ) {
 								return unit === _unitDesktop ? firstValueDesktop : ''
 							}
-
 							return propsToPass.placeholder
 						} )() }
 						__nextHasNoMarginBottom
@@ -587,6 +593,10 @@ const FourRangeControl = memo( props => {
 							onChange={ rangeOnChangeVertical }
 							allowReset={ false }
 							initialPosition={ ( () => {
+								if ( isFourMarkMode.top ) {
+									return ''
+								}
+
 								if ( currentHoverState !== 'normal' ) {
 									return ''
 								}
@@ -600,6 +610,10 @@ const FourRangeControl = memo( props => {
 								return propsToPass.initialPosition
 							} )() }
 							placeholder={ ( () => {
+								if ( isFourMarkMode.top ) {
+									return ''
+								}
+
 								if ( currentHoverState !== 'normal' ) {
 									return ''
 								}
@@ -644,6 +658,10 @@ const FourRangeControl = memo( props => {
 							onChange={ rangeOnChangeHorizontal }
 							allowReset={ false }
 							initialPosition={ ( () => {
+								if ( isFourMarkMode.left ) {
+									return ''
+								}
+
 								if ( currentHoverState !== 'normal' ) {
 									return ''
 								}
@@ -657,6 +675,10 @@ const FourRangeControl = memo( props => {
 								return propsToPass.initialPosition
 							} )() }
 							placeholder={ ( () => {
+								if ( isFourMarkMode.left ) {
+									return ''
+								}
+
 								if ( currentHoverState !== 'normal' ) {
 									return ''
 								}
@@ -705,6 +727,10 @@ const FourRangeControl = memo( props => {
 								onChange={ rangeOnChangeTop }
 								allowReset={ false }
 								initialPosition={ ( () => {
+									if ( isFourMarkMode.top ) {
+										return ''
+									}
+
 									if ( currentHoverState !== 'normal' ) {
 										return ''
 									}
@@ -718,6 +744,10 @@ const FourRangeControl = memo( props => {
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
+									if ( isFourMarkMode.top ) {
+										return ''
+									}
+
 									if ( currentHoverState !== 'normal' ) {
 										return ''
 									}
@@ -764,6 +794,10 @@ const FourRangeControl = memo( props => {
 								onChange={ rangeOnChangeRight }
 								allowReset={ false }
 								initialPosition={ ( () => {
+									if ( isFourMarkMode.right ) {
+										return ''
+									}
+
 									if ( currentHoverState !== 'normal' ) {
 										return ''
 									}
@@ -777,6 +811,10 @@ const FourRangeControl = memo( props => {
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
+									if ( isFourMarkMode.right ) {
+										return ''
+									}
+
 									if ( currentHoverState !== 'normal' ) {
 										return ''
 									}
@@ -823,6 +861,10 @@ const FourRangeControl = memo( props => {
 								onChange={ rangeOnChangeBottom }
 								allowReset={ false }
 								initialPosition={ ( () => {
+									if ( isFourMarkMode.bottom ) {
+										return ''
+									}
+
 									if ( currentHoverState !== 'normal' ) {
 										return ''
 									}
@@ -836,6 +878,10 @@ const FourRangeControl = memo( props => {
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
+									if ( isFourMarkMode.bottom ) {
+										return ''
+									}
+
 									if ( currentHoverState !== 'normal' ) {
 										return ''
 									}
@@ -882,6 +928,10 @@ const FourRangeControl = memo( props => {
 								onChange={ rangeOnChangeLeft }
 								allowReset={ false }
 								initialPosition={ ( () => {
+									if ( isFourMarkMode.left ) {
+										return ''
+									}
+
 									if ( currentHoverState !== 'normal' ) {
 										return ''
 									}
@@ -895,6 +945,10 @@ const FourRangeControl = memo( props => {
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
+									if ( isFourMarkMode.left ) {
+										return ''
+									}
+
 									if ( currentHoverState !== 'normal' ) {
 										return ''
 									}
