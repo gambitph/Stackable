@@ -140,6 +140,10 @@ export const GlobalColorSchemeStyles = () => {
 		if ( editorEl ) {
 			if ( styles !== '' && editorEl.classList.contains( 'stk-has-color-schemes' ) === false ) {
 				editorEl.classList.add( 'stk-has-color-schemes' )
+				addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
+					classnames.push( 'stk-has-color-schemes' )
+					return classnames
+				} )
 			}
 			if ( styles === '' ) {
 				editorEl.classList.remove( 'stk-has-color-schemes' )

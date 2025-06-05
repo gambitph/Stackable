@@ -180,6 +180,10 @@ export const useBlockLayoutEditorLoader = ( storeName, classSuffix ) => {
 			const mo = onClassChange( editorEl, () => {
 				if ( styles !== '' && editorEl?.classList.contains( className ) === false ) {
 					editorEl?.classList.add( className )
+					addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.${ classSuffix }`, classnames => {
+						classnames.push( className )
+						return classnames
+					} )
 				}
 				if ( styles === '' ) {
 					editorEl?.classList.remove( className )
