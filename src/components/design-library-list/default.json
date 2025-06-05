@@ -182,5 +182,28 @@
 		"text-5_placeholder": "Designing urban environments with green spaces and efficient infrastructure.",
 		"title-6_placeholder": "Environmental Education",
 		"text-6_placeholder": "Empowering communities with knowledge to adopt sustainable lifestyles."
+	},
+	"Testimonials": {
+		"heading_placeholder": "What Our Clients Say",
+		"description_placeholder": "Here's a look at what people are saying about working with us. We're proud to have helped so many achieve their goals.",
+		"kicker_placeholder": "Testimonials",
+		"name-1_placeholder": "Emily Johnson",
+		"position-1_placeholder": "Marketing Manager",
+		"text-1_placeholder": "XYZ Company has been a game-changer. Our online engagement and conversions significantly increased, leading to a 30% rise in leads in three months!",
+		"name-2_placeholder": "David Smith",
+		"position-2_placeholder": "Small Business Owner",
+		"text-2_placeholder": "Struggling to grow online, XYZ Company provided the perfect solution. Their tailored approach made a huge difference; my sales have doubled.",
+		"name-3_placeholder": "Sophia Miller",
+		"position-3_placeholder": "E-commerce Specialist",
+		"text-3_placeholder": "XYZ Company transformed our platform. Their expertise boosted traffic and improved satisfaction, consistently giving us higher average order values.",
+		"name-4_placeholder": "William Brown",
+		"position-4_placeholder": "Tech Startup Founder",
+		"text-4_placeholder": "XYZ Company delivered exceptional value. They helped us develop a strong brand and launch our product effectively. We've gained valuable traction.",
+		"name-5_placeholder": "James Wilson",
+		"position-5_placeholder": "Non-profit Director",
+		"text-5_placeholder": "XYZ Company exceeded our expectations. Their dedication significantly increased our donations and volunteer sign-ups by improving our online presence.",
+		"name-6_placeholder": "Olivia Davis",
+		"position-6_placeholder": "Real Estate Broker",
+		"text-6_placeholder": "XYZ Company gave me the edge. Their innovative digital advertising brought consistent, qualified leads, directly leading to more property sales."
 	}
 }
