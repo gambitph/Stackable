@@ -108,6 +108,18 @@ export const ModalDesignLibrary = props => {
 		} )
 	}, [ sidebarDesigns, selectedPlan, selectedCategory ] )
 
+	const colorSchemeHelpCallback = () => {
+		if ( selectedDesignIds.length ) {
+			// eslint-disable-next-line no-alert
+			const confirmClose = window.confirm( sprintf( __( 'You have one or more designs selected. Navigating to %s will close the Design Library and your current selection will be lost. Do you want to continue?', i18n ), __( 'Color Schemes', i18n ) ) )
+			if ( ! confirmClose ) {
+				return true
+			}
+		}
+		props.onClose()
+		return false
+	}
+
 	return (
 		<Modal
 			title={ __( 'Stackable Design Library', i18n ) }
@@ -288,8 +300,8 @@ export const ModalDesignLibrary = props => {
 												</Button>
 											} ) }
 											{ Object.keys( colorSchemesCollection ).length
-												? <ColorSchemesHelp customText="" callback={ props.onClose } className="ugb-design-library__manage-scheme" />
-												: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ props.onClose } />
+												? <ColorSchemesHelp customText="" callback={ colorSchemeHelpCallback } className="ugb-design-library__manage-scheme" />
+												: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ colorSchemeHelpCallback } />
 											}
 										</div>
 									</div>
@@ -349,8 +361,8 @@ export const ModalDesignLibrary = props => {
 												</Button>
 											} ) }
 											{ Object.keys( colorSchemesCollection ).length
-												? <ColorSchemesHelp customText="" callback={ props.onClose } className="ugb-design-library__manage-scheme" />
-												: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ props.onClose } />
+												? <ColorSchemesHelp customText="" callback={ colorSchemeHelpCallback } className="ugb-design-library__manage-scheme" />
+												: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ colorSchemeHelpCallback } />
 											}
 										</div>
 									</div>

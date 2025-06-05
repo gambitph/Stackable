@@ -9,8 +9,13 @@ export const ColorSchemesHelp = props => {
 		customText, callback, className,
 	} = props
 	const onClick = () => {
+		let cancelOnClick = false
 		if ( callback ) {
-			callback()
+			cancelOnClick = callback()
+		}
+
+		if ( cancelOnClick ) {
+			return
 		}
 
 		// Open the global settings sidebar.
