@@ -64,7 +64,6 @@ const BlockList = props => {
 			[ 'Table of Contents', 8 ],
 			[ 'Tabs', 11 ],
 			[ 'Team Members', 10 ],
-			[ 'Testimonials', 25 ],
 			[ 'Timeline', 9 ],
 			[ 'Video', 11 ],
 		]
