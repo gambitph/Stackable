@@ -467,6 +467,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-twentytwentyfive-theme';
 			} else if ( function_exists( 'hello_elementor_setup' ) ) { // Taken from https://github.com/elementor/hello-theme/blob/master/functions.php
 				$classes[] = 'stk--is-helloelementor-theme';
+			} else if ( function_exists( 'tove_setup' ) ) {
+				$classes[] = 'stk--is-tove-theme';
 			}
 
 			return $convert_to_string ? implode( ' ', $classes ) : $classes;
