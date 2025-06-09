@@ -826,7 +826,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( isset( $styles['tabletFontSize'] ) ) {
 					$clamp_tablet_value = $this->clamp_inherited_style( $styles['tabletFontSize'], $inherit_max );
 					if ( ! empty( $clamp_tablet_value ) ) {
-						$font_size = $this->create_style( $this->clean_font_size( 'font-size', $clamp_tablet_value, $styles['tabletFontSizeUnit'] ) );
+						$font_size = $this->create_style( 'font-size', $this->clean_font_size( $clamp_tablet_value, $styles['tabletFontSizeUnit'] ) );
 					}
 				}
 				if ( empty( $clamp_tablet_value ) ) {
