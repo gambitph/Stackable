@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.1
 Requires PHP: 7.3
-Stable tag: 3.16.0
+Stable tag: 3.16.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -310,6 +310,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.16.1 =
+* Fixed: Hotfix for PHP error encountered if you have a tablet gloal typography font size #3526
+* Fixed: Some preset controls now show blank values when not set #3519
 
 = 3.16.0 =
 [Introducing: Theme.json Support, Global Value Presets, Type Scale](https://wpstackable.com/blog/introducing-theme-json-support-global-value-presets-and-type-scale/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
