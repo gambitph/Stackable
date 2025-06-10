@@ -408,17 +408,14 @@ div.ugb-modal-design-library__enable-background {
 	position: absolute;
 	right: 60px;
 }
-.stk-design-library__plan-dropdown, .ugb-modal-design-library__stk-color-scheme-list {
+.stk-design-library__plan-dropdown, .ugb-design-library__color-scheme-popover {
 	--wp-admin-theme-color: #f00069;
 	--wp-admin-theme-color-darker-10: #{ darken(#f00069, 10%) };
 	--wp-admin-theme-color-darker-20: #{ darken(#f00069, 20%) };
 }
 
-.ugb-modal-design-library__stk-color-scheme-list-wrapper {
-	max-height: 145px;
-}
 .ugb-modal-design-library__stk-color-scheme-list {
-	padding: 0 0 8px;
+	padding: 8px;
 	.stk-color-scheme__none {
 		padding: 8px;
 		min-height: 30px;
@@ -457,4 +454,28 @@ div.ugb-modal-design-library__enable-background {
 
 .ugb-modal-design-library__style-options-tooltip .stk-tooltip__text a {
 	display: inline;
+}
+
+.ugb-design-library__color-scheme-popover .components-popover__content {
+	padding: 0;
+}
+
+.ugb-modal-design-library__stk-color-scheme-list-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0 0 4px;
+    border-bottom: 1px solid #e0e0e0;
+
+	p {
+		margin: 6px 6px 4px;
+		font-size: 11px;
+		font-weight: 500;
+	}
+
+	.components-button.has-icon {
+		padding: 0;
+		height: unset;
+		min-width: unset;
+	}
 }

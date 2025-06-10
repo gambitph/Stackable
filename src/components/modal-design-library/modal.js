@@ -26,9 +26,7 @@ import {
 	Spinner,
 	ToggleControl,
 } from '@wordpress/components'
-import {
-	useEffect, useState, useRef,
-} from '@wordpress/element'
+import { useEffect, useState } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { useBlockColorSchemes } from '~stackable/hooks'
 import ColorSchemePreview from '../color-scheme-preview'
@@ -37,6 +35,7 @@ import Tooltip from '../tooltip'
 
 const PLAN_OPTIONS = [ { key: '', label: __( 'All', i18n ) }, { key: 'free', label: __( 'Free', i18n ) }, { key: 'premium', label: __( 'Premium', i18n ) } ]
 const popoverProps = {
+	className: 'ugb-design-library__color-scheme-popover',
 	placement: 'right-start',
 	shift: true,
 }
@@ -65,8 +64,6 @@ export const ModalDesignLibrary = props => {
 	const [ enableBackground, setEnableBackground ] = useState( false )
 	const [ selectedContainerScheme, setSelectedContainerScheme ] = useState( '' )
 	const [ selectedBackgroundScheme, setSelectedBackgroundScheme ] = useState( '' )
-
-	const openDropdownRef = useRef( null )
 
 	// For version 4, the default tab is now 'patterns' and for category, we use '' instead of 'All'.
 	// So we need to update the local storage values here.
@@ -162,17 +159,10 @@ export const ModalDesignLibrary = props => {
 							onClick={ () => setDoReset( true ) }
 						/>
 						<Dropdown
-							focusOnMount={ false }
-							renderToggle={ ( { onToggle, onClose } ) => (
+							focusOnMount="container"
+							renderToggle={ ( { onToggle } ) => (
 								<Button
-									onClick={ () => {
-										if ( openDropdownRef.current ) {
-											openDropdownRef.current()
-										}
-
-										openDropdownRef.current = onClose
-										onToggle()
-									} }
+									onClick={ onToggle }
 									style={ { height: 'auto' } }
 									icon="arrow-down-alt2"
 									iconSize={ 12 }
@@ -190,7 +180,6 @@ export const ModalDesignLibrary = props => {
 											key={ i }
 											onClick={ () => {
 												setSelectedPlan( plan )
-												openDropdownRef.current = null
 												onClose()
 											} }
 										>
@@ -246,17 +235,10 @@ export const ModalDesignLibrary = props => {
 							<Dropdown
 								className="ugb-modal-design-library__color-scheme-dropdown"
 								popoverProps={ popoverProps }
-								focusOnMount={ false }
-								renderToggle={ ( { onToggle, onClose } ) => (
+								focusOnMount="container"
+								renderToggle={ ( { onToggle } ) => (
 									<Button
-										onClick={ () => {
-											if ( openDropdownRef.current ) {
-												openDropdownRef.current()
-											}
-
-											openDropdownRef.current = onClose
-											onToggle()
-										} }
+										onClick={ onToggle }
 										className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
 									>
 										{ selectedBackgroundScheme !== ''
@@ -266,7 +248,16 @@ export const ModalDesignLibrary = props => {
 									</Button>
 								) }
 								renderContent={ ( { onClose } ) => (
-									<div className="ugb-modal-design-library__stk-color-scheme-list-wrapper">
+									<div>
+										<div className="ugb-modal-design-library__stk-color-scheme-list-header">
+											<p> { __( 'Background Scheme', i18n ) }</p>
+											<Button
+												icon="no"
+												onClick={ () => {
+													onClose()
+												} }
+											/>
+										</div>
 										<div className="ugb-modal-design-library__stk-color-scheme-list">
 											<Button
 												className={ `ugb-modal-design-library__stk-color-scheme${ selectedBackgroundScheme === '' ? ' stk-color-scheme__selected' : '' }` }
@@ -275,8 +266,6 @@ export const ModalDesignLibrary = props => {
 														setEnableBackground( true )
 													}
 													setSelectedBackgroundScheme( '' )
-													openDropdownRef.current = null
-													onClose()
 												} }
 											>
 												<span className="stk-color-scheme-name stk-color-scheme__none"> { __( 'Default', i18n ) } </span>
@@ -290,9 +279,6 @@ export const ModalDesignLibrary = props => {
 															setEnableBackground( true )
 														}
 														setSelectedBackgroundScheme( key )
-
-														openDropdownRef.current = null
-														onClose()
 													} }
 												>
 													<ColorSchemePreview colors={ scheme.desktopColors } isCollapsed={ true } />
@@ -314,17 +300,10 @@ export const ModalDesignLibrary = props => {
 						>
 							<Dropdown
 								popoverProps={ popoverProps }
-								focusOnMount={ false }
-								renderToggle={ ( { onToggle, onClose } ) => (
+								focusOnMount="container"
+								renderToggle={ ( { onToggle } ) => (
 									<Button
-										onClick={ () => {
-											if ( openDropdownRef.current ) {
-												openDropdownRef.current()
-											}
-
-											openDropdownRef.current = onClose
-											onToggle()
-										} }
+										onClick={ onToggle }
 										className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
 									>
 										{ selectedContainerScheme !== ''
@@ -334,14 +313,21 @@ export const ModalDesignLibrary = props => {
 									</Button>
 								) }
 								renderContent={ ( { onClose } ) => (
-									<div className="ugb-modal-design-library__stk-color-scheme-list-wrapper">
+									<div>
+										<div className="ugb-modal-design-library__stk-color-scheme-list-header">
+											<p> { __( 'Container Scheme', i18n ) }</p>
+											<Button
+												icon="no"
+												onClick={ () => {
+													onClose()
+												} }
+											/>
+										</div>
 										<div className="ugb-modal-design-library__stk-color-scheme-list">
 											<Button
 												className={ `ugb-modal-design-library__stk-color-scheme${ selectedContainerScheme === '' ? ' stk-color-scheme__selected' : '' }` }
 												onClick={ () => {
 													setSelectedContainerScheme( '' )
-													openDropdownRef.current = null
-													onClose()
 												} }
 											>
 												<span className="stk-color-scheme-name stk-color-scheme__none"> { __( 'Default', i18n ) } </span>
@@ -352,8 +338,6 @@ export const ModalDesignLibrary = props => {
 													className={ `ugb-modal-design-library__stk-color-scheme${ selectedContainerScheme === key ? ' stk-color-scheme__selected' : '' }` }
 													onClick={ () => {
 														setSelectedContainerScheme( key )
-														openDropdownRef.current = null
-														onClose()
 													} }
 												>
 													<ColorSchemePreview colors={ scheme.desktopColors } isCollapsed={ true } />

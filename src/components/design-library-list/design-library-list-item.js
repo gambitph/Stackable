@@ -23,7 +23,7 @@ import { Tooltip } from '~stackable/components'
 import {
 	forwardRef, useEffect, useRef, useState,
 } from '@wordpress/element'
-import { useSelect } from '@wordpress/data'
+import { select, useSelect } from '@wordpress/data'
 import { Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { serialize } from '@wordpress/blocks'
@@ -187,9 +187,18 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 
 			const hostStyles = document.createElement( 'style' )
 			hostStyles.setAttribute( 'id', 'stk-design-library-styles' )
-			hostStyles.innerHTML = ! hasBackgroundTargetRef.current
-				? `body > .stk-block-columns { padding: 75px; } body > .stk-block-background:not(.stk--no-padding) { padding: calc(75px + var(--stk-block-background-padding)); }`
-				: `[stk-design-library__bg-target="true"] { padding: 25px; } [stk-design-library__bg-target="true"].stk-block-background:not(.stk--no-padding) { padding: calc(25px + var(--stk-block-background-padding)); }`
+
+			const blockLayouts = select( 'stackable/global-spacing-and-borders' ).getBlockLayouts()
+			hostStyles.innerHTML = ! hasBackgroundTargetRef.current ? 'body > .stk-block-columns { padding: 75px; }' : '[stk-design-library__bg-target="true"] { padding: 50px; }'
+
+			if ( ( Array.isArray( blockLayouts ) && ! blockLayouts.length ) ||
+				( typeof blockLayouts === 'object' && ! blockLayouts[ 'block-background-padding' ] )
+			) {
+				hostStyles.innerHTML += ! hasBackgroundTargetRef.current
+					? ` body > .stk-block-background:not(.stk--no-padding) { padding: calc(75px + var(--stk-block-background-padding)); }`
+					: ` [stk-design-library__bg-target="true"].stk-block-background:not(.stk--no-padding) { padding: calc(26px + var(--stk-block-background-padding)); }`
+			}
+
 			hostStyles.innerHTML += `.stk-block-count-up__text:not(.stk--count-up-active) { opacity: 1; }`
 			styleNodes.push( hostStyles )
 
