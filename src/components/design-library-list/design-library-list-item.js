@@ -41,10 +41,10 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		category = '',
 		plan,
 		selectedNum = false,
+		selectedData = null,
 		containerScheme,
 		backgroundScheme,
 		enableBackground,
-		forceUpdate,
 		cardHeight,
 		setCardHeight,
 		previewSize,
@@ -56,9 +56,9 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 
 	const hostRef = useRef( null )
 	const previewRef = useRef( null )
-	const prevEnableBackgroundRef = useRef( null )
 	const blocksForSubstitutionRef = useRef( false )
 	const hasBackgroundTargetRef = useRef( false )
+	const initialRenderRef = useRef( null )
 
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 	const editorDom = getEditorDom()
@@ -93,27 +93,39 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 
 				const _height = parseFloat( shadowBody.offsetHeight ) * scaleFactor	// Also adjust the height
 
-				const heightKey = enableBackground ? 'heightBackground' : 'heightNoBackground'
-				newPreviewSize[ heightKey ] = _height
+				if ( Object.keys( newPreviewSize ).length === 1 ) {
+					newPreviewSize.heightBackground = _height
+					newPreviewSize.heightNoBackground = _height
+				} else {
+					const heightKey = enableBackground ? 'heightBackground' : 'heightNoBackground'
+					newPreviewSize[ heightKey ] = _height
+				}
+
 				setPreviewSize( newPreviewSize )
 			}
 
-			const CardHeightKey = enableBackground ? 'background' : 'noBackground'
-			newCardHeight[ CardHeightKey ] = cardRect.height
+			if ( ! Object.keys( newCardHeight ).length ) {
+				newCardHeight.background = cardRect.height
+				newCardHeight.noBackground = cardRect.height
+			} else {
+				const CardHeightKey = enableBackground ? 'background' : 'noBackground'
+				newCardHeight[ CardHeightKey ] = cardRect.height
+			}
+
 			setTimeout( () => setCardHeight( newCardHeight ), 500 )
 		}
 	}
 
-	const renderPreview = () => {
-		let blocks = cloneDeep( content )
+	const renderPreview = ( blockContent = content ) => {
+		let blocks = cloneDeep( selectedData?.designData || blockContent )
 
 		// No need to add the color scheme attribute if the selected scheme is the default
-		if ( containerScheme !== '' ) {
+		if ( containerScheme !== '' && ! selectedNum ) {
 			blocks = addContainerScheme( blocks, containerScheme )
 		}
 
 		// Only add a background scheme if it is enabled
-		if ( enableBackground ) {
+		if ( enableBackground && ! selectedNum ) {
 			blocks = addBackgroundScheme( blocks, enableBackground, backgroundScheme )
 		}
 
@@ -126,7 +138,6 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			blocks={ cleanedBlock }
 			adjustScale={ adjustScale }
 			enableBackground={ enableBackground }
-			designId={ designId }
 		/> )
 	}
 
@@ -148,17 +159,6 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		const _block = cleanParse( _content )[ 0 ]
 		const { block, blocksForSubstitution } = parseDisabledBlocks( _block )
 		blocksForSubstitutionRef.current = blocksForSubstitution
-
-		setContent( block )
-	}, [ template ] )
-
-	useEffect( () => {
-		if ( ! content ||
-			! hostRef.current ||
-			selectedNum // Do not re-render if the design has been selected
-		) {
-			return
-		}
 
 		const shadowRoot = hostRef.current.shadowRoot || hostRef.current.attachShadow( { mode: 'open' } )
 
@@ -192,7 +192,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			hostStyles.innerHTML = ! hasBackgroundTargetRef.current ? 'body > .stk-block-columns { padding: 75px; }' : '[stk-design-library__bg-target="true"] { padding: 50px; }'
 
 			if ( ( Array.isArray( blockLayouts ) && ! blockLayouts.length ) ||
-				( typeof blockLayouts === 'object' && ! blockLayouts[ 'block-background-padding' ] )
+					( typeof blockLayouts === 'object' && ! blockLayouts[ 'block-background-padding' ] )
 			) {
 				hostStyles.innerHTML += ! hasBackgroundTargetRef.current
 					? ` body > .stk-block-background:not(.stk--no-padding) { padding: calc(75px + var(--stk-block-background-padding)); }`
@@ -213,27 +213,32 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			previewRef.current = createRoot( shadowRoot )
 		}
 
-		renderPreview()
+		renderPreview( block )
+		setContent( block )
+	}, [ template ] )
 
-		prevEnableBackgroundRef.current = enableBackground
+	useEffect( () => {
+		if ( ! initialRenderRef.current ) {
+			initialRenderRef.current = true
+			return
+		}
+
+		if ( ! content ||
+			! previewRef.current ||
+			selectedNum
+		) {
+			return
+		}
+
+		renderPreview()
 	}, [ content, containerScheme, backgroundScheme, enableBackground ] )
 
 	useEffect( () => {
-		if ( selectedNum === 0 && content ) {
-			setTimeout( adjustScale, 50 )
-		}
-	}, [ forceUpdate ] )
-
-	useEffect( () => {
-		if ( selectedNum === 0 && content ) {
+		if ( selectedNum === 0 && content && previewRef.current ) {
 			renderPreview()
-			setTimeout( adjustScale, 50 )
+			adjustScale()
 		}
 	}, [ selectedNum ] )
-
-	const getPreviewHeight = () => {
-		return selectedNum ? previewSize.heightSelected : ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground )
-	}
 
 	return (
 		<button
@@ -246,15 +251,12 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 				}
 				const cardRect = ref.current.getBoundingClientRect()
 
-				const newPreviewSize = { ...previewSize }
-				const newCardHeight = { ...cardHeight }
-				newPreviewSize.heightSelected = enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground
-				newCardHeight.selected = cardRect.height
+				const selectedPreviewSize = {
+					preview: enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground,
+					card: cardRect.height,
+				}
 
-				setPreviewSize( newPreviewSize )
-				setCardHeight( newCardHeight )
-
-				onClick( designId, parsedBlocks, blocksForSubstitutionRef.current )
+				onClick( designId, parsedBlocks, blocksForSubstitutionRef.current, selectedPreviewSize )
 			} }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
@@ -269,7 +271,10 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 				<div
 					className="stk-block-design__host-container"
 					style={ {
-						transform: `scale(${ previewSize?.scale })`, transformOrigin: 'top left', height: getPreviewHeight(),
+						transform: `scale(${ previewSize?.scale })`,
+						transformOrigin: 'top left',
+						height: selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
+							: ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground ),
 					} }
 				>
 

@@ -49,34 +49,6 @@ const BlockList = props => {
 			return output
 		}, {} )
 
-		const toAdd = [
-			[ 'Contact', 22 ],
-			[ 'Featured Products', 14 ],
-			[ 'Footer', 11 ],
-			[ 'Header', 12 ],
-			[ 'Map', 10 ],
-			[ 'Service Menu', 10 ],
-			[ 'Stats', 15 ],
-			[ 'Post Loop', 6 ],
-			[ 'Pricing Table', 15 ],
-			[ 'Quote', 10 ],
-			[ 'Carousel', 13 ],
-			[ 'Table of Contents', 8 ],
-			[ 'Tabs', 11 ],
-			[ 'Team Members', 10 ],
-			[ 'Timeline', 9 ],
-			[ 'Video', 11 ],
-		]
-
-		toAdd.forEach( ( [ label, count ] ) => {
-			_categories[ label ] = {
-				id: label,
-				label,
-				count,
-			}
-			total += count
-		} )
-
 		_categories.all = {
 			id: '',
 			label: '    ',

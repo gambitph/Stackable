@@ -365,7 +365,8 @@ export const ModalDesignLibrary = props => {
 					isBusy={ isBusy }
 					designs={ displayDesigns }
 					selectedDesigns={ selectedDesignIds }
-					onSelectMulti={ ( designId, parsedBlocks, blocksForSubstitution ) => {
+					selectedDesignData={ selectedDesignData }
+					onSelectMulti={ ( designId, parsedBlocks, blocksForSubstitution, selectedPreviewSize ) => {
 						const newSelectedDesigns = [ ...selectedDesignIds ]
 						// We also get the design data from displayDesigns
 						// already instead of after clicking the "Add
@@ -383,7 +384,9 @@ export const ModalDesignLibrary = props => {
 						} else {
 							newSelectedDesigns.push( designId )
 							setSelectedDesignIds( newSelectedDesigns )
-							newSelectedDesignData.push( { designData: parsedBlocks, blocksForSubstitution } )
+							newSelectedDesignData.push( {
+								designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
+							} )
 							setSelectedDesignData( newSelectedDesignData )
 						}
 					} }

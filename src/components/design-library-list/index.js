@@ -25,11 +25,11 @@ const DesignLibraryList = props => {
 		isBusy,
 		onSelectMulti,
 		selectedDesigns = [],
+		selectedDesignData = [],
 	} = props
 	const containerRef = useRef( null )
 
 	const [ scrollTop, setScrollTop ] = useState( 0 )
-	const [ forceUpdate, setForceUpdate ] = useState( 0 )
 
 	const listClasses = classnames( [
 		'ugb-design-library-items',
@@ -37,7 +37,6 @@ const DesignLibraryList = props => {
 	] )
 
 	useEffect( () => {
-		setForceUpdate( v => v + 1 )
 		containerRef.current.scrollTop = 0
 	}, [ designs ] )
 
@@ -53,6 +52,7 @@ const DesignLibraryList = props => {
 			<div className={ listClasses }>
 				{ ( designs || [] ).map( ( design, i ) => {
 					const selectedNum = selectedDesigns.indexOf( design.designId ) + 1
+					const selectedData = selectedNum ? selectedDesignData[ selectedNum - 1 ] : null
 					return (
 						<DesignLibraryItem
 							key={ i }
@@ -65,8 +65,8 @@ const DesignLibraryList = props => {
 							backgroundScheme={ props.backgroundScheme }
 							enableBackground={ props.enableBackground }
 							selectedNum={ selectedNum }
-							forceUpdate={ forceUpdate }
-							onClick={ ( designId, parsedBlocks, hasDisabledBlocks ) => onSelectMulti( designId, parsedBlocks, hasDisabledBlocks ) }
+							selectedData={ selectedData }
+							onClick={ onSelectMulti }
 							scrollTop={ scrollTop }
 						/>
 					)

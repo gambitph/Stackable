@@ -14,6 +14,7 @@ import {
 } from '~stackable/components'
 import { SVGStackableIcon } from '~stackable/icons'
 import { substituteCoreIfDisabled, BLOCK_STATE } from '~stackable/util'
+import { usePresetControls } from '~stackable/hooks'
 import { substitutionRules } from '../../blocks'
 
 /**
@@ -74,113 +75,6 @@ const checkIfImageUrl = async value => {
 	return value
 }
 
-// Replaces the current block with a block made out of attributes.
-const createBlockWithAttributes = async ( blockName, attributes, innerBlocks, substituteBlocks, parentClientId ) => {
-	const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
-
-	// Recursively substitute core blocks to disabled Stackable blocks
-	const traverseBlocksAndSubstitute = blocks => {
-		return blocks.map( block => {
-			let isDisabled = true
-			// Maximum attempt to error if no substitution rule for the block
-			let attempts = 10
-
-			// Check if the new substituted block is still disabled
-			while ( isDisabled && attempts > 0 ) {
-				const _blockName = block[ 1 ].originalName || block[ 0 ]
-				block = substituteCoreIfDisabled( _blockName, block[ 1 ], block[ 2 ], substitutionRules )
-				isDisabled = block[ 0 ] in disabledBlocks && disabledBlocks[ block[ 0 ] ] === BLOCK_STATE.DISABLED
-				attempts--
-			}
-
-			// Do a preorder traversal by subsituting first before traversing
-			if ( block[ 2 ] && block[ 2 ].length > 0 ) {
-				block[ 2 ] = traverseBlocksAndSubstitute( block[ 2 ] )
-			}
-
-			if ( ! Array.isArray( block[ 2 ] ) ) {
-				block[ 2 ] = []
-			}
-
-			const _block = {
-				name: block[ 0 ],
-				attributes: block[ 1 ],
-				innerBlocks: block[ 2 ],
-				isValid: true,
-			}
-			return _block
-		} )
-	}
-
-	if ( ! Array.isArray( disabledBlocks ) && substituteBlocks ) {
-		let block = convertBlocksToArray( {
-			name: blockName, attributes, innerBlocks,
-		} )
-
-		block = traverseBlocksAndSubstitute( [ block ] )[ 0 ]
-		blockName = block.name
-		attributes = block.attributes
-		innerBlocks = block.innerBlocks
-	}
-
-	const cleanBlockAttributes = async blocks => {
-		for ( const block of blocks ) {
-			const blockName = block.name
-
-			// For blocks with variations, do not remove the uniqueId
-			// since that will prompt the layout picker to show.
-			const hasVariations = !! getBlockType( blockName ) && getBlockVariations( blockName ).length > 0
-			if ( ! hasVariations && block.attributes.uniqueId ) {
-				delete block.attributes.uniqueId
-			}
-
-			const customAttributes = block.attributes.customAttributes
-
-			const indexToDelete = customAttributes?.findIndex( attribute => attribute[ 0 ] === 'stk-design-library__bg-target' )
-			if ( customAttributes && indexToDelete !== -1 ) {
-				block.attributes.customAttributes.splice( indexToDelete, 1 )
-			}
-
-			for ( const attributeName in block.attributes ) {
-				if ( typeof block.attributes[ attributeName ] === 'string' ) {
-					const value = String( block.attributes[ attributeName ] )
-					block.attributes[ attributeName ] = await checkIfImageUrl( value )
-				}
-			}
-
-			block.innerBlocks = await cleanBlockAttributes( block.innerBlocks )
-		}
-
-		return blocks
-	}
-
-	const block = await cleanBlockAttributes( [ {
-		name: blockName, attributes, innerBlocks,
-	} ] )
-
-	blockName = block[ 0 ].name
-	attributes = block[ 0 ].attributes
-	innerBlocks = block[ 0 ].innerBlocks
-
-	if ( ! parentClientId && attributes.hasBackground ) {
-		attributes.blockMargin = {
-			top: '',
-			right: '',
-			bottom: '0',
-			left: '',
-		}
-	} else if ( ! parentClientId ) {
-		attributes.blockMargin = {
-			top: '120',
-			right: '',
-			bottom: '120',
-			left: '',
-		}
-	}
-
-	return createBlock( blockName, attributes, createBlocksFromInnerBlocksTemplate( innerBlocks ) )
-}
-
 const Edit = props => {
 	const {
 		clientId,
@@ -197,6 +91,128 @@ const Edit = props => {
 	const blockProps = useBlockProps( {
 		className: 'ugb-design-library-block',
 	} )
+
+	const presetMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks() || null
+
+	const spacingSize = ! presetMarks || ! Array.isArray( presetMarks ) ? 120 : presetMarks[ presetMarks.length - 2 ].value
+
+	// Replaces the current block with a block made out of attributes.
+	const createBlockWithAttributes = async ( blockName, attributes, innerBlocks, substituteBlocks, parentClientId ) => {
+		const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
+
+		// Recursively substitute core blocks to disabled Stackable blocks
+		const traverseBlocksAndSubstitute = blocks => {
+			return blocks.map( block => {
+				let isDisabled = true
+				// Maximum attempt to error if no substitution rule for the block
+				let attempts = 10
+
+				// Check if the new substituted block is still disabled
+				while ( isDisabled && attempts > 0 ) {
+					const _blockName = block[ 1 ].originalName || block[ 0 ]
+					block = substituteCoreIfDisabled( _blockName, block[ 1 ], block[ 2 ], substitutionRules )
+					isDisabled = block[ 0 ] in disabledBlocks && disabledBlocks[ block[ 0 ] ] === BLOCK_STATE.DISABLED
+					attempts--
+				}
+
+				// Do a preorder traversal by subsituting first before traversing
+				if ( block[ 2 ] && block[ 2 ].length > 0 ) {
+					block[ 2 ] = traverseBlocksAndSubstitute( block[ 2 ] )
+				}
+
+				if ( ! Array.isArray( block[ 2 ] ) ) {
+					block[ 2 ] = []
+				}
+
+				const _block = {
+					name: block[ 0 ],
+					attributes: block[ 1 ],
+					innerBlocks: block[ 2 ],
+					isValid: true,
+				}
+				return _block
+			} )
+		}
+
+		if ( ! Array.isArray( disabledBlocks ) && substituteBlocks ) {
+			let block = convertBlocksToArray( {
+				name: blockName, attributes, innerBlocks,
+			} )
+
+			block = traverseBlocksAndSubstitute( [ block ] )[ 0 ]
+			blockName = block.name
+			attributes = block.attributes
+			innerBlocks = block.innerBlocks
+		}
+
+		const cleanBlockAttributes = async blocks => {
+			for ( const block of blocks ) {
+				const blockName = block.name
+
+				// For blocks with variations, do not remove the uniqueId
+				// since that will prompt the layout picker to show.
+				const hasVariations = !! getBlockType( blockName ) && getBlockVariations( blockName ).length > 0
+				if ( ! hasVariations && block.attributes.uniqueId ) {
+					delete block.attributes.uniqueId
+				}
+
+				const customAttributes = block.attributes.customAttributes
+
+				const indexToDelete = customAttributes?.findIndex( attribute => attribute[ 0 ] === 'stk-design-library__bg-target' )
+				if ( customAttributes && indexToDelete !== -1 ) {
+					block.attributes.customAttributes.splice( indexToDelete, 1 )
+				}
+
+				for ( const attributeName in block.attributes ) {
+					if ( typeof block.attributes[ attributeName ] === 'string' ) {
+						const value = String( block.attributes[ attributeName ] )
+						block.attributes[ attributeName ] = await checkIfImageUrl( value )
+					}
+				}
+
+				block.innerBlocks = await cleanBlockAttributes( block.innerBlocks )
+			}
+
+			return blocks
+		}
+
+		const block = await cleanBlockAttributes( [ {
+			name: blockName, attributes, innerBlocks,
+		} ] )
+
+		blockName = block[ 0 ].name
+		attributes = block[ 0 ].attributes
+		innerBlocks = block[ 0 ].innerBlocks
+
+		if ( ! parentClientId && attributes.hasBackground ) {
+			attributes.blockMargin = {
+				top: '',
+				right: '',
+				bottom: '0',
+				left: '',
+			}
+		} else if ( ! parentClientId ) {
+			attributes.blockMargin = {
+				top: spacingSize,
+				right: '',
+				bottom: spacingSize,
+				left: '',
+			}
+		}
+
+		const blockLayouts = select( 'stackable/global-spacing-and-borders' ).getBlockLayouts()
+		if ( attributes.hasBackground && typeof blockLayouts === 'object' && ! blockLayouts[ 'block-background-padding' ] ) {
+			attributes.blockPadding = {
+				top: spacingSize,
+				right: spacingSize,
+				bottom: spacingSize,
+				left: spacingSize,
+			}
+		}
+
+		return createBlock( blockName, attributes, createBlocksFromInnerBlocksTemplate( innerBlocks ) )
+	}
 
 	const addDesigns = async substituteBlocks => {
 		const { getBlockRootClientId } = select( 'core/block-editor' )
