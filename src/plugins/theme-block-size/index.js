@@ -28,7 +28,7 @@ export const ThemeBlockSize = () => {
 	useEffect( () => {
 		const editorBody = editorDom?.closest( 'body' )
 		if ( editorBody ) {
-			editorBody.appendChild( themeBlockSizeWrapper )
+			editorBody.insertBefore( themeBlockSizeWrapper, editorBody.firstChild )
 		}
 	}, [ deviceType, editorDom ] )
 

@@ -46,12 +46,15 @@ const GlobalSettingsLoader = () => {
 	useEffect( () => {
 		const editorBody = editorDom?.closest( 'body' )
 		if ( editorBody ) {
-			editorBody.appendChild( globalTypographyWrapper )
-			editorBody.appendChild( globalColorWrapper )
-			editorBody.appendChild( globalSpacingAndBorderWrapper )
-			editorBody.appendChild( globalButtonsAndIconsWrapper )
-			editorBody.appendChild( globalColorSchemesWrapper )
-			editorBody.appendChild( globalPresetControlsWrapper )
+			// No need to check for firstChild, since there will always be at least one
+			// e.g. the post title wrapper and the actual root container.
+			const firstChild = editorBody.firstChild
+			editorBody.insertBefore( globalTypographyWrapper, firstChild )
+			editorBody.insertBefore( globalColorWrapper, firstChild )
+			editorBody.insertBefore( globalSpacingAndBorderWrapper, firstChild )
+			editorBody.insertBefore( globalButtonsAndIconsWrapper, firstChild )
+			editorBody.insertBefore( globalColorSchemesWrapper, firstChild )
+			editorBody.insertBefore( globalPresetControlsWrapper, firstChild )
 		}
 	}, [ deviceType, editorDom ] )
 
