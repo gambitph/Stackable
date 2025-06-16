@@ -11,7 +11,7 @@ import { getDesigns, filterDesigns } from '~stackable/design-library'
 /**
  * External deprendencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 import classnames from 'classnames'
 import { useLocalStorage } from '~stackable/util'
 
@@ -158,7 +158,7 @@ export const ModalDesignLibrary = props => {
 							className="ugb-modal-design-library__refresh"
 							onClick={ () => setDoReset( true ) }
 						/>
-						<Dropdown
+						{ ! isPro && <Dropdown
 							focusOnMount="container"
 							renderToggle={ ( { onToggle } ) => (
 								<Button
@@ -188,7 +188,7 @@ export const ModalDesignLibrary = props => {
 									} ) }
 								</div>
 							) }
-						/>
+						/> }
 					</div>
 				</>
 			) }

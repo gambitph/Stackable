@@ -424,6 +424,12 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			$designs = $this->get_design_library_from_cloud();
 
 			$library = $designs[ self::API_VERSION ];
+
+			if ( ! $library ) {
+				return;
+			}
+
+
 			$disabled_blocks = $this->get_disabled_blocks();
 
 

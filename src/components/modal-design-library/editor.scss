@@ -274,13 +274,11 @@
 	}
 }
 
-.ugb-modal-design-library__refresh {
-	margin-right: 10px;
+.ugb-modal-design-library__style-options div.components-base-control {
+	margin-bottom: 0;
 }
 
 div.ugb-modal-design-library__enable-background {
-	margin-bottom: 0;
-
 	.components-flex {
 		justify-content: space-between;
 	}
@@ -407,6 +405,9 @@ div.ugb-modal-design-library__enable-background {
 .stk-design-library__header-settings {
 	position: absolute;
 	right: 60px;
+	display: flex;
+	gap: 10px;
+	align-items: center;
 }
 .stk-design-library__plan-dropdown, .ugb-design-library__color-scheme-popover {
 	--wp-admin-theme-color: #f00069;
