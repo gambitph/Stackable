@@ -26,6 +26,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 
 	const {
 		selector = '.stk-img-wrapper',
+		selectorCallbackWrapper = null,
 		hoverSelector = '.stk-img-wrapper:hover',
 		hoverSelectorCallback = null,
 		enableWidth = true,
@@ -54,6 +55,10 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			selector,
 			`${ selector } .stk-img-resizer-wrapper`,
 		],
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( [
+			selector,
+			`${ selector } .stk-img-resizer-wrapper`,
+		], ) : undefined,
 		renderIn: 'edit',
 		styleRule: 'aspectRatio',
 		attrName: 'imageAspectRatio',
@@ -63,6 +68,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		selector,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }` ) : undefined,
 		renderIn: 'save',
 		styleRule: 'aspectRatio',
 		attrName: 'imageAspectRatio',
@@ -74,6 +80,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'imageWidth', [ {
 		...propsToPass,
 		selector: `${ selector }:not(.stk--is-resizing)`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }:not(.stk--is-resizing)` ) : undefined,
 		renderIn: 'edit',
 		styleRule: 'width',
 		attrName: 'imageWidth',
@@ -96,6 +103,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		selector,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }` ) : undefined,
 		renderIn: 'save',
 		styleRuleCallback: _widthStyleRuleCallback,
 		attrName: 'imageWidth',
@@ -120,6 +128,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'imageHeight', [ {
 		...propsToPass,
 		selector: `${ selector }:not(.stk--is-resizing)`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }:not(.stk--is-resizing)` ) : undefined,
 		renderIn: 'edit',
 		styleRule: 'height',
 		attrName: 'imageHeight',
@@ -148,6 +157,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		selector,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }` ) : undefined,
 		renderIn: 'save',
 		styleRule: 'height',
 		attrName: 'imageHeight',
@@ -185,6 +195,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		 * @see https://stackoverflow.com/questions/12492006/box-shadow-on-element-with-webkit-mask-image
 		 */
 		selector: `${ selector } .stk-img-resizer-wrapper`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector } .stk-img-resizer-wrapper` ) : undefined,
 		hoverSelector: hoverSelector ? `${ hoverSelector } .stk-img-resizer-wrapper` : undefined,
 		hoverSelectorCallback,
 		renderIn: 'edit',
@@ -196,6 +207,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		selector,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }` ) : undefined,
 		hoverSelector,
 		renderIn: 'save',
 		styleRule: 'filter',
@@ -208,6 +220,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'imageFilter', [ {
 		...propsToPass,
 		selector: `${ selector } img`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector } img` ) : undefined,
 		hoverSelector: `${ hoverSelector } img`,
 		hoverSelectorCallback,
 		styleRule: 'filter',
@@ -219,6 +232,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'imageZoom', [ {
 		...propsToPass,
 		selector: `${ selector } img`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector } img` ) : undefined,
 		hoverSelector: `${ hoverSelector } img`,
 		hoverSelectorCallback,
 		styleRule: 'transform',
@@ -238,6 +252,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		 * @see https://github.com/gambitph/Stackable/issues/1833
 		 */
 		selector: `${ selector } .stk-img-resizer-wrapper img`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector } .stk-img-resizer-wrapper img` ) : undefined,
 		renderIn: 'edit',
 		styleRule: 'borderRadius',
 		attrName: 'imageBorderRadius',
@@ -246,6 +261,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		selector: `${ selector } img`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector } img` ) : undefined,
 		renderIn: 'save',
 		styleRule: 'borderRadius',
 		attrName: 'imageBorderRadius',
@@ -256,6 +272,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'imageFocalPoint', [ {
 		...propsToPass,
 		selector: `${ selector } img`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector } img` ) : undefined,
 		hoverSelector: `${ hoverSelector } img`,
 		hoverSelectorCallback,
 		styleRule: 'objectPosition',
@@ -269,6 +286,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'imageFit', [ {
 		...propsToPass,
 		selector: `${ selector } img`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector } img` ) : undefined,
 		styleRule: 'objectFit',
 		attrName: 'imageFit',
 		key: 'imageFit',
@@ -286,6 +304,11 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			`${ selector } .stk-img-resizer-wrapper::after`,
 			`${ selector } .stk-img-resizer-wrapper::before`,
 		],
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( [
+			`${ selector } .stk-img-resizer-wrapper img`,
+			`${ selector } .stk-img-resizer-wrapper::after`,
+			`${ selector } .stk-img-resizer-wrapper::before`,
+		] ) : undefined,
 		styleRule: 'mask-image',
 		vendorPrefixes: [ '-webkit-' ],
 		attrName: 'imageShape',
@@ -309,6 +332,11 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			`${ selector }::after`,
 			`${ selector }::before`,
 		],
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( [
+			`${ selector } img`,
+			`${ selector }::after`,
+			`${ selector }::before`,
+		] ) : undefined,
 		styleRule: 'mask-image',
 		vendorPrefixes: [ '-webkit-' ],
 		attrName: 'imageShape',
@@ -332,6 +360,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		...propsToPass,
 		renderIn: 'save',
 		selector: `${ selector }::after`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }::after` ) : undefined,
 		hoverSelector: `${ hoverSelector }::after`,
 		hoverSelectorCallback,
 		styleRuleCallback: getAttribute => {
@@ -367,6 +396,9 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		...propsToPass,
 		renderIn: 'edit',
 		selector: `${ selector } .stk-img-resizer-wrapper::after`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper(
+			`${ selector } .stk-img-resizer-wrapper::after`
+		) : undefined,
 		hoverSelector: `${ hoverSelector } .stk-img-resizer-wrapper::after`,
 		hoverSelectorCallback,
 		styleRuleCallback: getAttribute => {
@@ -406,6 +438,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		...propsToPass,
 		renderIn: 'edit',
 		selector: `${ selector }::after`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }::after` ) : undefined,
 		hoverSelector: `${ selector }::before`,
 		styleRuleCallback: getAttribute => {
 			const colorType = getAttribute( 'imageOverlayColorType' )
@@ -446,6 +479,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		...propsToPass,
 		renderIn: 'save',
 		selector: `${ selector }::after`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }::after` ) : undefined,
 		hoverSelector: `${ selector }::before`,
 		styleRuleCallback: getAttribute => {
 			const colorType = getAttribute( 'imageOverlayColorType' )
@@ -489,6 +523,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		...propsToPass,
 		renderIn: 'save',
 		selector: `${ selector }`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }` ) : undefined,
 		hoverSelector: `${ selector }::before`,
 		styleRule: '--stk-gradient-overlay',
 		attrName: 'imageOverlayOpacity',
@@ -498,6 +533,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		...propsToPass,
 		renderIn: 'edit',
 		selector: `${ selector } .stk-img-resizer-wrapper`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector } .stk-img-resizer-wrapper` ) : undefined,
 		hoverSelector: `${ selector } .stk-img-resizer-wrapper::before`,
 		styleRule: '--stk-gradient-overlay',
 		attrName: 'imageOverlayOpacity',
@@ -509,6 +545,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		...propsToPass,
 		renderIn: 'save',
 		selector: `${ selector }::after, ${ selector }::before`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper( `${ selector }::after, ${ selector }::before` ) : undefined,
 		styleRule: 'mix-blend-mode',
 		attrName: 'imageOverlayBlendMode',
 		key: 'imageOverlayBlendMode-save',
@@ -516,6 +553,9 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		...propsToPass,
 		renderIn: 'edit',
 		selector: `${ selector } .stk-img-resizer-wrapper::after, ${ selector } .stk-img-resizer-wrapper::before`,
+		selectorCallback: selectorCallbackWrapper ? selectorCallbackWrapper(
+			`${ selector } .stk-img-resizer-wrapper::after, ${ selector } .stk-img-resizer-wrapper::before`
+		) : undefined,
 		hoverSelectorCallback,
 		styleRule: 'mix-blend-mode',
 		attrName: 'imageOverlayBlendMode',
