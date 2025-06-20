@@ -82,7 +82,30 @@
 		background: #fff;
 		opacity: 0;
 		transition: all 0.3s cubic-bezier(0.2, 0.6, 0.4, 1);
-		padding: 0 24px; // This is for v2 blocks where the design library can be seen in the inspector.
+		padding: 0 16px; // This is for v2 blocks where the design library can be seen in the inspector.
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-content: center;
+
+		h4 {
+			font-size: 12px !important;
+		}
+
+		.ugb-design-control-pro-note__description {
+			grid-row: 1/3;
+			grid-column: 2/3;
+			margin-bottom: 0 !important;
+			font-size: 11px !important;
+		}
+		a.button {
+			font-size: 11px !important;
+			padding: 8px;
+
+			svg {
+				height: 12px;
+				width: 12px;
+			}
+		}
 	}
 	&[class*="ugb--is-premium"]:hover {
 		.ugb-design-control-pro-note {
@@ -119,6 +142,9 @@
 		.dashicon {
 			color: #bbb;
 		}
+	}
+	&.ugb--is-premium footer .stk-block-design__selected-num {
+		border: 1px solid #ddd;
 	}
 
 	&.ugb--is-toggled footer {
@@ -196,4 +222,15 @@
 
 :host body {
 	min-height: 500px;
+}
+
+.stk--design-preview-large {
+	.ugb-design-control-pro-note {
+		grid-template-columns: 1fr;
+
+		.ugb-design-control-pro-note__description {
+			grid-row: 2/3;
+			grid-column: 1/2;
+		}
+	}
 }

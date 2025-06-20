@@ -240,6 +240,11 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		}
 	}, [ selectedNum ] )
 
+	const getDesignPreviewSize = () => {
+		return selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
+			: ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground )
+	}
+
 	return (
 		<button
 			className={ mainClasses }
@@ -260,7 +265,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			} }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
-			<div style={ { position: 'relative' } }>
+			<div style={ { position: 'relative' } } className={ `${ getDesignPreviewSize() > 200 ? 'stk--design-preview-large' : '' }` }>
 				{ ! isPro && plan !== 'free' && (
 					<ProControl
 						type="design-library"
