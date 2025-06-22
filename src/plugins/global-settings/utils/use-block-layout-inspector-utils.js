@@ -9,12 +9,12 @@ import { hoverState } from './block-layout-utils'
 import { getShadows } from '~stackable/components'
 import { IMAGE_SHADOWS } from '~stackable/block-components'
 import { useDeviceType, useBlockHoverState } from '~stackable/hooks'
+import { saveSettings as saveAdminSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { models } from '@wordpress/api'
 import { useSelect, dispatch } from '@wordpress/data'
 
 export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayHoverNotice, saveTimeout ) => {
@@ -52,8 +52,7 @@ export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayH
 	const saveSettings = newSettings => {
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			const settings = new models.Settings( { [ optionName ]: newSettings } ) // eslint-disable-line camelcase
-			settings.save()
+			saveAdminSettings( { [ optionName ]: newSettings } ) // eslint-disable-line camelcase
 		}, 300 )
 
 		// Update our store.

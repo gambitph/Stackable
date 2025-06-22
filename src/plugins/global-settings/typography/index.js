@@ -23,7 +23,7 @@ import {
 	ProControlButton,
 	AdvancedToggleControl,
 } from '~stackable/components'
-import { fetchSettings } from '~stackable/util'
+import { fetchSettings, saveSettings } from '~stackable/util'
 import { useDeviceType } from '~stackable/hooks'
 import {
 	i18n, isPro, showProNotice,
@@ -38,7 +38,6 @@ import {
 import {
 	Fragment, useEffect, useRef, useState,
 } from '@wordpress/element'
-import { models } from '@wordpress/api'
 import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
@@ -236,10 +235,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		clearTimeout( saveTypographyThrottle )
 		saveTypographyThrottle = setTimeout( () => {
-			const model = new models.Settings( {
+			saveSettings( {
 				stackable_global_typography: [ newSettings ], // eslint-disable-line
 			} )
-			model.save()
 		}, 500 )
 	}
 
@@ -248,10 +246,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		clearTimeout( saveSelectedFontPairThrottle )
 		saveSelectedFontPairThrottle = setTimeout( () => {
-			const model = new models.Settings( {
+			saveSettings( {
 				stackable_selected_font_pair: name, // eslint-disable-line
 			} )
-			model.save()
 		}, 500 )
 	}
 
@@ -260,27 +257,24 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		clearTimeout( saveCustomFontPairsThrottle )
 		saveCustomFontPairsThrottle = setTimeout( () => {
-			const model = new models.Settings( {
+			saveSettings( {
 				stackable_custom_font_pairs: [ ...fontPairs ] , // eslint-disable-line
 			} )
-			model.save()
 		}, 500 )
 	}
 
 	const changeApplySettingsTo = value => {
 		setApplySettingsTo( value )
-		const model = new models.Settings( {
+		saveSettings( {
 			stackable_global_typography_apply_to: value, // eslint-disable-line
 		} )
-		model.save()
 	}
 
 	const changeIsApplyBodyToHTML = value => {
 		setIsApplyBodyToHTML( value )
-		const model = new models.Settings( {
+		saveSettings( {
 			stackable_is_apply_body_to_html: value, // eslint-disable-line
 		} )
-		model.save()
 	}
 
 	const updateTypeScale = value => {

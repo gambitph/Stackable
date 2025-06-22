@@ -23,14 +23,13 @@ import {
 	ControlSeparator,
 } from '~stackable/components'
 import { useBlockHoverState } from '~stackable/hooks'
-import { extractColor } from '~stackable/util'
+import { extractColor, saveSettings } from '~stackable/util'
 import { cloneDeep, isEqual } from 'lodash'
 
 import {
 	useRef, useState, useEffect,
 } from '@wordpress/element'
 import { useSelect, dispatch } from '@wordpress/data'
-import { models } from '@wordpress/api'
 import { __, sprintf } from '@wordpress/i18n'
 import { applyFilters, doAction } from '@wordpress/hooks'
 
@@ -149,12 +148,11 @@ const ColorSchemePicker = props => {
 			updatedColorSchemes[ currentIndex ] = currentItem
 
 			saveTimeout = setTimeout( () => {
-				const settings = new models.Settings( {
+				saveSettings( {
 					stackable_global_color_schemes: updatedColorSchemes, // eslint-disable-line camelcase
 					// Clear the cached CSS when the color scheme is updated
 					stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
 				} )
-				settings.save()
 			}, 300 )
 
 			// Update our store.
