@@ -45,7 +45,7 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 
 const GlobalSettings = () => {
 	const [ userCanManageOptions, setUserCanManageOptions ] = useState( false )
-	const id = useSelect( select => select( 'core' ).getCurrentUser().id )
+	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id )
 
 	useEffect( () => {
 		const checkCapabilities = async () => {
