@@ -42,10 +42,7 @@ test( 'Stackable settings should be saved', async ( {
 
 	// There should be no PHP errors
 	const pageError = await admin.getPageError()
-
-	console.log( 'getting page error' )
 	expect( pageError ).toBeNull()
-	console.log( 'no page error' )
 
 	// Retrieves the value of the first option, toggles it and check if the value changed
 	const option = page.locator( '.ugb-admin-toggle-setting' ).first().getByRole( 'switch' )
