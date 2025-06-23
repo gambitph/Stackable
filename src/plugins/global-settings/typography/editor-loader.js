@@ -13,7 +13,6 @@ import {
 	fetchSettings,
 	loadGoogleFont,
 	getDefaultFontSize,
-	saveSettings,
 } from '~stackable/util'
 import { generateStyles } from '~stackable/block-components'
 import deepmerge from 'deepmerge'
@@ -30,6 +29,7 @@ import {
 	addAction, removeAction, applyFilters, doAction, addFilter,
 } from '@wordpress/hooks'
 import { useSelect, dispatch } from '@wordpress/data'
+import { models } from '@wordpress/api'
 
 let saveTypographyAsPresetsThrottle = null
 
@@ -101,7 +101,8 @@ export const GlobalTypographyStyles = () => {
 
 			clearTimeout( saveTypographyAsPresetsThrottle )
 			saveTypographyAsPresetsThrottle = setTimeout( () => {
-				saveSettings( { stackable_global_custom_preset_controls: newSettings } ) // eslint-disable-line camelcase
+				const settings = new models.Settings( { stackable_global_custom_preset_controls: newSettings } ) // eslint-disable-line camelcase
+				settings.save()
 			}, 300 )
 
 			dispatch( 'stackable/global-preset-controls.custom' ).updateCustomPresetControls( newSettings )

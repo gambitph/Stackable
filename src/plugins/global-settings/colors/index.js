@@ -11,7 +11,6 @@ import { GlobalColorStyles } from './editor-loader'
  */
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
-import { saveSettings } from '~stackable/util'
 import rgba from 'color-rgba'
 
 /**
@@ -21,6 +20,7 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, useSelect } from '@wordpress/data'
+import { models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
 
 export { GlobalColorStyles }
@@ -80,7 +80,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideThemeColors: value,
 		} )
 
-		saveSettings( { stackable_global_hide_theme_colors: value } ) // eslint-disable-line camelcase
+		const settings = new models.Settings( { stackable_global_hide_theme_colors: value } ) // eslint-disable-line camelcase
+		settings.save()
 	}
 
 	const onChangeHideDefaultColors = value => {
@@ -88,7 +89,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideDefaultColors: value,
 		} )
 
-		saveSettings( { stackable_global_hide_default_colors: value } ) // eslint-disable-line camelcase
+		const settings = new models.Settings( { stackable_global_hide_default_colors: value } ) // eslint-disable-line camelcase
+		settings.save()
 	}
 
 	const onChangeHideSiteEditorColors = value => {
@@ -96,7 +98,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideSiteEditorColors: value,
 		} )
 
-		saveSettings( { stackable_global_hide_site_editor_colors: value } ) // eslint-disable-line camelcase
+		const settings = new models.Settings( { stackable_global_hide_site_editor_colors: value } ) // eslint-disable-line camelcase
+		settings.save()
 	}
 
 	const ColorToggleControls = applyFilters( 'stackable.global-settings.inspector.global-colors.toggle-controls', Fragment )

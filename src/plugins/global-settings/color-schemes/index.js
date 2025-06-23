@@ -14,7 +14,6 @@ import {
 import {
 	PanelAdvancedSettings, ProControlButton, HelpTooltip,
 } from '~stackable/components'
-import { saveSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -24,6 +23,7 @@ import { Fragment, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { ToggleControl } from '@wordpress/components'
 import { useSelect, dispatch } from '@wordpress/data'
+import { models } from '@wordpress/api'
 
 export { GlobalColorSchemeStyles } from './editor-loader'
 
@@ -82,7 +82,8 @@ addFilter( 'stackable.global-settings.inspector.global-colors.toggle-controls', 
 			hideColorSchemeColors: value,
 		} )
 
-		saveSettings( { stackable_global_hide_color_scheme_colors: value } ) // eslint-disable-line camelcase
+		const settings = new models.Settings( { stackable_global_hide_color_scheme_colors: value } ) // eslint-disable-line camelcase
+		settings.save()
 	}
 
 	return <>

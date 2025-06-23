@@ -65,12 +65,3 @@ export const fetchSettings = () => {
 
 	return fetchingPromise
 }
-
-export const saveSettings = async settings => {
-	const response = await apiFetch( {
-		path: `/stackable/v3/settings`,
-		method: 'POST',
-		data: settings,
-	} )
-	return response
-}
