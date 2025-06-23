@@ -294,15 +294,34 @@ Image.addStyles( blockStyles, {
 		}
 		return true
 	},
-	selectorCallback: getAttribute => {
+	// selectorCallback: ( getAttribute, _attributes, _clientId, props ) => {
+	// 	const className = getAttribute( 'className' )
+	// 	const blockStyle = getBlockStyle( variations, className )
+	// 	const imageHasLink = getAttribute( 'imageHasLink' )
+
+	// 	const selector = props.selector
+	// 	if ( [ 'list' ].includes( blockStyle?.name ) && imageHasLink ) {
+	// 		if ( Array.isArray( selector ) ) {
+	// 			return selector.map( sel =>
+	// 				sel.replace( '.stk-img-wrapper', `${ itemSelector } .stk-block-posts__image-link ` )
+	// 			)
+	// 		}
+	// 		return [ '.stk-img-wrapper', selector.replace( '.stk-img-wrapper', `${ itemSelector } .stk-block-posts__image-link` ) ]
+	// 	}
+	// 	return selector
+	// },
+	selectorCallback: ( getAttribute, _attributes, _clientId, props ) => {
 		const className = getAttribute( 'className' )
 		const blockStyle = getBlockStyle( variations, className )
 		const imageHasLink = getAttribute( 'imageHasLink' )
 
+		const selector = props.selector
 		if ( [ 'list' ].includes( blockStyle?.name ) && imageHasLink ) {
-			return `${ itemSelector } .stk-block-posts__image-link`
+			return Array.isArray( selector )
+				? [ ...selector, `${ itemSelector } .stk-block-posts__image-link` ]
+				: [ selector, `${ itemSelector } .stk-block-posts__image-link` ]
 		}
-		return '.stk-img-wrapper'
+		return selector
 	},
 	widthStyleRuleCallback: getAttribute => {
 		const className = getAttribute( 'className' )
