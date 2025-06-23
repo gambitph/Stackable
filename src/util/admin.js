@@ -55,7 +55,7 @@ export const fetchSettings = () => {
 	if ( ! fetchingPromise ) {
 		fetchingPromise = loadPromise.then( async () => {
 			const response = await apiFetch( {
-				path: `/stackable/v3/settings`,
+				path: '/stackable/v3/settings',
 				method: 'GET',
 			} )
 			fetchingPromise = null
