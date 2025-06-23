@@ -27,8 +27,10 @@ export const ThemeBlockSize = () => {
 
 	useEffect( () => {
 		const editorBody = editorDom?.closest( 'body' )
-		if ( editorBody ) {
-			editorBody.appendChild( themeBlockSizeWrapper )
+		const editorHead = editorBody?.ownerDocument?.head
+
+		if ( editorHead ) {
+			editorHead.appendChild( themeBlockSizeWrapper )
 		}
 	}, [ deviceType, editorDom ] )
 
@@ -50,6 +52,6 @@ if ( themeBlockSizeWrapper ) {
 }
 
 domReady( () => {
-	document?.body?.appendChild( themeBlockSizeWrapper )
+	document?.head?.appendChild( themeBlockSizeWrapper )
 	createRoot( themeBlockSizeWrapper ).render( <ThemeBlockSize /> )
 } )

@@ -45,13 +45,15 @@ const GlobalSettingsLoader = () => {
 	 */
 	useEffect( () => {
 		const editorBody = editorDom?.closest( 'body' )
-		if ( editorBody ) {
-			editorBody.appendChild( globalTypographyWrapper )
-			editorBody.appendChild( globalColorWrapper )
-			editorBody.appendChild( globalSpacingAndBorderWrapper )
-			editorBody.appendChild( globalButtonsAndIconsWrapper )
-			editorBody.appendChild( globalColorSchemesWrapper )
-			editorBody.appendChild( globalPresetControlsWrapper )
+		const editorHead = editorBody?.ownerDocument?.head
+
+		if ( editorHead ) {
+			editorHead.appendChild( globalTypographyWrapper )
+			editorHead.appendChild( globalColorWrapper )
+		    editorHead.appendChild( globalSpacingAndBorderWrapper )
+			editorHead.appendChild( globalButtonsAndIconsWrapper )
+			editorHead.appendChild( globalColorSchemesWrapper )
+			editorHead.appendChild( globalPresetControlsWrapper )
 		}
 	}, [ deviceType, editorDom ] )
 
@@ -75,12 +77,12 @@ globalButtonsAndIconsWrapper?.setAttribute( 'id', 'stk-global-buttons-and-icons-
 globalColorSchemesWrapper?.setAttribute( 'id', 'stk-global-color-schemes-styles' )
 globalPresetControlsWrapper?.setAttribute( 'id', 'stk-global-preset-controls-styles' )
 domReady( () => {
-	document?.body?.appendChild( globalTypographyWrapper )
-	document?.body?.appendChild( globalColorWrapper )
-	document?.body?.appendChild( globalSpacingAndBorderWrapper )
-	document?.body?.appendChild( globalButtonsAndIconsWrapper )
-	document?.body?.appendChild( globalColorSchemesWrapper )
-	document?.body?.appendChild( globalPresetControlsWrapper )
+	document?.head?.appendChild( globalTypographyWrapper )
+	document?.head?.appendChild( globalColorWrapper )
+	document?.head?.appendChild( globalSpacingAndBorderWrapper )
+	document?.head?.appendChild( globalButtonsAndIconsWrapper )
+	document?.head?.appendChild( globalColorSchemesWrapper )
+	document?.head?.appendChild( globalPresetControlsWrapper )
 	createRoot( globalTypographyWrapper ).render( <GlobalTypographyStyles /> )
 	createRoot( globalColorWrapper ).render( <GlobalColorStyles /> )
 	createRoot( globalSpacingAndBorderWrapper ).render( <GlobalSpacingAndBordersStyles /> )
