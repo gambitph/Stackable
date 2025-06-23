@@ -17,6 +17,7 @@ export class StackableFixture {
 			}
 
 			const finishedCallback = async ( request: Request ) => {
+				console.log( 'url', request.url() )
 				if ( request.url().includes( 'stackable/v3/settings' ) && request.method() === 'GET' ) {
 					try {
 						let settings = null
