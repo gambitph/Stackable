@@ -274,6 +274,11 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				$styles = $this->generate_color_scheme_styles( $styles, $scheme );
 			}
 
+			// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
+			if ( isset( $this->color_schemes[ $container_default ] ) && $this->is_scheme_empty( $this->color_schemes[ $container_default ] ) ) {
+				$styles = $this->getDefaultContainerColors( $styles, $default_color_schemes[ 2 ] );
+			}
+
 			$color_scheme_css = '';
 			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			if ( $generated_css != '' ) {
@@ -402,12 +407,56 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			return true;
 		}
 
+		public function is_scheme_empty( $scheme ) {
+			foreach( $scheme as $property => $values ) {
+				if ( is_array( $values ) ) {
+					foreach( $values as $device_state => $value ) {
+						if ( $value ) return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
 		public function is_gradient( $scheme, $property, $state ) {
 			if ( ! $this->has_value( $scheme, $property, $state ) ) {
 				return false;
 			}
 			$value = $scheme[ $property ][ $state ];
 			return strpos( $value, 'linear-' ) !== false || strpos( $value, 'radial-' ) !== false;
+		}
+
+		// These colors are used when there are color schemes but the default container scheme is empty
+		public function getDefaultContainerColors( $styles, $scheme ) {
+			$selectors = $scheme[ 'selectors' ];
+			$styles[] = array(
+				'selector'     => $selectors[ 'desktop' ] . ' :where(.stk-subtitle)',
+				'declarations' => array(
+					'--stk-accent-color' => 'var(--stk-subtitle-color)',
+				)
+			);
+			$styles[] = array(
+				'selector'     => $selectors[ 'desktop' ] . ' :where(.stk--inner-svg)',
+				'declarations' => array(
+					'--stk-accent-color' => 'var(--stk-icon-color)',
+				)
+			);
+			$styles[] = array(
+				'selector'     => $selectors[ 'desktop' ],
+				'declarations' => array(
+					'--stk-background-color' => 'var(--stk-default-container-background-color, #fff)',
+					'--stk-heading-color' => 'var(--stk-default-heading-color, initial)',
+					'--stk-text-color' => 'var(--stk-container-color, initial)',
+					'--stk-link-color' => 'var(--stk-default-link-color, var(--stk-text-color, initial))',
+					'--stk-accent-color' => '#ddd',
+					'--stk-button-background-color' => 'var(--stk-default-button-background-color, #008de4)',
+					'--stk-button-text-color' => 'var(--stk-default-button-text-color, #fff)',
+					'--stk-button-outline-color' => 'var(--stk-default-button-background-color, #008de4)'
+				)
+			);
+
+			return $styles;
 		}
 
 		/**

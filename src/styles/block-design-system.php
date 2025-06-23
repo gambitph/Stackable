@@ -86,6 +86,9 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 				"container-background-color" => array(
 					"desktop" => "#fff"
 				),
+				"default-container-background-color" => array(
+					"desktop" => "#fff"
+				),
 				"container-color" => array(
 					"desktop" => "#1e1e1e"
 				),
@@ -166,6 +169,12 @@ if ( ! class_exists( 'Stackable_Block_Design_System') ) {
 					"desktop" => "#008de4"
 				),
 				"button-text-color" => array(
+					"desktop" => "#fff"
+				),
+				"default-button-background-color" => array(
+					"desktop" => "#008de4"
+				),
+				"default-button-text-color" => array(
 					"desktop" => "#fff"
 				),
 				"icon-button-padding" => array(

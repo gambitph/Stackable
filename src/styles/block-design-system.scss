@@ -44,6 +44,7 @@ $block-design-system: (
 	container-border-radius: 0px,
 	container-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04),
 	container-background-color: #fff,
+	default-container-background-color: #fff,
 	container-color: #1e1e1e,
 
 	/**
@@ -81,6 +82,8 @@ $block-design-system: (
 	button-row-gap: 12px,
 	button-background-color: #008de4,
 	button-text-color: #fff,
+	default-button-background-color: #008de4,
+	default-button-text-color: #fff,
 	icon-button-padding: 12px,
 
 	/**
