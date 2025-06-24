@@ -42,7 +42,7 @@ export const usePresetControls = property => {
 		 * Dev note:
 		 * Starting from theme.json version 3, settings such as `typography.defaultFontSizes` and `spacing.defaultSpacingSizes`
 		 * must be set to `false` to override the default presets. If these settings are not found in the theme.json, they default to `true`.
-		 * Otherwise, themes that use the same slugs as the defaults will continue to use the default presets.
+		 * Themes that use the same slugs as the defaults will continue to use the default presets.
 		 * Therefore, we also need to get the default presets if the `defaultSizesEnabled` is `true` and merge it with the theme presets.
 		 *
 		 * https://make.wordpress.org/core/2024/06/19/theme-json-version-3/#:~:text=Breaking%20changes%20in%20version%203
