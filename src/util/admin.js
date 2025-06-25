@@ -6,7 +6,8 @@ import { sortBy } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { loadPromise, models } from '@wordpress/api'
+import { loadPromise } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 
 // Collect all the blocks and their variations for enabling/disabling and sort
 // them by type.
@@ -52,12 +53,13 @@ let fetchingPromise = null
  */
 export const fetchSettings = () => {
 	if ( ! fetchingPromise ) {
-		fetchingPromise = loadPromise.then( () => {
-			const settings = new models.Settings()
-			return settings.fetch().then( response => {
-				fetchingPromise = null
-				return response
+		fetchingPromise = loadPromise.then( async () => {
+			const response = await apiFetch( {
+				path: '/stackable/v3/settings/',
+				method: 'GET',
 			} )
+			fetchingPromise = null
+			return response
 		} )
 	}
 
