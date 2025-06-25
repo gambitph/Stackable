@@ -1,20 +1,5 @@
 [
   {
-    "family": "42dot Sans",
-    "variants": [
-      "300",
-      "regular",
-      "500",
-      "600",
-      "700",
-      "800"
-    ],
-    "subsets": [
-      "korean",
-      "latin"
-    ]
-  },
-  {
     "family": "ABeeZee",
     "variants": [
       "regular",
@@ -4227,6 +4212,37 @@
     ]
   },
   {
+    "family": "Chiron Sung HK",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "chinese-hongkong",
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "symbols2",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Chivo",
     "variants": [
       "100",
@@ -8010,9 +8026,13 @@
     "family": "Hanuman",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
+      "500",
+      "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
@@ -8344,6 +8364,19 @@
       "900italic"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Huninn",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chinese-traditional",
+      "cyrillic",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -10368,6 +10401,22 @@
     ]
   },
   {
+    "family": "LXGW Marker Gothic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chinese-traditional",
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "symbols2",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "LXGW WenKai Mono TC",
     "variants": [
       "300",
@@ -11877,6 +11926,23 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Matangi",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -24219,6 +24285,32 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "WDXL Lubrifont JP N",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext",
+      "symbols2"
+    ]
+  },
+  {
+    "family": "WDXL Lubrifont SC",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chinese-simplified",
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "symbols2"
     ]
   },
   {
