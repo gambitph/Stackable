@@ -7,18 +7,26 @@ import { __ } from '@wordpress/i18n'
 const PRESET_MAPPING = {
 	fontSizes: {
 		settings: [ 'typography', 'fontSizes' ],
+		defaultSizes: 'typography.fontSizes.default',
+		defaultEnabled: 'typography.defaultFontSizes',
 		prefix: 'font-size',
 	},
 	spacingSizes: {
 		settings: [ 'spacing', 'spacingSizes' ],
+		defaultSizes: 'spacing.spacingSizes.default',
+		defaultEnabled: 'spacing.defaultSpacingSizes',
 		prefix: 'spacing',
 	},
 	blockHeights: {
 		settings: [ 'blockHeights' ],
+		defaultSizes: '',
+		defaultEnabled: '',
 		prefix: 'block-height',
 	},
 	borderRadius: {
 		settings: [ 'borderRadius' ],
+		defaultSizes: '',
+		defaultEnabled: '',
 		prefix: 'border-radius',
 	},
 }
@@ -31,14 +39,41 @@ const nonePreset = {
 
 export const usePresetControls = property => {
 	// Get the theme presets for the property
-	const [ themePresets ] = useSettings( PRESET_MAPPING[ property ].settings.join( '.' ) )
+	const [
+		_themePresets,
+
+		/**
+		 * Dev note:
+		 * In theme.json version 3, `typography.defaultFontSizes` and `spacing.defaultSpacingSizes` default to `true`.
+		 * These settings must be explicitly set to `false` to override default presets. When enabled, themes with matching slugs
+		 * will use default presets, and theme presets with the same slugs will be ignored.
+		 * Therefore, we also need to get the default presets if the `defaultSizesEnabled` is `true` and merge it with the theme presets.
+		 *
+		 * See: https://make.wordpress.org/core/2024/06/19/theme-json-version-3/#:~:text=Breaking%20changes%20in%20version%203
+		 * */
+		wpDefaultPresets,
+		defaultSizesEnabled,
+	] = useSettings(
+		PRESET_MAPPING[ property ].settings.join( '.' ),
+		PRESET_MAPPING[ property ].defaultSizes,
+		PRESET_MAPPING[ property ].defaultEnabled
+	)
+
 	// Get all custom presets
 	const { allCustomPresets } = useSelect( select => {
 		const _customPresetControls = select( 'stackable/global-preset-controls.custom' )?.getCustomPresetControls()
 		return { allCustomPresets: { ..._customPresetControls } }
 	}, [] )
 
+	let themePresets = _themePresets
 	const hasThemePresets = Array.isArray( themePresets ) && themePresets.length > 0
+
+	// Merge theme presets with default presets when default sizes are enabled.
+	// This happens when settings like `typography.defaultFontSizes` or `spacing.defaultSpacingSizes`
+	// are not explicitly set to `false` in theme.json v3.
+	if ( hasThemePresets && wpDefaultPresets && defaultSizesEnabled !== false ) {
+		themePresets = [ ..._themePresets, ...wpDefaultPresets ]
+	}
 
 	// Get the theme/default presets if the user have one, else return the stackable presets
 	const basePresets = hasThemePresets
