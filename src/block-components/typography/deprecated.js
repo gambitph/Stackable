@@ -77,7 +77,9 @@ export const deprecateTypographyShadowColor = {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
-		if ( getAttribute( 'textShadow' ) || getAttribute( 'textShadowHover' ) || getAttribute( 'textShadowParentHover' ) ) {
+		if ( ( getAttribute( 'textShadow' ) && getAttribute( 'textShadow' ).indexOf( 'rgba' ) !== -1 ) ||
+			( getAttribute( 'textShadowHover' ) && getAttribute( 'textShadowHover' ).indexOf( 'rgba' ) !== -1 ) ||
+			( getAttribute( 'textShadowParentHover' ) && getAttribute( 'textShadowParentHover' ).indexOf( 'rgba' ) ) ) {
 			return true
 		}
 
