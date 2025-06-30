@@ -56,7 +56,9 @@ export const deprecateShadowColor = {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
-		if ( getAttribute( 'shadow' ) || getAttribute( 'shadowHover' ) || getAttribute( 'shadowParentHover' ) ) {
+		if ( ( getAttribute( 'shadow' ) && getAttribute( 'shadow' ).indexOf( 'rgba' ) !== -1 ) ||
+			( getAttribute( 'shadowHover' ) && getAttribute( 'shadowHover' ).indexOf( 'rgba' ) !== -1 ) ||
+			( getAttribute( 'shadowParentHover' ) && getAttribute( 'shadowParentHover' ).indexOf( 'rgba' ) ) ) {
 			return true
 		}
 
