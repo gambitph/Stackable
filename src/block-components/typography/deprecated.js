@@ -96,7 +96,7 @@ export const deprecateTypographyShadowColor = {
 		const shadowParentHover = getAttribute( 'textShadowParentHover' ) || shadowHover
 
 		if ( getAttribute( 'textShadow' ) && getAttribute( 'textShadow' ).indexOf( 'rgba' ) !== -1 ) {
-			const { options, color } = extractRgba( shadowHover )
+			const { options, color } = extractRgba( shadow )
 			const hex = rgbaToHexAlpha( color )
 			newAttributes[ getAttrName( 'textShadow' ) ] = `${ options } ${ hex }`
 		}
