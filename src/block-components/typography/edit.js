@@ -34,17 +34,17 @@ import { useSelect } from '@wordpress/data'
 
 const TYPOGRAPHY_SHADOWS = [
 	'none',
-	'2px 2px 4px rgba(0, 0, 0, 0.2)',
-	'6px 6px 4px rgba(120, 120, 120, 0.2)',
-	'2px 4px 5px rgba(0, 0, 0, 0.4)',
-	'0px 0px 5px rgba(0, 0, 0, 0.4)',
-	'4px 4px 0px rgba(0, 0, 0, 1)',
-	'0px 15px 14px rgba(18, 63, 82, 0.3)',
-	'25px 10px 14px rgba(18, 63, 82, 0.3)',
-	'25px 10px 30px rgba(18, 63, 82, 0.3)',
-	'0px 0px 40px rgba(18, 63, 82, 0.6)',
-	'0px 0px 62px rgba(71, 73, 79, 1)',
-	'0px 0px 100px rgba(71, 73, 79, 1)',
+	'2px 2px 4px #00000033',
+	'6px 6px 4px #78787833',
+	'2px 4px 5px #00000066',
+	'0px 0px 5px #00000066',
+	'4px 4px 0px #000000ff',
+	'0px 15px 14px #123f524c',
+	'25px 10px 14px #123f524c',
+	'25px 10px 30px #123f524c',
+	'0px 0px 40px #123f5299',
+	'0px 0px 62px #47494fff',
+	'0px 0px 100px #47494fff',
 ]
 
 const GRADIENT_OPTIONS = [
