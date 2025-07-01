@@ -179,14 +179,15 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			if ( is_wp_error( $temp_filepath ) ) {
 				return new WP_REST_Response( array(
 					'success' => false,
-					'message' => 'Failed to retrieve image from the provided URL.'
+					'message' => $temp_filepath->get_error_message()
 				), 500 );
 			}
 
 			if ( ! file_exists( $temp_filepath ) || ! wp_filesize( $temp_filepath ) ) {
-				@unlink( $temp_filepath );
+				wp_delete_file( $temp_filepath );
 				return new WP_REST_Response( array(
 					'success' => false,
+					// This is a custom check so we return a custom error message.
 					'message' => 'Invalid file content retrieved from the provided URL.'
 				), 400 );
 			}
@@ -205,9 +206,10 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					&& ! wp_getimagesize( $temp_filepath )
 				)
 			) {
-				@unlink( $temp_filepath );
+				wp_delete_file( $temp_filepath );
 				return new WP_REST_Response( array(
 					'success' => false,
+					// This is a custom check so we return a custom error message.
 					'message' => 'The file is not a valid image/video.'
 				), 400 );
 			}
@@ -219,13 +221,13 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			) );
 
 			if ( file_exists( $temp_filepath ) ) {
-				@unlink( $temp_filepath );
+				wp_delete_file( $temp_filepath );
 			}
 
 			if ( is_wp_error( $media_id ) ) {
 				return new WP_REST_Response( array(
 					'success' => false,
-					'message' => 'An error occured during media upload.'
+					'message' =>  $media_id->get_error_message()
 				), 500 );
 			}
 

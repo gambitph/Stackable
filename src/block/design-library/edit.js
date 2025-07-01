@@ -59,18 +59,22 @@ const checkIfImageUrl = async value => {
 	const matches = attributeUrl.pathname.match( /\/([^/]+\.(jpe?g|gif|png|mp4|webp))$/i )
 
 	if ( matches ) {
-		const result = await apiFetch( {
-			path: '/stackable/v3/design_library_image',
-			method: 'POST',
-			// eslint-disable-next-line camelcase
-			data: { image_url: attributeUrl.href },
-		} )
-		if ( result.success ) {
-			return result.new_url
+		try {
+			const result = await apiFetch( {
+				path: '/stackable/v3/design_library_image',
+				method: 'POST',
+				// eslint-disable-next-line camelcase
+				data: { image_url: attributeUrl.href },
+			} )
+			if ( result.success ) {
+				return result.new_url
+			}
+			console.error( 'Stackable Design Library:', result.message ) // eslint-disable-line no-console
+			return value
+		} catch ( error ) {
+			console.error( 'Stackable Design Library:', error.message ) // eslint-disable-line no-console
+			return value
 		}
-
-		console.error( 'Stackable Design Library:', result.message ) // eslint-disable-line no-console
-		return value
 	}
 	return value
 }
