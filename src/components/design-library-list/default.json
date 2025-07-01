@@ -34,6 +34,34 @@
 		"c-subtitle-6_placeholder": "Scalable and Adaptable",
 		"c-description-6_placeholder": "Invest in solutions built for tomorrow, with the flexibility to grow and evolve with your needs."
 	},
+	"Carousel": {
+		"subheading_placeholder": "Learn and Grow",
+		"heading_placeholder": "Explore Our Featured Resources",
+		"description_placeholder": "Get inspired, sharpen your skills, and stay ahead with curated content from our team and industry experts.",
+		"kicker_placeholder": "Learn and Grow",
+		"btn_placeholder": "View All Resources",
+		"title-1_placeholder": "The Beginner's Guide to UX Design",
+		"text-1_placeholder": "A friendly introduction to core UX principles and design thinking.",
+		"title-2_placeholder": "Scaling Your App Without the Stress",
+		"text-2_placeholder": "Best practices for growing your platform while keeping performance sharp.",
+		"title-3_placeholder": "Building a Brand That Connects",
+		"text-3_placeholder": "Learn how to craft a brand identity that resonates with real people.",
+		"title-4_placeholder": "Marketing Trends You Can't Ignore",
+		"text-4_placeholder": "Stay updated with actionable insights from today's digital landscape."
+	},
+	"Contact": {
+		"heading_placeholder": "Get in Touch With Us",
+		"kicker_placeholder": "Contact Us",
+		"description_placeholder": "Whether you have questions, need support, or want to explore opportunities—our team is just a message away.",
+		"btn_placeholder": "Learn More",
+		"title-1_placeholder": "Job Opportunities",
+		"text-1_placeholder": "Join our growing team and help us build the future—one line of code at a time.",
+		"title-2_placeholder": "Support",
+		"text-2_placeholder": "Reach out to our friendly support team for quick assistance with any technical or service-related concerns.",
+		"title-3_placeholder": "Sales",
+		"text-3_placeholder": "Discuss your goals with our sales team and discover how our solutions can meet your business needs.",
+		"cta_placeholder": "Contact Us"
+	},
 	"FAQ": {
 		"heading_placeholder": "Frequently Asked Questions (FAQs)",
 		"description_placeholder": "Find answers to the most common questions about [Your Product/Service]. If you can't find what you're looking for here, please contact us.",
@@ -256,6 +284,35 @@
 		"text-2_placeholder": "Innovation distinguishes between a leader and a follower.",
 		"name-2_placeholder": "C. D. Williams",
 		"position-2_placeholder": "Forward Thinker"
+	},
+	"Service Menu": {
+		"heading_placeholder": "Our Signature Menu",
+		"description_placeholder": "Crafted with fresh ingredients and bold flavors—perfect for any time of day.",
+		"category-1_placeholder": "Customer Favorites",
+		"category-2_placeholder": "Brunch & Bowls",
+		"category-3_placeholder": "Add-ons & Sides",
+		"title-1_placeholder": "Grilled Herb Chicken",
+		"text-1_placeholder": "Tender chicken breast marinated in herbs, served with charred vegetables.",
+		"title-2_placeholder": "Smoked Salmon Bowl",
+		"text-2_placeholder": "Cured salmon, quinoa, avocado, and lemon-dill dressing in one refreshing bowl.",
+		"title-3_placeholder": "Creamy Mushroom Pasta",
+		"text-3_placeholder": "Fresh pasta tossed in a garlic parmesan cream with sautéed mushrooms.",
+		"title-4_placeholder": "Avocado Toast Stack",
+		"text-4_placeholder": "Crispy sourdough topped with smashed avocado, egg, and house seasoning.",
+		"title-5_placeholder": "Spiced Beef Rice Bowl",
+		"text-5_placeholder": "Slow-braised beef, jasmine rice, and tangy slaw with a touch of heat.",
+		"title-6_placeholder": "Breakfast Burrito",
+		"text-6_placeholder": "Fluffy eggs, chorizo, potatoes, and cheese wrapped in a warm tortilla."
+	},
+	"Stats": {
+		"heading_placeholder": "Trusted by Teams, Loved by Customers",
+		"description_placeholder": "Our impact speaks for itself—from satisfied clients to successful projects delivered across industries.",
+		"kicker_placeholder": "By the Numbers",
+		"btn_placeholder": "See Our Impact",
+		"stat-title-1_placeholder": "Active Users",
+		"stat-title-2_placeholder": "Installs",
+		"stat-title-3_placeholder": "Websites",
+		"stat-title-4_placeholder": "New Users"
 	},
 	"Table of Contents": {
 		"heading_placeholder": "Table of Contents",
