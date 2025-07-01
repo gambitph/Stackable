@@ -58,7 +58,7 @@ export const deprecateShadowColor = {
 
 		if ( ( getAttribute( 'shadow' ) && getAttribute( 'shadow' ).indexOf( 'rgba' ) !== -1 ) ||
 			( getAttribute( 'shadowHover' ) && getAttribute( 'shadowHover' ).indexOf( 'rgba' ) !== -1 ) ||
-			( getAttribute( 'shadowParentHover' ) && getAttribute( 'shadowParentHover' ).indexOf( 'rgba' ) ) ) {
+			( getAttribute( 'shadowParentHover' ) && getAttribute( 'shadowParentHover' ).indexOf( 'rgba' ) !== -1 ) ) {
 			return true
 		}
 

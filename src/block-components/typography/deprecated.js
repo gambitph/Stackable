@@ -79,7 +79,7 @@ export const deprecateTypographyShadowColor = {
 
 		if ( ( getAttribute( 'textShadow' ) && getAttribute( 'textShadow' ).indexOf( 'rgba' ) !== -1 ) ||
 			( getAttribute( 'textShadowHover' ) && getAttribute( 'textShadowHover' ).indexOf( 'rgba' ) !== -1 ) ||
-			( getAttribute( 'textShadowParentHover' ) && getAttribute( 'textShadowParentHover' ).indexOf( 'rgba' ) ) ) {
+			( getAttribute( 'textShadowParentHover' ) && getAttribute( 'textShadowParentHover' ).indexOf( 'rgba' ) !== -1 ) ) {
 			return true
 		}
 
