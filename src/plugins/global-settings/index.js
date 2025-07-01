@@ -18,13 +18,17 @@ import {
 	isContentOnlyMode,
 	settings,
 } from 'stackable'
+import { currentUserHasCapability } from '~stackable/util'
 
 /** WordPress dependencies
  */
 import { registerPlugin } from '@wordpress/plugins'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addAction } from '@wordpress/hooks'
-import { dispatch, select } from '@wordpress/data'
+import { useEffect, useState } from '@wordpress/element'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 import { PanelBody } from '@wordpress/components'
 
 // Action used to toggle the global settings panel.
@@ -40,13 +44,26 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 } )
 
 const GlobalSettings = () => {
+	const [ userCanManageOptions, setUserCanManageOptions ] = useState( false )
+	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id )
+
+	useEffect( () => {
+		const checkCapabilities = async () => {
+			const capabilities = await currentUserHasCapability( 'manage_options' )
+			setUserCanManageOptions( capabilities )
+		}
+
+		checkCapabilities()
+	}, [ id ] )
 	// For older WP versions (<6.6), wp.editor.PluginSidebar is undefined,
 	// use wp.editSite.PluginSidebar and wp.editPost.PluginSidebar as fallback
 	const PluginSidebar = window.wp.editor.PluginSidebar || window.wp.editSite?.PluginSidebar || window.wp.editPost?.PluginSidebar
 
+	const globalSettingsInspector = applyFilters( 'stackable.global-settings.inspector', null )
+
 	return (
 		<>
-			{ PluginSidebar &&
+			{ PluginSidebar && userCanManageOptions &&
 				<PluginSidebar
 					name="sidebar"
 					title={ __( 'Stackable Settings', i18n ) }
@@ -60,7 +77,7 @@ const GlobalSettings = () => {
 							<a href="https://docs.wpstackable.com/article/465-how-to-style-the-different-block-hover-states?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">{ __( 'Learn more', i18n ) }</a> */ }
 						</p>
 					</PanelBody>
-					{ applyFilters( 'stackable.global-settings.inspector', null ) }
+					{ globalSettingsInspector }
 				</PluginSidebar>
 			}
 		</>

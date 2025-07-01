@@ -288,7 +288,7 @@ const BlockCss = props => {
 	}
 	const hoverStyleRule = _hoverStyleRule || styleRule
 
-	let selector = selectorCallback ? selectorCallback( getAttribute, attributes, clientId ) : _selector
+	let selector = selectorCallback ? selectorCallback( getAttribute, attributes, clientId, props ) : _selector
 	let hoverSelector = hoverSelectorCallback ? hoverSelectorCallback( getAttribute, attributes, clientId ) : _hoverSelector
 
 	const desktopQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'desktop' ) ) : 'desktop' ) || 'desktop'

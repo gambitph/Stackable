@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.1
 Requires PHP: 7.3
-Stable tag: 3.16.1
+Stable tag: 3.16.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -310,6 +310,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.16.2 =
+* Fixed: Clicking on certain portions of the editor scrolls the editor downward #3520 #3529
+* Fixed: Global settings - some themes produce an error in the editor #3532
+* Fixed: Global settings - now visible for non-admin users in the editor #3531
+* Fixed: Posts block - image overlay styles now work properly #3421 #3422
 
 = 3.16.1 =
 * Fixed: Hotfix for PHP error encountered if you have a tablet gloal typography font size #3526
