@@ -63,6 +63,8 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 	const editorDom = getEditorDom()
 
+	const siteTitle = useSelect( select => select( 'core' ).getEntityRecord( 'root', 'site' )?.title || 'InnovateCo', [] )
+
 	const mainClasses = classnames( [
 		'ugb-design-library-item',
 		'ugb-design-library-item--toggle',
@@ -131,7 +133,16 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 
 		setParsedBlocks( blocks )
 
-		const preview = serialize( blocks )
+		let preview = serialize( blocks )
+
+		// The block `wp/site-title` is a dynamic block, so we need to manually replace it for the preview
+		if ( category === 'Header' ) {
+			preview = preview.replace( /<!--\s*wp:site-title(?:\s+[^\/]*?)?\/-->/g, siteTitle )
+		} else if ( category === 'Tabs' ) {
+		// Add a class for the first tab to be the active tab in the preview
+			preview = preview.replace( '"stk-block-tabs__tab"', '"stk-block-tabs__tab stk-block-tabs__tab--active"' )
+		}
+
 		const cleanedBlock = preview.replace( /<!--[\s\S]*?-->/g, '' ) // removes comment
 
 		previewRef.current.render( <DesignPreview
@@ -167,9 +178,11 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			// Get all styles needed and make a copy for the shadow DOM
 			const styleNodes = STYLE_IDS.map( id => {
 				let style = null
-				let node = document.getElementById( id )
+				let node = document?.head?.querySelector( `#${ id }` )
 				if ( ! node && editorDom ) {
-					node = editorDom.querySelector( `#${ id }` )
+					const editorBody = editorDom?.closest( 'body' )
+					const editorHead = editorBody?.ownerDocument?.head
+					node = editorHead.querySelector( `#${ id }` )
 				}
 
 				if ( node ) {
@@ -199,7 +212,12 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 					: ` [stk-design-library__bg-target="true"].stk-block-background:not(.stk--no-padding) { padding: calc(26px + var(--stk-block-background-padding)); }`
 			}
 
+			// Additional styles for blocks to render properly in the preview
 			hostStyles.innerHTML += `.stk-block-count-up__text:not(.stk--count-up-active) { opacity: 1; }`
+			hostStyles.innerHTML += `.stk-block-timeline { --line-bg-color: var(--line-accent-bg-color, #000); }`
+			hostStyles.innerHTML += `.stk-progress-bar .stk-progress-bar__bar { width: var(--progress-percent, 0px); }`
+			hostStyles.innerHTML += `.stk-progress-circle .stk-progress-circle__bar { stroke-dashoffset: var(--progress-dash-offset); }`
+
 			styleNodes.push( hostStyles )
 
 			styleNodes.forEach( node => {
@@ -262,7 +280,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 					scale: previewSize.scale,
 				}
 
-				onClick( designId, parsedBlocks, blocksForSubstitutionRef.current, selectedPreviewSize )
+				onClick( designId, category, parsedBlocks, blocksForSubstitutionRef.current, selectedPreviewSize )
 			} }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
