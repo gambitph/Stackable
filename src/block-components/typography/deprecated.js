@@ -125,8 +125,12 @@ export const deprecateTypographyFontSize = {
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
 		const fontSize = getAttribute( 'fontSize' )
+		const fontSizeTablet = getAttribute( 'fontSizeTablet' )
+		const fontSizeMobile = getAttribute( 'fontSizeMobile' )
 
-		return typeof fontSize === 'number'
+		return typeof fontSize === 'number' ||
+			typeof fontSizeTablet === 'number' ||
+			typeof fontSizeMobile === 'number'
 	},
 	migrate: attrNameTemplate => attributes => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -137,9 +141,19 @@ export const deprecateTypographyFontSize = {
 		}
 
 		const fontSize = getAttribute( 'fontSize' )
+		const fontSizeTablet = getAttribute( 'fontSizeTablet' )
+		const fontSizeMobile = getAttribute( 'fontSizeMobile' )
 
 		if ( typeof fontSize === 'number' ) {
 			newAttributes[ getAttrName( 'fontSize' ) ] = String( fontSize )
+		}
+
+		if ( typeof fontSizeTablet === 'number' ) {
+			newAttributes[ getAttrName( 'fontSizeTablet' ) ] = String( fontSizeTablet )
+		}
+
+		if ( typeof fontSizeMobile === 'number' ) {
+			newAttributes[ getAttrName( 'fontSizeMobile' ) ] = String( fontSizeMobile )
 		}
 
 		return newAttributes
