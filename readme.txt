@@ -315,6 +315,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Using preset values with shadows will cause the preset value to reset on editor refresh #3538
 * Fixed: Color Schemes - container colors now do not inherit the background color scheme #3534
 * Fixed: Color Schemes - added setting to use old inheriting background color scheme behavior #3534
+* Fixed: Columns block - fixed visual outline of column picker #dca1aa5
+* Fixed: Corrected size of some icons in the block toolbar alignment button #4dd1872
 
 = 3.16.2 =
 * Fixed: Clicking on certain portions of the editor scrolls the editor downward #3520 #3529
