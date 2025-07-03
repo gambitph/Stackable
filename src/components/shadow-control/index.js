@@ -29,11 +29,11 @@ export const getShadows = () => {
 		'0 0 0 2px #7878781a',
 		'0 5px 5px 0 #123f5209',
 		'0px 2px 20px #99999933',
-		'0 5px 30px -10px #123f524c',
+		'0 5px 30px -10px #123f524d',
 		'0px 10px 30px #0000000d',
-		'7px 5px 30px #48497926',
+		'7px 5px 30px #48497927',
 		'0px 10px 60px #0000001a',
-		'0px 70px 90px -20px #4849794c',
+		'0px 70px 90px -20px #4849794d',
 	] )
 }
 
