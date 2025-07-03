@@ -22,8 +22,12 @@ export const deprecateSizeControlHeight = {
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
 		const height = getAttribute( 'height' )
+		const heightTablet = getAttribute( 'heightTablet' )
+		const heightMobile = getAttribute( 'heightMobile' )
 
-		return typeof height === 'number'
+		return typeof height === 'number' ||
+			typeof heightTablet === 'number' ||
+			typeof heightMobile === 'number'
 	},
 	migrate: attrNameTemplate => attributes => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -34,9 +38,19 @@ export const deprecateSizeControlHeight = {
 		}
 
 		const height = getAttribute( 'height' )
+		const heightTablet = getAttribute( 'heightTablet' )
+		const heightMobile = getAttribute( 'heightMobile' )
 
 		if ( typeof height === 'number' ) {
 			newAttributes[ getAttrName( 'height' ) ] = String( height )
+		}
+
+		if ( typeof heightTablet === 'number' ) {
+			newAttributes[ getAttrName( 'heightTablet' ) ] = String( heightTablet )
+		}
+
+		if ( typeof heightMobile === 'number' ) {
+			newAttributes[ getAttrName( 'heightMobile' ) ] = String( heightMobile )
 		}
 
 		return newAttributes

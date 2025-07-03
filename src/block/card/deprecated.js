@@ -88,6 +88,78 @@ addFilter( 'stackable.card.save.innerClassNames', 'stackable/3.0.2', ( output, p
 
 const deprecated = [
 	{
+		// Handle the migration of shadow attributes with the change of type in 3.15.3
+		attributes: attributes( '3.16.2' ),
+		save: withVersion( '3.16.2' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+
+			return hasBlockShadow || hasContainerShadow
+		},
+		migrate: ( attributes, innerBlocks ) => {
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			let newAttributes = {
+				...attributes,
+			}
+
+			if ( isNotV4 ) {
+				newAttributes = {
+					...newAttributes,
+					version: 2,
+				}
+
+				// Update the vertical align into flexbox
+				const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
+
+				if ( hasOldVerticalAlign ) {
+					newAttributes = {
+						...newAttributes,
+						containerVerticalAlign: '',
+						innerBlockAlign: attributes.containerVerticalAlign,
+					}
+				}
+
+				// If the inner blocks are horizontal, adjust to accomodate the new
+				// column gap, it will modify blocks because people used block
+				// margins before instead of a proper column gap.
+				if ( attributes.innerBlockOrientation === 'horizontal' ) {
+					innerBlocks.forEach( ( block, index ) => {
+						if ( index ) {
+							if ( ! block.attributes.blockMargin ) {
+								block.attributes.blockMargin = {
+									top: '',
+									right: '',
+									bottom: '',
+									left: '',
+								}
+							}
+							if ( block.attributes.blockMargin.left === '' ) {
+								block.attributes.blockMargin.left = 24
+							}
+						}
+					} )
+
+					newAttributes = {
+						...newAttributes,
+						innerBlockColumnGap: 0,
+					}
+				}
+			}
+
+			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes ),
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+			newAttributes = deprecateInnerBlockRowGapAndContainerHeight.migrate( '%s' )( newAttributes )
+
+			return [ newAttributes, innerBlocks ]
+		},
+	},
+	{
 		// Support the change of type for block height
 		attributes: attributes( '3.15.3' ),
 		save: withVersion( '3.15.3' )( Save ),
@@ -164,6 +236,20 @@ const deprecated = [
 		attributes: attributes( '3.12.11' ),
 		save: withVersion( '3.12.11' )( Save ),
 		isEligible: attributes => {
+			if ( (
+				typeof attributes?.blockHeight === 'string' ||
+				typeof attributes?.blockHeightTablet === 'string' ||
+				typeof attributes?.blockHeightMobile === 'string' ||
+				typeof attributes?.innerBlockRowGap === 'string' ||
+				typeof attributes?.innerBlockRowGapTablet === 'string' ||
+				typeof attributes?.innerBlockRowGapMobile === 'string' ||
+				typeof attributes?.containerHeight === 'string' ||
+				typeof attributes?.containerHeightTablet === 'string' ||
+				typeof attributes?.containerHeightMobile === 'string' )
+			) {
+				return false
+			}
+
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
 
