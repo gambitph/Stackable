@@ -1,25 +1,23 @@
 /**
  * Internal dependencies
  */
-import { DesignLibraryControl } from '../../components'
+// import { DesignLibraryControl } from '../../components'
 
 /**
  * External dependencies
  */
 import { PanelAdvancedSettings } from '~stackable/components'
-import { applyBlockDesign } from '~stackable/util'
+// import { applyBlockDesign } from '~stackable/util'
 import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import {
-	addFilter, doAction,
-} from '@wordpress/hooks'
+import { addFilter, doAction } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
-const addDesignPanel = blockName => output => {
+const addDesignPanel = () => output => {
 	return (
 		<Fragment>
 			{ output }
@@ -27,13 +25,14 @@ const addDesignPanel = blockName => output => {
 				title={ __( 'Designs', i18n ) }
 				initialOpen={ true }
 			>
-				<p className="components-base-control__help">{ __( 'You will not lose your block content when changing designs.', i18n ) }</p>
+				<p className="components-base-control__help">{ __( 'The designs for v2 blocks have been replaced with the new design library.', i18n ) }</p>
+				{ /* <p className="components-base-control__help">{ __( 'You will not lose your block content when changing designs.', i18n ) }</p>
 				<DesignLibraryControl
 					block={ `ugb/${ blockName }` }
 					onSelect={ designData => {
 						applyBlockDesign( designData.attributes )
 					} }
-				/>
+				/> */ }
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
