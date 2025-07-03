@@ -1,8 +1,10 @@
 /**
  * Internal dependencies
  */
+import './deprecated'
 import {
-	convertToObj, getCSS, schemeHasValue,
+	convertToObj, getCSS, schemeHasValue, getDefaultColors,
+	unsetDefaultColors,
 } from './utils'
 
 import { onClassChange } from '../utils'
@@ -17,6 +19,8 @@ import { useBlockColorSchemes, useBlockHoverState } from '~stackable/hooks'
  */
 import { useEffect, useState } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
+import { applyFilters } from '@wordpress/hooks'
+
 const renderGlobalStyles = (
 	setStyles,
 	colorSchemesArray,
@@ -43,6 +47,8 @@ const renderGlobalStyles = (
 	 * 5. Container color schemes (used by blocks that opt to use non-default container schemes)
 	 */
 
+	const unsetDefaults = unsetDefaultColors()
+
 	if ( baseColorScheme in colorSchemes && schemeHasValue( colorSchemes[ baseColorScheme ] ) ) {
 		decls = getCSS( colorSchemes[ baseColorScheme ], currentHoverState )
 		if ( decls.desktop.length || decls.desktopHover.length ) {
@@ -54,10 +60,10 @@ const renderGlobalStyles = (
 		decls = getCSS( colorSchemes[ backgroundModeColorScheme ], currentHoverState, 'background' )
 		let bgcss = ''
 		if ( decls.desktop.length || decls.desktopHover.length ) {
-			bgcss += `.stk-block-background{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }\n`
+			bgcss += `.stk-block-background{ ${ [ ...decls.desktop, ...decls.desktopHover, unsetDefaults ].join( '' ) } }\n`
 		}
 		if ( decls.desktopParentHover.length ) {
-			bgcss += `:where(.stk-hover-parent:hover) .stk-block-background{ ${ decls.desktopParentHover.join( '' ) } }\n`
+			bgcss += `:where(.stk-hover-parent:hover) .stk-block-background{ ${ [ ...decls.desktopParentHover, unsetDefaults ].join( '' ) } }\n`
 		}
 		css += bgcss
 	}
@@ -72,6 +78,11 @@ const renderGlobalStyles = (
 			containercss += `.stk-container:where(:not(.stk--no-background):hover), :where(.stk-hover-parent:hover) .stk-container:where(:not(.stk--no-background)){ ${ decls.desktopParentHover.join( '' ) } }\n`
 		}
 		css += containercss
+	// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
+	} else if ( containerModeColorScheme in colorSchemes && ! schemeHasValue( colorSchemes[ containerModeColorScheme ] ) ) {
+		const containercss = `.stk-container:where(:not(.stk--no-background)){ ${ getDefaultColors() } }\n`
+
+		css += applyFilters( 'stackable.global-settings.global-color-schemes.default-container-scheme', containercss )
 	}
 
 	Object.entries( colorSchemes ).forEach( ( [ key, scheme ] ) => {
@@ -81,10 +92,10 @@ const renderGlobalStyles = (
 
 		decls = getCSS( scheme, currentHoverState, 'background' )
 		if ( decls.desktop.length || decls.desktopHover.length ) {
-			rules.background.push( `.stk--background-scheme--${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover ].join( '' ) } }` )
+			rules.background.push( `.stk--background-scheme--${ key }{ ${ [ ...decls.desktop, ...decls.desktopHover, unsetDefaults ].join( '' ) } }` )
 		}
 		if ( decls.desktopParentHover.length ) {
-			rules.background.push( `:where(.stk-hover-parent:hover) .stk--background-scheme--${ key }{ ${ decls.desktopParentHover.join( '' ) } }` )
+			rules.background.push( `:where(.stk-hover-parent:hover) .stk--background-scheme--${ key }{ ${ [ ...decls.desktopParentHover, unsetDefaults ].join( '' ) } }` )
 		}
 
 		decls = getCSS( scheme, currentHoverState, 'container' )

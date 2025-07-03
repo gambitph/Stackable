@@ -180,7 +180,9 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				// 'columns-gap' => $this->get_value( $styles, ['blocks', 'core/columns', 'spacing', 'blockGap'] ),
 				'button-group-gap' =>  $this->get_value( $styles, ['blocks', 'core/buttons', 'spacing', 'blockGap'] ),
 				'default-gap' => $this->get_value( $styles, ['spacing', 'blockGap'] ),
-				'container-color' => $this->get_value( $styles, ['color', 'text'] ),
+				'text-color' => $this->get_value( $styles, ['color', 'text'] ),
+				'heading-color' => $this->get_value( $styles, [ 'elements', 'heading', 'color', 'text' ] ),
+				'link-color' => $this->get_value( $styles, [ 'elements', 'link', 'color', 'text' ] )
 			);
 
 			if ( $root_properties[ 'button-group-gap' ] || $root_properties[ 'default-gap' ] ) {
@@ -193,8 +195,22 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 			// 	$style_declarations['root']['declarations'][ '--stk-columns-column-gap' ] = $root_properties[ 'columns-gap' ] ?? $root_properties[ 'default-gap' ];
 			// }
 
-			if ( $root_properties[ 'container-color' ] ) {
-				$style_declarations['root']['declarations'][ '--stk-container-color' ] = $root_properties[ 'container-color' ];
+			if ( $root_properties[ 'text-color' ] ) {
+				$style_declarations['root']['declarations'][ '--stk-container-color' ] = $root_properties[ 'text-color' ];
+				$style_declarations['root']['declarations'][ '--stk-text-color' ] = $root_properties[ 'text-color' ];
+				$style_declarations['root']['declarations'][ '--stk-default-text-color' ] = $root_properties[ 'text-color' ];
+			}
+
+			if ( $root_properties[ 'heading-color' ] ) {
+				$style_declarations['root']['declarations'][ '--stk-default-heading-color' ] = $root_properties[ 'heading-color' ];
+			} else if ( $root_properties[ 'text-color' ] ) {
+				$style_declarations['root']['declarations'][ '--stk-default-heading-color' ] = $root_properties[ 'text-color' ];
+			}
+
+			if ( $root_properties[ 'link-color' ] ) {
+				$style_declarations['root']['declarations'][ '--stk-default-link-color' ] = $root_properties[ 'link-color' ];
+			} else if ( $root_properties[ 'text-color' ] ) {
+				$style_declarations['root']['declarations'][ '--stk-default-link-color' ] = $root_properties[ 'text-color' ];
 			}
 
 			/**
@@ -238,8 +254,8 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 					),
 					'get_properties' => array( 'color', 'background', 'background-color' ),
 					'set_custom_properties' => array(
-						'color' => '--stk-button-text-color',
-						'background' => '--stk-button-background-color',
+						'color' => array('--stk-button-text-color', '--stk-default-button-text-color'),
+						'background' => array('--stk-button-background-color', '--stk-default-button-background-color'),
 					),
 					'custom_properties_selector' => 'root',
 					'custom_properties_selector_hover' => 'button-default-hover',
@@ -388,7 +404,11 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 
 			// add a CSS custom property from `color`
 			if ( isset( $custom_properties['color'] ) && isset( $element_declarations['color'] ) ) {
-				$style_declarations[ $selector ][ 'declarations' ][ $custom_properties['color'] ] = $element_declarations[ 'color' ];
+				$color_custom_properties = is_array( $custom_properties[ 'color' ] ) ? $custom_properties[ 'color' ] : array( $custom_properties[ 'color' ] );
+
+				foreach ($color_custom_properties as $custom_property ) {
+					$style_declarations[ $selector ][ 'declarations' ][ $custom_property ] = $element_declarations[ 'color' ];
+				}
 			}
 
 			// add a CSS custom property from `background` or `background-color`
@@ -397,7 +417,11 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 			) ) {
 				$background_value = $element_declarations[ 'background' ] ?? $element_declarations[ 'background-color' ];
 
-				$style_declarations[ $selector ][ 'declarations' ][ $custom_properties['background'] ] = $background_value;
+				$background_custom_properties = is_array( $custom_properties[ 'background' ] ) ? $custom_properties['background'] : array( $custom_properties['background'] );
+
+				foreach ($background_custom_properties as $custom_property ) {
+					$style_declarations[ $selector ][ 'declarations' ][ $custom_property ] = $background_value;
+				}
 
 				unset( $style_declarations[ $element ][ 'declarations' ][ 'background' ] );
 				unset( $style_declarations[ $element ][ 'declarations' ][ 'background-color' ] );

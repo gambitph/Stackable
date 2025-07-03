@@ -132,6 +132,18 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					'default' => '',
 				)
 			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_use_v3_16_0_color_scheme_inheritance',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Stackable Global Color Scheme v3.16.0 Color Scheme Inheritance', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => false,
+				)
+			);
 		}
 
 		// Make this function static so it can be used when
@@ -182,6 +194,20 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		/**-----------------------------------------------------------------------------
 		 * Global Color Scheme functions
 		 *-----------------------------------------------------------------------------*/
+
+		public static function get_color_schemes_array() {
+			$schemes_array = is_array( get_option( 'stackable_global_color_schemes' ) ) ? get_option( 'stackable_global_color_schemes' ) : [];
+
+			// Get all color schemes, including custom color schemes if any
+			$all_color_schemes = apply_filters( 'stackable_global_color_schemes/get_color_schemes', $schemes_array );
+
+			if ( ! is_array( $all_color_schemes ) ) {
+				return false;
+			}
+
+			return self::convert_to_assoc_array( $all_color_schemes );
+		}
+
 		/**
 		 * Add the default global color schemes in the frontend (Base, Default Background, Default Container).
 		 * Other color schemes used by blocks will be added on `render_block` filter.
@@ -201,16 +227,13 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			}
 
 			// Generate the CSS for the color schemes if there is no cached CSS
-			$schemes_array = is_array( get_option( 'stackable_global_color_schemes' ) ) ? get_option( 'stackable_global_color_schemes' ) : [];
+			$all_color_schemes = $this::get_color_schemes_array();
 
-			// Get all color schemes, including custom color schemes if any
-			$all_color_schemes = apply_filters( 'stackable_global_color_schemes/get_color_schemes', $schemes_array );
-
-			if ( ! is_array( $all_color_schemes ) ) {
+			if ( ! $all_color_schemes ) {
 				return $current_css;
 			}
 
-			$this->color_schemes = $this->convert_to_assoc_array( $all_color_schemes );
+			$this->color_schemes = $all_color_schemes;
 
 			$base_default = isset( $this->color_schemes[ get_option( 'stackable_global_base_color_scheme' ) ] ) ? get_option( 'stackable_global_base_color_scheme' ) : 'scheme-default-1';
 			$background_default = isset( $this->color_schemes[ get_option( 'stackable_global_background_mode_color_scheme' ) ] )  ? get_option( 'stackable_global_background_mode_color_scheme' ) : 'scheme-default-2';
@@ -274,6 +297,11 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				$styles = $this->generate_color_scheme_styles( $styles, $scheme );
 			}
 
+			// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
+			if ( isset( $this->color_schemes[ $container_default ] ) && $this::is_scheme_empty( $this->color_schemes[ $container_default ] ) ) {
+				$styles = $this->getDefaultContainerColors( $styles, $default_color_schemes[ 2 ] );
+			}
+
 			$color_scheme_css = '';
 			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			if ( $generated_css != '' ) {
@@ -320,7 +348,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		 * @param Array 	$schemes_array
 		 * @return Array
 		 */
-		public function convert_to_assoc_array( $schemes_array ) {
+		public static function convert_to_assoc_array( $schemes_array ) {
 			return array_column( $schemes_array, 'colorScheme', 'key' );
 		}
 
@@ -402,12 +430,55 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			return true;
 		}
 
+		public static function is_scheme_empty( $scheme ) {
+			foreach( $scheme as $property => $values ) {
+				if ( is_array( $values ) ) {
+					foreach( $values as $device_state => $value ) {
+						if ( $value ) return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
 		public function is_gradient( $scheme, $property, $state ) {
 			if ( ! $this->has_value( $scheme, $property, $state ) ) {
 				return false;
 			}
 			$value = $scheme[ $property ][ $state ];
 			return strpos( $value, 'linear-' ) !== false || strpos( $value, 'radial-' ) !== false;
+		}
+
+		// These colors are used when there are color schemes but the default container scheme is empty
+		public function getDefaultContainerColors( $styles, $scheme ) {
+			$selectors = $scheme[ 'selectors' ];
+
+			$default_styles = array();
+			$default_styles[] = array(
+				'selector'     => $selectors[ 'desktop' ],
+				'declarations' => array(
+					'--stk-background-color' => 'var(--stk-default-container-background-color, #fff)',
+					'--stk-heading-color' => 'var(--stk-default-heading-color, initial)',
+					'--stk-text-color' => 'var(--stk-container-color, initial)',
+					'--stk-link-color' => 'var(--stk-default-link-color, var(--stk-text-color, initial))',
+					'--stk-accent-color' => '#ddd',
+					'--stk-subtitle-color' => '#39414d',
+					'--stk-default-icon-color' => 'var(--stk-icon-color)',
+					'--stk-button-background-color' => 'var(--stk-default-button-background-color, #008de4)',
+					'--stk-button-text-color' => 'var(--stk-default-button-text-color, #fff)',
+					'--stk-button-outline-color' => 'var(--stk-default-button-background-color, #008de4)'
+				)
+			);
+
+			$default_styles = apply_filters( 'stackable.global-settings.global-color-schemes.default-container-scheme', $default_styles );
+
+			foreach ( $default_styles as $styles ) {
+				$styles[] = $default_styles;
+			}
+
+
+			return $styles;
 		}
 
 		/**
@@ -436,6 +507,11 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				foreach ( $properties as $property => $css_property ) {
 					if ( $this->has_value( $scheme, $property, $state ) ) {
 						$decls[ $state ][ $css_property ] = $scheme[ $property ][ $state ];
+
+						if ( $property === 'accentColor' ) {
+							$suffix = $state === 'desktopHover' ? '-hover' : '';
+							$decls[ $state ][ "--stk-subtitle-color$suffix" ] = $scheme[ $property ][ $state ];
+						}
 					}
 
 					/**

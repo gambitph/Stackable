@@ -218,6 +218,7 @@ const SEARCH_TREE = [
 					__( 'Show Go premium notices', i18n ),
 					__( 'Generate Global Colors for native blocks', i18n ),
 					__( 'Inherit Block Styles from theme.json', i18n ),
+					__( 'Use v3.16.0 Color Scheme Inheritance', i18n ),
 				],
 			},
 			{
@@ -1447,6 +1448,18 @@ const AdditionalOptions = props => {
 								checked={ ! settings.stackable_disable_block_style_inheritance }
 								onChange={ checked => {
 									handleSettingsChange( { stackable_disable_block_style_inheritance: ! checked } ) // eslint-disable-line camelcase
+								} }
+							/>
+							<CheckboxControl
+								label={ __( 'Use v3.16.0 Color Scheme Inheritance', i18n ) }
+								className={ searchClassname( __( 'Use v3.16.0 Color Scheme Inheritance', i18n ), miscellaneous ) }
+								help={ __( `A bug in the color scheme inheritance was present in v3.16.0-v3.16.2. This has been fixed, but in order to preserve the state of affected sites, you may find this option turned on.`, i18n ) }
+								checked={ !! settings.stackable_use_v3_16_0_color_scheme_inheritance }
+								onChange={ checked => {
+									handleSettingsChange( {
+										stackable_use_v3_16_0_color_scheme_inheritance: checked,
+										stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
+									 } )
 								} }
 							/>
 						</div>
