@@ -19,6 +19,11 @@
 	.ugb-columns-width-control__reset {
 		text-transform: none;
 	}
+	.components-radio-control__input {
+		min-width: 0 !important;
+		width: 0 !important;
+		position: absolute !important;
+	}
 }
 
 .stk-column-widths-control__columns-slider {
