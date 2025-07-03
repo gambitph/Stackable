@@ -34,13 +34,13 @@ const SEPARATOR_SHADOWS = [
 	'0px 0 1px #78787880',
 	'0px 0 2px #78787880',
 	'2px 4px 6px #000', // This is a dark shadow similar to the shadow we used by default in v2.
-	'0px 5px 10px #99999959',
+	'0px 5px 10px #9999995a',
 	'0px 2px 20px #99999933',
-	'25px 10px 30px #123f524c',
+	'25px 10px 30px #123f524d',
 	'0px 10px 30px #0000000d',
-	'7px 5px 30px #48497926',
+	'7px 5px 30px #48497927',
 	'0px 10px 60px #0000001a',
-	'70px 130px -60px #48497961 ',
+	'70px 130px -60px #48497961',
 ]
 
 const SeparatorControls = props => {

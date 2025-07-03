@@ -36,32 +36,32 @@ const FLEX_HORIZONTAL_ALIGN_OPTIONS = [
 	{
 		value: 'flex-start',
 		title: __( 'Start', i18n ),
-		icon: <SVGIconLeft />,
+		icon: <SVGIconLeft width="24" height="24" />,
 	},
 	{
 		value: 'center',
 		title: __( 'Center', i18n ),
-		icon: <SVGIconHorizontalCenter />,
+		icon: <SVGIconHorizontalCenter width="24" height="24" />,
 	},
 	{
 		value: 'flex-end',
 		title: __( 'End', i18n ),
-		icon: <SVGIconRight />,
+		icon: <SVGIconRight width="24" height="24" />,
 	},
 	{
 		value: 'space-between',
 		title: __( 'Space Between', i18n ),
-		icon: <SVGIconSpaceBetween />,
+		icon: <SVGIconSpaceBetween width="24" height="24" />,
 	},
 	{
 		value: 'space-around',
 		title: __( 'Space Around', i18n ),
-		icon: <SVGIconSpaceAround />,
+		icon: <SVGIconSpaceAround width="24" height="24" />,
 	},
 	{
 		value: 'space-evenly',
 		title: __( 'Space Evenly', i18n ),
-		icon: <SVGIconSpaceEvenly />,
+		icon: <SVGIconSpaceEvenly width="24" height="24" />,
 	},
 ]
 
@@ -69,22 +69,22 @@ const FLEX_HORIZONTAL_ALIGN_OPTIONS_ALT = [
 	{
 		value: 'flex-start',
 		title: __( 'Start', i18n ),
-		icon: <SVGIconLeft />,
+		icon: <SVGIconLeft width="24" height="24" />,
 	},
 	{
 		value: 'center',
 		title: __( 'Center', i18n ),
-		icon: <SVGIconHorizontalCenter />,
+		icon: <SVGIconHorizontalCenter width="24" height="24" />,
 	},
 	{
 		value: 'flex-end',
 		title: __( 'End', i18n ),
-		icon: <SVGIconRight />,
+		icon: <SVGIconRight width="24" height="24" />,
 	},
 	{
 		value: 'space-between',
 		title: __( 'Space Between', i18n ),
-		icon: <SVGIconSpaceBetween />,
+		icon: <SVGIconSpaceBetween width="24" height="24" />,
 	},
 ]
 
@@ -92,27 +92,27 @@ const FLEX_VERTICAL_ALIGN_OPTIONS = [
 	{
 		value: 'flex-start',
 		title: __( 'Start', i18n ),
-		icon: <SVGIconTop />,
+		icon: <SVGIconTop width="24" height="24" />,
 	},
 	{
 		value: 'center',
 		title: __( 'Center', i18n ),
-		icon: <SVGIconVerticalCenter />,
+		icon: <SVGIconVerticalCenter width="24" height="24" />,
 	},
 	{
 		value: 'flex-end',
 		title: __( 'End', i18n ),
-		icon: <SVGIconBottom />,
+		icon: <SVGIconBottom width="24" height="24" />,
 	},
 	{
 		value: 'stretch',
 		title: __( 'Stretch', i18n ),
-		icon: <SVGIconStretch />,
+		icon: <SVGIconStretch width="24" height="24" />,
 	},
 	{
 		value: 'baseline',
 		title: __( 'Baseline', i18n ),
-		icon: <SVGIconVerticalBaseline />,
+		icon: <SVGIconVerticalBaseline width="24" height="24" />,
 	},
 ]
 
@@ -120,32 +120,32 @@ const FLEX_VERTICAL_JUSTIFY_OPTIONS = [
 	{
 		value: 'flex-start',
 		title: __( 'Start', i18n ),
-		icon: <SVGIconTop />,
+		icon: <SVGIconTop width="24" height="24" />,
 	},
 	{
 		value: 'center',
 		title: __( 'Center', i18n ),
-		icon: <SVGIconVerticalCenter />,
+		icon: <SVGIconVerticalCenter width="24" height="24" />,
 	},
 	{
 		value: 'flex-end',
 		title: __( 'End', i18n ),
-		icon: <SVGIconBottom />,
+		icon: <SVGIconBottom width="24" height="24" />,
 	},
 	{
 		value: 'space-between',
 		title: __( 'Space Between', i18n ),
-		icon: <SVGIconSpaceBetween style={ { transform: 'rotate(90deg)' } } />,
+		icon: <SVGIconSpaceBetween style={ { transform: 'rotate(90deg)' } } width="24" height="24" />,
 	},
 	{
 		value: 'space-around',
 		title: __( 'Space Around', i18n ),
-		icon: <SVGIconSpaceAround style={ { transform: 'rotate(90deg)' } } />,
+		icon: <SVGIconSpaceAround style={ { transform: 'rotate(90deg)' } } width="24" height="24" />,
 	},
 	{
 		value: 'space-evenly',
 		title: __( 'Space Evenly', i18n ),
-		icon: <SVGIconSpaceEvenly style={ { transform: 'rotate(90deg)' } } />,
+		icon: <SVGIconSpaceEvenly style={ { transform: 'rotate(90deg)' } } width="24" height="24" />,
 	},
 ]
 
@@ -158,12 +158,12 @@ const HORIZONTAL_ALIGN_OPTIONS = [
 	{
 		value: 'center',
 		title: __( 'Center', i18n ),
-		icon: <SVGIconHorizontalCenter />,
+		icon: <SVGIconHorizontalCenter width="24" height="24" />,
 	},
 	{
 		value: 'flex-end',
 		title: __( 'Right', i18n ),
-		icon: <SVGIconRight />,
+		icon: <SVGIconRight width="24" height="24" />,
 	},
 ]
 
@@ -171,17 +171,17 @@ const VERTICAL_ALIGN_OPTIONS = [
 	{
 		value: 'flex-start',
 		title: __( 'Top', i18n ),
-		icon: <SVGIconTop />,
+		icon: <SVGIconTop width="24" height="24" />,
 	},
 	{
 		value: 'center',
 		title: __( 'Center', i18n ),
-		icon: <SVGIconVerticalCenter />,
+		icon: <SVGIconVerticalCenter width="24" height="24" />,
 	},
 	{
 		value: 'flex-end',
 		title: __( 'Bottom', i18n ),
-		icon: <SVGIconBottom />,
+		icon: <SVGIconBottom width="24" height="24" />,
 	},
 ]
 
