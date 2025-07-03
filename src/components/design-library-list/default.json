@@ -262,26 +262,43 @@
 		"post-btn_placeholder": "Read more",
 		"btn_placeholder": "View all",
 		"tag_placeholder": "Editor's Picks",
-		"title-1_placeholder": "Future of AI in Everyday Life",
-		"text-1_placeholder": "Explore how AI is transforming daily routines and what's next.",
-		"title-2_placeholder": "Sustainable Living",
-		"text-2_placeholder": "Discover easy ways to adopt eco-friendly habits.",
-		"title-3_placeholder": "Mastering Remote Work: Tips for Productivity",
-		"text-3_placeholder": "Boost your efficiency with these essential remote work strategies.",
-		"title-4_placeholder": "Rise of Wearable Technology",
-		"text-4_placeholder": "Learn about the latest advancements in wearable devices.",
-		"title-5_placeholder": "Cybersecurity Essentials",
-		"text-5_placeholder": "Protect your digital life with these crucial security tips.",
-		"title-6_placeholder": "Mindful Photography",
-		"text-6_placeholder": "Enhance your photography skills through a mindful approach.",
-		"title-7_placeholder": "Storytelling in Brand Building",
-		"text-7_placeholder": "Learn how compelling narratives can elevate your brand."
+		"posts_placeholder": [
+			{
+				"title_placeholder": "Future of AI in Everyday Life",
+				"text_placeholder": "Explore how AI is transforming daily routines and what's next."
+			},
+			{
+				"title_placeholder": "Sustainable Living",
+				"text_placeholder": "Discover easy ways to adopt eco-friendly habits."
+			},
+			{
+				"title_placeholder": "Mastering Remote Work: Tips for Productivity",
+				"text_placeholder": "Boost your efficiency with these essential remote work strategies."
+			},
+			{
+				"title_placeholder": "Rise of Wearable Technology",
+				"text_placeholder": "Learn about the latest advancements in wearable devices."
+			},
+			{
+				"title_placeholder": "Cybersecurity Essentials",
+				"text_placeholder": "Protect your digital life with these crucial security tips."
+			},
+			{
+				"title_placeholder": "Mindful Photography",
+				"text_placeholder": "Enhance your photography skills through a mindful approach."
+			},
+			{
+				"title_placeholder": "Storytelling in Brand Building",
+				"text_placeholder": "Learn how compelling narratives can elevate your brand."
+			}
+		]
 	},
 	"Pricing Table": {
 		"heading_placeholder": "Our Pricing Plans",
 		"description_placeholder": "Choose the perfect plan to fit your needs, from individuals to large organizations. All plans include dedicated support and a commitment to your success.",
 		"btn-1_placeholder": "Get Started",
 		"btn-2_placeholder": "Buy Now",
+		"tag_placeholder": "Best Value",
 		"title-1_placeholder": "Flexible Scaling",
 		"text-1_placeholder": "Easily upgrade or downgrade as your needs evolve.",
 		"title-2_placeholder": "24/7 Customer Support",

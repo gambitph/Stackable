@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import DEFAULT from './default.json'
-import { settings } from 'stackable'
+import { settings, isPro } from 'stackable'
 import { parse, serialize } from '@wordpress/blocks'
 
 const DEFAULT_CONTENT = { ...DEFAULT }
@@ -197,4 +197,101 @@ export const parseDisabledBlocks = parsedBlock => {
 
 	const block = addOriginalAttributes( [ parsedBlock ] )[ 0 ]
 	return { block, blocksForSubstitution }
+}
+
+const IMAGE_STORAGE = 'https://storage.googleapis.com/stackable-plugin-assets/library-v4/images/'
+
+export const addPlaceholderForPostsBlock = ( content, postsPlaceholder, defaultValues ) => {
+	const remainingPosts = [ ...postsPlaceholder ]
+
+	// Normalize special characters
+	const normalized = content
+		.replace( /&lt;/g, '<' )
+		.replace( /&gt;/g, '>' )
+		.replace( /–/g, '-' )
+		.replace( /\u2013|\u2014/g, '-' )
+
+	// Regex to match all stackable/posts blocks
+	const postBlockRegex = /<!--\s*wp:stackable\/posts\s+(\{[\s\S]*?\})\s*-->([\s\S]*?)<!--\s*\/wp:stackable\/posts\s*-->/g
+
+	return normalized.replace( postBlockRegex, ( match, jsonStr, innerHtml ) => {
+		let attrs
+		try {
+			attrs = JSON.parse( jsonStr )
+		} catch {
+			return match // Skip if JSON is invalid
+		}
+
+		const numItems = attrs.numberOfItems ?? 6
+		const width = attrs.imageWidth ? attrs.imageWidth + ( attrs.imageWidthUnit ?? 'px' ) : 'auto'
+
+		// Get the post template inside the block
+		const templateMatch = innerHtml.match( /<!--\s*\/stk-start:posts\/template\s*-->([\s\S]*?)<!--\s*\/stk-end:post\/template\s*-->/ )
+		if ( ! templateMatch ) {
+			return match // Skip if template is missing
+		}
+
+		const template = templateMatch[ 1 ].trim()
+		const currentPosts = remainingPosts.splice( 0, numItems ) // Slice the posts for this block
+
+		const renderedPosts = currentPosts.map( ( post, index ) =>
+			template
+				.replace( /!#title!#/g, post.title_placeholder )
+				.replace( /!#excerpt!#/g, post.text_placeholder )
+				.replace( /!#date!#/g, 'March 1, 2025' )
+				.replace( /!#readmoreText!#/g, defaultValues[ 'post-btn_placeholder' ] )
+				.replace( /!#category!#/g, defaultValues.tag_placeholder )
+				.replace( /img class="stk-img"/g, `img class="stk-img" src="${ IMAGE_STORAGE }stk-design-library-image-${ index + 1 }.jpeg" width="${ width }" style="width: ${ width } !important;"` )
+		).join( '\n' )
+
+		// Replace just the template portion, keep rest of the block
+		const updatedInnerHtml = innerHtml.replace(
+			/<!--\s*\/stk-start:posts\/template\s*-->([\s\S]*?)<!--\s*\/stk-end:post\/template\s*-->/,
+			renderedPosts
+		)
+
+		return `<!-- wp:stackable/posts ${ jsonStr } -->${ updatedInnerHtml }<!-- /wp:stackable/posts -->`
+	} )
+}
+
+// Additional styles for blocks to render properly in the preview
+export const getAdditionalStylesForPreview = () => {
+	let styles = ''
+
+	// Make sure count up block numbers are visible
+	styles += `.stk-block-count-up__text:not(.stk--count-up-active) { opacity: 1; }`
+
+	// Fill the vertical line in timeline blocks
+	styles += `.stk-block-timeline { --line-bg-color: var(--line-accent-bg-color, #000); }`
+
+	// Display correctly the progress in progress bar and progress circle blocks
+	styles += `.stk-progress-bar .stk-progress-bar__bar { width: var(--progress-percent, 0px); }`
+	styles += `.stk-progress-circle .stk-progress-circle__bar { stroke-dashoffset: var(--progress-dash-offset); }`
+
+	// Display correctly the styles for posts block.
+	// Do this only if in Free version, since we will be able to load the correct CSS for Premium.
+	if ( ! isPro ) {
+		styles += `.stk-block-posts.is-style-horizontal-2 {
+	.stk-block-posts__item > .stk-container {
+		padding: 0;
+		display: flex;
+		flex-direction: row;
+
+		> .stk-block-posts__image-link:empty ~ .stk-container-padding,
+			.stk-container-padding:only-child {
+				width: 100%;
+		}
+	}
+	.stk-img-wrapper {
+		height: 100%;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	.stk-block-posts__image-link {
+		margin-bottom: 0;
+	}
+}`
+	}
+
+	return styles
 }

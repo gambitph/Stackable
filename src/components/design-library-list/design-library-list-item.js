@@ -4,7 +4,10 @@
 import ProControl from '../pro-control'
 import DEFAULT from './default.json'
 import {
-	addBackgroundScheme, addContainerScheme, cleanParse, parseDisabledBlocks,
+	addBackgroundScheme, addContainerScheme,
+	addPlaceholderForPostsBlock, cleanParse,
+	getAdditionalStylesForPreview,
+	parseDisabledBlocks,
 } from './util'
 
 /**
@@ -141,6 +144,9 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		} else if ( category === 'Tabs' ) {
 		// Add a class for the first tab to be the active tab in the preview
 			preview = preview.replace( '"stk-block-tabs__tab"', '"stk-block-tabs__tab stk-block-tabs__tab--active"' )
+		} else if ( category === 'Post Loop' ) {
+			const defaultValues = DEFAULT_CONTENT[ category ]
+			preview = addPlaceholderForPostsBlock( preview, defaultValues[ 'posts_placeholder' ], defaultValues )
 		}
 
 		const cleanedBlock = preview.replace( /<!--[\s\S]*?-->/g, '' ) // removes comment
@@ -213,10 +219,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			}
 
 			// Additional styles for blocks to render properly in the preview
-			hostStyles.innerHTML += `.stk-block-count-up__text:not(.stk--count-up-active) { opacity: 1; }`
-			hostStyles.innerHTML += `.stk-block-timeline { --line-bg-color: var(--line-accent-bg-color, #000); }`
-			hostStyles.innerHTML += `.stk-progress-bar .stk-progress-bar__bar { width: var(--progress-percent, 0px); }`
-			hostStyles.innerHTML += `.stk-progress-circle .stk-progress-circle__bar { stroke-dashoffset: var(--progress-dash-offset); }`
+			hostStyles.innerHTML += getAdditionalStylesForPreview()
 
 			styleNodes.push( hostStyles )
 
