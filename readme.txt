@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.1
 Requires PHP: 7.3
-Stable tag: 3.16.2
+Stable tag: 3.16.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -310,6 +310,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.16.3 =
+* Fixed: Using preset values with shadows will cause the preset value to reset on editor refresh #3538
+* Fixed: Color Schemes - container colors now do not inherit the background color scheme #3534
+* Fixed: Color Schemes - added setting to use old inheriting background color scheme behavior #3534
 
 = 3.16.2 =
 * Fixed: Clicking on certain portions of the editor scrolls the editor downward #3520 #3529

@@ -204,6 +204,7 @@
     ],
     "subsets": [
       "cyrillic-ext",
+      "ethiopic",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -2981,6 +2982,24 @@
     ]
   },
   {
+    "family": "Bitcount Grid Double",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Bitter",
     "variants": [
       "100",
@@ -4209,6 +4228,38 @@
       "latin",
       "latin-ext",
       "malayalam"
+    ]
+  },
+  {
+    "family": "Chiron Hei HK",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "chinese-hongkong",
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "symbols2",
+      "vietnamese"
     ]
   },
   {
@@ -10856,6 +10907,32 @@
     ]
   },
   {
+    "family": "Libertinus Math",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Libertinus Mono",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Libre Barcode 128",
     "variants": [
       "regular"
@@ -11771,6 +11848,16 @@
     ]
   },
   {
+    "family": "Manufacturing Consent",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Marcellus",
     "variants": [
       "regular"
@@ -12175,6 +12262,24 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Menbere",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "ethiopic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -15364,6 +15469,17 @@
     ]
   },
   {
+    "family": "Noto Sans Sunuwar",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "sunuwar"
+    ]
+  },
+  {
     "family": "Noto Sans Syloti Nagri",
     "variants": [
       "regular"
@@ -17286,6 +17402,20 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Parastoo",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -23973,6 +24103,18 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "UoqMunThenKhung",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chinese-traditional",
+      "cyrillic",
+      "latin",
+      "symbols2"
     ]
   },
   {
