@@ -75,6 +75,9 @@
 		"container-background-color": {
 			"desktop": "#fff"
 		},
+		"default-container-background-color": {
+			"desktop": "#fff"
+		},
 		"container-color": {
 			"desktop": "#1e1e1e"
 		}
@@ -161,6 +164,12 @@
 			"desktop": "#008de4"
 		},
 		"button-text-color": {
+			"desktop": "#fff"
+		},
+		"default-button-background-color": {
+			"desktop": "#008de4"
+		},
+		"default-button-text-color": {
 			"desktop": "#fff"
 		},
 		"icon-button-padding": {

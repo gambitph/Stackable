@@ -31,16 +31,16 @@ import { getAttributeNameFunc } from '~stackable/util'
 
 const SEPARATOR_SHADOWS = [
 	'none',
-	'0px 0 1px rgba(120, 120, 120, 0.5)',
-	'0px 0 2px rgba(120, 120, 120, 0.5)',
+	'0px 0 1px #78787880',
+	'0px 0 2px #78787880',
 	'2px 4px 6px #000', // This is a dark shadow similar to the shadow we used by default in v2.
-	'0px 5px 10px rgba(153, 153, 153, 0.35)',
-	'0px 2px 20px rgba(153, 153, 153, 0.2)',
-	'25px 10px 30px rgba(18, 63, 82, 0.3)',
-	'0px 10px 30px rgba(0, 0, 0, 0.05)',
-	'7px 5px 30px rgba(72, 73, 121, 0.15)',
-	'0px 10px 60px rgba(0, 0, 0, 0.1)',
-	'70px 130px -60px rgba(72, 73, 121, 0.38) ',
+	'0px 5px 10px #99999959',
+	'0px 2px 20px #99999933',
+	'25px 10px 30px #123f524c',
+	'0px 10px 30px #0000000d',
+	'7px 5px 30px #48497926',
+	'0px 10px 60px #0000001a',
+	'70px 130px -60px #48497961 ',
 ]
 
 const SeparatorControls = props => {

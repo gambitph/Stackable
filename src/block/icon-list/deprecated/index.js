@@ -69,6 +69,70 @@ const getEquivalentIconSize = iconSize => {
 
 const deprecated = [
 	{
+		// Handle the migration of shadow attributes with the change of type in 3.15.3
+		attributes: attributes( '3.16.2' ),
+		save: withVersion( '3.16.2' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+
+			return hasBlockShadow || hasContainerShadow
+		},
+		supports: {
+			anchor: true,
+			spacing: true,
+			__unstablePasteTextInline: true,
+			__experimentalSelector: 'ol,ul',
+			__experimentalOnMerge: true,
+		},
+		migrate: ( attributes, innerBlocks ) => {
+			let newAttributes = { ...attributes }
+			const {
+				text, icons, iconSize, ordered, iconGap,
+			} = attributes
+
+			const _iconSize = iconSize ? iconSize : 1
+			const _iconGap = iconGap ? iconGap : 0
+
+			newAttributes = {
+				...newAttributes,
+				listFullWidth: false,
+				iconVerticalAlignment: 'baseline',
+				iconGap: _iconGap + 4, // Our gap is smaller now.
+				iconSize: ordered
+					? getEquivalentFontSize( _iconSize )
+					: getEquivalentIconSize( _iconSize ),
+			}
+
+			if ( ! text ) {
+				const block = createBlock( 'stackable/icon-list-item' )
+				innerBlocks = [ block ]
+			} else {
+				const contents = textToArray( text )
+				const blocks = contents.map( ( content, index ) => {
+					const newBlock = createBlock( 'stackable/icon-list-item', {
+						text: content,
+						icon: getUniqueIcon( icons, index ),
+					} )
+					newBlock.attributes.uniqueId = createUniqueClass( newBlock.clientId )
+
+					return newBlock
+				} )
+				innerBlocks = blocks
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return [ newAttributes, innerBlocks ]
+		},
+	},
+	{
 		// Support the change of type for font size and  block height
 		attributes: attributes( '3.15.3' ),
 		save: withVersion( '3.15.3' )( Save ),
@@ -136,6 +200,16 @@ const deprecated = [
 		attributes: attributes( '3.12.11' ),
 		save: withVersion( '3.12.11' )( Save ),
 		isEligible: attributes => {
+			if ( ( typeof attributes?.fontSize === 'string' ||
+				typeof attributes?.fontSizeTablet === 'string' ||
+				typeof attributes?.fontSizeMobile === 'string' ||
+				typeof attributes?.blockHeight === 'string' ||
+				typeof attributes?.blockHeightTablet === 'string' ||
+				typeof attributes?.blockHeightMobile === 'string' )
+			) {
+				return false
+			}
+
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
 

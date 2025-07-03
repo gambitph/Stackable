@@ -77,7 +77,9 @@ export const deprecateTypographyShadowColor = {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
-		if ( getAttribute( 'textShadow' ) || getAttribute( 'textShadowHover' ) || getAttribute( 'textShadowParentHover' ) ) {
+		if ( ( getAttribute( 'textShadow' ) && getAttribute( 'textShadow' ).indexOf( 'rgba' ) !== -1 ) ||
+			( getAttribute( 'textShadowHover' ) && getAttribute( 'textShadowHover' ).indexOf( 'rgba' ) !== -1 ) ||
+			( getAttribute( 'textShadowParentHover' ) && getAttribute( 'textShadowParentHover' ).indexOf( 'rgba' ) !== -1 ) ) {
 			return true
 		}
 
@@ -96,7 +98,7 @@ export const deprecateTypographyShadowColor = {
 		const shadowParentHover = getAttribute( 'textShadowParentHover' ) || shadowHover
 
 		if ( getAttribute( 'textShadow' ) && getAttribute( 'textShadow' ).indexOf( 'rgba' ) !== -1 ) {
-			const { options, color } = extractRgba( shadowHover )
+			const { options, color } = extractRgba( shadow )
 			const hex = rgbaToHexAlpha( color )
 			newAttributes[ getAttrName( 'textShadow' ) ] = `${ options } ${ hex }`
 		}
@@ -123,8 +125,12 @@ export const deprecateTypographyFontSize = {
 		const getAttribute = _attrName => attributes[ getAttrName( _attrName ) ]
 
 		const fontSize = getAttribute( 'fontSize' )
+		const fontSizeTablet = getAttribute( 'fontSizeTablet' )
+		const fontSizeMobile = getAttribute( 'fontSizeMobile' )
 
-		return typeof fontSize === 'number'
+		return typeof fontSize === 'number' ||
+			typeof fontSizeTablet === 'number' ||
+			typeof fontSizeMobile === 'number'
 	},
 	migrate: attrNameTemplate => attributes => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -135,9 +141,19 @@ export const deprecateTypographyFontSize = {
 		}
 
 		const fontSize = getAttribute( 'fontSize' )
+		const fontSizeTablet = getAttribute( 'fontSizeTablet' )
+		const fontSizeMobile = getAttribute( 'fontSizeMobile' )
 
 		if ( typeof fontSize === 'number' ) {
 			newAttributes[ getAttrName( 'fontSize' ) ] = String( fontSize )
+		}
+
+		if ( typeof fontSizeTablet === 'number' ) {
+			newAttributes[ getAttrName( 'fontSizeTablet' ) ] = String( fontSizeTablet )
+		}
+
+		if ( typeof fontSizeMobile === 'number' ) {
+			newAttributes[ getAttrName( 'fontSizeMobile' ) ] = String( fontSizeMobile )
 		}
 
 		return newAttributes

@@ -235,6 +235,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/theme-block-style-inher
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/spacing-and-borders/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/buttons-and-icons/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/color-schemes/deprecated/index.php' );  // We need to add this so the filter for deprecation gets applied.
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/color-schemes/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/preset-controls/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/custom-block-styles.php' );
@@ -289,6 +290,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/editor-settings.php'
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/navigation-panel-pre-enabled.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/font-awesome-version.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/global-color-schemes.php' );
 
 /**
  * V2 Deprecated

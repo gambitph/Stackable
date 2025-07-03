@@ -91,12 +91,20 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 
 			if ( scheme[ property ]?.[ state ] ) {
 				decls[ state ].push( `${ customProperty }${ suffix }: ${ scheme[ property ]?.[ state ] };` )
+
+				if ( property === 'accentColor' ) {
+					decls[ state ].push( `${ camelToKebab( 'subtitleColor' ) }${ suffix }: ${ scheme[ property ]?.[ state ] };` )
+				}
 			}
 
 			const inheritedValue = getInheritedValue( scheme[ property ], state )
 			// const inheritedNormalValue = getInheritedValue( scheme[ property ], state, false )
 			if ( state === 'desktopParentHover' && currentHoverState !== 'normal' && property !== 'backgroundColor' && inheritedValue ) {
 				decls.desktopHover.push( `${ customProperty }-parent-hover: ${ inheritedValue };` )
+
+				if ( property === 'accentColor' ) {
+					decls[ state ].push( `${ camelToKebab( 'subtitleColor' ) }-parent-hover: ${ inheritedValue };` )
+				}
 			}
 
 			/**
@@ -151,6 +159,32 @@ export const getCSS = ( scheme, currentHoverState = 'normal', mode = '' ) => {
 	}
 
 	return addThemeCompatibility( decls, scheme, mode )
+}
+
+// These colors are used when there are color schemes but the default container scheme is empty
+export const getDefaultColors = () => {
+	let decls = ''
+
+	decls += '--stk-background-color: var(--stk-default-container-background-color, #fff);'
+	decls += '--stk-heading-color: var(--stk-default-heading-color, initial);'
+	decls += '--stk-text-color: var(--stk-container-color, initial);'
+	decls += '--stk-link-color: var(--stk-default-link-color, var(--stk-text-color, initial));'
+	decls += '--stk-accent-color: #ddd;'
+	decls += '--stk-subtitle-color: #39414d;'
+	decls += '--stk-default-icon-color: var(--stk-icon-color);'
+	decls += '--stk-button-background-color: var(--stk-default-button-background-color, #008de4);'
+	decls += '--stk-button-text-color: var(--stk-default-button-text-color, #fff);'
+	decls += '--stk-button-outline-color: var(--stk-default-button-background-color, #008de4);'
+
+	return decls
+}
+
+export const unsetDefaultColors = () => {
+	let decls = ''
+
+	decls += '--stk-default-icon-color: unset;'
+
+	return decls
 }
 
 const addThemeCompatibility = ( decls, scheme, mode ) => {

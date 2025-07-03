@@ -10,6 +10,38 @@ import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
 	{
+		// Handle the migration of shadow attributes with the change of type in 3.15.3
+		attributes: attributes( '3.16.2' ),
+		save: withVersion( '3.16.2' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+			const hasTabButtonShadow = deprecateShadowColor.isEligible( 'tab%s' )( attributes )
+			const hasActiveTabButtonShadow = deprecateShadowColor.isEligible( 'activeTab%s' )( attributes )
+			const hasTextShadow = deprecateTypographyShadowColor.isEligible( 'tab%s' )( attributes )
+
+			return hasBlockShadow || hasContainerShadow || hasTextShadow || hasTabButtonShadow || hasActiveTabButtonShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'activeTab%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyShadowColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'activeTab%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
+	{
 		// Support the change of type for fontSize and blockHeight
 		attributes: attributes( '3.15.3' ),
 		save: withVersion( '3.15.3' )( Save ),
@@ -42,6 +74,16 @@ const deprecated = [
 		attributes: attributes( '3.12.11' ),
 		save: withVersion( '3.12.11' )( Save ),
 		isEligible: attributes => {
+			if ( ( typeof attributes?.tabFontSize === 'string' ||
+				typeof attributes?.tabFontSizeTablet === 'string' ||
+				typeof attributes?.tabFontSizeMobile === 'string' ||
+				typeof attributes?.blockHeight === 'string' ||
+				typeof attributes?.blockHeightTablet === 'string' ||
+				typeof attributes?.blockHeightMobile === 'string' )
+			) {
+				return false
+			}
+
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
 			const hasTabButtonShadow = deprecateShadowColor.isEligible( 'tab%s' )( attributes )

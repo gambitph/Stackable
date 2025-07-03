@@ -9,6 +9,34 @@ import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
 	{
+		// Handle the migration of shadow attributes with the change of type in 3.15.3
+		attributes: attributes( '3.16.2' ),
+		save: withVersion( '3.16.2' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+
+			return hasBlockShadow || hasContainerShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'digit%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'label%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'digit%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'label%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'message%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
+	{
 		// Support the change of type for fontSize and blockHeight
 		attributes: attributes( '3.15.3' ),
 		save: withVersion( '3.15.3' )( Save ),
@@ -43,6 +71,22 @@ const deprecated = [
 		attributes: attributes( '3.12.11' ),
 		save: withVersion( '3.12.11' )( Save ),
 		isEligible: attributes => {
+			if ( ( typeof attributes?.digitfontSize === 'string' ||
+				typeof attributes?.digitfontSizeTablet === 'string' ||
+				typeof attributes?.digitfontSizeMobile === 'string' ||
+				typeof attributes?.labelFontSize === 'string' ||
+				typeof attributes?.labelFontSizeTablet === 'string' ||
+				typeof attributes?.labelFontSizeMobile === 'string' ||
+				typeof attributes?.messagefontSize === 'string' ||
+				typeof attributes?.messagefontSizeTablet === 'string' ||
+				typeof attributes?.messagefontSizeMobile === 'string' ||
+				typeof attributes?.blockHeight === 'string' ||
+				typeof attributes?.blockHeightTablet === 'string' ||
+				typeof attributes?.blockHeightMobile === 'string' )
+			) {
+				return false
+			}
+
 			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
 
