@@ -63,9 +63,9 @@ export const BlockStylesControl = props => {
 		const globalBlockStyles = select( 'stackable/global-block-styles' ).getBlockStyles( blockName )
 
 		const invalidNames = globalBlockStyles.reduce( ( output, item ) => {
-			output[ item.name.toLowerCase() ] = 1
+			output.add( item.name.toLowerCase() )
 			return output
-		}, {} )
+		}, new Set() )
 
 		const blockStyleOptions = globalBlockStyles.reduce( ( options, blockStyle ) => {
 			options.push( { label: blockStyle.name, value: blockStyle.slug } )
@@ -157,12 +157,13 @@ export const BlockStylesControl = props => {
 					value={ isModified }
 					default={ false }
 					onChange={ () => {
-						if ( ! blockStyle ) {
+						const blockStyleAttrs = globalBlockStyles.find( item => item.slug === blockStyle )?.attributes
+
+						if ( ! blockStyle || blockStyleAttrs === undefined ) {
 							setAttributes( defaultBlockAttributes )
 							return
 						}
 
-						const blockStyleAttrs = globalBlockStyles.find( item => item.slug === blockStyle ).attributes
 						setAttributes( {
 							...defaultBlockAttributes,
 							...blockStyleAttrs,
