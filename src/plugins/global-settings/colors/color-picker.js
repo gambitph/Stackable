@@ -125,16 +125,16 @@ const ColorPickers = props => {
 
 		updateColors( updatedColors )
 		setIsSorting( false )
-	  }
+	}
 
-	  const ItemPreview = ( { item } ) => {
+	const ItemPreview = ( { item } ) => {
 		return <ColorIndicator
 			className="stk-color-indicator block-editor-panel-color-gradient-settings__color-indicator"
 			colorValue={ item.color }
 		/>
-	  }
+	}
 
-	  const ItemPicker = ( { item, onChange } ) => {
+	const ItemPicker = ( { item, onChange } ) => {
 		return <div className="stk-color-palette-control__popover-content">
 			<ColorPicker
 				onChange={ value => onChange( {
@@ -145,7 +145,7 @@ const ColorPickers = props => {
 				enableAlpha={ true }
 			/>
 		</div>
-	  }
+	}
 
 	return (
 		<SortablePicker
