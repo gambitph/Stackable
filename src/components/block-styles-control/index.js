@@ -39,7 +39,7 @@ const popoverProps = {
 export const BlockStylesControl = props => {
 	const { blockName, clientId } = props
 	const blockType = getBlockType( blockName )
-	const blockAttributesFilter = [ ...STACKABLE_FILTERS[ blockName ], 'uniqueId' ]
+	const blockAttributesFilter = [ ...( STACKABLE_FILTERS[ blockName ] || [] ), 'uniqueId' ]
 	const defaultBlockAttributes = useMemo( () => getFilteredAttributes( blockType.attributes, blockAttributesFilter ), [] )
 
 	const [ openProNoticeModal, setOpenProNoticeModal ] = useState( false )

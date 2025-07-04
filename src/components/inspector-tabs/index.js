@@ -73,7 +73,7 @@ const InspectorTabs = props => {
 	return (
 		<>
 			<InspectorControls>
-				{ ! isPro && showProNotice && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
+				{ ( isPro || showProNotice ) && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
 				<PanelTabs
 					tabs={ props.tabs }
 					initialTab={ activeTab }

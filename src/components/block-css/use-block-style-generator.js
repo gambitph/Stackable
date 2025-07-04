@@ -29,8 +29,14 @@ export const useBlockCssGenerator = props => {
 	// Keep the generated CSS for editor and return it when only the text attribute has changed.
 	const oldCss = useRef( null )
 
-	const generateCssStyles = useMemo( () => isBlockStyleAttributesModified( blockName, attributes.blockStyle, attributes ),
-		[ clientId, attributes ] )
+	const generateCssStyles = useMemo( () => {
+		if ( ! blockName ) {
+			return true
+		}
+
+		return isBlockStyleAttributesModified( blockName, attributes.blockStyle, attributes )
+	},
+	[ clientId, attributes ] )
 
 	const editCss = useMemo( () => {
 		if ( oldText.current !== attributes.text ) {
