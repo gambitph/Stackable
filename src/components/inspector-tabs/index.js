@@ -2,7 +2,9 @@
  * External dependencies
  */
 import { PanelTabs, PanelAdvancedSettings } from '~stackable/components'
-import { i18n } from 'stackable'
+import {
+	i18n, isPro, showProNotice,
+} from 'stackable'
 
 /**
  * WordPress dependencies
@@ -13,6 +15,7 @@ import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
 import { useGlobalState } from '~stackable/util/global-state'
 import { __ } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
+import { BlockStylesControl } from '../block-styles-control'
 
 const { Slot: LayoutPanelSlot, Fill: LayoutPanelFill } = createSlotFill( 'StackableLayoutPanel' )
 
@@ -63,13 +66,14 @@ export {
 }
 
 const InspectorTabs = props => {
-	const { name } = useBlockEditContext()
+	const { name, clientId } = useBlockEditContext()
 	const defaultTab = getBlockSupport( name, 'stkDefaultTab' ) || 'style'
 	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, props.tabs.includes( defaultTab ) ? defaultTab : 'style' )
 
 	return (
 		<>
 			<InspectorControls>
+				{ ! isPro && showProNotice && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
 				<PanelTabs
 					tabs={ props.tabs }
 					initialTab={ activeTab }

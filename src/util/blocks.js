@@ -12,6 +12,8 @@ import {
 	omit,
 	orderBy,
 	last,
+	isEqual,
+	cloneDeep,
 } from 'lodash'
 import {
 	blockCategoryIndex,
@@ -36,6 +38,27 @@ import {
 import { useMemo } from '@wordpress/element'
 import { BlockIcon } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+
+export const STACKABLE_FILTERS = {
+	'stackable/card-group': [],
+	'stackable/card': [ 'imageUrl', 'imageId', 'imageAlt' ],
+	'stackable/button-group': [],
+	'stackable/button': [ 'text', 'icon', 'linkHasLink', 'linkUrl', 'linkNewTab', 'linkRel', 'linkHasTitle', 'linkTitle' ],
+	'stackable/text': [ 'text' ],
+	'stackable/subtitle': [ 'text' ],
+	'stackable/heading': [ 'text' ],
+	'stackable/number-box': [ 'text' ],
+	'stackable/image': [ 'imageUrl', 'imageId', 'imageAlt' ],
+	'stackable/icon': [ 'icon' ],
+	'stackable/icon-button': [ 'icon', 'linkHasLink', 'linkUrl', 'linkNewTab', 'linkRel', 'linkHasTitle', 'linkTitle' ],
+	'stackable/icon-list': [ 'icon', 'text' ],
+	'stackable/icon-list-item': [ 'text' ],
+	'stackable/progress-bar': [ 'text', 'progressValue', 'progressValuePrefix', 'progressValueSuffix', 'progressInnerText', 'progressMax' ],
+	'stackable/progress-circle': [ 'progressValue', 'progressValuePrefix', 'progressValueSuffix', 'progressMax' ],
+	'stackable/countdown': [ 'countdownType', 'date', 'restartInterval', 'actionOnExpiration', 'timezone', 'dayText', 'hourText', 'minuteText', 'secondText', 'daysLeft', 'hoursLeft', 'minutesLeft', 'secondsLeft', 'messageText' ],
+	'stackable/tab-labels': [ 'tabLabels' ],
+	'stackable/timeline': [ 'text' ],
+}
 
 /**
  * Enum for disabling and hiding blocks.
@@ -546,4 +569,42 @@ export const substituteCoreIfDisabled = ( blockName, blockAttributes, innerBlock
 		return [ blockName, blockAttributes, innerBlocks ]
 	}
 	return [ blockName, blockAttributes, [] ]
+}
+
+// Remove attributes which remain as the default.
+export const getCleanAttributes = ( attributes, blockName ) => {
+	const { getBlockType } = select( 'core/blocks' )
+
+	const defaultAttributes = getBlockType( blockName ).attributes
+	const cleanedAttributes = Object.keys( attributes ).reduce( ( attrs, attrName ) => {
+		const defaultValue = defaultAttributes[ attrName ] ? defaultAttributes[ attrName ].default : ''
+		if ( ! isEqual( attributes[ attrName ], defaultValue ) ) {
+			attrs[ attrName ] = attributes[ attrName ]
+		}
+		return attrs
+	}, {} )
+	return cleanedAttributes
+}
+
+// Filter out specified attributes from the block attributes
+export const getFilteredAttributes = ( attributes, filter ) => {
+	const filteredAttributes = {}
+
+	const blockAttrs = cloneDeep( attributes )
+
+	filter.forEach( attr => {
+		if ( attr in blockAttrs ) {
+			delete blockAttrs[ attr ]
+		}
+	} )
+
+	Object.entries( blockAttrs ).forEach( ( [ key, value ] ) => {
+		if ( 'default' in value ) {
+			filteredAttributes[ key ] = value.default
+		} else {
+			filteredAttributes[ key ] = undefined
+		}
+	} )
+
+	return filteredAttributes
 }

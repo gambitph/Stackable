@@ -10,6 +10,7 @@
 }
 
 
+.ugb-block-styles-controls,
 .ugb--has-panel-tabs .components-panel,
 .components-panel .ugb-toggle-panel-body,
 .components-popover.ugb-button-icon-control__popover,
@@ -25,14 +26,11 @@
 .ugb--has-panel-tabs .components-panel {
 
 	.block-editor-block-card,
+	.ugb-block-styles-controls,
 	.ugb-panel-tabs .ugb-panel-tabs__wrapper,
 	.ugb-panel-tabs .ugb-panel-tabs__wrapper > button {
 		background-color: #f5f5f5 !important;
 		color: var(--stk-skin-light);
-	}
-
-	.components-panel__body.ugb-panel-tabs {
-		border-top: none;
 	}
 
 	.ugb-panel-tabs__wrapper > button.is-active,

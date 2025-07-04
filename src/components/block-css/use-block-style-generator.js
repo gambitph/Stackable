@@ -1,7 +1,9 @@
-import { useQueryLoopInstanceId } from '~stackable/util'
+import { useQueryLoopInstanceId, isBlockStyleAttributesModified } from '~stackable/util'
 import { useMemo, useRef } from '@wordpress/element'
 import { useRafEffect } from '~stackable/hooks'
 import CssSaveCompiler from './css-save-compiler'
+
+import { select } from '@wordpress/data'
 
 export const useBlockCssGenerator = props => {
 	const {
@@ -12,6 +14,8 @@ export const useBlockCssGenerator = props => {
 		attributes,
 		blockState,
 	} = props
+
+	const blockName = select( 'core/block-editor' ).getBlock( clientId )?.name
 
 	// Keep the filtered block styles that we will update.
 	const blockStyleDefsRef = useRef( [] )
@@ -25,11 +29,20 @@ export const useBlockCssGenerator = props => {
 	// Keep the generated CSS for editor and return it when only the text attribute has changed.
 	const oldCss = useRef( null )
 
+	const generateCssStyles = useMemo( () => isBlockStyleAttributesModified( blockName, attributes.blockStyle, attributes ),
+		[ clientId, attributes ] )
+
 	const editCss = useMemo( () => {
 		if ( oldText.current !== attributes.text ) {
 			oldText.current = attributes.text
 			return oldCss.current
 		}
+
+		if ( ! generateCssStyles ) {
+			oldCss.current = ''
+			return ''
+		}
+
 		// Gather only the attributes that have values and all their
 		// corresponding block style definitions.
 		const attrNamesWithValues = blockStyles.getAttributesWithValues( attributes )

@@ -56,6 +56,7 @@ export const BlockDiv = memo( props => {
 			'stk-block',
 			blockHoverClass,
 			attributes.className, // Custom CSS classes.
+			attributes.blockStyle,
 			{
 				[ uniqueBlockClass ]: withUniqueClass,
 				'stk-block-background': attributes.hasBackground,
@@ -133,6 +134,7 @@ BlockDiv.Content = props => {
 			className,
 			'stk-block',
 			uniqueBlockClass,
+			attributes.blockStyle,
 			{
 				'stk-block-background': attributes.hasBackground,
 				[ `stk--background-scheme--${ attributes.backgroundColorScheme }` ]: attributes.hasBackground && attributes.backgroundColorScheme,

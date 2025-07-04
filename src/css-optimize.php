@@ -119,6 +119,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 				return;
 			}
 
+			// Make sure that we initialize/get the global block styles before checking our blocks
+			Stackable_Global_Block_Styles::init_global_block_styles_associative();
+
 			// Convert content to blocks.
 			$blocks = parse_blocks( $post->post_content );
 
@@ -167,12 +170,17 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 *
 		 * @return void
 		 */
-		public static function parse_block_style( $block, &$style_arr ) {
+		public static function parse_block_style( $block, &$style_arr, $check_for_block_styles = true ) {
 			$block_content = $block['innerHTML'];
 			if ( stripos( $block_content, '<style' ) !== false ) {
 
 				// We need the unique id for tracking.
 				if ( is_array( $block['attrs'] ) && array_key_exists( 'uniqueId', $block['attrs'] ) ) {
+
+					if ( $check_for_block_styles &&
+						Stackable_Global_Block_Styles::is_block_using_global_block_styles( $block ) ) {
+						return;
+					}
 
 					// Gather all the styles.
 					preg_match_all( '#<style[^>]*>(.*?)</style>#', $block_content, $styles );

@@ -5,9 +5,10 @@ import './editor-loader'
 import './color-schemes'
 import './buttons-and-icons'
 import './spacing-and-borders'
-import './block-defaults'
+import './block-styles'
 import './icon-library'
 import './preset-controls'
+import './block-defaults'
 
 /**
  * External dependencies

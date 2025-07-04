@@ -199,7 +199,7 @@ const LabeledItemIndicator = props => {
 									return
 								}
 
-								if ( ! isFocused ) {
+								if ( ItemPicker && ! isFocused ) {
 									onToggle()
 								}
 							} }
@@ -235,12 +235,12 @@ const LabeledItemIndicator = props => {
 											setIsFocused( false )
 										}, 100 )
 
-										if ( isOpen && ! ev.relatedTarget?.closest( '.components-popover' ) ) {
+										if ( ItemPicker && isOpen && ! ev.relatedTarget?.closest( '.components-popover' ) ) {
 											onToggle()
 										}
 									} }
 									onClick={ () => {
-										if ( ! isOpen ) {
+										if ( ItemPicker && ! isOpen ) {
 											onToggle()
 										}
 									} }
@@ -258,18 +258,22 @@ const LabeledItemIndicator = props => {
 						</Button>
 					)
 				} }
-				renderContent={ () => (
-					<ItemPicker item={ item } onChange={ onChange } />
-				) }
+				renderContent={ () => {
+					ItemPicker
+						? <ItemPicker item={ item } onChange={ onChange } />
+						: <></>
+				} }
 			/>
-			{ sortable && <Button
-				aria-label="Delete"
-				className="stk-global-settings-color-picker__delete-button"
-				icon="trash"
-				isSmall
-				isTertiary
-				onClick={ onDelete }
-			/> }
+			{ sortable &&
+				<Button
+					aria-label="Delete"
+					className="stk-global-settings-color-picker__delete-button"
+					icon="trash"
+					isSmall
+					isTertiary
+					onClick={ onDelete }
+				/>
+			}
 			{ ! sortable && <ResetButton
 				showReset={ showReset }
 				onChange={ onDelete }

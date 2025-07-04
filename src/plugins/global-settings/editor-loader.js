@@ -11,6 +11,7 @@ import { GlobalTypographyStyles } from './typography'
 import { GlobalSpacingAndBordersStyles } from './spacing-and-borders'
 import { GlobalButtonsAndIconsStyles } from './buttons-and-icons'
 import { GlobalPresetControlsStyles } from './preset-controls'
+import { GlobalBlockStyles } from './block-styles'
 import './block-defaults'
 
 /**
@@ -54,6 +55,7 @@ const GlobalSettingsLoader = () => {
 			editorHead.appendChild( globalButtonsAndIconsWrapper )
 			editorHead.appendChild( globalColorSchemesWrapper )
 			editorHead.appendChild( globalPresetControlsWrapper )
+			editorHead.appendChild( globalBlockStylesWrapper )
 		}
 	}, [ deviceType, editorDom ] )
 
@@ -70,12 +72,16 @@ const globalSpacingAndBorderWrapper = document?.createElement( 'style' )
 const globalButtonsAndIconsWrapper = document?.createElement( 'style' )
 const globalColorSchemesWrapper = document?.createElement( 'style' )
 const globalPresetControlsWrapper = document?.createElement( 'style' )
+const globalBlockStylesWrapper = document?.createElement( 'style' )
+
 globalTypographyWrapper?.setAttribute( 'id', 'stk-global-typography-styles' )
 globalColorWrapper?.setAttribute( 'id', 'stk-global-color-styles' )
 globalSpacingAndBorderWrapper?.setAttribute( 'id', 'stk-global-spacing-and-borders-styles' )
 globalButtonsAndIconsWrapper?.setAttribute( 'id', 'stk-global-buttons-and-icons-styles' )
 globalColorSchemesWrapper?.setAttribute( 'id', 'stk-global-color-schemes-styles' )
 globalPresetControlsWrapper?.setAttribute( 'id', 'stk-global-preset-controls-styles' )
+globalBlockStylesWrapper?.setAttribute( 'id', 'stk-global-block-styles' )
+
 domReady( () => {
 	document?.head?.appendChild( globalTypographyWrapper )
 	document?.head?.appendChild( globalColorWrapper )
@@ -83,10 +89,12 @@ domReady( () => {
 	document?.head?.appendChild( globalButtonsAndIconsWrapper )
 	document?.head?.appendChild( globalColorSchemesWrapper )
 	document?.head?.appendChild( globalPresetControlsWrapper )
+	document?.head?.appendChild( globalBlockStylesWrapper )
 	createRoot( globalTypographyWrapper ).render( <GlobalTypographyStyles /> )
 	createRoot( globalColorWrapper ).render( <GlobalColorStyles /> )
 	createRoot( globalSpacingAndBorderWrapper ).render( <GlobalSpacingAndBordersStyles /> )
 	createRoot( globalButtonsAndIconsWrapper ).render( <GlobalButtonsAndIconsStyles /> )
 	createRoot( globalColorSchemesWrapper ).render( <GlobalColorSchemeStyles /> )
 	createRoot( globalPresetControlsWrapper ).render( <GlobalPresetControlsStyles /> )
+	createRoot( globalBlockStylesWrapper ).render( <GlobalBlockStyles /> )
 } )

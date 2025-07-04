@@ -1,0 +1,119 @@
+.ugb-block-styles-controls {
+	padding: 8px 16px;
+	&.components-panel__body {
+		border-top: none;
+		margin-bottom: 1px;
+	}
+
+	.ugb-block-styles-controls__label {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 6px;
+	}
+
+	.components-base-control__field {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		row-gap: 4px;
+		position: relative;
+		padding-right: 28px;
+
+		> .components-base-control__label {
+			margin-bottom: 0;
+			align-self: center;
+		}
+
+		> div:nth-child(2) {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			:where(.ugb-button-component:has(.dashicons-update-alt)) {
+				background: #fff;
+			}
+		}
+
+		> .ugb-block-styles__select-control {
+			grid-column: 1/3;
+			> .ugb-button-component {
+				background: white;
+				width: 100%;
+				border: 1px solid #00000070;
+				padding: 0px 8px;
+				height: 32px;
+				border-radius: 2px;
+
+				&:focus:not(:disabled) {
+					box-shadow: 0 0 0 1px var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+				}
+
+				> .ugb-block-styles__dropdown-icon {
+					margin-right: 0;
+					margin-left: auto;
+					display: inline-flex;
+					gap: 4px;
+				}
+			}
+		}
+
+		> .stk-control__reset-button {
+			right: unset;
+			top: unset;
+			bottom: 4px;
+			color: var(--stk-skin-error);
+		}
+	}
+
+	.ugb-button-component.has-icon:hover {
+		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
+		background-color: var(--stk-skin-bg-secondary);
+		color: var(--stk-skin-dark);
+	}
+}
+
+.ugb-block-styles__new-style-modal {
+	min-width: max(350px, 35%);
+}
+.ugb-block-styles__new-style-description {
+	color: #1e1e1e;
+	margin-top: 0;
+}
+.ugb-block-styles__new-style-form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	.ugb-button-component {
+		margin-right: 0;
+		margin-left: auto;
+		&.has-icon {
+			gap: 8px;
+		}
+	}
+}
+
+.ugb-block-styles__update-style-form {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
+
+.ugb-block-styles-control__popover {
+	.components-popover__content {
+		width: 205px;
+		padding: 0;
+	}
+
+	.ugb-button-component {
+		display: flex;
+		padding: 8px;
+		height: 32px;
+		width: 100%;
+		align-items: center;
+    	justify-content: space-between;
+
+		&:hover {
+			color: var(--wp-components-color-foreground,#1e1e1e);
+			background: #0000001a;
+		}
+	}
+}
