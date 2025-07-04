@@ -72,8 +72,6 @@ if ( ! class_exists( 'Stackable_Video_Popup_Schema' ) ) {
 			$description = isset( $attributes[ 'videoDescription' ] ) ? $attributes[ 'videoDescription' ] : '';
 			$content_url = isset( $attributes[ 'videoLink' ] ) ? $attributes[ 'videoLink' ] : '';
 
-			error_log( $upload_date );
-
 			$video_schema[ 'name' ] = esc_attr( $name );
 			$video_schema[ 'description' ] = esc_attr( $description );
 			$video_schema[ 'uploadDate' ] = esc_attr( $upload_date );
