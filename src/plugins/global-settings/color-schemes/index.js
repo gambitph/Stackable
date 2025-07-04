@@ -61,12 +61,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 					</a>
 				</p>
 				}
-				<ColorSchemePicker
+				{ isOpen && <ColorSchemePicker
 					label={ __( 'Color Schemes', i18n ) }
 					itemInEdit={ itemInEdit }
 					setItemInEdit={ setItemInEdit }
 					setDisplayHoverNotice={ setDisplayHoverNotice }
-				/>
+				/> }
 				{ isPro && applyFilters( 'stackable.global-settings.global-color-schemes.inspector', Fragment, itemInEdit ) }
 				{ ! itemInEdit && showProNotice && <ProControlButton type="color-schemes" /> }
 			</PanelAdvancedSettings>
