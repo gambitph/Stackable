@@ -73,7 +73,12 @@ export const usePresetControls = property => {
 	// are not explicitly set to `false` in theme.json v3.
 	if ( hasThemePresets && wpDefaultPresets && defaultSizesEnabled !== false ) {
 		// Create a set for removing duplicates.
-		const existingSlugs = new Set( _themePresets.map( item => item.slug ) )
+		const existingSlugs = new Set()
+		_themePresets.forEach( item => {
+			if ( item && typeof item.slug === 'string' ) {
+				existingSlugs.add( item.slug )
+			}
+		} )
 
 		themePresets = [
 			..._themePresets,
