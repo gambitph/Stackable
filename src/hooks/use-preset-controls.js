@@ -72,7 +72,13 @@ export const usePresetControls = property => {
 	// This happens when settings like `typography.defaultFontSizes` or `spacing.defaultSpacingSizes`
 	// are not explicitly set to `false` in theme.json v3.
 	if ( hasThemePresets && wpDefaultPresets && defaultSizesEnabled !== false ) {
-		themePresets = [ ..._themePresets, ...wpDefaultPresets ]
+		// Create a set for removing duplicates.
+		const existingSlugs = new Set( _themePresets.map( item => item.slug ) )
+
+		themePresets = [
+			..._themePresets,
+			...wpDefaultPresets.filter( item => ! existingSlugs.has( item.slug ) ),
+		]
 	}
 
 	// Get the theme/default presets if the user have one, else return the stackable presets
