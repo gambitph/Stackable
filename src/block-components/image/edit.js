@@ -27,6 +27,7 @@ import {
 	useBlockSetAttributesContext,
 	useDeviceType,
 	useBlockLayoutDefaults,
+	usePresetControls,
 } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
 
@@ -123,6 +124,9 @@ const Controls = props => {
 
 		return 100
 	}, [ attributes.imageWidth, attributes.imageWidthUnit, attributes.imageHeight, attributes.imageHeightUnit ] )
+
+	const presetMarks = usePresetControls( 'borderRadius' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
 
 	return (
 		<>
@@ -438,6 +442,7 @@ const Controls = props => {
 						video: 'image-border-radius',
 						description: __( 'Adjusts the radius of image corners to make them more rounded', i18n ),
 					} }
+					marks={ presetMarks }
 				/>
 			}
 

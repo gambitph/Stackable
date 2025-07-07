@@ -55,10 +55,6 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				type: 'number',
 				default: '',
 			},
-			imageBorderRadius: {
-				type: 'number',
-				default: '',
-			},
 
 			imageOverlayColorType: {
 				type: 'string',
@@ -145,6 +141,17 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			},
 		},
 		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.add( {
+		attributes: {
+			imageBorderRadius: {
+				type: 'string',
+				default: '',
+			},
+		},
+		versionAdded: '3.16.4',
 		versionDeprecated: '',
 	} )
 }

@@ -13,7 +13,7 @@ import {
 	Image, deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
 	deprecateTypographyGradientColor, deprecationImageOverlayOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
-	deprecateTypographyFontSize, deprecateBlockHeight,
+	deprecateTypographyFontSize, deprecateBlockHeight, deprecateImageBorderRadius,
 } from '~stackable/block-components'
 
 /**
@@ -42,6 +42,74 @@ addFilter( 'stackable.posts.title.readmore-content', 'stackable/3_0_2', addUndef
 addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureImage )
 
 const deprecated = [
+	{
+		// Support the change of type for border radius
+		attributes: attributes( '3.16.3' ),
+		save: withVersion( '3.16.3' )( Save ),
+		isEligible: attributes => {
+			const hasNumberBorderRadius = deprecateImageBorderRadius.isEligible( attributes )
+
+			return hasNumberBorderRadius
+		},
+		migrate: attributes => {
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
+
+			// We used to have an "Inner content width" which is now just the block width
+			const hasOldInnerContentWidth = attributes.innerBlockContentWidth || attributes.innerBlockContentWidthTablet || attributes.innerBlockContentWidthMobile
+
+			if ( hasOldInnerContentWidth ) {
+				newAttributes = {
+					...newAttributes,
+					innerBlockContentWidth: '',
+					innerBlockContentWidthTablet: '',
+					innerBlockContentWidthMobile: '',
+					innerBlockContentWidthUnit: 'px',
+					innerBlockContentWidthUnitTablet: '',
+					innerBlockContentWidthUnitMobile: '',
+					blockWidth: attributes.innerBlockContentWidth,
+					blockWidthTablet: attributes.innerBlockContentWidthTablet,
+					blockWidthMobile: attributes.innerBlockContentWidthMobile,
+					blockWidthUnit: attributes.innerBlockContentWidthUnit,
+					blockWidthUnitTablet: attributes.innerBlockContentWidthUnitTablet,
+					blockWidthUnitMobile: attributes.innerBlockContentWidthUnitMobile,
+					innerBlockAlign: '',
+					innerBlockAlignTablet: '',
+					innerBlockAlignMobile: '',
+					blockHorizontalAlign: attributes.innerBlockAlign,
+					blockHorizontalAlignTablet: attributes.innerBlockAlignTablet,
+					blockHorizontalAlignMobile: attributes.innerBlockAlignMobile,
+				}
+			}
+
+			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'readmore%s' )( newAttributes )
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
+
+			newAttributes = deprecateTypographyFontSize.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'readmore%s' )( newAttributes )
+
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+			newAttributes = deprecateImageBorderRadius.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Handle the migration of shadow attributes with the change of type in 3.15.3
 		attributes: attributes( '3.16.2' ),
