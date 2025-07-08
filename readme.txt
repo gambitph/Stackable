@@ -18,7 +18,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
-[youtube https://www.youtube.com/watch?v=P3xG3t-QYjw]
+[youtube https://www.youtube.com/watch?v=lF4Da7k77IY]
 
 ## Transform Gutenberg into a Page Builder.
 
@@ -255,10 +255,6 @@ You'll need WordPress version 6.3 or higher for this to work.
 
 == Frequently Asked Questions ==
 
-**Did you just upgrade? Learn here about the New Inspector UI in v3.8**
-
-[youtube https://www.youtube.com/watch?v=RukT93hvzn8]
-
 **Is Stackable Free?**
 
 Yes, Stackable is free forever.
@@ -269,7 +265,7 @@ We have a premium version that adds more designs and advanced features. You may 
 
 No, you don't need to know a single line of code when using Stackable
 
-**Do you have a live demo?**
+**Do you have a live demo of what's in the Premium version?**
 
 Yes, we have [live demo that you can check out here](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
 
@@ -279,13 +275,9 @@ Blocks are the new shortcodes in WordPress 5.0 / Gutenberg. They're the basic el
 
 Stackable gives you an extensive collection of blocks that allows you to flexibly create any kind of professional landing page and front page.
 
-**What are UI Kits?**
-
-UI kits are a beautiful and cohesive collection of our block designs for budiling full sites easily. These kits offer a wide variety of web design styles and categories that allow you to kick start your design process right away
-
 **What themes can I use with Stackable?**
 
-Stackable should work with any theme.
+Stackable should work with any theme, we recommend using it with a block theme for the best experience.
 
 **Can I disable blocks that I do not use?**
 
