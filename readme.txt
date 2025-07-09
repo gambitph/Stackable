@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.1
 Requires PHP: 7.3
-Stable tag: 3.16.3
+Stable tag: 3.17.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -197,6 +197,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.17 New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.16 Theme.json Support, Global Value Presets, Type Scale](https://wpstackable.com/blog/introducing-theme-json-support-global-value-presets-and-type-scale/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.15 Global Design System](https://wpstackable.com/blog/introducing-the-new-stackable-global-design-system/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.14 Icon Library & Granular Plugin Settings](https://wpstackable.com/blog/icon-library-granular-plugin-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -302,6 +303,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+[Introducing: New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+= 3.17.0 =
+* New: Completely Revamped Design Library!
+* New: Design Library - 375 new designs/patterns
+* New: Design Library - now inherits block styles from the current block theme
+* New: Design Library - now integrates Global Color Schemes
 
 = 3.16.3 =
 * Fixed: Preset values may double in some themes #3543
