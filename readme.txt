@@ -310,6 +310,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Color Schemes - added setting to use old inheriting background color scheme behavior #3534
 * Fixed: Columns block - fixed visual outline of column picker #dca1aa5
 * Fixed: Corrected size of some icons in the block toolbar alignment button #4dd1872
+* Fixed: Updated Freemius SDK to v2.12.1
 
 = 3.16.2 =
 * Fixed: Clicking on certain portions of the editor scrolls the editor downward #3520 #3529
