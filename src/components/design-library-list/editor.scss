@@ -86,10 +86,10 @@
 		display: flex;
 		flex-direction: column;
 		align-content: center;
+		min-height: 99px; // Quick fix to make the pro note visible for small preview designs.
 
 		h4 {
 			font-size: 12px !important;
-			margin-bottom: -6px !important;
 		}
 
 		.ugb-design-control-pro-note__description {
@@ -97,6 +97,7 @@
 			grid-column: 2/3;
 			margin-bottom: 0 !important;
 			font-size: 11px !important;
+			margin-top: -6px !important;
 		}
 		a.button {
 			font-size: 11px !important;
@@ -168,6 +169,16 @@
 		z-index: 9;
 	}
 }
+
+.stk--design-preview-small {
+	.ugb-design-control-pro-note {
+		flex-direction: row !important;
+	}
+	.ugb-design-control-pro-note__description {
+		display: none;
+	}
+}
+
 // .ugb-design-library-item__image {
 // 	width: 100% !important;
 // 	margin: 0 !important;

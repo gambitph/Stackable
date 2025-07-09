@@ -287,7 +287,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			} }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
-			<div style={ { position: 'relative' } } className={ `${ getDesignPreviewSize() > 200 ? 'stk--design-preview-large' : '' }` }>
+			<div style={ { position: 'relative' } } className={ `${ getDesignPreviewSize() > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
 				{ ! isPro && plan !== 'free' && (
 					<ProControl
 						type="design-library"
