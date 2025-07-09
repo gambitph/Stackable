@@ -9,6 +9,7 @@ import { fetchSettings } from '~stackable/util'
 import { useEffect, useState } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { registerPlugin } from '@wordpress/plugins'
+import { addFilter } from '@wordpress/hooks'
 
 // Adds a body class for block style inheritance
 const ThemeBlockStyleInheritanceClass = () => {
@@ -19,7 +20,15 @@ const ThemeBlockStyleInheritanceClass = () => {
 
 	useEffect( () => {
 		fetchSettings().then( response => {
-			setDisableBlockStyleInheritance( response.stackable_disable_block_style_inheritance )
+			const isDisabled = response.stackable_disable_block_style_inheritance
+			setDisableBlockStyleInheritance( isDisabled )
+
+			if ( ! isDisabled ) {
+				addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.block-style-inheritance`, classnames => {
+					classnames.push( 'stk-has-block-style-inheritance' )
+					return classnames
+				} )
+			}
 		} )
 	}, [] )
 

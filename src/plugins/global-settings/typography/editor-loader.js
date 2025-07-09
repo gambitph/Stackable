@@ -201,7 +201,7 @@ export const formClassOrTagSelectors = ( selector, applyTo ) => {
 	const isClassSelector = selector.startsWith( '.' )
 
 	// Include Stackable blocks.
-	selectors.push( `[data-type^="stackable/"] ${ selector }` )
+	selectors.push( `:is([data-type^="stackable/"], .stk-block) ${ selector }` )
 
 	// Include native blocks.
 	if ( isClassSelector || applyTo !== 'blocks-stackable' ) {

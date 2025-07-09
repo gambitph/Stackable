@@ -334,6 +334,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			$version_parts = explode( '-', STACKABLE_VERSION );
 
+			$wp_global_styles = wp_get_global_stylesheet();
+
 			global $content_width;
 			global $wp_version;
 			$args = apply_filters( 'stackable_localize_script', array(
@@ -369,6 +371,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'settings' => apply_filters( 'stackable_js_settings', array() ),
 				'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
 				'blockCategoryIndex' => apply_filters( 'stackable_block_category_index', 0 ),
+
+				// Global Styles for Design Library
+				'wpGlobalStylesInlineCss' => $wp_global_styles,
 			) );
 			wp_localize_script( 'wp-blocks', 'stackable', $args );
 		}
@@ -462,6 +467,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-twentytwentyfive-theme';
 			} else if ( function_exists( 'hello_elementor_setup' ) ) { // Taken from https://github.com/elementor/hello-theme/blob/master/functions.php
 				$classes[] = 'stk--is-helloelementor-theme';
+			} else if ( function_exists( 'tove_setup' ) ) {
+				$classes[] = 'stk--is-tove-theme';
 			}
 
 			return $convert_to_string ? implode( ' ', $classes ) : $classes;

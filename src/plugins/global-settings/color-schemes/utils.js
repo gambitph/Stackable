@@ -170,7 +170,7 @@ export const getDefaultColors = () => {
 	decls += '--stk-text-color: var(--stk-container-color, initial);'
 	decls += '--stk-link-color: var(--stk-default-link-color, var(--stk-text-color, initial));'
 	decls += '--stk-accent-color: #ddd;'
-	decls += '--stk-subtitle-color: #39414d;'
+	decls += '--stk-subtitle-color: var(--stk-default-subtitle-color, #39414d);'
 	decls += '--stk-default-icon-color: var(--stk-icon-color);'
 	decls += '--stk-button-background-color: var(--stk-default-button-background-color, #008de4);'
 	decls += '--stk-button-text-color: var(--stk-default-button-text-color, #fff);'

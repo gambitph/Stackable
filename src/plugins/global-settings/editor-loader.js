@@ -26,6 +26,7 @@ import { useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
+import { addFilter } from '@wordpress/hooks'
 
 const GlobalSettingsLoader = () => {
 	const deviceType = useDeviceType()
@@ -76,6 +77,20 @@ globalSpacingAndBorderWrapper?.setAttribute( 'id', 'stk-global-spacing-and-borde
 globalButtonsAndIconsWrapper?.setAttribute( 'id', 'stk-global-buttons-and-icons-styles' )
 globalColorSchemesWrapper?.setAttribute( 'id', 'stk-global-color-schemes-styles' )
 globalPresetControlsWrapper?.setAttribute( 'id', 'stk-global-preset-controls-styles' )
+
+addFilter( 'stackable.global-styles.ids', 'stackable/global-settings', styleIds => {
+	styleIds.push(
+		'stk-global-typography-styles',
+		'stk-global-color-styles',
+		'stk-global-spacing-and-borders-styles',
+		'stk-global-buttons-and-icons-styles',
+		'stk-global-color-schemes-styles',
+		'stk-global-preset-controls-styles'
+	)
+
+	return styleIds
+} )
+
 domReady( () => {
 	document?.head?.appendChild( globalTypographyWrapper )
 	document?.head?.appendChild( globalColorWrapper )

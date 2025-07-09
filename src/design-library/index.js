@@ -1,7 +1,7 @@
 import apiFetch from '@wordpress/api-fetch'
 import { doAction, applyFilters } from '@wordpress/hooks'
 
-const LATEST_API_VERSION = 'v3'
+const LATEST_API_VERSION = 'v4'
 
 let designLibrary = null
 let designs = []
@@ -26,6 +26,7 @@ export const fetchDesignLibrary = async ( forceReset = false, version = '' ) => 
 	return designLibrary[ version || LATEST_API_VERSION ]
 }
 
+// TODO: to remove
 export const fetchDesign = async ( designId, version = '' ) => {
 	if ( ! designs[ designId ] ) {
 		const results = await apiFetch( {
@@ -37,6 +38,7 @@ export const fetchDesign = async ( designId, version = '' ) => {
 	return designs[ designId ]
 }
 
+// TODO: to remove
 export const setDevModeDesignLibrary = async ( devMode = false ) => {
 	const results = await apiFetch( {
 		path: `/stackable/v2/design_library_dev_mode/`,
@@ -49,64 +51,23 @@ export const setDevModeDesignLibrary = async ( devMode = false ) => {
 }
 
 export const getDesigns = async ( {
-	type: isType = '',
-	block: isBlock = '',
-	mood: isMood = '',
-	plan: isPlan = '',
-	colors: hasColors = [],
-	categories: hasCategories = [],
-	uikit: isUiKit = '',
-	search = '',
 	reset = false,
-	apiVersion = '',
 } ) => {
-	let library = Object.values( await fetchDesignLibrary( reset, apiVersion ) )
+	const library = Object.values( await fetchDesignLibrary( reset ) )
+	return library
+}
 
-	if ( isType ) {
-		library = library.filter( ( { type } ) => type === isType )
-	}
-
-	if ( isBlock ) {
-		const blockName = isBlock.replace( /^\w+\//, '' )
-		library = library.filter( ( { block } ) => block.endsWith( `/${ blockName }` ) )
-	}
-
-	if ( isMood ) {
-		library = library.filter( ( { mood } ) => mood === isMood )
-	}
-
+export const filterDesigns = async ( {
+	library = [],
+	plan: isPlan = '',
+	category: isCategory = '',
+} ) => {
 	if ( isPlan ) {
 		library = library.filter( ( { plan } ) => plan === isPlan )
 	}
 
-	if ( hasColors && hasColors.length ) {
-		library = library.filter( ( { colors } ) => colors.some( color => hasColors.includes( color ) ) )
-	}
-
-	if ( hasCategories && hasCategories.length ) {
-		library = library.filter( ( { categories } ) => categories.some( category => hasCategories.includes( category ) ) )
-	}
-
-	if ( isUiKit ) {
-		library = library.filter( ( { uikit } ) => uikit === isUiKit )
-	}
-
-	if ( search ) {
-		const terms = search.toLowerCase().replace( /\s+/, ' ' ).trim().split( ' ' )
-
-		// Every search term should match a property of a design.
-		terms.forEach( searchTerm => {
-			library = library.filter( design => {
-				// Our search term needs to match at least one of these properties.
-				const propertiesToSearch = applyFilters( 'stackable.design-library.search-properties',
-					[ 'label', 'plan', 'tags', 'categories', 'colors' ], apiVersion )
-
-				return propertiesToSearch.some( designProp => {
-					// Search whether the term matched.
-					return design[ designProp ].toString().toLowerCase().indexOf( searchTerm ) !== -1
-				} )
-			} )
-		} )
+	if ( isCategory ) {
+		library = library.filter( ( { category } ) => category === isCategory )
 	}
 
 	return library
