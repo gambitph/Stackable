@@ -11,16 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'media_handle_sideload' ) ) {
-    require_once ABSPATH . 'wp-admin/includes/media.php';
-}
-if ( ! function_exists( 'download_url' ) ) {
-    require_once ABSPATH . 'wp-admin/includes/file.php';
-}
-if ( ! function_exists( 'wp_read_image_metadata' ) ) {
-    require_once ABSPATH . 'wp-admin/includes/image.php';
-}
-
 if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 	/**
 	 * Class Stackable Design Library
@@ -141,6 +131,16 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		}
 
 		public function get_design_library_image( $request ) {
+			if ( ! function_exists( 'media_handle_sideload' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/media.php';
+			}
+			if ( ! function_exists( 'download_url' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+			if ( ! function_exists( 'wp_read_image_metadata' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/image.php';
+			}
+
 			$url = $request->get_param( 'image_url' );
 
 			$basename = sanitize_file_name( wp_basename( parse_url( $url, PHP_URL_PATH ) ) );
