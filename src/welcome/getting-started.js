@@ -42,37 +42,37 @@ const essentialsProps = [
 	{
 		title: __( 'The Basics of Stackable Blocks', i18n ),
 		subtitle: __( 'Learn how to personalize and tailor Stackable Blocks to match your website\'s unique style and design.', i18n ),
-		src: 'https://www.youtube.com/embed/6RyuqBs4BbM',
+		src: 'https://www.youtube.com/embed/GsQxH_gDp1A',
 		url: '#',
 	},
 	{
 		title: __( 'Flexbox Controls', i18n ),
 		subtitle: __( 'Explore the powerful Flexbox controls in Stackable that allow you to effortlessly create dynamic and responsive layouts.', i18n ),
-		src: 'https://www.youtube.com/embed/DMatMTqFXCo',
+		src: 'https://www.youtube.com/embed/73N9uXnpUJE',
 		url: '#',
 	},
 	{
 		title: __( 'How to Use Responsive and Hover State Toggles', i18n ),
 		subtitle: __( 'Discover how to design responsively and style different hover styles in Stackable.', i18n ),
-		src: 'https://www.youtube.com/embed/08lWu3Q9Puk',
+		src: 'https://www.youtube.com/embed/YPFWu8qwSS4',
 		url: '#',
 	},
 	{
 		title: __( 'How to Use Global Styling', i18n ),
 		subtitle: __( 'Master the art of optimizing your workflow for globally styling your website to maintain consistency across all pages.', i18n ),
-		src: 'https://www.youtube.com/embed/XvjyVXd1Rt4',
+		src: 'https://www.youtube.com/embed/sYnNWSlQawc',
 		url: '#',
 	},
 	{
 		title: __( 'How to Use Color Schemes', i18n ),
 		subtitle: __( 'Learn how to use Color Schemes to more easily manage your design colors and allow switching colors for entire sections.', i18n ),
-		src: 'https://www.youtube.com/embed/0jkNERX3edU',
+		src: 'https://www.youtube.com/embed/b2U7E9X2yCk',
 		url: '#',
 	},
 	{
 		title: __( 'How to Use Global Typography', i18n ),
 		subtitle: __( 'Unlock the full potential of typography in Stackable and gain insights on how to create visually stunning and impactful text designs.', i18n ),
-		src: 'https://www.youtube.com/embed/zZ_nWUqfg28',
+		src: 'https://www.youtube.com/embed/WhctpivVlh8',
 		url: '#',
 	},
 ]
@@ -109,7 +109,7 @@ export const GettingStarted = () => {
 				<p className="subtitle">{ __( 'Learn the essentials in just a few minutes by watching this video. Scroll down to see more quick tutorials.', i18n ) } </p>
 
 				<div className="s-video-wrapper s-getting-started-video">
-					<iframe className="s-video" src="https://www.youtube.com/embed/lF4Da7k77IY" title={ __( 'Getting Started', i18n ) } allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowFullScreen></iframe>
+					<iframe className="s-video" src="https://www.youtube.com/embed/WP2LHxGulps" title={ __( 'Getting Started', i18n ) } allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowFullScreen></iframe>
 				</div>
 
 				<div className="s-button-container"><a href="/wp-admin/post-new.php?post_type=page" target="_new" className="s-button s-secondary-button uppercase">
