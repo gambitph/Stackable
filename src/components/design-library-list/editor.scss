@@ -30,7 +30,7 @@
 	grid-template-columns: 1fr;
 	// grid-template-rows: auto 40px;
 	padding: 0;
-	border: 0 ;
+	border: 0;
 	text-align: start;
 	cursor: pointer;
 	background: #fff;
@@ -83,12 +83,13 @@
 		opacity: 0;
 		transition: all 0.3s cubic-bezier(0.2, 0.6, 0.4, 1);
 		padding: 0 16px; // This is for v2 blocks where the design library can be seen in the inspector.
-		display: grid;
-		grid-template-columns: 1fr 1fr;
+		display: flex;
+		flex-direction: column;
 		align-content: center;
 
 		h4 {
 			font-size: 12px !important;
+			margin-bottom: -6px !important;
 		}
 
 		.ugb-design-control-pro-note__description {
@@ -209,7 +210,7 @@
 // new design library styles
 .stk-block-design__host {
 	min-width: 1200px;
-    position: absolute;
+	position: absolute;
 	top: 0;
 	left: 0;
 	opacity: 1;
@@ -217,7 +218,7 @@
 }
 
 .stk-block-design__host-container {
-    position: relative;
+	position: relative;
 }
 
 :host body {
