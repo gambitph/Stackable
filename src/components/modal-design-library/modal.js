@@ -40,6 +40,10 @@ const popoverProps = {
 	shift: true,
 }
 
+// Reset the local storage values for the design library block list.
+// This is to make sure that the design library shows "all" at the start.
+localStorage?.setItem( 'stk__design_library__block-list__selected', '' )
+
 export const ModalDesignLibrary = props => {
 	const {
 		backgroundModeColorScheme, containerModeColorScheme, colorSchemesCollection,
