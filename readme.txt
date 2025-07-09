@@ -14,7 +14,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 **The Ultimate Companion to the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, global design system, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, global design system, ready-made designs, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
@@ -35,12 +35,12 @@ Design faster and more efficiently with our global controls, which make designin
 - Global Typography
 - Global Spacing, Borders, Buttons and Icons
 
-## Ready Made Templates, Block Designs and Wireframes
+## Ready Made Designs & Patterns
 
 Enjoy an impressive Design Library to jumpstart your designing process. Never start from scratch and design like a pro with the help of our stunning and professionally-made designs.
 
-- Dozens of UI Kit designs
-- Hundreds of ready-made block designs
+- Hundreds of ready-made designs
+- Designs that inherit the styles of your block theme
 - Dozens of block layouts
 - Various shape separator designs
 
