@@ -330,7 +330,7 @@ Typography.addStyles( blockStyles, {
 } )
 
 Typography.addStyles( blockStyles, {
-	selectorCallback: getAttribute => `.stk-block-posts__category a${ getAttribute( 'highlighted' )
+	selectorCallback: getAttribute => `.stk-block-posts__category, .stk-block-posts__category a${ getAttribute( 'highlighted' )
 		? ' .stk-button__inner-text'
 		: '' }`,
 	hoverSelectorCallback: getAttribute => {
