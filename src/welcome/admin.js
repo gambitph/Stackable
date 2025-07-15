@@ -42,7 +42,7 @@ import { BLOCK_STATE } from '~stackable/util/blocks'
 import { BlockToggler, OptimizationSettings } from '~stackable/deprecated/v2/welcome/admin'
 import blockData from '~stackable/deprecated/v2/welcome/blocks'
 
-const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
+const [ FREE_BLOCKS, BLOCK_DEPENDENCIES ] = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 
 export const getAllBlocks = () => applyFilters( 'stackable.settings.blocks', FREE_BLOCKS )
 
@@ -272,6 +272,17 @@ const getParentBlocks = blockName => {
 	return parents
 }
 
+export const getBlockTitle = name => {
+	for ( const category in DERIVED_BLOCKS ) {
+		for ( const block of DERIVED_BLOCKS[ category ] ) {
+			if ( block.name === name ) {
+				return block.title
+			}
+		}
+	}
+	return name
+}
+
 const BlockList = () => {
 	const DERIVED_BLOCKS = getAllBlocks()
 	return (
@@ -333,25 +344,14 @@ const RestSettingsNotice = () => {
 
 // Confirmation dialog when disabling a block that is dependent on another block.
 const ToggleBlockDialog = ( {
-	blockName,
+	blockName = '',
 	blockList,
 	isDisabled,
 	onConfirm,
 	onCancel,
+	hideHeader = false,
+	customText = '',
 } ) => {
-	const DERIVED_BLOCKS = getAllBlocks()
-
-	const getBlockTitle = name => {
-		for ( const category in DERIVED_BLOCKS ) {
-			for ( const block of DERIVED_BLOCKS[ category ] ) {
-				if ( block.name === name ) {
-					return block.title
-				}
-			}
-		}
-		return name
-	}
-
 	const blockTitle = getBlockTitle( blockName )
 
 	return (
@@ -362,10 +362,13 @@ const ToggleBlockDialog = ( {
 				? sprintf( __( 'Disable %s block?', i18n ), blockTitle )
 				: sprintf( __( 'Enable %s block?', i18n ), blockTitle ) }
 			onRequestClose={ onCancel }
+			__experimentalHideHeader={ hideHeader }
 		>
-			{ isDisabled
-				? <p>{ __( 'Disabling this block will also disable these blocks that require this block to function:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
-				: <p>{ __( 'Enabling this block will also enable these blocks that are needed for this block to function:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+			{ hideHeader ? customText
+				: ( isDisabled
+					? <p>{ __( 'Disabling this block will also disable these blocks that require this block to function:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+					: <p>{ __( 'Enabling this block will also enable these blocks that are needed for this block to function:', i18n ) }</p> // eslint-disable-line @wordpress/i18n-no-variables
+				)
 			}
 			<ul>
 				{ blockList.map( ( block, i ) => (
@@ -445,6 +448,7 @@ const Sidenav = ( {
 							onKeyDown={ () => handleTabChange( id ) }
 							role="tab"
 							tabIndex={ 0 }
+							id={ `stk-tab__${ id }` }
 						>
 							{ label }
 						</button>
@@ -502,6 +506,7 @@ const Settings = () => {
 	const [ currentTab, setCurrentTab ] = useState( 'editor-settings' )
 	const [ currentSearch, setCurrentSearch ] = useState( '' )
 	const [ isSaving, setIsSaving ] = useState( false )
+	const [ isFetching, setIsFetching ] = useState( false )
 	const [ isRecentlySaved, setIsRecentlySaved ] = useState( false )
 	const [ hasV2Tab, setHasV2Tab ] = useState( false )
 
@@ -536,10 +541,12 @@ const Settings = () => {
 	}, [ unsavedChanges, settings ] )
 
 	useEffect( () => {
+		setIsFetching( true )
 		fetchSettings().then( response => {
 			setSettings( response )
 			// Should only be set initially since we have to reload after setting for it to work with the backend
 			setHasV2Tab( hasV2Compatibility( response ) )
+			setIsFetching( false )
 		} )
 	}, [] )
 
@@ -591,6 +598,7 @@ const Settings = () => {
 		handleSettingsChange,
 		filteredSearchTree,
 		currentTab,
+		isFetching,
 	}
 
 	return <>
@@ -879,6 +887,7 @@ const Blocks = props => {
 		settings,
 		handleSettingsChange,
 		filteredSearchTree,
+		isFetching,
 	} = props
 
 	const BLOCK_STATE_MAP = Object.freeze( {
@@ -895,6 +904,33 @@ const Blocks = props => {
 	const [ isEnabledDialogOpen, setIsEnabledDialogOpen ] = useState( false )
 	const [ currentToggleBlock, setCurrentToggleBlock ] = useState( '' )
 	const [ currentToggleBlockList, setCurrentToggleBlockList ] = useState( [] )
+
+	const [ blocksToEnable, setBlocksToEnable ] = useState( [] )
+
+	useEffect( () => {
+		// eslint-disable-next-line @wordpress/no-global-event-listener
+		window.addEventListener( 'message', ev => {
+			if ( typeof ev.data !== 'object' || ev.data.source !== 'STK_DESIGN_LIBRARY' || ev.origin !== window.location.origin ) {
+				return
+			}
+
+			if ( ev.data.type === 'STK_ENABLE_BLOCKS' && ev.data.blocks instanceof Set && ev.data.blocks.size ) {
+				const blocks = [ ...ev.data.blocks ].map( block => {
+					if ( block in BLOCK_DEPENDENCIES ) {
+						return BLOCK_DEPENDENCIES[ block ]
+					}
+					return block
+				} )
+				setBlocksToEnable( blocks )
+			}
+		} )
+	}, [] )
+
+	useEffect( () => {
+		if ( ! isFetching && blocksToEnable.length ) {
+			setIsEnabledDialogOpen( true )
+		}
+	}, [ isFetching, blocksToEnable ] )
 
 	// Map string states to integer block states
 	const mapStringStates = states => {
@@ -989,11 +1025,11 @@ const Blocks = props => {
 		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
 	}
 
-	const handleEnableDialogConfirm = () => {
+	const handleEnableDialogConfirm = ( blockList = currentToggleBlockList ) => {
 		setIsEnabledDialogOpen( false )
 		const newDisabledBlocks = { ...disabledBlocks }
 		delete newDisabledBlocks[ currentToggleBlock ]
-		currentToggleBlockList.forEach( block => {
+		blockList.forEach( block => {
 			delete newDisabledBlocks[ block ]
 		} )
 		handleSettingsChange( { stackable_block_states: newDisabledBlocks } ) // eslint-disable-line camelcase
@@ -1001,26 +1037,42 @@ const Blocks = props => {
 
 	return (
 		<>
-			{ isDisabledDialogOpen && currentToggleBlockList && (
+			{ isDisabledDialogOpen && currentToggleBlockList.length !== 0 && (
 				<ToggleBlockDialog
 					blockName={ currentToggleBlock }
 					blockList={ currentToggleBlockList }
 					isDisabled={ true }
-					onConfirm={ handleDisableDialogConfirm }
+					onConfirm={ () => handleDisableDialogConfirm() }
 					onCancel={ () => {
 						setIsDisabledDialogOpen( false )
 					} }
 				/>
 			) }
 
-			{ isEnabledDialogOpen && currentToggleBlockList && (
+			{ isEnabledDialogOpen && currentToggleBlockList.length !== 0 && (
 				<ToggleBlockDialog
 					blockName={ currentToggleBlock }
 					blockList={ currentToggleBlockList }
 					isDisabled={ false }
-					onConfirm={ handleEnableDialogConfirm }
+					onConfirm={ () => handleEnableDialogConfirm() }
 					onCancel={ () => {
 						setIsEnabledDialogOpen( false )
+					} }
+				/>
+			) }
+			{ isEnabledDialogOpen && blocksToEnable.length !== 0 && (
+				<ToggleBlockDialog
+					blockList={ blocksToEnable }
+					isDisabled={ false }
+					hideHeader={ true }
+					customText={ __( 'The following blocks will be enabled:', i18n ) }
+					onConfirm={ () => {
+						handleEnableDialogConfirm( blocksToEnable )
+						setBlocksToEnable( [] )
+					} }
+					onCancel={ () => {
+						setIsEnabledDialogOpen( false )
+						setBlocksToEnable( [] )
 					} }
 				/>
 			) }

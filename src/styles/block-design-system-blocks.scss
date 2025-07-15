@@ -430,7 +430,7 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 	.stk-block-posts {
 		&__meta {
 			&:where(:hover) {
-				color: var(--stk-subtitle-color-hover,  cssvar(subtitle-color));
+				color: var(--stk-subtitle-color-hover, cssvar(subtitle-color));
 			}
 		}
 	}

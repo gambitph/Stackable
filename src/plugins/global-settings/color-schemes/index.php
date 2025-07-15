@@ -463,7 +463,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					'--stk-text-color' => 'var(--stk-container-color, initial)',
 					'--stk-link-color' => 'var(--stk-default-link-color, var(--stk-text-color, initial))',
 					'--stk-accent-color' => '#ddd',
-					'--stk-subtitle-color' => '#39414d',
+					'--stk-subtitle-color' => 'var(--stk-default-subtitle-color, #39414d)',
 					'--stk-default-icon-color' => 'var(--stk-icon-color)',
 					'--stk-button-background-color' => 'var(--stk-default-button-background-color, #008de4)',
 					'--stk-button-text-color' => 'var(--stk-default-button-text-color, #fff)',

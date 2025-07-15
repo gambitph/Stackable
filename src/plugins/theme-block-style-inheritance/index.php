@@ -199,6 +199,8 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				$style_declarations['root']['declarations'][ '--stk-container-color' ] = $root_properties[ 'text-color' ];
 				$style_declarations['root']['declarations'][ '--stk-text-color' ] = $root_properties[ 'text-color' ];
 				$style_declarations['root']['declarations'][ '--stk-default-text-color' ] = $root_properties[ 'text-color' ];
+				$style_declarations['root']['declarations'][ '--stk-subtitle-color' ] = $root_properties[ 'text-color' ];
+				$style_declarations['root']['declarations'][ '--stk-default-subtitle-color' ] = $root_properties[ 'text-color' ];
 			}
 
 			if ( $root_properties[ 'heading-color' ] ) {

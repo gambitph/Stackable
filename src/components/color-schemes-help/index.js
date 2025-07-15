@@ -4,8 +4,20 @@ import { Link } from '~stackable/components'
 import { __ } from '@wordpress/i18n'
 import { dispatch } from '@wordpress/data'
 
-export const ColorSchemesHelp = () => {
+export const ColorSchemesHelp = props => {
+	const {
+		customText, callback, className,
+	} = props
 	const onClick = () => {
+		let cancelOnClick = false
+		if ( callback ) {
+			cancelOnClick = callback()
+		}
+
+		if ( cancelOnClick ) {
+			return
+		}
+
 		// Open the global settings sidebar.
 		dispatch( 'core/edit-post' )?.openGeneralSidebar( 'stackable-global-settings/sidebar' ) // For Block Editor
 		dispatch( 'core/edit-site' )?.openGeneralSidebar( 'stackable-global-settings/sidebar' ) // For Site Editor
@@ -31,9 +43,10 @@ export const ColorSchemesHelp = () => {
 	}
 
 	return <>
-		<span>{ __( 'Change the color scheme.', i18n ) }</span>
-		&nbsp;
-		<Link onClick={ onClick }> { __( 'Manage your color schemes.', i18n ) } </Link>
+		{ customText || customText === '' ? customText
+			: <span>{ __( 'Change the color scheme.', i18n ) }</span> }
+		{ customText !== '' && <>&nbsp;</> }
+		<Link className={ className } onClick={ onClick }> { __( 'Manage your color schemes.', i18n ) } </Link>
 	</>
 }
 

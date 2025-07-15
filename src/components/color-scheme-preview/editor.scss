@@ -76,3 +76,15 @@
 .stk-scheme--is-disabled {
 	opacity: 0.1;
 }
+
+.stk-scheme--is-collapsed {
+	flex-direction: row;
+	gap: 4px;
+	align-items: center;
+	max-height: 30px;
+
+	.stk-global-color-scheme__preview__typography {
+		margin-bottom: 0;
+		font-size: 12px;
+	}
+}

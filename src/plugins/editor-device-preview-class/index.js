@@ -15,6 +15,7 @@ import { useDeviceType, useBlockHoverState } from '~stackable/hooks'
 import { useEffect } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { registerPlugin } from '@wordpress/plugins'
+import { addFilter } from '@wordpress/hooks'
 
 const EditorPreviewClass = () => {
 	const deviceType = useDeviceType()
@@ -45,6 +46,10 @@ const EditorPreviewClass = () => {
 			if ( document.querySelector( 'body' ).className.match( themeRegex ) && ! editorEl.className.match( themeRegex ) ) {
 				const theme = document.querySelector( 'body' ).className.match( themeRegex )[ 0 ]
 				editorEl.classList.add( theme )
+				addFilter( 'stackable.global-styles.classnames', 'stackable/theme-classname', styleIds => {
+					styleIds.push( theme )
+					return styleIds
+				} )
 			}
 
 			// At first load of the editor, the `stk-preview-device-*` and `stk--is-*-theme` are removed, so we have to re-add it.
@@ -60,6 +65,10 @@ const EditorPreviewClass = () => {
 				if ( document.querySelector( 'body' ).className.match( themeRegex ) && ! editorEl.className.match( themeRegex ) ) {
 					const theme = document.querySelector( 'body' ).className.match( themeRegex )[ 0 ]
 					editorEl.classList.add( theme )
+					addFilter( 'stackable.global-styles.classnames', 'stackable/theme-classname', styleIds => {
+						styleIds.push( theme )
+						return styleIds
+					} )
 				}
 			} )
 

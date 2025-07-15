@@ -19,7 +19,7 @@ import { useBlockColorSchemes, useBlockHoverState } from '~stackable/hooks'
  */
 import { useEffect, useState } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, addFilter } from '@wordpress/hooks'
 
 const renderGlobalStyles = (
 	setStyles,
@@ -150,6 +150,10 @@ export const GlobalColorSchemeStyles = () => {
 		if ( editorEl ) {
 			if ( styles !== '' && editorEl.classList.contains( 'stk-has-color-schemes' ) === false ) {
 				editorEl.classList.add( 'stk-has-color-schemes' )
+				addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
+					classnames.push( 'stk-has-color-schemes' )
+					return classnames
+				} )
 			}
 			if ( styles === '' ) {
 				editorEl.classList.remove( 'stk-has-color-schemes' )
@@ -159,6 +163,10 @@ export const GlobalColorSchemeStyles = () => {
 			const mo = onClassChange( editorEl, () => {
 				if ( styles !== '' && editorEl?.classList.contains( 'stk-has-color-schemes' ) === false ) {
 					editorEl?.classList.add( 'stk-has-color-schemes' )
+					addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
+						classnames.push( 'stk-has-color-schemes' )
+						return classnames
+					} )
 				}
 				if ( styles === '' ) {
 					editorEl?.classList.remove( 'stk-has-color-schemes' )

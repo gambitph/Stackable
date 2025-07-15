@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.1
 Requires PHP: 7.3
-Stable tag: 3.16.3
+Stable tag: 3.17.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -14,7 +14,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 **The Ultimate Companion to the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, global design system, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, global design system, ready-made designs, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
@@ -35,12 +35,12 @@ Design faster and more efficiently with our global controls, which make designin
 - Global Typography
 - Global Spacing, Borders, Buttons and Icons
 
-## Ready Made Templates, Block Designs and Wireframes
+## Ready Made Designs & Patterns
 
 Enjoy an impressive Design Library to jumpstart your designing process. Never start from scratch and design like a pro with the help of our stunning and professionally-made designs.
 
-- Dozens of UI Kit designs
-- Hundreds of ready-made block designs
+- Hundreds of ready-made designs
+- Designs that inherit the styles of your block theme
 - Dozens of block layouts
 - Various shape separator designs
 
@@ -197,6 +197,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.17 New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.16 Theme.json Support, Global Value Presets, Type Scale](https://wpstackable.com/blog/introducing-theme-json-support-global-value-presets-and-type-scale/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.15 Global Design System](https://wpstackable.com/blog/introducing-the-new-stackable-global-design-system/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.14 Icon Library & Granular Plugin Settings](https://wpstackable.com/blog/icon-library-granular-plugin-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -255,10 +256,6 @@ You'll need WordPress version 6.3 or higher for this to work.
 
 == Frequently Asked Questions ==
 
-**Did you just upgrade? Learn here about the New Inspector UI in v3.8**
-
-[youtube https://www.youtube.com/watch?v=RukT93hvzn8]
-
 **Is Stackable Free?**
 
 Yes, Stackable is free forever.
@@ -269,7 +266,7 @@ We have a premium version that adds more designs and advanced features. You may 
 
 No, you don't need to know a single line of code when using Stackable
 
-**Do you have a live demo?**
+**Do you have a live demo of what's in the Premium version?**
 
 Yes, we have [live demo that you can check out here](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
 
@@ -279,13 +276,9 @@ Blocks are the new shortcodes in WordPress 5.0 / Gutenberg. They're the basic el
 
 Stackable gives you an extensive collection of blocks that allows you to flexibly create any kind of professional landing page and front page.
 
-**What are UI Kits?**
-
-UI kits are a beautiful and cohesive collection of our block designs for budiling full sites easily. These kits offer a wide variety of web design styles and categories that allow you to kick start your design process right away
-
 **What themes can I use with Stackable?**
 
-Stackable should work with any theme.
+Stackable should work with any theme, we recommend using it with a block theme for the best experience.
 
 **Can I disable blocks that I do not use?**
 
@@ -311,12 +304,22 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+[Introducing: New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+= 3.17.0 =
+* New: Completely Revamped Design Library!
+* New: Design Library - 375 new designs/patterns
+* New: Design Library - now inherits block styles from the current block theme
+* New: Design Library - now integrates Global Color Schemes
+
 = 3.16.3 =
+* Fixed: Preset values may double in some themes #3543
 * Fixed: Using preset values with shadows will cause the preset value to reset on editor refresh #3538
 * Fixed: Color Schemes - container colors now do not inherit the background color scheme #3534
 * Fixed: Color Schemes - added setting to use old inheriting background color scheme behavior #3534
 * Fixed: Columns block - fixed visual outline of column picker #dca1aa5
 * Fixed: Corrected size of some icons in the block toolbar alignment button #4dd1872
+* Fixed: Updated Freemius SDK to v2.12.1
 
 = 3.16.2 =
 * Fixed: Clicking on certain portions of the editor scrolls the editor downward #3520 #3529

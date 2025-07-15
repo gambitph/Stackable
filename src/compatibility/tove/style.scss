@@ -1,0 +1,4 @@
+:where(.stk-has-block-style-inheritance.stk--is-tove-theme) :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination):is(.is-style-plain) .stk-button {
+	border-width: 0;
+	box-shadow: none;
+}
