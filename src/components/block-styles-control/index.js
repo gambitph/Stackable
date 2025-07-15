@@ -17,7 +17,7 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import { sprintf, __ } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import {
 	BaseControl, Modal,
 	Dropdown,
@@ -174,7 +174,7 @@ export const BlockStylesControl = props => {
 			</BaseControl>
 			{ openProNoticeModal && <Modal
 				className="ugb-block-styles__new-style-modal"
-				title={ sprintf( __( '%s Premium Feature', i18n ), __( 'Global Block Styles', i18n ) ) }
+				title={ __( 'This Is a Premium Feature', i18n ) }
 				onRequestClose={ () => setOpenProNoticeModal( false ) }
 			>
 				<ProControl type="global-block-styles" />
