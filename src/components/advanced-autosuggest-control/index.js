@@ -279,7 +279,7 @@ class AdvancedAutosuggestControl extends Component {
 								this.setState( { isShowingSuggestions: false } )
 							}
 
-							if ( shouldShowSuggestions ) {
+							if ( shouldShowSuggestions && this.state.containerRect ) {
 								// We need to add styling to position the
 								// suggestion drop down correctly. Scrolling
 								// the editor/inspector breaks the position, so
