@@ -113,12 +113,12 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 			$library = $designs[ self::API_VERSION ];
 			foreach ( $library as $design_id => $design ) {
-				if ( WP_Block_Patterns_Registry::get_instance()->is_registered( 'stackable/' . $design_id ) ) {
-					$res = unregister_block_pattern( 'stackable/' . $design_id );
+				if ( WP_Block_Patterns_Registry::get_instance()->is_registered( 'stackable_' . $design_id ) ) {
+					$res = unregister_block_pattern( 'stackable_' . $design_id );
 				}
 
-				if ( WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( 'stackable/' . $design[ 'category' ] ) ) {
-					$res = unregister_block_pattern_category( 'stackable/' . $design[ 'category' ] );
+				if ( WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( 'stackable_' . $design[ 'category' ] ) ) {
+					$res = unregister_block_pattern_category( 'stackable_' . $design[ 'category' ] );
 				}
 			}
 			// Delete design library.
@@ -241,7 +241,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		}
 
 		public function filter_patterns( $pattern ) {
-			return strpos( $pattern[ 'name' ], 'stackable/' ) !== false;
+			return strpos( $pattern[ 'name' ], 'stackable_' ) !== false;
 		}
 
 		public function get_design_library_from_cloud() {
@@ -297,7 +297,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 				$block_patterns = WP_Block_Patterns_Registry::get_instance()->get_all_registered( $outside_init );
 				foreach ( $block_patterns as $pattern ) {
-					if ( strpos( $pattern[ 'name' ], 'stackable/' ) !== false ) {
+					if ( strpos( $pattern[ 'name' ], 'stackable_' ) !== false ) {
 						$pattern[ 'title' ] = str_replace( sprintf( __( 'Stackable ', STACKABLE_I18N ) ), '', $pattern[ 'title' ] );
 						$content[ $pattern[ 'designId' ] ] = $pattern;
 					}
@@ -423,6 +423,27 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			return preg_replace( '/[^a-z0-9-]+/', '-', $category );
 		}
 
+		public function get_template_with_placeholders( $template, $category ) {
+			if ( ! class_exists( 'Stackable_Design_Library_Placeholders' ) ) {
+				return $template;
+			}
+
+			$default_placeholders = Stackable_Design_Library_Placeholders::get_default();
+
+			if ( ! isset( $default_placeholders[ $category ] ) ) {
+				return $template;
+			}
+
+			foreach( $default_placeholders[ $category ] as $placeholder => $value ) {
+				if ( ! is_string( $value ) ) {
+					continue;
+				}
+				$template = str_replace( $placeholder, $value, $template );
+			}
+
+			return $template;
+		}
+
 		public function register_design_pattern() {
 			$designs = $this->get_design_library_from_cloud();
 
@@ -453,17 +474,17 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					if ( $has_disabled ) continue;
 				}
 
-				register_block_pattern_category( 'stackable/' . $this->get_category_kebab_case( $design[ 'category' ] ), [
+				register_block_pattern_category( 'stackable_' . $this->get_category_kebab_case( $design[ 'category' ] ), [
 					'label' => sprintf( __( 'Stackable %s', STACKABLE_I18N ), $design[ 'category' ] ),
 					'description' => sprintf( __( '%s patterns for Stackable Design Library', STACKABLE_I18N ), $design[ 'category' ] ),
 				] );
 
 				register_block_pattern(
-						'stackable/' . $design_id,
+						'stackable_' . $design_id,
 						array(
 							'title'			=> sprintf( __( 'Stackable %s', STACKABLE_I18N ), $design[ 'label' ] ),
-							'content' 		=> $design[ 'template' ],
-							'categories' 	=> array( 'stackable/' . $this->get_category_kebab_case( $design[ 'category' ] ), 'stackable' ), // used in Patterns
+							'content' 		=> $this->get_template_with_placeholders( $design[ 'template' ], $design[ 'category' ] ),
+							'categories' 	=> array( 'stackable_' . $this->get_category_kebab_case( $design[ 'category' ] ), 'stackable' ), // used in Patterns
 							'category'		=> $design[ 'category' ], // used in Design Library
 							'description'	=> $design[ 'description' ],
 							'plan'			=> $design[ 'plan' ],

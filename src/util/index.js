@@ -401,6 +401,12 @@ export const semverCompare = ( version1, operator, version2 ) => {
  * // Returns: [["1.5", "rem"], ["2", "vw"]]
  */
 export const extractNumbersAndUnits = value => {
+	if ( typeof value === 'number' ) {
+		return [ [ value.toString(), 'px' ] ]
+	} else if ( typeof value !== 'string' ) {
+		return [ [ '0', 'px' ] ]
+	}
+
 	if ( value.startsWith( 'var' ) ) {
 		return [ [ value, '' ] ]
 	}

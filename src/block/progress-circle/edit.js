@@ -132,7 +132,7 @@ const Edit = props => {
 				</div>
 				{ /* Add our progress style here because we're adjusting the value using a hook */ }
 				<style>
-					{ `.editor-styles-wrapper .stk-${ props.attributes.uniqueId } .stk-progress-circle { --progress-value:${ derivedValue } }` }
+					{ `.editor-styles-wrapper .stk-${ props.attributes.uniqueId } .stk-progress-circle { --progress-value:${ derivedProgressValue } }` }
 				</style>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
