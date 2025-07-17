@@ -423,6 +423,27 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			return preg_replace( '/[^a-z0-9-]+/', '-', $category );
 		}
 
+		public function get_template_with_placeholders( $template, $category ) {
+			if ( ! class_exists( 'Stackable_Design_Library_Placeholders' ) ) {
+				return $template;
+			}
+
+			$default_placeholders = Stackable_Design_Library_Placeholders::get_default();
+
+			if ( ! isset( $default_placeholders[ $category ] ) ) {
+				return $template;
+			}
+
+			foreach( $default_placeholders[ $category ] as $placeholder => $value ) {
+				if ( ! is_string( $value ) ) {
+					continue;
+				}
+				$template = str_replace( $placeholder, $value, $template );
+			}
+
+			return $template;
+		}
+
 		public function register_design_pattern() {
 			$designs = $this->get_design_library_from_cloud();
 
@@ -462,7 +483,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 						'stackable/' . $design_id,
 						array(
 							'title'			=> sprintf( __( 'Stackable %s', STACKABLE_I18N ), $design[ 'label' ] ),
-							'content' 		=> $design[ 'template' ],
+							'content' 		=> $this->get_template_with_placeholders( $design[ 'template' ], $design[ 'category' ] ),
 							'categories' 	=> array( 'stackable/' . $this->get_category_kebab_case( $design[ 'category' ] ), 'stackable' ), // used in Patterns
 							'category'		=> $design[ 'category' ], // used in Design Library
 							'description'	=> $design[ 'description' ],
