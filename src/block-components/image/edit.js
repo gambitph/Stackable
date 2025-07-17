@@ -175,7 +175,7 @@ const Controls = props => {
 							newAttributes.imageWidth = ''
 							newAttributes.imageWidthUnit = '%'
 							// We need the width of the image block to compare
-							if ( width < imageBlockWidth ) {
+							if ( width && width < imageBlockWidth ) {
 								newAttributes.imageWidth = width
 								newAttributes.imageWidthUnit = 'px'
 							}
