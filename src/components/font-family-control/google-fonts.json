@@ -2982,7 +2982,97 @@
     ]
   },
   {
+    "family": "Bitcount",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Bitcount Grid Double",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Bitcount Grid Single",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Bitcount Prop Double",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Bitcount Prop Single",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Bitcount Single",
     "variants": [
       "100",
       "200",
@@ -9019,6 +9109,27 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Intel One Mono",
+    "variants": [
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "symbols2",
+      "vietnamese"
     ]
   },
   {

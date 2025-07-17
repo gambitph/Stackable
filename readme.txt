@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.1
 Requires PHP: 7.3
-Stable tag: 3.17.0
+Stable tag: 3.17.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -303,6 +303,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.17.1 =
+* Fixed: Progress circle block - having a prefix/suffix with dynamic content now works #3499
+* Fixed: Image block - image becomes small when using a design library item then changing it to dynamic content #3522
+* Fixed: Dyanmic content - dynamic content popup can go to the upper left #3523
+* Fixed: Dynamic content - opening a dynamic field picker adds a vertical scrollbar for a split second #3524
+* Fixed: Design library items show placeholders when registered as a pattern #3552
+* Fixed: You can now use the same category names for user added patterns #3548
 
 [Introducing: New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
