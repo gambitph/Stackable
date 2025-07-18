@@ -311,6 +311,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Dynamic content - opening a dynamic field picker adds a vertical scrollbar for a split second #3524
 * Fixed: Design library items show placeholders when registered as a pattern #3552
 * Fixed: You can now use the same category names for user added patterns #3548
+* Fixed: Some themes can trigger a JavaScript error preventing the global settings from opening #da8ce1d
 
 [Introducing: New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
