@@ -294,11 +294,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Screenshots ==
 
-1. Responsive Gutenberg Blocks
-2. Page Builder-like Block Options
-3. Global Settings that affect your entire site
+1. Design Library with 375+ designs that fit your Block Theme
+2. Global Settings that affect your entire site
+3. Responsive Gutenberg Blocks
 4. Powerful Custom Gutenberg Blocks
-5. Ready-made Design Library
+5. Page Builder-like Block Options
 
 == Upgrade Notice ==
 
