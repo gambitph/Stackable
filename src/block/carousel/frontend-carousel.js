@@ -82,47 +82,46 @@ class _StackableCarousel {
 			this.clones = []
 			const clonesToAdd = []
 			let lastClone = null
-			let frame = 0
+			let index = 0
+			let step = 0
 
 			const runInitSteps = () => {
-				if ( frame === 0 ) {
-					this.slideEls.forEach( ( original, i ) => {
-						const clone = original.cloneNode( true )
-						clone.classList.add( `stk-slide-clone-${ i + 1 }` )
+				if ( step === 0 ) {
+					// Clone only the last slide and the first N slides (where N equals to slidesToShow)
+					const slideIndex = index === this.slidesToShow ? this.slideEls.length - 1 : index
+					const original = this.slideEls[ slideIndex ]
+					const clone = original.cloneNode( true )
+					clone.classList.add( `stk-slide-clone-${ slideIndex + 1 }` )
 
-						this.clones.push( clone )
+					this.clones.push( clone )
 
-						// Ensure click events on cloned slides are delegated to the corresponding original slide elements.
-						// This preserves expected interactivity for cloned slides in infinite scroll.
-						clone.addEventListener( 'click', e => {
-							const targetClassList = [ ...e.target.classList ]
-							if ( targetClassList.length ) {
-								const targetClasses = `.${ targetClassList.join( '.' ) }`
-								const originalTarget = original.querySelector( targetClasses )
-								originalTarget.click()
-							}
-						} )
-
-						if ( i === this.slideEls.length - 1 ) {
-							lastClone = clone
-
-							// Also add the last slide clone at the end
-							if ( this.slidesToShow === this.slideEls.length ) {
-								const lastCloneClone = clone.cloneNode( true )
-								lastCloneClone.classList.add( `stk-slide-clone-${ i + 1 }-clone` )
-								clonesToAdd.push( lastCloneClone )
-							}
-						} else {
-							clonesToAdd.push( clone )
+					// Ensure click events on cloned slides are delegated to the corresponding original slide elements.
+					// This preserves expected interactivity for cloned slides in infinite scroll.
+					clone.addEventListener( 'click', e => {
+						const targetClassList = [ ...e.target.classList ]
+						if ( targetClassList.length ) {
+							const targetClasses = `.${ targetClassList.join( '.' ) }`
+							const originalTarget = original.querySelector( targetClasses )
+							originalTarget.click()
 						}
 					} )
-				} else if ( frame === 2 ) {
+
+					if ( index === this.slidesToShow ) {
+						lastClone = clone
+						step++
+					} else {
+						clonesToAdd.push( clone )
+					}
+
+					index++
+				} else if ( step === 1 ) {
 					// Append clones at the end except for the last slide clone which will be placed at the front
-					this.sliderEl.appendChild( ...clonesToAdd )
+					this.sliderEl.append( ...clonesToAdd )
 					if ( lastClone ) {
 						this.sliderEl.insertBefore( lastClone, this.slideEls[ 0 ] )
 					}
-				} else if ( frame === 3 ) {
+					step++
+				} else if ( step === 2 ) {
 					// IMPORTANT: Do style reads before applying style change to improve performance
 					// https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing
 					const targetOffsetLeft = this.slideEls[ 0 ].offsetLeft
@@ -130,16 +129,19 @@ class _StackableCarousel {
 					// Scroll without animation to the first slide
 					this.sliderEl.style.scrollBehavior = 'unset'
 					this.sliderEl.scrollLeft = targetOffsetLeft
+					step++
+				} else if ( step === 3 ) {
 					this.sliderEl.style.scrollBehavior = ''
 
 					this.currentSlide = 1
 					this.updateDots()
-				} else if ( frame === 4 ) {
+					step++
+				} else if ( step === 4 ) {
 					otherInitCalls()
+					step++
 				}
 
-				frame++
-				if ( frame < 5 ) {
+				if ( step < 5 ) {
 					requestAnimationFrame( runInitSteps )
 				}
 			}
@@ -252,7 +254,7 @@ class _StackableCarousel {
 	nextSlide = () => {
 		let newSlide = this.currentSlide + 1
 
-		if ( this.infiniteScroll && newSlide > this.slideEls.length ) {
+		if ( this.type === 'slide' && this.infiniteScroll && newSlide > this.slideEls.length ) {
 			this.swapSlides( newSlide, 'N' )
 			return
 		}
@@ -266,7 +268,7 @@ class _StackableCarousel {
 	prevSlide = () => {
 		let newSlide = this.currentSlide - 1
 
-		if ( this.infiniteScroll && newSlide < this.slideOffset ) {
+		if ( this.type === 'slide' && this.infiniteScroll && newSlide < this.slideOffset ) {
 			this.swapSlides( newSlide, 'P' )
 			return
 		}
@@ -288,7 +290,7 @@ class _StackableCarousel {
 
 		const runSteps = () => {
 			if ( steps === 0 ) {
-				const lastCloneSlide = this.clones[ this.currentSlide - 1 ].offsetLeft
+				const lastCloneSlide = this.clones[ this.clones.length - 1 ].offsetLeft
 				const firstCloneSide = this.clones[ 0 ].offsetLeft
 
 				let initSlide = null
@@ -321,26 +323,26 @@ class _StackableCarousel {
 		if ( slide === this.currentSlide && ! force ) {
 			return
 		}
+		const currentSlideEl = this.slideEls[ this.currentSlide - 1 ]
+		const newSlideEl = this.slideEls[ slide - 1 ]
+		const offsetLeft = newSlideEl.offsetLeft
 
-		this.slideEls[ this.currentSlide - 1 ].classList.remove( 'stk-block-carousel__slide--active' )
-		this.slideEls[ slide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
+		currentSlideEl.classList.remove( 'stk-block-carousel__slide--active' )
+		newSlideEl.classList.add( 'stk-block-carousel__slide--active' )
 
 		if ( this.type === 'slide' ) {
-			const offsetLeft = this.slideEls[ slide - 1 ].offsetLeft
 			this.sliderEl.scrollLeft = offsetLeft
 		} else if ( this.type === 'fade' ) { // fade
-			const slidePrevEl = this.slideEls[ this.currentSlide - 1 ]
-			slidePrevEl.style.opacity = 0
+			currentSlideEl.style.opacity = 0
 
-			const slideEl = this.slideEls[ slide - 1 ]
-			slideEl.style.zIndex = ++this.currentZIndex
-			slideEl.style.transition = 'none'
-			slideEl.style.opacity = 0
-			slideEl.style.visibility = 'visible'
-			slideEl.style.left = `${ this.isRTL ? '' : '-' }${ 100 * ( slide - 1 ) }%`
+			newSlideEl.style.zIndex = ++this.currentZIndex
+			newSlideEl.style.transition = 'none'
+			newSlideEl.style.opacity = 0
+			newSlideEl.style.visibility = 'visible'
+			newSlideEl.style.left = `${ this.isRTL ? '' : '-' }${ 100 * ( slide - 1 ) }%`
 			setTimeout( () => {
-				slideEl.style.transition = ''
-				slideEl.style.opacity = 1
+				newSlideEl.style.transition = ''
+				newSlideEl.style.opacity = 1
 			}, 1 )
 		}
 		this.fixAccessibility( slide )
