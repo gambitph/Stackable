@@ -35,6 +35,7 @@ const withBlockWrapperIsHovered = createHigherOrderComponent(
 			<BlockWrapper
 				align={ props.attributes.align }
 				className={ props.attributes.className }
+				blockStyle={ props.attributes.blockStyle }
 				blockHoverClass={ blockHoverClass }
 				// These are needed by isHovered
 				hoverRef={ ref }

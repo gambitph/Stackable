@@ -29,7 +29,5 @@ export const isBlockStyleAttributesModified = ( blockName, styleSlug, _blockAttr
 		}
 	} )
 
-	// console.log( 'ismodified, current', blockAttrs, 'blockstyle', blockStyleAttrs )
-
 	return Object.keys( blockAttrs ).length
 }
