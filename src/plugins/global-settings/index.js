@@ -66,7 +66,7 @@ const GlobalSettings = () => {
 			{ PluginSidebar && userCanManageOptions &&
 				<PluginSidebar
 					name="sidebar"
-					title={ __( 'Stackable Settings', i18n ) }
+					title={ __( 'Stackable Design System', i18n ) }
 					className="ugb-global-settings__inspector"
 					icon={ <SVGStackableIcon /> }
 				>
