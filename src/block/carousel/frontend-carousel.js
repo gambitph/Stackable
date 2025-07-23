@@ -247,10 +247,6 @@ class _StackableCarousel {
 		return maxSlides
 	}
 
-	needToSwapCount = slide => {
-		return this.slidesToShow - ( this.slideEls.length - slide + 1 )
-	}
-
 	nextSlide = () => {
 		let newSlide = this.currentSlide + 1
 
