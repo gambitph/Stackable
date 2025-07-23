@@ -20,6 +20,7 @@ import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
+	withBlockStyleContext,
 } from '~stackable/higher-order'
 import {
 	Column,
@@ -222,4 +223,5 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
 )( Edit )

@@ -39,6 +39,7 @@ import {
 import { InnerBlocks } from '@wordpress/block-editor'
 import {
 	withBlockAttributeContext,
+	withBlockStyleContext,
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -321,4 +322,5 @@ export default compose(
 	withQueryLoopContext,
 	withBlockAttributeContext,
 	withActiveTab( 'initialTabOpen' ),
+	withBlockStyleContext( blockStyles ),
 )( Edit )

@@ -108,7 +108,7 @@ export { default as InspectorBottomTip } from './inspector-bottom-tip'
 export { default as BlockWrapper } from './block-wrapper'
 // TODO: clean this
 export {
-	default as BlockCss, BlockCssCompiler, BlockStyleGenerator, useBlockCssGenerator,
+	default as BlockCss, BlockCssCompiler, BlockStyleGenerator, useBlockCssGenerator, CssSaveCompiler,
 } from './block-css'
 export { default as ColumnsWidthControl } from './columns-width-control'
 export { default as ColumnsWidthMultiControl } from './columns-width-multi-control'

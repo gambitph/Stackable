@@ -7,7 +7,7 @@ const renderGlobalStyles = ( setStyles, allBlockStyles ) => {
 	for ( const blockName in allBlockStyles ) {
 		const blockStyles = allBlockStyles[ blockName ]
 		blockStyles.forEach( blockStyle => {
-			styles += blockStyle.css
+			styles += blockStyle.editCss
 		} )
 	}
 

@@ -258,8 +258,8 @@ const LabeledItemIndicator = props => {
 						</Button>
 					)
 				} }
-				renderContent={ () => {
-					return <> { ItemPicker && <ItemPicker item={ item } onChange={ onChange } /> } </>
+				renderContent={ ( { onClose } ) => {
+					return <> { ItemPicker && <ItemPicker item={ item } onChange={ onChange } onClose={ onClose } /> } </>
 				} }
 			/>
 			{ sortable &&

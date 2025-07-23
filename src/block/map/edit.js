@@ -40,7 +40,8 @@ import {
 	getAlignmentClasses,
 } from '~stackable/block-components'
 import {
-	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
+	withBlockAttributeContext, withBlockStyleContext,
+	withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import { currentUserHasCapability, getAttributeName } from '~stackable/util'
 
@@ -569,4 +570,5 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
 )( Edit )

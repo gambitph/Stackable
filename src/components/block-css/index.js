@@ -39,6 +39,7 @@ import { sprintf } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 export { BlockStyleGenerator } from './block-style-generator-class'
 export { useBlockCssGenerator } from './use-block-style-generator'
+export { default as CssSaveCompiler } from './css-save-compiler'
 
 const BlockCss = props => {
 	const {

@@ -7,7 +7,8 @@
 
 	.ugb-block-styles-controls__label {
 		display: inline-flex;
-		align-items: baseline;
+		align-items: center;
+		height: 24px;
 		gap: 6px;
 	}
 
@@ -16,24 +17,35 @@
 		grid-template-columns: 1fr auto;
 		row-gap: 4px;
 		position: relative;
-		padding-right: 28px;
 
 		> .components-base-control__label {
 			margin-bottom: 0;
 			align-self: center;
 		}
 
-		> div:nth-child(2) {
+		> .ugb-block-styles__actions {
 			display: flex;
 			align-items: center;
-			gap: 6px;
+			gap: 4px;
 			:where(.ugb-button-component:has(.dashicons-update-alt)) {
 				background: #fff;
+				gap: 0;
+				padding: 2px 8px 2px 2px;
+			}
+		}
+
+		> .components-base-control:has(.ugb-block-styles__select-control) {
+			grid-column: 1/3;
+			margin-bottom: 0;
+			.components-base-control__field {
+				margin-bottom: 0;
 			}
 		}
 
 		> .ugb-block-styles__select-control {
-			grid-column: 1/3;
+			&.has-modified {
+				padding-right: 28px;
+			}
 			> .ugb-button-component {
 				background: #fff;
 				width: 100%;
@@ -71,8 +83,8 @@
 }
 
 .ugb-block-styles__new-style-modal {
-	max-width: 350px;
-	width: 100vw;
+	max-width: 550px;
+	width: 90vw;
 }
 .ugb-block-styles__new-style-description {
 	color: #1e1e1e;
@@ -83,12 +95,23 @@
 	flex-direction: column;
 	gap: 16px;
 
-	.ugb-button-component {
+	.ugb-block-styles__attributes-list {
+		p {
+			margin: 0 0 4px;
+		}
+		ul {
+			margin: 0;
+			list-style: disc;
+			padding-inline-start: 20px;
+		}
+		li {
+			margin: 0;
+		}
+	}
+
+	.components-button {
 		margin-right: 0;
 		margin-left: auto;
-		&.has-icon {
-			gap: 8px;
-		}
 	}
 }
 
@@ -96,25 +119,4 @@
 	display: flex;
 	gap: 8px;
 	justify-content: flex-end;
-}
-
-.ugb-block-styles-control__popover {
-	.components-popover__content {
-		width: 205px;
-		padding: 0;
-	}
-
-	.ugb-button-component {
-		display: flex;
-		padding: 8px;
-		height: 32px;
-		width: 100%;
-		align-items: center;
-		justify-content: space-between;
-
-		&:hover {
-			color: var(--wp-components-color-foreground, #1e1e1e);
-			background: #0000001a;
-		}
-	}
 }

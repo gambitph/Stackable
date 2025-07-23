@@ -34,7 +34,8 @@ import {
 	getContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
-	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
+	withBlockAttributeContext, withBlockStyleContext,
+	withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -147,4 +148,5 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
 )( Edit )

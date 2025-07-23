@@ -17,7 +17,8 @@ import {
 	useBlockCssGenerator,
 } from '~stackable/components'
 import {
-	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
+	withBlockAttributeContext, withBlockStyleContext,
+	withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -150,6 +151,7 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
 )( Edit )
 
 // Disable bottom margins for child blocks.
