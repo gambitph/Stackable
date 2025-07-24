@@ -7,6 +7,7 @@ import {
 	srcUrl,
 	settings,
 	cdnUrl,
+	devMode,
 } from 'stackable'
 import {
 	Button,
@@ -163,9 +164,12 @@ const Edit = props => {
 
 				const customAttributes = block.attributes.customAttributes
 
-				const indexToDelete = customAttributes?.findIndex( attribute => attribute[ 0 ] === 'stk-design-library__bg-target' )
-				if ( customAttributes && indexToDelete !== -1 ) {
-					block.attributes.customAttributes.splice( indexToDelete, 1 )
+				const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
+				if ( ! isDesignLibraryDevMode ) {
+					const indexToDelete = customAttributes?.findIndex( attribute => attribute[ 0 ] === 'stk-design-library__bg-target' )
+					if ( customAttributes && indexToDelete !== -1 ) {
+						block.attributes.customAttributes.splice( indexToDelete, 1 )
+					}
 				}
 
 				for ( const attributeName in block.attributes ) {
@@ -189,30 +193,33 @@ const Edit = props => {
 		attributes = block[ 0 ].attributes
 		innerBlocks = block[ 0 ].innerBlocks
 
-		if ( category !== 'Header' ) {
-			if ( ! parentClientId && attributes.hasBackground ) {
-				attributes.blockMargin = {
-					top: '',
-					right: '',
-					bottom: '0',
-					left: '',
+		const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
+		if ( ! isDesignLibraryDevMode ) {
+			if ( category !== 'Header' ) {
+				if ( ! parentClientId && attributes.hasBackground ) {
+					attributes.blockMargin = {
+						top: '',
+						right: '',
+						bottom: '0',
+						left: '',
+					}
+				} else if ( ! parentClientId ) {
+					attributes.blockMargin = {
+						top: spacingSize,
+						right: '',
+						bottom: spacingSize,
+						left: '',
+					}
 				}
-			} else if ( ! parentClientId ) {
-				attributes.blockMargin = {
-					top: spacingSize,
-					right: '',
-					bottom: spacingSize,
-					left: '',
-				}
-			}
 
-			const blockLayouts = select( 'stackable/global-spacing-and-borders' ).getBlockLayouts()
-			if ( attributes.hasBackground && typeof blockLayouts === 'object' && ! blockLayouts[ 'block-background-padding' ] ) {
-				attributes.blockPadding = {
-					top: spacingSize,
-					right: spacingSize,
-					bottom: spacingSize,
-					left: spacingSize,
+				const blockLayouts = select( 'stackable/global-spacing-and-borders' ).getBlockLayouts()
+				if ( attributes.hasBackground && typeof blockLayouts === 'object' && ! blockLayouts[ 'block-background-padding' ] ) {
+					attributes.blockPadding = {
+						top: spacingSize,
+						right: spacingSize,
+						bottom: spacingSize,
+						left: spacingSize,
+					}
 				}
 			}
 		}

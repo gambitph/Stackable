@@ -319,7 +319,8 @@ div.ugb-modal-design-library__enable-background {
 	margin-bottom: 0 !important;
 	margin: 0 auto;
 
-	.components-base-control__field, .stk-control-label {
+	.components-base-control__field,
+	.stk-control-label {
 		margin: 0;
 	}
 	.components-button-group {
@@ -357,16 +358,16 @@ div.ugb-modal-design-library__enable-background {
 
 
 .ugb-modal-design-library__stk-color-scheme {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    outline: 1px solid #e0e0e0;
-    border-radius: 2px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	outline: 1px solid #e0e0e0;
+	border-radius: 2px;
 	margin-bottom: 8px;
 	padding: 0;
 	height: auto;
 	width: 100%;
-	&:hover  {
+	&:hover {
 		&.stk-color-scheme__toggle .stk-color-scheme__none,
 		.stk-global-color-scheme__preview {
 			color: initial;
@@ -377,7 +378,8 @@ div.ugb-modal-design-library__enable-background {
 	}
 
 	&.stk-color-scheme__selected {
-		&, &:active {
+		&,
+		&:active {
 			outline: 2px solid var(--wp-admin-theme-color, #f00069);
 			color: var(--wp-admin-theme-color, #f00069);
 		}
@@ -408,8 +410,12 @@ div.ugb-modal-design-library__enable-background {
 	display: flex;
 	gap: 10px;
 	align-items: center;
+	.components-toggle-control {
+		margin-bottom: 0;
+	}
 }
-.stk-design-library__plan-dropdown, .ugb-design-library__color-scheme-popover {
+.stk-design-library__plan-dropdown,
+.ugb-design-library__color-scheme-popover {
 	--wp-admin-theme-color: #f00069;
 	--wp-admin-theme-color-darker-10: #{ darken(#f00069, 10%) };
 	--wp-admin-theme-color-darker-20: #{ darken(#f00069, 20%) };
@@ -444,7 +450,7 @@ div.ugb-modal-design-library__enable-background {
 	max-width: 800px;
 	ul {
 		list-style: circle;
-    	margin-inline-start: 20px;
+		margin-inline-start: 20px;
 	}
 }
 
@@ -462,11 +468,11 @@ div.ugb-modal-design-library__enable-background {
 }
 
 .ugb-modal-design-library__stk-color-scheme-list-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
-    margin: 0 0 4px;
-    border-bottom: 1px solid #e0e0e0;
+	display: flex;
+	justify-content: space-between;
+	padding: 0;
+	margin: 0 0 4px;
+	border-bottom: 1px solid #e0e0e0;
 
 	p {
 		margin: 6px 6px 4px;

@@ -15,7 +15,7 @@ import {
  */
 import { createRoot } from '~stackable/util'
 import {
-	isPro, i18n, wpGlobalStylesInlineCss,
+	isPro, i18n, wpGlobalStylesInlineCss, devMode,
 } from 'stackable'
 import classnames from 'classnames'
 import { Tooltip } from '~stackable/components'
@@ -162,7 +162,9 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 	useEffect( () => {
 		const defaultValues = DEFAULT_CONTENT[ category ]
 		let _content = template
-		if ( defaultValues ) {
+
+		const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
+		if ( defaultValues && ! isDesignLibraryDevMode ) {
 			Object.keys( defaultValues ).forEach( key => {
 				_content = _content.replaceAll( key, defaultValues[ key ] )
 			} )
