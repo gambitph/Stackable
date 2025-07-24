@@ -5,7 +5,7 @@ import './store'
 import './variation-picker'
 import './custom-block-styles-editor'
 import SaveMenu from './save-menu'
-import { useSavedDefaultBlockStyle } from '~stackable/hooks'
+import { useSavedDefaultBlockStyle } from './use-saved-default-block-style'
 import { settings } from 'stackable'
 
 /**

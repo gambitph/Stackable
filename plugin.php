@@ -239,7 +239,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/buttons
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/color-schemes/deprecated/index.php' );  // We need to add this so the filter for deprecation gets applied.
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/color-schemes/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/preset-controls/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/custom-block-styles.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/compatibility/index.php' );
 if ( ! is_admin() ) {
@@ -292,6 +291,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/navigation-panel-pre-enabled.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/font-awesome-version.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/global-color-schemes.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/block-defaults.php' );
 
 /**
  * V2 Deprecated
