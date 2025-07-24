@@ -306,6 +306,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 3.17.2 =
 * Fixed: If using non-English locale, Google Fonts may not load properly in the editor
+* Fixed: Do not create a new design library block if there already is one
 
 = 3.17.1 =
 * Fixed: Progress circle block - having a prefix/suffix with dynamic content now works #3499
