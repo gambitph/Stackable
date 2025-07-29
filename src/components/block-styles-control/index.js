@@ -123,7 +123,7 @@ export const BlockStylesControl = props => {
 	const onSelectBlockStyle = option => {
 		if ( isPro ) {
 			doAction( 'stackable.global-settings.global-block-styles.select-block-style',
-				option,	globalBlockStyles, defaultBlockAttributes, setAttributes )
+				option,	blockStyle, globalBlockStyles, defaultBlockAttributes, setAttributes )
 		} else {
 			setOpenProNotice( value => ! value )
 		}
