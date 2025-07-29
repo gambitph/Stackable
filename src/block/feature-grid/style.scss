@@ -2,5 +2,6 @@
 
 .stk-block-feature-grid.stk--column-wrap-desktop .stk--flex > .stk-block-column,
 .stk-block-feature-grid.stk--column-wrap-desktop .stk--flex > * > * > [data-type="stackable/column"] {
-	flex: var(--stk-flex-grow, 1) 1 calc(100% - var(--stk-column-gap, 0px) * 0 / 1) !important;
+	// "* 1px" is added to prevent optimizers that remove the "px" unit from "0px" values from destroying calculations.
+	flex: var(--stk-flex-grow, 1) 1 calc(100% - var(--stk-column-gap, 0px) * 1px * 0 / 1) !important;
 }
