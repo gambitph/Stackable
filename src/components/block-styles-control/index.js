@@ -152,8 +152,7 @@ export const BlockStylesControl = props => {
 						iconPosition="right"
 						iconSize={ 12 }
 						onClick={ () => {
-							// Clicking this button when the popover is open also triggers the popover's `onClose`,
-							// so the popover will close automatically.
+							// Clicking this button when the popover is open also triggers the popover's `onClose`, so the popover will close automatically.
 							if ( ! openPopover && ! popoverOnCloseRef.current ) {
 								setOpenPopover( true )
 							}
@@ -198,7 +197,9 @@ export const BlockStylesControl = props => {
 				>
 					<PanelBody>
 						<h2 className="components-panel__body-title">{ __( 'Block Styles', i18n ) }</h2>
-						<p className="components-panel__body-description">Description</p>
+						<p className="components-panel__body-description">
+							{ __( 'Choose a block style to quickly apply a predefined set of styles to this block.', i18n ) }
+						</p>
 						<ul className="ugb-block-styles-controls__list">
 							<li>
 								<Button
