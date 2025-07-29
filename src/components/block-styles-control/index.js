@@ -156,7 +156,6 @@ export const BlockStylesControl = props => {
 							if ( ! openPopover && ! popoverOnCloseRef.current ) {
 								setOpenPopover( true )
 							}
-							popoverOnCloseRef.current = false
 						} }
 						ref={ buttonRef }
 					>
@@ -191,6 +190,7 @@ export const BlockStylesControl = props => {
 						setOpenPopover( false )
 						// This prevents the popover from reopening if the button was clicked
 						popoverOnCloseRef.current = true
+						setTimeout( () => popoverOnCloseRef.current = false, 100 )
 					 } }
 					anchor={ buttonRef.current }
 					placement="bottom-end"
