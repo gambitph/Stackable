@@ -48,6 +48,7 @@ export const BlockStylesControl = props => {
 
 	const prevBlockStyleRef = useRef( null )
 	const buttonRef = useRef( null )
+	const popoverOnCloseTimeout = useRef( null )
 	const popoverOnCloseRef = useRef( false )
 
 	const mainClasses = classnames( [
@@ -190,10 +191,10 @@ export const BlockStylesControl = props => {
 						setOpenPopover( false )
 						// This prevents the popover from reopening if the button was clicked
 						popoverOnCloseRef.current = true
-						setTimeout( () => popoverOnCloseRef.current = false, 100 )
+						clearTimeout( popoverOnCloseTimeout.current )
+						popoverOnCloseTimeout.current = setTimeout( () => popoverOnCloseRef.current = false, 100 )
 					 } }
 					anchor={ buttonRef.current }
-					placement="bottom-end"
 					offset={ 8 }
 				>
 					<PanelBody>
