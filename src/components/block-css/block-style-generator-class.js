@@ -160,7 +160,7 @@ export class BlockStyleGenerator {
 		} )
 
 		if ( getNonCssAttributes && attrNames ) {
-			const nonCssAttrs = attrNames.filter( attrName => ! ( attrName in blockStyles ) && attrName !== 'uniqueId' )
+			const nonCssAttrs = attrNames.filter( attrName => ! ( this.getRootAttrName( attrName ) in blockStyles ) && attrName !== 'uniqueId' )
 			return [ orderdBlockStyles, nonCssAttrs ]
 		}
 
