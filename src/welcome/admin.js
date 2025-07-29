@@ -767,7 +767,7 @@ const EditorSettings = props => {
 								} }
 								help={ __( 'Adds a toolbar button for advanced copying and pasting block styles', i18n ) }
 							/>
-							{ settings.stackable_enable_block_defaults && <AdminToggleSetting
+							<AdminToggleSetting
 								label={ __( 'Reset Layout', i18n ) }
 								searchedSettings={ toolbar.children }
 								value={ settings.stackable_enable_reset_layout }
@@ -775,7 +775,7 @@ const EditorSettings = props => {
 									handleSettingsChange( { stackable_enable_reset_layout: value } ) // eslint-disable-line camelcase
 								} }
 								help={ __( 'Adds a toolbar button for resetting the layout of a stackble block back to the original', i18n ) }
-							/> }
+							/>
 							{ settings.stackable_enable_block_defaults && <AdminToggleSetting
 								label={ __( 'Save as Default Block', i18n ) }
 								searchedSettings={ toolbar.children }
