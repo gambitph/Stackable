@@ -5,19 +5,25 @@
 
 	.ugb-block-styles-controls__wrapper {
 		position: relative;
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: 4px;
 
 		.ugb-block-styles-controls__block-style-button {
 			padding-right: 6px;
+			display: inline-block;
+			height: auto;
+			line-height: 1.4;
+			text-align: left;
+			place-self: flex-start;
 		}
 
-		&.has-modified {
-			padding-right: 28px;
-
-			.stk-control__reset-button {
-				right: 0;
-				top: 0;
-				color: var(--stk-skin-error);
-			}
+		.stk-control__reset-button {
+			position: relative;
+			top: 0;
+			right: 0;
+			color: var(--stk-skin-error);
 		}
 	}
 

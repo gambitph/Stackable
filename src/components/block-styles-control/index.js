@@ -160,7 +160,8 @@ export const BlockStylesControl = props => {
 						} }
 						ref={ buttonRef }
 					>
-						{ `${ __( 'Block Style', i18n ) }: ${ blockStyleLabel }${ isModified && inBlockStyleOptions ? ` (${ __( 'Modified', i18n ) })` : '' }` }
+						{ `${ __( 'Block Style', i18n ) }:` } <wbr /> { blockStyleLabel }{ isModified && inBlockStyleOptions ? ` (${ __( 'Modified', i18n ) })` : '' }
+
 					</Button>
 					<ResetButton
 						allowReset={ true }
