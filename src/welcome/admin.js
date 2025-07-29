@@ -238,7 +238,7 @@ const SEARCH_TREE = [
 			{
 				id: 'optimizations',
 				children: [
-					__( 'Frontend JS & CSS Files' ),
+					__( 'Frontend JS & CSS Files', i18n ),
 				],
 			},
 			{
@@ -679,7 +679,7 @@ const EditorSettings = props => {
 					{ editor.children.length > 0 &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Editor', i18n ) }</h2>
-							<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.' ) }	</p>
+							<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.', i18n ) }	</p>
 							<AdminToggleSetting
 								label={ __( 'Stackable Text as Default Block', i18n ) }
 								searchedSettings={ editor.children }
@@ -789,7 +789,7 @@ const EditorSettings = props => {
 					{ inspector.children.length > 0 &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Inspector', i18n ) }</h2>
-							<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the inspector here.' ) }</p>
+							<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the inspector here.', i18n ) }</p>
 							<AdminToggleSetting
 								label={ __( 'Don\'t show help video tooltips', i18n ) }
 								searchedSettings={ inspector.children }
