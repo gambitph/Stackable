@@ -143,7 +143,8 @@ const LABELS = {
 	'global-block-styles': {
 		title: __( 'Global Block Styles', i18n ),
 		description: <ul>
-			<li>{ __( 'Create your own block styles', i18n ) }</li>
+			<li>{ __( 'Create and use your own block styles', i18n ) }</li>
+			<li>{ __( 'Update your block styles', i18n ) }</li>
 			<li>{ __( 'Organize your custom block styles', i18n ) }</li>
 		</ul>,
 	},

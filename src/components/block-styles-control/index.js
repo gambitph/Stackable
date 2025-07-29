@@ -3,12 +3,17 @@
  */
 import ProControl from '../pro-control'
 import { ResetButton } from '../base-control2/reset-button'
+import ControlSeparator from '../control-separator'
+import Button from '../button'
 import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import {
-	getBlockStyleAttributesFilter, getFilteredAttributes, isBlockStyleAttributesModified,
+	getBlockStyleAttributesFilter,
+	getFilteredAttributes,
+	isBlockStyleAttributesModified,
+	currentUserHasCapability,
 } from '~stackable/util'
 import { i18n, isPro } from 'stackable'
 import classnames from 'classnames'
@@ -18,11 +23,9 @@ import classnames from 'classnames'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	BaseControl, Modal,
 	Dashicon,
-	SelectControl,
-	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
-	__experimentalInputControlSuffixWrapper as InputControlSuffixWrapper,
+	Popover,
+	PanelBody,
 } from '@wordpress/components'
 import {
 	Fragment,
@@ -39,15 +42,24 @@ export const BlockStylesControl = props => {
 	const blockAttributesFilter = getBlockStyleAttributesFilter( blockName )
 	const defaultBlockAttributes = useMemo( () => getFilteredAttributes( blockType.attributes, blockAttributesFilter ), [] )
 
-	const [ openProNoticeModal, setOpenProNoticeModal ] = useState( false )
+	const [ openProNotice, setOpenProNotice ] = useState( false )
 	const [ openSaveModal, setOpenSaveModal ] = useState( false )
+	const [ openPopover, setOpenPopover ] = useState( false )
 
 	const prevBlockStyleRef = useRef( null )
+	const buttonRef = useRef( null )
+	const popoverOnCloseRef = useRef( false )
 
 	const mainClasses = classnames( [
 		'components-panel__body',
 		'ugb-block-styles-controls',
 	] )
+
+	const proControlClasses = classnames( [
+		'ugb-pro-control-button__wrapper',
+	], {
+		'ugb-pro-control-button--hidden': ! openProNotice,
+	} )
 
 	const attributes = useBlockAttributesContext()
 
@@ -103,88 +115,129 @@ export const BlockStylesControl = props => {
 		}
 	}, [ blockStyle ] )
 
-	const selectOnClick = e => {
-		if ( ! isPro ) {
-			e.preventDefault()
-			setOpenProNoticeModal( true )
+	const onSelectDefaultBlockStyle = () => {
+		setAttributes( { ...defaultBlockAttributes, modifiedBlockStyle: false } )
+	}
+
+	const onSelectBlockStyle = option => {
+		if ( isPro ) {
+			doAction( 'stackable.global-settings.global-block-styles.select-block-style',
+				option,	globalBlockStyles, defaultBlockAttributes, setAttributes )
+		} else {
+			setOpenProNotice( value => ! value )
+		}
+	}
+
+	const onAddBlockStyle = () => {
+		if ( isPro ) {
+			doAction( 'stackable.global-settings.global-block-styles.add-block-style', setOpenSaveModal )
+		} else {
+			setOpenProNotice( value => ! value )
 		}
 	}
 
 	const SaveUpdateModal = applyFilters( 'stackable.global-settings.global-block-styles.save-update-modal', Fragment )
-	const SaveUpdateButtons = applyFilters( 'stackable.global-settings.global-block-styles.save-update-buttons', Fragment )
-
-	const selectProps = isPro ? {} : {
-		suffix: <InputControlSuffixWrapper style={ { display: 'flex', gap: 4 } }>
-			<Dashicon icon="lock" size={ 12 } />
-			<Dashicon icon="arrow-down-alt2" size={ 12 } />
-		</InputControlSuffixWrapper>,
-	}
 
 	return (
 		<>
-			<BaseControl
-				className={ mainClasses }
-				label={
-					<span className="ugb-block-styles-controls__label">
-						{ __( 'Style', i18n ) }
-						{ ! isPro && <span className="stk-pulsating-circle" role="presentation" /> }
-					</span>
-				}
-			>
-				<SaveUpdateButtons
-					blockStyle={ blockStyle }
-					inOptions={ inBlockStyleOptions }
-					isModified={ isModified }
-					setOpenSaveModal={ setOpenSaveModal }
-				/>
-				<SelectControl
-					{ ...selectProps }
-					value={ blockStyle }
-					className={ `ugb-block-styles__select-control${ isModified && inBlockStyleOptions ? ' has-modified' : '' }` }
-					onMouseDown={ selectOnClick }
-					onKeyDown={ selectOnClick }
-					onChange={ option => {
-						if ( isPro ) {
-							doAction( 'stackable.global-settings.global-block-styles.select-block-style',
-								option,	globalBlockStyles, defaultBlockAttributes, setAttributes )
-						}
-					} }
+			<div className={ mainClasses } >
+				<div
+					className={ `ugb-block-styles-controls__wrapper ${ isModified && inBlockStyleOptions ? 'has-modified' : '' }` }
 				>
-					<option value="">
-						{ __( 'Default', i18n ) }
-					</option>
-					{ globalBlockStyles.map( ( option, index ) => {
-						return <option key={ index } value={ option.slug }>
-							{ option.name } { blockStyle === option.slug && inBlockStyleOptions && isModified ? `(${ __( 'Modified', i18n ) })` : '' }
-						</option>
-					} ) }
-				</SelectControl>
+					<Button
+						variant="tertiary"
+						className="ugb-block-styles-controls__block-style-button"
+						size="small"
+						icon="edit"
+						iconPosition="right"
+						iconSize={ 12 }
+						onClick={ () => {
+							// Clicking this button when the popover is open also triggers the popover's `onClose`,
+							// so the popover will close automatically.
+							if ( ! openPopover && ! popoverOnCloseRef.current ) {
+								setOpenPopover( true )
+							}
+							popoverOnCloseRef.current = false
+						} }
+						ref={ buttonRef }
+					>
+						{ `${ __( 'Block Style', i18n ) }: ${ blockStyleLabel }${ isModified && inBlockStyleOptions ? ` (${ __( 'Modified', i18n ) })` : '' }` }
+					</Button>
+					<ResetButton
+						allowReset={ true }
+						value={ isModified && inBlockStyleOptions }
+						default={ false }
+						onChange={ () => {
+							if ( ! blockStyle || ! inBlockStyleOptions ) {
+								setAttributes( defaultBlockAttributes )
+								return
+							}
 
-				<ResetButton
-					allowReset={ true }
-					value={ isModified && inBlockStyleOptions }
-					default={ false }
-					onChange={ () => {
-						if ( ! blockStyle || ! inBlockStyleOptions ) {
-							setAttributes( defaultBlockAttributes )
-							return
-						}
+							setAttributes( {
+								...defaultBlockAttributes,
+								...blockStyleAttributes,
+								blockStyle,
+							} )
+						} }
+					/>
+				</div>
+			</div>
+			{ openPopover && (
+				<Popover
+					className="ugb-button-icon-control__popover ugb-block-styles-controls__popover"
+					focusOnMount="container"
+					onEscape={ () => setOpenPopover( false ) }
+					onClose={ () => {
+						setOpenPopover( false )
+						// This prevents the popover from reopening if the button was clicked
+						popoverOnCloseRef.current = true
+					 } }
+					anchor={ buttonRef.current }
+					placement="bottom-end"
+					offset={ 8 }
+				>
+					<PanelBody>
+						<h2 className="components-panel__body-title">{ __( 'Block Styles', i18n ) }</h2>
+						<p className="components-panel__body-description">Description</p>
+						<ul className="ugb-block-styles-controls__list">
+							<li>
+								<Button
+									onClick={ () => onSelectDefaultBlockStyle() }
+									className={ ! blockStyle ? 'ugb-block-styles-controls__selected' : '' }
+								>
+									{ ! blockStyle && <span className="ugb-block-styles-controls__selected-icon"> <Dashicon icon="saved" /> </span> }
+									<span className="ugb-block-styles-controls__label">{ __( 'Default', i18n ) }</span>
+								</Button>
+							</li>
+							{ globalBlockStyles.map( ( option, index ) => {
+								return <li key={ index }>
+									<Button
+										onClick={ () => onSelectBlockStyle( option.slug ) }
+										className={ blockStyle === option.slug ? 'ugb-block-styles-controls__selected' : '' }
+									>
+										{ blockStyle === option.slug && <span className="ugb-block-styles-controls__selected-icon"> <Dashicon icon="saved" /> </span> }
+										<span className="ugb-block-styles-controls__label">
+											{ option.name } { blockStyle === option.slug && inBlockStyleOptions && isModified ? `(${ __( 'Modified', i18n ) })` : '' }
+										</span>
+										{ ! isPro && <Dashicon icon="lock" size={ 12 } /> }
+									</Button>
+								</li>
+							} ) }
+						</ul>
+						<SaveUpdateButtons
+							blockStyle={ blockStyle }
+							inOptions={ inBlockStyleOptions }
+							isModified={ isModified }
+							setOpenSaveModal={ setOpenSaveModal }
+							onAddBlockStyle={ onAddBlockStyle }
+						/>
+						<div className={ proControlClasses } >
+							<ProControl type="global-block-styles" />
+						</div>
 
-						setAttributes( {
-							...defaultBlockAttributes,
-							...blockStyleAttributes,
-							blockStyle,
-						} )
-					} }
-				/>
-			</BaseControl>
-			{ openProNoticeModal && <Modal
-				className="ugb-block-styles__new-style-modal"
-				title={ __( 'This Is a Premium Feature', i18n ) }
-				onRequestClose={ () => setOpenProNoticeModal( false ) }
-			>
-				<ProControl type="global-block-styles" />
-			</Modal> }
+					</PanelBody>
+				</Popover>
+			) }
 			<SaveUpdateModal
 				openSaveModal={ openSaveModal }
 				setOpenSaveModal={ setOpenSaveModal }
@@ -194,4 +247,48 @@ export const BlockStylesControl = props => {
 			/>
 		</>
 	)
+}
+
+const SaveUpdateButtons = props => {
+	const {
+		blockStyle, inOptions, isModified, setOpenSaveModal, onAddBlockStyle,
+	} = props
+	const [ userCanManageOptions, setUserCanManageOptions ] = useState( false )
+	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id, [] )
+
+	useEffect( () => {
+		const checkCapabilities = async () => {
+			const capabilities = await currentUserHasCapability( 'manage_options' )
+			setUserCanManageOptions( capabilities )
+		}
+
+		checkCapabilities()
+	}, [ id ] )
+
+	const UpdateButton = applyFilters( 'stackable.global-settings.global-block-styles.update-button', Fragment )
+
+	// Do not show the add and update buttons if the user does not have "manage options" capabilities
+	if ( ! userCanManageOptions ) {
+		return Fragment
+	}
+
+	return ( <>
+		<ControlSeparator style={ { width: '100% !important', margin: '0 auto !important' } } />
+		<ul>
+			<UpdateButton
+				blockStyle={ blockStyle }
+				inOptions={ inOptions }
+				isModified={ isModified }
+				setOpenSaveModal={ setOpenSaveModal }
+			/>
+			<li>
+				<Button onClick={ () => onAddBlockStyle() }>
+					<span className="ugb-block-styles-controls__action">
+						{ __( 'Add new block style', i18n ) }
+						{ ! isPro && <span className="stk-pulsating-circle" role="presentation" /> }
+					</span>
+				</Button>
+			</li>
+		</ul>
+	</> )
 }
