@@ -410,6 +410,9 @@ div.ugb-modal-design-library__enable-background {
 	display: flex;
 	gap: 10px;
 	align-items: center;
+	.components-toggle-control {
+		margin-bottom: 0;
+	}
 }
 .stk-design-library__plan-dropdown,
 .ugb-design-library__color-scheme-popover {

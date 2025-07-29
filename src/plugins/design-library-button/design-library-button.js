@@ -17,6 +17,16 @@ const DesignLibraryButton = () => {
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
 	const onClick = useCallback( () => {
+		// If there's a design library block already in the editor, just open it.
+		if ( getEditorDom()?.querySelector( '[data-type="stackable/design-library"]' ) ) {
+			const button = getEditorDom()?.querySelector( `[data-type="stackable/design-library"] button` )
+			// Open the design library.
+			if ( button ) {
+				button.click()
+			}
+			return
+		}
+
 		// Insert a design library block.
 		const block = createBlock( 'stackable/design-library' )
 
