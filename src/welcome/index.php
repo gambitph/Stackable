@@ -77,12 +77,12 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'welcomeSrcUrl' => untrailingslashit( plugins_url( '/', __FILE__ ) ),
 					'i18n' => STACKABLE_I18N,
 					'cdnUrl' => STACKABLE_DESIGN_LIBRARY_URL,
-					'isPro' => sugb_fs()->can_use_premium_code() && STACKABLE_BUILD !== 'free',
+					'isPro' => STACKABLE_BUILD !== 'free' && sugb_fs()->can_use_premium_code(),
 					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
-					'contactURL' => ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '',
-					'planName' => sugb_fs()->get_plan_name(),
-					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ( ! sugb_fs()->can_use_premium_code() || STACKABLE_BUILD === 'free' ),
+					'contactURL' => STACKABLE_BUILD === 'free' ? '' : ( ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '' ),
+					'planName' => STACKABLE_BUILD === 'free' ? '' : sugb_fs()->get_plan_name(),
+					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ),
 					'nonceNews' => stackable_get_news_feed_nonce(),
 				) );
 				wp_localize_script( 'stackable-welcome', 'stackable', $args );
@@ -94,11 +94,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 			$display_account_tab = true;
 			$display_contact_tab = true;
-			$account_url = sugb_fs()->get_account_url();
+			$account_url = STACKABLE_BUILD === 'free' ? '' : sugb_fs()->get_account_url();
 			$contact_url = admin_url( 'options-general.php?page=stackable-contact' );
 
 			// If network activated and in multisite, the accounts page is in a different URL.
-			if ( is_multisite() && sugb_fs()->is_network_active() ) {
+			if ( is_multisite() && STACKABLE_BUILD !== 'free' && sugb_fs()->is_network_active() ) {
 				$account_url = str_replace( 'options-general.php', 'admin.php', $account_url );
 				$contact_url = admin_url( 'network/admin.php?page=stackable-contact' );
 				if ( ! is_main_site() ) {
@@ -119,14 +119,14 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<span><?php _e( 'Settings', STACKABLE_I18N ) ?></span>
 				</a>
 
-				<?php if ( $display_account_tab && sugb_fs()->get_user() ) { ?>
+				<?php if ( $display_account_tab && STACKABLE_BUILD !== 'free' && sugb_fs()->get_user() ) { ?>
 					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-account' ? 's-active' : '' ?>"
 						href="<?php echo $account_url ?>">
 						<span><?php _e( 'Account', STACKABLE_I18N ) ?></span>
 					</a>
 				<?php } ?>
 
-				<?php if ( sugb_fs()->has_affiliate_program() ) { ?>
+				<?php if ( STACKABLE_BUILD !== 'free' && sugb_fs()->has_affiliate_program() ) { ?>
 					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-affiliation' ? 's-active' : '' ?>"
 						href="<?php echo admin_url( 'options-general.php?page=stackable-affiliation' ) ?>">
 						<span><?php _e( 'Affiliation', STACKABLE_I18N ) ?></span>
@@ -165,7 +165,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		}
 
 		public static function print_premium_button() { ?>
-			<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
+			<?php if ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ) : ?>
 				<a href="https://wpstackable.com/premium/?utm_source=wp-settings-tabs&utm_campaign=gopremium&utm_medium=wp-dashboard" class="s-button s-premium-button" title="<?php esc_attr_e( 'Unlock my Premium Features', STACKABLE_I18N ) ?>" target="_new">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" style="vertical-align: middle; fill: currentColor"><path d="M321.7 0c19.1 0 32.9 18.3 27.6 36.6L295.8 224l85.2 0c19.3 0 34.9 15.6 34.9 34.9c0 10.3-4.5 20-12.3 26.6L144.9 505.2c-5.2 4.4-11.8 6.8-18.6 6.8c-19.1 0-32.9-18.3-27.6-36.6L152.2 288l-86.4 0C47.1 288 32 272.9 32 254.3c0-9.9 4.3-19.2 11.8-25.6L303.1 6.9C308.3 2.4 314.9 0 321.7 0zM285.6 85L104.4 240l79.6 0c7.5 0 14.6 3.5 19.2 9.5s6 13.8 3.9 21L162.3 427.5 345.5 272 264 272c-7.5 0-14.6-3.5-19.2-9.5s-6-13.8-3.9-21L285.6 85z"/></svg>
 					<?php esc_attr_e( 'Unlock my Premium Features', STACKABLE_I18N ) ?>
@@ -196,7 +196,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						<?php do_action( 'stackable_settings_page_mid' ); ?>
 					</div>
 					<!-- <div class="s-side">
-						<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
+						<?php if ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ) : ?>
 						<aside class="s-box s-premium-box">
 							<h3><?php _e( '🚀 Stackable Premium', STACKABLE_I18N ) ?></h3>
 							<p><?php _e( 'If you are ready for even more, upgrade to Premium and get:', STACKABLE_I18N ) ?></p>
@@ -292,7 +292,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			}
 
 			// Go Premium link.
-			if ( ! sugb_fs()->is_whitelabeled() && ! sugb_fs()->can_use_premium_code() ) {
+			if ( STACKABLE_BUILD === 'free' ) {
 				$premium_link = sprintf( '<a href="%s" target="_blank" style="color: #93003c; text-shadow: 1px 1px 1px #eee; font-weight: bold;">%s</a>',
 					'https://wpstackable.com/premium/?utm_source=wp-plugins&utm_campaign=gopremium&utm_medium=wp-dashboard',
 					__( 'Go Premium', STACKABLE_I18N )
@@ -320,9 +320,10 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		 * Redirect to the welcome screen if our marker exists.
 		 */
 		public function redirect_to_welcome_page() {
+
 			if ( get_option( 'stackable_redirect_to_welcome' ) &&
 				current_user_can( 'manage_options' ) &&
-				! sugb_fs()->is_activation_mode()
+				( STACKABLE_BUILD === 'free' || ! sugb_fs()->is_activation_mode() )
 			) {
 				// Never go here again.
 				delete_option( 'stackable_redirect_to_welcome' );
