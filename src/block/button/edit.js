@@ -168,5 +168,5 @@ export default compose(
 	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
-	withBlockStyleContext( blockStyles ),
+	withBlockStyleContext( buttonStyles ),
 )( Edit )
