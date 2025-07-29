@@ -219,7 +219,7 @@ const SEARCH_TREE = [
 					__( 'Generate Global Colors for native blocks', i18n ),
 					__( 'Inherit Block Styles from theme.json', i18n ),
 					__( 'Use v3.16.0 Color Scheme Inheritance', i18n ),
-					__( 'Block Defaults (Deprecated)', i18n ),
+					__( 'Block Defaults (Sunsetted)', i18n ),
 				],
 			},
 			{
