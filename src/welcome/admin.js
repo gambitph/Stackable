@@ -1518,7 +1518,7 @@ const AdditionalOptions = props => {
 							<CheckboxControl
 								label={ __( 'Block Defaults (Deprecated)', i18n ) }
 								className={ searchClassname( __( 'Block Defaults (Deprecated)', i18n ), miscellaneous ) }
-								help={ __( `Default state of blocks were previously allowed to be saved. This functionality has since been deprecated, and sunsetted in the future in replacement of the new Stackable Design System.`, i18n ) }
+								help={ __( `Default state of blocks were previously allowed to be saved. This functionality has since been sunsetted in lieu of the Stackable Design System. Use at your own risk as this feature is slated to be removed in a future version.`, i18n ) }
 								checked={ settings.stackable_enable_block_defaults }
 								onChange={ checked => {
 									handleSettingsChange( {
