@@ -92,6 +92,7 @@ class _StackableCarousel {
 					const original = this.slideEls[ slideIndex ]
 					const clone = original.cloneNode( true )
 					clone.classList.add( `stk-slide-clone-${ slideIndex + 1 }` )
+					clone.style.zIndex = -1
 					original.style.willChange = 'transform'
 					original.style.transform = 'TranslateX( 0 )'
 
