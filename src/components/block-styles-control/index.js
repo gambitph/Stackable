@@ -51,6 +51,7 @@ export const BlockStylesControl = props => {
 	const buttonRef = useRef( null )
 	const popoverOnCloseTimeout = useRef( null )
 	const popoverOnCloseRef = useRef( false )
+	const panelBodyRef = useRef( null )
 
 	// Reset openProNotice when the popover is closed
 	useEffect( () => {
@@ -159,11 +160,12 @@ export const BlockStylesControl = props => {
 						size="small"
 						icon="edit"
 						iconSize={ 12 }
-						onClick={ () => {
-							// Clicking this button when the popover is open also triggers the popover's `onClose`, so the popover will close automatically.
-							if ( ! openPopover && ! popoverOnCloseRef.current ) {
-								setOpenPopover( true )
-							}
+						onMouseDown={ () => {
+							setOpenPopover( isOpen => ! isOpen )
+							// Focus on the selected block style button when the popover is opened.
+							setTimeout( () => {
+								panelBodyRef.current?.querySelector( '.ugb-block-styles-controls__selected' )?.focus()
+							}, 50 )
 						} }
 						ref={ buttonRef }
 					>
@@ -192,7 +194,7 @@ export const BlockStylesControl = props => {
 			{ openPopover && (
 				<Popover
 					className="ugb-button-icon-control__popover ugb-block-styles-controls__popover"
-					focusOnMount="container"
+					focusOnMount={ false }
 					onEscape={ () => setOpenPopover( false ) }
 					onClose={ () => {
 						setOpenPopover( false )
@@ -206,7 +208,7 @@ export const BlockStylesControl = props => {
 					placement="left-start"
 					resize={ false }
 				>
-					<PanelBody>
+					<PanelBody ref={ panelBodyRef }>
 						<h2 className="components-panel__body-title">{ __( 'Block Styles', i18n ) }</h2>
 						<p className="components-panel__body-description">
 							{ __( 'Choose a block style to quickly apply a predefined set of styles to this block.', i18n ) }
