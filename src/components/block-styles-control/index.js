@@ -51,6 +51,19 @@ export const BlockStylesControl = props => {
 	const buttonRef = useRef( null )
 	const panelBodyRef = useRef( null )
 
+	const [ userCanManageOptions, setUserCanManageOptions ] = useState( false )
+	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id, [] )
+
+	// Check if the user has "manage options" capabilities and can manage block styles.
+	useEffect( () => {
+		const checkCapabilities = async () => {
+			const capabilities = await currentUserHasCapability( 'manage_options' )
+			setUserCanManageOptions( capabilities )
+		}
+
+		checkCapabilities()
+	}, [ id ] )
+
 	// Reset openProNotice when the popover is closed
 	useEffect( () => {
 		if ( ! openPopover ) {
@@ -237,13 +250,15 @@ export const BlockStylesControl = props => {
 								</li>
 							} ) }
 						</ul>
-						<SaveUpdateButtons
-							blockStyle={ blockStyle }
-							inOptions={ inBlockStyleOptions }
-							isModified={ isModified }
-							setOpenSaveModal={ setOpenSaveModal }
-							onAddBlockStyle={ onAddBlockStyle }
-						/>
+						{ userCanManageOptions && (
+							<SaveUpdateButtons
+								blockStyle={ blockStyle }
+								inOptions={ inBlockStyleOptions }
+								isModified={ isModified }
+								setOpenSaveModal={ setOpenSaveModal }
+								onAddBlockStyle={ onAddBlockStyle }
+							/>
+						) }
 						<div className={ proControlClasses } >
 							<ProControl type="global-block-styles" />
 						</div>
@@ -266,24 +281,8 @@ const SaveUpdateButtons = props => {
 	const {
 		blockStyle, inOptions, isModified, setOpenSaveModal, onAddBlockStyle,
 	} = props
-	const [ userCanManageOptions, setUserCanManageOptions ] = useState( false )
-	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id, [] )
-
-	useEffect( () => {
-		const checkCapabilities = async () => {
-			const capabilities = await currentUserHasCapability( 'manage_options' )
-			setUserCanManageOptions( capabilities )
-		}
-
-		checkCapabilities()
-	}, [ id ] )
 
 	const UpdateButton = applyFilters( 'stackable.global-settings.global-block-styles.update-button', Fragment )
-
-	// Do not show the add and update buttons if the user does not have "manage options" capabilities
-	if ( ! userCanManageOptions ) {
-		return Fragment
-	}
 
 	return ( <>
 		<Flex style={ { marginTop: '24px' } } direction="column" align="flex-end">
