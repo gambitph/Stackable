@@ -1,0 +1,14 @@
+# Ignore JavaScript files to prevent conflicts with ESLint
+*.js
+*.jsx
+*.ts
+*.tsx
+
+# Ignore build files
+dist/
+build/
+node_modules/
+
+# Ignore other files that shouldn't be formatted
+*.min.js
+*.min.css 
