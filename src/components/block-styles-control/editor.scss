@@ -79,16 +79,16 @@
 }
 
 .ugb-block-styles-controls__popover {
-	.ugb-block-styles-controls__list .components-button:focus:not(:disabled) {
-		box-shadow: none;
-		outline: 1px solid #e0e0e0;
-	}
 	.components-button {
 		width: 100%;
 		position: relative;
 
 		&.ugb-block-styles-controls__selected {
-			outline: 2px solid var(--stk-skin-dark) !important;
+			outline: 1px solid var(--stk-skin-dark) !important;
+		}
+
+		&:focus:not(:disabled) {
+			box-shadow: 0 0 0 2px var(--stk-skin-dark);
 		}
 
 		.dashicons-lock {

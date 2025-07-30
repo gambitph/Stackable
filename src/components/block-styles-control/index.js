@@ -49,8 +49,6 @@ export const BlockStylesControl = props => {
 
 	const prevBlockStyleRef = useRef( null )
 	const buttonRef = useRef( null )
-	const popoverOnCloseTimeout = useRef( null )
-	const popoverOnCloseRef = useRef( false )
 	const panelBodyRef = useRef( null )
 
 	// Reset openProNotice when the popover is closed
@@ -126,6 +124,11 @@ export const BlockStylesControl = props => {
 	}, [ blockStyle ] )
 
 	const onSelectDefaultBlockStyle = () => {
+		// Do nothing if block style is already "Default"
+		if ( ! blockStyle ) {
+			return
+		}
+
 		setAttributes( { ...defaultBlockAttributes, modifiedBlockStyle: false } )
 	}
 
@@ -196,13 +199,7 @@ export const BlockStylesControl = props => {
 					className="ugb-button-icon-control__popover ugb-block-styles-controls__popover"
 					focusOnMount={ false }
 					onEscape={ () => setOpenPopover( false ) }
-					onClose={ () => {
-						setOpenPopover( false )
-						// This prevents the popover from reopening if the button was clicked
-						popoverOnCloseRef.current = true
-						clearTimeout( popoverOnCloseTimeout.current )
-						popoverOnCloseTimeout.current = setTimeout( () => popoverOnCloseRef.current = false, 100 )
-					 } }
+					onClose={ () => setOpenPopover( false ) }
 					anchor={ buttonRef.current }
 					offset={ 8 }
 					placement="left-start"
@@ -218,6 +215,7 @@ export const BlockStylesControl = props => {
 								<Button
 									onClick={ () => onSelectDefaultBlockStyle() }
 									className={ ! blockStyle ? 'ugb-block-styles-controls__selected' : '' }
+									tabIndex={ 0 }
 								>
 									{ ! blockStyle && <span className="ugb-block-styles-controls__selected-icon"> <Dashicon icon="saved" /> </span> }
 									<span className="ugb-block-styles-controls__label">{ __( 'Default', i18n ) }</span>
@@ -228,6 +226,7 @@ export const BlockStylesControl = props => {
 									<Button
 										onClick={ () => onSelectBlockStyle( option.slug ) }
 										className={ blockStyle === option.slug ? 'ugb-block-styles-controls__selected' : '' }
+										tabIndex={ 0 }
 									>
 										{ blockStyle === option.slug && <span className="ugb-block-styles-controls__selected-icon"> <Dashicon icon="saved" /> </span> }
 										<span className="ugb-block-styles-controls__label">
@@ -287,7 +286,7 @@ const SaveUpdateButtons = props => {
 	}
 
 	return ( <>
-		<Flex style={ { marginTop: '24px' } }>
+		<Flex style={ { marginTop: '24px' } } direction="column" align="flex-end">
 			<FlexItem>
 				<UpdateButton
 					blockStyle={ blockStyle }
