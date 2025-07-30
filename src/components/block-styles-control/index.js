@@ -221,7 +221,9 @@ export const BlockStylesControl = props => {
 					<PanelBody ref={ panelBodyRef }>
 						<h2 className="components-panel__body-title">{ __( 'Block Styles', i18n ) }</h2>
 						<p className="components-panel__body-description">
-							{ __( 'Choose a block style to quickly apply a predefined set of styles to this block.', i18n ) }
+							{ __( 'Save the styles of this block to reuse on others. You can also update a saved style, and the changes will apply wherever it\'s used.', i18n ) }
+							&nbsp;
+							<a href="https://docs.wpstackable.com/article/737-how-to-use-block-styles" target="_docs" rel="noreferrer">{ __( 'Learn more', i18n ) }</a>
 						</p>
 						<ul className="ugb-block-styles-controls__list">
 							<li>
