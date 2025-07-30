@@ -85,6 +85,7 @@
 	}
 	.components-button {
 		width: 100%;
+		position: relative;
 
 		&.ugb-block-styles-controls__selected {
 			outline: 2px solid var(--stk-skin-dark) !important;
@@ -94,6 +95,13 @@
 			position: absolute;
 			right: 8px;
 		}
+	}
+
+	.components-panel__body:has(.ugb-pro-control-button__wrapper:not(.ugb-pro-control-button--hidden)) > *:not(.ugb-pro-control-button__wrapper) {
+		height: 0 !important;
+		overflow: hidden !important;
+		min-height: 0 !important;
+		max-height: 0 !important;
 	}
 
 	.components-panel__body-description {

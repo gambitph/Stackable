@@ -52,6 +52,13 @@ export const BlockStylesControl = props => {
 	const popoverOnCloseTimeout = useRef( null )
 	const popoverOnCloseRef = useRef( false )
 
+	// Reset openProNotice when the popover is closed
+	useEffect( () => {
+		if ( ! openPopover ) {
+			setOpenProNotice( false )
+		}
+	}, [ openPopover ] )
+
 	const mainClasses = classnames( [
 		'components-panel__body',
 		'ugb-block-styles-controls',
@@ -196,7 +203,8 @@ export const BlockStylesControl = props => {
 					 } }
 					anchor={ buttonRef.current }
 					offset={ 8 }
-					placement="left"
+					placement="left-start"
+					resize={ false }
 				>
 					<PanelBody>
 						<h2 className="components-panel__body-title">{ __( 'Block Styles', i18n ) }</h2>
