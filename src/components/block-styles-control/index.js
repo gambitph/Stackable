@@ -286,7 +286,7 @@ const SaveUpdateButtons = props => {
 	}
 
 	return ( <>
-		<Flex style={ { marginTop: '24px' } } direction="column" align="flex-end">
+		<Flex style={ { marginTop: '24px' } }>
 			<FlexItem>
 				<UpdateButton
 					blockStyle={ blockStyle }
