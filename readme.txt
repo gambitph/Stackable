@@ -252,7 +252,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 6.3 or higher for this to work.
+You'll need WordPress version 6.5.5 or higher for this to work.
 
 == Frequently Asked Questions ==
 
