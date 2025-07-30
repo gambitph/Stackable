@@ -11,7 +11,9 @@ import { getDesigns, filterDesigns } from '~stackable/design-library'
 /**
  * External deprendencies
  */
-import { i18n, isPro } from 'stackable'
+import {
+	i18n, isPro, devMode,
+} from 'stackable'
 import classnames from 'classnames'
 import { useLocalStorage } from '~stackable/util'
 
@@ -155,6 +157,19 @@ export const ModalDesignLibrary = props => {
 					/> */ }
 
 					<div className="stk-design-library__header-settings">
+						{ devMode && (
+							<ToggleControl
+								label="Dev Mode"
+								checked={ !! localStorage.getItem( 'stk__design_library__dev_mode' ) || false }
+								onChange={ value => {
+									localStorage.setItem( 'stk__design_library__dev_mode', value ? '1' : '' )
+									setTimeout( () => {
+										document?.querySelector( '.ugb-insert-library-button__wrapper .ugb-insert-library-button' ).click()
+									}, 100 )
+									props.onClose()
+								} }
+							/>
+						) }
 						<Button
 							icon="image-rotate"
 							iconSize={ 14 }

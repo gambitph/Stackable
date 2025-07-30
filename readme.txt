@@ -252,7 +252,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 6.3 or higher for this to work.
+You'll need WordPress version 6.5.5 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -303,6 +303,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.17.2 =
+* Fixed: If using non-English locale, Google Fonts may not load properly in the editor
+* Fixed: Do not create a new design library block if there already is one
 
 = 3.17.1 =
 * Fixed: Progress circle block - having a prefix/suffix with dynamic content now works #3499

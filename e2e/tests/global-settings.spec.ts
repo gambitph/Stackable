@@ -20,7 +20,7 @@ test.describe( 'Global Settings', () => {
 		page,
 		editor,
 	} ) => {
-		await page.getByLabel( 'Stackable Settings' ).click()
+		await page.getByLabel( 'Stackable Design System' ).click()
 		await page.getByRole( 'button', { name: 'Global Color Palette' } ).click()
 
 		// Add a new Global Color
@@ -66,7 +66,7 @@ test.describe( 'Global Settings', () => {
 		await page.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
 
 		// Delete added Global Color
-		await page.getByLabel( 'Stackable Settings' ).click()
+		await page.getByLabel( 'Stackable Design System' ).click()
 
 		page.on( 'dialog', async dialog => await dialog.accept() )
 		const deleteRequest = page.waitForResponse( response => response.url().includes( 'wp/v2/settings' ) && response.request().method() === 'POST' )
@@ -82,7 +82,7 @@ test.describe( 'Global Settings', () => {
 		page,
 		editor,
 	} ) => {
-		await page.getByLabel( 'Stackable Settings' ).click()
+		await page.getByLabel( 'Stackable Design System' ).click()
 		await page.getByRole( 'button', { name: 'Global Typography' } ).click()
 
 		// Set Global Typography Styles of Heading 2 to have a text-transform uppercase
@@ -107,7 +107,7 @@ test.describe( 'Global Settings', () => {
 		await expect( editor.canvas.locator( '[data-type="stackable/heading"] > .stk-block-heading > h2[role="textbox"]' ) ).toHaveCSS( 'text-transform', 'uppercase' )
 
 		// Reset Global Typography Styles
-		await page.getByLabel( 'Stackable Settings' ).click()
+		await page.getByLabel( 'Stackable Design System' ).click()
 
 		const resetButton = page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).getByLabel( 'Reset' )
 		const deleteRequest = page.waitForResponse( response => response.url().includes( 'wp/v2/settings' ) && response.request().method() === 'POST' )
