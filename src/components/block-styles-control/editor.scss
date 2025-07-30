@@ -32,6 +32,11 @@
 		background-color: var(--stk-skin-bg-secondary);
 		color: var(--stk-skin-dark);
 	}
+
+	.stk-panel-modified-indicator {
+		display: inline-block;
+		margin-inline: 8px;
+	}
 }
 
 .ugb-block-styles__new-style-modal {
@@ -80,10 +85,6 @@
 	}
 	.components-button {
 		width: 100%;
-		position: relative;
-		padding: 0 4px;
-		height: 28px;
-		outline: 1px solid #e0e0e0;
 
 		&.ugb-block-styles-controls__selected {
 			outline: 2px solid var(--stk-skin-dark) !important;
@@ -106,11 +107,8 @@
 		margin-inline-start: 24px;
 	}
 
-	.ugb-block-styles-controls__action {
-		margin: 0 auto;
-		display: inline-flex;
-		align-items: center;
-		gap: 4px;
+	.stk-pulsating-circle {
+		margin-inline-start: 8px;
 	}
 
 	.ugb-control-separator {

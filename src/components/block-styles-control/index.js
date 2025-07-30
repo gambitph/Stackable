@@ -3,7 +3,6 @@
  */
 import ProControl from '../pro-control'
 import { ResetButton } from '../base-control2/reset-button'
-import ControlSeparator from '../control-separator'
 import Button from '../button'
 import {
 	useBlockAttributesContext,
@@ -26,6 +25,8 @@ import {
 	Dashicon,
 	Popover,
 	PanelBody,
+	Flex,
+	FlexItem,
 } from '@wordpress/components'
 import {
 	Fragment,
@@ -150,7 +151,6 @@ export const BlockStylesControl = props => {
 						className="ugb-block-styles-controls__block-style-button"
 						size="small"
 						icon="edit"
-						iconPosition="right"
 						iconSize={ 12 }
 						onClick={ () => {
 							// Clicking this button when the popover is open also triggers the popover's `onClose`, so the popover will close automatically.
@@ -160,7 +160,7 @@ export const BlockStylesControl = props => {
 						} }
 						ref={ buttonRef }
 					>
-						{ `${ __( 'Block Style', i18n ) }:` } <wbr /> { blockStyleLabel }{ isModified && inBlockStyleOptions ? ` (${ __( 'Modified', i18n ) })` : '' }
+						{ `${ __( 'Block Style', i18n ) }:` } <wbr /> { blockStyleLabel }{ isModified && inBlockStyleOptions ? <span className="stk-panel-modified-indicator stk--visible"></span> : '' }
 
 					</Button>
 					<ResetButton
@@ -196,6 +196,7 @@ export const BlockStylesControl = props => {
 					 } }
 					anchor={ buttonRef.current }
 					offset={ 8 }
+					placement="left"
 				>
 					<PanelBody>
 						<h2 className="components-panel__body-title">{ __( 'Block Styles', i18n ) }</h2>
@@ -276,22 +277,24 @@ const SaveUpdateButtons = props => {
 	}
 
 	return ( <>
-		<ControlSeparator style={ { width: '100% !important', margin: '0 auto !important' } } />
-		<ul>
-			<UpdateButton
-				blockStyle={ blockStyle }
-				inOptions={ inOptions }
-				isModified={ isModified }
-				setOpenSaveModal={ setOpenSaveModal }
-			/>
-			<li>
-				<Button onClick={ () => onAddBlockStyle() }>
-					<span className="ugb-block-styles-controls__action">
-						{ __( 'Add new block style', i18n ) }
-						{ ! isPro && <span className="stk-pulsating-circle" role="presentation" /> }
-					</span>
+		<Flex style={ { marginTop: '24px' } }>
+			<FlexItem>
+				<UpdateButton
+					blockStyle={ blockStyle }
+					inOptions={ inOptions }
+					isModified={ isModified }
+					setOpenSaveModal={ setOpenSaveModal }
+				/>
+			</FlexItem>
+			<FlexItem>
+				<Button
+					variant="primary"
+					onClick={ () => onAddBlockStyle() }
+				>
+					{ __( 'Save as New Style', i18n ) }
+					{ ! isPro && <span className="stk-pulsating-circle" role="presentation" /> }
 				</Button>
-			</li>
-		</ul>
+			</FlexItem>
+		</Flex>
 	</> )
 }
