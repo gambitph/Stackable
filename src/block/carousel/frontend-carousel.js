@@ -118,10 +118,9 @@ class _StackableCarousel {
 				} else if ( step === 2 ) {
 					const numSlides = this.slideEls.length
 					const slideClientRect = this.slideEls[ 0 ].getBoundingClientRect()
-					const carouselSlideGap = window.getComputedStyle( this.el ).getPropertyValue( '--gap' )
 					const slideWidth = slideClientRect.width
 
-					this.slideTranslateX = `calc((${ slideWidth }px * ${ numSlides }) + (${ carouselSlideGap } * ${ numSlides }))`
+					this.slideTranslateX = `calc((${ slideWidth }px * ${ numSlides }) + (var(--gap) * ${ numSlides }))`
 
 					step++
 				} else if ( step === 3 ) {
