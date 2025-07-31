@@ -20,6 +20,7 @@ const BlockWrapper = memo( props => {
 	const {
 		align = undefined,
 		className: blockClassName = '',
+		blockStyle = undefined,
 		blockHoverClass = '',
 		children,
 		hoverRef,
@@ -40,6 +41,8 @@ const BlockWrapper = memo( props => {
 		// We force-removed the block alignment wrapper div (see src/blocks.js),
 		// so we need to add our own data-align attribute.
 		'data-align': align,
+		// Add data-block-style attribute to replace data-block selectors
+		...( blockStyle ? { 'data-block-style': blockStyle } : {} ),
 	} )
 
 	// Remove the custom CSS names here because we will be adding it in the BlockDiv component, we need to do this for our current styles to work.

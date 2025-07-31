@@ -47,6 +47,7 @@ import {
 import { useDeviceType } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
+	withBlockStyleContext,
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -792,4 +793,5 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
 )( Edit )

@@ -16,7 +16,8 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockStyleContext,
+	withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -120,4 +121,5 @@ export default compose(
 	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
 )( Edit )

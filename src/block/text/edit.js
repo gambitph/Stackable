@@ -36,6 +36,7 @@ import {
 } from '~stackable/components'
 import {
 	withBlockAttributeContext,
+	withBlockStyleContext,
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -216,4 +217,5 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles )
 )( Edit )

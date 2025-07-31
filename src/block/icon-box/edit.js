@@ -30,7 +30,8 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
+	withBlockAttributeContext, withBlockStyleContext,
+	withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import { substituteCoreIfDisabled } from '~stackable/util'
 import { substitutionRules } from '../../blocks'
@@ -158,4 +159,5 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
 )( Edit )

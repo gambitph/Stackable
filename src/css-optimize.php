@@ -173,7 +173,6 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 
 				// We need the unique id for tracking.
 				if ( is_array( $block['attrs'] ) && array_key_exists( 'uniqueId', $block['attrs'] ) ) {
-
 					// Gather all the styles.
 					preg_match_all( '#<style[^>]*>(.*?)</style>#', $block_content, $styles );
 					// $style contains:

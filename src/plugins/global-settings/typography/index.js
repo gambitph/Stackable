@@ -587,4 +587,4 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
-}, 4 )
+}, 6 )

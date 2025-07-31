@@ -35,7 +35,8 @@ import {
 	useBlockAttributesContext, useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
+	withBlockAttributeContext, withBlockStyleContext,
+	withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -213,6 +214,7 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
 )( Edit )
 
 // Add another icon picker to the Icon block for picking the icon for the opened accordion.

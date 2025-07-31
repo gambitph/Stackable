@@ -189,7 +189,6 @@ const FourRangeControl = memo( props => {
 				: props.enableBottom ? { desktop: _valueDesktop?.bottom, tablet: _valueTablet?.bottom }
 					: { desktop: _valueDesktop?.left, tablet: _valueTablet?.left }
 
-	const [ isFourMarkMode, setIsFourMarkMode ] = useState( false )
 	// Ensure the convesion of value from preset to custom with regards to the unit is donce once.
 	const isConversionDone = useRef( {
 		first: false,
@@ -231,6 +230,8 @@ const FourRangeControl = memo( props => {
 			}
 		} )
 	}
+
+	const [ isFourMarkMode, setIsFourMarkMode ] = useState( isMarkValue )
 
 	// Set the markMode when device type changes
 	useEffect( () => {

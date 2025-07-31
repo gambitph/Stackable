@@ -110,9 +110,10 @@ export class BlockStyleGenerator {
 	 * Gets all the block styles for the given attribute names
 	 *
 	 * @param {Array} attrNames Array of attribute names
+	 * @param {boolean} getNonCssAttributes returns the blockStyles and the non-css attributes if true
 	 * @return {Object} Object of blockStyles, keys are the indices
 	 */
-	getBlockStyles( attrNames ) {
+	getBlockStyles( attrNames, getNonCssAttributes = false ) {
 		if ( ! attrNames ) {
 			return this._orderedStyles.reduce( ( blockStyles, blockStyle, index ) => {
 				blockStyles[ index ] = blockStyle
@@ -157,6 +158,11 @@ export class BlockStyleGenerator {
 				orderdBlockStyles[ index ] = this._orderedStyles[ index ]
 			}
 		} )
+
+		if ( getNonCssAttributes && attrNames ) {
+			const nonCssAttrs = attrNames.filter( attrName => ! ( this.getRootAttrName( attrName ) in blockStyles ) && attrName !== 'uniqueId' )
+			return [ orderdBlockStyles, nonCssAttrs ]
+		}
 
 		return orderdBlockStyles
 	}
@@ -207,6 +213,7 @@ export class BlockStyleGenerator {
 						instanceId: args.instanceId,
 						attributes,
 						editorMode: true,
+						generateForAllBlockStates: args.generateForAllBlockStates,
 					} )
 					if ( css ) {
 						generatedCss.push( css )
@@ -231,6 +238,7 @@ export class BlockStyleGenerator {
 				instanceId: args.instanceId,
 				attributes,
 				editorMode: true,
+				generateForAllBlockStates: args.generateForAllBlockStates,
 			} )
 
 			if ( css ) {

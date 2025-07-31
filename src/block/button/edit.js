@@ -22,6 +22,7 @@ import {
 import { useBlockLayoutDefaults, useBlockStyle } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
+	withBlockStyleContext,
 	withBlockWrapper,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -167,4 +168,5 @@ export default compose(
 	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withBlockStyleContext( buttonStyles ),
 )( Edit )

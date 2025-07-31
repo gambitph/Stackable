@@ -113,10 +113,6 @@ const AdvancedRangeControl = props => {
 	let derivedValue = typeof props.value === 'undefined'
 		? value : props.value
 
-	// Is value at first render the same as a step value? If so, do mark mode
-	// at the start, or show custom
-	// If no initial value, use the given default from the settings
-	const [ isMarkMode, setIsMarkMode ] = useState( false )
 	// Ensure the convesion of value from preset to custom with regards to the unit is donce once.
 	const isConversionDone = useRef( false )
 
@@ -131,6 +127,11 @@ const AdvancedRangeControl = props => {
 			derivedValue = matchedMark.value
 		}
 	}
+
+	// Is value at first render the same as a step value? If so, do mark mode
+	// at the start, or show custom
+	// If no initial value, use the given default from the settings
+	const [ isMarkMode, setIsMarkMode ] = useState( isMarkValue )
 
 	// Set the markMode when device type changes
 	useEffect( () => {

@@ -140,6 +140,14 @@ const LABELS = {
 			<li>{ __( 'Use Global Typography sizes as presets', i18n ) }</li>
 		</ul>,
 	},
+	'global-block-styles': {
+		title: __( 'Global Block Styles', i18n ),
+		description: <ul>
+			<li>{ __( 'Create and use your own block styles', i18n ) }</li>
+			<li>{ __( 'Update your block styles', i18n ) }</li>
+			<li>{ __( 'Organize your custom block styles', i18n ) }</li>
+		</ul>,
+	},
 }
 
 const ProControl = props => {

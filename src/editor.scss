@@ -207,3 +207,8 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 		}
 	}
 }
+
+// Remove the block description from the inspector.
+.block-editor-block-inspector:has(.ugb-panel-tabs) .block-editor-block-card__description {
+	display: none;
+}

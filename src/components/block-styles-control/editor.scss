@@ -1,0 +1,133 @@
+.ugb-block-styles-controls {
+	padding: 0 16px 8px 8px;
+	position: relative;
+	border-top: none !important;
+
+	.ugb-block-styles-controls__wrapper {
+		position: relative;
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: 4px;
+
+		.ugb-block-styles-controls__block-style-button {
+			padding-right: 6px;
+			display: inline-block;
+			height: auto;
+			line-height: 1.4;
+			text-align: left;
+			place-self: flex-start;
+		}
+
+		.stk-control__reset-button {
+			position: relative;
+			top: 0;
+			right: 0;
+			color: var(--stk-skin-error);
+		}
+	}
+
+	.ugb-button-component.has-icon:hover {
+		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
+		background-color: var(--stk-skin-bg-secondary);
+		color: var(--stk-skin-dark);
+	}
+
+	.stk-panel-modified-indicator {
+		display: inline-block;
+		margin-inline: 8px;
+	}
+}
+
+.ugb-block-styles__new-style-modal {
+	max-width: 550px;
+	width: 90vw;
+
+	.notice {
+		margin: 0 0 16px;
+	}
+}
+.ugb-block-styles__new-style-description {
+	color: #1e1e1e;
+	margin-top: 0;
+}
+.ugb-block-styles__new-style-form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	.ugb-block-styles__attributes-list {
+		p {
+			margin: 0 0 4px;
+		}
+		ul {
+			margin: 0;
+			list-style: disc;
+			padding-inline-start: 20px;
+		}
+		li {
+			margin: 0;
+		}
+	}
+
+	.components-button {
+		margin-right: 0;
+		margin-left: auto;
+	}
+}
+
+.ugb-block-styles__update-style-form {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
+
+.ugb-block-styles-controls__popover {
+	.components-popover__content {
+		width: 350px !important;
+	}
+	.components-button {
+		width: 100%;
+		position: relative;
+
+		&.ugb-block-styles-controls__selected {
+			outline: 1px solid var(--stk-skin-dark) !important;
+		}
+
+		&:focus:not(:disabled) {
+			box-shadow: 0 0 0 2px var(--stk-skin-dark);
+		}
+
+		.dashicons-lock {
+			position: absolute;
+			right: 8px;
+		}
+	}
+
+	.components-panel__body:has(.ugb-pro-control-button__wrapper:not(.ugb-pro-control-button--hidden)) > *:not(.ugb-pro-control-button__wrapper) {
+		height: 0 !important;
+		overflow: hidden !important;
+		min-height: 0 !important;
+		max-height: 0 !important;
+	}
+
+	.components-panel__body-description {
+		margin: -12px 0 1.5em;
+	}
+
+	.ugb-block-styles-controls__selected-icon {
+		position: absolute;
+	}
+	.ugb-block-styles-controls__label {
+		margin-inline-start: 24px;
+	}
+
+	.stk-pulsating-circle {
+		margin-inline-start: 8px;
+	}
+
+	.ugb-control-separator {
+		width: 100% !important;
+		margin: 0 auto !important;
+	}
+}

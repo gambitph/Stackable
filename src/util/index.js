@@ -16,6 +16,7 @@ export * from './fontawesome'
 export * from './user'
 export * from './colors'
 export * from './element'
+export * from './block-styles'
 
 /**
  * WordPress dependencies
@@ -250,10 +251,11 @@ const prependCSSClassCache = {}
  * @param {string} mainClassName The main class of the block to target.
  * @param {string} uniqueClassName The unique parent classname to wrap the selector.
  * @param {string} wrapSelector All selectors will be wrapped in this if provided.
+ * @param {string} hoverStateSelector selectors with %h in it will be wrapped in this if provided.
  *
  * @return {string} The modified CSS selector.
  */
-export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassName = '', wrapSelector = '' ) => {
+export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassName = '', wrapSelector = '', hoverStateSelector = '' ) => {
 	const key = `${ cssSelector }-${ mainClassName }-${ uniqueClassName }-${ wrapSelector }`
 	if ( prependCSSClassCache[ key ] ) {
 		return prependCSSClassCache[ key ]
@@ -267,6 +269,13 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 		.split( ',' )
 		.map( s => {
 			let newSelector = ''
+			let hasHoverStateSelector = false
+
+			if ( s.includes( '%h' ) ) {
+				hasHoverStateSelector = true
+				s = s.replaceAll( '%h', '' ).trim()
+			}
+
 			if ( s.includes( '[data-block=' ) ||
 			     s === 'html' ||
 			     s === 'body'
@@ -285,6 +294,11 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 					.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|:|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
 					.replace( /\s:(?!(is|where))/, ':' ) // If the selector given is just a pseudo selector ':before', it will produce ' :before', remove the extra space.
 			}
+
+			if ( hasHoverStateSelector && hoverStateSelector && wrapSelector ) {
+				return `${ hoverStateSelector }${ wrapSelector } ${ newSelector }`
+			}
+
 			return wrapSelector ? `${ wrapSelector } ${ newSelector }` : newSelector
 		} )
 		.join( ', ' )

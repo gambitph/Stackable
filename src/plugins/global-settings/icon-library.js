@@ -32,5 +32,5 @@ if ( showProNotice || isPro ) {
 				</PanelAdvancedSettings>
 			</Fragment>
 		)
-	}, 12 )
+	}, 16 )
 }

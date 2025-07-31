@@ -23,6 +23,14 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
+			blockStyle: {
+				type: 'string',
+				default: '',
+			},
+			modifiedBlockStyle: {
+				type: 'boolean',
+				default: false,
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

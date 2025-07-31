@@ -5,6 +5,7 @@ import './editor-loader'
 import './color-schemes'
 import './buttons-and-icons'
 import './spacing-and-borders'
+import './block-styles'
 import './icon-library'
 import './preset-controls'
 
