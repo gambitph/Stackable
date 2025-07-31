@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getDefinedBlockStyles } from './use-block-style'
+import { getDefinedBlockStyles } from '~stackable/hooks'
 import { CONTENT_ATTRIBUTES, recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
 
 /**

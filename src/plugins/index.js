@@ -6,7 +6,6 @@ import './theme-block-size'
 import './design-library-button'
 import './layout-picker-reset'
 // import './v2-migration-popup' // Probably 1.5yrs of checking for backward compatibility is enough.
-import './save-block'
 import './editor-device-preview-class'
 import './theme-block-style-inheritance'
 import { BlockLinking } from './block-linking'
@@ -27,6 +26,7 @@ import { registerPlugin } from '@wordpress/plugins'
 import { ConvertToContainerButton, GetBlockAttributesButton } from '~stackable/components'
 import { devMode } from 'stackable'
 import { fetchSettings } from '~stackable/util'
+import '~stackable/deprecated/block-defaults'
 
 registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToContainerButton } )
 registerPlugin( 'stackable-block-hover-state', { render: BlockHoverState } )
