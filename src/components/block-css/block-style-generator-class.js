@@ -213,6 +213,7 @@ export class BlockStyleGenerator {
 						instanceId: args.instanceId,
 						attributes,
 						editorMode: true,
+						generateForAllBlockStates: args.generateForAllBlockStates,
 					} )
 					if ( css ) {
 						generatedCss.push( css )
@@ -237,6 +238,7 @@ export class BlockStyleGenerator {
 				instanceId: args.instanceId,
 				attributes,
 				editorMode: true,
+				generateForAllBlockStates: args.generateForAllBlockStates,
 			} )
 
 			if ( css ) {

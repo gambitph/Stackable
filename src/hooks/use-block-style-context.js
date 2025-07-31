@@ -13,7 +13,6 @@ export const useBlockStyleContext = () => {
 export const BlockStyleProvider = props => {
 	return <BlockStyleContext.Provider value={ [
 		props.blockStyles,
-		props.editCss,
 		{
 			blockState: props.blockState,
 			clientId: props.clientId,

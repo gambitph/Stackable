@@ -83,6 +83,8 @@ const BlockCss = props => {
 		clientId = '', // The block's clientId, only used if rendering for the editor.
 		instanceId = '', // Used by the Query Loop block, this is the instance of the template being displayed.
 		blockState = 'normal', // The block's hover state to render the styles for.
+
+		generateForAllBlockStates = false, // If true, it will generate styles for all block states
 	} = props
 
 	// const editorMode = ! compileCssTo
@@ -301,15 +303,20 @@ const BlockCss = props => {
 
 	// TODO: why do we have this condition for the collapsedSelector, but they just do the same prepending??
 	if ( hasCollapsed ) {
-		if ( blockState === 'collapsed' ) {
+		if ( generateForAllBlockStates ) {
+			collapsedSelector = prependClass( selector, '%h :where(.stk-block-accordion.stk--is-open) .%s' )
+		} else if ( blockState === 'collapsed' ) {
 			collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s' )
 		} else {
 			collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s' )
 		}
 	}
 
+	// Use %h as a placeholder to indicate that a hover state class should be prepended to the selector.
 	if ( hasParentHover ) {
-		if ( blockState === 'parent-hover' ) {
+		if ( generateForAllBlockStates ) {
+			parentHoverSelector = [ prependClass( selector, '%h.%s.stk--is-hovered' ), prependClass( selector, ':where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .%s' ) ]
+		} else if ( blockState === 'parent-hover' ) {
 			parentHoverSelector = prependClass( selector, '.%s.stk--is-hovered' )
 		} else {
 			parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .%s' )
@@ -322,11 +329,14 @@ const BlockCss = props => {
 	// using the selector `[data-block="clientId"]`, for these scenarios the
 	// method will not work. Instead we just append `:hover` to the block
 	// selector directly.
+	// Use %h as a placeholder to indicate that a hover state class should be prepended to the selector.
 	if ( hasHover ) {
 		const selectorHasDataBlock = ( hoverSelector || selector ).includes( '[data-block=' ) && ( hoverSelector || selector ).endsWith( ']' )
 		if ( selectorHasDataBlock ) {
 		// If there is a [data-block] append the :hover or .stk-is-hovered directly to it.
-			if ( blockState === 'hover' ) {
+			if ( generateForAllBlockStates ) {
+				hoverSelector = [ appendClass( selector, '%h.stk--is-hovered' ), hoverSelector || appendClass( selector, ':hover' ) ]
+			} else if ( blockState === 'hover' ) {
 			// In editor, always use the `selector` instead of the hoverSelector.
 				hoverSelector = appendClass( selector, '.stk--is-hovered' )
 			} else {
@@ -334,6 +344,9 @@ const BlockCss = props => {
 			}
 		} else {
 		// Prepend .%s:hover to the selector.
+			if ( generateForAllBlockStates ) {
+				hoverSelector = [ prependClass( selector, '%h.%s.stk--is-hovered' ), hoverSelector || prependClass( selector, '.%s:hover' ) ]
+			}
 			if ( blockState === 'hover' ) { // eslint-disable-line no-lonely-if
 			// In editor, always use the `selector` instead of the hoverSelector.
 				hoverSelector = prependClass( selector, '.%s.stk--is-hovered' )
@@ -353,8 +366,8 @@ const BlockCss = props => {
 		if ( typeof selector === 'string' ) {
 		// Add instance id to classes. ( e.g. `stk-abc123` -> `stk-abc123-2`, where 2 is `instanceId`. )
 			selector = selector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
-			hoverSelector = hoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
-			parentHoverSelector = parentHoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+			hoverSelector = typeof hoverSelector === 'string' ? hoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` ) : hoverSelector.map( s => s.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` ) )
+			parentHoverSelector = typeof parentHoverSelector === 'string' ? parentHoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` ) : parentHoverSelector.map( s => s.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` ) )
 			collapsedSelector = collapsedSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
 		}
 	}
@@ -372,16 +385,20 @@ const BlockCss = props => {
 	if ( Array.isArray( hoverSelector ) ) {
 		hoverSelector = hoverSelector.join( ', ' )
 	}
+	if ( Array.isArray( parentHoverSelector ) ) {
+		parentHoverSelector = parentHoverSelector.join( ', ' )
+	}
 
-	selector = prependCSSClass( selector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+	const wrapSelector = editorMode ? '.editor-styles-wrapper' : ''
+	selector = prependCSSClass( selector, blockUniqueClassName, blockUniqueClassName, wrapSelector )
 	if ( hasHover ) {
-		hoverSelector = prependCSSClass( hoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+		hoverSelector = prependCSSClass( hoverSelector, blockUniqueClassName, blockUniqueClassName, wrapSelector, generateForAllBlockStates ? '.stk-preview-state--hover' : '' )
 	}
 	if ( hasParentHover ) {
-		parentHoverSelector = prependCSSClass( parentHoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+		parentHoverSelector = prependCSSClass( parentHoverSelector, blockUniqueClassName, blockUniqueClassName, wrapSelector, generateForAllBlockStates ? '.stk-preview-state--parent-hover' : '' )
 	}
 	if ( hasCollapsed ) {
-		collapsedSelector = prependCSSClass( collapsedSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+		collapsedSelector = prependCSSClass( collapsedSelector, blockUniqueClassName, blockUniqueClassName, wrapSelector, generateForAllBlockStates ? '.stk-preview-state--collapsed' : '' )
 	}
 
 	let css = ''
