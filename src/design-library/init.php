@@ -365,7 +365,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 			$premium_designs = array();
 			foreach ( $library as $design_id => $design ) {
-				if ( $design[ 'plan' ] === 'premium' && sugb_fs()->can_use_premium_code() && STACKABLE_BUILD === 'premium' ) {
+				if ( $design[ 'plan' ] === 'premium' && STACKABLE_BUILD === 'premium' && sugb_fs()->can_use_premium_code() ) {
 					continue;
 				}
 
@@ -465,7 +465,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			}
 
 			foreach ( $library as $design_id => $design ) {
-				if ( $design[ 'plan' ] === 'premium' && ( ! sugb_fs()->can_use_premium_code() || STACKABLE_BUILD === 'free' ) ) {
+				if ( $design[ 'plan' ] === 'premium' && ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ) ) {
 					continue;
 				}
 

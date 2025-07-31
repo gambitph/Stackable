@@ -6,9 +6,10 @@
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.17.1
+ * Version: 3.17.2
  *
  * @package Stackable
+ * @fs_premium_only /freemius.php, /freemius/
  */
 
 // Exit if accessed directly.
@@ -24,7 +25,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
 defined( 'STACKABLE_BUILD' ) || define( 'STACKABLE_BUILD', 'free' );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.17.1' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.17.2' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://storage.googleapis.com/stackable-plugin-assets' ); // Design Library CDN URL
@@ -210,7 +211,9 @@ if ( ! function_exists( 'is_frontend' ) ) {
  * Freemius.
  * This needs to be first.
  */
-require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
+if ( STACKABLE_BUILD !== 'free' ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
+}
 
 /**
  * Block Initializer.
@@ -275,8 +278,8 @@ if ( is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
 }
 
-if ( sugb_fs()->is__premium_only() ) {
-	if ( STACKABLE_BUILD === 'premium' ) {
+if ( STACKABLE_BUILD === 'premium' ) {
+	if ( sugb_fs()->is__premium_only() ) {
 		/**
 		 * Premium initialize code.
 		 */
