@@ -76,10 +76,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
 				}
 
-				// For some native blocks, add a note that they're core blocks.
-				// Only do this when we need to style native blocks.
-				if ( in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
-					add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+				// Optimize by avoiding repeated calls to get_apply_typography_to() and unnecessary filter registration.
+				// Only do this if we have global typography.
+				if ( $this->has_global_typography()	) {
+					$apply_typography_to = $this->get_apply_typography_to();
+					if ( $apply_typography_to === 'blocks-stackable-native' || $apply_typography_to === 'blocks-all' ) {
+						add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+					}
 				}
 
 				// Fixes columns issue with Native Posts block.
@@ -562,6 +565,24 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		/**-----------------------------------------------------------------------------
 		 * Typography functions
 		 *-----------------------------------------------------------------------------*/
+
+		/**
+		 * Fast way to check if the global typography is empty.
+		 * 
+		 * @return boolean
+		 */
+		public function has_global_typography() {
+			$typography = get_option( 'stackable_global_typography' );
+			if ( empty( $typography ) ) {
+				return false;
+			}
+
+			// $typography is an array of arrays.
+			if ( ! empty( $typography ) && is_array( $typography ) && ! empty( $typography[0] ) && is_array( $typography[0] ) ) {
+				return ! empty( array_filter( $typography[0] ) );
+			}
+			return true;
+		}
 
 		/**
 		 * Add our global typography styles in the frontend.
