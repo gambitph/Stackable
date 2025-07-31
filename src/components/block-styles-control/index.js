@@ -33,7 +33,7 @@ import {
 	useEffect,
 	useMemo, useRef, useState,
 } from '@wordpress/element'
-import { useSelect } from '@wordpress/data'
+import { useSelect, dispatch } from '@wordpress/data'
 import { getBlockType } from '@wordpress/blocks'
 import { applyFilters, doAction } from '@wordpress/hooks'
 
@@ -199,6 +199,9 @@ export const BlockStylesControl = props => {
 		}
 
 		setAttributes( { ...defaultBlockAttributes, modifiedBlockStyle: false } )
+
+		// Reset to normal state after selecting block style
+		dispatch( 'stackable/hover-state' ).updateHoverState( 'normal' )
 	}
 
 	const onSelectBlockStyle = ( option, index ) => {

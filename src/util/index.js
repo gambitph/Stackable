@@ -296,7 +296,7 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 			}
 
 			if ( hasHoverStateSelector && hoverStateSelector && wrapSelector ) {
-				return `${ hoverStateSelector }${ wrapSelector } ${ newSelector }`
+				return `${ wrapSelector }:where(${ hoverStateSelector }) ${ newSelector }`
 			}
 
 			return wrapSelector ? `${ wrapSelector } ${ newSelector }` : newSelector
