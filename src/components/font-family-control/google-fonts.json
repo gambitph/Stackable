@@ -7686,6 +7686,36 @@
     ]
   },
   {
+    "family": "Google Sans Code",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "adlam",
+      "canadian-aboriginal",
+      "cherokee",
+      "latin",
+      "latin-ext",
+      "math",
+      "old-permic",
+      "symbols",
+      "symbols2",
+      "syriac",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Gorditas",
     "variants": [
       "regular",
@@ -11044,6 +11074,44 @@
     ]
   },
   {
+    "family": "Libertinus Sans",
+    "variants": [
+      "regular",
+      "italic",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Libertinus Serif",
+    "variants": [
+      "regular",
+      "italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Libre Barcode 128",
     "variants": [
       "regular"
@@ -13083,6 +13151,36 @@
     ]
   },
   {
+    "family": "Mozilla Headline",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Mozilla Text",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Mr Bedfort",
     "variants": [
       "regular"
@@ -13430,6 +13528,27 @@
       "latin-ext",
       "math",
       "symbols"
+    ]
+  },
+  {
+    "family": "Nata Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -22716,7 +22835,10 @@
   {
     "family": "Special Gothic",
     "variants": [
-      "regular"
+      "regular",
+      "500",
+      "600",
+      "700"
     ],
     "subsets": [
       "latin",
@@ -23521,6 +23643,26 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "TikTok Sans",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {

@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.2
 Requires PHP: 7.3
-Stable tag: 3.17.1
+Stable tag: 3.18.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -197,6 +197,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.18 Global Block Styles](https://wpstackable.com/blog/introducing-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.17 New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.16 Theme.json Support, Global Value Presets, Type Scale](https://wpstackable.com/blog/introducing-theme-json-support-global-value-presets-and-type-scale/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.15 Global Design System](https://wpstackable.com/blog/introducing-the-new-stackable-global-design-system/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -303,6 +304,22 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.18.0 =
+
+[Introducing: Global Block Styles](https://wpstackable.com/blog/introducing-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Global Block Styles - you can now reuse block styles across your entire site #3541 #383
+* Change: Removed Freemius SDK from the free version #3568
+* Change: Stackable plugin settings is now called the Stackable Design System #3560
+* Change: Block Defaults feature has been sunset, but with backward compatibility #3500
+* Fixed: Carousel block - improved performance, especially in Safari #3561
+* Fixed: Image block - added presets to border radius #3521
+* Fixed: Posts block - corrected line-height for category text #3537
+* Fixed: Image box block - image not displaying when using line layout #3493
+* Fixed: Optimized Google Font checking #3567
+* Fixed: Added support for CSS optimizers that strip out the "px" from "0px" #3564
+* Fixed: Added some missing string translations #3414
 
 = 3.17.2 =
 * Fixed: If using non-English locale, Google Fonts may not load properly in the editor
