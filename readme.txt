@@ -317,6 +317,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Image block - added presets to border radius #3521
 * Fixed: Posts block - corrected line-height for category text #3537
 * Fixed: Image box block - image not displaying when using line layout #3493
+* Fixed: Clean Global Typography CSS output #d51a38e
 * Fixed: Optimized Google Font checking #3567
 * Fixed: Added support for CSS optimizers that strip out the "px" from "0px" #3564
 * Fixed: Added some missing string translations #3414
