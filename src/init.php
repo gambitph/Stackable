@@ -123,10 +123,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Enqueue the global CSS file in the frontend.
-			if ( ! is_admin() &&
-			     get_option( 'stackable_use_css_files', 'yes' ) === 'yes' &&
-				 Stackable_CSS_File_Generator::css_file_exists() 
-			) {
+			if ( ! is_admin() && get_option( 'stackable_use_css_files', 'yes' ) === 'yes' ) {
 				Stackable_CSS_File_Generator::enqueue_global_css_file();
 			} else {
 				// Keep the old inline style registration as fallback for backward compatibility
