@@ -14,7 +14,6 @@ export const BlockStyleProvider = props => {
 	return <BlockStyleContext.Provider value={ [
 		props.blockStyles,
 		{
-			blockState: props.blockState,
 			clientId: props.clientId,
 			context: props.context,
 		},
