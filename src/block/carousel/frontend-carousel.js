@@ -46,14 +46,6 @@ class _StackableCarousel {
 
 		this.fixChildrenAccessibility() // This needs to be first before infinte scrolling clones slides.
 		this.initProperties()
-		this.addEventListeners()
-		this.fixAccessibility( this.currentSlide )
-		this.setDotActive( this.currentSlide )
-		this.fixInlineScrollNavigation()
-
-		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
-
-		this.unpauseAutoplay()
 	}
 
 	initProperties = () => {
@@ -73,29 +65,97 @@ class _StackableCarousel {
 			}
 		}
 
+		// If we have infiniteScroll, call this after cloning the slides
+		const otherInitCalls = () => {
+			this.addEventListeners()
+			this.fixAccessibility( this.currentSlide )
+			this.setDotActive( this.currentSlide )
+			this.fixInlineScrollNavigation()
+
+			this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
+
+			this.unpauseAutoplay()
+		}
+
 		if ( this.infiniteScroll && ! this.el._StackableHasInitCarousel ) {
 			// clone slides
-			this.clones = this.slideEls.map( node => node.cloneNode( true ) )
+			this.clones = []
+			const clonesToAdd = []
+			let lastClone = null
+			let index = 0
+			let step = 0
 
-			this.clones.map( ( node, i ) => {
-				node.classList.add( `stk-slide-clone-${ i + 1 }` )
-				if ( i === this.clones.length - 1 ) {
-					return this.sliderEl.insertBefore( node, this.slideEls[ 0 ] )
+			const runInitSteps = () => {
+				if ( step === 0 ) {
+					// Clone only the last slide and the first N slides (where N equals to slidesToShow)
+					const slideIndex = index === this.slidesToShow ? this.slideEls.length - 1 : index
+					const original = this.slideEls[ slideIndex ]
+					const clone = original.cloneNode( true )
+					clone.classList.add( `stk-slide-clone-${ slideIndex + 1 }` )
+					clone.style.zIndex = -1
+					original.style.willChange = 'transform'
+					original.style.transform = 'TranslateX( 0 )'
+
+					// prevents flickering when changing the value of TranslateX
+					original.style.transition = 'transform 0s'
+
+					this.clones.push( clone )
+
+					if ( index === this.slidesToShow ) {
+						lastClone = clone
+						step++
+					} else {
+						clonesToAdd.push( clone )
+					}
+
+					index++
+				} else if ( step === 1 ) {
+					// Append clones at the end except for the last slide clone which will be placed at the front
+					this.sliderEl.append( ...clonesToAdd )
+					if ( lastClone ) {
+						this.sliderEl.insertBefore( lastClone, this.slideEls[ 0 ] )
+					}
+					step++
+				} else if ( step === 2 ) {
+					const numSlides = this.slideEls.length
+					const slideClientRect = this.slideEls[ 0 ].getBoundingClientRect()
+					const slideWidth = slideClientRect.width
+
+					this.slideTranslateX = `calc((${ slideWidth }px * ${ numSlides }) + (var(--gap) * ${ numSlides }))`
+
+					step++
+				} else if ( step === 3 ) {
+					// IMPORTANT: Do style reads before applying style change to improve performance
+					// https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing
+					const targetOffsetLeft = this.slideEls[ 0 ].offsetLeft
+
+					// Scroll without animation to the first slide
+					this.sliderEl.style.scrollBehavior = 'unset'
+					this.sliderEl.scrollLeft = targetOffsetLeft
+					step++
+				} else if ( step === 4 ) {
+					this.sliderEl.style.scrollBehavior = ''
+
+					this.currentSlide = 1
+					this.swappedSlides = 0
+					this.updateDots()
+					step++
+				} else if ( step === 5 ) {
+					otherInitCalls()
+					step++
 				}
 
-				return this.sliderEl.appendChild( node )
-			} )
+				if ( step <= 5 ) {
+					requestAnimationFrame( runInitSteps )
+				}
+			}
 
-			// Scroll without animation to the first slide
-			this.sliderEl.style.scrollBehavior = 'unset'
-			this.sliderEl.scrollLeft = this.slideEls[ 0 ].offsetLeft
-			this.sliderEl.style.scrollBehavior = ''
-
-			this.currentSlide = 1
-			this.swappedSlides = 0
+			requestAnimationFrame( runInitSteps )
+			return
 		}
 
 		this.updateDots()
+		otherInitCalls()
 	}
 
 	updateDots = () => {
@@ -198,7 +258,7 @@ class _StackableCarousel {
 	nextSlide = () => {
 		let newSlide = this.currentSlide + 1
 
-		if ( this.infiniteScroll && newSlide > this.maxSlides() ) {
+		if ( this.type === 'slide' && this.infiniteScroll && newSlide > this.maxSlides() ) {
 			this.swapSlides( newSlide, 'N' )
 			return
 		}
@@ -212,7 +272,7 @@ class _StackableCarousel {
 	prevSlide = () => {
 		let newSlide = this.currentSlide - 1
 
-		if ( this.infiniteScroll &&
+		if ( this.type === 'slide' && this.infiniteScroll &&
 			( newSlide < this.slideOffset || this.needToSwapCount( newSlide ) >= 0 ) ) {
 			this.swapSlides( newSlide, 'P' )
 			return
@@ -225,95 +285,100 @@ class _StackableCarousel {
 	}
 
 	swapSlides = ( slide, dir ) => {
-		let setScrollToClone = false
-		if ( this.slidesToShow === this.slideEls.length ) {
-			setScrollToClone = true
-		}
-
+		let scrollToSlide = false
 		if ( dir === 'N' && slide > this.slideEls.length ) {
 			slide = this.slideOffset
-			setScrollToClone = true
+			scrollToSlide = true
 		} else if ( dir === 'P' && slide < this.slideOffset ) {
 			slide = this.slideEls.length
-			setScrollToClone = true
+			scrollToSlide = true
 		}
 
 		const needToSwap = this.needToSwapCount( slide )
+		let startIndex = 0
+		let endIndex = 0
+		let slideTranslateXValue = 0
 		if ( needToSwap > 0 && this.swappedSlides < needToSwap ) {
-			// swap original and clone slides
-			const original = [ ...this.slideEls.slice( this.swappedSlides, needToSwap ) ]
-			const clones = [ ...this.clones.slice( this.swappedSlides, needToSwap ) ]
+			startIndex = this.swappedSlides
+			endIndex = needToSwap
 
-			original.map( node => this.sliderEl.insertBefore( node, this.clones[ needToSwap ] ) )
-			clones.map( node => this.sliderEl.insertBefore( node, this.slideEls[ needToSwap ] ) )
+			slideTranslateXValue = this.slideTranslateX
 
-			// This ensures that the cloned slides are in the right position when slides to show === number of slides
-			if ( this.slidesToShow === this.slideEls.length && dir === 'N' ) {
-				const children = this.sliderEl.children
-				this.sliderEl.append( children[ 0 ] )
-			} else if ( this.slidesToShow === this.slideEls.length && dir === 'P' ) {
-				const children = [ ...Array.from( this.sliderEl.children ).slice( -2 ) ].reverse()
-				children.map( node => this.sliderEl.insertBefore( node, this.sliderEl.children[ 0 ] ) )
-			}
-
-			this.swappedSlides = needToSwap
+			this.swappedSlides = endIndex
 		} else if ( this.swappedSlides > needToSwap ) {
-			// unswap original and clone slides that are not needed
-			const _needToSwap = needToSwap > 0 ? needToSwap : 0
-			const original = [ ...this.slideEls.slice( _needToSwap, this.swappedSlides ) ]
-			const clones = [ ...this.clones.slice( _needToSwap, this.swappedSlides ) ]
-			original.map( node => this.sliderEl.insertBefore( node, this.slideEls[ this.swappedSlides ] ) )
-			clones.map( node => this.sliderEl.insertBefore( node, this.clones[ this.swappedSlides ] ) )
-			this.swappedSlides = _needToSwap
+			startIndex = needToSwap > 0 ? needToSwap : 0
+			endIndex = this.swappedSlides
 
-			// This ensures that the cloned slides are in the right position when slides to show === number of slides
-			if ( this.slidesToShow === this.slideEls.length ) {
-				const children = this.sliderEl.children
-				this.sliderEl.insertBefore( children[ children.length - 1 ], children[ 0 ] )
+			this.swappedSlides = startIndex
+		}
+
+		let step = 0
+
+		const runSteps = () => {
+			if ( step === 0 ) {
+				this.slideEls.slice( startIndex, endIndex ).forEach( slide => {
+					slide.style.transform = `TranslateX(${ slideTranslateXValue })`
+				} )
+				step++
+				requestAnimationFrame( runSteps )
+			} else if ( step === 1 ) {
+				this.slideEls.slice( startIndex, endIndex ).forEach( slide => slide.offsetLeft )
+
+				if ( scrollToSlide ) {
+					const lastCloneSlide = this.clones[ this.clones.length - 1 ].offsetLeft
+					const firstCloneSide = this.clones[ 0 ].offsetLeft
+
+					let initSlide = null
+
+					if ( dir === 'N' ) {
+						initSlide = lastCloneSlide
+					} else if ( this.slidesToShow === 1 ) {
+						initSlide = lastCloneSlide
+					} else {
+						initSlide = firstCloneSide
+					}
+
+					// Move from the last slide to the first slide (N - next) or
+					// Move from the first slide to the last slide (P - prev)
+					this.sliderEl.style.scrollBehavior = 'unset'
+					this.sliderEl.scrollLeft = initSlide
+					this.sliderEl.style.scrollBehavior = ''
+				}
+
+				step++
+				requestAnimationFrame( runSteps )
+			} else {
+				requestAnimationFrame( () => this.goToSlide( slide ) )
 			}
 		}
 
-		if ( setScrollToClone ) {
-			// Move from the last slide to the first slide (N - next) or
-			// Move from the first slide to the last slide (P - prev)
-			this.sliderEl.style.scrollBehavior = 'unset'
-			this.sliderEl.scrollLeft = dir === 'N'
-				? this.clones[ this.currentSlide - 1 ].offsetLeft // Go to the last clone slide
-				: ( this.slidesToShow === 1
-					? this.clones[ this.currentSlide - 1 ].offsetLeft // If slidesToShow is 1, go to the first clone slide
-					: this.slideEls[ this.currentSlide - 1 ].offsetLeft // Go to the original first slide which is swapped with the clone
-				)
-			this.sliderEl.style.scrollBehavior = ''
-		}
-
-		setTimeout( () => {
-			this.goToSlide( slide )
-		}, 1 )
+		requestAnimationFrame( runSteps )
 	}
 
 	goToSlide = ( slide, force = false ) => {
 		if ( slide === this.currentSlide && ! force ) {
 			return
 		}
+		const currentSlideEl = this.slideEls[ this.currentSlide - 1 ]
+		const newSlideEl = this.slideEls[ slide - 1 ]
+		const offsetLeft = newSlideEl.offsetLeft
 
-		this.slideEls[ this.currentSlide - 1 ].classList.remove( 'stk-block-carousel__slide--active' )
-		this.slideEls[ slide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
+		currentSlideEl.classList.remove( 'stk-block-carousel__slide--active' )
+		newSlideEl.classList.add( 'stk-block-carousel__slide--active' )
 
 		if ( this.type === 'slide' ) {
-			this.sliderEl.scrollLeft = this.slideEls[ slide - 1 ].offsetLeft
+			this.sliderEl.scrollLeft = offsetLeft
 		} else if ( this.type === 'fade' ) { // fade
-			const slidePrevEl = this.slideEls[ this.currentSlide - 1 ]
-			slidePrevEl.style.opacity = 0
+			currentSlideEl.style.opacity = 0
 
-			const slideEl = this.slideEls[ slide - 1 ]
-			slideEl.style.zIndex = ++this.currentZIndex
-			slideEl.style.transition = 'none'
-			slideEl.style.opacity = 0
-			slideEl.style.visibility = 'visible'
-			slideEl.style.left = `${ this.isRTL ? '' : '-' }${ 100 * ( slide - 1 ) }%`
+			newSlideEl.style.zIndex = ++this.currentZIndex
+			newSlideEl.style.transition = 'none'
+			newSlideEl.style.opacity = 0
+			newSlideEl.style.visibility = 'visible'
+			newSlideEl.style.left = `${ this.isRTL ? '' : '-' }${ 100 * ( slide - 1 ) }%`
 			setTimeout( () => {
-				slideEl.style.transition = ''
-				slideEl.style.opacity = 1
+				newSlideEl.style.transition = ''
+				newSlideEl.style.opacity = 1
 			}, 1 )
 		}
 		this.fixAccessibility( slide )
@@ -414,6 +479,11 @@ class _StackableCarousel {
 	}
 
 	onWheel = e => {
+		const sliderElScrollLeft = this.sliderEl.scrollLeft
+		const lastSlideOffset = this.slideEls[ this.slideEls.length - 1 ].offsetLeft
+		const firstCloneOffset = this.clones[ 0 ].offsetLeft
+		const slidesOffset = this.slideEls.map( slide => slide.offsetLeft )
+		const clonesOffset = this.clones.map( slide => slide.offsetLeft )
 		if ( this.type === 'fade' ) {
 			if ( this.wheelTimeout ) {
 				return
@@ -430,19 +500,19 @@ class _StackableCarousel {
 				}, 500 )
 			}
 		// For infinite scrolling, set the scroll position to the actual slide ( not to the clone of the slide )
-		} else if ( this.infiniteScroll && e.deltaX <= -1 && this.sliderEl.scrollLeft === 0 ) {
+		} else if ( this.infiniteScroll && e.deltaX <= -1 && sliderElScrollLeft === 0 ) {
 			this.sliderEl.style.scrollBehavior = 'unset'
-			this.sliderEl.scrollLeft = this.slideEls[ this.slideEls.length - 1 ].offsetLeft
+			this.sliderEl.scrollLeft = lastSlideOffset
 			this.sliderEl.style.scrollBehavior = ''
-		} else if ( this.infiniteScroll && e.deltaX >= 1 && this.sliderEl.scrollLeft >= this.clones[ 0 ].offsetLeft ) {
-			this.clones.every( ( clone, i ) => {
-				if ( this.sliderEl.scrollLeft === clone.offsetLeft ) {
+		} else if ( this.infiniteScroll && e.deltaX >= 1 && sliderElScrollLeft >= firstCloneOffset ) {
+			clonesOffset.some( ( offset, i ) => {
+				if ( sliderElScrollLeft === offset ) {
 					this.sliderEl.style.scrollBehavior = 'unset'
-					this.sliderEl.scrollLeft = this.slideEls[ i ].offsetLeft
+					this.sliderEl.scrollLeft = slidesOffset[ i ]
 					this.sliderEl.style.scrollBehavior = ''
-					return false
+					return true
 				}
-				return true
+				return false
 			} )
 		}
 	}
@@ -467,14 +537,17 @@ class _StackableCarousel {
 	dragMouseMove = e => {
 		// How far the mouse has been moved
 		let dx = e.clientX - this.initialClientX
+		const sliderElScrollLeft = this.sliderEl.scrollLeft
+		const lastSlideOffsetLeft = this.slideEls[ this.slideEls.length - 1 ].offsetLeft
+		const firstCloneOffsetLeft = this.clones[ 0 ].offsetLeft
 
 		if ( this.type === 'slide' ) {
-			if ( this.infiniteScroll && this.sliderEl.scrollLeft === 0 && dx > 0 ) {
-				this.initialScrollLeft = this.slideEls[ this.slideEls.length - 1 ].offsetLeft
+			if ( this.infiniteScroll && sliderElScrollLeft === 0 && dx > 0 ) {
+				this.initialScrollLeft = lastSlideOffsetLeft
 				this.initialClientX = e.clientX
 				dx = 0
-			} else if ( this.infiniteScroll && this.sliderEl.scrollLeft >= this.clones[ 0 ].offsetLeft && dx < 0 ) {
-				this.initialScrollLeft = this.slideEls[ 0 ].offsetLeft
+			} else if ( this.infiniteScroll && sliderElScrollLeft >= firstCloneOffsetLeft && dx < 0 ) {
+				this.initialScrollLeft = firstCloneOffsetLeft
 				this.initialClientX = e.clientX
 				dx = 0
 			}
