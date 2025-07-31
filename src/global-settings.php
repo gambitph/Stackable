@@ -590,7 +590,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 
 				$selectors = $this->form_selectors( $tag );
-				$css[] = $this->generate_typography_styles( implode( ', ', $selectors ), $styles );
+				$typography_css = $this->generate_typography_styles( implode( ', ', $selectors ), $styles );
+				if ( ! empty( $typography_css ) ) {
+					$css[] = $typography_css;
+				}
 
 				// Gather the Google Fonts.
 				if ( isset( $styles['fontFamily'] ) ) {

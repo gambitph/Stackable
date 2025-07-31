@@ -127,7 +127,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			wp_register_style( 'ugb-style-css-nodep', false );
 			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
 			if ( ! empty( $inline_css ) ) {
-				wp_add_inline_style( 'ugb-style-css-nodep', $inline_css );
+				wp_add_inline_style( 'ugb-style-css-nodep', trim( $inline_css ) );
 			}
 
 			// Register inline frontend styles for theme.json block style inheritance
