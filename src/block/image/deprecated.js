@@ -5,7 +5,7 @@ import { withVersion } from '~stackable/higher-order'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecationImageOverlayOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor, deprecateTypographyFontSize,
-	deprecateBlockHeight,
+	deprecateBlockHeight, deprecateImageBorderRadius,
 } from '~stackable/block-components'
 
 import { RichText } from '@wordpress/block-editor'
@@ -60,6 +60,31 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( 
 } )
 
 const deprecated = [
+	{
+		// Support the change of type for border radius
+		attributes: attributes( '3.16.3' ),
+		save: withVersion( '3.16.3' )( Save ),
+		isEligible: attributes => {
+			const hasNumberBorderRadius = deprecateImageBorderRadius.isEligible( attributes )
+
+			return hasNumberBorderRadius
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'figcaption%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+			newAttributes = deprecateImageBorderRadius.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Handle the migration of shadow attributes with the change of type in 3.15.3
 		attributes: attributes( '3.16.2' ),

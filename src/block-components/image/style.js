@@ -242,7 +242,12 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		styleRule: 'borderRadius',
 		attrName: 'imageBorderRadius',
 		key: 'imageBorderRadius',
-		format: '%spx',
+		valueCallback: value => {
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 	}, {
 		...propsToPass,
 		selector: `${ selector } img`,
@@ -250,7 +255,12 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		styleRule: 'borderRadius',
 		attrName: 'imageBorderRadius',
 		key: 'imageBorderRadius-save',
-		format: '%spx',
+		valueCallback: value => {
+			if ( typeof value === 'string' && value.startsWith( 'var' ) ) {
+				return value
+			}
+			return value + 'px'
+		},
 	} ] )
 
 	blockStyleGenerator.addBlockStyles( 'imageFocalPoint', [ {

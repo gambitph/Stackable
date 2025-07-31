@@ -27,6 +27,17 @@ export const deprecatedAddAttributes = attrObject => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '3.12.0',
 	} )
+
+	attrObject.add( {
+		attributes: {
+			imageBorderRadius: {
+				type: 'number',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '3.16.4',
+	} )
 }
 
 export const deprecationImageOverlayOpacity = {
@@ -97,6 +108,27 @@ export const deprecationImageOverlayOpacity = {
 				imageOverlayColorHover: hasHover ? `linear-gradient(${ imageOverlayGradientDirectionHover }deg, ${ imageOverlayColorHover } ${ imageOverlayGradientLocation1Hover }%,  ${ imageOverlayColor2Hover } ${ imageOverlayGradientLocation2Hover }%)` : newAttributes.imageOverlayColorHover,
 				imageOverlayColorParentHover: hasParentHover ? `linear-gradient(${ imageOverlayGradientDirectionParentHover }deg, ${ imageOverlayColorParentHover } ${ imageOverlayGradientLocation1ParentHover }%,  ${ imageOverlayColor2ParentHover } ${ imageOverlayGradientLocation2ParentHover }%)` : newAttributes.imageOverlayColorParentHover,
 			}
+		}
+
+		return newAttributes
+	},
+}
+
+export const deprecateImageBorderRadius = {
+	isEligible: attributes => {
+		const imageBorderRadius = attributes.imageBorderRadius
+
+		return typeof imageBorderRadius === 'number'
+	},
+	migrate: attributes => {
+		const newAttributes = {
+			...attributes,
+		}
+
+		const imageBorderRadius = attributes.imageBorderRadius
+
+		if ( typeof imageBorderRadius === 'number' ) {
+			newAttributes.imageBorderRadius = String( imageBorderRadius )
 		}
 
 		return newAttributes
