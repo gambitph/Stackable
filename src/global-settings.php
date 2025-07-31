@@ -69,9 +69,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				 *
 				 * @since 2.17.1
 				 */
-				// Don't do anything if we don't have any global typography.
-				$typography = get_option( 'stackable_global_typography' );
-				if ( ! empty( $typography ) && is_array( $typography ) ) {
+				// Only do this if we have global typography.
+				if ( $this->has_global_typography()	) {
 					$this->force_typography = get_option( 'stackable_global_force_typography' );
 					add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
 				}
