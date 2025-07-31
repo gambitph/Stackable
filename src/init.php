@@ -122,12 +122,21 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				wp_register_script( 'ugb-block-frontend-js', null, [], STACKABLE_VERSION );
 			}
 
-			// Register inline frontend styles, these are always loaded.
-			// Register via a dummy style.
-			wp_register_style( 'ugb-style-css-nodep', false );
-			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
-			if ( ! empty( $inline_css ) ) {
-				wp_add_inline_style( 'ugb-style-css-nodep', trim( $inline_css ) );
+			// Enqueue the global CSS file in the frontend.
+			if ( ! is_admin() &&
+			     get_option( 'stackable_use_css_files', 'yes' ) === 'yes' &&
+				 Stackable_CSS_File_Generator::css_file_exists() 
+			) {
+				Stackable_CSS_File_Generator::enqueue_global_css_file();
+			} else {
+				// Keep the old inline style registration as fallback for backward compatibility
+				// but only use it if CSS file generation is disabled
+				// Register via a dummy style.
+				wp_register_style( 'ugb-style-css-nodep', false );
+				$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
+				if ( ! empty( $inline_css ) ) {
+					wp_add_inline_style( 'ugb-style-css-nodep', trim( $inline_css ) );
+				}
 			}
 
 			// Register inline frontend styles for theme.json block style inheritance
