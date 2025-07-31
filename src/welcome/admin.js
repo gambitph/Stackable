@@ -219,6 +219,7 @@ const SEARCH_TREE = [
 					__( 'Generate Global Colors for native blocks', i18n ),
 					__( 'Inherit Block Styles from theme.json', i18n ),
 					__( 'Use v3.16.0 Color Scheme Inheritance', i18n ),
+					__( 'Block Defaults (Sunsetted)', i18n ),
 				],
 			},
 			{
@@ -775,7 +776,7 @@ const EditorSettings = props => {
 								} }
 								help={ __( 'Adds a toolbar button for resetting the layout of a stackble block back to the original', i18n ) }
 							/>
-							<AdminToggleSetting
+							{ settings.stackable_enable_block_defaults && <AdminToggleSetting
 								label={ __( 'Save as Default Block', i18n ) }
 								searchedSettings={ toolbar.children }
 								value={ settings.stackable_enable_save_as_default_block }
@@ -783,7 +784,7 @@ const EditorSettings = props => {
 									handleSettingsChange( { stackable_enable_save_as_default_block: value } ) // eslint-disable-line
 								} }
 								help={ __( 'Adds a toolbar button for saving a block as the default block', i18n ) }
-							/>
+							/> }
 						</div>
 					}
 					{ inspector.children.length > 0 &&
@@ -1511,6 +1512,17 @@ const AdditionalOptions = props => {
 									handleSettingsChange( {
 										stackable_use_v3_16_0_color_scheme_inheritance: checked,
 										stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
+									 } )
+								} }
+							/>
+							<CheckboxControl
+								label={ __( 'Block Defaults (Deprecated)', i18n ) }
+								className={ searchClassname( __( 'Block Defaults (Sunsetted)', i18n ), miscellaneous ) }
+								help={ __( `Default state of blocks were previously allowed to be saved. This functionality has since been sunsetted in lieu of the Stackable Design System. Use at your own risk as this feature is slated to be removed in a future version.`, i18n ) }
+								checked={ settings.stackable_enable_block_defaults }
+								onChange={ checked => {
+									handleSettingsChange( {
+										stackable_enable_block_defaults: checked, // eslint-disable-line camelcase
 									 } )
 								} }
 							/>

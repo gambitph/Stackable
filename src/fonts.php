@@ -45,14 +45,14 @@ if ( ! class_exists( 'Stackable_Theme_Fonts' ) ) {
 			$theme_fonts = WP_Font_Face_Resolver::get_fonts_from_theme_json();
 
 			foreach ( $theme_fonts as $key => $value ) {
-				self::$theme_fonts[] = $value[ 0 ][ 'font-family' ];
+				self::$theme_fonts[ $value[ 0 ][ 'font-family' ] ] = true;
 			}
 
 			return self::$theme_fonts;
 		}
 
 		public static function is_theme_font( $font_name ) {
-			return in_array( strtolower( $font_name ), self::gather_theme_fonts() );
+			return isset( self::gather_theme_fonts()[ strtolower( $font_name ) ] );
 		}
 
 		public function register_rest_fields() {
@@ -72,7 +72,7 @@ if ( ! class_exists( 'Stackable_Theme_Fonts' ) ) {
 		 * @return array
 		 */
 		public static function get_theme_fonts() {
-			$response = self::gather_theme_fonts();
+			$response = array_keys( self::gather_theme_fonts() );
 
 			return new WP_REST_Response( $response, 200 );
 		}
@@ -87,6 +87,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
   class Stackable_Google_Fonts {
 
 		public static $google_fonts = [];
+		public static $done_registering = [];
 
 		function __construct() {
 			if ( is_frontend() ) {
@@ -116,7 +117,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		}
 
 		public static function enqueue_frontend_block_fonts() {
-			self::enqueue_google_fonts( array_unique( self::$google_fonts ) );
+			self::enqueue_google_fonts( array_keys( self::$google_fonts ) );
 		}
 
 		public static function is_web_font( $font_name ) {
@@ -131,18 +132,25 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		}
 
 		public static function register_font( $font_name ) {
+			if ( isset( self::$done_registering[ $font_name ] ) ) {
+				return;
+			}
+
 			if ( ! self::is_web_font( $font_name ) ) {
+				self::$done_registering[ $font_name ] = true;
 				return;
 			}
 
 			if ( Stackable_Theme_Fonts::is_theme_font( $font_name ) ) {
+				self::$done_registering[ $font_name ] = true;
 				return;
 			}
 
-			if ( ! in_array( $font_name, self::$google_fonts ) ) {
+			if ( ! isset( self::$google_fonts[ $font_name ] ) ) {
 				// Allow themes to disable enqueuing fonts, helpful for custom fonts.
 				if ( apply_filters( 'stackable_enqueue_font', true, $font_name ) ) {
-					self::$google_fonts[] = $font_name;
+					self::$google_fonts[ $font_name ] = true;
+					self::$done_registering[ $font_name ] = true;
 
 					// Enqueue the fonts in the footer.
 					add_filter( 'wp_footer', array( 'Stackable_Google_Fonts', 'enqueue_frontend_block_fonts' ) );

@@ -1,5 +1,5 @@
 === Stackable - Page Builder Gutenberg Blocks ===
-Contributors: bfintal, gambitph, freemius
+Contributors: bfintal, gambitph
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.2
@@ -18,7 +18,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
-[youtube https://www.youtube.com/watch?v=P3xG3t-QYjw]
+[youtube https://www.youtube.com/watch?v=xAOWZHAkG3E]
 
 ## Transform Gutenberg into a Page Builder.
 
@@ -252,7 +252,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 6.3 or higher for this to work.
+You'll need WordPress version 6.5.5 or higher for this to work.
 
 == Frequently Asked Questions ==
 

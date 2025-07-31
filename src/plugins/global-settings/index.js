@@ -8,7 +8,6 @@ import './spacing-and-borders'
 import './block-styles'
 import './icon-library'
 import './preset-controls'
-import './block-defaults'
 
 /**
  * External dependencies

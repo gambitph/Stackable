@@ -12,7 +12,6 @@ import { GlobalSpacingAndBordersStyles } from './spacing-and-borders'
 import { GlobalButtonsAndIconsStyles } from './buttons-and-icons'
 import { GlobalPresetControlsStyles } from './preset-controls'
 import { GlobalBlockStyles } from './block-styles'
-import './block-defaults'
 
 /**
  * External dependencies

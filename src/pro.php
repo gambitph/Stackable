@@ -65,7 +65,7 @@ if ( ! function_exists( 'stackable_should_show_pro_notices' ) ) {
 	 * @return Boolean
 	 */
 	function stackable_should_show_pro_notices() {
-		return STACKABLE_SHOW_PRO_NOTICES && stackable_show_pro_notices_option() && ( ! sugb_fs()->can_use_premium_code() || STACKABLE_BUILD === 'free' );
+		return STACKABLE_SHOW_PRO_NOTICES && stackable_show_pro_notices_option() && ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() );
 	}
 }
 
@@ -137,7 +137,13 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
 		}
     }
 
-	if ( STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code() ) {
+	if ( STACKABLE_SHOW_PRO_NOTICES || STACKABLE_BUILD === 'free' ) {
 		new Stackable_Go_Premium_Notification();
+	} else {
+		if ( sugb_fs()->is__premium_only() ) {
+			if ( ! sugb_fs()->can_use_premium_code() ) {
+				new Stackable_Go_Premium_Notification();
+			}
+		}
 	}
 }
