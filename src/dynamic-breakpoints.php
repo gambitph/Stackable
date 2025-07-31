@@ -67,7 +67,7 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 			) );
 
 			// Check if there are saved custom breakpoints from our settings.
-			$saved_breakpoints = get_option( 'stackable_dynamic_breakpoints' );
+			$saved_breakpoints = get_option( 'stackable_dynamic_breakpoints', false );
 			if ( ! empty( $saved_breakpoints ) ) {
 				// Set breakpoints for tablet and mobile if they are set.
 				if ( ! empty( $saved_breakpoints['tablet'] ) ) {

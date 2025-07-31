@@ -73,11 +73,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( $this->has_global_typography()	) {
 					$this->force_typography = get_option( 'stackable_global_force_typography' );
 					add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
-				}
 
-				// Optimize by avoiding repeated calls to get_apply_typography_to() and unnecessary filter registration.
-				// Only do this if we have global typography.
-				if ( $this->has_global_typography()	) {
+					// Optimize by avoiding repeated calls to get_apply_typography_to() and unnecessary filter registration.
 					$apply_typography_to = $this->get_apply_typography_to();
 					if ( $apply_typography_to === 'blocks-stackable-native' || $apply_typography_to === 'blocks-all' ) {
 						add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
@@ -571,7 +568,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return boolean
 		 */
 		public function has_global_typography() {
-			$typography = get_option( 'stackable_global_typography' );
+			$typography = get_option( 'stackable_global_typography', false );
 			if ( empty( $typography ) ) {
 				return false;
 			}
@@ -589,7 +586,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return void
 		 */
 		public function typography_parse_global_styles() {
-			$typography = get_option( 'stackable_global_typography' );
+			$typography = get_option( 'stackable_global_typography', false );
 			if ( ! $typography || ! is_array( $typography ) ) {
 				return;
 			}
