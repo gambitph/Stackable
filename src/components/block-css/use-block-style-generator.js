@@ -30,7 +30,6 @@ export const useBlockCssGenerator = props => {
 			oldText.current = attributes.text
 			return oldCss.current
 		}
-
 		// Gather only the attributes that have values and all their
 		// corresponding block style definitions.
 		const attrNamesWithValues = blockStyles.getAttributesWithValues( attributes )
