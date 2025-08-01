@@ -6,6 +6,9 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
+	Icon, arrowRight, arrowLeft,
+} from '@wordpress/icons'
+import {
 	useEffect, useState, useCallback, useRef, useMemo,
 } from '@wordpress/element'
 
@@ -166,7 +169,7 @@ const ModalTour = props => {
 				/>
 				{ currentStep > 0 && (
 					<Button
-						variant="secondary"
+						variant="tertiary"
 						onClick={ () => {
 							setCurrentStep( currentStep - 1 )
 							setTimeout( () => {
@@ -174,7 +177,9 @@ const ModalTour = props => {
 							}, 50 )
 						} }
 					>
-						{ __( 'Previous', i18n ) }
+						<Icon icon={ arrowLeft } size={ 20 } />
+						&nbsp;
+						{ __( 'Back', i18n ) }
 					</Button>
 				) }
 				{ showNext && (
@@ -192,6 +197,8 @@ const ModalTour = props => {
 						} }
 					>
 						{ currentStep === steps.length - 1 ? __( 'Finish', i18n ) : __( 'Next', i18n ) }
+						&nbsp;
+						<Icon icon={ arrowRight } size={ 20 } />
 					</Button>
 				) }
 			</Flex>
