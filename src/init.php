@@ -118,16 +118,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Enqueue the global CSS file in the frontend.
 			if ( ! is_admin() && get_option( 'stackable_use_css_files', 'yes' ) === 'yes' ) {
-				Stackable_CSS_File_Generator::enqueue_global_css_file();
+				// The enqueue_global_css_file method now has built-in fallback to inline styles
+				// if CSS file generation fails
+				Stackable_Global_Design_System_CSS_Generator::enqueue_global_css_file();
 			} else {
-				// Keep the old inline style registration as fallback for backward compatibility
-				// but only use it if CSS file generation is disabled
-				// Register via a dummy style.
-				wp_register_style( 'ugb-style-css-nodep', false );
-				$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
-				if ( ! empty( $inline_css ) ) {
-					wp_add_inline_style( 'ugb-style-css-nodep', trim( $inline_css ) );
-				}
+				Stackable_Global_Design_System_CSS_Generator::enqueue_global_css_inline();
 			}
 
 			// This is needed for the translation strings in our UI.
