@@ -130,13 +130,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				}
 			}
 
-			// Register inline frontend styles for theme.json block style inheritance
-			wp_register_style( 'ugb-block-style-inheritance-nodep', false );
-			$block_style_inline_css = apply_filters( 'stackable_block_style_inheritance_inline_styles_nodep', '' );
-			if ( ! empty( $block_style_inline_css ) ) {
-				wp_add_inline_style( 'ugb-block-style-inheritance-nodep', $block_style_inline_css );
-			}
-
 			// This is needed for the translation strings in our UI.
 			if ( is_admin() ) {
 				stackable_load_js_translations();
@@ -250,6 +243,16 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			return $block_content;
 		}
 
+		// Register inline frontend styles for theme.json block style inheritance
+		public function enqueue_inline_block_style_inheritance() {
+			$block_style_inline_css = apply_filters( 'stackable_block_style_inheritance_inline_styles_nodep', '' );
+			if ( ! empty( $block_style_inline_css ) ) {
+				wp_register_style( 'ugb-block-style-inheritance-nodep', false );
+				wp_add_inline_style( 'ugb-block-style-inheritance-nodep', $block_style_inline_css );
+				wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
+			}
+		}
+
 		/**
 		 * Enqueue frontend scripts and styles.
 		 *
@@ -259,7 +262,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			$this->register_frontend_assets();
 			wp_enqueue_style( 'ugb-style-css' );
 			if ( is_frontend() ) {
-				wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
+				$this->enqueue_inline_block_style_inheritance();
 			}
 			wp_enqueue_style( 'ugb-style-css-nodep' );
 			wp_enqueue_script( 'ugb-block-frontend-js' );
@@ -382,7 +385,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		// Ensure that block style inheritance styles comes after the editor block styles.
 		function enqueue_style_in_editor() {
 			wp_enqueue_style( 'ugb-block-editor-css' );
-			wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
+			$this->enqueue_inline_block_style_inheritance();
 		}
 
 		/**
