@@ -60,7 +60,11 @@ if ( ! class_exists( 'Stackable_Base_CSS_File_Generator' ) ) {
 		public static function get_css_file_name() {
 			$css_content = static::generate_css_content();
 			$content_hash = md5( $css_content );
-			return static::get_css_file_prefix() . $content_hash . '.css';
+			
+			// Add a timestamp as cache buster to ensure unique file names
+			$timestamp = time();
+			
+			return static::get_css_file_prefix() . $content_hash . '-' . $timestamp . '.css';
 		}
 
 		/**
@@ -214,6 +218,9 @@ if ( ! class_exists( 'Stackable_Base_CSS_File_Generator' ) ) {
 					unlink( $old_file_path );
 				}
 			}
+			
+			// Clear the cached file name - next generation will have a new timestamp
+			delete_option( static::get_cache_option_name() );
 		}
 	}
 }
