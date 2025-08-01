@@ -402,7 +402,7 @@ if ( ! class_exists( 'Stackable_CSS_File_Generator' ) ) {
             add_action( 'admin_init', array( $this, 'register_use_css_files_setting' ) );
             add_action( 'rest_api_init', array( $this, 'register_use_css_files_setting' ) );
 
-            add_action( 'stackable_early_version_upgraded', 'register_use_css_files_setting_upgraded', 10, 2 );
+            add_action( 'stackable_early_version_upgraded', array( $this, 'register_use_css_files_setting_upgraded' ), 10, 2 );
 		}
 
         /**
