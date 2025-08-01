@@ -24,7 +24,12 @@ const STEPS = [
 		anchor: '.ugb-modal-design-library__enable-background',
 		position: 'right',
 		nextEventTarget: '.ugb-modal-design-library__enable-background',
-		// showNext: false,
+		ctaLabel: __( 'Enable Background', i18n ),
+		ctaOnClick: () => {
+			const element = document.querySelector( '.ugb-modal-design-library__enable-background .components-form-toggle__input' )
+			element?.click()
+		},
+		showNext: false,
 	},
 	{
 		title: __( 'Patterns and Full-Pages', i18n ),
@@ -51,6 +56,8 @@ const ModalTour = props => {
 	const {
 		title,
 		description,
+		ctaLabel = null,
+		ctaOnClick = NOOP,
 		size = 'small',
 		anchor = null, // This is a selector for the element to anchor the modal to. Defaults to middle of the screen.
 		position = 'center', // This is the position to place the modal relative to the anchor. Can be 'left', 'right', 'top', 'bottom', 'center'.
@@ -161,6 +168,21 @@ const ModalTour = props => {
 				}` }
 			</style>
 			{ description }
+			{ ctaLabel && (
+				<Button
+					onClick={ () => {
+						ctaOnClick()
+						setCurrentStep( currentStep + 1 )
+						setTimeout( () => {
+							setForceRefresh( forceRefresh + 1 )
+						}, 50 )
+					} }
+					variant="primary"
+					className="ugb-tour-modal__cta"
+				>
+					{ ctaLabel }
+				</Button>
+			) }
 			<Flex className="ugb-tour-modal__footer">
 				<Steps
 					numSteps={ steps.length }
