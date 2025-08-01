@@ -10,6 +10,7 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
+import apiFetch from '@wordpress/api-fetch'
 import {
 	useEffect, useState, useCallback, useMemo, Suspense, Fragment,
 } from '@wordpress/element'
@@ -144,6 +145,7 @@ const SEARCH_TREE = [
 				children: [
 					__( 'Optimize Inline CSS', i18n ),
 					__( 'Lazy Load Images within Carousels', i18n ),
+					__( 'Generate CSS Files', i18n ),
 				],
 			},
 		],
@@ -1163,6 +1165,8 @@ const Optimizations = props => {
 		filteredSearchTree,
 	} = props
 
+	const [ isInvalidatingCssFiles, setIsInvalidatingCssFiles ] = useState( false )
+
 	const groups = filteredSearchTree.find( tab => tab.id === 'optimizations' ).groups
 	const optimizations = groups.find( group => group.id === 'optimizations' )
 	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
@@ -1194,6 +1198,40 @@ const Optimizations = props => {
 									handleSettingsChange( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
 								} }
 								help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
+							/>
+							<AdminToggleSetting
+								label={ __( 'Generate CSS Files', i18n ) }
+								searchedSettings={ optimizations.children }
+								value={ settings.stackable_use_css_files }
+								onChange={ value => {
+									handleSettingsChange( { stackable_use_css_files: value } ) // eslint-disable-line camelcase
+								} }
+								help={
+									<>
+										<p>{ __( 'Generate CSS files for the global design system and block style inheritance. This can improve performance by reducing the number of inline styles and leverages browser caching. Disabling this loads the CSS inline.', i18n ) }</p>
+										{ /* Button to invalidate the CSS files */ }
+										<Button className="button button-secondary"
+											onClick={ () => {
+												// Show a spinner while the API call is in progress
+												setIsInvalidatingCssFiles( true )
+												apiFetch( {
+													path: '/stackable/v3/invalidate-css-files',
+													method: 'POST',
+												} ).finally( () => {
+													setIsInvalidatingCssFiles( false )
+												} )
+											} }>
+											{ isInvalidatingCssFiles && (
+												<Spinner style={ {
+													marginTop: '-2px',
+													verticalAlign: 'middle',
+													marginInlineStart: 0,
+												} } />
+											) }
+											{ __( 'Invalidate CSS Files', i18n ) }
+										</Button>
+									</>
+								}
 							/>
 						</div>
 					}

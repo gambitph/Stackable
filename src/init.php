@@ -117,7 +117,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Enqueue the global CSS file in the frontend.
-			if ( ! is_admin() && get_option( 'stackable_use_css_files', 'yes' ) === 'yes' ) {
+			if ( ! is_admin() && ! empty( get_option( 'stackable_use_css_files', true ) ) ) {
 				// The enqueue_global_css_file method now has built-in fallback to inline styles
 				// if CSS file generation fails
 				Stackable_Global_Design_System_CSS_Generator::enqueue_global_css_file();
@@ -241,7 +241,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		// Register inline frontend styles for theme.json block style inheritance
 		public function enqueue_inline_block_style_inheritance() {
 			// Use the new CSS generator class with built-in fallback to inline styles
-			if ( ! is_admin() && get_option( 'stackable_use_css_files', 'yes' ) === 'yes' ) {
+			if ( ! is_admin() && ! empty( get_option( 'stackable_use_css_files', true ) ) ) {
 				Stackable_Block_Style_Inheritance_CSS_Generator::enqueue_block_inheritance_css_file();
 			} else {
 				Stackable_Block_Style_Inheritance_CSS_Generator::enqueue_block_inheritance_css_inline();

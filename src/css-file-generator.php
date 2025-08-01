@@ -215,22 +215,6 @@ if ( ! class_exists( 'Stackable_Base_CSS_File_Generator' ) ) {
 				}
 			}
 		}
-
-		/**
-		 * Clear all cached CSS files for this generator.
-		 */
-		public static function clear_css_cache() {
-			$css_dir = static::get_css_file_path();
-			
-			if ( file_exists( $css_dir ) ) {
-				$files = glob( $css_dir . static::get_css_file_prefix() . '*.css' );
-				foreach ( $files as $file ) {
-					unlink( $file );
-				}
-			}
-
-			delete_option( static::get_cache_option_name() );
-		}
 	}
 }
 
@@ -392,4 +376,89 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance_CSS_Generator' ) ) {
 	}
 
 	new Stackable_Block_Style_Inheritance_CSS_Generator();
+}
+
+if ( ! class_exists( 'Stackable_CSS_File_Generator' ) ) {
+
+	/**
+	 * REST API endpoints for CSS file generator operations.
+	 */
+	class Stackable_CSS_File_Generator {
+
+		/**
+		 * Initialize the REST API endpoints.
+		 */
+		public function __construct() {
+			add_action( 'rest_api_init', array( $this, 'register_routes' ) );
+
+            // Register the setting stackable_use_css_files
+            add_action( 'admin_init', array( $this, 'register_use_css_files_setting' ) );
+            add_action( 'rest_api_init', array( $this, 'register_use_css_files_setting' ) );
+		}
+
+        /**
+         * Register the setting stackable_use_css_files
+         */
+        public function register_use_css_files_setting() {
+            register_setting(
+				'stackable_editor_settings',
+                'stackable_use_css_files',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Enables CSS file generation for the global design system and block style inheritance', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+            );
+        }
+
+		/**
+		 * Register REST API routes.
+		 */
+		public function register_routes() {
+			register_rest_route( 'stackable/v3', '/invalidate-css-files', array(
+				'methods' => 'POST',
+				'callback' => array( $this, 'invalidate_all_css_files' ),
+				'permission_callback' => array( $this, 'check_permissions' ),
+			) );
+		}
+
+		/**
+		 * Check if user has permission to invalidate CSS files.
+		 *
+		 * @return bool
+		 */
+		public function check_permissions() {
+			return current_user_can( 'manage_options' );
+		}
+
+		/**
+		 * Invalidate all generated CSS files.
+		 *
+		 * @param WP_REST_Request $request The request object.
+		 * @return WP_REST_Response|WP_Error
+		 */
+		public function invalidate_all_css_files( $request ) {
+			try {
+				// Clear all CSS caches
+				Stackable_Global_Design_System_CSS_Generator::invalidate_css_file();
+				Stackable_Block_Style_Inheritance_CSS_Generator::invalidate_css_file();
+
+				return new WP_REST_Response( array(
+					'success' => true,
+					'message' => 'CSS files invalidated successfully',
+				), 200 );
+
+			} catch ( Exception $e ) {
+				return new WP_Error(
+					'css_invalidation_failed',
+					'Failed to invalidate CSS files: ' . $e->getMessage(),
+					array( 'status' => 500 )
+				);
+			}
+		}
+	}
+
+	new Stackable_CSS_File_Generator();
 }
