@@ -394,6 +394,8 @@ if ( ! class_exists( 'Stackable_CSS_File_Generator' ) ) {
             // Register the setting stackable_use_css_files
             add_action( 'admin_init', array( $this, 'register_use_css_files_setting' ) );
             add_action( 'rest_api_init', array( $this, 'register_use_css_files_setting' ) );
+
+            add_action( 'stackable_early_version_upgraded', 'register_use_css_files_setting_upgraded', 10, 2 );
 		}
 
         /**
@@ -411,6 +413,15 @@ if ( ! class_exists( 'Stackable_CSS_File_Generator' ) ) {
 					'default' => true,
 				)
             );
+        }
+
+        /**
+         * When upgrading from a lower version, disable use CSS files.
+         */
+        public function register_use_css_files_setting_upgraded( $old_version, $new_version ) {
+            if ( ! empty( $old_version ) && version_compare( $old_version, "3.19.0", "<" ) ) {
+                update_option( 'stackable_use_css_files', '', 'no' );
+            }
         }
 
 		/**
