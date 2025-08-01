@@ -17,12 +17,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 	class Stackable_Init {
 
 		/**
-		 * Holds the scripts which are already enqueued, to ensure we only do it once per script.
-		 * @var Array
-		 */
-		public $scripts_loaded = array();
-
-		/**
 		 * Enqueue the frontend scripts, ensures we only do it once.
 		 *
 		 * @var boolean
@@ -243,15 +237,15 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Enqueue the block script once.
-			if ( ! isset( $this->scripts_loaded[ $block['blockName'] ] ) ) {
-				$stackable_block = substr( $block['blockName'], 10 );
-				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
-				$this->scripts_loaded[ $block['blockName'] ] = true;
+			if ( did_action( 'stackable/' . $block['blockName'] . '/enqueue_scripts' ) === 0 ) {
+				do_action( 'stackable/' . $block['blockName'] . '/enqueue_scripts' );
 			}
 
 			// Check whether the current block needs to enqueue some scripts.
 			// This gets called across all the blocks.
-			do_action( 'stackable/enqueue_scripts', $block_content, $block );
+			if ( did_action( 'stackable/enqueue_scripts' ) === 0 ) {
+				do_action( 'stackable/enqueue_scripts', $block_content, $block );
+			}
 
 			return $block_content;
 		}
