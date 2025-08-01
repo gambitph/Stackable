@@ -437,7 +437,7 @@ if ( ! class_exists( 'Stackable_CSS_File_Generator' ) ) {
 		public function register_routes() {
 			register_rest_route( 'stackable/v3', '/invalidate-css-files', array(
 				'methods' => 'POST',
-				'callback' => array( $this, 'invalidate_all_css_files' ),
+				'callback' => array( __CLASS__, 'invalidate_all_css_files' ),
 				'permission_callback' => array( $this, 'check_permissions' ),
 			) );
 		}
@@ -457,7 +457,7 @@ if ( ! class_exists( 'Stackable_CSS_File_Generator' ) ) {
 		 * @param WP_REST_Request $request The request object.
 		 * @return WP_REST_Response|WP_Error
 		 */
-		public function invalidate_all_css_files( $request ) {
+		public static function invalidate_all_css_files( $request ) {
 			try {
 				// Clear all CSS caches
 				Stackable_Global_Design_System_CSS_Generator::invalidate_css_file();
@@ -479,4 +479,7 @@ if ( ! class_exists( 'Stackable_CSS_File_Generator' ) ) {
 	}
 
 	new Stackable_CSS_File_Generator();
+
+    // Run on activation to ensure the CSS files are newly generated.
+    register_activation_hook( STACKABLE_FILE, array( 'Stackable_CSS_File_Generator', 'invalidate_all_css_files' ) );
 }
