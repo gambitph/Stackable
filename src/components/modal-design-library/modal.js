@@ -6,6 +6,7 @@ import BlockList from './block-list'
 import Button from '../button'
 // import AdvancedToolbarControl from '../advanced-toolbar-control'
 import DesignLibraryList from '~stackable/components/design-library-list'
+import { ModalTour } from '~stackable/components'
 import { getDesigns, filterDesigns } from '~stackable/design-library'
 
 /**
@@ -215,6 +216,10 @@ export const ModalDesignLibrary = props => {
 			onRequestClose={ props.onClose }
 		>
 			<div className="ugb-modal-design-library__wrapper">
+
+				{ /* DEV NOTE: this is just a test */ }
+				<ModalTour />
+
 				<aside className="ugb-modal-design-library__sidebar">
 					<div className="ugb-modal-design-library__filters">
 						<BlockList
