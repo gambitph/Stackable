@@ -240,11 +240,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 		// Register inline frontend styles for theme.json block style inheritance
 		public function enqueue_inline_block_style_inheritance() {
-			$block_style_inline_css = apply_filters( 'stackable_block_style_inheritance_inline_styles_nodep', '' );
-			if ( ! empty( $block_style_inline_css ) ) {
-				wp_register_style( 'ugb-block-style-inheritance-nodep', false );
-				wp_add_inline_style( 'ugb-block-style-inheritance-nodep', $block_style_inline_css );
-				wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
+			// Use the new CSS generator class with built-in fallback to inline styles
+			if ( ! is_admin() && get_option( 'stackable_use_css_files', 'yes' ) === 'yes' ) {
+				Stackable_Block_Style_Inheritance_CSS_Generator::enqueue_block_inheritance_css_file();
+			} else {
+				Stackable_Block_Style_Inheritance_CSS_Generator::enqueue_block_inheritance_css_inline();
 			}
 		}
 

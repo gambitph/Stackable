@@ -315,3 +315,81 @@ if ( ! class_exists( 'Stackable_Global_Design_System_CSS_Generator' ) ) {
 
 	new Stackable_Global_Design_System_CSS_Generator();
 }
+
+if ( ! class_exists( 'Stackable_Block_Style_Inheritance_CSS_Generator' ) ) {
+
+	/**
+	 * Block Style Inheritance CSS Generator - Extends the base class for block theme style inheritance.
+	 */
+	class Stackable_Block_Style_Inheritance_CSS_Generator extends Stackable_Base_CSS_File_Generator {
+
+		/**
+		 * CSS file handle for block style inheritance.
+		 */
+		protected static function get_css_handle() {
+			return 'ugb-block-style-inheritance';
+		}
+
+		/**
+		 * CSS file name prefix.
+		 */
+		protected static function get_css_file_prefix() {
+			return 'stackable-block-inheritance-';
+		}
+
+		/**
+		 * Option name for caching the CSS file name.
+		 */
+		protected static function get_cache_option_name() {
+			return 'stackable_block_inheritance_css_file_name';
+		}
+
+		/**
+		 * Generate the CSS content from block style inheritance filters.
+		 *
+		 * @return string
+		 */
+		protected static function generate_css_content() {
+			// Apply the filter that contributes to block style inheritance
+			$css_content = apply_filters( 'stackable_block_style_inheritance_inline_styles_nodep', '' );
+			
+			// Add any additional block inheritance styles that might be needed
+			$css_content = apply_filters( 'stackable_block_inheritance_css_file_content', $css_content );
+			
+			return trim( $css_content );
+		}
+
+		/**
+		 * Initialize
+		 */
+		function __construct() {
+			// Add hooks to regenerate CSS when theme.json or block settings change
+			add_action( 'switch_theme', array( $this, 'invalidate_current_css_file' ) );
+			add_action( 'update_option_theme_mods_' . get_stylesheet(), array( $this, 'invalidate_current_css_file' ) );
+			add_action( 'customize_save_after', array( $this, 'invalidate_current_css_file' ) );
+		}
+
+		/**
+		 * Regenerate the CSS file when block style inheritance settings change.
+		 */
+		public function invalidate_current_css_file() {
+			static::invalidate_css_file();
+		}
+
+		/**
+		 * Enqueue the block inheritance CSS file (alias for backward compatibility).
+		 */
+		public static function enqueue_block_inheritance_css_file() {
+			return static::enqueue_css_file();
+		}
+
+		/**
+		 * Enqueue the block inheritance CSS as inline styles (useful for debugging or when file generation is disabled).
+		 */
+		public static function enqueue_block_inheritance_css_inline() {
+			return static::enqueue_inline_css();
+		}
+	}
+
+	new Stackable_Block_Style_Inheritance_CSS_Generator();
+}
