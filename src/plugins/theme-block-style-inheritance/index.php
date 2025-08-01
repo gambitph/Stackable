@@ -21,8 +21,6 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 
 			add_action( 'body_class', array( $this, 'add_body_class_block_style_inheritance' ) );
 			add_filter( 'stackable_block_style_inheritance_inline_styles_nodep', array( $this, 'add_block_style_inheritance' ) );
-
-			add_filter( 'safecss_filter_attr_allow_css', array( $this, 'allow_css' ), 10, 2 );
 		}
 
 		// Register the settings for block style inheritance
@@ -323,6 +321,9 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 			foreach( $style_declarations as $key => $declaration ) {
 				$styles[] = $declaration;
 			}
+
+			// Allow some CSS functions like color-mix() to be included in the generated CSS.
+			add_filter( 'safecss_filter_attr_allow_css', array( $this, 'allow_css' ), 10, 2 );
 
 			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $styles );
 			if ( $generated_css ) {
