@@ -56,7 +56,7 @@ export { default as AdminSelectSetting } from './admin-select-setting'
 export { default as TaxonomyControl } from './taxonomy-control'
 export { default as Tooltip } from './tooltip'
 export { default as BlockStyles } from './block-styles'
-export { default as ModalTour } from './modal-tour'
+export { default as GuidedModalTour } from './guided-modal-tour'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'
