@@ -3,6 +3,7 @@ import {
 	guidedTourStates, // TODO: This doesn't exist yet. The state should be loaded here from localize values, this should be an object with the tour ID as the key and the state as the value.
 } from 'stackable'
 import classNames from 'classnames'
+import confetti from 'canvas-confetti'
 
 import {
 	Modal, Flex, Button,
@@ -235,6 +236,12 @@ const ModalTour = props => {
 						variant="primary"
 						onClick={ () => {
 							if ( currentStep === steps.length - 1 ) {
+								confetti( {
+									angle: -90,
+									spread: 90,
+									origin: { y: -0.3 },
+									zIndex: 100000,
+								} )
 								onClose()
 							} else {
 								setCurrentStep( currentStep + 1 )
