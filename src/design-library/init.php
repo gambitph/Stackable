@@ -29,8 +29,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		public function __construct() {
 			add_action( 'rest_api_init', array( $this, 'register_route' ) );
 
-			add_filter( 'stackable_design_library_get_premium_designs', array( $this, 'get_designs_with_disabled_blocks' ) );
-			add_filter( 'stackable_design_library_get_premium_designs', array( $this, 'get_premium_designs' ) );
 			add_action( 'stackable_delete_design_library_cache', array( $this, 'delete_cache_v3' ) );
 		}
 
@@ -109,7 +107,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 		public function delete_cache() {
 			// Delete design library.
-			delete_transient( 'stackable_get_design_library_v4' );
 			delete_transient( 'stackable_get_design_library_json_v4' );
 
 			do_action( 'stackable_delete_design_library_cache' );
@@ -225,10 +222,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			), 200 );
 		}
 
-		public function filter_patterns( $pattern ) {
-			return strpos( $pattern[ 'name' ], 'stackable_' ) !== false;
-		}
-
 		public function get_design_library_from_cloud() {
 			$designs = get_transient( 'stackable_get_design_library_json_v4' );
 
@@ -247,8 +240,20 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					);
 				} else {
 					$content_body = wp_remote_retrieve_body( $response );
-					$content = apply_filters( 'stackable_design_library_retreive_body', $content_body );
-					$content = json_decode( $content, true );
+					$designs = apply_filters( 'stackable_design_library_retreive_body', $content_body );
+					$designs = json_decode( $designs, true );
+
+					$content = array();
+					foreach ( $designs as $design_id => $design ) {
+						$content[ $design_id ] = array(
+							'title'			=> $design[ 'label' ],
+							'content' 		=> $design[ 'template' ],
+							'category'	 	=> $design[ 'category' ],
+							'description'	=> $design[ 'description' ],
+							'plan'			=> $design[ 'plan' ],
+							'designId'		=> $design_id
+						);
+					}
 
 					// Add our error message so we can see it in the network tab.
 					if ( empty( $content ) ) {
@@ -272,38 +277,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			return apply_filters( 'stackable_design_library', $designs );
 		}
 
-		public function _get_design_library( $outside_init = false ) {
-			$designs = get_transient( 'stackable_get_design_library_v4' );
-			// Fetch designs.
-			if ( empty( $designs ) ) {
-				$designs = array();
-				$content = array();
-
-				$block_patterns = WP_Block_Patterns_Registry::get_instance()->get_all_registered( $outside_init );
-				foreach ( $block_patterns as $pattern ) {
-					if ( strpos( $pattern[ 'name' ], 'stackable_' ) !== false ) {
-						$pattern[ 'title' ] = str_replace( sprintf( __( 'Stackable ', STACKABLE_I18N ) ), '', $pattern[ 'title' ] );
-						$content[ $pattern[ 'designId' ] ] = $pattern;
-					}
-				}
-
-				// Get premium designs for v4
-				$content = apply_filters( 'stackable_design_library_get_premium_designs', $content );
-
-				// We add the latest designs in the `v4` area.
-				$designs[ self::API_VERSION ] = $content;
-
-				// Allow deprecated code to fetch other designs
-				$designs = apply_filters( 'stackable_fetch_design_library', $designs );
-
-				// Cache results.
-				set_transient( 'stackable_get_design_library_v4', $designs, DAY_IN_SECONDS );
-
-			}
-
-			return apply_filters( 'stackable_design_library', $designs );
-		}
-
 		/**
 		 * Gets and caches library designs.
 		 */
@@ -313,120 +286,9 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				$this->delete_cache();
 			}
 
-			return rest_ensure_response( $this->_get_design_library( $reset ) );
+			return rest_ensure_response( $this->get_design_library_from_cloud() );
 		}
 
-		public function get_disabled_blocks() {
-			$disabled_blocks = get_option( 'stackable_block_states' );
-
-			if ( $disabled_blocks == false ) {
-				return false;
-			}
-
-			$disabled_blocks = array_filter( $disabled_blocks, function ( $block_state ) { return $block_state == 3; } );
-			if ( count( $disabled_blocks ) ) {
-				$disabled_blocks = array_keys( $disabled_blocks );
-				$disabled_blocks = array_map( function ( $block ) { return preg_quote( $block, '/' ); }, $disabled_blocks );
-				$disabled_blocks = '/' . implode( '|', $disabled_blocks ) . '/i';
-				return $disabled_blocks;
-			}
-
-			return false;
-		}
-
-		public function check_for_disabled_block( $design, $disabled_blocks ) {
-			if ( preg_match( $disabled_blocks, $design ) ) {
-				return true;
-			}
-
-			return false;
-		}
-
-		public function get_premium_designs( $content ) {
-			$designs = $this->get_design_library_from_cloud();
-
-			$library = $designs[ self::API_VERSION ];
-
-			$premium_designs = array();
-			foreach ( $library as $design_id => $design ) {
-				if ( $design[ 'plan' ] === 'premium' && STACKABLE_BUILD === 'premium' && sugb_fs()->can_use_premium_code() ) {
-					continue;
-				}
-
-				$premium_designs[ $design_id ] = array(
-					'title'			=> $design[ 'label' ],
-					'content' 		=> $design[ 'template' ],
-					'category'	 	=> $design[ 'category' ],
-					'description'	=> $design[ 'description' ],
-					'plan'			=> $design[ 'plan' ],
-					'designId'		=> $design_id
-				);
-			}
-
-			$merged = array_merge( $content, $premium_designs );
-
-			uasort($merged, function( $design_1, $design_2 ) {
-				return strnatcmp( $design_1[ 'title' ], $design_2[ 'title' ] );
-			});
-
-			return $merged;
-		}
-
-		public function get_designs_with_disabled_blocks( $content ) {
-			$designs = $this->get_design_library_from_cloud();
-
-			$library = $designs[ self::API_VERSION ];
-
-			$designs_with_disabled = array();
-			foreach ( $library as $design_id => $design ) {
-				if ( isset( $content[ $design_id ] ) ) {
-					continue;
-				}
-
-				$designs_with_disabled[ $design_id ] = array(
-					'title'			=> $design[ 'label' ],
-					'content' 		=> $design[ 'template' ],
-					'category' 		=> $design[ 'category' ],
-					'description'	=> $design[ 'description' ],
-					'plan'			=> $design[ 'plan' ],
-					'designId'		=> $design_id,
-				);
-			}
-
-			$merged = array_merge( $content, $designs_with_disabled );
-
-			uasort($merged, function( $design_1, $design_2 ) {
-				return strnatcmp( $design_1[ 'title' ], $design_2[ 'title' ] );
-			});
-
-			return $merged;
-		}
-
-		public function get_category_kebab_case( $category ) {
-			$category = trim( strtolower( $category ) );
-			return preg_replace( '/[^a-z0-9-]+/', '-', $category );
-		}
-
-		public function get_template_with_placeholders( $template, $category ) {
-			if ( ! class_exists( 'Stackable_Design_Library_Placeholders' ) ) {
-				return $template;
-			}
-
-			$default_placeholders = Stackable_Design_Library_Placeholders::get_default();
-
-			if ( ! isset( $default_placeholders[ $category ] ) ) {
-				return $template;
-			}
-
-			foreach( $default_placeholders[ $category ] as $placeholder => $value ) {
-				if ( ! is_string( $value ) ) {
-					continue;
-				}
-				$template = str_replace( $placeholder, $value, $template );
-			}
-
-			return $template;
-		}
 
 		/**
 		 * Gets the URL of the CDN where to load our design library data.  When
