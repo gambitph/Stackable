@@ -108,6 +108,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		public function delete_cache() {
 			// Delete design library.
 			delete_transient( 'stackable_get_design_library_json_v4' );
+			delete_transient( 'stackable_get_design_library_v4' );
 
 			do_action( 'stackable_delete_design_library_cache' );
 		}
@@ -223,7 +224,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		}
 
 		public function get_design_library_from_cloud() {
-			$designs = get_transient( 'stackable_get_design_library_json_v4' );
+			$designs = get_transient( 'stackable_get_design_library_v4' );
 
 			// Fetch designs.
 			if ( empty( $designs ) ) {
@@ -271,7 +272,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				$designs = apply_filters( 'stackable_fetch_design_library', $designs );
 
 				// Cache results.
-				set_transient( 'stackable_get_design_library_json_v4', $designs, DAY_IN_SECONDS );
+				set_transient( 'stackable_get_design_library_v4', $designs, DAY_IN_SECONDS );
 			}
 
 			return apply_filters( 'stackable_design_library', $designs );
