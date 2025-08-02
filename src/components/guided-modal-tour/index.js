@@ -49,6 +49,7 @@ const NOOP = () => {}
 const GuidedModalTour = props => {
 	const {
 		steps = STEPS,
+		hasConfetti = true,
 		tourId = '', // This is the ID of the tour, this will be used to store the tour state in the database.
 	} = props
 
@@ -61,6 +62,7 @@ const GuidedModalTour = props => {
 
 	return <ModalTour
 		steps={ steps }
+		hasConfetti={ hasConfetti }
 		onClose={ () => {
 			// TODO: Save the tour state to the database that we finished it.
 			setIsDone( true )
@@ -72,6 +74,7 @@ const ModalTour = props => {
 	const {
 		steps = STEPS,
 		onClose = NOOP,
+		hasConfetti = true,
 	} = props
 
 	const [ currentStep, setCurrentStep ] = useState( 0 )
@@ -236,12 +239,34 @@ const ModalTour = props => {
 						variant="primary"
 						onClick={ () => {
 							if ( currentStep === steps.length - 1 ) {
-								confetti( {
-									angle: -90,
-									spread: 90,
-									origin: { y: -0.3 },
-									zIndex: 100000,
-								} )
+								if ( hasConfetti ) {
+									confetti( {
+										particleCount: 50,
+										angle: 60,
+										spread: 70,
+										origin: { x: 0 },
+										zIndex: 100000,
+										disableForReducedMotion: true,
+									} )
+									confetti( {
+										particleCount: 50,
+										angle: 120,
+										spread: 70,
+										origin: { x: 1 },
+										zIndex: 100000,
+										disableForReducedMotion: true,
+									} )
+									setTimeout( () => {
+										confetti( {
+											particleCount: 50,
+											angle: -90,
+											spread: 90,
+											origin: { y: -0.3 },
+											zIndex: 100000,
+											disableForReducedMotion: true,
+										} )
+									}, 150 )
+								}
 								onClose()
 							} else {
 								setCurrentStep( currentStep + 1 )
