@@ -28,11 +28,12 @@ const STEPS = [
 		anchor: '.ugb-modal-design-library__enable-background',
 		position: 'right',
 		nextEventTarget: '.ugb-modal-design-library__enable-background',
-		ctaLabel: __( 'Enable Background', i18n ),
-		ctaOnClick: () => {
-			const element = document.querySelector( '.ugb-modal-design-library__enable-background .components-form-toggle__input' )
-			element?.click()
-		},
+		// ctaLabel: __( 'Enable Background', i18n ),
+		// ctaOnClick: () => {
+		// 	const element = document.querySelector( '.ugb-modal-design-library__enable-background .components-form-toggle__input' )
+		// 	element?.click()
+		// },
+		glowTarget: '.ugb-modal-design-library__enable-background',
 		// showNext: false,
 	},
 	{
@@ -96,6 +97,7 @@ const ModalTour = props => {
 		showNext = true, // If true, a "Next" button will be shown.
 		nextEventTarget = null, // If provided, this is a selector for the element to trigger the next event if there is one.
 		nextEvent = 'click', // This is the event to listen for to trigger the next step.
+		glowTarget = null, // If provided, this is a selector for the element to glow when the step is active.
 	} = steps[ currentStep ]
 
 	// Create a stable function reference for the event listener
@@ -112,7 +114,7 @@ const ModalTour = props => {
 			setIsVisible( true )
 			setTimeout( () => {
 				setIsVisibleDelayed( true )
-			}, 30 )
+			}, 50 )
 		}, 1000 )
 
 		return () => clearTimeout( timer )
@@ -152,16 +154,16 @@ const ModalTour = props => {
 		switch ( position ) {
 			case 'left':
 				// Left, middle
-				return [ `${ anchorRect.left - modalRect.width - 24 }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
+				return [ `${ anchorRect.left - modalRect.width - 16 }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
 			case 'right':
 				// Right, middle
-				return [ `${ anchorRect.right + 24 }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
+				return [ `${ anchorRect.right + 16 }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
 			case 'top':
 				// Center, top
-				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.top - modalRect.height - 24 }px` ]
+				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.top - modalRect.height - 16 }px` ]
 			case 'bottom':
 				// Center, bottom
-				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.bottom + 24 }px` ]
+				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.bottom + 16 }px` ]
 			case 'center':
 				return [
 					`${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`,
@@ -171,6 +173,33 @@ const ModalTour = props => {
 				return defaultOffset
 		}
 	}, [ anchor, position, modalRef.current, isVisible, isVisibleDelayed, forceRefresh ] )
+
+	// If we have a glow target, create a new element in the body, placed on the top of the target, below the modal.
+	useEffect( () => {
+		if ( glowTarget ) {
+			// Get the top, left, width, and height of the target.
+			const target = document.querySelector( glowTarget )
+			if ( target ) {
+				const targetRect = target.getBoundingClientRect()
+
+				// Create the element.
+				const element = document.createElement( 'div' )
+				element.className = 'ugb-tour-modal__glow'
+				element.style.top = `${ targetRect.top - 8 }px`
+				element.style.left = `${ targetRect.left - 8 }px`
+				element.style.width = `${ targetRect.width + 16 }px`
+				element.style.height = `${ targetRect.height + 16 }px`
+				document.body.appendChild( element )
+			}
+		}
+		// Remove the element when the component unmounts or the step changes.
+		return () => {
+			if ( glowTarget ) {
+				const element = document.querySelector( '.ugb-tour-modal__glow' )
+				element?.remove()
+			}
+		}
+	}, [ glowTarget, currentStep, isVisible, isVisibleDelayed, forceRefresh ] )
 
 	if ( ! isVisible ) {
 		return null
@@ -272,7 +301,7 @@ const ModalTour = props => {
 								setCurrentStep( currentStep + 1 )
 								setTimeout( () => {
 									setForceRefresh( forceRefresh + 1 )
-								}, 50 )
+								}, 100 )
 							}
 						} }
 					>
@@ -298,6 +327,10 @@ const Steps = props => {
 		currentStep = 0,
 		// onClickStep = NOOP,
 	} = props
+
+	if ( numSteps === 1 ) {
+		return null
+	}
 
 	return (
 		<div className="ugb-tour-modal__steps">

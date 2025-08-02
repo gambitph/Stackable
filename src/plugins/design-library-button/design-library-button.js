@@ -12,6 +12,20 @@ import { dispatch, useSelect } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { useCallback } from '@wordpress/element'
 import { ToolbarButton } from '@wordpress/components'
+import { GuidedModalTour } from '~stackable/components'
+
+const STEPS = [
+	{
+		title: '👋 ' + __( 'Welcome to Stackable', i18n ),
+		description: __( 'We’re excited to have you here. Let\’s get you started by opening the Design Library. Click the button above to get started.', i18n ),
+		// size: 'medium',
+		anchor: '.ugb-insert-library-button',
+		position: 'bottom',
+		nextEventTarget: '.ugb-insert-library-button',
+		glowTarget: '.ugb-insert-library-button',
+		showNext: false,
+	},
+]
 
 const DesignLibraryButton = () => {
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
@@ -41,11 +55,14 @@ const DesignLibraryButton = () => {
 	}, [ getEditorDom ] )
 
 	return ( settings.stackable_enable_design_library &&
-		<ToolbarButton
-			onClick={ onClick }
-			className="ugb-insert-library-button"
-			icon={ <SVGStackableIcon /> }
-		>{ __( 'Design Library', i18n ) }</ToolbarButton>
+		<>
+			<GuidedModalTour steps={ STEPS } hasConfetti={ false } />
+			<ToolbarButton
+				onClick={ onClick }
+				className="ugb-insert-library-button"
+				icon={ <SVGStackableIcon /> }
+			>{ __( 'Design Library', i18n ) }</ToolbarButton>
+		</>
 	)
 }
 
