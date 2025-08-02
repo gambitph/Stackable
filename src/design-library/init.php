@@ -31,7 +31,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 			add_filter( 'stackable_design_library_get_premium_designs', array( $this, 'get_designs_with_disabled_blocks' ) );
 			add_filter( 'stackable_design_library_get_premium_designs', array( $this, 'get_premium_designs' ) );
-			add_action( 'init', array( $this, 'register_design_pattern' ) );
 			add_action( 'stackable_delete_design_library_cache', array( $this, 'delete_cache_v3' ) );
 		}
 
@@ -109,23 +108,9 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		}
 
 		public function delete_cache() {
-			$designs = $this->get_design_library_from_cloud();
-
-			$library = $designs[ self::API_VERSION ];
-			foreach ( $library as $design_id => $design ) {
-				if ( WP_Block_Patterns_Registry::get_instance()->is_registered( 'stackable_' . $design_id ) ) {
-					$res = unregister_block_pattern( 'stackable_' . $design_id );
-				}
-
-				if ( WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( 'stackable_' . $design[ 'category' ] ) ) {
-					$res = unregister_block_pattern_category( 'stackable_' . $design[ 'category' ] );
-				}
-			}
 			// Delete design library.
 			delete_transient( 'stackable_get_design_library_v4' );
 			delete_transient( 'stackable_get_design_library_json_v4' );
-
-			$this->register_design_pattern();
 
 			do_action( 'stackable_delete_design_library_cache' );
 		}
@@ -441,56 +426,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			}
 
 			return $template;
-		}
-
-		public function register_design_pattern() {
-			$designs = $this->get_design_library_from_cloud();
-
-			$library = $designs[ self::API_VERSION ];
-
-			if ( ! $library ) {
-				return;
-			}
-
-
-			$disabled_blocks = $this->get_disabled_blocks();
-
-
-			if ( ! WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( 'stackable' ) ) {
-				register_block_pattern_category( 'stackable', [
-					'label' => __( 'Stackable', STACKABLE_I18N ),
-					'description' => __( 'Patterns for Stackable Design Library', STACKABLE_I18N ),
-				] );
-			}
-
-			foreach ( $library as $design_id => $design ) {
-				if ( $design[ 'plan' ] === 'premium' && ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ) ) {
-					continue;
-				}
-
-				if ( $disabled_blocks ) {
-					$has_disabled = $this->check_for_disabled_block( $design[ 'template' ], $disabled_blocks );
-					if ( $has_disabled ) continue;
-				}
-
-				register_block_pattern_category( 'stackable_' . $this->get_category_kebab_case( $design[ 'category' ] ), [
-					'label' => sprintf( __( 'Stackable %s', STACKABLE_I18N ), $design[ 'category' ] ),
-					'description' => sprintf( __( '%s patterns for Stackable Design Library', STACKABLE_I18N ), $design[ 'category' ] ),
-				] );
-
-				register_block_pattern(
-						'stackable_' . $design_id,
-						array(
-							'title'			=> sprintf( __( 'Stackable %s', STACKABLE_I18N ), $design[ 'label' ] ),
-							'content' 		=> $this->get_template_with_placeholders( $design[ 'template' ], $design[ 'category' ] ),
-							'categories' 	=> array( 'stackable_' . $this->get_category_kebab_case( $design[ 'category' ] ), 'stackable' ), // used in Patterns
-							'category'		=> $design[ 'category' ], // used in Design Library
-							'description'	=> $design[ 'description' ],
-							'plan'			=> $design[ 'plan' ],
-							'designId'		=> $design_id
-						)
-					);
-			}
 		}
 
 		/**
