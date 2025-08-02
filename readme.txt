@@ -322,6 +322,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Added support for CSS optimizers that strip out the "px" from "0px" #3564
 * Fixed: Added some missing string translations #3414
 
+= 3.17.3 =
+* Fixed: Stopped design library from being registered as patterns
+
 = 3.17.2 =
 * Fixed: Design Library - Updated CDN URL
 * Fixed: If using non-English locale, Google Fonts may not load properly in the editor
