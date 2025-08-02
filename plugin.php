@@ -28,7 +28,7 @@ defined( 'STACKABLE_BUILD' ) || define( 'STACKABLE_BUILD', 'free' );
 defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.18.0' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
-defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://storage.googleapis.com/stackable-plugin-assets' ); // Design Library CDN URL
+defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://stackable-files.pages.dev' ); // Design Library CDN URL
 
 /********************************************************************************************
  * Activation & PHP version checks.

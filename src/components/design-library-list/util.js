@@ -199,7 +199,7 @@ export const parseDisabledBlocks = parsedBlock => {
 	return { block, blocksForSubstitution }
 }
 
-const IMAGE_STORAGE = 'https://storage.googleapis.com/stackable-plugin-assets/library-v4/images/'
+const IMAGE_STORAGE = 'https://stackable-files.pages.dev/library-v4/images/'
 
 export const addPlaceholderForPostsBlock = ( content, postsPlaceholder, defaultValues ) => {
 	const remainingPosts = [ ...postsPlaceholder ]

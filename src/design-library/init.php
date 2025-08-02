@@ -252,8 +252,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				$designs = array();
 				$content = null;
 
-				// Add ignoreCache to retrieve the updated file
-				$response = wp_remote_get( self::get_cdn_url() . 'library-v4/library.json?ignoreCache=1' );
+				$response = wp_remote_get( self::get_cdn_url() . 'library-v4/library.json' );
 
 				if ( is_wp_error( $response ) ) {
 					// Add our error message so we can see it in the network tab.
