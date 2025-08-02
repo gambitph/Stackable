@@ -29,7 +29,7 @@ const STEPS = [
 			const element = document.querySelector( '.ugb-modal-design-library__enable-background .components-form-toggle__input' )
 			element?.click()
 		},
-		showNext: false,
+		// showNext: false,
 	},
 	{
 		title: __( 'Patterns and Full-Pages', i18n ),
@@ -209,7 +209,7 @@ const ModalTour = props => {
 						variant="primary"
 						onClick={ () => {
 							if ( currentStep === steps.length - 1 ) {
-								props.onClose()
+								onClose()
 							} else {
 								setCurrentStep( currentStep + 1 )
 								setTimeout( () => {
@@ -218,9 +218,15 @@ const ModalTour = props => {
 							}
 						} }
 					>
-						{ currentStep === steps.length - 1 ? __( 'Finish', i18n ) : __( 'Next', i18n ) }
-						&nbsp;
-						<Icon icon={ arrowRight } size={ 20 } />
+						{ currentStep === steps.length - 1 ? (
+							__( 'Finish', i18n )
+						) : (
+							<>
+								{ __( 'Next', i18n ) }
+								&nbsp;
+								<Icon icon={ arrowRight } size={ 20 } />
+							</>
+						) }
 					</Button>
 				) }
 			</Flex>
