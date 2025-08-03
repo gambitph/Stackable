@@ -7,12 +7,14 @@
 .ugb-tour-modal {
 	pointer-events: all;
 	position: absolute;
-	--offset-x: 0;
-	--offset-y: 0;
+	--offset-x: 0px;
+	--offset-y: 0px;
 	--left: 50%;
 	--top: 50%;
 	left: var(--left);
 	top: var(--top);
+	margin-left: var(--offset-x);
+	margin-top: var(--offset-y);
 	overflow: visible;
 
 	--wp-admin-theme-color: #f00069;
@@ -20,7 +22,15 @@
 	--wp-admin-theme-color-darker-20: #cb0044;
 
 	// Smoothly transition moving top & left.
-	transition: max-width 0.2s cubic-bezier(0.4, 0, 0.2, 1), left 0.2s cubic-bezier(0.4, 0, 0.2, 1), top 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in-out, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease-in-out;
+	transition:
+		max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+		left 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+		top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+		margin-left 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+		margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 0.4s ease-in-out,
+		transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+		box-shadow 0.2s ease-in-out;
 	will-change: left, top, max-width;
 
 	display: none;
@@ -54,6 +64,18 @@
 	.ugb-tour-modal__footer {
 		margin-top: 16px;
 		justify-content: flex-end;
+	}
+
+	.ugb-tour-modal__help {
+		background: #f4fbff;
+		padding: 8px 12px;
+		border-radius: 8px;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		margin-block: 16px;
+		svg {
+			vertical-align: text-top;
+			margin-inline-end: 8px;
+		}
 	}
 
 	.ugb-tour-modal__cta {

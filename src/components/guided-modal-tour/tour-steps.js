@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
+import { createInterpolateElement } from '@wordpress/element'
 
 /**
  * Guided Modal Tour Step Properties Documentation
@@ -14,6 +15,7 @@ import { i18n } from 'stackable'
  *
  * - title (string): The title text displayed at the top of the modal.
  * - description (string|ReactNode): The main content or instructions for the step.
+ * - help (string|ReactNode): If provided, a help text will be shown below the description.
  * - size (string): The size of the modal. Can be 'small', 'medium', or 'large'. Default is 'small'.
  * - anchor (string): A CSS selector for the element to which the modal should be anchored. If not provided, modal is centered.
  * - position (string): The position of the modal relative to the anchor. Can be 'left', 'right', 'top', 'bottom', or 'center'. Default is 'center'.
@@ -68,7 +70,10 @@ export const TOUR_STEPS = {
 		steps: [
 			{
 				title: '👋 ' + __( 'Welcome to Stackable', i18n ),
-				description: __( 'We\'re excited to have you here. Let\'s get you started by opening the Design Library. Click the button above to get started.', i18n ),
+				description: __( 'We\'re excited to have you here. Let\'s get you started by opening the Design Library.', i18n ),
+				help: createInterpolateElement( __( 'Click the <strong>Design Library</strong> button to continue.', i18n ), {
+					strong: <strong />,
+				} ),
 				// size: 'medium',
 				anchor: '.ugb-insert-library-button',
 				position: 'bottom',
@@ -87,28 +92,49 @@ export const TOUR_STEPS = {
 		steps: [
 			{
 				title: '👋 ' + __( 'Welcome to Your Design Library', i18n ),
-				description: __( 'These are pre-built designs that are style-matched to your block theme. You can insert one or more patterns to quickly build your page.', i18n ),
+				description: __( 'These are hundreds ofpre-built designs that are style-matched to your block theme. You can insert one or more patterns to quickly build your page.', i18n ),
+				help: createInterpolateElement( __( 'Pick one of the <strong>designs</strong> to continue.', i18n ), {
+					strong: <strong />,
+				} ),
 				size: 'medium',
+				nextEventTarget: '.ugb-design-library-item',
+				offsetX: '-400px',
+			},
+			{
+				title: __( 'You Can Add More Than One', i18n ),
+				description: __( 'You can add more than one designs to your page. When you\'re done, you can the Add Designs button to insert. But let\'s see what else you can do.', i18n ),
+				size: 'small',
+				offsetX: '-400px',
 			},
 			{
 				title: __( 'Pick Styling Options', i18n ),
-				description: __( 'Turn on backgrounds, change color schemes, to customize the library. Go ahead and click on "Section Background" and see your changes in real-time.', i18n ),
+				description: __( 'Turn on backgrounds, change color schemes, to customize the library in real-time.', i18n ),
+				help: createInterpolateElement( __( 'Toggle the <strong>Section Background</strong> to continue.', i18n ), {
+					strong: <strong />,
+				} ),
 				anchor: '.ugb-modal-design-library__enable-background',
 				position: 'right',
 				nextEventTarget: '.ugb-modal-design-library__enable-background',
-				// ctaLabel: __( 'Enable Background', i18n ),
-				// ctaOnClick: () => {
-				// 	const element = document.querySelector( '.ugb-modal-design-library__enable-background .components-form-toggle__input' )
-				// 	element?.click()
-				// },
 				glowTarget: '.ugb-modal-design-library__enable-background',
-				// showNext: false,
+			},
+			{
+				title: __( 'Designs are Styled', i18n ),
+				description: __( 'Great! Your entire library now has a background. You can also change the other styling options next time.', i18n ),
+				anchor: '.ugb-modal-design-library__designs',
+				position: 'left',
+				offsetX: '200px',
 			},
 			{
 				title: __( 'Patterns and Full-Pages', i18n ),
-				description: __( 'Click here to switch between patterns and full-page layouts.', i18n ),
+				description: __( 'Aside from patterns, there are also full-page layouts in the library.', i18n ),
+				help: createInterpolateElement( __( 'Click the <strong>Pages</strong> tab to continue.', i18n ), {
+					strong: <strong />,
+				} ),
+				// TODO: Change these when we have the pages tab already.
 				anchor: '.ugb-modal-design-library .components-modal__header',
 				position: 'bottom',
+				nextEventTarget: '.ugb-modal-design-library .components-modal__header',
+				glowTarget: '.ugb-modal-design-library .components-modal__header',
 			},
 		],
 	},

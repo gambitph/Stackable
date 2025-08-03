@@ -21,7 +21,7 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
-	Icon, arrowRight, arrowLeft,
+	Icon, arrowRight, arrowLeft, info,
 } from '@wordpress/icons'
 import {
 	useEffect, useState, useCallback, useRef, useMemo,
@@ -87,13 +87,14 @@ const ModalTour = props => {
 	const {
 		title,
 		description,
+		help = null, // If provided, a help text will be shown below the description.
 		ctaLabel = null, // If provided, a button will be shown with this label.
 		ctaOnClick = NOOP, // This will be called when the button is clicked, we will move to the next step after.
 		size = 'small', // Size of the modal. Can be 'small', 'medium', 'large'.
 		anchor = null, // This is a selector for the element to anchor the modal to. Defaults to middle of the screen.
 		position = 'center', // This is the position to place the modal relative to the anchor. Can be 'left', 'right', 'top', 'bottom', 'center'.
-		offsetX = 0, // This is the X offset of the modal relative to the anchor.
-		offsetY = 0, // This is the Y offset of the modal relative to the anchor.
+		offsetX = '0px', // This is the X offset of the modal relative to the anchor.
+		offsetY = '0px', // This is the Y offset of the modal relative to the anchor.
 		showNext = true, // If true, a "Next" button will be shown.
 		nextEventTarget = null, // If provided, this is a selector for the element to trigger the next event if there is one.
 		nextEvent = 'click', // This is the event to listen for to trigger the next step.
@@ -121,15 +122,42 @@ const ModalTour = props => {
 	}, [] )
 
 	useEffect( () => {
+		let clickListener = null
+
 		if ( nextEventTarget ) {
-			const element = document.querySelector( nextEventTarget )
-			element?.addEventListener( nextEvent, handleNextEvent )
+			if ( nextEvent === 'click' ) {
+				clickListener = event => {
+					// Check if the event target matches the selector or is inside an element that matches
+					if (
+						event.target.matches( nextEventTarget ) ||
+						event.target.closest( nextEventTarget )
+					) {
+						handleNextEvent()
+					}
+				}
+				// Use ownerDocument instead of document directly
+				const doc = modalRef.current?.ownerDocument || document
+				doc.addEventListener( 'click', clickListener )
+			} else {
+				const elements = document.querySelectorAll( nextEventTarget )
+				for ( let i = 0; i < elements.length; i++ ) {
+					elements[ i ].addEventListener( nextEvent, handleNextEvent )
+				}
+			}
 		}
 
 		return () => {
 			if ( nextEventTarget ) {
-				const element = document.querySelector( nextEventTarget )
-				element?.removeEventListener( nextEvent, handleNextEvent )
+				if ( nextEvent === 'click' && clickListener ) {
+					// Use ownerDocument instead of document directly
+					const doc = modalRef.current?.ownerDocument || document
+					doc.removeEventListener( 'click', clickListener )
+				} else {
+					const elements = document.querySelectorAll( nextEventTarget )
+					for ( let i = 0; i < elements.length; i++ ) {
+						elements[ i ].removeEventListener( nextEvent, handleNextEvent )
+					}
+				}
 			}
 		}
 	}, [ currentStep, nextEventTarget, nextEvent, handleNextEvent ] )
@@ -225,13 +253,19 @@ const ModalTour = props => {
 		>
 			<style>
 				{ `.ugb-tour-modal {
-					--offset-x: ${ offsetX }px;
-					--offset-y: ${ offsetY }px;
+					--offset-x: ${ offsetX };
+					--offset-y: ${ offsetY };
 					--left: ${ modalOffsetX };
 					--top: ${ modalOffsetY };
 				}` }
 			</style>
 			{ description }
+			{ help && (
+				<div className="ugb-tour-modal__help">
+					<Icon icon={ info } size={ 16 } />
+					{ help }
+				</div>
+			) }
 			{ ctaLabel && (
 				<Button
 					onClick={ () => {
