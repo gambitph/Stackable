@@ -1,3 +1,11 @@
+/**
+ * Internal dependencies
+ */
+import { TOURS } from './tours'
+
+/**
+ * External dependencies
+ */
 import {
 	i18n,
 	guidedTourStates, // TODO: This doesn't exist yet. The state should be loaded here from localize values, this should be an object with the tour ID as the key and the state as the value.
@@ -5,6 +13,9 @@ import {
 import classNames from 'classnames'
 import confetti from 'canvas-confetti'
 
+/**
+ * WordPress dependencies
+ */
 import {
 	Modal, Flex, Button,
 } from '@wordpress/components'
@@ -16,40 +27,11 @@ import {
 	useEffect, useState, useCallback, useRef, useMemo,
 } from '@wordpress/element'
 
-const STEPS = [
-	{
-		title: '👋 ' + __( 'Welcome to Your Design Library', i18n ),
-		description: __( 'These are pre-built designs that are style-matched to your block theme. You can insert one or more patterns to quickly build your page.', i18n ),
-		size: 'medium',
-	},
-	{
-		title: __( 'Pick Styling Options', i18n ),
-		description: __( 'Turn on backgrounds, change color schemes, to customize the library. Go ahead and click on "Section Background" and see your changes in real-time.', i18n ),
-		anchor: '.ugb-modal-design-library__enable-background',
-		position: 'right',
-		nextEventTarget: '.ugb-modal-design-library__enable-background',
-		// ctaLabel: __( 'Enable Background', i18n ),
-		// ctaOnClick: () => {
-		// 	const element = document.querySelector( '.ugb-modal-design-library__enable-background .components-form-toggle__input' )
-		// 	element?.click()
-		// },
-		glowTarget: '.ugb-modal-design-library__enable-background',
-		// showNext: false,
-	},
-	{
-		title: __( 'Patterns and Full-Pages', i18n ),
-		description: __( 'Click here to switch between patterns and full-page layouts.', i18n ),
-		anchor: '.ugb-modal-design-library .components-modal__header',
-		position: 'bottom',
-	},
-]
-
 const NOOP = () => {}
 
 // The main tour component.
 const GuidedModalTour = props => {
 	const {
-		steps = STEPS,
 		hasConfetti = true,
 		tourId = '', // This is the ID of the tour, this will be used to store the tour state in the database.
 	} = props
@@ -62,7 +44,7 @@ const GuidedModalTour = props => {
 	}
 
 	return <ModalTour
-		steps={ steps }
+		steps={ TOURS[ tourId ] }
 		hasConfetti={ hasConfetti }
 		onClose={ () => {
 			// TODO: Save the tour state to the database that we finished it.
@@ -73,7 +55,7 @@ const GuidedModalTour = props => {
 
 const ModalTour = props => {
 	const {
-		steps = STEPS,
+		steps,
 		onClose = NOOP,
 		hasConfetti = true,
 	} = props

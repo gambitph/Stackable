@@ -14,19 +14,6 @@ import { useCallback } from '@wordpress/element'
 import { ToolbarButton } from '@wordpress/components'
 import { GuidedModalTour } from '~stackable/components'
 
-const STEPS = [
-	{
-		title: '👋 ' + __( 'Welcome to Stackable', i18n ),
-		description: __( 'We’re excited to have you here. Let\’s get you started by opening the Design Library. Click the button above to get started.', i18n ),
-		// size: 'medium',
-		anchor: '.ugb-insert-library-button',
-		position: 'bottom',
-		nextEventTarget: '.ugb-insert-library-button',
-		glowTarget: '.ugb-insert-library-button',
-		showNext: false,
-	},
-]
-
 const DesignLibraryButton = () => {
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
@@ -56,7 +43,8 @@ const DesignLibraryButton = () => {
 
 	return ( settings.stackable_enable_design_library &&
 		<>
-			<GuidedModalTour steps={ STEPS } hasConfetti={ false } />
+			{ /* TODO: This will need to only play on first time going to the editor, and if there's no quick button that started another tour */ }
+			<GuidedModalTour tourId="editor-welcome" hasConfetti={ false } />
 			<ToolbarButton
 				onClick={ onClick }
 				className="ugb-insert-library-button"
