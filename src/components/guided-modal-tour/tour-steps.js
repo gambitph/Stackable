@@ -145,6 +145,7 @@ export const TOUR_STEPS = {
 				},
 				postStep: () => {
 					document.querySelector( '.ugb-design-library__color-scheme-popover .ugb-modal-design-library__stk-color-scheme:last-of-type' )?.click()
+					document.querySelector( '.ugb-modal-design-library__color-scheme-close-button' )?.click()
 				},
 			},
 			{

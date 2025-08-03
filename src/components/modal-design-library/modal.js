@@ -276,6 +276,7 @@ export const ModalDesignLibrary = props => {
 											<p> { __( 'Background Scheme', i18n ) }</p>
 											<Button
 												icon="no"
+												className="ugb-modal-design-library__color-scheme-close-button"
 												onClick={ () => {
 													onClose()
 												} }
