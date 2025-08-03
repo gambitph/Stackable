@@ -158,15 +158,20 @@ const ModalTour = props => {
 
 	// If we have a glow target, create a new element in the body, placed on the top of the target, below the modal.
 	useEffect( () => {
-		if ( glowTarget ) {
+		if ( glowTarget && isVisibleDelayed ) {
 			// Get the top, left, width, and height of the target.
 			const target = document.querySelector( glowTarget )
 			if ( target ) {
 				const targetRect = target.getBoundingClientRect()
 
+				// Estimate the size of the glow target based on the size of the target.
+				const glowTargetSize = targetRect.width > 300 || targetRect.height > 200 ? 'large'
+					: targetRect.width > 300 || targetRect.height > 100 ? 'medium'
+						: 'small'
+
 				// Create the element.
 				const element = document.createElement( 'div' )
-				element.className = 'ugb-tour-modal__glow'
+				element.className = `ugb-tour-modal__glow ugb-tour-modal__glow--${ glowTargetSize }`
 				element.style.top = `${ targetRect.top - 8 }px`
 				element.style.left = `${ targetRect.left - 8 }px`
 				element.style.width = `${ targetRect.width + 16 }px`

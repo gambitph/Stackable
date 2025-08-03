@@ -150,6 +150,11 @@
 	will-change: transform, box-shadow;
 }
 
+.ugb-tour-modal__glow--medium,
+.ugb-tour-modal__glow--large {
+	animation: tour-modal-glow-small 0.7s infinite alternate;
+}
+
 // Animation keyframes to grow the box-shadow like it's glowing
 @keyframes tour-modal-glow {
 	0% {
@@ -159,5 +164,17 @@
 	100% {
 		box-shadow: 0 0 50px #ff2283, 0 0 5px #f00069;
 		transform: scaleX(1.05) scaleY(1.12);
+	}
+}
+
+// Animation keyframes for small glow
+@keyframes tour-modal-glow-small {
+	0% {
+		box-shadow: 0 0 20px #ff2283, 0 0 5px #f00069;
+		transform: scaleX(1) scaleY(1);
+	}
+	100% {
+		box-shadow: 0 0 50px #ff2283, 0 0 5px #f00069;
+		transform: scaleX(1.02) scaleY(1.02);
 	}
 }

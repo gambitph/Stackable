@@ -18,6 +18,7 @@ import {
 	isContentOnlyMode,
 	settings,
 } from 'stackable'
+import { GuidedModalTour } from '~stackable/components'
 import { currentUserHasCapability } from '~stackable/util'
 
 /** WordPress dependencies
@@ -78,6 +79,7 @@ const GlobalSettings = () => {
 						</p>
 					</PanelBody>
 					{ globalSettingsInspector }
+					<GuidedModalTour tourId="design-system-welcome" />
 				</PluginSidebar>
 			}
 		</>

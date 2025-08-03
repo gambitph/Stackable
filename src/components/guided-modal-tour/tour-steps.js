@@ -2,6 +2,18 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 
 export const TOUR_STEPS = {
+	'design-system-welcome': [
+		{
+			title: '👋 ' + __( 'Welcome to Your Design System', i18n ),
+			description: __( 'We\'re excited to have you here. Let\'s get you started by opening the Design Library. Click the button above to get started.', i18n ),
+			size: 'medium',
+			anchor: '.interface-interface-skeleton__sidebar',
+			position: 'left',
+			// nextEventTarget: '.ugb-insert-library-button',
+			glowTarget: '.interface-interface-skeleton__sidebar',
+			// showNext: false,
+		},
+	],
 	'editor-welcome': [
 		{
 			title: '👋 ' + __( 'Welcome to Stackable', i18n ),
