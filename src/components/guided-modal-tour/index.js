@@ -32,19 +32,37 @@ const NOOP = () => {}
 // The main tour component.
 const GuidedModalTour = props => {
 	const {
-		hasConfetti = true,
 		tourId = '', // This is the ID of the tour, this will be used to store the tour state in the database and to get the steps.
 	} = props
 
 	// On mount, check if the tour has been completed, if so, don't show it.
 	const [ isDone, setIsDone ] = useState( guidedTourStates?.[ tourId ] )
 
-	if ( isDone ) {
+	const {
+		steps = [],
+		condition = null,
+		hasConfetti = true,
+	} = TOUR_STEPS[ tourId ]
+
+	// If there is a condition, check if it's met, if not, don't show the tour.
+	// condition can be true, false, or null. true will show the tour (even if
+	// it's already done), false will not show the tour, null will show the tour
+	// only once (normal behavior).
+	const conditionResult = condition ? condition() : null
+	if ( conditionResult === false ) {
+		return null
+	} else if ( conditionResult === null ) {
+		if ( isDone ) {
+			return null
+		}
+	}
+
+	if ( ! steps.length ) {
 		return null
 	}
 
 	return <ModalTour
-		steps={ TOUR_STEPS[ tourId ] }
+		steps={ steps }
 		hasConfetti={ hasConfetti }
 		onClose={ () => {
 			// TODO: Save the tour state to the database that we finished it.
