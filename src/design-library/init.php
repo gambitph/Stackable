@@ -272,7 +272,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				$designs = apply_filters( 'stackable_fetch_design_library', $designs );
 
 				// Cache results.
-				set_transient( 'stackable_get_design_library_v4', $designs, DAY_IN_SECONDS );
+				set_transient( 'stackable_get_design_library_v4', $designs, 7 * DAY_IN_SECONDS );
 			}
 
 			return apply_filters( 'stackable_design_library', $designs );
