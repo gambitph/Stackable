@@ -1,6 +1,49 @@
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 
+/**
+ * Guided Modal Tour Step Properties Documentation
+ *
+ * Tour-level properties (per tour object, not per step):
+ *
+ * - steps (array): The array of step objects as described above.
+ * - hasConfetti (boolean): If true, confetti is shown on the last step. Default is true.
+ * - condition (function): A function that returns true, false, or null to control if/when the tour is shown. null will show the tour only once.
+ *
+ * Each step in a tour is an object with the following possible properties:
+ *
+ * - title (string): The title text displayed at the top of the modal.
+ * - description (string|ReactNode): The main content or instructions for the step.
+ * - size (string): The size of the modal. Can be 'small', 'medium', or 'large'. Default is 'small'.
+ * - anchor (string): A CSS selector for the element to which the modal should be anchored. If not provided, modal is centered.
+ * - position (string): The position of the modal relative to the anchor. Can be 'left', 'right', 'top', 'bottom', or 'center'. Default is 'center'.
+ * - offsetX (number): X-axis offset in pixels for fine-tuning the modal's position relative to the anchor.
+ * - offsetY (number): Y-axis offset in pixels for fine-tuning the modal's position relative to the anchor.
+ * - ctaLabel (string): If provided, a call-to-action button will be shown with this label.
+ * - ctaOnClick (function): Function to call when the CTA button is clicked. The tour will move to the next step after this is called.
+ * - showNext (boolean): If true, a "Next" button is shown. Default is true.
+ * - nextEventTarget (string): A CSS selector for an element. If provided, the tour will wait for the specified event on this element before moving to the next step.
+ * - nextEvent (string): The event name to listen for on nextEventTarget (e.g., 'click'). Default is 'click'.
+ * - glowTarget (string): A CSS selector for an element to highlight/glow during this step.
+ *
+ * Example:
+ * {
+ *   title: 'Welcome',
+ *   description: 'This is the first step.',
+ *   size: 'medium',
+ *   anchor: '.my-element',
+ *   position: 'bottom',
+ *   offsetX: 10,
+ *   offsetY: 0,
+ *   ctaLabel: 'Get Started',
+ *   ctaOnClick: () => { ... },
+ *   showNext: false,
+ *   nextEventTarget: '.my-button',
+ *   nextEvent: 'click',
+ *   glowTarget: '.my-element',
+ * }
+ */
+
 export const TOUR_STEPS = {
 	'design-system-welcome': {
 		steps: [
