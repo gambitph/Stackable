@@ -1,5 +1,5 @@
 .ugb-tour-modal--overlay {
-	z-index: 1000001;
+	z-index: 1000002;
 	background-color: transparent !important;
 	pointer-events: none;
 }
@@ -24,10 +24,10 @@
 	// Smoothly transition moving top & left.
 	transition:
 		max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-		left 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-		top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-		margin-left 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-		margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+		left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+		top 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+		margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+		margin-top 0.2s cubic-bezier(0.4, 0, 0.2, 1),
 		opacity 0.4s ease-in-out,
 		transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
 		box-shadow 0.2s ease-in-out;
@@ -163,13 +163,18 @@
 
 .ugb-tour-modal__glow {
 	position: absolute;
-	z-index: 999999;
+	z-index: 1000001;
 	box-shadow: 0 0 20px #f00069;
 	border-radius: 8px;
 	pointer-events: none;
 	animation: tour-modal-glow 0.7s infinite alternate;
 	mix-blend-mode: multiply;
 	will-change: transform, box-shadow;
+	transition: opacity 0.2s ease-in-out;
+	opacity: 1;
+	&.ugb-tour-modal__glow--hidden {
+		opacity: 0;
+	}
 }
 
 .ugb-tour-modal__glow--medium,

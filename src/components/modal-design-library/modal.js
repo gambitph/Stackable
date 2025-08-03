@@ -253,7 +253,7 @@ export const ModalDesignLibrary = props => {
 						/>
 						<BaseControl
 							label={ __( 'Background Scheme', i18n ) }
-							className="ugb-modal-design-library__color-scheme-label"
+							className="ugb-modal-design-library__color-scheme-label ugb-modal-design-library__background-scheme"
 						>
 							<Dropdown
 								className="ugb-modal-design-library__color-scheme-dropdown"

@@ -51,13 +51,22 @@ export const TOUR_STEPS = {
 		steps: [
 			{
 				title: '👋 ' + __( 'Welcome to Your Design System', i18n ),
-				description: __( 'We\'re excited to have you here. Let\'s get you started by opening the Design Library. Click the button above to get started.', i18n ),
+				description: __( 'Design once, apply everywhere! Set global styles so every block across your site looks and feels unified.', i18n ),
 				size: 'medium',
 				anchor: '.interface-interface-skeleton__sidebar',
 				position: 'left',
-				// nextEventTarget: '.ugb-insert-library-button',
-				glowTarget: '.interface-interface-skeleton__sidebar',
-			// showNext: false,
+				// glowTarget: '.interface-interface-skeleton__sidebar',
+			},
+			{
+				title: __( 'Use The Style Guide', i18n ),
+				description: __( 'You can use the Style Guide to see how your complete design system looks.', i18n ),
+				help: createInterpolateElement( __( 'Click the <strong>Style Guide</strong> button to continue.', i18n ), {
+					strong: <strong />,
+				} ),
+				anchor: '.ugb-modal-design-system__style-guide-button',
+				position: 'left',
+				nextEventTarget: '.ugb-modal-design-system__style-guide-button',
+				glowTarget: '.ugb-modal-design-system__style-guide-button',
 			},
 		],
 	},
@@ -101,14 +110,8 @@ export const TOUR_STEPS = {
 				offsetX: '-400px',
 			},
 			{
-				title: __( 'You Can Add More Than One', i18n ),
-				description: __( 'You can add more than one designs to your page. When you\'re done, you can the Add Designs button to insert. But let\'s see what else you can do.', i18n ),
-				size: 'small',
-				offsetX: '-400px',
-			},
-			{
 				title: __( 'Pick Styling Options', i18n ),
-				description: __( 'Turn on backgrounds, change color schemes, to customize the library in real-time.', i18n ),
+				description: __( 'Optionally, you can turn on backgrounds, change color schemes, to customize the library in real-time.', i18n ),
 				help: createInterpolateElement( __( 'Toggle the <strong>Section Background</strong> to continue.', i18n ), {
 					strong: <strong />,
 				} ),
@@ -116,17 +119,37 @@ export const TOUR_STEPS = {
 				position: 'right',
 				nextEventTarget: '.ugb-modal-design-library__enable-background',
 				glowTarget: '.ugb-modal-design-library__enable-background',
+				postStep: () => {
+					const el = document.querySelector( '.ugb-modal-design-library__enable-background input' )
+					// If the input is not checked, click the button.
+					if ( ! el.checked ) {
+						el.click()
+					}
+				},
 			},
 			{
-				title: __( 'Designs are Styled', i18n ),
-				description: __( 'Great! Your entire library now has a background. You can also change the other styling options next time.', i18n ),
-				anchor: '.ugb-modal-design-library__designs',
-				position: 'left',
-				offsetX: '200px',
+				title: __( 'Change Color Schemes', i18n ),
+				description: __( 'Awesome! Your designs now have a background. Try out the available color schemes below. You can also create your own later!', i18n ),
+				help: createInterpolateElement( __( 'Pick a <strong>Color Scheme</strong> to continue.', i18n ), {
+					strong: <strong />,
+				} ),
+				anchor: '.ugb-design-library__color-scheme-popover',
+				position: 'top',
+				nextEventTarget: '.ugb-design-library__color-scheme-popover .ugb-modal-design-library__stk-color-scheme',
+				glowTarget: '.ugb-design-library__color-scheme-popover .ugb-modal-design-library__stk-color-scheme:last-of-type',
+				preStep: () => {
+					// Let's make sure the background scheme is open.
+					if ( ! document.querySelector( '.ugb-design-library__color-scheme-popover' ) ) {
+						document.querySelector( '.ugb-modal-design-library__background-scheme .ugb-modal-design-library__stk-color-scheme' )?.click()
+					}
+				},
+				postStep: () => {
+					document.querySelector( '.ugb-design-library__color-scheme-popover .ugb-modal-design-library__stk-color-scheme:last-of-type' )?.click()
+				},
 			},
 			{
 				title: __( 'Patterns and Full-Pages', i18n ),
-				description: __( 'Aside from patterns, there are also full-page layouts in the library.', i18n ),
+				description: __( 'Great! Your entire library is now styled. Aside from patterns, there are also full-page layouts in the library.', i18n ),
 				help: createInterpolateElement( __( 'Click the <strong>Pages</strong> tab to continue.', i18n ), {
 					strong: <strong />,
 				} ),

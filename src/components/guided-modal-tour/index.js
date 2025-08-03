@@ -83,6 +83,7 @@ const ModalTour = props => {
 	const [ isVisibleDelayed, setIsVisibleDelayed ] = useState( false )
 	const [ forceRefresh, setForceRefresh ] = useState( 0 )
 	const modalRef = useRef( null )
+	const glowElementRef = useRef( null )
 
 	const {
 		title,
@@ -99,15 +100,55 @@ const ModalTour = props => {
 		nextEventTarget = null, // If provided, this is a selector for the element to trigger the next event if there is one.
 		nextEvent = 'click', // This is the event to listen for to trigger the next step.
 		glowTarget = null, // If provided, this is a selector for the element to glow when the step is active.
+		// eslint-disable-next-line no-unused-vars
+		preStep = NOOP, // If provided, this is a function to run before the step is shown.
+		// eslint-disable-next-line no-unused-vars
+		postStep = NOOP, // If provided, this is a function to run after the step is shown.
 	} = steps[ currentStep ]
+
+	// While the modal is visible, just keep on force refreshing the modal in an interval to make sure the modal is always in the correct position.
+	useEffect( () => {
+		let interval
+		if ( isVisible ) {
+			interval = setInterval( () => {
+				setForceRefresh( forceRefresh => forceRefresh + 1 )
+			}, 300 )
+		}
+		return () => clearInterval( interval )
+	}, [ isVisible, isVisibleDelayed ] )
 
 	// Create a stable function reference for the event listener
 	const handleNextEvent = useCallback( () => {
-		setCurrentStep( currentStep + 1 )
+		setCurrentStep( currentStep => {
+			setTimeout( () => {
+				steps[ currentStep ]?.postStep?.( currentStep )
+			}, 50 )
+			const nextStep = currentStep + 1
+			steps[ nextStep ]?.preStep?.( nextStep )
+			return nextStep
+		} )
 		setTimeout( () => {
-			setForceRefresh( forceRefresh + 1 )
+			setForceRefresh( forceRefresh => forceRefresh + 1 )
 		}, 50 )
-	}, [ currentStep ] )
+		setTimeout( () => {
+			setForceRefresh( forceRefresh => forceRefresh + 1 )
+		}, 350 )
+	}, [ currentStep, steps ] )
+
+	const handleBackEvent = useCallback( () => {
+		setCurrentStep( currentStep => {
+			// steps[ currentStep ]?.postStep?.( currentStep )
+			const nextStep = currentStep - 1
+			steps[ nextStep ]?.preStep?.( nextStep )
+			return nextStep
+		} )
+		setTimeout( () => {
+			setForceRefresh( forceRefresh => forceRefresh + 1 )
+		}, 50 )
+		setTimeout( () => {
+			setForceRefresh( forceRefresh => forceRefresh + 1 )
+		}, 350 )
+	}, [ currentStep, steps ] )
 
 	// Show modal after 1 second delay
 	useEffect( () => {
@@ -116,7 +157,7 @@ const ModalTour = props => {
 			setTimeout( () => {
 				setIsVisibleDelayed( true )
 			}, 150 )
-		}, 1500 )
+		}, 1050 )
 
 		return () => clearTimeout( timer )
 	}, [] )
@@ -162,6 +203,22 @@ const ModalTour = props => {
 		}
 	}, [ currentStep, nextEventTarget, nextEvent, handleNextEvent ] )
 
+	// Create the glow element while this component is mounted.
+	useEffect( () => {
+		// Create the element.
+		const element = document.createElement( 'div' )
+		element.className = `ugb-tour-modal__glow ugb-tour-modal__glow--hidden`
+		document.body.appendChild( element )
+
+		// Keep track of the element.
+		glowElementRef.current = element
+
+		return () => {
+			glowElementRef.current = null
+			element.remove()
+		}
+	}, [] )
+
 	// These are the X and Y offsets of the modal relative to the anchor. This will be
 	const [ modalOffsetX, modalOffsetY ] = useMemo( () => {
 		if ( ! modalRef.current ) {
@@ -178,6 +235,10 @@ const ModalTour = props => {
 		// Based on the anchor and position, calculate the X and Y offsets of the modal relative to the anchor.
 		// We have the modalRef.current which we can use to get the modal's bounding client rect.
 		const anchorRect = document.querySelector( anchor )?.getBoundingClientRect()
+
+		if ( ! anchorRect ) {
+			return defaultOffset
+		}
 
 		switch ( position ) {
 			case 'left':
@@ -216,21 +277,16 @@ const ModalTour = props => {
 						: 'small'
 
 				// Create the element.
-				const element = document.createElement( 'div' )
-				element.className = `ugb-tour-modal__glow ugb-tour-modal__glow--${ glowTargetSize }`
-				element.style.top = `${ targetRect.top - 8 }px`
-				element.style.left = `${ targetRect.left - 8 }px`
-				element.style.width = `${ targetRect.width + 16 }px`
-				element.style.height = `${ targetRect.height + 16 }px`
-				document.body.appendChild( element )
+				if ( glowElementRef.current ) {
+					glowElementRef.current.className = `ugb-tour-modal__glow ugb-tour-modal__glow--${ glowTargetSize }`
+					glowElementRef.current.style.top = `${ targetRect.top - 8 }px`
+					glowElementRef.current.style.left = `${ targetRect.left - 8 }px`
+					glowElementRef.current.style.width = `${ targetRect.width + 16 }px`
+					glowElementRef.current.style.height = `${ targetRect.height + 16 }px`
+				}
 			}
-		}
-		// Remove the element when the component unmounts or the step changes.
-		return () => {
-			if ( glowTarget ) {
-				const element = document.querySelector( '.ugb-tour-modal__glow' )
-				element?.remove()
-			}
+		} else if ( glowElementRef.current ) {
+			glowElementRef.current.className = `ugb-tour-modal__glow ugb-tour-modal__glow--hidden`
 		}
 	}, [ glowTarget, currentStep, isVisible, isVisibleDelayed, forceRefresh ] )
 
@@ -270,10 +326,7 @@ const ModalTour = props => {
 				<Button
 					onClick={ () => {
 						ctaOnClick()
-						setCurrentStep( currentStep + 1 )
-						setTimeout( () => {
-							setForceRefresh( forceRefresh + 1 )
-						}, 50 )
+						handleNextEvent()
 					} }
 					variant="primary"
 					className="ugb-tour-modal__cta"
@@ -285,17 +338,11 @@ const ModalTour = props => {
 				<Steps
 					numSteps={ steps.length }
 					currentStep={ currentStep }
-					onClickStep={ setCurrentStep }
 				/>
 				{ currentStep > 0 && (
 					<Button
 						variant="tertiary"
-						onClick={ () => {
-							setCurrentStep( currentStep - 1 )
-							setTimeout( () => {
-								setForceRefresh( forceRefresh + 1 )
-							}, 50 )
-						} }
+						onClick={ handleBackEvent }
 					>
 						<Icon icon={ arrowLeft } size={ 20 } />
 						&nbsp;
@@ -337,10 +384,7 @@ const ModalTour = props => {
 								}
 								onClose()
 							} else {
-								setCurrentStep( currentStep + 1 )
-								setTimeout( () => {
-									setForceRefresh( forceRefresh + 1 )
-								}, 100 )
+								handleNextEvent()
 							}
 						} }
 					>
@@ -364,7 +408,6 @@ const Steps = props => {
 	const {
 		numSteps = 3,
 		currentStep = 0,
-		// onClickStep = NOOP,
 	} = props
 
 	if ( numSteps === 1 ) {
@@ -382,7 +425,6 @@ const Steps = props => {
 				return (
 					<div
 						className={ classes }
-						// onClick={ () => onClickStep( index ) }
 						key={ index }
 					/>
 				)
