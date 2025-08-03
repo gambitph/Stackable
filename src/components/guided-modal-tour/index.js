@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { TOURS } from './tours'
+import { TOUR_STEPS } from './tour-steps'
 
 /**
  * External dependencies
@@ -33,7 +33,7 @@ const NOOP = () => {}
 const GuidedModalTour = props => {
 	const {
 		hasConfetti = true,
-		tourId = '', // This is the ID of the tour, this will be used to store the tour state in the database.
+		tourId = '', // This is the ID of the tour, this will be used to store the tour state in the database and to get the steps.
 	} = props
 
 	// On mount, check if the tour has been completed, if so, don't show it.
@@ -44,7 +44,7 @@ const GuidedModalTour = props => {
 	}
 
 	return <ModalTour
-		steps={ TOURS[ tourId ] }
+		steps={ TOUR_STEPS[ tourId ] }
 		hasConfetti={ hasConfetti }
 		onClose={ () => {
 			// TODO: Save the tour state to the database that we finished it.
@@ -96,8 +96,8 @@ const ModalTour = props => {
 			setIsVisible( true )
 			setTimeout( () => {
 				setIsVisibleDelayed( true )
-			}, 50 )
-		}, 1000 )
+			}, 150 )
+		}, 1500 )
 
 		return () => clearTimeout( timer )
 	}, [] )

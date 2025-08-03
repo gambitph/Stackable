@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 
-export const TOURS = {
+export const TOUR_STEPS = {
 	'editor-welcome': [
 		{
 			title: '👋 ' + __( 'Welcome to Stackable', i18n ),
