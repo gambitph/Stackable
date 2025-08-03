@@ -82,6 +82,7 @@ const ModalTour = props => {
 	const [ isVisible, setIsVisible ] = useState( false )
 	const [ isVisibleDelayed, setIsVisibleDelayed ] = useState( false )
 	const [ forceRefresh, setForceRefresh ] = useState( 0 )
+	const [ isTransitioning, setIsTransitioning ] = useState( false )
 	const modalRef = useRef( null )
 	const glowElementRef = useRef( null )
 
@@ -109,45 +110,79 @@ const ModalTour = props => {
 	// While the modal is visible, just keep on force refreshing the modal in an interval to make sure the modal is always in the correct position.
 	useEffect( () => {
 		let interval
-		if ( isVisible ) {
+		if ( isVisible && ! isTransitioning ) {
 			interval = setInterval( () => {
 				setForceRefresh( forceRefresh => forceRefresh + 1 )
-			}, 300 )
+			}, 500 )
 		}
 		return () => clearInterval( interval )
-	}, [ isVisible, isVisibleDelayed ] )
+	}, [ isVisible, isVisibleDelayed, isTransitioning ] )
 
 	// Create a stable function reference for the event listener
 	const handleNextEvent = useCallback( () => {
-		setCurrentStep( currentStep => {
-			setTimeout( () => {
-				steps[ currentStep ]?.postStep?.( currentStep )
-			}, 50 )
-			const nextStep = currentStep + 1
-			steps[ nextStep ]?.preStep?.( nextStep )
-			return nextStep
-		} )
+		// Hide modal during transition
+		setIsVisible( false )
+		setIsVisibleDelayed( false )
+		setIsTransitioning( true )
+
 		setTimeout( () => {
-			setForceRefresh( forceRefresh => forceRefresh + 1 )
-		}, 50 )
+			setCurrentStep( currentStep => {
+				setTimeout( () => {
+					steps[ currentStep ]?.postStep?.( currentStep )
+				}, 50 )
+				const nextStep = currentStep + 1
+				steps[ nextStep ]?.preStep?.( nextStep )
+				return nextStep
+			} )
+
+			// Show modal after 200ms delay
+			setTimeout( () => {
+				setIsVisible( true )
+				setTimeout( () => {
+					setIsVisibleDelayed( true )
+					setIsTransitioning( false )
+				}, 150 )
+			}, 200 )
+		}, 100 )
+
 		setTimeout( () => {
 			setForceRefresh( forceRefresh => forceRefresh + 1 )
 		}, 350 )
+		setTimeout( () => {
+			setForceRefresh( forceRefresh => forceRefresh + 1 )
+		}, 650 )
 	}, [ currentStep, steps ] )
 
 	const handleBackEvent = useCallback( () => {
-		setCurrentStep( currentStep => {
-			// steps[ currentStep ]?.postStep?.( currentStep )
-			const nextStep = currentStep - 1
-			steps[ nextStep ]?.preStep?.( nextStep )
-			return nextStep
-		} )
+		// Hide modal during transition
+		setIsVisible( false )
+		setIsVisibleDelayed( false )
+		setIsTransitioning( true )
+
 		setTimeout( () => {
-			setForceRefresh( forceRefresh => forceRefresh + 1 )
-		}, 50 )
+			setCurrentStep( currentStep => {
+				// steps[ currentStep ]?.postStep?.( currentStep )
+				const nextStep = currentStep - 1
+				steps[ nextStep ]?.preStep?.( nextStep )
+				return nextStep
+			} )
+
+			// Show modal after 200ms delay
+			setTimeout( () => {
+				setIsVisible( true )
+				setTimeout( () => {
+					setIsVisibleDelayed( true )
+					setIsTransitioning( false )
+				}, 150 )
+			}, 200 )
+		}, 100 )
+
 		setTimeout( () => {
 			setForceRefresh( forceRefresh => forceRefresh + 1 )
 		}, 350 )
+		setTimeout( () => {
+			setForceRefresh( forceRefresh => forceRefresh + 1 )
+		}, 650 )
 	}, [ currentStep, steps ] )
 
 	// Show modal after 1 second delay
@@ -261,7 +296,7 @@ const ModalTour = props => {
 			default:
 				return defaultOffset
 		}
-	}, [ anchor, position, modalRef.current, isVisible, isVisibleDelayed, forceRefresh ] )
+	}, [ anchor, position, modalRef.current, isVisible, isVisibleDelayed, isTransitioning, forceRefresh ] )
 
 	// If we have a glow target, create a new element in the body, placed on the top of the target, below the modal.
 	useEffect( () => {
@@ -288,7 +323,7 @@ const ModalTour = props => {
 		} else if ( glowElementRef.current ) {
 			glowElementRef.current.className = `ugb-tour-modal__glow ugb-tour-modal__glow--hidden`
 		}
-	}, [ glowTarget, currentStep, isVisible, isVisibleDelayed, forceRefresh ] )
+	}, [ glowTarget, currentStep, isVisible, isVisibleDelayed, isTransitioning, forceRefresh ] )
 
 	if ( ! isVisible ) {
 		return null
