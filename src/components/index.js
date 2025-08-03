@@ -57,6 +57,7 @@ export { default as TaxonomyControl } from './taxonomy-control'
 export { default as Tooltip } from './tooltip'
 export { default as BlockStyles } from './block-styles'
 export { default as GuidedModalTour } from './guided-modal-tour'
+export { default as StyleGuide, StyleGuidePopover } from './style-guide'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'

@@ -18,7 +18,7 @@ import {
 	isContentOnlyMode,
 	settings,
 } from 'stackable'
-import { GuidedModalTour } from '~stackable/components'
+import { GuidedModalTour, StyleGuidePopover } from '~stackable/components'
 import { currentUserHasCapability } from '~stackable/util'
 
 /** WordPress dependencies
@@ -30,7 +30,8 @@ import { useEffect, useState } from '@wordpress/element'
 import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
-import { PanelBody } from '@wordpress/components'
+import { Icon, layout as layoutIcon } from '@wordpress/icons'
+import { Button, PanelBody } from '@wordpress/components'
 
 // Action used to toggle the global settings panel.
 addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
@@ -47,6 +48,8 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 const GlobalSettings = () => {
 	const [ userCanManageOptions, setUserCanManageOptions ] = useState( false )
 	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id )
+
+	const [ isStyleGuideOpen, setIsStyleGuideOpen ] = useState( false )
 
 	useEffect( () => {
 		const checkCapabilities = async () => {
@@ -77,7 +80,18 @@ const GlobalSettings = () => {
 							{ /* &nbsp;
 							<a href="https://docs.wpstackable.com/article/465-how-to-style-the-different-block-hover-states?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">{ __( 'Learn more', i18n ) }</a> */ }
 						</p>
+						<Button
+							isSecondary
+							className="ugb-global-settings__preview-button"
+							onClick={ () => setIsStyleGuideOpen( isOpen => ! isOpen ) }
+							icon={ <Icon icon={ layoutIcon } /> }
+						>
+							{ isStyleGuideOpen ? __( 'Close Preview', i18n ) : __( 'Preview Design System', i18n ) }
+						</Button>
 					</PanelBody>
+					{ isStyleGuideOpen && (
+						<StyleGuidePopover onClose={ () => setIsStyleGuideOpen( false ) } />
+					) }
 					{ globalSettingsInspector }
 					<GuidedModalTour tourId="design-system-welcome" />
 				</PluginSidebar>

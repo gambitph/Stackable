@@ -125,6 +125,12 @@ const ModalTour = props => {
 		setIsVisibleDelayed( false )
 		setIsTransitioning( true )
 
+		// If at the last step, just close
+		if ( currentStep === steps.length - 1 ) {
+			onClose()
+			return
+		}
+
 		setTimeout( () => {
 			setCurrentStep( currentStep => {
 				setTimeout( () => {

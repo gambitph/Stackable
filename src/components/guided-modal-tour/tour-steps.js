@@ -60,14 +60,21 @@ export const TOUR_STEPS = {
 			{
 				title: __( 'Use The Style Guide', i18n ),
 				description: __( 'You can use the Style Guide to see how your complete design system looks.', i18n ),
-				help: createInterpolateElement( __( 'Click the <strong>Style Guide</strong> button to continue.', i18n ), {
+				help: createInterpolateElement( __( 'Click the <strong>Preview Design System</strong> button to continue.', i18n ), {
 					strong: <strong />,
 				} ),
-				anchor: '.ugb-modal-design-system__style-guide-button',
+				anchor: '.ugb-global-settings__preview-button',
 				position: 'left',
-				nextEventTarget: '.ugb-modal-design-system__style-guide-button',
-				glowTarget: '.ugb-modal-design-system__style-guide-button',
+				nextEventTarget: '.ugb-global-settings__preview-button',
+				glowTarget: '.ugb-global-settings__preview-button',
+				postStep: () => {
+					// Open the style guide if it's not open.
+					if ( ! document.querySelector( '.ugb-style-guide-popover' ) ) {
+						document.querySelector( '.ugb-global-settings__preview-button' )?.click()
+					}
+				},
 			},
+			// TODO: this is not yet finished
 		],
 	},
 	'editor-welcome': {
