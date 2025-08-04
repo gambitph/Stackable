@@ -30,10 +30,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			add_action( 'rest_api_init', array( $this, 'register_route' ) );
 
 			add_action( 'stackable_delete_design_library_cache', array( $this, 'delete_cache_v3' ) );
-
-			// DEV NOTE: Commenting this out for now since it is producing server load in the frontend.
-			// We can re-enable this when we have a better way to register block patterns.
-			// add_action( 'init', array( $this, 'register_design_pattern' ) );
 		}
 
 		public static function validate_string( $value, $request, $param ) {
