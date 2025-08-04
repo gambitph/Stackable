@@ -120,32 +120,34 @@ const LABELS = {
 	'font-pairs': {
 		title: __( 'Premium Typography', i18n ),
 		description: <ul>
-			<li>{ __( 'Access to 90+ curated font pairs', i18n ) }</li>
-			<li>{ __( 'Create your own custom font pairs', i18n ) }</li>
+			<li>{ __( 'Apply beautiful typography combinations instantly', i18n ) }</li>
+			<li>{ __( 'Access to 90+ curated font pairs for professional designs', i18n ) }</li>
+			<li>{ __( 'Create custom font combinations for your brand', i18n ) }</li>
 		</ul>,
 	},
 	'color-schemes': {
 		title: __( 'Premium Color Schemes', i18n ),
 		description: <ul>
+			<li>{ __( 'Define site-wide colors that apply to all blocks automatically', i18n ) }</li>
 			<li>{ __( 'Access to 50+ curated color scheme presets', i18n ) }</li>
-			<li>{ __( 'Create your own color schemes', i18n ) }</li>
-			<li>{ __( 'Set default color schemes for blocks and sections', i18n ) }</li>
-			<li>{ __( 'Streamline your design workflow', i18n ) }</li>
+			<li>{ __( 'Create custom color schemes for backgrounds, containers, and buttons', i18n ) }</li>
 		</ul>,
 	},
 	'preset-controls': {
 		title: __( 'Premium Preset Controls', i18n ),
 		description: <ul>
 			<li>{ __( 'Customize your own presets like small, medium, large & x-large', i18n ) }</li>
+			<li>{ __( 'Maintain structured, well-balanced designs effortlessly', i18n ) }</li>
 			<li>{ __( 'Use Global Typography sizes as presets', i18n ) }</li>
 		</ul>,
 	},
 	'global-block-styles': {
 		title: __( 'Global Block Styles', i18n ),
 		description: <ul>
-			<li>{ __( 'Create and use your own block styles', i18n ) }</li>
-			<li>{ __( 'Update your block styles', i18n ) }</li>
-			<li>{ __( 'Organize your custom block styles', i18n ) }</li>
+			<li>{ __( 'Design once, apply everywhere - no more copy-paste', i18n ) }</li>
+			<li>{ __( 'Class-based styling for leaner, faster websites', i18n ) }</li>
+			<li>{ __( 'Sync changes across all blocks instantly', i18n ) }</li>
+			<li>{ __( 'Override styles while keeping them synced', i18n ) }</li>
 		</ul>,
 	},
 }
