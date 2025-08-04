@@ -348,7 +348,7 @@ const SaveUpdateButtons = props => {
 					onClick={ () => onAddBlockStyle() }
 					size="small"
 				>
-					{ __( 'Save as New Style', i18n ) }
+					{ __( 'Save New Block Style', i18n ) }
 					{ ! isPro && <span className="stk-pulsating-circle" role="presentation" /> }
 				</Button>
 			</FlexItem>
