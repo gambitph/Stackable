@@ -56,10 +56,10 @@ const DesignLibraryList = props => {
 					return (
 						<DesignLibraryItem
 							key={ i }
-							template={ design.content }
+							template={ design.template }
 							plan={ design.plan }
 							designId={ design.designId }
-							label={ design.title }
+							label={ design.label }
 							category={ design.category }
 							containerScheme={ props.containerScheme }
 							backgroundScheme={ props.backgroundScheme }

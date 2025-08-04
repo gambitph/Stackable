@@ -28,9 +28,7 @@ import {
 	Spinner,
 	ToggleControl,
 } from '@wordpress/components'
-import {
-	useEffect, useRef, useState,
-} from '@wordpress/element'
+import { useEffect, useState } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { useBlockColorSchemes } from '~stackable/hooks'
 import ColorSchemePreview from '../color-scheme-preview'
@@ -69,8 +67,6 @@ export const ModalDesignLibrary = props => {
 	// The display designs are used to list the available designs the user can choose.
 	const [ displayDesigns, setDisplayDesigns ] = useState( [] )
 
-	const designLibrary = useRef( {} )
-
 	const [ enableBackground, setEnableBackground ] = useState( false )
 	const [ selectedContainerScheme, setSelectedContainerScheme ] = useState( '' )
 	const [ selectedBackgroundScheme, setSelectedBackgroundScheme ] = useState( '' )
@@ -93,9 +89,9 @@ export const ModalDesignLibrary = props => {
 
 		getDesigns( {
 			reset: doReset,
+			type: selectedTab,
 		} ).then( designs => {
-			designLibrary.current = designs.patterns
-			setSidebarDesigns( Object.values( designs[ selectedTab ] ) )
+			setSidebarDesigns( designs )
 		} ).finally( () => {
 			setDoReset( false )
 			setIsBusy( false )

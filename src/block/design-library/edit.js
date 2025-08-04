@@ -34,6 +34,7 @@ import {
 } from '@wordpress/components'
 import { useBlockProps } from '@wordpress/block-editor'
 import apiFetch from '@wordpress/api-fetch'
+
 const convertBlocksToArray = block => {
 	const innerBlocks = block.innerBlocks.map( innerBlock => convertBlocksToArray( innerBlock ) )
 	return [ block.name, block.attributes, innerBlocks ]
@@ -99,6 +100,7 @@ const Edit = props => {
 	const disabledBlocksRef = useRef( [] )
 	const callbackRef = useRef( null )
 	const blocksToRemoveRef = useRef( [] )
+	const insertIndexRef = useRef( -1 )
 
 	const blockProps = useBlockProps( {
 		className: 'ugb-design-library-block',
@@ -261,11 +263,23 @@ const Edit = props => {
 			}
 		}
 
-		if ( blocks.length ) {
+		if ( ! blocks.length ) {
+			return
+		}
+
+		if ( insertIndexRef.current !== -1 ) {
+			dispatch( 'core/block-editor' ).insertBlocks( blocks, insertIndexRef.current )
+		} else {
 			dispatch( 'core/block-editor' ).replaceBlocks( clientId, blocks )
-			if ( callbackRef.current ) {
-				callbackRef.current()
-			}
+		}
+
+		if ( blocksToRemoveRef.current.length ) {
+			dispatch( 'core/block-editor' ).removeBlocks( blocksToRemoveRef.current )
+			blocksToRemoveRef.current = []
+		}
+
+		if ( callbackRef.current ) {
+			callbackRef.current()
 		}
 	}
 
@@ -294,18 +308,10 @@ const Edit = props => {
 		}
 	}
 
-	const removeBlocks = () => {
-		if ( blocksToRemoveRef.current.length ) {
-			dispatch( 'core/block-editor' ).removeBlocks( blocksToRemoveRef.current )
-		}
-	}
-
 	const onClickSecondary = async () => {
-		removeBlocks()
 		await addDesigns( false )
 	}
 	const onClickPrimary = async () => {
-		removeBlocks()
 		await addDesigns( true )
 	}
 
@@ -363,10 +369,11 @@ const Edit = props => {
 						callbackRef.current = callback
 
 						if ( type === 'pages' ) {
-							const currentBlocks = select( 'core/block-editor' ).getBlockOrder().filter( id => id !== clientId )
+							const allBlocks = select( 'core/block-editor' ).getBlockOrder()
+							const blocksToRemove = allBlocks.filter( id => id !== clientId )
 
-							if ( currentBlocks.length ) {
-								blocksToRemoveRef.current = currentBlocks
+							if ( blocksToRemove.length ) {
+								blocksToRemoveRef.current = allBlocks
 								setIsDialogOpen( DIALOG_OPTIONS.REMOVE_BLOCKS )
 								return
 							}
@@ -394,33 +401,53 @@ const Edit = props => {
 									{ __( 'Adding this page design will replace all existing blocks in the editor. Are you sure you want to continue?', i18n ) }
 								</span>
 							</div>
-							<Flex justify="flex-end">
+							<Flex direction="column" align="flex-end">
+								<Button
+									__next40pxDefaultSize
+									variant="primary"
+									onClick={ () => {
+										insertIndexRef.current = 0
+										if ( disabledBlocksRef.current.size ) {
+											// Close this dialog and reopen after a while to show the notice for disabled blocks
+											// The existing blocks will be removed later
+											setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
+											setTimeout( () => setIsDialogOpen( DIALOG_OPTIONS.DISABLED_BLOCKS ), 500 )
+											return
+										}
+
+										addDesigns( false )
+									} }
+								>
+									{ __( 'Replace existing content with page design', i18n ) }
+								</Button>
 								<Button
 									__next40pxDefaultSize
 									variant="secondary"
+									onClick={ () => {
+										insertIndexRef.current = blocksToRemoveRef.current.length
+										// When appending the page design, only remove the design library block
+										blocksToRemoveRef.current = [ clientId ]
+
+										if ( disabledBlocksRef.current.size ) {
+											setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
+											setTimeout( () => setIsDialogOpen( DIALOG_OPTIONS.DISABLED_BLOCKS ), 500 )
+
+											return
+										}
+										addDesigns( false )
+									} }
+								>
+									{ __( 'Append page design only', i18n ) }
+								</Button>
+								<Button
+									__next40pxDefaultSize
+									variant="tertiary"
 									onClick={ () => {
 										blocksToRemoveRef.current = []
 										setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
 									 } }
 								>
 									{ __( 'Cancel', i18n ) }
-								</Button>
-								<Button
-									__next40pxDefaultSize
-									variant="primary"
-									onClick={ () => {
-										if ( disabledBlocksRef.current.size ) {
-											// Close this dialog and reopen after a while to show the notice for disabled blocks
-											// The existing blocks will be removed later
-											setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
-											setTimeout( () => setIsDialogOpen( DIALOG_OPTIONS.DISABLED_BLOCKS ), 500 )
-										} else {
-											removeBlocks()
-											addDesigns( false )
-										}
-									} }
-								>
-									{ __( 'Insert page design', i18n ) }
 								</Button>
 							</Flex>
 						</> }

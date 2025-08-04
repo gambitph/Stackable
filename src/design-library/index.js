@@ -1,34 +1,43 @@
 import apiFetch from '@wordpress/api-fetch'
 import { doAction, applyFilters } from '@wordpress/hooks'
 
-const LATEST_API_VERSION = 'v5'
+const LATEST_API_VERSION = 'v4'
 
-let designLibrary = null
-let designs = []
+let designLibrary = {}
+let designs = {}
+let pages = {}
 
 export const getBlockName = block => block.replace( /^[\w-]+\//, '' )
 
-export const fetchDesignLibrary = async ( forceReset = false, version = '' ) => {
-	if ( ! designLibrary || forceReset ) {
+export const fetchDesignLibrary = async ( forceReset = false, version = '', type = 'patterns' ) => {
+	if ( forceReset ) {
+		doAction( 'stackable.design-library.reset-cache' )
+		designLibrary = {}
+		designs = {}
+		pages = {}
+	}
+
+	if ( ( type === 'patterns' && ! Object.keys( designs ).length ) ||
+		( type === 'pages' && ! Object.keys( pages ).length )
+	) {
 		const results = await apiFetch( {
-			path: `/stackable/v2/design_library${ forceReset ? '/reset' : '' }`,
+			path: `/stackable/v2/design_library/${ type }${ forceReset ? '/reset' : '' }`,
 			method: 'GET',
 		} )
-		designLibrary = await results
+		const designsPerType = await results
 
-		designs = designLibrary[ LATEST_API_VERSION ]?.patterns
+		designLibrary[ type ] = designsPerType
 
-		// Reset all designs that we already have cached.
-		if ( forceReset ) {
-			doAction( 'stackable.design-library.reset-cache' )
-			designs = []
+		if ( type === 'patterns' ) {
+			designs = designsPerType[ LATEST_API_VERSION ]
+		} else {
+			pages = designsPerType[ LATEST_API_VERSION ]
 		}
 	}
 
-	return designLibrary[ version || LATEST_API_VERSION ]
+	return designLibrary[ type ][ version || LATEST_API_VERSION ]
 }
 
-// TODO: to remove
 export const fetchDesign = async designId => {
 	if ( ! designs[ designId ] ) {
 		await fetchDesignLibrary()
@@ -50,10 +59,11 @@ export const setDevModeDesignLibrary = async ( devMode = false ) => {
 
 export const getDesigns = async ( {
 	reset = false,
+	type = 'patterns',
 } ) => {
-	const designLibrary = await fetchDesignLibrary( reset )
+	const designLibrary = await fetchDesignLibrary( reset, LATEST_API_VERSION, type )
 
-	return designLibrary
+	return Object.values( designLibrary )
 }
 
 export const filterDesigns = async ( {
