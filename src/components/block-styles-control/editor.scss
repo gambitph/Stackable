@@ -84,7 +84,7 @@
 
 .ugb-block-styles-controls__popover {
 	.components-popover__content {
-		width: 350px !important;
+		width: 370px !important;
 	}
 	.components-button {
 		width: 100%;
@@ -109,6 +109,9 @@
 		overflow: hidden !important;
 		min-height: 0 !important;
 		max-height: 0 !important;
+		opacity: 0 !important;
+		margin: 0 !important;
+		padding: 0 !important;
 	}
 
 	.components-panel__body-description {
