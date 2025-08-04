@@ -68,6 +68,7 @@ const DesignLibraryList = props => {
 							selectedData={ selectedData }
 							onClick={ onSelectMulti }
 							scrollTop={ scrollTop }
+							selectedTab={ props.selectedTab }
 						/>
 					)
 				} ) }

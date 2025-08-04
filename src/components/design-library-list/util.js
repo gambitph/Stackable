@@ -94,19 +94,22 @@ export const addContainerScheme = (
 		} )
 	}
 
-	const newBlock = addScheme( [ block ] )[ 0 ]
+	const newBlock = addScheme( block )
 
 	return newBlock
 }
 
 export const addBackgroundScheme = (
-	block,
+	blocks,
 	enableBackground,
 	backgroundScheme,
+	addHasBackground = true
 ) => {
 	const addBackground = block => {
-		block.attributes.hasBackground = true
-		if ( backgroundScheme !== '' ) {
+		if ( addHasBackground ) {
+			block.attributes.hasBackground = true
+		}
+		if ( block.attributes.hasBackground && backgroundScheme !== '' ) {
 			block.attributes.backgroundColorScheme = backgroundScheme
 		}
 
@@ -127,19 +130,21 @@ export const addBackgroundScheme = (
 	}
 
 	if ( ! enableBackground ) {
-		return block
+		return blocks
 	}
 
-	const customAttributes = block.attributes.customAttributes
+	return blocks.map( block => {
+		const customAttributes = block.attributes.customAttributes
 
-	if ( ! customAttributes?.length ) {
-		block = addBackground( block )
+		if ( ! customAttributes?.length ) {
+			block = addBackground( block )
+			return block
+		}
+
+		getTargetBlock( block.innerBlocks )
+
 		return block
-	}
-
-	getTargetBlock( block.innerBlocks )
-
-	return block
+	} )
 }
 
 export const replacePlaceholders = ( block, category ) => {
@@ -173,12 +178,12 @@ const retrieveAttributes = ( blockName, hasNoInnerBlocks, content ) => {
 	return parsedAttrs
 }
 
-export const parseDisabledBlocks = parsedBlock => {
+export const parseDisabledBlocks = parsedBlocks => {
 	const disabledBlocks = settings.stackable_block_states || []
 	const blocksForSubstitution = new Set()
 
 	if ( Array.isArray( disabledBlocks ) && ! disabledBlocks.length ) {
-		return { block: parsedBlock, blocksForSubstitution }
+		return { blocks: parsedBlocks, blocksForSubstitution }
 	}
 
 	const addOriginalAttributes = blocks => {
@@ -197,8 +202,8 @@ export const parseDisabledBlocks = parsedBlock => {
 		} )
 	}
 
-	const block = addOriginalAttributes( [ parsedBlock ] )[ 0 ]
-	return { block, blocksForSubstitution }
+	const blocks = addOriginalAttributes( parsedBlocks )
+	return { blocks, blocksForSubstitution }
 }
 
 const IMAGE_STORAGE = cdnUrl.replace( /\/$/, '' ) + '/library-v4/images/'
@@ -259,6 +264,16 @@ export const addPlaceholderForPostsBlock = ( content, postsPlaceholder, defaultV
 // Additional styles for blocks to render properly in the preview
 export const getAdditionalStylesForPreview = () => {
 	let styles = ''
+
+	// Creates a Block Formatting Context (BFC), ensuring it contains the margin of its children
+	styles += 'body { display: flow-root; }'
+
+	styles += 'body { --stk-block-wide-width: 1000px; max-height: 1500px;}'
+
+	// Enable smooth scrolling for pages tab hover effect
+	styles += 'body { scroll-behavior: smooth; overflow-y: auto; }'
+
+	styles += '::-webkit-scrollbar { width: 0; }'
 
 	// Make sure count up block numbers are visible
 	styles += `.stk-block-count-up__text:not(.stk--count-up-active) { opacity: 1; }`

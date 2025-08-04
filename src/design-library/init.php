@@ -21,7 +21,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 * The current version of the API we're using.
 		 * @var String
 		 */
-		const API_VERSION = 'v4';
+		const API_VERSION = 'v5';
 
 		/**
 		 * Constructor
@@ -91,6 +91,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		public function delete_cache_v3() {
 			// Delete design library.
 			delete_transient( 'stackable_get_design_library' );
+			delete_transient( 'stackable_get_design_library_json_v4' );
+			delete_transient( 'stackable_get_design_library_v4' );
 
 			// Delete designs.
 			global $wpdb;
@@ -107,8 +109,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 		public function delete_cache() {
 			// Delete design library.
-			delete_transient( 'stackable_get_design_library_json_v4' );
-			delete_transient( 'stackable_get_design_library_v4' );
+			delete_transient( 'stackable_get_design_library_v5' );
 
 			do_action( 'stackable_delete_design_library_cache' );
 		}
@@ -224,7 +225,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		}
 
 		public function get_design_library_from_cloud() {
-			$designs = get_transient( 'stackable_get_design_library_v4' );
+			$designs = get_transient( 'stackable_get_design_library_v5' );
 
 			// Fetch designs.
 			if ( empty( $designs ) ) {
@@ -241,19 +242,22 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					);
 				} else {
 					$content_body = wp_remote_retrieve_body( $response );
-					$designs = apply_filters( 'stackable_design_library_retreive_body', $content_body );
-					$designs = json_decode( $designs, true );
+					$library = apply_filters( 'stackable_design_library_retreive_body', $content_body );
+					$library = json_decode( $library, true );
 
 					$content = array();
-					foreach ( $designs as $design_id => $design ) {
-						$content[ $design_id ] = array(
-							'title'			=> $design[ 'label' ],
-							'content' 		=> $design[ 'template' ],
-							'category'	 	=> $design[ 'category' ],
-							'description'	=> $design[ 'description' ],
-							'plan'			=> $design[ 'plan' ],
-							'designId'		=> $design_id
-						);
+					foreach( $library as $type => $design_patterns ) {
+						$content[ $type ] = array();
+						foreach ( $design_patterns as $design_id => $design ) {
+							$content[ $type ][ $design_id ] = array(
+								'title'			=> $design[ 'label' ],
+								'content' 		=> $design[ 'template' ],
+								'category'	 	=> $design[ 'category' ],
+								'description'	=> $design[ 'description' ],
+								'plan'			=> $design[ 'plan' ],
+								'designId'		=> $design_id
+							);
+						}
 					}
 
 					// Add our error message so we can see it in the network tab.
@@ -268,11 +272,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				// We add the latest designs in the `v4` area.
 				$designs[ self::API_VERSION ] = $content;
 
-				// Allow deprecated code to fetch other designs
-				$designs = apply_filters( 'stackable_fetch_design_library', $designs );
-
 				// Cache results.
-				set_transient( 'stackable_get_design_library_v4', $designs, 7 * DAY_IN_SECONDS );
+				set_transient( 'stackable_get_design_library_v5', $designs, 7 * DAY_IN_SECONDS );
 			}
 
 			return apply_filters( 'stackable_design_library', $designs );

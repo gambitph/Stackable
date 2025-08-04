@@ -1,7 +1,7 @@
 import apiFetch from '@wordpress/api-fetch'
 import { doAction, applyFilters } from '@wordpress/hooks'
 
-const LATEST_API_VERSION = 'v4'
+const LATEST_API_VERSION = 'v5'
 
 let designLibrary = null
 let designs = []
@@ -16,6 +16,8 @@ export const fetchDesignLibrary = async ( forceReset = false, version = '' ) => 
 		} )
 		designLibrary = await results
 
+		designs = designLibrary[ LATEST_API_VERSION ]?.patterns
+
 		// Reset all designs that we already have cached.
 		if ( forceReset ) {
 			doAction( 'stackable.design-library.reset-cache' )
@@ -27,15 +29,11 @@ export const fetchDesignLibrary = async ( forceReset = false, version = '' ) => 
 }
 
 // TODO: to remove
-export const fetchDesign = async ( designId, version = '' ) => {
+export const fetchDesign = async designId => {
 	if ( ! designs[ designId ] ) {
-		const results = await apiFetch( {
-			path: `/stackable/v2/design/${ version || LATEST_API_VERSION }/${ designId }`,
-			method: 'GET',
-		} )
-		designs[ designId ] = await results
+		await fetchDesignLibrary()
 	}
-	return designs[ designId ]
+	return designs[ designId ] || {}
 }
 
 // TODO: to remove
@@ -53,8 +51,9 @@ export const setDevModeDesignLibrary = async ( devMode = false ) => {
 export const getDesigns = async ( {
 	reset = false,
 } ) => {
-	const library = Object.values( await fetchDesignLibrary( reset ) )
-	return library
+	const designLibrary = await fetchDesignLibrary( reset )
+
+	return designLibrary
 }
 
 export const filterDesigns = async ( {
