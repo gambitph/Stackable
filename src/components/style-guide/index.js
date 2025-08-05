@@ -23,7 +23,11 @@ import { createBlock, serialize } from '@wordpress/blocks'
 export { default as StyleGuidePopover } from './popover'
 
 // TODO: This is not yet finished
-const StyleGuide = () => {
+const StyleGuide = props => {
+	const { designSystem } = props
+
+	const { colors } = designSystem
+
 	const styleGuideRef = useRef( null )
 
 	return (
@@ -35,41 +39,14 @@ const StyleGuide = () => {
 					<h1 className="ugb-style-guide__section-title">{ __( 'Colors', i18n ) }</h1>
 					<h2 className="ugb-style-guide__section-subheading">{ __( 'Color Palette', i18n ) }</h2>
 					<div className="ugb-style-guide__columns ugb-style-guide__colors">
-						<div className="ugb-style-guide__column" style={ { backgroundColor: '#f00069' } }>
-							<div className="ugb-style-guide__color-label ugb-style-guide__label" style={ { color: isDarkColor( '#f00069' ) ? '#fff' : '#000' } }>
-								#F00069
+						{ colors.map( ( color, key ) => {
+							return <div key={ key } className="ugb-style-guide__column" style={ { backgroundColor: color.color } }>
+								<div className="ugb-style-guide__color-label ugb-style-guide__label" style={ { color: isDarkColor( color.color ) ? '#fff' : '#000' } }>
+									<p> { color.name } </p>
+									<p> { color.color } </p>
+								</div>
 							</div>
-						</div>
-						<div className="ugb-style-guide__column" style={ { backgroundColor: '#111' } }>
-							<div className="ugb-style-guide__color-label ugb-style-guide__label" style={ { color: isDarkColor( '#111' ) ? '#fff' : '#000' } }>
-								#111111
-							</div>
-						</div>
-						<div className="ugb-style-guide__column" style={ { backgroundColor: '#222' } }>
-							<div className="ugb-style-guide__color-label ugb-style-guide__label" style={ { color: isDarkColor( '#222' ) ? '#fff' : '#000' } }>
-								#222222
-							</div>
-						</div>
-						<div className="ugb-style-guide__column" style={ { backgroundColor: '#333' } }>
-							<div className="ugb-style-guide__color-label ugb-style-guide__label" style={ { color: isDarkColor( '#333' ) ? '#fff' : '#000' } }>
-								#333333
-							</div>
-						</div>
-						<div className="ugb-style-guide__column" style={ { backgroundColor: '#444' } }>
-							<div className="ugb-style-guide__color-label ugb-style-guide__label" style={ { color: isDarkColor( '#444' ) ? '#fff' : '#000' } }>
-								#444444
-							</div>
-						</div>
-						<div className="ugb-style-guide__column" style={ { backgroundColor: '#555' } }>
-							<div className="ugb-style-guide__color-label ugb-style-guide__label" style={ { color: isDarkColor( '#555' ) ? '#fff' : '#000' } }>
-								#555555
-							</div>
-						</div>
-						<div className="ugb-style-guide__column" style={ { backgroundColor: '#666' } }>
-							<div className="ugb-style-guide__color-label ugb-style-guide__label" style={ { color: isDarkColor( '#666' ) ? '#fff' : '#000' } }>
-								#666666
-							</div>
-						</div>
+						} ) }
 					</div>
 
 					<h2 className="ugb-style-guide__section-subheading">{ __( 'Color Schemes', i18n ) }</h2>

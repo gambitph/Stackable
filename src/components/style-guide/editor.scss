@@ -36,6 +36,15 @@
 		font-size: 1em;
 		font-weight: 500;
 		line-height: 1;
+
+		p:first-child {
+			margin: 0;
+		}
+
+		p:last-child {
+			margin-top: 4px;
+			margin-bottom: 0;
+		}
 	}
 
 	.ugb-style-guide__colors {
