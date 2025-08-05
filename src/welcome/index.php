@@ -98,11 +98,19 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			$contact_url = admin_url( 'options-general.php?page=stackable-contact' );
 
 			// If network activated and in multisite, the accounts page is in a different URL.
-			if ( is_multisite() && STACKABLE_BUILD !== 'free' && sugb_fs()->is_network_active() ) {
-				$account_url = str_replace( 'options-general.php', 'admin.php', $account_url );
-				$contact_url = admin_url( 'network/admin.php?page=stackable-contact' );
-				if ( ! is_main_site() ) {
-					$display_account_tab = false;
+			if ( STACKABLE_BUILD === 'free' ) {
+				$display_account_tab = false;
+				$display_contact_tab = false;
+			} else {
+				if ( is_multisite() && sugb_fs()->is_network_active() ) {
+					$account_url = str_replace( 'options-general.php', 'admin.php', $account_url );
+					$contact_url = admin_url( 'network/admin.php?page=stackable-contact' );
+					if ( ! is_main_site() ) {
+						$display_account_tab = false;
+						$display_contact_tab = false;
+					}
+				}
+				if ( sugb_fs()->is_whitelabeled() ) {
 					$display_contact_tab = false;
 				}
 			}
@@ -136,7 +144,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				<a class="s-tab" href="https://docs.wpstackable.com" target="_docs">
 				<span><?php _e( 'Documentation', STACKABLE_I18N ) ?></span></a>
 
-				<?php if ( $display_contact_tab ) { ?>
+				<?php if ( $display_contact_tab && STACKABLE_BUILD !== 'free' ) { ?>
 					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-contact' ? 's-active' : '' ?>"
 						href="<?php echo $contact_url ?>">
 						<span><?php _e( 'Contact Us', STACKABLE_I18N ) ?></span>
@@ -311,7 +319,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		 * Redirecting right away will not work.
 		 */
 		public static function start_redirect_to_welcome_page( $network_wide ) {
-			if ( ! $network_wide ) {
+			if ( ! $network_wide && ! defined( 'STACKABLE_NO_WELCOME_REDIRECT' ) ) {
 				update_option( 'stackable_redirect_to_welcome', '1' );
 			}
 		}
