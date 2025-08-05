@@ -270,8 +270,8 @@ export const getAdditionalStylesForPreview = () => {
 
 	styles += 'body { --stk-block-wide-width: 1000px; max-height: 1500px;}'
 
-	// Enable smooth scrolling for pages tab hover effect
-	styles += 'body { scroll-behavior: smooth; overflow-y: auto; }'
+	// Use 'auto' for scroll behavior. Let the scroll interval handle the speed.
+	styles += 'body { scroll-behavior: auto; overflow-y: auto; }'
 
 	styles += '::-webkit-scrollbar { width: 0; }'
 

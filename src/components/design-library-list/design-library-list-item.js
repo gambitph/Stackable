@@ -68,6 +68,10 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 	const blocksForSubstitutionRef = useRef( false )
 	const hasBackgroundTargetRef = useRef( false )
 	const initialRenderRef = useRef( null )
+	const scrollPositionRef = useRef( 0 )
+	const shadowBodySizeRef = useRef( null )
+
+	const scrollIntervalRef = useRef( null )
 
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 	const editorDom = getEditorDom()
@@ -161,6 +165,14 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			}
 
 			setTimeout( () => setCardHeight( newCardHeight ), 500 )
+
+			if ( shadowBodySizeRef.current === null ) {
+				shadowBodySizeRef.current = {
+					clientHeight: shadowBody.clientHeight,
+					scrollHeight: shadowBody.scrollHeight,
+					maxScrollTop: shadowBody.scrollHeight - shadowBody.clientHeight
+				}
+			}
 		}
 	}
 
@@ -202,6 +214,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			blocks={ cleanedBlock }
 			adjustScale={ adjustScale }
 			enableBackground={ enableBackground }
+			onScroll={ onScroll }
 		/> )
 	}
 
@@ -352,12 +365,65 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		onClick( designId, category, parsedBlocks, blocksForSubstitutionRef.current, selectedPreviewSize )
 	}
 
+	const onMouseOver = () => {
+		const shadowDomBody = hostRef?.current?.shadowRoot.querySelector( 'body' )
+		if ( shadowDomBody && shadowBodySizeRef.current ) {
+			setTimeout( () => {
+				if ( scrollIntervalRef.current ) {
+					clearInterval( scrollIntervalRef.current )
+				}
+
+				if ( scrollPositionRef.current === -1 ) {
+					scrollPositionRef.current = shadowDomBody.scrollTop
+				}
+
+				scrollIntervalRef.current = setInterval( () => {
+					console.log( 'scrolling' )
+					const scrollDifference = shadowBodySizeRef.current.maxScrollTop - scrollPositionRef.current
+					const shouldScroll = shadowBodySizeRef.current.maxScrollTop - scrollPositionRef.current > 0
+
+					if ( shadowDomBody && shouldScroll ) {
+						const scrollBy = scrollDifference >= 20 ? 20 : scrollDifference
+						shadowDomBody.scrollTop = scrollPositionRef.current + scrollBy
+						scrollPositionRef.current += scrollBy
+					} else {
+						clearInterval( scrollIntervalRef.current )
+					}
+				}, 20 )
+			}, 500 )
+		}
+	}
+
+	const onMouseOut = () => {
+		if ( scrollPositionRef.current <= 0 ) {
+			return
+		}
+
+		const shadowDomBody = hostRef?.current?.shadowRoot.querySelector( 'body' )
+		if ( shadowDomBody ) {
+			clearInterval( scrollIntervalRef.current )
+			shadowDomBody.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			})
+			scrollPositionRef.current = -1
+		}
+	}
+
+	const onScroll = () => {
+		if ( scrollIntervalRef.current ) {
+			clearInterval( scrollIntervalRef.current )
+		}
+	}
+
 	return (
 		<button
 			className={ mainClasses }
 			ref={ ref }
 			data-stk-design-id={ props.designId }
 			onClick={ () => selectedTab === 'patterns' ? onClickDesign() : {} }
+			onMouseOut={ () => selectedTab === 'patterns' ? {} : onMouseOut() }
+			onMouseOver={ () => selectedTab === 'patterns' ? {} : onMouseOver() }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
 			<div style={ { position: 'relative' } } className={ `${ getDesignPreviewSize() > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
@@ -431,7 +497,7 @@ DesignLibraryListItem.defaultProps = {
 export default DesignLibraryListItem
 
 const DesignPreview = ( {
-	blocks, adjustScale, enableBackground,
+	blocks, adjustScale, enableBackground, onScroll
 } ) => {
 	useEffect( () => {
 		// Adjust scale if the background was toggled
@@ -444,6 +510,7 @@ const DesignPreview = ( {
 	return (
 		<body
 			className={ shadowBodyClasses }
+			onWheel={ () => onScroll() }
 		>
 			<div
 				dangerouslySetInnerHTML={ { __html: blocks } }
