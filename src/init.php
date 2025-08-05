@@ -300,7 +300,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				// wp-util for wp.ajax.
 				// wp-plugins & wp-edit-post for Gutenberg plugins.
 				array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api', 'lodash' ),
-				STACKABLE_VERSION
+				STACKABLE_VERSION,
+				true
 			);
 
 			// Backend editor scripts: blocks.
@@ -309,7 +310,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
 				// Depend on the window.stk API.
 				apply_filters( 'stackable_editor_js_dependencies', array( 'ugb-stk' ) ),
-				STACKABLE_VERSION
+				STACKABLE_VERSION,
+				true // Load in footer to avoid render blocking
 			);
 
 			// Add translations.
