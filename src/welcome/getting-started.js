@@ -6,11 +6,20 @@ import SVGTutorialsIcon from './images/tutorials.svg'
 import SVGDocsIcon from './images/docs.svg'
 import SVGCommunityIcon from './images/user.svg'
 import SVGArrowUpRightIcon from './images/arrow-up-right.svg'
+import SVGDivider from './images/divider.svg'
+import SVGQuickButtonsArrow from './images/quick-buttons-arrow.svg'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import {
+	Icon,
+	addTemplate as addTemplateIcon,
+	styles as stylesIcon,
+	scheduled as scheduledIcon,
+	brush as brushIcon,
+} from '@wordpress/icons'
 
 /**
  * External dependencies
@@ -102,22 +111,98 @@ const EssentialsCard = ( {
 
 export const GettingStarted = () => {
 	return <>
+
 		<div className="s-body">
-
 			<div className="s-getting-started__centered">
-				<h2 className="title"> { __( 'Unleash the Full Potential of the WordPress Block Editor by Turning It into a Page Builder', i18n ) } </h2>
-				<p className="subtitle">{ __( 'Learn the essentials in just a few minutes by watching this video. Scroll down to see more quick tutorials.', i18n ) } </p>
+				<div className="tag">{ __( 'Welcome to Stackable', i18n ) }</div>
+				{ /* <h2 className="title">{ __( 'Let\'s build something amazing!', i18n ) }</h2> */ }
+				<h2 className="title">{ __( 'Welcome to Your New Block Editor Workflow!', i18n ) }</h2>
+			</div>
+			<div className="s-getting-started__quick-start-wrapper">
 
-				<div className="s-video-wrapper s-getting-started-video">
-					<iframe className="s-video" src="https://www.youtube.com/embed/WP2LHxGulps" title={ __( 'Getting Started', i18n ) } allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowFullScreen></iframe>
+				<div className="s-quick-buttons-wrapper">
+					<div className="s-quick-buttons-arrow">
+						<SVGQuickButtonsArrow />
+						<span>{ __( 'Quick Start', i18n ) }</span>
+					</div>
+					<div className="s-card">
+						<div className="s-quick-button-icon">
+							<Icon icon={ addTemplateIcon } />
+						</div>
+						<div className="s-quick-button-description">
+							<h3>{ __( 'Build Pages in Seconds', i18n ) }</h3>
+							<p>{ __( 'Jump straight into our Design Library and insert polished, pre-built sections — no more blank-page overwhelm.', i18n ) }</p>
+						</div>
+						<div className="s-quick-button-button">
+							<a href="/wp-admin/post-new.php?post_type=page&tour=design-library-welcome" className="s-button s-secondary-button uppercase">
+								{ __( 'Build Now', i18n ) }
+							</a>
+						</div>
+					</div>
+
+					<div className="s-card">
+						<div className="s-quick-button-icon">
+							<Icon icon={ stylesIcon } />
+						</div>
+						<div className="s-quick-button-description">
+							<h3>{ __( 'Apply Global Styles Instantly', i18n ) }</h3>
+							<p>{ __( 'Set your brand\'s colors, fonts, and spacing once in the Design System — every Stackable block updates automatically.', i18n ) }</p>
+						</div>
+						<div className="s-quick-button-button">
+							<a href="/wp-admin/post-new.php?post_type=page&tour=design-system-welcome" className="s-button s-secondary-button uppercase">
+								{ __( 'Try Now', i18n ) }
+							</a>
+						</div>
+					</div>
+
+					{ /* TODO: Hide this for now */ }
+					<div className="s-card" style={ { display: 'none' } }>
+						<div className="s-quick-button-icon">
+							<Icon icon={ scheduledIcon } />
+						</div>
+						<div className="s-quick-button-description">
+							<h3>{ __( 'Start with a Complete Site Kit', i18n ) }</h3>
+							<p>{ __( 'Pick a ready-made website template to kickstart your project — fully built layouts and styles, just swap in your content.', i18n ) }</p>
+						</div>
+						<div className="s-quick-button-button">
+							<a href="/wp-admin/post-new.php?post_type=page" className="s-button s-secondary-button uppercase">
+								{ __( 'Select Kit', i18n ) }
+							</a>
+						</div>
+					</div>
+
+					{ /* TODO: Hide this for now */ }
+					<div className="s-card" style={ { display: 'none' } }>
+						<div className="s-quick-button-icon">
+							<Icon icon={ brushIcon } />
+						</div>
+						<div className="s-quick-button-description">
+							<h3>{ __( 'Pre-set Design Systems', i18n ) }</h3>
+							<p>{ __( 'Browse curated Design System presets — apply a professional look instantly without building from scratch.', i18n ) }</p>
+						</div>
+						<div className="s-quick-button-button">
+							<a href="/wp-admin/post-new.php?post_type=page" className="s-button s-secondary-button uppercase">
+								{ __( 'Pick A System', i18n ) }
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div className="s-button-container"><a href="/wp-admin/post-new.php?post_type=page" target="_new" className="s-button s-secondary-button uppercase">
-					{ __( 'Create a new page', i18n ) }
-				</a></div>
+				<div className="s-getting-started-video s-card">
+					<div className="s-video-wrapper s-card-top">
+						<iframe className="s-video" src="https://www.youtube.com/embed/WP2LHxGulps" title={ __( 'Getting Started', i18n ) } allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowFullScreen></iframe>
+					</div>
+					<h3>{ __( 'Getting Started with Stackable', i18n ) }</h3>
+					<p>{ __( 'Watch this video to get started with Stackable in within 5 minutes.', i18n ) }</p>
+				</div>
 			</div>
 
+			<SVGDivider className="s-divider" />
+
 			<div className="s-getting-started__section">
+				<div className="s-card-header">
+					<h2> { __( 'Resources', i18n ) } </h2>
+				</div>
 				<div className="s-card-container s-card-general">
 					{ generalProps.map( ( item, key ) => {
 						return <GeneralCard { ...item } key={ key } />
@@ -132,17 +217,6 @@ export const GettingStarted = () => {
 					{ essentialsProps.map( ( item, key ) => {
 						return <EssentialsCard { ...item } key={ key } />
 					} ) }
-				</div>
-			</div>
-
-			<div className="s-getting-started__footer-banner">
-				<div className="s-banner-wrapper">
-					<div className="s-banner-content">
-						<h2> { __( 'Check out our library of tutorials and guides', i18n ) } </h2>
-					</div>
-					<div className="s-button-container"><a href="https://wpstackable.com/learn/?utm_source=plugin&utm_medium=getting_started&utm_campaign=tutorial_button" target="_blank" rel="noreferrer" className="s-button s-secondary-button">
-						{ __( 'Go to Stackable Learn', i18n ) }
-					</a></div>
 				</div>
 			</div>
 		</div>

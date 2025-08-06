@@ -2,32 +2,53 @@
 * Styles used by the Getting Started section.
 */
 
-@import "getting-started-banner-bg";
+@mixin s-shadow {
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+	transition: all 0.3s ease-in-out;
+	&:hover {
+		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+	}
+}
+
+.settings_page_stackable-getting-started {
+	.s-body {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+}
 
 .s-getting-started {
-	background-color: #fff;
+	background-color: #f0f0f1;
 	overflow-x: auto;
 
 	.s-getting-started__centered {
-		margin-bottom: 64px !important;
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
 	}
 
-	.title,
-	.subtitle {
+	.tag {
 		text-align: center;
+		color: #f00069;
+		border: 1px solid #f0006933;
+		padding: 4px 16px;
+		border-radius: 30px;
+		background-color: #f0006933;
 	}
 
 	.title {
-		margin: 8px;
-		margin-bottom: 24px;
-		font-weight: 600;
+		font-weight: 700;
 		font-size: 32px;
 		line-height: 1.2;
-	}
+		margin: 0;
 
-	.subtitle {
-		font-weight: 300;
-		margin-bottom: 24px;
+		span {
+			background-image: linear-gradient(30deg, #f00069, #d000ff);
+			-webkit-background-clip: text;
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+			color: transparent;
+		}
 	}
 
 	.s-video-wrapper {
@@ -36,7 +57,7 @@
 		margin-bottom: 24px;
 
 		&.s-card-top {
-			margin: -20px -20px 20px;
+			margin: -1.5em -1.5em 1.5em;
 		}
 
 		.s-video {
@@ -45,7 +66,6 @@
 		}
 
 		&.s-getting-started-video .s-video {
-			width: 700px;
 			max-width: 100%;
 			min-width: unset;
 		}
@@ -58,7 +78,7 @@
 	}
 
 	.s-secondary-button {
-		background: var(--stk-welcome-secondary) !important;
+		background: var(--stk-welcome-primary) !important;
 		border-radius: 4px;
 		font-weight: 600;
 		transition: all 0.1s ease-in-out;
@@ -88,9 +108,10 @@
 
 	.s-card-header {
 		h2 {
-			font-size: 25px;
-			font-weight: 500;
-			padding-top: 25px;
+			margin: 2em 0 1em;
+			font-weight: 700;
+			font-size: 32px;
+			line-height: 1.2;
 		}
 
 		div {
@@ -119,11 +140,7 @@
 		max-width: 1200px;
 
 		&.s-card-general .s-card {
-			box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-			transition: 0.3s;
-			&:hover {
-				box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-			}
+			@include s-shadow;
 		}
 
 		.s-card-link {
@@ -132,101 +149,79 @@
 			cursor: pointer;
 			text-decoration: none;
 		}
-
 		.s-card {
-			padding: 20px;
-			border-radius: 5px;
-			border: 1px solid #1018280f;
-			display: flex;
-			flex-direction: column;
 			width: calc(30% - 32px);
-
-			.s-card-title {
-				margin-bottom: 16px;
-			}
-			.s-card-subtitle {
-				margin-bottom: 0;
-			}
-
-			.s-card-title,
-			.s-card-subtitle {
-				margin-top: 0;
-			}
-
-			.s-video-wrapper {
-				align-items: center;
-			}
-
-			.s-icon-wrapper {
-				border: 1px solid #eaecf0;
-				border-radius: 8px;
-				padding: 10px;
-				display: flex;
-				align-items: center;
-				max-width: fit-content;
-				margin-bottom: 20px;
-			}
-
-			.s-bottom-icon-wrapper {
-				display: flex;
-				justify-content: flex-end;
-			}
-
-			svg {
-				height: 24px;
-				width: 24px;
-			}
-
 		}
 	}
 
-	.s-getting-started__footer-banner {
-		position: relative;
-		left: 0;
-		right: 0;
-		margin: auto;
-		margin-bottom: 56px;
-		background-image: url($--s-banner-bg);
-		background-size: cover;
-		background-position: center;
-		border-radius: 8px;
+	.s-card {
+		padding: 1.5em;
+		display: flex;
+		flex-direction: column;
+		border-radius: 16px;
+		@include s-shadow;
+		background: #fff;
+		overflow: hidden;
 
-		.s-banner-wrapper {
-			padding: 36px 80px;
-			display: flex;
-			justify-content: space-between;
-			z-index: 1;
-			position: relative;
-
-			.s-banner-content {
-				max-width: 350px;
-				color: #fff;
-				font-weight: 300;
-
-				h2 {
-					font-size: 32px;
-					font-weight: 700;
-					color: #fff;
-					line-height: 32px;
-					margin: 0;
-				}
-			}
-
-			.s-button-container {
-				align-items: flex-end;
-				margin-bottom: 0;
-
-			}
+		.s-card-title,
+		h3 {
+			margin: 0 0 0.5em;
 		}
+		.s-card-subtitle,
+		p {
+			margin: 0;
+		}
+		> *:last-child {
+			margin-bottom: 0;
+		}
+
+		.s-video-wrapper {
+			align-items: center;
+		}
+
+		.s-icon-wrapper {
+			border: 1px solid #eaecf0;
+			border-radius: 8px;
+			padding: 10px;
+			display: flex;
+			align-items: center;
+			max-width: fit-content;
+			margin-bottom: 20px;
+		}
+
+		.s-bottom-icon-wrapper {
+			display: flex;
+			justify-content: flex-end;
+		}
+
+		svg {
+			height: 24px;
+			width: 24px;
+		}
+
+	}
+
+	.s-divider {
+		width: 250px;
+		margin: 64px auto;
+		display: block;
 	}
 }
 
-@media screen and (min-width: 800px) {
-	.s-getting-started__centered {
-		max-width: 900px;
-		margin: 0 auto;
-		padding: 0 24px;
-	}
+.s-getting-started__centered {
+	color: #fff;
+	box-sizing: border-box;
+	width: calc(100% + 100px);
+	background-position: center;
+	background-size: cover;
+	margin-bottom: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5em;
+}
+body.settings_page_stackable-getting-started .s-body-container > .s-getting-started__centered:first-child {
+	margin-top: -40px !important;
 }
 
 @media screen and (max-width: 1200px) {
@@ -235,5 +230,94 @@
 	}
 	.s-card {
 		width: 330px !important;
+	}
+}
+
+.s-getting-started__quick-start-wrapper {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 40px;
+	margin: 1em 0 64px;
+	align-items: flex-start;
+
+	.s-getting-started-video {
+		flex-direction: column;
+		border-radius: 16px;
+		@include s-shadow;
+		overflow: hidden;
+	}
+
+	.s-quick-buttons-wrapper {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		.s-card {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			gap: 24px;
+
+			@media screen and (max-width: 1200px) {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+		}
+	}
+	.s-quick-button-icon {
+		background: #4770f8;
+		fill: #fff;
+		display: flex;
+		padding: 8px;
+		border-radius: 8px;
+	}
+	// Succeeding icon colors are different.
+	.s-card:nth-child(3) {
+		.s-quick-button-icon {
+			background: #f00069;
+		}
+	}
+	.s-card:nth-child(4) {
+		.s-quick-button-icon {
+			background: #d000ff;
+		}
+	}
+	.s-card:nth-child(5) {
+		.s-quick-button-icon {
+			background: #f89347;
+		}
+	}
+	.s-quick-button-button {
+		white-space: nowrap;
+	}
+
+	.s-quick-button-description {
+		> *:first-child {
+			margin-top: 0;
+		}
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.s-quick-buttons-arrow {
+		position: absolute;
+		bottom: 100%;
+		display: flex;
+		flex-direction: row-reverse;
+		margin-bottom: -20px;
+		right: 69px;
+		svg {
+			width: 64px;
+			transform: scaleX(-1);
+		}
+		span {
+			margin-top: 7px;
+			font-size: 18px;
+			color: #402933;
+			transform: rotate(-4deg);
+			font-family: Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif", "Sitka Small", serif;
+		}
 	}
 }

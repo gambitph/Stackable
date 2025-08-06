@@ -15,7 +15,7 @@
 	"bugs": "https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks",
 	"dependencies": {
 		"@wordpress/dom-ready": "^3.2.3",
-		"@wordpress/icons": "^6.1.1",
+		"@wordpress/icons": "^10.27.0",
 		"bigpicture": "^2.5.3",
 		"canvas-confetti": "^1.9.3",
 		"classnames": "^2.2.6",
