@@ -19,8 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Freemius SDK: Auto deactivate the free version when activating the paid one.
 if ( function_exists( 'sugb_fs' ) ) {
-	sugb_fs()->set_basename( true, __FILE__ );
-	return;
+	 // Prevent PHP errors by checking sugb_fs return value.
+    // In the free version, sugb_fs() is a no-op function that returns null.
+    // Only proceed if sugb_fs() returns an object (i.e., the Freemius SDK is loaded).
+    if ( is_object( sugb_fs() ) ) {
+        sugb_fs()->set_basename( false, __FILE__ );
+        return;
+    }
 }
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
@@ -213,6 +218,11 @@ if ( ! function_exists( 'is_frontend' ) ) {
  */
 if ( STACKABLE_BUILD !== 'free' ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
+} else if ( ! function_exists( 'sugb_fs' ) ) {
+    // Provide a no-op sugb_fs() stub for compatibility when Freemius SDK is not loaded.
+    // This allows themes and plugins to safely check for Stackable's presence.
+    // The function returns null and performs no actions.
+    function sugb_fs() {};
 }
 
 /**
