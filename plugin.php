@@ -269,6 +269,7 @@ if ( ! is_admin() ) {
 /**
  * Welcome screen.
  */
+require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/getting-started.php' );
 if ( is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/news.php' );

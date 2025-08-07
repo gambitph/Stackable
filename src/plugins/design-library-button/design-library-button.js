@@ -44,7 +44,7 @@ const DesignLibraryButton = () => {
 	return ( settings.stackable_enable_design_library &&
 		<>
 			{ /* TODO: This will need to only play on first time going to the editor, and if there's no quick button that started another tour */ }
-			<GuidedModalTour tourId="editor-welcome" />
+			<GuidedModalTour tourId="editor" />
 			<ToolbarButton
 				onClick={ onClick }
 				className="ugb-insert-library-button"

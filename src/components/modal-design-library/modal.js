@@ -217,7 +217,7 @@ export const ModalDesignLibrary = props => {
 		>
 			<div className="ugb-modal-design-library__wrapper">
 
-				<GuidedModalTour tourId="design-library-welcome" />
+				<GuidedModalTour tourId="design-library" />
 
 				<aside className="ugb-modal-design-library__sidebar">
 					<div className="ugb-modal-design-library__filters">

@@ -2,13 +2,14 @@
  * Internal dependencies
  */
 import { TOUR_STEPS } from './tour-steps'
+import './tour-trigger'
 
 /**
  * External dependencies
  */
 import {
 	i18n,
-	guidedTourStates, // TODO: This doesn't exist yet. The state should be loaded here from localize values, this should be an object with the tour ID as the key and the state as the value.
+	guidedTourStates,
 } from 'stackable'
 import classNames from 'classnames'
 import confetti from 'canvas-confetti'
@@ -19,6 +20,7 @@ import confetti from 'canvas-confetti'
 import {
 	Modal, Flex, Button,
 } from '@wordpress/components'
+import { models } from '@wordpress/api'
 import { __ } from '@wordpress/i18n'
 import {
 	Icon, arrowRight, arrowLeft, info,
@@ -36,13 +38,20 @@ const GuidedModalTour = props => {
 	} = props
 
 	// On mount, check if the tour has been completed, if so, don't show it.
-	const [ isDone, setIsDone ] = useState( guidedTourStates?.[ tourId ] )
+	const [ isDone, setIsDone ] = useState( guidedTourStates.includes( tourId ) )
+
+	// We need this to prevent the tour from being shown again if it's just completed.
+	const [ justCompleted, setJustCompleted ] = useState( false )
 
 	const {
 		steps = [],
 		condition = null,
 		hasConfetti = true,
 	} = TOUR_STEPS[ tourId ]
+
+	if ( justCompleted ) {
+		return null
+	}
 
 	// If there is a condition, check if it's met, if not, don't show the tour.
 	// condition can be true, false, or null. true will show the tour (even if
@@ -65,8 +74,23 @@ const GuidedModalTour = props => {
 		steps={ steps }
 		hasConfetti={ hasConfetti }
 		onClose={ () => {
-			// TODO: Save the tour state to the database that we finished it.
 			setIsDone( true )
+			setJustCompleted( true )
+
+			// Update the stackable_guided_tour_states setting
+			if ( ! guidedTourStates.includes( tourId ) ) {
+				// eslint-disable-next-line camelcase
+				const settings = new models.Settings( { stackable_guided_tour_states: [ ...guidedTourStates, tourId ] } )
+				settings.save()
+			}
+
+			// Soft update the global variable to prevent the tour from being shown again.
+			guidedTourStates.push( tourId )
+
+			// Remove the "tour" GET parameter from the URL so conditions won't get triggered again.
+			const url = new URL( window.location.href )
+			url.searchParams.delete( 'tour' )
+			window.history.replaceState( null, '', url.toString() )
 		} }
 	/>
 }
@@ -331,6 +355,21 @@ const ModalTour = props => {
 		}
 	}, [ glowTarget, currentStep, isVisible, isVisibleDelayed, isTransitioning, forceRefresh ] )
 
+	// When unmounted, do not call onClose. So we need to do this handler on our own.
+	useEffect( () => {
+		const handleHeaderClick = () => {
+			onClose()
+		}
+		if ( modalRef.current ) {
+			modalRef.current.querySelector( '.components-modal__header' ).addEventListener( 'click', handleHeaderClick )
+		}
+		return () => {
+			if ( modalRef.current ) {
+				modalRef.current.querySelector( '.components-modal__header' ).removeEventListener( 'click', handleHeaderClick )
+			}
+		}
+	}, [ modalRef.current, onClose ] )
+
 	if ( ! isVisible ) {
 		return null
 	}
@@ -341,7 +380,7 @@ const ModalTour = props => {
 			overlayClassName="ugb-tour-modal--overlay"
 			shouldCloseOnClickOutside={ false }
 			size={ size }
-			onRequestClose={ onClose }
+			// onRequestClose={ onClose } // Do not use onRequestClose, it will cause the tour finish
 			className={ classNames( 'ugb-tour-modal', `ugb-tour-modal--${ position }`, {
 				'ugb-tour-modal--visible': isVisible,
 				'ugb-tour-modal--visible-delayed': isVisibleDelayed,

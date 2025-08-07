@@ -93,7 +93,7 @@ const GlobalSettings = () => {
 						<StyleGuidePopover onClose={ () => setIsStyleGuideOpen( false ) } />
 					) }
 					{ globalSettingsInspector }
-					<GuidedModalTour tourId="design-system-welcome" />
+					<GuidedModalTour tourId="design-system" />
 				</PluginSidebar>
 			}
 		</>

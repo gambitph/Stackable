@@ -8,6 +8,7 @@ import SVGCommunityIcon from './images/user.svg'
 import SVGArrowUpRightIcon from './images/arrow-up-right.svg'
 import SVGDivider from './images/divider.svg'
 import SVGQuickButtonsArrow from './images/quick-buttons-arrow.svg'
+import SVGCheck from './images/check.svg'
 
 /**
  * WordPress dependencies
@@ -24,7 +25,8 @@ import {
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, guidedTourStates } from 'stackable'
+import classNames from 'classnames'
 
 const generalProps = [
 	{
@@ -134,7 +136,15 @@ export const GettingStarted = () => {
 							<p>{ __( 'Jump straight into our Design Library and insert polished, pre-built sections — no more blank-page overwhelm.', i18n ) }</p>
 						</div>
 						<div className="s-quick-button-button">
-							<a href="/wp-admin/post-new.php?post_type=page&tour=design-library-welcome" className="s-button s-secondary-button uppercase">
+							<a
+								href={ `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=design-library` }
+								className={ classNames( 's-button s-secondary-button uppercase', {
+									's-button--checked': guidedTourStates?.includes( 'design-library' ),
+								} ) }
+							>
+								<span className="s-quick-button-toggle-indicator">
+									<SVGCheck />
+								</span>
 								{ __( 'Build Now', i18n ) }
 							</a>
 						</div>
@@ -149,7 +159,15 @@ export const GettingStarted = () => {
 							<p>{ __( 'Set your brand\'s colors, fonts, and spacing once in the Design System — every Stackable block updates automatically.', i18n ) }</p>
 						</div>
 						<div className="s-quick-button-button">
-							<a href="/wp-admin/post-new.php?post_type=page&tour=design-system-welcome" className="s-button s-secondary-button uppercase">
+							<a
+								href={ `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=design-system` }
+								className={ classNames( 's-button s-secondary-button uppercase', {
+									's-button--checked': guidedTourStates?.includes( 'design-system' ),
+								} ) }
+							>
+								<span className="s-quick-button-toggle-indicator">
+									<SVGCheck />
+								</span>
 								{ __( 'Try Now', i18n ) }
 							</a>
 						</div>
@@ -165,7 +183,12 @@ export const GettingStarted = () => {
 							<p>{ __( 'Pick a ready-made website template to kickstart your project — fully built layouts and styles, just swap in your content.', i18n ) }</p>
 						</div>
 						<div className="s-quick-button-button">
-							<a href="/wp-admin/post-new.php?post_type=page" className="s-button s-secondary-button uppercase">
+							<a
+								href="/wp-admin/post-new.php?post_type=page"
+								className={ classNames( 's-button s-secondary-button uppercase', {
+									's-button--checked': guidedTourStates?.includes( 'site-kit' ),
+								} ) }
+							>
 								{ __( 'Select Kit', i18n ) }
 							</a>
 						</div>
@@ -181,7 +204,12 @@ export const GettingStarted = () => {
 							<p>{ __( 'Browse curated Design System presets — apply a professional look instantly without building from scratch.', i18n ) }</p>
 						</div>
 						<div className="s-quick-button-button">
-							<a href="/wp-admin/post-new.php?post_type=page" className="s-button s-secondary-button uppercase">
+							<a
+								href="/wp-admin/post-new.php?post_type=page"
+								className={ classNames( 's-button s-secondary-button uppercase', {
+									's-button--checked': guidedTourStates?.includes( 'design-system-picker' ),
+								} ) }
+							>
 								{ __( 'Pick A System', i18n ) }
 							</a>
 						</div>

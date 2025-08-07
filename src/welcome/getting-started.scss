@@ -202,7 +202,7 @@
 	}
 
 	.s-divider {
-		width: 250px;
+		width: 150px;
 		margin: 64px auto;
 		display: block;
 	}
@@ -318,6 +318,37 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 			color: #402933;
 			transform: rotate(-4deg);
 			font-family: Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif", "Sitka Small", serif;
+		}
+	}
+
+	.s-quick-button-toggle-indicator {
+		width: 18px;
+		display: inline-block;
+		background: #0000002b;
+		border-radius: 100%;
+		height: 18px;
+		vertical-align: middle;
+		margin-inline: -8px 12px;
+		margin-top: -3px;
+		box-sizing: border-box;
+		position: relative;
+		svg {
+			position: absolute;
+			fill: #23ff8a;
+			top: -4px;
+			left: -1px;
+			filter: drop-shadow(1px 1px 2px #0006);
+		}
+	}
+	.s-button:not(.s-button--checked) {
+		.s-quick-button-toggle-indicator svg {
+			display: none;
+		}
+	}
+	.s-button.s-button--checked {
+		background: #555 !important;
+		.s-quick-button-toggle-indicator {
+			background: #0000004f;
 		}
 	}
 }
