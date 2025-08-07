@@ -1,6 +1,25 @@
+$guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+@mixin guide-titles {
+	font-family: $guide-font-family;
+	font-size: 1.1em;
+	font-weight: 400;
+}
+
 .ugb-style-guide {
+	&,
+	p {
+		font-size: 16px;
+	}
+
 	.ugb-style-guide__content {
+		background: #fff; // This is needed for the export
 		padding: 70px;
+	}
+
+	.ugb-style-guide__title {
+		font-family: $guide-font-family;
+		font-size: 1.1em;
+		font-weight: 400;
 	}
 
 	.ugb-style-guide__columns {
@@ -10,42 +29,117 @@
 	}
 
 	.ugb-style-guide__section-title {
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-		font-size: 2em;
+		font-family: $guide-font-family;
+		font-size: 32.44px;
 		font-weight: 700;
 		border-bottom: 1px solid #eee;
 		line-height: 1.2;
 		padding: 0 0 8px;
 		margin-bottom: 1em;
 		&:not(:first-child) {
-			margin-top: 2em;
+			margin-top: 2.5em;
 		}
 	}
 
 	.ugb-style-guide__section-subheading {
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-		font-size: 1.1em;
+		font-family: $guide-font-family;
+		font-size: 25.63px;
 		font-weight: 400;
 		margin-bottom: 1em;
+		color: #999;
 		&:not(:first-child) {
-			margin-top: 1.5em;
+			margin-top: 2.5em;
 		}
 	}
-	.ugb-style-guide__label {
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-		font-size: 1em;
-		font-weight: 500;
+
+	// Color Schemes
+
+	.ugb-style-guide__color-container {
+		border-radius: 16px;
+		border: 1px solid #eee;
+		padding: 24px;
+	}
+
+	.ugb-style-guide__color-schemes {
+		gap: 20px;
+		margin-top: 20px;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+
+		.ugb-style-guide__color-scheme-title {
+			margin: 0 0 48px;
+		}
+	}
+
+	.ugb-style-guide__color-scheme__subtitle {
+		font-size: 14.22px;
+		margin-bottom: 8px;
 		line-height: 1;
+	}
 
-		p:first-child {
-			margin: 0;
-		}
+	.ugb-style-guide__color-scheme__heading {
+		font-size: 28.83px;
+		font-weight: 600;
+		margin-bottom: 24px;
+		line-height: 1.2;
+	}
 
-		p:last-child {
-			margin-top: 4px;
-			margin-bottom: 0;
+	.ugb-style-guide__color-scheme__body {
+		font-size: 16px;
+		line-height: 1.6;
+		a:hover {
+			color: var(--hover-color) !important;
 		}
 	}
+
+	.ugb-style-guide__color-scheme__links {
+		display: flex;
+		gap: 16px;
+		margin-top: 24px;
+	}
+
+	.ugb-style-guide__color-scheme__button,
+	.ugb-style-guide__color-scheme__button--outline {
+		padding: 12px 24px;
+		border: 0;
+		border-radius: 4px;
+	}
+	.ugb-style-guide__color-scheme__button {
+		&:hover {
+			background-color: var(--hover-background-color) !important;
+			color: var(--hover-color) !important;
+		}
+	}
+	.ugb-style-guide__color-scheme__button--outline {
+		background: transparent;
+		border-width: 2px;
+		border-style: solid;
+		&:hover {
+			border-color: var(--hover-border-color) !important;
+			color: var(--hover-color) !important;
+		}
+	}
+
+	.ugb-style-guide__color-scheme__colors {
+		margin-top: 16px;
+		p {
+			margin: 0;
+			line-height: 1.6;
+			font-size: 14.22px;
+		}
+	}
+
+	.ugb-style-guide__color-indicator {
+		border: 1px solid #eee;
+		width: 1em;
+		height: 1em;
+		border-radius: 100%;
+		display: inline-block;
+		vertical-align: middle;
+		margin: -4px 4px 0;
+	}
+
+	// Colors
 
 	.ugb-style-guide__colors {
 		gap: 20px;
@@ -54,18 +148,32 @@
 		flex-wrap: wrap;
 		.ugb-style-guide__column {
 			flex: 1 1 200px;
-			height: 100px;
-			border-radius: 10px;
-			border: 1px solid #eee;
+			height: 130px;
 			display: flex;
 			align-items: flex-end;
-			padding: 12px;
+			max-width: calc(50% - 10px);
 		}
 	}
 
+	.ugb-style-guide__color-label {
+		@include guide-titles;
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 1.2;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
 }
-.ugb-style-guide-popover__title {
+.ugb-style-guide-popover__heading {
 	margin: 70px 70px 0;
+	.ugb-style-guide-popover__title {
+		margin-inline-end: 150px;
+		font-size: 39.81px;
+	}
+	.ugb-style-guide-popover__description {
+		max-width: 50%;
+	}
 }
 
 .ugb-style-guide__print-button {
@@ -81,10 +189,6 @@
 		right: 20px;
 		position: absolute;
 		margin-top: 10px;
-	}
-
-	.ugb-style-guide__print-button {
-		margin: -1em 70px 0 0;
 	}
 
 	> .components-popover__content {
