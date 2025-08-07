@@ -126,12 +126,11 @@ const LONG_TEXT = [
 
 // TODO: This is not yet finished
 const StyleGuide = props => {
-	const { designSystem } = props
+	const { designSystem, contentRef = null } = props
 
 	const {
 		colors,
 		colorSchemes = DUMMY_COLOR_SCHEMES,
-		contentRef = null,
 	} = designSystem
 
 	return (
@@ -141,6 +140,7 @@ const StyleGuide = props => {
 
 					<h1 className="ugb-style-guide__section-title ugb-style-guide__title">{ __( 'Colors', i18n ) }</h1>
 
+					{ /* TODO: Kae: the color schemes should always output at least 2 entries: 1 base color scheme and 1 background color scheme even at their default states. */ }
 					{ colorSchemes && <>
 						<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Color Schemes', i18n ) }</h2>
 						<div className="ugb-style-guide__columns ugb-style-guide__color-schemes">
@@ -202,7 +202,7 @@ const StyleGuide = props => {
 						</div>
 					</> }
 
-					{ colors && <>
+					{ !! colors.length && <>
 						<h2 className="ugb-style-guide__section-subheading">{ __( 'Global Color Palette', i18n ) }</h2>
 						<div className="ugb-style-guide__columns ugb-style-guide__colors">
 							{ colors.map( ( color, key ) => {
@@ -219,20 +219,144 @@ const StyleGuide = props => {
 					{ /* TODO: Kae: Also add the color scheme colors here */ }
 
 					<h1 className="ugb-style-guide__section-title ugb-style-guide__title">{ __( 'Typography', i18n ) }</h1>
-					<div className="ugb-style-guide__columns">
+					<div className="ugb-style-guide__columns ugb-style-guide__typography-headings">
+
 						<div className="ugb-style-guide__column">
-							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Titles & Headings', i18n ) }</h2>
-							<h1>{ __( 'Heading 1', i18n ) }</h1>
-							<h2>{ __( 'Heading 2', i18n ) }</h2>
-							<h3>{ __( 'Heading 3', i18n ) }</h3>
-							<h4>{ __( 'Heading 4', i18n ) }</h4>
-							<h5>{ __( 'Heading 5', i18n ) }</h5>
-							<h6>{ __( 'Heading 6', i18n ) }</h6>
+							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Desktop', i18n ) }</h2>
+							<div className="ugb-style-guide__typography-container">
+								<h1>{ __( 'Heading 1', i18n ) }</h1>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h2>{ __( 'Heading 2', i18n ) }</h2>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h3>{ __( 'Heading 3', i18n ) }</h3>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h4>{ __( 'Heading 4', i18n ) }</h4>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h5>{ __( 'Heading 5', i18n ) }</h5>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h6>{ __( 'Heading 6', i18n ) }</h6>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<p>{ __( 'Body', i18n ) }</p>
+								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<p>{ __( 'Subtitle', i18n ) }</p>
+								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<p>{ __( 'Button', i18n ) }</p>
+								<div className="ugb-style-guide__typography-label">System Font / Bold / 16px</div>
+							</div>
+						</div>
+
+						<div className="ugb-style-guide__column">
+							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Tablet', i18n ) }</h2>
+							<div className="ugb-style-guide__typography-container">
+								<h1>{ __( 'Heading 1', i18n ) }</h1>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h2>{ __( 'Heading 2', i18n ) }</h2>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h3>{ __( 'Heading 3', i18n ) }</h3>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h4>{ __( 'Heading 4', i18n ) }</h4>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h5>{ __( 'Heading 5', i18n ) }</h5>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h6>{ __( 'Heading 6', i18n ) }</h6>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<p>{ __( 'Body', i18n ) }</p>
+								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<p>{ __( 'Subtitle', i18n ) }</p>
+								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<p>{ __( 'Button', i18n ) }</p>
+								<div className="ugb-style-guide__typography-label">System Font / Bold / 16px</div>
+							</div>
+						</div>
+
+						<div className="ugb-style-guide__column">
+							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Mobile', i18n ) }</h2>
+							<div className="ugb-style-guide__typography-container">
+								<h1>{ __( 'Heading 1', i18n ) }</h1>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h2>{ __( 'Heading 2', i18n ) }</h2>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h3>{ __( 'Heading 3', i18n ) }</h3>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h4>{ __( 'Heading 4', i18n ) }</h4>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h5>{ __( 'Heading 5', i18n ) }</h5>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<h6>{ __( 'Heading 6', i18n ) }</h6>
+								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<p>{ __( 'Body', i18n ) }</p>
+								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<p>{ __( 'Subtitle', i18n ) }</p>
+								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
+							</div>
+							<div className="ugb-style-guide__typography-container">
+								<p>{ __( 'Button', i18n ) }</p>
+								<div className="ugb-style-guide__typography-label">System Font / Bold / 16px</div>
+							</div>
+						</div>
+					</div>
+
+					<div className="ugb-style-guide__columns ugb-style-guide__typography-body">
+						<div className="ugb-style-guide__column">
+							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Desktop', i18n ) }</h2>
+							<h2>{ __( 'Built on the Moments Between', i18n ) }</h2>
+							<p>{ LONG_TEXT[ 0 ] } { LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] }</p>
 						</div>
 						<div className="ugb-style-guide__column">
-							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Body Text', i18n ) }</h2>
-							<p>{ LONG_TEXT[ 0 ] } { LONG_TEXT[ 1 ] }</p>
-							<p>{ LONG_TEXT[ 2 ] } { LONG_TEXT[ 3 ] }</p>
+							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Tablet', i18n ) }</h2>
+							<h2>{ __( 'Built on the Moments Between', i18n ) }</h2>
+							<p>{ LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] } { LONG_TEXT[ 3 ] }</p>
+						</div>
+						<div className="ugb-style-guide__column">
+							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Mobile', i18n ) }</h2>
+							<h2>{ __( 'Built on the Moments Between', i18n ) }</h2>
+							<p>{ LONG_TEXT[ 2 ] } { LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] }</p>
 						</div>
 					</div>
 				</div>
