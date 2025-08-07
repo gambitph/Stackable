@@ -1,12 +1,20 @@
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, srcUrl } from 'stackable'
 
 /**
  * Internal dependencies
  */
 import { isDarkColor } from '~stackable/util'
+import heroBg from './images/hero-bg.webp'
+import mediaText from './images/media-text.webp'
+import {
+	Icon,
+	addTemplate as addTemplateIcon,
+	styles as stylesIcon,
+	scheduled as scheduledIcon,
+} from '@wordpress/icons'
 
 /**
  * WordPress dependencies
@@ -368,6 +376,84 @@ const StyleGuide = props => {
 							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Mobile', i18n ) }</h2>
 							<h2>{ __( 'Built on the Moments Between', i18n ) }</h2>
 							<p>{ LONG_TEXT[ 2 ] } { LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] }</p>
+						</div>
+					</div>
+
+					<h1 className="ugb-style-guide__section-title ugb-style-guide__title">{ __( 'Web Elements', i18n ) }</h1>
+					<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Buttons', i18n ) }</h2>
+					<div className="ugb-style-guide__elements ugb-style-guide__elements__buttons">
+						<button className="ugb-style-guide__button">Button</button>
+						{ /* TODO: Kae: These are block styles: */ }
+						<button className="ugb-style-guide__button">Secondary Button</button>
+						<button className="ugb-style-guide__button">Outline Button</button>
+					</div>
+					<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Images', i18n ) }</h2>
+					<div className="ugb-style-guide__elements ugb-style-guide__elements__images">
+						<img src={ srcUrl + '/' + heroBg } alt="Placeholder" />
+						{ /* TODO: Kae: Block styles here if any */ }
+					</div>
+					{ /* TODO: Kae: Remaining block styles: */ }
+
+					<h1 className="ugb-style-guide__section-title ugb-style-guide__title">{ __( 'Design System Preview', i18n ) }</h1>
+					<div className="ugb-style-guide__preview">
+						<div className="ugb-style-guide__preview-mock-browser">
+							<div className="ugb-style-guide__preview-mock-browser__buttons">
+								<div className="ugb-style-guide__preview-mock-browser__button"></div>
+								<div className="ugb-style-guide__preview-mock-browser__button"></div>
+								<div className="ugb-style-guide__preview-mock-browser__button"></div>
+							</div>
+							{ /* TODO: can we get the URL of the current site here? */ }
+							<div className="ugb-style-guide__preview-mock-browser__url">https://example.com</div>
+							<div className="ugb-style-guide__preview-mock-browser__resize-handle"></div>
+						</div>
+						{ /* TODO: this is a section with a background */ }
+						<div className="ugb-style-guide__preview-hero" style={ { '--bg-image': `url(${ srcUrl + '/' + heroBg })` } }>
+							<div>{ __( 'Subtitle', i18n ) }</div>
+							<h1>{ __( 'Hero', i18n ) }</h1>
+							<p>{ LONG_TEXT[ 0 ] }</p>
+							<div>
+								<button>{ __( 'Get Started', i18n ) }</button>
+								<button>{ __( 'Learn More', i18n ) }</button>
+							</div>
+						</div>
+						{ /* TODO: no background section */ }
+						<div className="ugb-style-guide__preview-content">
+							<h2>{ __( 'Section Title', i18n ) }</h2>
+							<p>{ __( 'Description', i18n ) }</p>
+							<div className="ugb-style-guide__preview-content__grid">
+								{ /* TODO: this should have containers on */ }
+								<div className="ugb-style-guide__preview-content__grid-item">
+									<Icon icon={ addTemplateIcon } />
+									<h3>{ __( 'Grid Item Title', i18n ) }</h3>
+									<p>{ LONG_TEXT[ 1 ] }</p>
+								</div>
+								<div className="ugb-style-guide__preview-content__grid-item">
+									<Icon icon={ stylesIcon } />
+									<h3>{ __( 'Grid Item Title', i18n ) }</h3>
+									<p>{ LONG_TEXT[ 3 ] }</p>
+								</div>
+								<div className="ugb-style-guide__preview-content__grid-item">
+									<Icon icon={ scheduledIcon } />
+									<h3>{ __( 'Grid Item Title', i18n ) }</h3>
+									<p>{ LONG_TEXT[ 4 ] }</p>
+								</div>
+							</div>
+							{ /* TODO: Kae: Add the content here */ }
+						</div>
+						{ /* TODO: section with background: media on left, text on right */ }
+						<div className="ugb-style-guide__preview-content-2">
+							<div className="ugb-style-guide__preview-content__media">
+								{ /* TODO: use actual random neutral image */ }
+								<img src={ srcUrl + '/' + mediaText } alt="Placeholder" />
+							</div>
+							<div className="ugb-style-guide__preview-content__text">
+								<p>{ __( 'Subtitle', i18n ) }</p>
+								<h2>{ __( 'Section Title', i18n ) }</h2>
+								<p>{ LONG_TEXT[ 5 ] }</p>
+								<div>
+									<button>{ __( 'Learn More', i18n ) }</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
