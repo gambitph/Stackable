@@ -147,8 +147,8 @@ const StyleGuide = props => {
 							{ colorSchemes.map( ( colorScheme, i ) => {
 								return (
 									<div key={ colorScheme.key } className="ugb-style-guide__column">
+										<h2 className="ugb-style-guide__color-scheme-title ugb-style-guide__title ugb-style-guide__color-label">{ colorScheme.name }</h2>
 										<div className="ugb-style-guide__color-scheme ugb-style-guide__color-container" style={ { backgroundColor: colorScheme.backgroundColor.color } }>
-											<h2 className="ugb-style-guide__color-scheme-title ugb-style-guide__title ugb-style-guide__color-label" style={ { color: isDarkColor( colorScheme.backgroundColor.color ) ? '#fff' : '#000' } }>{ colorScheme.name }</h2>
 											{ /* TODO: Kae: the fonts and sizes here should be based on the design system */ }
 											<div className="ugb-style-guide__color-scheme__subtitle" style={ { color: colorScheme.accentColor.color } }>{ __( 'Subtitle', i18n ) }</div>
 											<div className="ugb-style-guide__color-scheme__heading" style={ { color: colorScheme.headingColor.color } }>{ __( 'Headings', i18n ) }</div>
@@ -157,6 +157,8 @@ const StyleGuide = props => {
 												{ LONG_TEXT[ i % 6 ] }
                                                 &nbsp;
 												{ LONG_TEXT[ ( i + 1 ) % 6 ] }
+                                                &nbsp;
+												{ LONG_TEXT[ ( i + 2 ) % 6 ] }
                                                 &nbsp;
 												{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
 												<a href="#" onClick={ e => e.preventDefault() } style={ {
@@ -187,6 +189,7 @@ const StyleGuide = props => {
 											</div>
 										</div>
 										<div className="ugb-style-guide__color-scheme__colors">
+											<h3 className="ugb-style-guide__section-subheading--small">{ __( 'Base Colors', i18n ) }</h3>
 											<p>{ __( 'Background Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.backgroundColor.color } } />{ colorScheme.backgroundColor.name || colorScheme.backgroundColor.color }</p>
 											<p>{ __( 'Heading Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.headingColor.color } } />{ colorScheme.headingColor.name || colorScheme.headingColor.color }</p>
 											<p>{ __( 'Text Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.textColor.color } } />{ colorScheme.textColor.name || colorScheme.textColor.color }</p>
@@ -195,6 +198,14 @@ const StyleGuide = props => {
 											<p>{ __( 'Button Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.buttonColor.color } } />{ colorScheme.buttonColor.name || colorScheme.buttonColor.color }</p>
 											<p>{ __( 'Button Text Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.buttonTextColor.color } } />{ colorScheme.buttonTextColor.name || colorScheme.buttonTextColor.color }</p>
 											<p>{ __( 'Button Outline Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.buttonOutlineColor.color } } />{ colorScheme.buttonOutlineColor.name || colorScheme.buttonOutlineColor.color }</p>
+											<h3 className="ugb-style-guide__section-subheading--small">{ __( 'Hover Colors', i18n ) }</h3>
+											<p>{ __( 'Button Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.buttonColor.color } } />{ colorScheme.buttonColor.name || colorScheme.buttonColor.color }</p>
+											<p>{ __( 'Button Text Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.buttonTextColor.color } } />{ colorScheme.buttonTextColor.name || colorScheme.buttonTextColor.color }</p>
+											<p>{ __( 'Button Outline Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.buttonOutlineColor.color } } />{ colorScheme.buttonOutlineColor.name || colorScheme.buttonOutlineColor.color }</p>
+											<h3 className="ugb-style-guide__section-subheading--small">{ __( 'Parent Hovered Colors', i18n ) }</h3>
+											<p>{ __( 'Background Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.backgroundColor.color } } />{ colorScheme.backgroundColor.name || colorScheme.backgroundColor.color }</p>
+											<p>{ __( 'Heading Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.headingColor.color } } />{ colorScheme.headingColor.name || colorScheme.headingColor.color }</p>
+											<p>{ __( 'Text Color', i18n ) }{ `: ` }<span className="ugb-style-guide__color-indicator" style={ { backgroundColor: colorScheme.textColor.color } } />{ colorScheme.textColor.name || colorScheme.textColor.color }</p>
 										</div>
 									</div>
 								)

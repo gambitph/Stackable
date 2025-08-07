@@ -93,7 +93,7 @@ const ExportButton = props => {
 			isBusy={ isExporting }
 			disabled={ isExporting }
 		>
-			{ __( 'Export', i18n ) }
+			{ __( 'Export as Image', i18n ) }
 		</Button>
 	)
 }
