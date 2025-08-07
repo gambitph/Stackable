@@ -73,8 +73,10 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		border-radius: 16px;
 		border: 1px solid #eee;
 		padding: 24px;
-		display: flex;
-		flex-direction: column;
+		&.ugb-style-guide__color-scheme {
+			display: flex;
+			flex-direction: column;
+		}
 	}
 
 	.ugb-style-guide__color-scheme {
