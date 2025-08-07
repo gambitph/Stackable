@@ -19,7 +19,7 @@ import {
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 // import { RawHTML } from '@wordpress/element'
 // import { createBlock, serialize } from '@wordpress/blocks'
 
@@ -139,16 +139,20 @@ const StyleGuide = props => {
 	const {
 		colors,
 		colorSchemes = DUMMY_COLOR_SCHEMES,
+		typography = {
+			desktop: [], tablet: [], mobile: [],
+		},
+		designSystemStyles = '',
 	} = designSystem
 
 	return (
 		<>
 			<div className="ugb-style-guide">
 				<div className="ugb-style-guide__content" ref={ contentRef }>
-
+					<style>{ designSystemStyles }</style>
 					<h1 className="ugb-style-guide__section-title ugb-style-guide__title">{ __( 'Colors', i18n ) }</h1>
 
-					{ /* TODO: Kae: the color schemes should always output at least 2 entries: 1 base color scheme and 1 background color scheme even at their default states. */ }
+					{ /* TODO: Kae: the color schemes should always output at least 2 entries: 1 base color scheme and 1 background color scheme even at their default states. className="ugb-style-guide__typography-preview" data-device="desktop" */ }
 					{ colorSchemes && <>
 						<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Color Schemes', i18n ) }</h2>
 						<div className="ugb-style-guide__columns ugb-style-guide__color-schemes">
@@ -158,10 +162,10 @@ const StyleGuide = props => {
 										<h2 className="ugb-style-guide__color-scheme-title ugb-style-guide__title ugb-style-guide__color-label">{ colorScheme.name }</h2>
 										<div className="ugb-style-guide__color-scheme ugb-style-guide__color-container" style={ { backgroundColor: colorScheme.backgroundColor.color } }>
 											{ /* TODO: Kae: the fonts and sizes here should be based on the design system */ }
-											<div className="ugb-style-guide__color-scheme__subtitle" style={ { color: colorScheme.accentColor.color } }>{ __( 'Subtitle', i18n ) }</div>
-											<div className="ugb-style-guide__color-scheme__heading" style={ { color: colorScheme.headingColor.color } }>{ __( 'Headings', i18n ) }</div>
+											<div className="ugb-style-guide__color-scheme__subtitle stk-subtitle ugb-style-guide__typography-preview" data-device="desktop" style={ { color: colorScheme.accentColor.color } }>{ __( 'Subtitle', i18n ) }</div>
+											<h2 className="ugb-style-guide__color-scheme__heading ugb-style-guide__typography-preview" data-device="desktop" style={ { color: colorScheme.headingColor.color } }>{ __( 'Headings', i18n ) }</h2>
 
-											<div className="ugb-style-guide__color-scheme__body" style={ { color: colorScheme.textColor.color } }>
+											<p className="ugb-style-guide__color-scheme__body ugb-style-guide__typography-preview" data-device="desktop" style={ { color: colorScheme.textColor.color } }>
 												{ LONG_TEXT[ i % 6 ] }
                                                 &nbsp;
 												{ LONG_TEXT[ ( i + 1 ) % 6 ] }
@@ -175,7 +179,7 @@ const StyleGuide = props => {
 												} }>
 													{ __( 'Link', i18n ) }
 												</a>
-											</div>
+											</p>
 
 											{ /* TODO: Kae: the button looks here should be based on the design system */ }
 											<div className="ugb-style-guide__color-scheme__links">
@@ -185,14 +189,14 @@ const StyleGuide = props => {
 													color: colorScheme.buttonTextColor.color,
 													'--hover-background-color': colorScheme.buttonColor.hoverColor || colorScheme.buttonColor.color,
 													'--hover-color': colorScheme.buttonTextColor.hoverColor || colorScheme.buttonTextColor.color,
-												} }>{ __( 'Button', i18n ) }</button>
+												} }><span className="stk-button__inner-text ugb-style-guide__typography-preview" data-device="desktop">{ __( 'Button', i18n ) }</span></button>
 
 												<button className="ugb-style-guide__color-scheme__button--outline" style={ {
 													borderColor: colorScheme.buttonOutlineColor.color,
 													color: colorScheme.buttonOutlineColor.color,
 													'--hover-border-color': colorScheme.buttonOutlineColor.hoverColor || colorScheme.buttonOutlineColor.color,
 													'--hover-color': colorScheme.buttonOutlineColor.hoverColor || colorScheme.buttonOutlineColor.color,
-												} }>{ __( 'Button', i18n ) }</button>
+												} }><span className="stk-button__inner-text ugb-style-guide__typography-preview" data-device="desktop">{ __( 'Button', i18n ) }</span></button>
 
 											</div>
 										</div>
@@ -242,140 +246,78 @@ const StyleGuide = props => {
 
 						<div className="ugb-style-guide__column">
 							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Desktop', i18n ) }</h2>
-							<div className="ugb-style-guide__typography-container">
-								<h1>{ __( 'Heading 1', i18n ) }</h1>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h2>{ __( 'Heading 2', i18n ) }</h2>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h3>{ __( 'Heading 3', i18n ) }</h3>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h4>{ __( 'Heading 4', i18n ) }</h4>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h5>{ __( 'Heading 5', i18n ) }</h5>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h6>{ __( 'Heading 6', i18n ) }</h6>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<p>{ __( 'Body', i18n ) }</p>
-								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<p>{ __( 'Subtitle', i18n ) }</p>
-								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<p>{ __( 'Button', i18n ) }</p>
-								<div className="ugb-style-guide__typography-label">System Font / Bold / 16px</div>
-							</div>
+							{ typography.desktop.length > 0 && typography.desktop.map( ( [ element, description ], i ) => {
+								const Tag = element.startsWith( 'h' ) ? element : 'p'
+								const classname = i === 7 ? 'stk-subtitle' : i === 8 ? 'stk-button__inner-text' : ''
+
+								const label = i < 6 ? sprintf( __( 'Heading %d', i18n ), i + 1 )
+									: i === 6 ? __( 'Body', i18n )
+										: i === 7 ? __( 'Subtitle', i18n )
+											: __( 'Button', i18n )
+
+								return (
+									<div key={ i } className="ugb-style-guide__typography-container">
+										<Tag className={ `ugb-style-guide__typography-preview ${ classname }` } data-device="desktop">{ label }</Tag>
+										<div className="ugb-style-guide__typography-label">{ description }</div>
+									</div>
+								)
+							} ) }
 						</div>
 
 						<div className="ugb-style-guide__column">
 							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Tablet', i18n ) }</h2>
-							<div className="ugb-style-guide__typography-container">
-								<h1>{ __( 'Heading 1', i18n ) }</h1>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h2>{ __( 'Heading 2', i18n ) }</h2>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h3>{ __( 'Heading 3', i18n ) }</h3>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h4>{ __( 'Heading 4', i18n ) }</h4>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h5>{ __( 'Heading 5', i18n ) }</h5>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h6>{ __( 'Heading 6', i18n ) }</h6>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<p>{ __( 'Body', i18n ) }</p>
-								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<p>{ __( 'Subtitle', i18n ) }</p>
-								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<p>{ __( 'Button', i18n ) }</p>
-								<div className="ugb-style-guide__typography-label">System Font / Bold / 16px</div>
-							</div>
+							{ typography.tablet.length > 0 && typography.tablet.map( ( [ element, description ], i ) => {
+								const Tag = element.startsWith( 'h' ) ? element : 'p'
+								const classname = i === 7 ? 'stk-subtitle' : i === 8 ? 'stk-button__inner-text' : ''
+								const label = i < 6 ? sprintf( __( 'Heading %d', i18n ), i + 1 )
+									: i === 6 ? __( 'Body', i18n )
+										: i === 7 ? __( 'Subtitle', i18n )
+											: __( 'Button', i18n )
+
+								return (
+									<div key={ i } className="ugb-style-guide__typography-container">
+										<Tag className={ `ugb-style-guide__typography-preview ${ classname }` } data-device="tablet">{ label }</Tag>
+										<div className="ugb-style-guide__typography-label">{ description }</div>
+									</div>
+								)
+							} ) }
 						</div>
 
 						<div className="ugb-style-guide__column">
 							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Mobile', i18n ) }</h2>
-							<div className="ugb-style-guide__typography-container">
-								<h1>{ __( 'Heading 1', i18n ) }</h1>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h2>{ __( 'Heading 2', i18n ) }</h2>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h3>{ __( 'Heading 3', i18n ) }</h3>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h4>{ __( 'Heading 4', i18n ) }</h4>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h5>{ __( 'Heading 5', i18n ) }</h5>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<h6>{ __( 'Heading 6', i18n ) }</h6>
-								<div className="ugb-style-guide__typography-label">DM Sans / Bold / 36px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<p>{ __( 'Body', i18n ) }</p>
-								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<p>{ __( 'Subtitle', i18n ) }</p>
-								<div className="ugb-style-guide__typography-label">System Font / Normal / 16px</div>
-							</div>
-							<div className="ugb-style-guide__typography-container">
-								<p>{ __( 'Button', i18n ) }</p>
-								<div className="ugb-style-guide__typography-label">System Font / Bold / 16px</div>
-							</div>
+							{ typography.mobile.length > 0 && typography.mobile.map( ( [ element, description ], i ) => {
+								const Tag = element.startsWith( 'h' ) ? element : 'p'
+								const classname = i === 7 ? 'stk-subtitle' : i === 8 ? 'stk-button__inner-text' : ''
+								const label = i < 6 ? sprintf( __( 'Heading %d', i18n ), i + 1 )
+									: i === 6 ? __( 'Body', i18n )
+										: i === 7 ? __( 'Subtitle', i18n )
+											: __( 'Button', i18n )
+
+								return (
+									<div key={ i } className="ugb-style-guide__typography-container">
+										<Tag className={ `ugb-style-guide__typography-preview ${ classname }` } data-device="mobile">{ label }</Tag>
+										<div className="ugb-style-guide__typography-label">{ description }</div>
+									</div>
+								)
+							} ) }
 						</div>
 					</div>
 
 					<div className="ugb-style-guide__columns ugb-style-guide__typography-body">
 						<div className="ugb-style-guide__column">
 							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Desktop', i18n ) }</h2>
-							<h2>{ __( 'Built on the Moments Between', i18n ) }</h2>
-							<p>{ LONG_TEXT[ 0 ] } { LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] }</p>
+							<h2 className="ugb-style-guide__typography-preview" data-device="desktop">{ __( 'Built on the Moments Between', i18n ) }</h2>
+							<p className="ugb-style-guide__typography-preview" data-device="desktop">{ LONG_TEXT[ 0 ] } { LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] }</p>
 						</div>
 						<div className="ugb-style-guide__column">
 							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Tablet', i18n ) }</h2>
-							<h2>{ __( 'Built on the Moments Between', i18n ) }</h2>
-							<p>{ LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] } { LONG_TEXT[ 3 ] }</p>
+							<h2 className="ugb-style-guide__typography-preview" data-device="tablet">{ __( 'Built on the Moments Between', i18n ) }</h2>
+							<p className="ugb-style-guide__typography-preview" data-device="tablet">{ LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] } { LONG_TEXT[ 3 ] }</p>
 						</div>
 						<div className="ugb-style-guide__column">
 							<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Mobile', i18n ) }</h2>
-							<h2>{ __( 'Built on the Moments Between', i18n ) }</h2>
-							<p>{ LONG_TEXT[ 2 ] } { LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] }</p>
+							<h2 className="ugb-style-guide__typography-preview" data-device="mobile">{ __( 'Built on the Moments Between', i18n ) }</h2>
+							<p className="ugb-style-guide__typography-preview" data-device="mobile">{ LONG_TEXT[ 2 ] } { LONG_TEXT[ 1 ] } { LONG_TEXT[ 2 ] }</p>
 						</div>
 					</div>
 

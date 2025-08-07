@@ -3,12 +3,10 @@
  */
 import { Tooltip, TypographyControl } from '~stackable/components'
 import {
-	createTypographyStyles, getFontFamilyLabel, loadGoogleFont,
+	createTypographyStyles, loadGoogleFont, createTypographyDescription,
 } from '~stackable/util'
 import { i18n } from 'stackable'
-import {
-	upperFirst, omit, startCase, last,
-} from 'lodash'
+import { omit } from 'lodash'
 import classnames from 'classnames'
 import { generateStyles } from '~stackable/block-components'
 import { usePresetControls } from '~stackable/hooks'
@@ -45,7 +43,7 @@ const TypographyPicker = props => {
 	const mainClasses = classnames( [
 		'ugb-global-settings-typography-control',
 	], {
-		'ugb-global-settings-typography-control--with-description': createDescription( value ),
+		'ugb-global-settings-typography-control--with-description': createTypographyDescription( value ),
 	} )
 
 	const useTypographyAsPresets = useSelect( select =>
@@ -128,55 +126,6 @@ TypographyPicker.defaultProps = {
 
 export default TypographyPicker
 
-/**
- * Creates a summary description of what the current font is.
- *
- * @param {Object} styleObject Our font styles
- * @param {string} device The current device to create the typography description for
- */
-const createDescription = ( styleObject, device = 'desktop' ) => {
-	const description = []
-	if ( styleObject.fontFamily ) {
-		description.push( getFontFamilyLabel( styleObject.fontFamily ) )
-	}
-	if ( styleObject.fontSize ) {
-		description.push( `${ styleObject.fontSize }${ styleObject.fontSizeUnit || 'px' }` )
-	}
-
-	// Show the correct font size when in tablet or mobile previews.
-	if ( device === 'tablet' && styleObject.tabletFontSize ) {
-		if ( styleObject.fontSize ) {
-			description.pop()
-		}
-		description.push( `${ styleObject.tabletFontSize }${ styleObject.tabletFontSizeUnit || 'px' }` )
-	} else if ( device === 'mobile' && ( styleObject.tabletFontSize || styleObject.mobileFontSize ) ) {
-		if ( styleObject.fontSize ) {
-			description.pop()
-		}
-		if ( styleObject.mobileFontSize ) {
-			description.push( `${ styleObject.mobileFontSize }${ styleObject.mobileFontSizeUnit || 'px' }` )
-		} else {
-			description.push( `${ styleObject.tabletFontSize }${ styleObject.tabletFontSizeUnit || 'px' }` )
-		}
-	}
-
-	if ( styleObject.fontWeight ) {
-		description.push( styleObject.fontWeight )
-	}
-	if ( styleObject.textTransform ) {
-		description.push( upperFirst( styleObject.textTransform ) )
-	}
-
-	// If a css custom property, get just the name names
-	return description.map( value => {
-		if ( value.includes( 'var(' ) ) {
-			const propName = value.match( /var\(([^\),]*)/ )?.[ 1 ]
-			return startCase( last( propName.split( '--' ) ) )
-		}
-		return value
-	} ).join( ', ' )
-}
-
 const TypographyPreview = props => {
 	const isSelectorTag = props.selector?.startsWith( '.' )
 	const Tag = isSelectorTag ? 'p' : props.selector
@@ -194,7 +143,7 @@ const TypographyPreview = props => {
 		} ),
 		[]
 	)
-	const description = createDescription( props.styles, device )
+	const description = createTypographyDescription( props.styles, device )
 
 	// Don't include the line-height since it can ruin our control.
 	const stylesToRender = omit( props.styles, [ 'lineHeight', 'tabletLineHeight', 'mobileLineHeight' ] )

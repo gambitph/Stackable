@@ -102,20 +102,20 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		}
 	}
 
-	.ugb-style-guide__color-scheme__subtitle {
+	:where(.ugb-style-guide__color-scheme__subtitle) {
 		font-size: 14.22px;
 		margin-bottom: 8px;
 		line-height: 1;
 	}
 
-	.ugb-style-guide__color-scheme__heading {
+	:where(.ugb-style-guide__color-scheme__heading) {
 		font-size: 28.83px;
 		font-weight: 600;
 		margin-bottom: 16px;
 		line-height: 1.2;
 	}
 
-	.ugb-style-guide__color-scheme__body {
+	:where(.ugb-style-guide__color-scheme__body) {
 		font-size: 16px;
 		line-height: 1.6;
 		a:hover {
