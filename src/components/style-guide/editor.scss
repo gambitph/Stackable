@@ -34,7 +34,7 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		font-weight: 700;
 		line-height: 1.2;
 		margin-bottom: 1em;
-		&:not(:first-child) {
+		&:not(:first-child):not(:first-of-type) {
 			margin-top: 2.5em;
 		}
 	}
@@ -198,7 +198,18 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 	// Typography
 
 	.ugb-style-guide__typography-headings {
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr 0.8fr 0.7fr;
+		.ugb-style-guide__column {
+			overflow: hidden;
+		}
+		.ugb-style-guide__typography-preview {
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	}
+	.ugb-style-guide__typography-preview {
+		line-height: 1.2;
 	}
 
 	.ugb-style-guide__typography-container {
