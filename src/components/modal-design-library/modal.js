@@ -219,7 +219,7 @@ export const ModalDesignLibrary = props => {
 			className={ classnames( 'ugb-modal-design-library', 'ugb-modal-design-library--is-multiselect' ) }
 			onRequestClose={ props.onClose }
 		>
-			<div className="ugb-modal-design-library__wrapper">
+			<div className={ classnames( 'ugb-modal-design-library__wrapper', { 'ugb-modal-design-library__full-pages': selectedTab === 'pages' } ) }>
 				<aside className="ugb-modal-design-library__sidebar">
 					<div className="ugb-modal-design-library__filters">
 						<BlockList

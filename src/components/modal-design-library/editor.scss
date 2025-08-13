@@ -42,6 +42,10 @@
 		grid-template-rows: auto auto 80px;
 		flex: 1;
 		height: 100%;
+
+		&.ugb-modal-design-library__full-pages {
+			grid-template-rows: auto auto;
+		}
 	}
 	.ugb-modal-design-library__sidebar {
 		box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
