@@ -92,6 +92,7 @@ export const ModalDesignLibrary = props => {
 			type: selectedTab,
 		} ).then( designs => {
 			setSidebarDesigns( designs )
+			setSelectedCategory( '' )
 		} ).finally( () => {
 			setDoReset( false )
 			setIsBusy( false )

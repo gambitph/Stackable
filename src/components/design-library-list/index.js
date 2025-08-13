@@ -51,24 +51,29 @@ const DesignLibraryList = props => {
 		{ ! isBusy && <>
 			<div className={ listClasses }>
 				{ ( designs || [] ).map( ( design, i ) => {
-					const selectedNum = selectedDesigns.indexOf( design.designId ) + 1
+					const selectedNum = selectedDesigns.indexOf( design.id ) + 1
 					const selectedData = selectedNum ? selectedDesignData[ selectedNum - 1 ] : null
+
+					const previewProps = {
+						designId: design.id,
+						template: design.template,
+						category: design.category,
+						containerScheme: props.containerScheme,
+						backgroundScheme: props.backgroundScheme,
+						enableBackground: props.enableBackground,
+						onClick: onSelectMulti,
+					}
+
 					return (
 						<DesignLibraryItem
 							key={ i }
-							template={ design.template }
 							plan={ design.plan }
-							designId={ design.designId }
 							label={ design.label }
-							category={ design.category }
-							containerScheme={ props.containerScheme }
-							backgroundScheme={ props.backgroundScheme }
-							enableBackground={ props.enableBackground }
+							previewProps={ previewProps }
 							selectedNum={ selectedNum }
 							selectedData={ selectedData }
-							onClick={ onSelectMulti }
-							scrollTop={ scrollTop }
 							selectedTab={ props.selectedTab }
+							scrollTop={ scrollTop }
 						/>
 					)
 				} ) }
@@ -91,11 +96,21 @@ DesignLibraryList.defaultProps = {
 export default DesignLibraryList
 
 const DesignLibraryItem = props => {
-	const { scrollTop, ...propsToPass } = props
+	const {
+		scrollTop, previewProps: _previewProps, ...propsToPass
+	} = props
+
 	const itemRef = useRef( null )
 	const [ cardHeight, setCardHeight ] = useState( {} )
 	const [ previewSize, setPreviewSize ] = useState( {} )
 	const [ shouldRender, setShouldRender ] = useState( props.testKey < 9 )
+
+	const previewProps = {
+		..._previewProps,
+		setPreviewSize: previewSize => setPreviewSize( previewSize ),
+		setCardHeight: height => setCardHeight( height ),
+		cardHeight,
+	}
 
 	useEffect( () => {
 		if ( ! itemRef.current ) {
@@ -123,8 +138,7 @@ const DesignLibraryItem = props => {
 	return <DesignLibraryListItem
 		ref={ itemRef }
 		previewSize={ previewSize }
-		setPreviewSize={ previewSize => setPreviewSize( previewSize ) }
-		setCardHeight={ height => setCardHeight( height ) }
+		previewProps={ previewProps }
 		{ ...propsToPass }
 	/>
 }
