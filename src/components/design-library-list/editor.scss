@@ -1,7 +1,7 @@
 .ugb-design-library-items {
 	page-break-inside: avoid;
 	break-inside: avoid;
-	gap: 40px;
+	gap: 30px;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	align-items: center;
@@ -24,6 +24,7 @@
 }
 .ugb-modal-design-library__designs {
 	overflow: auto;
+	background: #f4f4f5;
 }
 .ugb-design-library-item {
 	display: grid;
@@ -104,7 +105,7 @@
 	// Toggle mode
 	&.ugb-design-library-item--toggle footer {
 		position: relative;
-		padding: 16px 16px 24px;
+		padding: 16px;
 		display: flex;
 		justify-content: space-between;
 		> div {
