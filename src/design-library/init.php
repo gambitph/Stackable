@@ -274,7 +274,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			if ( $type === 'pages' ) {
 				return $designs;
 			}
-
 			return apply_filters( 'stackable_design_library', $designs );
 		}
 
