@@ -167,9 +167,17 @@ const SEARCH_TREE = [
 		groups: [
 			{
 				id: 'role-manager',
-				children: [
-					...Object.values( editorRoles ),
-				],
+				children: ( editorRoles
+					? Object.values( editorRoles )
+					: [
+						__( 'Role Manager', i18n ),
+						__( 'Administrator', i18n ),
+						__( 'Editor', i18n ),
+						__( 'Author', i18n ),
+						__( 'Contributor', i18n ),
+						__( 'Subscriber', i18n ),
+					]
+				),
 			},
 		],
 	},
@@ -181,7 +189,17 @@ const SEARCH_TREE = [
 				id: 'custom-fields-settings',
 				children: [
 					__( 'Custom Fields', i18n ),
-					...Object.values( editorRoles ),
+					...( editorRoles
+						? Object.values( editorRoles )
+						: [
+							__( 'Role Manager', i18n ),
+							__( 'Administrator', i18n ),
+							__( 'Editor', i18n ),
+							__( 'Author', i18n ),
+							__( 'Contributor', i18n ),
+							__( 'Subscriber', i18n ),
+						]
+					),
 				],
 			},
 		],
