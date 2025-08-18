@@ -21,7 +21,9 @@ if ( ! class_exists( 'Stackable_Welcome_Notification_Rate' ) ) {
         const RATING_NOTICE_TIME = 432000; // 5 * 24 * 60 * 60
 
         function __construct() {
-            add_action( 'admin_menu', array( $this, 'check_activation_date' ), 9 );
+            if ( is_admin() ) {
+                add_action( 'admin_menu', array( $this, 'check_activation_date' ), 9 );
+            }
         }
 
         /**
