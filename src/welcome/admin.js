@@ -29,6 +29,7 @@ import {
 	isPro,
 	v2disabledBlocks,
 	defaultBreakpoints,
+	editorRoles,
 } from 'stackable'
 import classnames from 'classnames'
 import { fetchSettings, importBlocks } from '~stackable/util/admin'
@@ -167,12 +168,7 @@ const SEARCH_TREE = [
 			{
 				id: 'role-manager',
 				children: [
-					__( 'Role Manager', i18n ),
-					__( 'Administrator', i18n ),
-					__( 'Editor', i18n ),
-					__( 'Author', i18n ),
-					__( 'Contributor', i18n ),
-					__( 'Subscriber', i18n ),
+					...Object.values( editorRoles ),
 				],
 			},
 		],
@@ -185,11 +181,7 @@ const SEARCH_TREE = [
 				id: 'custom-fields-settings',
 				children: [
 					__( 'Custom Fields', i18n ),
-					__( 'Administrator', i18n ),
-					__( 'Editor', i18n ),
-					__( 'Author', i18n ),
-					__( 'Contributor', i18n ),
-					__( 'Subscriber', i18n ),
+					...Object.values( editorRoles ),
 				],
 			},
 		],
