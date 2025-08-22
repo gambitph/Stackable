@@ -25,14 +25,14 @@ import { __ } from '@wordpress/i18n'
 
 export { GlobalBlockStyles } from './editor-loader'
 
-addFilter( 'stackable.global-settings.inspector', 'stackable/global-block-styles', output => {
-	const hasBlockStyles = useSelect( select => {
-		const blockStyles = select( 'stackable/global-block-styles' ).getAllBlockStyles()
+if ( showProNotice || isPro ) {
+	addFilter( 'stackable.global-settings.inspector', 'stackable/global-block-styles', output => {
+		const hasBlockStyles = useSelect( select => {
+			const blockStyles = select( 'stackable/global-block-styles' ).getAllBlockStyles()
 
-		return Object.keys( blockStyles ).length > 0
-	}, [] )
+			return Object.keys( blockStyles ).length > 0
+		}, [] )
 
-	if ( showProNotice || isPro ) {
 		return (
 			<Fragment>
 				{ output }
@@ -48,8 +48,5 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-block-styles
 				</PanelAdvancedSettings>
 			</Fragment>
 		)
-	}
-
-	return <Fragment />
-}, 8 )
-
+	}, 8 )
+}

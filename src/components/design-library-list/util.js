@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import DEFAULT from './default.json'
-import { settings, isPro } from 'stackable'
+import {
+	settings, isPro, cdnUrl,
+} from 'stackable'
 import { parse, serialize } from '@wordpress/blocks'
 
 const DEFAULT_CONTENT = { ...DEFAULT }
@@ -199,7 +201,7 @@ export const parseDisabledBlocks = parsedBlock => {
 	return { block, blocksForSubstitution }
 }
 
-const IMAGE_STORAGE = 'https://stackable-files.pages.dev/library-v4/images/'
+const IMAGE_STORAGE = cdnUrl.replace( /\/$/, '' ) + '/library-v4/images/'
 
 export const addPlaceholderForPostsBlock = ( content, postsPlaceholder, defaultValues ) => {
 	const remainingPosts = [ ...postsPlaceholder ]

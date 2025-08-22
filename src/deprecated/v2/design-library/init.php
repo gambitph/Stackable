@@ -119,7 +119,7 @@ if ( ! class_exists( 'Stackable_Design_Library_V2' ) ) {
 				$designs = json_decode( $content, true );
 
 				// Cache results.
-				set_transient( 'stackable_get_block_designs_v2_' . $block, $designs, DAY_IN_SECONDS );
+				set_transient( 'stackable_get_block_designs_v2_' . $block, $designs, 7 * DAY_IN_SECONDS );
 			}
 
 			$designs = apply_filters( 'stackable_block_design_v2_' . $block, $designs );

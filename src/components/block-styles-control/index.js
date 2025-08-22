@@ -340,7 +340,7 @@ const SaveUpdateButtons = props => {
 	const ActionButtons = applyFilters( 'stackable.global-settings.global-block-styles.action-buttons', Fragment )
 
 	return ( <>
-		<Flex style={ { marginTop: '24px' } }>
+		<Flex style={ { marginTop: '24px', justifyContent: 'flex-end' } }>
 			<ActionButtons { ...propsToPass } />
 			<FlexItem style={ ! props.blockStyle || ! props.inOptions ? { marginLeft: 'auto' } : {} }>
 				<Button
@@ -348,7 +348,7 @@ const SaveUpdateButtons = props => {
 					onClick={ () => onAddBlockStyle() }
 					size="small"
 				>
-					{ __( 'Save as New Style', i18n ) }
+					{ __( 'Save New Block Style', i18n ) }
 					{ ! isPro && <span className="stk-pulsating-circle" role="presentation" /> }
 				</Button>
 			</FlexItem>

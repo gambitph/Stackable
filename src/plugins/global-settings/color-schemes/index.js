@@ -8,10 +8,11 @@ import ColorSchemePicker from './color-scheme-picker'
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, showProNotice } from 'stackable'
 import {
 	PanelAdvancedSettings, HelpTooltip,
 	AdvancedSelectControl, SectionSettings,
+	ProControlButton,
 } from '~stackable/components'
 import { useBlockColorSchemes } from '~stackable/hooks'
 
@@ -96,6 +97,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 					setItemInEdit={ setItemInEdit }
 					setDisplayHoverNotice={ setDisplayHoverNotice }
 				/>
+				{ ! itemInEdit && showProNotice && <ProControlButton type="color-schemes" /> }
 				{ ! itemInEdit && <>
 					<SectionSettings title={ __( 'Default Block Colors', i18n ) }>
 						<AdvancedSelectControl

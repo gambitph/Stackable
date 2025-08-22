@@ -17,6 +17,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'stackable_multiple_plugins_check' ) ) {
+	// Prevent multiple Stackable plugin versions from being active simultaneously.
+	function stackable_multiple_plugins_check() {
+		if ( is_plugin_active( $GLOBALS['OTHER_STACKABLE_FILE'] ) ) {
+			deactivate_plugins( $GLOBALS['OTHER_STACKABLE_FILE'] );
+		}
+	}
+}
+
+if ( defined('STACKABLE_FILE') && STACKABLE_FILE !== __FILE__ && ! isset( $GLOBALS['OTHER_STACKABLE_FILE'] ) ) {
+	// Get relative file path of the other Stackable version.
+	$GLOBALS['OTHER_STACKABLE_FILE'] = plugin_basename( STACKABLE_FILE );
+
+	// Use a temporary option to store the other Stackable Plugin info needed for the admin notice. This will be deleted later.
+	// Note: We cannot use add_action in the register_activation_hook callback so we use this temporary option.
+	// See https://developer.wordpress.org/reference/functions/register_activation_hook/#process-flow for more info.
+	add_option( 'stackable_other_stackable_plugin_info', [ 'BUILD' => STACKABLE_BUILD, 'VERSION' => STACKABLE_VERSION ] );
+
+	register_activation_hook( __FILE__, 'stackable_multiple_plugins_check' );
+}
+
 // Freemius SDK: Auto deactivate the free version when activating the paid one.
 if ( function_exists( 'sugb_fs' ) ) {
 	sugb_fs()->set_basename( true, __FILE__ );
@@ -156,6 +177,28 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
 		update_option( 'stackable_notice_gutenberg_plugin_ignore', true );
 	}
 	add_action( 'wp_ajax_stackable_notice_gutenberg_plugin_ignore', 'stackable_notice_gutenberg_plugin_ignore' );
+}
+
+/**
+ * Show notice if another Stackable plugin has been deactivated.
+ *
+ * @since 3.18.1
+ */
+if ( ! function_exists( 'stackable_notice_other_stackable_plugin_deactivated' ) ) {
+    function stackable_notice_other_stackable_plugin_deactivated() {
+        $OTHER_STACKABLE_INFO = get_option( 'stackable_other_stackable_plugin_info', false );
+        if ( $OTHER_STACKABLE_INFO ) {
+            printf(
+                '<div class="notice notice-info is-dismissible stackable_notice_gutenberg_plugin"><p>%s</p></div>',
+                sprintf( esc_html__( '%sStackable Notice%s: The Stackable plugin (%s version %s) has been deactivated. Only one active Stackable plugin is needed.', STACKABLE_I18N ), '<strong>', '</strong>', $OTHER_STACKABLE_INFO['BUILD'], $OTHER_STACKABLE_INFO['VERSION'] )
+            );
+            delete_option( 'stackable_other_stackable_plugin_info' );
+        }
+	}
+
+	if ( get_option( 'stackable_other_stackable_plugin_info', false ) ) {
+		add_action( 'admin_notices', 'stackable_notice_other_stackable_plugin_deactivated' );
+	}
 }
 
 /********************************************************************************************

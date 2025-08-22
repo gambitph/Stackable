@@ -18,7 +18,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
-[youtube https://www.youtube.com/watch?v=xAOWZHAkG3E]
+[youtube https://www.youtube.com/watch?v=ZSo3t1l5tHQ]
 
 ## Transform Gutenberg into a Page Builder.
 
@@ -321,6 +321,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Optimized Google Font checking #3567
 * Fixed: Added support for CSS optimizers that strip out the "px" from "0px" #3564
 * Fixed: Added some missing string translations #3414
+
+= 3.17.3 =
+* Fixed: Stopped design library from being registered as patterns
 
 = 3.17.2 =
 * Fixed: Design Library - Updated CDN URL

@@ -24,7 +24,7 @@ const ProControlButton = props => {
 	} )
 
 	return (
-		<div className="components-base-control">
+		<div className="components-base-control ugb-pro-control-button">
 			<button className="ugb-pro-control-more-dots" onClick={ () => setIsOpen( v => ! v ) }>
 				<div className="ugb-pro-control-more-dots__dot stk-pulsating-circle"></div>
 				<div className="ugb-pro-control-more-dots__dot stk-pulsating-circle"></div>
