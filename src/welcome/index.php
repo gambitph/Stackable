@@ -60,8 +60,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				wp_enqueue_script( 'wp-i18n' );
 				wp_enqueue_script( 'wp-element' );
 				wp_enqueue_script( 'wp-hooks' );
+				// Dev note: Load wp-plugins to ensure registerPlugin is available for guided tours. This prevents issues where wp.plugins is missing in WP 6.5.5, which can cause errors and break the settings page.
+				wp_enqueue_script( 'wp-plugins' );
 				wp_enqueue_script( 'wp-util' ); // Need wp.ajax.
-				wp_enqueue_script( 'wp-plugins' ); // Need registerPlugin
 				wp_enqueue_script( 'wp-components' ); // Need Spinner.
 				wp_enqueue_style( 'wp-components' ); // Need Spinner.
 
