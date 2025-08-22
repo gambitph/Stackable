@@ -19,14 +19,13 @@ import {
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { Fragment, useState } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
 export { GlobalBlockStyles } from './editor-loader'
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-block-styles', output => {
-	const [ isOpen, setIsOpen ] = useState( false )
 	const hasBlockStyles = useSelect( select => {
 		const blockStyles = select( 'stackable/global-block-styles' ).getAllBlockStyles()
 
@@ -42,10 +41,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-block-styles
 					className="ugb-global-block-styles__panel"
 					isPremiumPanel={ ! isPro }
 					showModifiedIndicator={ isPro && hasBlockStyles }
-					onToggle={ isOpen => setIsOpen( isOpen ) }
 				>
 					{ ! isPro && <ProControl type="global-block-styles" /> }
-					{ isPro && applyFilters( 'stackable.global-settings.inspector.global-block-styles.control', Fragment, isOpen ) }
+					{ isPro && applyFilters( 'stackable.global-settings.inspector.global-block-styles.control', Fragment ) }
 
 				</PanelAdvancedSettings>
 			</Fragment>
