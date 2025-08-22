@@ -78,6 +78,10 @@ jobs:
         POST_ID=$(wp-env run tests-cli wp post create wp-content/plugins/Stackable/e2e/config/post-content.txt --post_title="Existing Blocks" --post_status=publish --porcelain)
         echo "WP_TEST_POSTID=$POST_ID" >> $GITHUB_ENV
       continue-on-error: true
+    - name: Disable guided tours
+      run: |
+        TOUR_STATES='["design-system", "editor", "design-library"]'
+        wp-env run tests-cli wp option update stackable_guided_tour_states "$TOUR_STATES" --format=json
     - name: Run playwright tests
       id: run-playwright-tests
       env:
