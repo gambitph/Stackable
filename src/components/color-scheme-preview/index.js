@@ -1,5 +1,21 @@
+import { i18n } from 'stackable'
+
 import { Button, BaseControl } from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
+
 import classnames from 'classnames'
+
+export const COLOR_SCHEME_PROPERTY_LABELS = {
+	backgroundColor: __( 'Background Color', i18n ),
+	headingColor: __( 'Heading Color', i18n ),
+	textColor: __( 'Text Color', i18n ),
+	linkColor: __( 'Link Color', i18n ),
+	accentColor: __( 'Accent Color', i18n ),
+	buttonBackgroundColor: __( 'Button Color', i18n ),
+	buttonTextColor: __( 'Button Text Color', i18n ),
+	buttonOutlineColor: __( 'Button Outline Color', i18n ),
+}
+
 export const DEFAULT_COLOR_SCHEME_COLORS = {
 	backgroundColor: { desktop: '' },
 	headingColor: { desktop: '' },

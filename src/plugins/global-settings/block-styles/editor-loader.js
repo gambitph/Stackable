@@ -1,14 +1,23 @@
 import { useEffect, useState } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 
-const renderGlobalStyles = ( setStyles, allBlockStyles ) => {
+export const renderGlobalBlockStyleStyles = ( setStyles, allBlockStyles, returnSaveCss = false, returnCss = false ) => {
 	let styles = ''
 
 	for ( const blockName in allBlockStyles ) {
 		const blockStyles = allBlockStyles[ blockName ]
 		blockStyles.forEach( blockStyle => {
+			if ( returnSaveCss ) {
+				styles += blockStyle.saveCss
+				return
+			}
+
 			styles += blockStyle.editCss
 		} )
+	}
+
+	if ( returnCss ) {
+		return styles
 	}
 
 	setStyles( styles )
@@ -21,7 +30,7 @@ export const GlobalBlockStyles = () => {
 
 	useEffect( () => {
 		if ( allBlockStyles && typeof allBlockStyles === 'object' && Object.keys( allBlockStyles ).length ) {
-			renderGlobalStyles( setStyles, allBlockStyles )
+			renderGlobalBlockStyleStyles( setStyles, allBlockStyles )
 		}
 	}, [ allBlockStyles ] )
 

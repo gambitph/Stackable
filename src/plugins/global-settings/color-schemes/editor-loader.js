@@ -21,13 +21,14 @@ import { useEffect, useState } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
-const renderGlobalStyles = (
+export const renderGlobalColorSchemeStyles = (
 	setStyles,
 	colorSchemesArray,
 	baseColorScheme,
 	backgroundModeColorScheme,
 	containerModeColorScheme,
 	currentHoverState,
+	returnCss = false,
 ) => {
 	let css = '',
 		decls
@@ -79,7 +80,8 @@ const renderGlobalStyles = (
 		}
 		css += containercss
 	// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
-	} else if ( containerModeColorScheme in colorSchemes && ! schemeHasValue( colorSchemes[ containerModeColorScheme ] ) ) {
+	} else if ( containerModeColorScheme in colorSchemes && ! schemeHasValue( colorSchemes[ containerModeColorScheme ] ) &&
+			backgroundModeColorScheme in colorSchemes && schemeHasValue( colorSchemes[ backgroundModeColorScheme ] ) ) {
 		const containercss = `.stk-container:where(:not(.stk--no-background)){ ${ getDefaultColors() } }\n`
 
 		css += applyFilters( 'stackable.global-settings.global-color-schemes.default-container-scheme', containercss )
@@ -110,6 +112,10 @@ const renderGlobalStyles = (
 	css += `${ rules.background.join( '\n' ) }`
 	css += `${ rules.container.join( '\n' ) }`
 
+	if ( returnCss ) {
+		return css
+	}
+
 	setStyles( css )
 }
 
@@ -129,7 +135,7 @@ export const GlobalColorSchemeStyles = () => {
 
 	useEffect( () => {
 		if ( allColorSchemes && Array.isArray( allColorSchemes ) ) {
-			renderGlobalStyles(
+			renderGlobalColorSchemeStyles(
 				setStyles,
 				allColorSchemes,
 				baseColorScheme,

@@ -26,7 +26,9 @@ import { currentUserHasCapability } from '~stackable/util'
 import { registerPlugin } from '@wordpress/plugins'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addAction } from '@wordpress/hooks'
-import { useEffect, useState } from '@wordpress/element'
+import {
+	memo, useEffect, useState,
+} from '@wordpress/element'
 import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
@@ -45,9 +47,15 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 	}
 } )
 
+const GlobalSettingsInspector = memo( () => {
+	const panels = applyFilters( 'stackable.global-settings.inspector', null )
+
+	return <> { panels } </>
+} )
+
 const GlobalSettings = () => {
 	const [ userCanManageOptions, setUserCanManageOptions ] = useState( false )
-	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id )
+	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id, [] )
 
 	const [ isStyleGuideOpen, setIsStyleGuideOpen ] = useState( false )
 
@@ -62,8 +70,6 @@ const GlobalSettings = () => {
 	// For older WP versions (<6.6), wp.editor.PluginSidebar is undefined,
 	// use wp.editSite.PluginSidebar and wp.editPost.PluginSidebar as fallback
 	const PluginSidebar = window.wp.editor.PluginSidebar || window.wp.editSite?.PluginSidebar || window.wp.editPost?.PluginSidebar
-
-	const globalSettingsInspector = applyFilters( 'stackable.global-settings.inspector', null )
 
 	return (
 		<>
@@ -92,7 +98,7 @@ const GlobalSettings = () => {
 					{ isStyleGuideOpen && (
 						<StyleGuidePopover onClose={ () => setIsStyleGuideOpen( false ) } />
 					) }
-					{ globalSettingsInspector }
+					<GlobalSettingsInspector />
 					<GuidedModalTour tourId="design-system" />
 				</PluginSidebar>
 			}

@@ -295,3 +295,9 @@ export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s',
 		editor: createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes, options )[ 0 ],
 	} ]
 }
+// Converts property name to space separated string (e.g., backgroundColor --> Background Color)
+export const getPropertyLabel = property => {
+	const result = property.replace( /([a-z])([A-Z])/g, '$1 $2' )
+		.replace( /^([a-z])/, match => match.toUpperCase() )
+	return result
+}

@@ -265,7 +265,7 @@ export const ModalDesignLibrary = props => {
 										className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
 									>
 										{ selectedBackgroundScheme !== ''
-											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedBackgroundScheme || backgroundModeColorScheme ].desktopColors } />
+											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedBackgroundScheme || backgroundModeColorScheme ].normal } />
 											: <ColorSchemeTextItem label={ __( 'Default', i18n ) } />
 										}
 									</Button>
@@ -305,7 +305,7 @@ export const ModalDesignLibrary = props => {
 														setSelectedBackgroundScheme( key )
 													} }
 												>
-													<ColorSchemePreview colors={ scheme.desktopColors } isCollapsed={ true } />
+													<ColorSchemePreview colors={ scheme.normal } isCollapsed={ true } />
 													<span className="stk-color-scheme-name"> { scheme.name }</span>
 												</Button>
 											} ) }
@@ -331,7 +331,7 @@ export const ModalDesignLibrary = props => {
 										className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
 									>
 										{ selectedContainerScheme !== ''
-											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedContainerScheme || containerModeColorScheme ].desktopColors } />
+											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedContainerScheme || containerModeColorScheme ].normal } />
 											: <ColorSchemeTextItem label={ __( 'Default', i18n ) } />
 										}
 									</Button>
@@ -364,7 +364,7 @@ export const ModalDesignLibrary = props => {
 														setSelectedContainerScheme( key )
 													} }
 												>
-													<ColorSchemePreview colors={ scheme.desktopColors } isCollapsed={ true } />
+													<ColorSchemePreview colors={ scheme.normal } isCollapsed={ true } />
 													<span className="stk-color-scheme-name"> { scheme.name } </span>
 												</Button>
 											} ) }

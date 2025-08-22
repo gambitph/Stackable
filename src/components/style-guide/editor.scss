@@ -77,11 +77,19 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 			display: flex;
 			flex-direction: column;
 		}
+
+		&,
+		* {
+			transition: all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), margin 0s, flex 0s, max-width 0s, visibility 0s;
+		}
 	}
 
 	.ugb-style-guide__color-scheme {
 		position: sticky;
 		top: 0;
+		&:hover {
+			background-color: var(--hover-background-color) !important;
+		}
 	}
 
 	.ugb-style-guide__color-schemes {
@@ -102,6 +110,13 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		}
 	}
 
+	:where(.ugb-style-guide__color-scheme):hover :where(
+	.ugb-style-guide__color-scheme__subtitle,
+	.ugb-style-guide__color-scheme__heading,
+	.ugb-style-guide__color-scheme__body) {
+		color: var(--parent-hover-color) !important;
+	}
+
 	:where(.ugb-style-guide__color-scheme__subtitle) {
 		font-size: 14.22px;
 		margin-bottom: 8px;
@@ -115,6 +130,10 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		line-height: 1.2;
 	}
 
+	:where(.ugb-style-guide__color-scheme):hover :where(.ugb-style-guide__color-scheme__body) a {
+		color: var(--parent-hover-color) !important;
+	}
+
 	:where(.ugb-style-guide__color-scheme__body) {
 		font-size: 16px;
 		line-height: 1.6;
@@ -123,39 +142,81 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		}
 	}
 
-	.ugb-style-guide__color-scheme__links {
+	.ugb-style-guide__preview-button-group {
 		display: flex;
-		gap: 16px;
+		column-gap: var(--stk-button-column-gap, 16px);
+		row-gap: var(--stk-button-row-gap, 16px);
 		margin-top: 32px;
 	}
 
 	.ugb-style-guide__color-scheme__button,
 	.ugb-style-guide__color-scheme__button--outline {
-		padding: 12px 24px;
+		padding: var(--stk-button-padding, 12px 24px);
+		border-radius: var(--stk-button-border-radius, 4px);
 		border: 0;
-		border-radius: 4px;
+		min-height: var(--stk-button-min-height, 0);
+		cursor: pointer;
+		position: relative;
+		box-sizing: border-box;
+
+		&::before {
+			border-radius: inherit;
+			content: "";
+			height: 100%;
+			inset: 0;
+			pointer-events: none;
+			position: absolute;
+			width: 100%;
+			box-shadow: var(--stk-button-box-shadow, none);
+		}
+	}
+
+	:where(.ugb-style-guide__color-scheme):hover .ugb-style-guide__color-scheme__button {
+		background-color: var(--parent-hover-background-color) !important;
+		color: var(--parent-hover-color) !important;
 	}
 	.ugb-style-guide__color-scheme__button {
+		background-color: var(--stk-button-background-color);
+		color: var(--stk-button-text-color);
+		&::before {
+			border-style: var(--stk-button-border-style, none);
+			border-width: var(--stk-button-border-width, 0);
+		}
+
 		&:hover {
-			background-color: var(--hover-background-color) !important;
-			color: var(--hover-color) !important;
+			background-color: var(--hover-background-color, var(--stk-button-background-color)) !important;
+			color: var(--hover-color, var(--stk-button-text-color)) !important;
+		}
+	}
+	:where(.ugb-style-guide__color-scheme):hover .ugb-style-guide__color-scheme__button--outline {
+		color: var(--parent-hover-color) !important;
+		&::before {
+			border-color: var(--parent-hover-border-color) !important;
 		}
 	}
 	.ugb-style-guide__color-scheme__button--outline {
 		background: transparent;
-		border-width: 2px;
-		border-style: solid;
+		color: var(--stk-button-outline-color);
+		&::before {
+			border-color: var(--stk-button-outline-color) !important;
+			border-width: var(--stk-button-ghost-border-width, 2px);
+			border-style: solid;
+		}
 		&:hover {
-			border-color: var(--hover-border-color) !important;
-			color: var(--hover-color) !important;
+			color: var(--hover-color, var(--stk-button-outline-color)) !important;
+			&::before {
+				border-color: var(--hover-border-color, var(--stk-button-outline-color)) !important;
+			}
 		}
 	}
+
 
 	.ugb-style-guide__color-scheme__colors {
 		p {
 			margin: 0;
 			line-height: 1.6;
 			font-size: 14.22px;
+			color: initial;
 		}
 	}
 
@@ -215,7 +276,8 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 	.ugb-style-guide__typography-container {
 		margin: 32px 0;
 		> *:not(div) {
-			line-height: 1;
+			color: initial;
+			line-height: normal;
 			margin: 0 !important;
 		}
 	}
@@ -241,15 +303,22 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		gap: 24px;
 	}
 
-	.ugb-style-guide__elements__images img {
-		width: 60%;
-		height: auto;
+	.ugb-style-guide__elements__images {
+		.stk-img-wrapper:hover img {
+			opacity: 1;
+		}
+		img {
+			width: 60% !important;
+			height: auto !important;
+		}
 	}
 
 	// Design System Preview
 
 	.ugb-style-guide__preview {
-		border-radius: 16px;
+		border-radius: var(--stk-block-background-border-radius, 16px);
+		border-top-left-radius: 16px;
+		border-top-right-radius: 16px;
 		overflow: hidden;
 		box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 	}
@@ -282,61 +351,68 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		inset-inline-start: 16px;
 	}
 
+	.ugb-style-guide__preview-root {
+		.stk-img-wrapper:hover img {
+			opacity: 1;
+		}
+	}
+
 	.ugb-style-guide__preview-hero {
 		// Fade the background image
 		background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), var(--bg-image);
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		// TODO: These should all be the design system: background padding.
-		padding: 100px 50px;
-		text-align: center;
-		color: #fff;
+		// background-size: cover;
+		// background-position: center;
+		// background-repeat: no-repeat;
+		// min-height: 300px;
+		// display: flex;
+		// flex-direction: column;
+		// justify-content: center;
+		// padding: var(--stk-block-background-padding, 100px 50px);
+		// text-align: center;
+		// color: #fff;
 	}
 
-	.ugb-style-guide__preview-content {
-		padding: 50px;
-		// TODO: These should all be the design system: background padding.
-		> h2,
-		p {
-			text-align: center;
-		}
-	}
-	.ugb-style-guide__preview-content__grid {
-		margin-top: 36px;
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
-		// TODO: These should all be the design system
-		gap: 24px;
-	}
+	// .ugb-style-guide__preview-content {
+	// 	padding: 50px;
+	// 	// TODO: These should all be the design system: background padding.
+	// 	> h2,
+	// 	p {
+	// 		text-align: center;
+	// 	}
+	// }
+	// .ugb-style-guide__preview-content__grid {
+	// 	margin-top: 36px;
+	// 	display: grid;
+	// 	grid-template-columns: 1fr 1fr 1fr;
+	// 	// TODO: These should all be the design system
+	// 	column-gap: var(--stk-columns-column-gap, 0px);
+	// }
 
-	.ugb-style-guide__preview-content__grid-item {
-		text-align: center;
-		// TODO: These should all be the design system for containers
-		background: #fff;
-		padding: 24px;
-		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-	}
+	// .ugb-style-guide__preview-content__grid-item {
+	// 	text-align: center;
+	// 	margin: var(--stk-column-margin, 12px);
+	// }
 
-	.ugb-style-guide__preview-content-2 {
-		// TODO: These should all be the design system
-		background: #eee;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 24px;
-		padding: 50px;
-		.ugb-style-guide__preview-content__media {
-			img {
-				object-fit: cover;
-				width: 100%;
-				height: 400px;
-				// TODO: use image border radius and shadow
-			}
-		}
-		.ugb-style-guide__preview-content__text {
-			padding-top: 50px;
-		}
-	}
+	// .ugb-style-guide__preview-content-2 {
+	// 	// TODO: These should all be the design system
+	// 	background: #eee;
+	// 	display: grid;
+	// 	grid-template-columns: 1fr 1fr;
+	// 	gap: 24px;
+	// 	min-height: 500px;
+	// 	align-content: center;
+	// 	padding: var(--stk-block-background-padding, 50px);
+	// 	.ugb-style-guide__preview-content__media {
+	// 		img {
+	// 			object-fit: cover;
+	// 			width: 100%;
+	// 			height: 400px;
+	// 		}
+	// 	}
+	// 	.ugb-style-guide__preview-content__text {
+	// 		padding-top: 50px;
+	// 	}
+	// }
 }
 .ugb-style-guide-popover__heading {
 	margin: 70px 70px 0;
