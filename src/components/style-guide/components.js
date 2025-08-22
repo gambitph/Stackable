@@ -249,7 +249,6 @@ export const BlockStyles = ( { allBlockStyles, className } ) => {
 				return ( <Fragment key={ index }>
 					<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ blockTitle }</h2>
 					<div className={ `ugb-style-guide__elements ugb-style-guide__preview-root ${ className }` }>
-						<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ blockName }</h2>
 						{ /* Render Default Block Style */ }
 						<RenderBlock key={ 0 } blockName={ blockName } />
 						{ blockStyles.map( ( blockStyle, styleIndex ) => (

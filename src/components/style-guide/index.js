@@ -18,10 +18,6 @@ import { __ } from '@wordpress/i18n'
 
 export { default as StyleGuidePopover } from './popover'
 
-const THEME_STYLES = wpGlobalStylesInlineCss.replaceAll( ':root', '&' ).replace( /[^\-](\bbody)/g, ( match, p1 ) => {
-	return match.replace( p1, '.ugb-style-guide__preview-root' )
-} )
-
 // TODO: This is not yet finished
 const StyleGuide = props => {
 	const { designSystem, contentRef = null } = props
@@ -36,6 +32,10 @@ const StyleGuide = props => {
 		designSystemStyles = '',
 		previewClassNames = '',
 	} = designSystem
+
+	const THEME_STYLES = wpGlobalStylesInlineCss.replaceAll( ':root', '&' ).replace( /[^\-](\bbody)/g, ( match, p1 ) => {
+		return match.replace( p1, '.ugb-style-guide__preview-root' )
+	} )
 
 	return (
 		<>
