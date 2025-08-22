@@ -47,6 +47,7 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 	}
 } )
 
+// Separate the design system inspector controls into their own component to minimize unnecessary parent re-renders
 const GlobalSettingsInspector = memo( () => {
 	const panels = applyFilters( 'stackable.global-settings.inspector', null )
 
