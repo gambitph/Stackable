@@ -61,12 +61,13 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				wp_enqueue_script( 'wp-element' );
 				wp_enqueue_script( 'wp-hooks' );
 				wp_enqueue_script( 'wp-util' ); // Need wp.ajax.
+				wp_enqueue_script( 'wp-plugins' ); // Need registerPlugin
 				wp_enqueue_script( 'wp-components' ); // Need Spinner.
 				wp_enqueue_style( 'wp-components' ); // Need Spinner.
 
 				do_action( 'stackable_settings_admin_enqueue_scripts' );
 
-				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor', 'lodash' ), STACKABLE_VERSION );
+				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-plugins', 'wp-components', 'wp-api', 'wp-editor', 'lodash' ), STACKABLE_VERSION );
 
 				// Add translations.
 				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );
