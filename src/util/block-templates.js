@@ -44,6 +44,11 @@ const HORIZONTAL_SCROLLER_TEMPLATE = [
 	] ],
 ]
 
+const COLUMNS_TEMPLATE = [
+	HORIZONTAL_SCROLLER_TEMPLATE[ 2 ],
+	HORIZONTAL_SCROLLER_TEMPLATE[ 0 ],
+]
+
 const ICON_BOX_TEMPLATE = [
 	[ 'stackable/icon-label', { blockMargin: { bottom: 0 } }, [
 		[ 'stackable/icon', { contentAlign: 'left' } ],
@@ -144,6 +149,7 @@ const TIMELINE_TEMPLATE = [
 export const PLACEHOLDER_INNER_BLOCKS = {
 	'stackable/carousel': CAROUSEL_TEMPLATE,
 	'stackable/column': COLUMN_TEMPLATE,
+	'stackable/columns': COLUMNS_TEMPLATE,
 	'stackable/horizontal-scroller': HORIZONTAL_SCROLLER_TEMPLATE,
 	'stackable/icon-box': ICON_BOX_TEMPLATE,
 	'stackable/icon-label': ICON_LABEL_TEMPLATE,
