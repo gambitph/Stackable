@@ -137,5 +137,5 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
-	withBlockStyleContext( blockStyles ),
+	withBlockStyleContext( dividerStyles ),
 )( Edit )
