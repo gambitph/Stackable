@@ -319,7 +319,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		 * Redirecting right away will not work.
 		 */
 		public static function start_redirect_to_welcome_page( $network_wide ) {
-			if ( ! $network_wide ) {
+			if ( ! $network_wide && ! defined( 'STACKABLE_NO_WELCOME_REDIRECT' ) ) {
 				update_option( 'stackable_redirect_to_welcome', '1' );
 			}
 		}

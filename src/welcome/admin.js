@@ -30,6 +30,7 @@ import {
 	isPro,
 	v2disabledBlocks,
 	defaultBreakpoints,
+	editorRoles,
 } from 'stackable'
 import classnames from 'classnames'
 import { fetchSettings, importBlocks } from '~stackable/util/admin'
@@ -168,14 +169,7 @@ const SEARCH_TREE = [
 		groups: [
 			{
 				id: 'role-manager',
-				children: [
-					__( 'Role Manager', i18n ),
-					__( 'Administrator', i18n ),
-					__( 'Editor', i18n ),
-					__( 'Author', i18n ),
-					__( 'Contributor', i18n ),
-					__( 'Subscriber', i18n ),
-				],
+				children: Object.values( editorRoles || {} ),
 			},
 		],
 	},
@@ -187,11 +181,7 @@ const SEARCH_TREE = [
 				id: 'custom-fields-settings',
 				children: [
 					__( 'Custom Fields', i18n ),
-					__( 'Administrator', i18n ),
-					__( 'Editor', i18n ),
-					__( 'Author', i18n ),
-					__( 'Contributor', i18n ),
-					__( 'Subscriber', i18n ),
+					...Object.values( editorRoles || {} ),
 				],
 			},
 		],
@@ -580,13 +570,13 @@ const Settings = () => {
 	}, [ hasUnsavedChanges ] )
 
 	const filteredSearchTree = useMemo( () => {
-		if ( ! currentSearch ) {
-			return SEARCH_TREE
-		}
 		const loweredSearch = currentSearch.toLowerCase()
 
 		return SEARCH_TREE.map( tabs => {
 			const filtedGroups = tabs.groups.map( group => {
+				if ( ! currentSearch ) {
+					return { ...group, children: null }
+				}
 				const filteredChildren = group.children.filter( child => {
 					return child.toLowerCase().includes( loweredSearch.toLowerCase() )
 				} )
@@ -599,6 +589,7 @@ const Settings = () => {
 	const props = {
 		settings,
 		handleSettingsChange,
+		currentSearch,
 		filteredSearchTree,
 		currentTab,
 		isFetching,
@@ -645,15 +636,15 @@ const EditorSettings = props => {
 	const editor = groups.find( group => group.id === 'editor' )
 	const toolbar = groups.find( group => group.id === 'toolbar' )
 	const inspector = groups.find( group => group.id === 'inspector' )
-	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 
 	return (
 		<div className="s-editor-settings">
-			{ groupLength <= 0 ? (
+			{ ! hasGroupMatch ? (
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ blocks.children.length > 0 &&
+					{ ( blocks.children === null || blocks.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Block Widths', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'Adjust the width of Stackable blocks here.', i18n ) }</p>
@@ -679,7 +670,7 @@ const EditorSettings = props => {
 							/>
 						</div>
 					}
-					{ editor.children.length > 0 &&
+					{ ( editor.children === null || editor.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Editor', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the editor here.', i18n ) }	</p>
@@ -738,7 +729,7 @@ const EditorSettings = props => {
 							/>
 						</div>
 					}
-					{ toolbar.children.length > 0 &&
+					{ ( toolbar.children === null || toolbar.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Toolbar', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'You can disable some toolbar features here.', i18n ) }	</p>
@@ -789,7 +780,7 @@ const EditorSettings = props => {
 							/> }
 						</div>
 					}
-					{ inspector.children.length > 0 &&
+					{ ( inspector.children === null || inspector.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Inspector', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'You can customize some of the features and behavior of Stackable in the inspector here.', i18n ) }</p>
@@ -828,15 +819,15 @@ const Responsiveness = props => {
 
 	const groups = filteredSearchTree.find( tab => tab.id === 'responsiveness' ).groups
 	const dynamicBreakpoints = groups.find( group => group.id === 'dynamic-breakpoints' )
-	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 
 	return (
 		<div className="s-responsiveness">
-			{ groupLength <= 0 ? (
+			{ ! hasGroupMatch ? (
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ dynamicBreakpoints.children.length > 0 &&
+					{ ( dynamicBreakpoints.children === null || dynamicBreakpoints.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Dynamic Breakpoints', i18n ) }</h2>
 							<p className="s-settings-subtitle">
@@ -900,7 +891,7 @@ const Blocks = props => {
 	} )
 	const DERIVED_BLOCKS = getAllBlocks()
 	const groups = filteredSearchTree.find( tab => tab.id === 'blocks' ).groups
-	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 	const disabledBlocks = settings.stackable_block_states ?? {} // eslint-disable-line camelcase
 
 	const [ isDisabledDialogOpen, setIsDisabledDialogOpen ] = useState( false )
@@ -1081,7 +1072,7 @@ const Blocks = props => {
 			) }
 
 			<div className="s-blocks">
-				{ groupLength <= 0 ? (
+				{ ! hasGroupMatch ? (
 					<h3>{ __( 'No matching settings', i18n ) }</h3>
 				) : (
 					<div className="s-setting-group">
@@ -1100,7 +1091,7 @@ const Blocks = props => {
 								`s-box-block__title--${ id }`,
 							] )
 							const group = groups.find( group => group.id === id )
-							return group.children.length > 0 && (
+							return ( group.children === null || group.children.length > 0 ) && (
 								<div className="s-box s-box-block" key={ id }>
 									<h3 className={ classes }>
 										{ Icon && <Icon height="20" width="20" /> }
@@ -1169,15 +1160,15 @@ const Optimizations = props => {
 
 	const groups = filteredSearchTree.find( tab => tab.id === 'optimizations' ).groups
 	const optimizations = groups.find( group => group.id === 'optimizations' )
-	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 
 	return (
 		<div className="s-optimizations">
-			{ groupLength <= 0 ? (
+			{ ! hasGroupMatch ? (
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ optimizations.children.length > 0 &&
+					{ ( optimizations.children === null || optimizations.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Optimizations', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'Here you can adjust some optimization settings that are performed by Stackable.', i18n ) }</p>
@@ -1244,15 +1235,15 @@ const Optimizations = props => {
 const GlobalSettings = props => {
 	const groups = props.filteredSearchTree.find( tab => tab.id === 'global-settings' ).groups
 	const globalSettings = groups.find( group => group.id === 'global-settings' )
-	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 
 	return (
 		<div className="s-global-settings">
-			{ groupLength <= 0 ? (
+			{ ! hasGroupMatch ? (
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ globalSettings.children.length > 0 &&
+					{ ( globalSettings.children === null || globalSettings.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Global Settings', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'Here you can tweak Global Settings that affect the styles across your entire site.', i18n ) }</p>
@@ -1276,7 +1267,7 @@ const GlobalSettings = props => {
 
 const RoleManager = props => {
 	const groups = props.filteredSearchTree.find( tab => tab.id === 'role-manager' ).groups
-	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 	const propsToPass = {
 		...props,
 		roleManager: groups.find( group => group.id === 'role-manager' ),
@@ -1286,11 +1277,11 @@ const RoleManager = props => {
 
 	return (
 		<div className="s-role-manager">
-			{ groupLength <= 0 ? (
+			{ ! hasGroupMatch ? (
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ propsToPass.roleManager.children.length > 0 &&
+					{ ( propsToPass.roleManager.children === null || propsToPass.roleManager.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Role Manager', i18n ) }</h2>
 							<p className="s-settings-subtitle">
@@ -1328,7 +1319,7 @@ const RoleManager = props => {
 
 const CustomFields = props => {
 	const groups = props.filteredSearchTree.find( tab => tab.id === 'custom-fields-settings' ).groups
-	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 	const propsToPass = {
 		...props,
 		customFields: groups.find( group => group.id === 'custom-fields-settings' ),
@@ -1339,11 +1330,11 @@ const CustomFields = props => {
 
 	return (
 		<div className="s-custom-fields">
-			{ groupLength <= 0 ? (
+			{ ! hasGroupMatch ? (
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ propsToPass.customFields.children.length > 0 &&
+					{ ( propsToPass.customFields.children === null || propsToPass.customFields.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<div className="s-custom-fields-settings-header">
 								<h2>{ __( 'Custom Fields', i18n ) }</h2>
@@ -1390,7 +1381,7 @@ const Integrations = props => {
 	} = props
 
 	const groups = filteredSearchTree.find( tab => tab.id === 'integrations' ).groups
-	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 	const propsToPass = {
 		...props,
 		integrations: groups.find( group => group.id === 'integrations' ),
@@ -1400,11 +1391,11 @@ const Integrations = props => {
 
 	return (
 		<div className="s-integrations">
-			{ groupLength <= 0 ? (
+			{ ! hasGroupMatch ? (
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ propsToPass.integrations.children.length > 0 &&
+					{ ( propsToPass.integrations.children === null || propsToPass.integrations.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Integrations', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'Here are settings for the different integrations available in Stackable.', i18n ) }</p>
@@ -1497,19 +1488,21 @@ const AdditionalOptions = props => {
 	const groups = filteredSearchTree.find( tab => tab.id === 'other-settings' ).groups
 	const miscellaneous = groups.find( group => group.id === 'miscellaneous' )
 	const migrationSettings = groups.find( group => group.id === 'migration-settings' )
-	const groupLength = groups.reduce( ( acc, curr ) => acc + curr.children.length, 0 )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 
 	const searchClassname = ( label, searchedSettings ) => {
-		return searchedSettings.children.includes( label ) ? '' : 'ugb-admin-setting--not-highlight'
+		return searchedSettings.children === null || searchedSettings.children.includes( label )
+			? ''
+			: 'ugb-admin-setting--not-highlight'
 	}
 
 	return (
 		<div className="s-other-options-wrapper">
-			{ groupLength <= 0 ? (
+			{ ! hasGroupMatch ? (
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
-					{ miscellaneous.children.length > 0 &&
+					{ ( miscellaneous.children === null || miscellaneous.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Miscellaneous', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'Below are other minor settings. Some may be useful when upgrading from older versions of Stackable.', i18n ) }</p>
@@ -1566,7 +1559,7 @@ const AdditionalOptions = props => {
 							/>
 						</div>
 					}
-					{ migrationSettings.children.length > 0 &&
+					{ ( migrationSettings.children === null || migrationSettings.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Migration Settings', i18n ) }</h2>
 							<p>{ __( 'After enabling the version 2 blocks, please refresh the page to re-fetch the blocks from the server.', i18n ) }</p>
@@ -1630,7 +1623,7 @@ const V2Settings = props => {
 
 	return (
 		<div className={ classes }>
-			{ optimizations.children.length > 0 &&
+			{ ( optimizations.children === null || optimizations.children.length > 0 ) &&
 				<div className="s-setting-group">
 					<h2>{ __( '🏃‍♂️ Optimization Settings', i18n ) } (V2)</h2>
 					<p className="s-settings-subtitle">
@@ -1642,7 +1635,7 @@ const V2Settings = props => {
 					<OptimizationSettings searchedSettings={ optimizations.children } />
 				</div>
 			}
-			{ blocks.children.length > 0 &&
+			{ ( blocks.children === null || blocks.children.length > 0 ) &&
 				<div className="s-setting-group">
 					<h2>{ __( 'Enable & Disable Blocks', i18n ) } (V2)</h2>
 					<strong>{ __( 'This only works for version 2 blocks.', i18n ) }</strong>

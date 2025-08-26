@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.2
 Requires PHP: 7.3
-Stable tag: 3.18.0
+Stable tag: 3.18.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,7 +18,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
-[youtube https://www.youtube.com/watch?v=xAOWZHAkG3E]
+[youtube https://www.youtube.com/watch?v=ZSo3t1l5tHQ]
 
 ## Transform Gutenberg into a Page Builder.
 
@@ -304,6 +304,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.18.1 =
+* Fixed: Block styles - error encountered when creating divider and icon button block styles #3583
+* Fixed: Role Manager settings doesn't display when changing the site language #3565
+* Fixed: Auto-deactivate free/premium when another is acitvated and show an admin notice #3574
+* Fixed: Block styles - show the correct block title when deleting a style #387
+* Fixed: PHP error on stackable_add_welcome_notification when doing some REST API calls #3579
 
 = 3.18.0 =
 
