@@ -556,7 +556,7 @@ body.toplevel_page_stk-custom-fields {
 			flex: 1 0 auto;
 			display: flex;
 			flex-direction: column;
-			justify-content: end;
+			justify-content: flex-end;
 		}
 		.s-save-changes-inner-wrapper {
 			bottom: 20px;
@@ -599,7 +599,7 @@ body.toplevel_page_stk-custom-fields {
 	}
 	.s-search-setting {
 		display: flex;
-		justify-content: end;
+		justify-content: flex-end;
 		position: absolute;
 		right: 30px;
 		.s-search-setting__input {
