@@ -13,7 +13,7 @@ import {
 /**
  * External dependencies.
  */
-import { createRoot } from '~stackable/util'
+import { cleanSerializedBlock, createRoot } from '~stackable/util'
 import {
 	isPro, i18n, wpGlobalStylesInlineCss, devMode,
 } from 'stackable'
@@ -149,7 +149,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			preview = addPlaceholderForPostsBlock( preview, defaultValues[ 'posts_placeholder' ], defaultValues )
 		}
 
-		const cleanedBlock = preview.replace( /<!--[\s\S]*?-->/g, '' ) // removes comment
+		const cleanedBlock = cleanSerializedBlock( preview )
 
 		previewRef.current.render( <DesignPreview
 			blocks={ cleanedBlock }

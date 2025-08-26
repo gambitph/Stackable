@@ -608,3 +608,14 @@ export const getFilteredAttributes = ( attributes, filter ) => {
 
 	return filteredAttributes
 }
+
+// removes comment from serialized block string
+export const cleanSerializedBlock = ( serialized, cb ) => {
+	let cleanSerialized = serialized.replace( /<!--[\s\S]*?-->/g, '' )
+
+	if ( cb ) {
+		cleanSerialized = cb( cleanSerialized )
+	}
+
+	return cleanSerialized
+}

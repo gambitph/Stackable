@@ -23,7 +23,15 @@ export const useDesignSystem = () => {
 		const _typography = select( 'stackable/global-typography' ).getSettings() || {}
 		const buttonsAndIcons = select( 'stackable/global-buttons-and-icons' ).getBlockLayouts() || {}
 		const spacingAndBorders = select( 'stackable/global-spacing-and-borders' ).getBlockLayouts() || {}
-		const allBlockStyles = select( 'stackable/global-block-styles' ).getAllBlockStyles() || {}
+		const _allBlockStyles = select( 'stackable/global-block-styles' ).getAllBlockStyles() || {}
+
+		// Sort allBlockStyles alphabetically by key, keeping it as an object
+		const allBlockStyles = Object.keys( _allBlockStyles )
+			.sort()
+			.reduce( ( acc, key ) => {
+				acc[ key ] = _allBlockStyles[ key ]
+				return acc
+			}, {} )
 
 		return {
 			colors, _typography, buttonsAndIcons, spacingAndBorders, allBlockStyles,

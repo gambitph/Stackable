@@ -171,46 +171,6 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		}
 	}
 
-	:where(.ugb-style-guide__color-scheme):hover .ugb-style-guide__color-scheme__button {
-		background-color: var(--parent-hover-background-color) !important;
-		color: var(--parent-hover-color) !important;
-	}
-	.ugb-style-guide__color-scheme__button {
-		background-color: var(--stk-button-background-color);
-		color: var(--stk-button-text-color);
-		&::before {
-			border-style: var(--stk-button-border-style, none);
-			border-width: var(--stk-button-border-width, 0);
-		}
-
-		&:hover {
-			background-color: var(--hover-background-color, var(--stk-button-background-color)) !important;
-			color: var(--hover-color, var(--stk-button-text-color)) !important;
-		}
-	}
-	:where(.ugb-style-guide__color-scheme):hover .ugb-style-guide__color-scheme__button--outline {
-		color: var(--parent-hover-color) !important;
-		&::before {
-			border-color: var(--parent-hover-border-color) !important;
-		}
-	}
-	.ugb-style-guide__color-scheme__button--outline {
-		background: transparent;
-		color: var(--stk-button-outline-color);
-		&::before {
-			border-color: var(--stk-button-outline-color) !important;
-			border-width: var(--stk-button-ghost-border-width, 2px);
-			border-style: solid;
-		}
-		&:hover {
-			color: var(--hover-color, var(--stk-button-outline-color)) !important;
-			&::before {
-				border-color: var(--hover-border-color, var(--stk-button-outline-color)) !important;
-			}
-		}
-	}
-
-
 	.ugb-style-guide__color-scheme__colors {
 		p {
 			margin: 0;
@@ -301,15 +261,84 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		display: flex;
 		flex-wrap: wrap;
 		gap: 24px;
+
+		.is-style-plain .stk-button {
+			background: transparent !important;
+		}
+
+		> div {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			> * {
+				margin-bottom: 0;
+			}
+			> p {
+				margin-top: 12px;
+			}
+		}
+		> div:has(> .stk-block-divider, > .stk-block-separator, > .stk-block-spacer) {
+			&,
+			> div {
+				width: 100%;
+			}
+		}
+		> div:has(> .stk-block-image, > .stk-block-blockquote, > .stk-block-card, > .stk-block-team-member, > .stk-block-testimonial) {
+			max-width: calc(100% / 3 - 16px);
+		}
+
+		> div:has(> .stk-block-hero, > .stk-block-horizontal-scroller, > .stk-block-notification, > .stk-block-timeline) {
+			max-width: calc(100% / 2 - 12px);
+		}
+
+		> div:has(> .stk-block-accordion, > .stk-block-icon-box, > .stk-block-icon-label, > .stk-block-icon-list, > .stk-block-map, > .stk-block-number-box, > .stk-block-price, > .stk-block-pricing-box, > .stk-block-progress-bar, > .stk-block-progress-circle) {
+			width: calc(100% / 3 - 16px);
+		}
+
+		> div > :is(.stk-block-horizontal-scroller, .stk-block-icon-box, .stk-block-icon-label, .stk-block-icon-list, .stk-block-map, .stk-block-number-box, .stk-block-price, .stk-block-pricing-box, .stk-block-progress-circle) {
+			width: 100%;
+		}
+
+		> div:has(> .stk-block-count-up) .stk-block-count-up__text:not(.stk--count-up-active) {
+			opacity: 1;
+		}
+
+		> div > .stk-block-progress-bar .stk-progress-bar .stk-progress-bar__bar {
+			width: var(--progress-percent, 0px);
+		}
+
+		> div > .stk-block-progress-circle .stk-progress-circle .stk-progress-circle__bar {
+			stroke-dashoffset: var(--progress-dash-offset);
+		}
+
+		> div > .stk-block-timeline {
+			--line-bg-color: var(--line-accent-bg-color, #000);
+		}
+
+		.stk-block-spacer {
+			height: 50px;
+		}
+
+		.stk-block-timeline > .stk-inner-blocks::after,
+		.stk-block-timeline__middle,
+		.stk-block-timeline__middle::after {
+			background: var(--fixed-bg) !important;
+			background-attachment: fixed !important;
+		}
+		.stk-block-timeline__middle::after,
+		.stk-block-timeline > .stk-inner-blocks::after {
+			content: "" !important;
+		}
+	}
+
+	.ugb-style-guide__elements__buttons .stk-button {
+		height: 100%;
 	}
 
 	.ugb-style-guide__elements__images {
 		.stk-img-wrapper:hover img {
 			opacity: 1;
-		}
-		img {
-			width: 60% !important;
-			height: auto !important;
 		}
 	}
 
@@ -358,62 +387,10 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 	}
 
 	.ugb-style-guide__preview-hero {
-		// Fade the background image
 		background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), var(--bg-image);
-		// background-size: cover;
-		// background-position: center;
-		// background-repeat: no-repeat;
-		// min-height: 300px;
-		// display: flex;
-		// flex-direction: column;
-		// justify-content: center;
-		// padding: var(--stk-block-background-padding, 100px 50px);
-		// text-align: center;
-		// color: #fff;
 	}
-
-	// .ugb-style-guide__preview-content {
-	// 	padding: 50px;
-	// 	// TODO: These should all be the design system: background padding.
-	// 	> h2,
-	// 	p {
-	// 		text-align: center;
-	// 	}
-	// }
-	// .ugb-style-guide__preview-content__grid {
-	// 	margin-top: 36px;
-	// 	display: grid;
-	// 	grid-template-columns: 1fr 1fr 1fr;
-	// 	// TODO: These should all be the design system
-	// 	column-gap: var(--stk-columns-column-gap, 0px);
-	// }
-
-	// .ugb-style-guide__preview-content__grid-item {
-	// 	text-align: center;
-	// 	margin: var(--stk-column-margin, 12px);
-	// }
-
-	// .ugb-style-guide__preview-content-2 {
-	// 	// TODO: These should all be the design system
-	// 	background: #eee;
-	// 	display: grid;
-	// 	grid-template-columns: 1fr 1fr;
-	// 	gap: 24px;
-	// 	min-height: 500px;
-	// 	align-content: center;
-	// 	padding: var(--stk-block-background-padding, 50px);
-	// 	.ugb-style-guide__preview-content__media {
-	// 		img {
-	// 			object-fit: cover;
-	// 			width: 100%;
-	// 			height: 400px;
-	// 		}
-	// 	}
-	// 	.ugb-style-guide__preview-content__text {
-	// 		padding-top: 50px;
-	// 	}
-	// }
 }
+
 .ugb-style-guide-popover__heading {
 	margin: 70px 70px 0;
 	.ugb-style-guide-popover__title {

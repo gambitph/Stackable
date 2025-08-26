@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {
-	LONG_TEXT, DefaultButton, DefaultImage,
-	DefaultOutlineButton, RenderBlock,
+	DefaultButton,
+	DefaultOutlineButton,
+	RenderBlock,
+	getPlaceholders,
 } from './utils'
 import heroBg from './images/hero-bg.webp'
 import mediaText from './images/media-text.webp'
@@ -9,6 +11,7 @@ import { COLOR_SCHEME_PROPERTY_LABELS } from '../color-scheme-preview'
 
 import { i18n, srcUrl } from 'stackable'
 import { isDarkColor } from '~stackable/util'
+import { LONG_TEXT } from '~stackable/util/block-templates'
 
 import { __, sprintf } from '@wordpress/i18n'
 import {
@@ -208,7 +211,7 @@ export const BlockStyles = ( { allBlockStyles, className } ) => {
 		<h1 className="ugb-style-guide__section-title ugb-style-guide__title">{ __( 'Web Elements', i18n ) }</h1>
 		<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Buttons', i18n ) }</h2>
 		<div className={ `ugb-style-guide__elements ugb-style-guide__elements__buttons ugb-style-guide__preview-root ${ className }` }>
-			<DefaultButton text={ __( 'Default', i18n ) } />
+			<RenderBlock blockName="stackable/button" attributes={ { text: __( 'Button', i18n ) } } />
 			{ 'stackable/button' in allBlockStyles && allBlockStyles[ 'stackable/button' ].length > 0 && <>
 				{ allBlockStyles[ 'stackable/button' ].map( ( blockStyle, index ) => {
 					return <RenderBlock
@@ -216,15 +219,18 @@ export const BlockStyles = ( { allBlockStyles, className } ) => {
 						blockName="stackable/button"
 						attributes={ {
 							...blockStyle.attributes,
-							text: blockStyle.name,
+							text: __( 'Button', i18n ),
 							blockStyle: blockStyle.slug,
-						} } />
+						} }
+						name={ blockStyle.name }
+					/>
 				} ) }
 			</> }
 		</div>
 		<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ __( 'Images', i18n ) }</h2>
 		<div className={ `ugb-style-guide__elements ugb-style-guide__elements__images ugb-style-guide__preview-root ${ className }` }>
-			<DefaultImage imgSrc={ srcUrl + '/' + heroBg } />
+			{ /* <DefaultImage imgSrc={ srcUrl + '/' + heroBg } /> */ }
+			<RenderBlock blockName="stackable/image" attributes={ { imageExternalUrl: `${ srcUrl }/${ heroBg }` } } />
 			{ 'stackable/image' in allBlockStyles && allBlockStyles[ 'stackable/image' ].length > 0 && <>
 				{ allBlockStyles[ 'stackable/image' ].map( ( blockStyle, index ) => {
 					return <RenderBlock
@@ -232,8 +238,11 @@ export const BlockStyles = ( { allBlockStyles, className } ) => {
 						blockName="stackable/image"
 						attributes={ {
 							...blockStyle.attributes,
+							imageExternalUrl: `${ srcUrl }/${ heroBg }`,
 							blockStyle: blockStyle.slug,
-						} } />
+						} }
+						name={ blockStyle.name }
+					/>
 				} ) }
 			</> }
 		</div>
@@ -246,19 +255,23 @@ export const BlockStyles = ( { allBlockStyles, className } ) => {
 				}
 
 				const blockTitle = getBlockType( blockName ).title
+				const { attributes, innerBlocks } = getPlaceholders( blockName )
 				return ( <Fragment key={ index }>
 					<h2 className="ugb-style-guide__section-subheading ugb-style-guide__title">{ blockTitle }</h2>
 					<div className={ `ugb-style-guide__elements ugb-style-guide__preview-root ${ className }` }>
 						{ /* Render Default Block Style */ }
-						<RenderBlock key={ 0 } blockName={ blockName } />
+						<RenderBlock key={ 0 } blockName={ blockName } attributes={ attributes } innerBlocks={ innerBlocks } />
 						{ blockStyles.map( ( blockStyle, styleIndex ) => (
 							<RenderBlock
 								key={ styleIndex + 1 }
 								blockName={ blockName }
 								attributes={ {
+									...attributes,
 									...blockStyle.attributes,
 									blockStyle: blockStyle.slug,
 								} }
+								innerBlocks={ innerBlocks }
+								name={ blockStyle.name }
 							/>
 						) ) }
 					</div>

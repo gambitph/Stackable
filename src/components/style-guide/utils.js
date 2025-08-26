@@ -1,8 +1,15 @@
-import { i18n } from 'stackable'
+import heroBg from './images/hero-bg.webp'
+import { i18n, srcUrl } from 'stackable'
+import { cleanSerializedBlock, createUniqueClass } from '~stackable/util'
 
 import { __ } from '@wordpress/i18n'
 import { RawHTML } from '@wordpress/element'
-import { createBlock, serialize } from '@wordpress/blocks'
+import {
+	createBlock, serialize,
+	createBlocksFromInnerBlocksTemplate,
+	getBlockVariations,
+} from '@wordpress/blocks'
+import { PLACEHOLDER_INNER_BLOCKS } from '~stackable/util/block-templates'
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 export const DefaultButton = ( {
@@ -34,36 +41,6 @@ export const DefaultOutlineButton = ( {
 	</>
 }
 
-export const DefaultImage = ( { imgSrc } ) => {
-	return <>
-		<div className="wp-block-stackable-image stk-block-image stk-block stk-703847c" data-block-id="703847c">
-			<figure>
-				<span className="stk-img-wrapper stk-image--shape-stretch">
-					<img className="stk-img" src={ imgSrc } width="150" height="300" alt="Placeholder" />
-				</span>
-			</figure>
-		</div>
-
-	</>
-}
-
-export const RenderBlock = props => {
-	const {
-		blockName, attributes = {}, innerBlocks = [],
-	} = props
-
-	return (
-		<RawHTML>
-			{ serialize( createBlock(
-				blockName,
-				attributes,
-				innerBlocks
-			) ) }
-		</RawHTML>
-	)
-}
-
-// DUMMY DATA
 export const DUMMY_COLOR_SCHEMES = [
 	{
 		name: 'Base Color Scheme',
@@ -99,17 +76,65 @@ export const DUMMY_COLOR_SCHEMES = [
 	},
 ]
 
-export const LONG_TEXT = [
-	// Translators: This is placeholder text used in the style guide.
-	__( 'They didn\'t plan to build a life around shared walls and hand-me-down furniture, but somehow, it worked.', i18n ),
-	// Translators: This is placeholder text used in the style guide.
-	__( 'Morning routines bled into late-night talks, and even the silence felt familiar.', i18n ),
-	// Translators: This is placeholder text used in the style guide.
-	__( 'Careers shifted, relationships changed, and expectations rarely lined up with reality.', i18n ),
-	// Translators: This is placeholder text used in the style guide.
-	__( 'But there was always time for inside jokes, spontaneous distractions, and someone to show up, even without being asked.', i18n ),
-	// Translators: This is placeholder text used in the style guide.
-	__( 'Each of them brought something different—quiet patience, loud opinions, unexpected wisdom.', i18n ),
-	// Translators: This is placeholder text used in the style guide.
-	__( 'Change arrived slowly, then all at once. Some said goodbye, some stayed longer, and some simply evolved.', i18n ),
-]
+const SERIALIZE_CALLBACKS = {
+	'stackable/tabs': serialized => serialized.replace( '"stk-block-tabs__tab"', '"stk-block-tabs__tab stk-block-tabs__tab--active"' ),
+}
+
+const ADDITIONAL_ATTRIBUTES = {
+	'stackable/heading': { text: __( 'Heading', i18n ) },
+	'stackable/text': { text: __( 'Text', i18n ) },
+	'stackable/subtitle': { text: __( 'Subtitle', i18n ) },
+	'stackable/card': { imageExternalUrl: `${ srcUrl }/${ heroBg }` },
+	'stackable/count-up': { text: '1,234.56' },
+	'stackable/icon-list-item': { text: __( 'List Item', i18n ) },
+	'stackable/number-box': { text: __( '1', i18n ) },
+}
+
+export const RenderBlock = props => {
+	const {
+		blockName, attributes, innerBlocks, name = __( 'Default', i18n ),
+	} = props
+
+	const block = createBlock( blockName, attributes, innerBlocks )
+	block.attributes.uniqueId = createUniqueClass( block.clientId )
+	let serialized = serialize( [ block ] )
+
+	if ( blockName === 'stackable/timeline' ) {
+		const _block = createBlock( blockName, attributes, innerBlocks )
+		_block.attributes.timelineIsLast = true
+		serialized += '\n' + serialize( [ _block ] )
+	}
+
+	return (
+		<RawHTML>
+			{ cleanSerializedBlock( serialized, SERIALIZE_CALLBACKS[ blockName ] ) }
+			{ `<p>${ name }</p>` }
+		</RawHTML>
+	)
+}
+
+export const getPlaceholders = blockName => {
+	let innerBlocks = []
+	let attributes = {}
+
+	const variations = getBlockVariations( blockName )
+
+	if ( blockName in PLACEHOLDER_INNER_BLOCKS ) {
+		innerBlocks = createBlocksFromInnerBlocksTemplate( PLACEHOLDER_INNER_BLOCKS[ blockName ] )
+	} else if ( variations.length && variations[ 0 ].innerBlocks?.length ) {
+		innerBlocks = createBlocksFromInnerBlocksTemplate( variations[ 0 ].innerBlocks )
+	}
+
+	if ( variations.length && variations[ 0 ].attributes ) {
+		attributes = variations[ 0 ].attributes
+	}
+
+	if ( blockName in ADDITIONAL_ATTRIBUTES ) {
+		attributes = {
+			...attributes,
+			...ADDITIONAL_ATTRIBUTES[ blockName ],
+		}
+	}
+
+	return { attributes, innerBlocks }
+}
