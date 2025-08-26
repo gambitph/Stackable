@@ -306,6 +306,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.18.1 =
+* Fixed: Block styles - error encountered when creating divider and icon button block styles #3583
 * Fixed: Role Manager settings doesn't display when changing the site language #3565
 * Fixed: Auto-deactivate free/premium when another is acitvated and show an admin notice #3574
 * Fixed: Block styles - show the correct block title when deleting a style #387
