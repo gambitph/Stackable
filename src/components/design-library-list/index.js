@@ -68,7 +68,7 @@ const DesignLibraryList = props => {
 						<DesignLibraryItem
 							key={ i }
 							plan={ design.plan }
-							label={ design.label }
+							label={ design.label || design.title }
 							previewProps={ previewProps }
 							selectedNum={ selectedNum }
 							selectedData={ selectedData }
