@@ -273,6 +273,9 @@ const Edit = props => {
 			dispatch( 'core/block-editor' ).replaceBlocks( clientId, blocks )
 		}
 
+		// Set focus on the top-most added block
+		dispatch( 'core/block-editor' ).selectBlock( blocks[ 0 ].clientId )
+
 		if ( blocksToRemoveRef.current.length ) {
 			dispatch( 'core/block-editor' ).removeBlocks( blocksToRemoveRef.current )
 			blocksToRemoveRef.current = []

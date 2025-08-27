@@ -54,7 +54,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 	)
 
 	const {
-		onScroll, onMouseOut, onMouseOver,
+		onMouseOut, onMouseOver, onMouseDown,
 	} = useAutoScroll( hostRef, shadowBodySizeRef, selectedTab )
 
 	const getDesignPreviewSize = () => {
@@ -113,7 +113,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 							shadowRoot={ shadowRoot }
 							selectedTab={ selectedTab }
 							adjustScale={ adjustScale }
-							onScroll={ onScroll }
+							onMouseDown={ onMouseDown }
 						/> }
 					</div>
 				</div>

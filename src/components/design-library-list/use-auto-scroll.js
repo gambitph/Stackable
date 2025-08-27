@@ -10,7 +10,7 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 	const scrollIntervalRef = useRef( null )
 
 	const onMouseOverImpl = () => {
-		const shadowDomBody = hostRef?.current?.shadowRoot.querySelector( 'body' )
+		const shadowDomBody = hostRef?.current?.shadowRoot?.querySelector?.( 'body' )
 		if ( shadowDomBody && shadowBodySizeRef.current ) {
 			scrollPositionRef.current = 0
 			setTimeout( () => {
@@ -34,13 +34,13 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 					const scrollBy = scrollDifference >= 20 ? 20 : scrollDifference
 					shadowDomBody.scrollTop = scrollPositionRef.current + scrollBy
 					scrollPositionRef.current += scrollBy
-				}, 20 )
-			}, 500 )
+				}, 60 )
+			}, 1000 )
 		}
 	}
 
 	const onMouseOutImpl = () => {
-		const shadowDomBody = hostRef?.current?.shadowRoot.querySelector( 'body' )
+		const shadowDomBody = hostRef?.current?.shadowRoot?.querySelector?.( 'body' )
 		if ( shadowDomBody ) {
 			clearInterval( scrollIntervalRef.current )
 			scrollIntervalRef.current = null
@@ -52,20 +52,19 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 		}
 	}
 
-	const onScrollImpl = () => {
-		if ( scrollIntervalRef.current ) {
-			clearInterval( scrollIntervalRef.current )
-			scrollIntervalRef.current = null
-		}
+	const onMouseDownImpl = () => {
+		clearInterval( scrollIntervalRef.current )
+		scrollIntervalRef.current = null
+		scrollPositionRef.current = -1
 	}
 
 	const onMouseOver = selectedTab === 'patterns' ? NOOP : onMouseOverImpl
 	const onMouseOut = selectedTab === 'patterns' ? NOOP : onMouseOutImpl
-	const onScroll = selectedTab === 'patterns' ? NOOP : onScrollImpl
+	const onMouseDown = selectedTab === 'patterns' ? NOOP : onMouseDownImpl
 
 	return {
 		onMouseOver,
 		onMouseOut,
-		onScroll,
+		onMouseDown,
 	}
 }
