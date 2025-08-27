@@ -85,12 +85,10 @@ export const usePreviewRenderer = (
 
 				setPreviewSize( newPreviewSize )
 
-				if ( shadowBodySizeRef.current === null ) {
-					shadowBodySizeRef.current = {
-						clientHeight: shadowBody.clientHeight,
-						scrollHeight: shadowBody.scrollHeight,
-						maxScrollTop: shadowBody.scrollHeight - shadowBody.clientHeight,
-					}
+				shadowBodySizeRef.current = {
+					clientHeight: shadowBody.clientHeight,
+					scrollHeight: shadowBody.scrollHeight,
+					maxScrollTop: shadowBody.scrollHeight - shadowBody.clientHeight,
 				}
 			}
 
