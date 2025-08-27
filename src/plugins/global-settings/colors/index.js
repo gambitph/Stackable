@@ -70,6 +70,7 @@ addFilter( 'stackable.util.is-dark-color', 'stackable/global-colors', color => {
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', output => {
 	const {
+		stackableColors,
 		hideThemeColors,
 		hideDefaultColors,
 		hideSiteEditorColors,
@@ -112,6 +113,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			<PanelAdvancedSettings
 				title={ __( 'Global Color Palette', i18n ) }
 				onToggle={ isOpen => setIsOpen( isOpen ) }
+				showModifiedIndicator={ !! stackableColors?.length }
 			>
 				{ isOpen && <>
 					<p className="components-base-control__help">
