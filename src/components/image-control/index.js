@@ -34,7 +34,7 @@ const ImageControl = props => {
 
 	return (
 		<div className="ugb-image-control">
-			<BaseControl help={ props.help }>
+			<BaseControl help={ props.help } __nextHasNoMarginBottom>
 				<BaseControlMultiLabel
 					label={ props.label }
 					screens={ props.screens }

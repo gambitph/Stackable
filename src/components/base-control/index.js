@@ -37,6 +37,8 @@ const BaseControl = props => {
 		<_BaseControl
 			help={ props.help }
 			className={ className }
+			__nextHasNoMarginBottom
+			__next40pxDefaultSize
 		>
 			{ props.hasLabel &&
 				<BaseControlMultiLabel

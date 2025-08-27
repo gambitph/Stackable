@@ -1476,6 +1476,7 @@ const AdditionalOptions = props => {
 									onChange={ checked => {
 										handleSettingsChange( { stackable_show_pro_notices: checked ? '1' : '' } ) // eslint-disable-line camelcase
 									} }
+									__nextHasNoMarginBottom
 								/>
 							}
 							<CheckboxControl
@@ -1486,6 +1487,7 @@ const AdditionalOptions = props => {
 								onChange={ checked => {
 									handleSettingsChange( { stackable_global_colors_native_compatibility: checked } ) // eslint-disable-line camelcase
 								} }
+								__nextHasNoMarginBottom
 							/>
 							<CheckboxControl
 								label={ __( 'Inherit Block Styles from theme.json', i18n ) }
@@ -1495,6 +1497,7 @@ const AdditionalOptions = props => {
 								onChange={ checked => {
 									handleSettingsChange( { stackable_disable_block_style_inheritance: ! checked } ) // eslint-disable-line camelcase
 								} }
+								__nextHasNoMarginBottom
 							/>
 							<CheckboxControl
 								label={ __( 'Use v3.16.0 Color Scheme Inheritance', i18n ) }
@@ -1507,6 +1510,7 @@ const AdditionalOptions = props => {
 										stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
 									 } )
 								} }
+								__nextHasNoMarginBottom
 							/>
 							<CheckboxControl
 								label={ __( 'Block Defaults (Deprecated)', i18n ) }
@@ -1518,6 +1522,7 @@ const AdditionalOptions = props => {
 										stackable_enable_block_defaults: checked, // eslint-disable-line camelcase
 									 } )
 								} }
+								__nextHasNoMarginBottom
 							/>
 						</div>
 					}
@@ -1540,6 +1545,7 @@ const AdditionalOptions = props => {
 									}
 									handleSettingsChange( { stackable_v2_editor_compatibility: checked ? '1' : '' } ) // eslint-disable-line camelcase
 								} }
+								__nextHasNoMarginBottom
 							/>
 							<CheckboxControl
 								label={ __( 'Load version 2 blocks in the editor only when the page was using version 2 blocks', i18n ) }
@@ -1551,6 +1557,7 @@ const AdditionalOptions = props => {
 									}
 									handleSettingsChange( { stackable_v2_editor_compatibility_usage: checked ? '1' : '' } ) // eslint-disable-line camelcase
 								} }
+								__nextHasNoMarginBottom
 							/>
 							<CheckboxControl
 								disabled={ settings.stackable_v2_editor_compatibility === '1' || settings.stackable_v2_editor_compatibility_usage === '1' }
@@ -1564,6 +1571,7 @@ const AdditionalOptions = props => {
 								onChange={ checked => {
 									handleSettingsChange( { stackable_v2_frontend_compatibility: checked ? '1' : '' } ) // eslint-disable-line camelcase
 								} }
+								__nextHasNoMarginBottom
 							/>
 						</div>
 					}

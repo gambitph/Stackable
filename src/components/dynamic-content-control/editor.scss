@@ -90,3 +90,10 @@
 		}
 	}
 }
+
+// Dynamic content fields in the popover are too close together.
+.stackable-dynamic-content__popover-content {
+	.components-base-control {
+		margin-bottom: 16px;
+	}
+}

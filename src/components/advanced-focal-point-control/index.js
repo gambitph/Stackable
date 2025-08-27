@@ -42,6 +42,7 @@ const AdvancedFocalPointControl = props => {
 				{ ...propsToPass }
 				value={ value || FOCAL_DEFAULT_VALUE }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+				__nextHasNoMarginBottom
 			/>
 			<ResetButton
 				allowReset={ props.allowReset }

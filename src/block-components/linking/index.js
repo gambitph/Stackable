@@ -44,7 +44,7 @@ export const _Linking = () => {
 	return <div
 		className="stk-linking-wrapper"
 	>
-		<Tooltip position="bottom" text={
+		<Tooltip placement="bottom" text={
 			<>
 				{ __( 'When linked, styling this block would also style other linked blocks in adjacent columns.', i18n ) }
 				<br />

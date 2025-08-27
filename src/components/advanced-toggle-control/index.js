@@ -50,7 +50,7 @@ const AdvancedToggleControl = memo( props => {
 			id={ id }
 			help={ helpLabel }
 			className={ className }
-			allowReset={ true }
+			allowReset={ props.allowReset }
 			value={ checked }
 			showReset={ props.defaultValue ? checked !== props.defaultValue : checked }
 			onChange={ onChange }
@@ -72,7 +72,7 @@ const AdvancedToggleControl = memo( props => {
 
 AdvancedToggleControl.defaultProps = {
 	className: '',
-	allowReset: false,
+	allowReset: true,
 	showReset: null,
 	defaultValue: '',
 
