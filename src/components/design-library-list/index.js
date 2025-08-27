@@ -51,12 +51,12 @@ const DesignLibraryList = props => {
 		{ ! isBusy && <>
 			<div className={ listClasses }>
 				{ ( designs || [] ).map( ( design, i ) => {
-					const selectedNum = selectedDesigns.indexOf( design.id ) + 1
+					const selectedNum = selectedDesigns.indexOf( design.id || design.designId ) + 1
 					const selectedData = selectedNum ? selectedDesignData[ selectedNum - 1 ] : null
 
 					const previewProps = {
-						designId: design.id,
-						template: design.template,
+						designId: design.id || design.designId,
+						template: design.template || design.content,
 						category: design.category,
 						containerScheme: props.containerScheme,
 						backgroundScheme: props.backgroundScheme,

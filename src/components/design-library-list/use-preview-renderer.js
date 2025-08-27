@@ -167,7 +167,7 @@ export const usePreviewRenderer = (
 				for ( let i = 0; i < _content.length; i++ ) {
 					const section = _content[ i ]
 					const design = await fetchDesign( section.id )
-					const designContent = replacePlaceholders( design.template, design.category )
+					const designContent = replacePlaceholders( design.template || design.content, design.category )
 
 					categoriesRef.current.push( design.category )
 
