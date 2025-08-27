@@ -275,7 +275,7 @@ div.ugb-modal-design-library__enable-background {
 .stk-design-library-tabs {
 	margin: 0 auto;
 	margin-bottom: 0 !important;
-	height: calc( 100% + 1px);
+	height: calc(100% + 1px);
 
 	.components-base-control__field {
 		&,
@@ -409,10 +409,16 @@ div.ugb-modal-design-library__enable-background {
 }
 
 .ugb-design-library__confirm-dialog {
-	max-width: 800px;
+	max-width: 500px;
 	ul {
-		list-style: circle;
+		list-style: disc;
 		margin-inline-start: 20px;
+	}
+	button {
+		justify-content: center;
+	}
+	p:first-child {
+		margin-top: 0;
 	}
 }
 

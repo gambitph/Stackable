@@ -397,11 +397,11 @@ const Edit = props => {
 					<VStack spacing={ 8 }>
 						{ isDialogOpen === DIALOG_OPTIONS.REMOVE_BLOCKS && <>
 							<div>
-								<span>
+								<p>
 									{ __( 'Adding this page design will replace all existing blocks in the editor. Are you sure you want to continue?', i18n ) }
-								</span>
+								</p>
 							</div>
-							<Flex direction="column" align="flex-end">
+							<Flex direction="column" align="stretch">
 								<Button
 									__next40pxDefaultSize
 									variant="primary"
@@ -453,15 +453,16 @@ const Edit = props => {
 						</> }
 						{ isDialogOpen === DIALOG_OPTIONS.DISABLED_BLOCKS && <>
 							<div>
-								<span>{ __( 'The designs you have selected contain the following disabled blocks:', i18n ) }</span>
+								<p>{ __( 'The designs you have selected contain the following disabled blocks:', i18n ) }</p>
 								<ul>
 									{ disabledBlocksRef.current && [ ...disabledBlocksRef.current ].map( ( block, i ) => <li key={ i }>{ block }</li> ) }
 								</ul>
-								<span> { __( 'These blocks can be enabled in the Stackable settings page. Do you want to keep the disabled blocks or substitute them with other Stackable or core blocks?', i18n ) }</span>
+								<p> { __( 'These blocks can be enabled in the Stackable settings page. Do you want to keep the disabled blocks or substitute them with other Stackable or core blocks?', i18n ) }</p>
 							</div>
-							<Flex direction="column" align="flex-end">
+							<Flex direction="column" align="stretch">
 								<Button
 									__next40pxDefaultSize
+									style={ { textAlign: 'center' } }
 									variant="primary"
 									onClick={ () => onClickPrimary() }
 								>
@@ -469,6 +470,7 @@ const Edit = props => {
 								</Button>
 								<Button
 									__next40pxDefaultSize
+									style={ { textAlign: 'center', marginBottom: '16px' } }
 									variant="secondary"
 									onClick={ () => onClickSecondary() }
 								>
@@ -476,6 +478,7 @@ const Edit = props => {
 								</Button>
 								<Button
 									__next40pxDefaultSize
+									style={ { textAlign: 'center', marginBottom: '16px' } }
 									variant="tertiary"
 									onClick={ () => onClickTertiary() }
 								>
