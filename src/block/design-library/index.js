@@ -13,6 +13,8 @@ import edit from './edit'
 import save from './save'
 import metadata from './block.json'
 
+import { addFilter } from '@wordpress/hooks'
+
 export const settings = {
 	...metadata,
 	icon: StackableIcon,
@@ -33,3 +35,14 @@ export const settings = {
 	edit,
 	save,
 }
+
+// Always hide design library from block inserter
+addFilter( `stackable.design-library.settings`, `stackable/design-library/inserter`, settings => {
+	return {
+		...settings,
+		supports: {
+			...settings.supports,
+			inserter: false,
+		},
+	}
+} )
