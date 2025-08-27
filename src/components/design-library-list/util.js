@@ -314,6 +314,9 @@ export const getAdditionalStylesForPreview = () => {
 	styles += `.stk-progress-bar .stk-progress-bar__bar { width: var(--progress-percent, 0px); }`
 	styles += `.stk-progress-circle .stk-progress-circle__bar { stroke-dashoffset: var(--progress-dash-offset); }`
 
+	// Set styles for maps graphic
+	styles += `.stk-block-map { height: 100%; } .stk-block-map > img { height: 100%; width: 100%; object-fit: cover; }`
+
 	// Display correctly the styles for posts block.
 	// Do this only if in Free version, since we will be able to load the correct CSS for Premium.
 	if ( ! isPro ) {
