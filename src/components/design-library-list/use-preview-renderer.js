@@ -3,6 +3,7 @@
  * Internal dependencies.
  */
 import DEFAULT from './default.json'
+import mapsGraphic from './images/maps.png'
 import {
 	addBackgroundScheme, addContainerScheme,
 	addPlaceholderForPostsBlock, cleanParse,
@@ -13,7 +14,9 @@ import {
 /**
  * External dependencies.
  */
-import { isPro, devMode } from 'stackable'
+import {
+	isPro, devMode, srcUrl,
+} from 'stackable'
 import { fetchDesign } from '~stackable/design-library'
 import { cloneDeep } from 'lodash'
 
@@ -136,6 +139,22 @@ export const usePreviewRenderer = (
 		} else if ( categoriesRef.current.includes( 'Post Loop' ) ) {
 			const defaultValues = DEFAULT_CONTENT[ 'Post Loop' ]
 			preview = addPlaceholderForPostsBlock( preview, defaultValues.posts_placeholder, defaultValues )
+		}
+
+		// For designs with maps block, replace the iframe with an img of the maps
+		if ( preview.includes( 'stk-block-map' ) ) {
+			// Regex to match <div ... class="...stk-block-map...">...</div>
+			preview = preview.replace(
+				/(<div[^>]*class="[^"]*stk-block-map[^"]*"[^>]*>)([\s\S]*?)(<\/div>)/g,
+				( match, divStart, divContent, divEnd ) => {
+					// Replace <iframe ...></iframe> or <iframe .../> with <img ... />
+					const replacedContent = divContent.replace(
+						/<iframe[\s\S]*?<\/iframe>|<iframe[\s\S]*?\/>/g,
+						'<img src="' + srcUrl + '/' + mapsGraphic + '" />'
+					)
+					return divStart + replacedContent + divEnd
+				}
+			)
 		}
 
 		const cleanedBlock = preview.replace( /<!--[\s\S]*?-->/g, '' ) // removes comment
