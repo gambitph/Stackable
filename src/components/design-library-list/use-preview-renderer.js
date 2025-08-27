@@ -245,6 +245,14 @@ export const usePreviewRenderer = (
 		}
 	}, [ blocks ] )
 
+	// If categories change, adjust preview sizes
+	useEffect( () => {
+		if ( ! content || ! blocks.parsed || ! blocks.serialized ) {
+			return
+		}
+		setTimeout( adjustScale, 100 )
+	}, [ content ] )
+
 	const onClickDesign = () => {
 		if ( ! isPro && plan !== 'free' ) {
 			return
