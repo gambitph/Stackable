@@ -46,7 +46,7 @@ export const DesignPreview = ( {
 		const container = ref.current
 		if ( container ) {
 			const deltaY = e.clientY - lastY.current
-			container.scrollTop = lastScrollTop.current - ( deltaY * 2 )
+			container.scrollTop = lastScrollTop.current - ( deltaY * 4 )
 		}
 	}
 

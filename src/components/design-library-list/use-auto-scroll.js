@@ -7,34 +7,63 @@ const NOOP = () => {}
 
 export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 	const scrollPositionRef = useRef( 0 )
-	const scrollIntervalRef = useRef( null )
+	const animationFrameRef = useRef( null )
+	const isScrollingRef = useRef( false )
+
+	const smoothScrollToBottom = ( shadowDomBody, targetScrollTop ) => {
+		if ( ! shadowDomBody || ! isScrollingRef.current ) {
+			return
+		}
+
+		const currentScrollTop = shadowDomBody.scrollTop
+		const distance = targetScrollTop - currentScrollTop
+		const totalDistance = shadowBodySizeRef.current.maxScrollTop
+		const progress = 1 - ( distance / totalDistance ) // 0 at start, 1 at end
+
+		// If we're close enough to the target, stop scrolling
+		if ( Math.abs( distance ) < 1 ) {
+			isScrollingRef.current = false
+			return
+		}
+
+		// Bell curve: faster ramp up, starts at reasonable speed, peaks in middle
+		// Creates a more aggressive acceleration and deceleration pattern
+		const bellCurve = 10 * progress * ( 1 - progress ) // Peaks at 2.0 in the middle
+		const baseSpeed = 15 // Base speed multiplier
+		const scrollStep = Math.max( baseSpeed * bellCurve, 5 ) // Minimum 1.5px for better start
+
+		// Apply the scroll step
+		shadowDomBody.scrollTop = currentScrollTop + scrollStep
+		scrollPositionRef.current = shadowDomBody.scrollTop
+
+		// Continue scrolling on next frame
+		animationFrameRef.current = requestAnimationFrame( () =>
+			smoothScrollToBottom( shadowDomBody, targetScrollTop )
+		)
+	}
 
 	const onMouseOverImpl = () => {
 		const shadowDomBody = hostRef?.current?.shadowRoot?.querySelector?.( 'body' )
 		if ( shadowDomBody && shadowBodySizeRef.current ) {
+			// Reset scroll position and start smooth scrolling
 			scrollPositionRef.current = 0
+			isScrollingRef.current = true
+
 			setTimeout( () => {
-				if ( scrollPositionRef.current === -1 ) {
+				if ( scrollPositionRef.current === -1 || ! isScrollingRef.current ) {
 					return
 				}
 
-				if ( scrollIntervalRef.current ) {
-					clearInterval( scrollIntervalRef.current )
+				// Clear any existing animation
+				if ( animationFrameRef.current ) {
+					cancelAnimationFrame( animationFrameRef.current )
 				}
 
-				scrollIntervalRef.current = setInterval( () => {
-					const scrollDifference = shadowBodySizeRef.current.maxScrollTop - scrollPositionRef.current
-					const shouldScroll = shadowBodySizeRef.current.maxScrollTop - scrollPositionRef.current > 0
-
-					if ( ! shadowDomBody || ! shouldScroll ) {
-						clearInterval( scrollIntervalRef.current )
-						return
-					}
-
-					const scrollBy = scrollDifference >= 20 ? 20 : scrollDifference
-					shadowDomBody.scrollTop = scrollPositionRef.current + scrollBy
-					scrollPositionRef.current += scrollBy
-				}, 60 )
+				// Start smooth scrolling to bottom
+				const targetScrollTop = shadowBodySizeRef.current.maxScrollTop
+				if ( targetScrollTop > 0 ) {
+					smoothScrollToBottom( shadowDomBody, targetScrollTop )
+				}
 			}, 1000 )
 		}
 	}
@@ -42,8 +71,13 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 	const onMouseOutImpl = () => {
 		const shadowDomBody = hostRef?.current?.shadowRoot?.querySelector?.( 'body' )
 		if ( shadowDomBody ) {
-			clearInterval( scrollIntervalRef.current )
-			scrollIntervalRef.current = null
+			// Stop scrolling and smoothly return to top
+			isScrollingRef.current = false
+			if ( animationFrameRef.current ) {
+				cancelAnimationFrame( animationFrameRef.current )
+				animationFrameRef.current = null
+			}
+
 			shadowDomBody.scrollTo( {
 				top: 0,
 				behavior: 'smooth',
@@ -53,8 +87,12 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 	}
 
 	const onMouseDownImpl = () => {
-		clearInterval( scrollIntervalRef.current )
-		scrollIntervalRef.current = null
+		// Stop auto-scrolling when user interacts
+		isScrollingRef.current = false
+		if ( animationFrameRef.current ) {
+			cancelAnimationFrame( animationFrameRef.current )
+			animationFrameRef.current = null
+		}
 		scrollPositionRef.current = -1
 	}
 
