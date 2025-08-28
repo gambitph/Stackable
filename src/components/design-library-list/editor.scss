@@ -199,3 +199,23 @@
 		}
 	}
 }
+
+// Full page previews
+.ugb-modal-design-library__full-pages {
+	.stk--design-preview-large {
+		cursor: grab;
+		cursor: -webkit-grab;
+		&.is-grabbing {
+			cursor: grabbing;
+			cursor: -webkit-grabbing;
+		}
+	}
+	.ugb-design-control-pro-note {
+		top: auto;
+		padding: 60px 30px 30px;
+		background: linear-gradient(180deg, transparent, #fffe 40px, #fff) !important;
+	}
+	.stk-block-design__host {
+		opacity: 1 !important;
+	}
+}
