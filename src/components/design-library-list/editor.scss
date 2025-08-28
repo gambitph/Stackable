@@ -205,7 +205,7 @@
 	.stk--design-preview-large {
 		cursor: grab;
 		cursor: -webkit-grab;
-		&.is-grabbing {
+		&:active {
 			cursor: grabbing;
 			cursor: -webkit-grabbing;
 		}
@@ -214,6 +214,7 @@
 		top: auto;
 		padding: 60px 30px 30px;
 		background: linear-gradient(180deg, transparent, #fffe 40px, #fff) !important;
+		bottom: -1px;
 	}
 	.stk-block-design__host {
 		opacity: 1 !important;
