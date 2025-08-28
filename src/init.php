@@ -340,6 +340,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			global $wp_version;
 			$args = apply_filters( 'stackable_localize_script', array(
 				'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
+				'homeUrl' => home_url(),
 				'contentWidth' => isset( $content_width ) ? $content_width : 900,
 				'i18n' => STACKABLE_I18N,
 				'nonce' => wp_create_nonce( 'stackable' ),

@@ -9,7 +9,9 @@ import heroBg from './images/hero-bg.webp'
 import mediaText from './images/media-text.webp'
 import { COLOR_SCHEME_PROPERTY_LABELS } from '../color-scheme-preview'
 
-import { i18n, srcUrl } from 'stackable'
+import {
+	i18n, srcUrl, homeUrl,
+} from 'stackable'
 import { isDarkColor } from '~stackable/util'
 import { LONG_TEXT } from '~stackable/util/block-templates'
 
@@ -294,7 +296,7 @@ export const WebPreview = ( { className } ) => {
 					<div className="ugb-style-guide__preview-mock-browser__button"></div>
 				</div>
 				{ /* TODO: can we get the URL of the current site here? */ }
-				<div className="ugb-style-guide__preview-mock-browser__url">https://example.com</div>
+				<div className="ugb-style-guide__preview-mock-browser__url">{ homeUrl }</div>
 				<div className="ugb-style-guide__preview-mock-browser__resize-handle"></div>
 			</div>
 			<div className={ `ugb-style-guide__preview-root ${ className }` }>
