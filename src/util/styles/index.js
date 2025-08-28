@@ -15,6 +15,7 @@ import { applyFilters } from '@wordpress/hooks'
 export { default as StyleObject } from './style-object'
 export { useStyles, getStyles } from './style-object'
 export { useQueryLoopInstanceId } from './style-object'
+export { blockStyleGenerators } from './block-style-generators'
 
 export const isDarkColor = _color => {
 	try {

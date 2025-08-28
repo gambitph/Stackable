@@ -330,6 +330,10 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		.stk-block-timeline > .stk-inner-blocks::after {
 			content: "" !important;
 		}
+
+		.stk-block-notification h3 {
+			color: var(--stk-container-color) !important;
+		}
 	}
 
 	.ugb-style-guide__elements__buttons .stk-button {

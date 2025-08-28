@@ -1,6 +1,16 @@
 import heroBg from './images/hero-bg.webp'
-import { i18n, srcUrl } from 'stackable'
-import { cleanSerializedBlock, createUniqueClass } from '~stackable/util'
+import profile from './images/profile.webp'
+import {
+	i18n, srcUrl, version as VERSION,
+} from 'stackable'
+
+import { CssSaveCompiler } from '../block-css'
+import {
+	cleanSerializedBlock,
+	createUniqueClass,
+	blockStyleGenerators,
+} from '~stackable/util'
+import { PLACEHOLDER_INNER_BLOCKS } from '~stackable/util/block-templates'
 
 import { __ } from '@wordpress/i18n'
 import { RawHTML } from '@wordpress/element'
@@ -9,7 +19,6 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 	getBlockVariations,
 } from '@wordpress/blocks'
-import { PLACEHOLDER_INNER_BLOCKS } from '~stackable/util/block-templates'
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 export const DefaultButton = ( {
@@ -90,19 +99,51 @@ const ADDITIONAL_ATTRIBUTES = {
 	'stackable/number-box': { text: __( '1', i18n ) },
 }
 
+const getGeneratedCss = ( blocks, generateForInnerBlocks = false ) => {
+	return blocks.map( block => {
+		if ( ! block.attributes.uniqueId ) {
+			block.attributes.uniqueId = createUniqueClass( block.clientId )
+		}
+
+		const blockStyleGenerator = blockStyleGenerators[ block.name ]
+		const attrNamesWithValues = blockStyleGenerator.getAttributesWithValues( block.attributes )
+		const blockStyleDefs = blockStyleGenerator.getBlockStyles( attrNamesWithValues )
+
+		const cssCompiler = new CssSaveCompiler()
+		const saveCss = blockStyleGenerator.generateBlockStylesForSave(
+			cssCompiler,
+			block.attributes,
+			blockStyleDefs,
+			{
+				version: VERSION,
+			}
+		)
+
+		block.attributes.generatedCss = saveCss
+
+		if ( generateForInnerBlocks ) {
+			block.innerBlocks = getGeneratedCss( block.innerBlocks, generateForInnerBlocks )
+		}
+
+		return block
+	} )
+}
+
 export const RenderBlock = props => {
 	const {
 		blockName, attributes, innerBlocks, name = __( 'Default', i18n ),
 	} = props
 
 	const block = createBlock( blockName, attributes, innerBlocks )
-	block.attributes.uniqueId = createUniqueClass( block.clientId )
-	let serialized = serialize( [ block ] )
+	const newBlock = getGeneratedCss( [ block ] )
+
+	let serialized = serialize( newBlock )
 
 	if ( blockName === 'stackable/timeline' ) {
 		const _block = createBlock( blockName, attributes, innerBlocks )
 		_block.attributes.timelineIsLast = true
-		serialized += '\n' + serialize( [ _block ] )
+		const duplicateBlock = getGeneratedCss( [ _block ] )
+		serialized += '\n' + serialize( duplicateBlock )
 	}
 
 	return (
@@ -111,6 +152,19 @@ export const RenderBlock = props => {
 			{ `<p>${ name }</p>` }
 		</RawHTML>
 	)
+}
+
+const INNER_BLOCK_CALLBACKS = {
+	'stackable/team-member': innerBlocks => {
+		innerBlocks[ 0 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
+
+		return innerBlocks
+	},
+	'stackable/testimonial': innerBlocks => {
+		innerBlocks[ 1 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
+
+		return innerBlocks
+	},
 }
 
 export const getPlaceholders = blockName => {
@@ -123,6 +177,14 @@ export const getPlaceholders = blockName => {
 		innerBlocks = createBlocksFromInnerBlocksTemplate( PLACEHOLDER_INNER_BLOCKS[ blockName ] )
 	} else if ( variations.length && variations[ 0 ].innerBlocks?.length ) {
 		innerBlocks = createBlocksFromInnerBlocksTemplate( variations[ 0 ].innerBlocks )
+
+		if ( blockName in INNER_BLOCK_CALLBACKS ) {
+			innerBlocks = INNER_BLOCK_CALLBACKS[ blockName ]( innerBlocks )
+		}
+	}
+
+	if ( innerBlocks.length ) {
+		innerBlocks = getGeneratedCss( innerBlocks, true )
 	}
 
 	if ( variations.length && variations[ 0 ].attributes ) {
@@ -136,5 +198,7 @@ export const getPlaceholders = blockName => {
 		}
 	}
 
-	return { attributes, innerBlocks }
+	return {
+		attributes, innerBlocks,
+	}
 }
