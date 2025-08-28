@@ -295,16 +295,24 @@ div.ugb-modal-design-library__enable-background {
 
 	.components-button {
 		height: 100%;
-		border: 1px solid #e0e0e0;
 		box-shadow: none !important;
 		padding: 4px 24px;
 		border-radius: 0 !important;
-		&:hover,
-		&.is-primary:hover,
-		&.is-primary {
-			color: #f00069 !important;
-			background: #e543761a;
-			border-color: #f00069;
+		border: none;
+		color: #777;
+		&:focus-visible {
+			outline: 1px solid #f00069;
+			outline-offset: 2px;
+		}
+		&:hover {
+			color: #111;
+		}
+		&.is-primary,
+		&.is-primary:hover {
+			color: #111;
+			font-weight: bold;
+			background: #e5437610;
+			box-shadow: inset 0 -3px 0 #f00069 !important;
 		}
 	}
 }

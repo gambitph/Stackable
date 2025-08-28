@@ -42,8 +42,11 @@
 	border: 1px solid #0000001a;
 	box-shadow: none;
 	.ugb-button-component {
-		transition: all 0.4s cubic-bezier(0.2, 0.6, 0.4, 1);
+		transition: opacity 0.4s cubic-bezier(0.2, 0.6, 0.4, 1);
 		opacity: 0;
+		@media (hover: none) {
+			opacity: 1;
+		}
 	}
 	&:hover {
 		// box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
