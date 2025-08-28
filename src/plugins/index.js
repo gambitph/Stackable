@@ -5,6 +5,7 @@ import './global-settings'
 import './theme-block-size'
 import './design-library-button'
 import './layout-picker-reset'
+import './guided-modal-tour-trigger'
 // import './v2-migration-popup' // Probably 1.5yrs of checking for backward compatibility is enough.
 import './editor-device-preview-class'
 import './theme-block-style-inheritance'
