@@ -88,7 +88,7 @@ export const DesignPreview = ( {
 			// eslint-disable-next-line @wordpress/no-global-event-listener
 			window.removeEventListener( 'mouseup', handleMouseUp )
 		}
-	}, [] )
+	}, [ selectedTab ] )
 
 	useEffect( () => {
 		// The scale might not be correct on first load, so adjust it again to be sure.
