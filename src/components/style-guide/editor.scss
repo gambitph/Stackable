@@ -273,6 +273,7 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 
 			> * {
 				margin-bottom: 0;
+				pointer-events: none;
 			}
 			> p {
 				margin-top: 12px;
@@ -288,15 +289,15 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 			max-width: calc(100% / 3 - 16px);
 		}
 
-		> div:has(> .stk-block-hero, > .stk-block-horizontal-scroller, > .stk-block-notification, > .stk-block-timeline) {
+		> div:has(> .stk-block-hero, > .stk-block-horizontal-scroller, > .stk-block-notification, > .stk-block-timeline, > .stk-block-posts) {
 			max-width: calc(100% / 2 - 12px);
 		}
 
-		> div:has(> .stk-block-accordion, > .stk-block-icon-box, > .stk-block-icon-label, > .stk-block-icon-list, > .stk-block-map, > .stk-block-number-box, > .stk-block-price, > .stk-block-pricing-box, > .stk-block-progress-bar, > .stk-block-progress-circle) {
+		> div:has(> .stk-block-accordion, > .stk-block-icon-box, > .stk-block-icon-label, > .stk-block-icon-list, > .stk-block-map, > .stk-block-number-box, > .stk-block-price, > .stk-block-pricing-box, > .stk-block-progress-bar, > .stk-block-progress-circle, > .stk-block-table-of-contents) {
 			width: calc(100% / 3 - 16px);
 		}
 
-		> div > :is(.stk-block-horizontal-scroller, .stk-block-icon-box, .stk-block-icon-label, .stk-block-icon-list, .stk-block-map, .stk-block-number-box, .stk-block-price, .stk-block-pricing-box, .stk-block-progress-circle) {
+		> div > :is(.stk-block-horizontal-scroller, .stk-block-icon-box, .stk-block-icon-label, .stk-block-icon-list, .stk-block-map, .stk-block-number-box, .stk-block-price, .stk-block-pricing-box, .stk-block-progress-circle, .stk-block-table-of-contents) {
 			width: 100%;
 		}
 
@@ -348,6 +349,18 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 
 	:where(.ugb-style-guide__elements .stk-block-table-of-contents ul) {
 		list-style-type: initial;
+		:where(a) {
+			color: currentColor;
+		}
+	}
+
+	:where(.ugb-style-guide__elements .stk-block-posts) {
+		:where(h1, h2, h3, h4, h5, h6) {
+			color: var(--stk-heading-color, currentColor);
+		}
+		:where(a) {
+			color: currentColor;
+		}
 	}
 
 	.ugb-style-guide__elements__buttons .stk-button {

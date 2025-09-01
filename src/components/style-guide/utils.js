@@ -12,13 +12,15 @@ import {
 } from '~stackable/util'
 import { PLACEHOLDER_INNER_BLOCKS } from '~stackable/util/block-templates'
 
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { RawHTML } from '@wordpress/element'
 import {
 	createBlock, serialize,
 	createBlocksFromInnerBlocksTemplate,
 	getBlockVariations,
 } from '@wordpress/blocks'
+import { DEFAULT_CONTENT } from '../design-library-list/design-library-list-item'
+import { addPlaceholderForPostsBlock } from '../design-library-list/util'
 
 export const DUMMY_COLOR_SCHEMES = [
 	{
@@ -84,6 +86,74 @@ const ADDITIONAL_ATTRIBUTES = {
 	'stackable/count-up': { text: '1,234.56' },
 	'stackable/icon-list-item': { text: __( 'List Item', i18n ) },
 	'stackable/number-box': { text: __( '1', i18n ) },
+	'stackable/table-of-contents': {
+		headings: [
+			{
+				content: sprintf( __( 'Heading %s', i18n ), 1 ),
+				level: 1,
+				anchor: 'heading-1',
+				clientId: '72dfd683-3844-47a3-af9d-76eddbf6d51c',
+				tag: 1,
+				isExcluded: false,
+			},
+			{
+				content: sprintf( __( 'Heading %s', i18n ), 2 ),
+				level: 2,
+				anchor: 'heading-2-1',
+				clientId: 'd9208411-5aef-4446-893b-f41226ba7858',
+				tag: 2,
+				isExcluded: false,
+			},
+			{
+				content: sprintf( __( 'Heading %s', i18n ), 3 ),
+				level: 3,
+				anchor: 'heading-3',
+				clientId: 'fb915b6c-f956-44dc-8c50-44ccbb8e430c',
+				tag: 3,
+				isExcluded: false,
+			},
+			{
+				content: sprintf( __( 'Heading %s', i18n ), 4 ),
+				level: 4,
+				anchor: 'heading-4',
+				clientId: '350dd450-77f6-430d-a9f3-0be449c64235',
+				tag: 4,
+				isExcluded: false,
+			},
+			{
+				content: sprintf( __( 'Heading %s', i18n ), 5 ),
+				level: 5,
+				anchor: 'heading-5',
+				clientId: '41cde9d8-2585-47ea-a6ba-a3a208a0ede3',
+				tag: 5,
+				isExcluded: false,
+			},
+			{
+				content: sprintf( __( 'Heading %s', i18n ), 6 ),
+				level: 6,
+				anchor: 'heading-6',
+				clientId: '375f0cb3-2aa1-478b-a3a7-de5dedd3dd38',
+				tag: 6,
+				isExcluded: false,
+			},
+			{
+				content: sprintf( __( 'Heading %s', i18n ), 2 ),
+				level: 2,
+				anchor: 'heading-2-2',
+				clientId: '642f3b01-8ead-4813-a092-22d9995610c0',
+				tag: 2,
+				isExcluded: false,
+			},
+			{
+				content: sprintf( __( 'Heading %s', i18n ), 2 ),
+				level: 2,
+				anchor: 'heading-2-3',
+				clientId: 'f0ad1cb6-332f-406b-9f3f-d41e08725740',
+				tag: 2,
+				isExcluded: false,
+			},
+		],
+	},
 }
 
 const INNER_BLOCK_CALLBACKS = {
@@ -192,6 +262,11 @@ const getSerializedBlock = props => {
 		newBlock = getGeneratedCss( [ block ] )
 		serialized = serialize( newBlock )
 		blockName = 'stackable/icon-list'
+	}
+
+	if ( blockName === 'stackable/posts' ) {
+		const defaultValues = DEFAULT_CONTENT[ 'Post Loop' ]
+		serialized = addPlaceholderForPostsBlock( serialized, defaultValues.posts_placeholder, defaultValues, `${ srcUrl }/${ heroBg }` )
 	}
 
 	return {

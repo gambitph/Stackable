@@ -33,7 +33,7 @@ import { serialize } from '@wordpress/blocks'
 import { applyFilters } from '@wordpress/hooks'
 import { cloneDeep } from 'lodash'
 
-const DEFAULT_CONTENT = { ...DEFAULT }
+export const DEFAULT_CONTENT = { ...DEFAULT }
 
 const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 	const {
