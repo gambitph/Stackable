@@ -334,6 +334,20 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		.stk-block-notification h3 {
 			color: var(--stk-container-color) !important;
 		}
+
+		.stk-block-accordion {
+			min-height: unset;
+			max-height: fit-content;
+			pointer-events: none;
+
+			.stk-block {
+				min-height: unset;
+			}
+		}
+	}
+
+	:where(.ugb-style-guide__elements .stk-block-table-of-contents ul) {
+		list-style-type: initial;
 	}
 
 	.ugb-style-guide__elements__buttons .stk-button {

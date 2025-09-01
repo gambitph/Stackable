@@ -20,36 +20,6 @@ import {
 	getBlockVariations,
 } from '@wordpress/blocks'
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-export const DefaultButton = ( {
-	text, dataDevice = 'desktop', style = '',
-} ) => {
-	return <>
-		<div className="wp-block-stackable-button stk-block-button stk-block stk-5609083" data-block-id="5609083">
-			{ style && <style> { style } </style> }
-			<a className="stk-link stk-button stk--hover-effect-darken" href="" onClick={ e => e.preventDefault() }>
-				<span className="stk-button__inner-text ugb-style-guide__typography-preview" data-device={ dataDevice }>{ text }</span>
-			</a>
-		</div>
-	</>
-}
-
-export const DefaultOutlineButton = ( {
-	text, dataDevice = 'desktop', style = '',
-} ) => {
-	return <>
-
-		<div className="wp-block-stackable-button stk-block-button is-style-ghost stk-block stk-3f9ae3c" data-block-id="3f9ae3c">
-			<style>{ '.stk-3f9ae3c .stk-button{background:transparent !important;}.stk-3f9ae3c .stk-button:hover:after{background:transparent !important;opacity:1 !important;}:where(.stk-hover-parent:hover,  .stk-hover-parent.stk--is-hovered) .stk-3f9ae3c .stk-button:after{background:transparent !important;opacity:1 !important;}.stk-3f9ae3c .stk-button:before{border-style:solid !important;}' }</style>
-			{ style && <style> { style } </style> }
-			<a className="stk-link stk-button stk--hover-effect-darken" href="" onClick={ e => e.preventDefault() }>
-				<span className="stk-button__inner-text ugb-style-guide__typography-preview" data-device={ dataDevice }>{ text }</span>
-			</a>
-		</div>
-
-	</>
-}
-
 export const DUMMY_COLOR_SCHEMES = [
 	{
 		name: 'Base Color Scheme',
@@ -87,6 +57,23 @@ export const DUMMY_COLOR_SCHEMES = [
 
 const SERIALIZE_CALLBACKS = {
 	'stackable/tabs': serialized => serialized.replace( '"stk-block-tabs__tab"', '"stk-block-tabs__tab stk-block-tabs__tab--active"' ),
+	'stackable/countdown': serialized => serialized.replace(
+		'<div class="stk-block-countdown__digit stk-block-countdown__digit-day"></div>',
+		'<div class="stk-block-countdown__digit stk-block-countdown__digit-day">10</div>'
+	).replace(
+		'<div class="stk-block-countdown__digit stk-block-countdown__digit-hour"></div>',
+		'<div class="stk-block-countdown__digit stk-block-countdown__digit-hour">12</div>'
+	).replace(
+		'<div class="stk-block-countdown__digit stk-block-countdown__digit-minute"></div>',
+		'<div class="stk-block-countdown__digit stk-block-countdown__digit-minute">30</div>'
+	).replace(
+		'<div class="stk-block-countdown__digit stk-block-countdown__digit-second"></div>',
+		'<div class="stk-block-countdown__digit stk-block-countdown__digit-second">45</div>',
+	),
+	'stackable/icon-list': ( serialized, attributes ) => serialized.replace(
+		/#stk-icon-list__icon-svg-def-[^"]*/g,
+		`#stk-icon-list__icon-svg-def-${ attributes.uniqueId }`
+	),
 }
 
 const ADDITIONAL_ATTRIBUTES = {
@@ -97,6 +84,49 @@ const ADDITIONAL_ATTRIBUTES = {
 	'stackable/count-up': { text: '1,234.56' },
 	'stackable/icon-list-item': { text: __( 'List Item', i18n ) },
 	'stackable/number-box': { text: __( '1', i18n ) },
+}
+
+const INNER_BLOCK_CALLBACKS = {
+	'stackable/team-member': innerBlocks => {
+		innerBlocks[ 0 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
+
+		return innerBlocks
+	},
+	'stackable/testimonial': innerBlocks => {
+		innerBlocks[ 1 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
+
+		return innerBlocks
+	},
+}
+
+/* eslint-disable jsx-a11y/anchor-is-valid */
+export const DefaultButton = ( {
+	text, dataDevice = 'desktop', style = '',
+} ) => {
+	return <>
+		<div className="wp-block-stackable-button stk-block-button stk-block stk-5609083" data-block-id="5609083">
+			{ style && <style> { style } </style> }
+			<a className="stk-link stk-button stk--hover-effect-darken" href="" onClick={ e => e.preventDefault() }>
+				<span className="stk-button__inner-text ugb-style-guide__typography-preview" data-device={ dataDevice }>{ text }</span>
+			</a>
+		</div>
+	</>
+}
+
+export const DefaultOutlineButton = ( {
+	text, dataDevice = 'desktop', style = '',
+} ) => {
+	return <>
+
+		<div className="wp-block-stackable-button stk-block-button is-style-ghost stk-block stk-3f9ae3c" data-block-id="3f9ae3c">
+			<style>{ '.stk-3f9ae3c .stk-button{background:transparent !important;}.stk-3f9ae3c .stk-button:hover:after{background:transparent !important;opacity:1 !important;}:where(.stk-hover-parent:hover,  .stk-hover-parent.stk--is-hovered) .stk-3f9ae3c .stk-button:after{background:transparent !important;opacity:1 !important;}.stk-3f9ae3c .stk-button:before{border-style:solid !important;}' }</style>
+			{ style && <style> { style } </style> }
+			<a className="stk-link stk-button stk--hover-effect-darken" href="" onClick={ e => e.preventDefault() }>
+				<span className="stk-button__inner-text ugb-style-guide__typography-preview" data-device={ dataDevice }>{ text }</span>
+			</a>
+		</div>
+
+	</>
 }
 
 const getGeneratedCss = ( blocks, generateForInnerBlocks = false ) => {
@@ -129,14 +159,15 @@ const getGeneratedCss = ( blocks, generateForInnerBlocks = false ) => {
 	} )
 }
 
-export const RenderBlock = props => {
+const getSerializedBlock = props => {
 	const {
-		blockName, attributes, innerBlocks, name = __( 'Default', i18n ),
+		blockName: _blockName, attributes, innerBlocks,
 	} = props
 
-	const block = createBlock( blockName, attributes, innerBlocks )
-	const newBlock = getGeneratedCss( [ block ] )
+	let blockName = _blockName
 
+	let block = createBlock( blockName, attributes, innerBlocks )
+	let newBlock = getGeneratedCss( [ block ] )
 	let serialized = serialize( newBlock )
 
 	if ( blockName === 'stackable/timeline' ) {
@@ -146,25 +177,43 @@ export const RenderBlock = props => {
 		serialized += '\n' + serialize( duplicateBlock )
 	}
 
+	if ( blockName === 'stackable/accordion' ) {
+		const _block = createBlock( blockName, attributes, innerBlocks )
+		_block.attributes.startOpen = true
+		_block.attributes.blockMargin = {
+			top: 24, bottom: 0, left: 0, right: 0,
+		}
+		const duplicateBlock = getGeneratedCss( [ _block ] )
+		serialized += '\n' + serialize( duplicateBlock )
+	}
+
+	if ( blockName === 'stackable/icon-list-item' ) {
+		block = createBlock( 'stackable/icon-list', {}, [ block ] )
+		newBlock = getGeneratedCss( [ block ] )
+		serialized = serialize( newBlock )
+		blockName = 'stackable/icon-list'
+	}
+
+	return {
+		serialized, blockName, attributes: block.attributes,
+	}
+}
+
+export const RenderBlock = props => {
+	const {
+		name = __( 'Default', i18n ), ...propsToPass
+	} = props
+
+	const {
+		serialized, blockName, attributes,
+	} = getSerializedBlock( propsToPass )
+
 	return (
 		<RawHTML>
-			{ cleanSerializedBlock( serialized, SERIALIZE_CALLBACKS[ blockName ] ) }
+			{ cleanSerializedBlock( serialized, SERIALIZE_CALLBACKS[ blockName ], attributes ) }
 			{ `<p>${ name }</p>` }
 		</RawHTML>
 	)
-}
-
-const INNER_BLOCK_CALLBACKS = {
-	'stackable/team-member': innerBlocks => {
-		innerBlocks[ 0 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
-
-		return innerBlocks
-	},
-	'stackable/testimonial': innerBlocks => {
-		innerBlocks[ 1 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
-
-		return innerBlocks
-	},
 }
 
 export const getPlaceholders = blockName => {
