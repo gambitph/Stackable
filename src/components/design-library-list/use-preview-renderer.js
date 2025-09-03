@@ -51,6 +51,7 @@ export const usePreviewRenderer = (
 
 	const [ blocks, setBlocks ] = useState( { parsed: null, serialized: '' } )
 	const [ content, setContent ] = useState( '' )
+	const [ contentForInsertion, setContentForInsertion ] = useState( null )
 
 	const categoriesRef = useRef( [] )
 	const blocksForSubstitutionRef = useRef( false )
@@ -125,7 +126,7 @@ export const usePreviewRenderer = (
 		}
 
 		if ( selectedTab === 'patterns' ) {
-			adjustPatternSpacing( parsedBlocks[ 0 ].attributes, category, spacingSize, isDesignLibraryDevMode )
+			adjustPatternSpacing( parsedBlocks[ 0 ].attributes, category, spacingSize, false )
 		}
 
 		let preview = serialize( parsedBlocks )
@@ -168,34 +169,53 @@ export const usePreviewRenderer = (
 	// Replace the placeholders with the default content
 	useEffect( () => {
 		let _parsedBlocks = []
+		let _parsedBlocksForInsertion = null
 		const initialize = async () => {
-			let _content = template
+			const _content = template
 			if ( selectedTab === 'patterns' ) {
-				_content = replacePlaceholders( _content, category, isDesignLibraryDevMode )
+				// For preview: always replace placeholders (ignore dev mode)
+				const _contentForPreview = replacePlaceholders( _content, category, false )
+				// For insertion: only create separate content if dev mode is enabled
+				const _contentForInsertion = isDesignLibraryDevMode ? replacePlaceholders( _content, category, true ) : _contentForPreview
 
 				categoriesRef.current.push( category )
 
-				if ( _content.includes( 'stk-design-library__bg-target="true"' ) ) {
+				if ( _contentForPreview.includes( 'stk-design-library__bg-target="true"' ) ) {
 					hasBackgroundTargetRef.current = true
 				}
 
-				_parsedBlocks = cleanParse( _content )
+				_parsedBlocks = cleanParse( _contentForPreview )
+				_parsedBlocksForInsertion = isDesignLibraryDevMode ? cleanParse( _contentForInsertion ) : null
 			} else {
 				for ( let i = 0; i < _content.length; i++ ) {
 					const section = _content[ i ]
 					const design = await fetchDesign( section.id )
-					const designContent = replacePlaceholders( design.template || design.content, design.category )
+					// For preview: always replace placeholders (ignore dev mode)
+					const designContentForPreview = replacePlaceholders( design.template || design.content, design.category, false )
+					// For insertion: only create separate content if dev mode is enabled
+					const designContentForInsertion = isDesignLibraryDevMode ? replacePlaceholders( design.template || design.content, design.category, true ) : designContentForPreview
 
 					categoriesRef.current.push( design.category )
 
-					let _block = cleanParse( designContent )[ 0 ]
+					let _block = cleanParse( designContentForPreview )[ 0 ]
+					let _blockForInsertion = isDesignLibraryDevMode ? cleanParse( designContentForInsertion )[ 0 ] : null
 
 					if ( section.bg ) {
 						_block = addBackgroundScheme( [ _block ], true, '' )[ 0 ]
+						if ( _blockForInsertion ) {
+							_blockForInsertion = addBackgroundScheme( [ _blockForInsertion ], true, '' )[ 0 ]
+						}
 					}
 
-					adjustPatternSpacing( _block.attributes, design.category, spacingSize, isDesignLibraryDevMode )
+					adjustPatternSpacing( _block.attributes, design.category, spacingSize, false )
+					if ( _blockForInsertion ) {
+						adjustPatternSpacing( _blockForInsertion.attributes, design.category, spacingSize, true )
+					}
 					_parsedBlocks.push( _block )
+					if ( _blockForInsertion ) {
+						_parsedBlocksForInsertion = _parsedBlocksForInsertion || []
+						_parsedBlocksForInsertion.push( _blockForInsertion )
+					}
 				}
 			}
 		}
@@ -203,9 +223,11 @@ export const usePreviewRenderer = (
 		initialize().then( () => {
 		    // We need to parse the content because this is what we use to insert the blocks in the Editor
 		    const [ parsedBlocks, blocksForSubstitution ] = parseDisabledBlocks( _parsedBlocks )
+		    const parsedBlocksForInsertion = _parsedBlocksForInsertion ? parseDisabledBlocks( _parsedBlocksForInsertion )[ 0 ] : null
 		    blocksForSubstitutionRef.current = blocksForSubstitution
 
 		    setContent( parsedBlocks )
+		    setContentForInsertion( parsedBlocksForInsertion )
 			setIsLoading( false )
 		} )
 	}, [ template ] )
@@ -265,7 +287,8 @@ export const usePreviewRenderer = (
 			scale: previewSize.scale,
 		}
 
-		onClick( designId, category, blocks.parsed, blocksForSubstitutionRef.current, selectedPreviewSize )
+		// Use contentForInsertion if dev mode is enabled, otherwise use regular content
+		onClick( designId, category, contentForInsertion || content, blocksForSubstitutionRef.current, selectedPreviewSize )
 	}
 
 	return {
