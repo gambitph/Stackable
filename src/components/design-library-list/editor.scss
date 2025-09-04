@@ -223,3 +223,19 @@
 		cursor: default;
 	}
 }
+
+
+.ugb-design-library-items {
+	.stk-spinner-container .components-spinner {
+		display: block;
+		margin: 50px auto;
+	}
+
+	&.stk-design-library__item-pages .stk-spinner-container {
+		height: 400px;
+		display: flex;
+		.components-spinner {
+			margin: auto;
+		}
+	}
+}

@@ -74,10 +74,15 @@ export const usePreviewRenderer = (
 			const shadowBody = shadowRoot.querySelector( 'body' )
 			if ( shadowBody ) {
 				const cardWidth = cardRect.width // Get width of the card
-				const scaleFactor = cardWidth > 0 ? cardWidth / shadowBody.offsetWidth : 1 	// Divide by 1200, which is the width of preview in the shadow DOM
+				const scaleFactor = cardWidth > 0 ? cardWidth / 1300 : 1 	// Divide by 1200, which is the width of preview in the shadow DOM
 				newPreviewSize.scale = scaleFactor
 
-				const _height = parseFloat( shadowBody.offsetHeight ) * scaleFactor	// Also adjust the height
+				let _bodyHeight = 1200
+				if ( selectedTab === 'patterns' ) {
+					_bodyHeight = shadowBody.offsetHeight
+				}
+
+				const _height = parseFloat( _bodyHeight ) * scaleFactor	// Also adjust the height
 
 				if ( Object.keys( newPreviewSize ).length === 1 ) {
 					newPreviewSize.heightBackground = _height

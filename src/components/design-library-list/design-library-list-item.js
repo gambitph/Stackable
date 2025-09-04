@@ -97,14 +97,13 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 						showHideNote={ false }
 					/>
 				) }
-				{ isLoading && <Spinner style={ { display: 'block', margin: '50px auto' } } /> }
+				{ isLoading && <div className="stk-spinner-container"><Spinner /></div> }
 				<div
 					className="stk-block-design__host-container"
 					style={ {
 						transform: `scale(${ selectedNum && selectedData ? selectedData.selectedPreviewSize.scale : previewSize?.scale })`,
 						transformOrigin: 'top left',
-						height: selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
-							: ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground ),
+						height: getDesignPreviewSize(),
 					} }
 				>
 					<div className="stk-block-design__host" ref={ hostRef }>
