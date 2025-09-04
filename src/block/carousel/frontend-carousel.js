@@ -93,11 +93,15 @@ class _StackableCarousel {
 					const clone = original.cloneNode( true )
 					clone.classList.add( `stk-slide-clone-${ slideIndex + 1 }` )
 					clone.style.zIndex = -1
+
+					clone.style.willChange = 'transform'
+					clone.style.transform = 'TranslateX( 0 )'
 					original.style.willChange = 'transform'
 					original.style.transform = 'TranslateX( 0 )'
 
 					// prevents flickering when changing the value of TranslateX
 					original.style.transition = 'transform 0s'
+					clone.style.transition = 'transform 0s'
 
 					this.clones.push( clone )
 
@@ -118,10 +122,25 @@ class _StackableCarousel {
 					step++
 				} else if ( step === 2 ) {
 					const numSlides = this.slideEls.length
-					const slideClientRect = this.slideEls[ 0 ].getBoundingClientRect()
-					const slideWidth = slideClientRect.width
 
-					this.slideTranslateX = `calc((${ slideWidth }px * ${ numSlides }) + (var(--gap) * ${ numSlides }))`
+					// Calculate and assign the translateX values for each slide and its corresponding clone.
+					// This ensures that when slides are swapped for infinite scrolling, they appear in the correct position.
+					// The translateX value is based on the width of the slides and the number of slides, including margins and gaps.
+					this.slideEls.forEach( ( slide, index ) => {
+						const computedStyles = window.getComputedStyle( slide )
+						const margins = parseInt( computedStyles.getPropertyValue( 'margin-left' ) ) + parseInt( computedStyles.getPropertyValue( 'margin-right' ) )
+						const width = slide.getBoundingClientRect().width + margins
+
+						slide.slideTranslateX = `calc((${ width }px * ${ numSlides }) + (var(--gap) * ${ numSlides }))`
+
+						if ( index < this.slidesToShow ) {
+							this.clones[ index ].slideTranslateX = slide.slideTranslateX
+						}
+
+						if ( index === this.slideEls.length - 1 ) {
+							this.clones[ this.clones.length - 1 ].slideTranslateX = `calc((${ width }px * -${ numSlides }) + (var(--gap) * -${ numSlides }))`
+						}
+					} )
 
 					step++
 				} else if ( step === 3 ) {
@@ -297,12 +316,12 @@ class _StackableCarousel {
 		const needToSwap = this.needToSwapCount( slide )
 		let startIndex = 0
 		let endIndex = 0
-		let slideTranslateXValue = 0
+		let useSlideTranslateX = false
 		if ( needToSwap > 0 && this.swappedSlides < needToSwap ) {
 			startIndex = this.swappedSlides
 			endIndex = needToSwap
 
-			slideTranslateXValue = this.slideTranslateX
+			useSlideTranslateX = true
 
 			this.swappedSlides = endIndex
 		} else if ( this.swappedSlides > needToSwap ) {
@@ -317,7 +336,10 @@ class _StackableCarousel {
 		const runSteps = () => {
 			if ( step === 0 ) {
 				this.slideEls.slice( startIndex, endIndex ).forEach( slide => {
-					slide.style.transform = `TranslateX(${ slideTranslateXValue })`
+					slide.style.transform = `TranslateX(${ useSlideTranslateX ? slide.slideTranslateX : 0 })`
+				} )
+				this.clones.slice( startIndex, endIndex ).forEach( clone => {
+					clone.style.transform = `TranslateX(${ useSlideTranslateX ? clone.slideTranslateX : 0 })`
 				} )
 				step++
 				requestAnimationFrame( runSteps )
