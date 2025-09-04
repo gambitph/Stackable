@@ -299,8 +299,8 @@ export const getAdditionalStylesForPreview = () => {
 
 	styles += 'body { --stk-block-wide-width: 1000px; }'
 
-	// Use 'auto' for scroll behavior. Let the scroll interval handle the speed.
-	styles += 'body.preview-pages { scroll-behavior: auto; overflow-y: auto; max-height: 1500px; }'
+	// Use overflow-y: hidden to prevent mousewheel scrolling
+	styles += 'body.preview-pages { overflow-y: hidden; max-height: 1200px; }'
 
 	styles += '::-webkit-scrollbar { width: 0; }'
 
