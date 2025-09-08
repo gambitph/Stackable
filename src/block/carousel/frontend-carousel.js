@@ -121,26 +121,14 @@ class _StackableCarousel {
 					}
 					step++
 				} else if ( step === 2 ) {
-					const numSlides = this.slideEls.length
+					// Calculate the difference between the first slide and the first clone
+					// This is used to calculate the translateX values for the slides and clones
+					const slideOffsetLeft = this.slideEls[ 0 ].offsetLeft
+					const cloneOffsetLeft = this.clones[ 0 ].offsetLeft
 
-					// Calculate and assign the translateX values for each slide and its corresponding clone.
-					// This ensures that when slides are swapped for infinite scrolling, they appear in the correct position.
-					// The translateX value is based on the width of the slides and the number of slides, including margins and gaps.
-					this.slideEls.forEach( ( slide, index ) => {
-						const computedStyles = window.getComputedStyle( slide )
-						const margins = parseInt( computedStyles.getPropertyValue( 'margin-left' ) ) + parseInt( computedStyles.getPropertyValue( 'margin-right' ) )
-						const width = slide.getBoundingClientRect().width + margins
-
-						slide.slideTranslateX = `calc((${ width }px * ${ numSlides }) + (var(--gap) * ${ numSlides }))`
-
-						if ( index < this.slidesToShow ) {
-							this.clones[ index ].slideTranslateX = slide.slideTranslateX
-						}
-
-						if ( index === this.slideEls.length - 1 ) {
-							this.clones[ this.clones.length - 1 ].slideTranslateX = `calc((${ width }px * -${ numSlides }) + (var(--gap) * -${ numSlides }))`
-						}
-					} )
+					const diff = Math.abs( slideOffsetLeft - cloneOffsetLeft )
+					this.slideTranslateX = ( this.isRTL ? -diff : diff ) + 'px'
+					this.cloneTranslateX = ( this.isRTL ? diff : -diff ) + 'px'
 
 					step++
 				} else if ( step === 3 ) {
@@ -336,10 +324,10 @@ class _StackableCarousel {
 		const runSteps = () => {
 			if ( step === 0 ) {
 				this.slideEls.slice( startIndex, endIndex ).forEach( slide => {
-					slide.style.transform = `TranslateX(${ useSlideTranslateX ? slide.slideTranslateX : 0 })`
+					slide.style.transform = `translateX(${ useSlideTranslateX ? this.slideTranslateX : 0 })`
 				} )
 				this.clones.slice( startIndex, endIndex ).forEach( clone => {
-					clone.style.transform = `TranslateX(${ useSlideTranslateX ? clone.slideTranslateX : 0 })`
+					clone.style.transform = `translateX(${ useSlideTranslateX ? this.cloneTranslateX : 0 })`
 				} )
 				step++
 				requestAnimationFrame( runSteps )
