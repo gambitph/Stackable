@@ -139,10 +139,12 @@ export const usePreviewRenderer = (
 		// The block `wp/site-title` is a dynamic block, so we need to manually replace it for the preview
 		if ( categoriesRef.current.includes( 'Header' ) ) {
 			preview = preview.replace( /<!--\s*wp:site-title(?:\s+[^\/]*?)?\/-->/g, siteTitle )
-		} else if ( categoriesRef.current.includes( 'Tabs' ) ) {
+		}
+		if ( categoriesRef.current.includes( 'Tabs' ) ) {
 		// Add a class for the first tab to be the active tab in the preview
 			preview = preview.replace( '"stk-block-tabs__tab"', '"stk-block-tabs__tab stk-block-tabs__tab--active"' )
-		} else if ( categoriesRef.current.includes( 'Post Loop' ) ) {
+		}
+		if ( categoriesRef.current.includes( 'Post Loop' ) ) {
 			const defaultValues = DEFAULT_CONTENT[ 'Post Loop' ]
 			preview = addPlaceholderForPostsBlock( preview, defaultValues.posts_placeholder, defaultValues )
 		}
@@ -293,7 +295,7 @@ export const usePreviewRenderer = (
 		}
 
 		// Use contentForInsertion if dev mode is enabled, otherwise use regular content
-		onClick( designId, category, contentForInsertion || content, blocksForSubstitutionRef.current, selectedPreviewSize )
+		onClick( designId, category, contentForInsertion || blocks.parsed, blocksForSubstitutionRef.current, selectedPreviewSize )
 	}
 
 	return {
