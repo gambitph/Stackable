@@ -9,6 +9,7 @@ import {
 	addPlaceholderForPostsBlock, cleanParse,
 	parseDisabledBlocks, adjustPatternSpacing,
 	replacePlaceholders,
+	replaceImages,
 } from './util'
 
 /**
@@ -164,6 +165,8 @@ export const usePreviewRenderer = (
 				}
 			)
 		}
+
+		preview = replaceImages( preview )
 
 		const cleanedBlock = preview.replace( /<!--[\s\S]*?-->/g, '' ) // removes comment
 

@@ -290,6 +290,24 @@ export const addPlaceholderForPostsBlock = ( content, postsPlaceholder, defaultV
 	} )
 }
 
+export const replaceImages = content => {
+	const NEW_IMAGE_STORAGE = cdnUrl.replace( /\/$/, '' ) + '/library-v4/images/low-resolution/'
+
+	// Replace images in the content with low resolution images from the new image storage
+	return content.replace(
+		new RegExp( IMAGE_STORAGE.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ) + '([^\\/\\s]+)\\.(jpeg|jpg|png)', 'g' ),
+		( match, filename, ext ) => {
+			let newExt = ext
+			if ( ext === 'jpeg' || ext === 'jpg' ) {
+				newExt = 'jpg'
+			} else if ( ext === 'png' ) {
+				newExt = 'png'
+			}
+			return NEW_IMAGE_STORAGE + filename + '.' + newExt
+		}
+	)
+}
+
 // Additional styles for blocks to render properly in the preview
 export const getAdditionalStylesForPreview = () => {
 	let styles = ''
