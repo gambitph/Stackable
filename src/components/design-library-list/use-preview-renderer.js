@@ -3,7 +3,7 @@
  * Internal dependencies.
  */
 import DEFAULT from './default.json'
-import mapsGraphic from './images/maps.png'
+import mapsGraphic from './images/maps.webp'
 import {
 	addBackgroundScheme, addContainerScheme,
 	addPlaceholderForPostsBlock, cleanParse,
