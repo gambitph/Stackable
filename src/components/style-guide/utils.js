@@ -257,6 +257,13 @@ const getSerializedBlock = props => {
 		serialized += '\n' + serialize( duplicateBlock )
 	}
 
+	if ( blockName === 'stackable/column' ) {
+		block = createBlock( 'stackable/columns', {}, [ block ] )
+		newBlock = getGeneratedCss( [ block ] )
+		serialized = serialize( newBlock )
+		blockName = 'stackable/columns'
+	}
+
 	if ( blockName === 'stackable/icon-list-item' ) {
 		block = createBlock( 'stackable/icon-list', {}, [ block ] )
 		newBlock = getGeneratedCss( [ block ] )
