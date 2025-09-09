@@ -133,7 +133,7 @@ export const GettingStarted = () => {
 						</div>
 						<div className="s-quick-button-description">
 							<h3>{ __( 'Build Pages in Seconds', i18n ) }</h3>
-							<p>{ __( 'Jump straight into our Design Library and insert polished, pre-built sections — no more blank-page overwhelm.', i18n ) }</p>
+							<p>{ __( 'Jump straight into our Design Library and insert polished, pre-built sections; no more blank-page overwhelm.', i18n ) }</p>
 						</div>
 						<div className="s-quick-button-button">
 							<a
@@ -156,7 +156,7 @@ export const GettingStarted = () => {
 						</div>
 						<div className="s-quick-button-description">
 							<h3>{ __( 'Apply Global Styles Instantly', i18n ) }</h3>
-							<p>{ __( 'Set your brand\'s colors, fonts, and spacing once in the Design System — every Stackable block updates automatically.', i18n ) }</p>
+							<p>{ __( 'Set your brand\'s colors, fonts, and spacing once in the Design System; every Stackable block updates automatically.', i18n ) }</p>
 						</div>
 						<div className="s-quick-button-button">
 							<a
