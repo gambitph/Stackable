@@ -295,15 +295,9 @@ export const replaceImages = content => {
 
 	// Replace images in the content with low resolution images from the new image storage
 	return content.replace(
-		new RegExp( IMAGE_STORAGE.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ) + '([^\\/\\s]+)\\.(jpeg|jpg|png)', 'g' ),
-		( match, filename, ext ) => {
-			let newExt = ext
-			if ( ext === 'jpeg' || ext === 'jpg' ) {
-				newExt = 'jpg'
-			} else if ( ext === 'png' ) {
-				newExt = 'png'
-			}
-			return NEW_IMAGE_STORAGE + filename + '.' + newExt
+		new RegExp( IMAGE_STORAGE.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ) + '([^\\/\\s]+\\.(jpeg|jpg|png))', 'g' ),
+		( match, filenameWithExt ) => {
+			return NEW_IMAGE_STORAGE + filenameWithExt
 		}
 	)
 }
