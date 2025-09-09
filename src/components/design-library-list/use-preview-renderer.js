@@ -19,7 +19,7 @@ import {
 	isPro, devMode, srcUrl,
 } from 'stackable'
 import { fetchDesign } from '~stackable/design-library'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, escape as escapeHtml } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -139,7 +139,7 @@ export const usePreviewRenderer = (
 
 		// The block `wp/site-title` is a dynamic block, so we need to manually replace it for the preview
 		if ( categoriesRef.current.includes( 'Header' ) ) {
-			preview = preview.replace( /<!--\s*wp:site-title(?:\s+[^\/]*?)?\/-->/g, siteTitle )
+			preview = preview.replace( /<!--\s*wp:site-title(?:\s+[^\/]*?)?\/-->/g, escapeHtml( siteTitle ) )
 		}
 		if ( categoriesRef.current.includes( 'Tabs' ) ) {
 		// Add a class for the first tab to be the active tab in the preview
