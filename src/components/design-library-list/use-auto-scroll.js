@@ -28,7 +28,7 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 
 		// Bell curve: faster ramp up, starts at reasonable speed, peaks in middle
 		// Creates a more aggressive acceleration and deceleration pattern
-		const bellCurve = 10 * progress * ( 1 - progress ) // Peaks at 2.0 in the middle
+		const bellCurve = 4 * progress * ( 1 - progress ) // Peaks at 2.0 in the middle
 		const baseSpeed = 15 // Base speed multiplier
 		const scrollStep = Math.max( baseSpeed * bellCurve, 5 ) // Minimum 1.5px for better start
 
