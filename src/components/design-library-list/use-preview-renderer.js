@@ -170,7 +170,7 @@ export const usePreviewRenderer = (
 
 		preview = replaceImages( preview )
 
-		const cleanedBlock = cleanSerializedBlock( /<!--[\s\S]*?-->/g, '' ) // removes comment
+		const cleanedBlock = cleanSerializedBlock( preview ) // removes comment
 
 		setBlocks( {
 			parsed: parsedBlocks,
