@@ -20,6 +20,7 @@ import {
 import { useState, useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { ResetButton } from '../base-control2/reset-button'
+import { ITEM_PICKER } from './util'
 
 const addItemPopoverProps = {
 	placement: 'left-start',
@@ -259,7 +260,11 @@ const LabeledItemIndicator = props => {
 					)
 				} }
 				renderContent={ ( { onClose } ) => {
-					return <> { ItemPicker && <ItemPicker item={ item } onChange={ onChange } onClose={ onClose } /> } </>
+					const ItemPicker_ = typeof ItemPicker === 'string' ? ITEM_PICKER[ ItemPicker ] : null
+
+					return typeof ItemPicker === 'string' && ItemPicker_
+						? <ItemPicker_ item={ item } onChange={ onChange } onClose={ onClose } />
+						: <ItemPicker item={ item } onChange={ onChange } onClose={ onClose } />
 				} }
 			/>
 			{ sortable &&
