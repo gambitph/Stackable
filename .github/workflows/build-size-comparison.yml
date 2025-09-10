@@ -78,55 +78,270 @@ jobs:
         cd ../../../
         ls -la *.zip
 
-    - name: Compare Build Sizes
+    - name: Extract and Compare Files
       run: |
-        echo "## 📦 Build Size Comparison" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
+        # Extract both zip files
+        mkdir -p current-files base-files
+        unzip -q current-build.zip -d current-files/
+        unzip -q base-build.zip -d base-files/
         
-        # Check if files exist
-        if [ ! -f "current-build.zip" ]; then
-          echo "❌ **Error**: current-build.zip not found" >> $GITHUB_STEP_SUMMARY
-          exit 1
-        fi
+        # Create comparison script
+        cat > compare_files.py << 'EOF'
+        import os
+        import json
+        from pathlib import Path
+
+        def get_file_size(filepath):
+            if os.path.exists(filepath):
+                return os.path.getsize(filepath)
+            return 0
+
+        def format_bytes(bytes):
+            for unit in ['B', 'KB', 'MB', 'GB']:
+                if bytes < 1024.0:
+                    return f"{bytes:.1f}{unit}"
+                bytes /= 1024.0
+            return f"{bytes:.1f}TB"
+
+        def compare_directories(current_dir, base_dir):
+            current_path = Path(current_dir)
+            base_path = Path(base_dir)
+            
+            all_files = set()
+            
+            # Get all files from both directories
+            for file_path in current_path.rglob('*'):
+                if file_path.is_file():
+                    rel_path = file_path.relative_to(current_path)
+                    all_files.add(str(rel_path))
+            
+            for file_path in base_path.rglob('*'):
+                if file_path.is_file():
+                    rel_path = file_path.relative_to(base_path)
+                    all_files.add(str(rel_path))
+            
+            changes = []
+            total_current = 0
+            total_base = 0
+            
+            for file_path in sorted(all_files):
+                current_file = current_path / file_path
+                base_file = base_path / file_path
+                
+                current_size = get_file_size(current_file)
+                base_size = get_file_size(base_file)
+                
+                total_current += current_size
+                total_base += base_size
+                
+                if current_size != base_size:
+                    diff = current_size - base_size
+                    if base_size > 0:
+                        percent = (diff / base_size) * 100
+                    else:
+                        percent = 100 if current_size > 0 else 0
+                    
+                    status = "🆕" if base_size == 0 else "❌" if current_size == 0 else "📝"
+                    
+                    changes.append({
+                        'file': file_path,
+                        'current_size': current_size,
+                        'base_size': base_size,
+                        'diff': diff,
+                        'percent': percent,
+                        'status': status
+                    })
+            
+            return changes, total_current, total_base
+
+        # Compare files
+        changes, total_current, total_base = compare_directories('current-files', 'base-files')
         
-        if [ ! -f "base-build.zip" ]; then
-          echo "❌ **Error**: base-build.zip not found" >> $GITHUB_STEP_SUMMARY
-          exit 1
-        fi
+        # Create summary
+        total_diff = total_current - total_base
+        total_percent = (total_diff / total_base * 100) if total_base > 0 else 0
         
-        # Get file sizes
-        CURRENT_SIZE=$(du -h current-build.zip | cut -f1)
-        BASE_SIZE=$(du -h base-build.zip | cut -f1)
+        # Flag large changes (>10% or >100KB)
+        flagged_changes = [c for c in changes if abs(c['percent']) > 10 or abs(c['diff']) > 102400]
         
-        # Get exact byte sizes for calculation
-        CURRENT_BYTES=$(stat -c%s current-build.zip)
-        BASE_BYTES=$(stat -c%s base-build.zip)
+        # Generate report
+        report = {
+            'total_current': total_current,
+            'total_base': total_base,
+            'total_diff': total_diff,
+            'total_percent': total_percent,
+            'changes': changes,
+            'flagged_changes': flagged_changes
+        }
         
-        # Calculate difference
-        DIFF_BYTES=$((CURRENT_BYTES - BASE_BYTES))
-        DIFF_PERCENT=$((DIFF_BYTES * 100 / BASE_BYTES))
+        with open('comparison_report.json', 'w') as f:
+            json.dump(report, f, indent=2)
         
-        echo "| Build | Size |" >> $GITHUB_STEP_SUMMARY
-        echo "|-------|------|" >> $GITHUB_STEP_SUMMARY
-        echo "| **Current PR** | **$CURRENT_SIZE** |" >> $GITHUB_STEP_SUMMARY
-        echo "| Base Branch | $BASE_SIZE |" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
+        # Print summary to console
+        print(f"Total size change: {format_bytes(total_diff)} ({total_percent:+.1f}%)")
+        print(f"Files changed: {len(changes)}")
+        print(f"Flagged changes: {len(flagged_changes)}")
+        EOF
         
-        if [ $DIFF_BYTES -gt 0 ]; then
-          echo "📈 **Size increased by** $(numfmt --to=iec $DIFF_BYTES) (+$DIFF_PERCENT%)" >> $GITHUB_STEP_SUMMARY
-        elif [ $DIFF_BYTES -lt 0 ]; then
-          echo "📉 **Size decreased by** $(numfmt --to=iec $((DIFF_BYTES * -1))) (-$((DIFF_PERCENT * -1))%)" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "✅ **No size change**" >> $GITHUB_STEP_SUMMARY
-        fi
+        python3 compare_files.py
+
+    - name: Generate PR Comment
+      id: pr_comment
+      run: |
+        # Read the comparison report
+        python3 -c "
+        import json
+        with open('comparison_report.json', 'r') as f:
+            report = json.load(f)
         
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📁 Build Contents" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Current PR build contents:**" >> $GITHUB_STEP_SUMMARY
-        echo '```' >> $GITHUB_STEP_SUMMARY
-        unzip -l current-build.zip | head -20 >> $GITHUB_STEP_SUMMARY
-        echo '```' >> $GITHUB_STEP_SUMMARY
+        def format_bytes(bytes):
+            for unit in ['B', 'KB', 'MB', 'GB']:
+                if bytes < 1024.0:
+                    return f'{bytes:.1f}{unit}'
+                bytes /= 1024.0
+            return f'{bytes:.1f}TB'
+        
+        # Generate comment
+        comment = '## 📦 Build Size Comparison\n\n'
+        
+        # Overall summary
+        total_current = report['total_current']
+        total_base = report['total_base']
+        total_diff = report['total_diff']
+        total_percent = report['total_percent']
+        
+        comment += '| Build | Size |\n'
+        comment += '|-------|------|\n'
+        comment += f'| **Current PR** | **{format_bytes(total_current)}** |\n'
+        comment += f'| Base Branch | {format_bytes(total_base)} |\n\n'
+        
+        if total_diff > 0:
+            comment += f'📈 **Total size increased by** {format_bytes(total_diff)} (+{total_percent:.1f}%)\n\n'
+        elif total_diff < 0:
+            comment += f'📉 **Total size decreased by** {format_bytes(abs(total_diff))} ({total_percent:.1f}%)\n\n'
+        else:
+            comment += '✅ **No total size change**\n\n'
+        
+        # File changes summary
+        changes = report['changes']
+        flagged = report['flagged_changes']
+        
+        comment += f'**Files changed:** {len(changes)}\n'
+        comment += f'**Large changes flagged:** {len(flagged)}\n\n'
+        
+        if flagged:
+            comment += '## ⚠️ Large Changes (Requires Review)\n\n'
+            comment += '| File | Current | Base | Change | % | Status |\n'
+            comment += '|------|---------|------|--------|---|--------|\n'
+            
+            for change in flagged:
+                status_icon = change['status']
+                file_name = change['file']
+                current_size = format_bytes(change['current_size'])
+                base_size = format_bytes(change['base_size'])
+                diff_size = format_bytes(abs(change['diff']))
+                percent = change['percent']
+                
+                if change['diff'] > 0:
+                    change_str = f'+{diff_size}'
+                elif change['diff'] < 0:
+                    change_str = f'-{diff_size}'
+                else:
+                    change_str = '0B'
+                
+                comment += f'| `{file_name}` | {current_size} | {base_size} | {change_str} | {percent:+.1f}% | {status_icon} |\n'
+            
+            comment += '\n'
+        
+        # All changes table (if not too many)
+        if len(changes) <= 50:
+            comment += '## 📋 All File Changes\n\n'
+            comment += '| File | Current | Base | Change | % | Status |\n'
+            comment += '|------|---------|------|--------|---|--------|\n'
+            
+            for change in changes:
+                status_icon = change['status']
+                file_name = change['file']
+                current_size = format_bytes(change['current_size'])
+                base_size = format_bytes(change['base_size'])
+                diff_size = format_bytes(abs(change['diff']))
+                percent = change['percent']
+                
+                if change['diff'] > 0:
+                    change_str = f'+{diff_size}'
+                elif change['diff'] < 0:
+                    change_str = f'-{diff_size}'
+                else:
+                    change_str = '0B'
+                
+                comment += f'| `{file_name}` | {current_size} | {base_size} | {change_str} | {percent:+.1f}% | {status_icon} |\n'
+        else:
+            comment += f'## 📋 File Changes (showing first 50 of {len(changes)})\n\n'
+            comment += '| File | Current | Base | Change | % | Status |\n'
+            comment += '|------|---------|------|--------|---|--------|\n'
+            
+            for change in changes[:50]:
+                status_icon = change['status']
+                file_name = change['file']
+                current_size = format_bytes(change['current_size'])
+                base_size = format_bytes(change['base_size'])
+                diff_size = format_bytes(abs(change['diff']))
+                percent = change['percent']
+                
+                if change['diff'] > 0:
+                    change_str = f'+{diff_size}'
+                elif change['diff'] < 0:
+                    change_str = f'-{diff_size}'
+                else:
+                    change_str = '0B'
+                
+                comment += f'| `{file_name}` | {current_size} | {base_size} | {change_str} | {percent:+.1f}% | {status_icon} |\n'
+        
+        # Save comment to file
+        with open('pr_comment.md', 'w') as f:
+            f.write(comment)
+        
+        print('PR comment generated')
+        "
+
+    - name: Post/Update PR Comment
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const comment = fs.readFileSync('pr_comment.md', 'utf8');
+          
+          // Find existing comment
+          const { data: comments } = await github.rest.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+          });
+          
+          const existingComment = comments.find(comment => 
+            comment.user.type === 'Bot' && 
+            comment.body.includes('📦 Build Size Comparison')
+          );
+          
+          if (existingComment) {
+            // Update existing comment
+            await github.rest.issues.updateComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: existingComment.id,
+              body: comment
+            });
+            console.log('Updated existing PR comment');
+          } else {
+            // Create new comment
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });
+            console.log('Created new PR comment');
+          }
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
