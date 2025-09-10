@@ -9,6 +9,7 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 	const scrollPositionRef = useRef( 0 )
 	const animationFrameRef = useRef( null )
 	const isScrollingRef = useRef( false )
+	const delayTimeoutRef = useRef( null )
 
 	const smoothScrollToBottom = ( shadowDomBody, targetScrollTop ) => {
 		if ( ! shadowDomBody || ! isScrollingRef.current ) {
@@ -49,7 +50,13 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 			scrollPositionRef.current = 0
 			isScrollingRef.current = true
 
-			setTimeout( () => {
+			// Clear any existing timeout
+			if ( delayTimeoutRef.current ) {
+				clearTimeout( delayTimeoutRef.current )
+				delayTimeoutRef.current = null
+			}
+
+			delayTimeoutRef.current = setTimeout( () => {
 				if ( scrollPositionRef.current === -1 || ! isScrollingRef.current ) {
 					return
 				}
@@ -64,6 +71,8 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 				if ( targetScrollTop > 0 ) {
 					smoothScrollToBottom( shadowDomBody, targetScrollTop )
 				}
+
+				delayTimeoutRef.current = null
 			}, 1000 )
 		}
 	}
@@ -76,6 +85,12 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 			if ( animationFrameRef.current ) {
 				cancelAnimationFrame( animationFrameRef.current )
 				animationFrameRef.current = null
+			}
+
+			// Clear any existing timeout
+			if ( delayTimeoutRef.current ) {
+				clearTimeout( delayTimeoutRef.current )
+				delayTimeoutRef.current = null
 			}
 
 			shadowDomBody.scrollTo( {
@@ -93,15 +108,28 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 			cancelAnimationFrame( animationFrameRef.current )
 			animationFrameRef.current = null
 		}
+
+		// Clear any existing timeout
+		if ( delayTimeoutRef.current ) {
+			clearTimeout( delayTimeoutRef.current )
+			delayTimeoutRef.current = null
+		}
 		scrollPositionRef.current = -1
 	}
 
 	// Cleanup any pending animation on unmount.
 	useEffect( () => {
 		return () => {
+			isScrollingRef.current = false
 			if ( animationFrameRef.current ) {
 				cancelAnimationFrame( animationFrameRef.current )
 				animationFrameRef.current = null
+			}
+
+			// Clear any existing timeout
+			if ( delayTimeoutRef.current ) {
+				clearTimeout( delayTimeoutRef.current )
+				delayTimeoutRef.current = null
 			}
 			scrollPositionRef.current = -1
 		}
