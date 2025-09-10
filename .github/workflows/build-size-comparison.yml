@@ -72,12 +72,27 @@ jobs:
         
         # Create zip for base branch
         cd ../../base-branch/build/stackable
-        zip -r ../../base-build.zip . -x "*.map" "node_modules/*"
+        zip -r ../../../base-build.zip . -x "*.map" "node_modules/*"
+        
+        # Move zip files to root directory for easier access
+        cd ../../../
+        ls -la *.zip
 
     - name: Compare Build Sizes
       run: |
         echo "## 📦 Build Size Comparison" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Check if files exist
+        if [ ! -f "current-build.zip" ]; then
+          echo "❌ **Error**: current-build.zip not found" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+        
+        if [ ! -f "base-build.zip" ]; then
+          echo "❌ **Error**: base-build.zip not found" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
         
         # Get file sizes
         CURRENT_SIZE=$(du -h current-build.zip | cut -f1)
