@@ -5,6 +5,7 @@ import {
 	useEffect, createPortal, useRef,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
+import { safeHTML } from '@wordpress/dom'
 
 const NOOP = () => {}
 
@@ -88,7 +89,7 @@ export const DesignPreview = ( {
 			className={ shadowBodyClasses }
 		>
 			<div
-				dangerouslySetInnerHTML={ { __html: blocks } }
+				dangerouslySetInnerHTML={ { __html: safeHTML( blocks ) } }
 				style={ { pointerEvents: 'none' } }	// prevent blocks from being clicked
 			/>
 		</body>
