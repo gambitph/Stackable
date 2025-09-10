@@ -19,8 +19,7 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 	getBlockVariations,
 } from '@wordpress/blocks'
-import { DEFAULT_CONTENT } from '../design-library-list/design-library-list-item'
-import { addPlaceholderForPostsBlock } from '../design-library-list/util'
+import { DEFAULT_CONTENT, addPlaceholderForPostsBlock } from '../design-library-list/util'
 
 export const DUMMY_COLOR_SCHEMES = [
 	{
