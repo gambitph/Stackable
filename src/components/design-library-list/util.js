@@ -157,7 +157,7 @@ export const adjustPatternSpacing = ( attributes, category, spacingSize, isDesig
 	// to the generatedCss attribute for preview purposes. This generatedCss will be regenerated
 	// by the BlockCssGenerator once the pattern is actually added to the editor.
 	let additionalCss = ''
-	if ( ! isDesignLibraryDevMode && category !== 'Header' ) {
+	if ( ! isDesignLibraryDevMode && category !== 'header' ) {
 		if ( attributes.hasBackground ) {
 			additionalCss += 'margin-bottom: 0px !important;'
 		} else {
@@ -300,6 +300,18 @@ export const replaceImages = content => {
 			return NEW_IMAGE_STORAGE + filenameWithExt
 		}
 	)
+}
+
+export const getCategorySlug = id => {
+	if ( typeof id !== 'string' ) {
+		return ''
+	}
+	if ( id.startsWith( 'section-' ) ) {
+		// Remove 'section-' prefix and trailing dash + number
+		return id.replace( /^section-/, '' ).replace( /-\d+$/, '' )
+	}
+	// Remove trailing dash + number for other ids
+	return id.replace( /-\d+$/, '' )
 }
 
 // Additional styles for blocks to render properly in the preview

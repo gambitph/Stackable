@@ -10,6 +10,7 @@ import {
 	parseDisabledBlocks, adjustPatternSpacing,
 	replacePlaceholders,
 	replaceImages,
+	getCategorySlug,
 } from './util'
 
 /**
@@ -132,21 +133,21 @@ export const usePreviewRenderer = (
 		}
 
 		if ( selectedTab === 'patterns' ) {
-			adjustPatternSpacing( parsedBlocks[ 0 ].attributes, category, spacingSize, false )
+			adjustPatternSpacing( parsedBlocks[ 0 ].attributes, categoriesRef.current[ 0 ], spacingSize, false )
 		}
 
 		let preview = serialize( parsedBlocks )
 
 		// The block `wp/site-title` is a dynamic block, so we need to manually replace it for the preview
-		if ( categoriesRef.current.includes( 'Header' ) ) {
+		if ( categoriesRef.current.includes( 'header' ) ) {
 			preview = preview.replace( /<!--\s*wp:site-title(?:\s+[^\/]*?)?\/-->/g, escapeHtml( siteTitle ) )
 		}
-		if ( categoriesRef.current.includes( 'Tabs' ) ) {
+		if ( categoriesRef.current.includes( 'tabs' ) ) {
 		// Add a class for the first tab to be the active tab in the preview
 			preview = preview.replace( '"stk-block-tabs__tab"', '"stk-block-tabs__tab stk-block-tabs__tab--active"' )
 		}
-		if ( categoriesRef.current.includes( 'Post Loop' ) ) {
-			const defaultValues = DEFAULT_CONTENT[ 'Post Loop' ]
+		if ( categoriesRef.current.includes( 'post-loop' ) ) {
+			const defaultValues = DEFAULT_CONTENT[ 'post-loop' ]
 			preview = addPlaceholderForPostsBlock( preview, defaultValues.posts_placeholder, defaultValues )
 		}
 
@@ -183,12 +184,14 @@ export const usePreviewRenderer = (
 		const initialize = async () => {
 			const _content = template
 			if ( selectedTab === 'patterns' ) {
-				// For preview: always replace placeholders (ignore dev mode)
-				const _contentForPreview = replacePlaceholders( _content, category, false )
-				// For insertion: only create separate content if dev mode is enabled
-				const _contentForInsertion = isDesignLibraryDevMode ? replacePlaceholders( _content, category, true ) : _contentForPreview
+				const categorySlug = getCategorySlug( designId )
 
-				categoriesRef.current.push( category )
+				// For preview: always replace placeholders (ignore dev mode)
+				const _contentForPreview = replacePlaceholders( _content, categorySlug, false )
+				// For insertion: only create separate content if dev mode is enabled
+				const _contentForInsertion = isDesignLibraryDevMode ? replacePlaceholders( _content, categorySlug, true ) : _contentForPreview
+
+				categoriesRef.current.push( categorySlug )
 
 				if ( _contentForPreview.includes( 'stk-design-library__bg-target="true"' ) ) {
 					hasBackgroundTargetRef.current = true
@@ -199,13 +202,15 @@ export const usePreviewRenderer = (
 			} else {
 				for ( let i = 0; i < _content.length; i++ ) {
 					const section = _content[ i ]
-					const design = await fetchDesign( section.id )
-					// For preview: always replace placeholders (ignore dev mode)
-					const designContentForPreview = replacePlaceholders( design.template || design.content, design.category, false )
-					// For insertion: only create separate content if dev mode is enabled
-					const designContentForInsertion = isDesignLibraryDevMode ? replacePlaceholders( design.template || design.content, design.category, true ) : designContentForPreview
+					const design = await fetchDesign( section.designId || section.id )
+					const categorySlug = getCategorySlug( section.designId || section.id )
 
-					categoriesRef.current.push( design.category )
+					// For preview: always replace placeholders (ignore dev mode)
+					const designContentForPreview = replacePlaceholders( design.template || design.content, categorySlug, false )
+					// For insertion: only create separate content if dev mode is enabled
+					const designContentForInsertion = isDesignLibraryDevMode ? replacePlaceholders( design.template || design.content, categorySlug, true ) : designContentForPreview
+
+					categoriesRef.current.push( categorySlug )
 
 					let _block = cleanParse( designContentForPreview )[ 0 ]
 					let _blockForInsertion = isDesignLibraryDevMode ? cleanParse( designContentForInsertion )[ 0 ] : null
@@ -217,9 +222,9 @@ export const usePreviewRenderer = (
 						}
 					}
 
-					adjustPatternSpacing( _block.attributes, design.category, spacingSize, false )
+					adjustPatternSpacing( _block.attributes, categorySlug, spacingSize, false )
 					if ( _blockForInsertion ) {
-						adjustPatternSpacing( _blockForInsertion.attributes, design.category, spacingSize, true )
+						adjustPatternSpacing( _blockForInsertion.attributes, categorySlug, spacingSize, true )
 					}
 					_parsedBlocks.push( _block )
 					if ( _blockForInsertion ) {
