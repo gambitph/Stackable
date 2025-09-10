@@ -349,3 +349,4 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/disabled-blocks.p
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/optimization-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/global-settings.php' );
+error_log('test');

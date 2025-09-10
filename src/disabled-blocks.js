@@ -103,3 +103,4 @@ const applySettingsToMeta = metadata => {
 }
 
 addFilter( 'stackable.block.metadata', 'stackable/disabled-blocks', applySettingsToMeta )
+console.log( 'test' )
