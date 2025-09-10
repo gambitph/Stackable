@@ -20,6 +20,22 @@ jobs:
         ref: ${{ github.base_ref }}
         path: base-branch
 
+    - name: Checkout Premium Repo (Current PR)
+      uses: actions/checkout@v4
+      with:
+        repository: 'bfintal/Stackable-Premium'
+        ref: 'v3'
+        path: 'pro__premium_only'
+        token: '${{ secrets.ACCESS_KEY }}'
+
+    - name: Checkout Premium Repo (Base Branch)
+      uses: actions/checkout@v4
+      with:
+        repository: 'bfintal/Stackable-Premium'
+        ref: 'v3'
+        path: 'base-branch/pro__premium_only'
+        token: '${{ secrets.ACCESS_KEY }}'
+
     - name: Setup Node
       uses: actions/setup-node@v3
       with:
