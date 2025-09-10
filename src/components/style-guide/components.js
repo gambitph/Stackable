@@ -287,7 +287,7 @@ export const BlockStyles = ( { allBlockStyles, className } ) => {
 
 export const WebPreview = ( { className } ) => {
 	return <>
-		<h1 className="ugb-style-guide__section-title ugb-style-guide__title">{ __( 'Design System Preview', i18n ) }</h1>
+		<h1 className="ugb-style-guide__section-title ugb-style-guide__title">{ __( 'Example Website Preview', i18n ) }</h1>
 		<div className="ugb-style-guide__preview">
 			<div className="ugb-style-guide__preview-mock-browser">
 				<div className="ugb-style-guide__preview-mock-browser__buttons">
