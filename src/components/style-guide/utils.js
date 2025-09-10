@@ -271,7 +271,7 @@ const getSerializedBlock = props => {
 	}
 
 	if ( blockName === 'stackable/posts' ) {
-		const defaultValues = DEFAULT_CONTENT[ 'Post Loop' ]
+		const defaultValues = DEFAULT_CONTENT[ 'post-loop' ]
 		serialized = addPlaceholderForPostsBlock( serialized, defaultValues.posts_placeholder, defaultValues, `${ srcUrl }/${ heroBg }` )
 	}
 
