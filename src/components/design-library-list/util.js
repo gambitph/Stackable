@@ -327,6 +327,7 @@ export const getAdditionalStylesForPreview = () => {
 	styles += 'body.preview-pages { overflow-y: hidden; max-height: 1200px; }'
 
 	styles += '::-webkit-scrollbar { width: 0; }'
+	styles += 'body.preview-pages { scrollbar-width: none; -ms-overflow-style: none; }'
 
 	// Make sure count up block numbers are visible
 	styles += `.stk-block-count-up__text:not(.stk--count-up-active) { opacity: 1; }`

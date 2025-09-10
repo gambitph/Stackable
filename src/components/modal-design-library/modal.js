@@ -146,14 +146,6 @@ export const ModalDesignLibrary = props => {
 								value: 'pages',
 								title: __( 'Pages', i18n ),
 							},
-							// {
-							// 	value: 'design-system',
-							// 	title: __( 'Design System', i18n ),
-							// },
-							// {
-							// 	value: 'site-kits',
-							// 	title: __( 'Site Kits', i18n ),
-							// },
 						] }
 						value={ selectedTab }
 						onChange={ setSelectedTab }

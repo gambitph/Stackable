@@ -24,7 +24,7 @@ export const fetchDesignLibrary = async ( forceReset = false, version = '', type
 			path: `/stackable/v2/design_library/${ type }${ forceReset ? '/reset' : '' }`,
 			method: 'GET',
 		} )
-		const designsPerType = await results
+		const designsPerType = results
 
 		designLibrary[ type ] = designsPerType
 

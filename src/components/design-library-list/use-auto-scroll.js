@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { useRef } from '@wordpress/element'
+import { useRef, useEffect } from '@wordpress/element'
 
 const NOOP = () => {}
 
@@ -95,6 +95,17 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 		}
 		scrollPositionRef.current = -1
 	}
+
+	// Cleanup any pending animation on unmount.
+	useEffect( () => {
+		return () => {
+			if ( animationFrameRef.current ) {
+				cancelAnimationFrame( animationFrameRef.current )
+				animationFrameRef.current = null
+			}
+			scrollPositionRef.current = -1
+		}
+	}, [] )
 
 	const onMouseOver = selectedTab === 'patterns' ? NOOP : onMouseOverImpl
 	const onMouseOut = selectedTab === 'patterns' ? NOOP : onMouseOutImpl
