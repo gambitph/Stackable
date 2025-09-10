@@ -236,7 +236,7 @@ jobs:
             
             for change in flagged:
                 status_icon = change['status']
-                file_name = change['file']
+                file_name = change['file'].replace('`', '\\`')  # Escape backticks
                 current_size = format_bytes(change['current_size'])
                 base_size = format_bytes(change['base_size'])
                 diff_size = format_bytes(abs(change['diff']))
@@ -249,7 +249,12 @@ jobs:
                 else:
                     change_str = '0B'
                 
-                comment += f'| `{file_name}` | {current_size} | {base_size} | {change_str} | {percent:+.1f}% | {status_icon} |\n'
+                # Truncate long file names and escape special characters
+                display_name = file_name
+                if len(display_name) > 50:
+                    display_name = '...' + display_name[-47:]
+                
+                comment += f'| `{display_name}` | {current_size} | {base_size} | {change_str} | {percent:+.1f}% | {status_icon} |\n'
             
             comment += '\n'
         
@@ -261,7 +266,7 @@ jobs:
             
             for change in changes:
                 status_icon = change['status']
-                file_name = change['file']
+                file_name = change['file'].replace('`', '\\`')  # Escape backticks
                 current_size = format_bytes(change['current_size'])
                 base_size = format_bytes(change['base_size'])
                 diff_size = format_bytes(abs(change['diff']))
@@ -274,7 +279,12 @@ jobs:
                 else:
                     change_str = '0B'
                 
-                comment += f'| `{file_name}` | {current_size} | {base_size} | {change_str} | {percent:+.1f}% | {status_icon} |\n'
+                # Truncate long file names and escape special characters
+                display_name = file_name
+                if len(display_name) > 50:
+                    display_name = '...' + display_name[-47:]
+                
+                comment += f'| `{display_name}` | {current_size} | {base_size} | {change_str} | {percent:+.1f}% | {status_icon} |\n'
         else:
             comment += f'## 📋 File Changes (showing first 50 of {len(changes)})\n\n'
             comment += '| File | Current | Base | Change | % | Status |\n'
@@ -282,7 +292,7 @@ jobs:
             
             for change in changes[:50]:
                 status_icon = change['status']
-                file_name = change['file']
+                file_name = change['file'].replace('`', '\\`')  # Escape backticks
                 current_size = format_bytes(change['current_size'])
                 base_size = format_bytes(change['base_size'])
                 diff_size = format_bytes(abs(change['diff']))
@@ -295,7 +305,12 @@ jobs:
                 else:
                     change_str = '0B'
                 
-                comment += f'| `{file_name}` | {current_size} | {base_size} | {change_str} | {percent:+.1f}% | {status_icon} |\n'
+                # Truncate long file names and escape special characters
+                display_name = file_name
+                if len(display_name) > 50:
+                    display_name = '...' + display_name[-47:]
+                
+                comment += f'| `{display_name}` | {current_size} | {base_size} | {change_str} | {percent:+.1f}% | {status_icon} |\n'
         
         # Save comment to file
         with open('pr_comment.md', 'w') as f:
