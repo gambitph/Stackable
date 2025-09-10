@@ -30,5 +30,6 @@ jobs:
     - uses: preactjs/compressed-size-action@v2
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        build-script: "echo 'Using pre-built files'"
         pattern: "./build/stackable/**"
         exclude: "{**/*.map,**/node_modules/**}"
