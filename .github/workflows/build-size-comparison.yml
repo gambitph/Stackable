@@ -1,0 +1,107 @@
+name: Build Size Comparison
+
+on:
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build-and-compare:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout current PR
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Checkout base branch
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.base_ref }}
+        path: base-branch
+
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14.x
+        cache: 'npm'
+
+    - name: Install Dependencies (Current PR)
+      run: |
+        npm ci --legacy-peer-deps
+        cd pro__premium_only
+        npm ci --legacy-peer-deps
+
+    - name: Install Dependencies (Base Branch)
+      run: |
+        cd base-branch
+        npm ci --legacy-peer-deps
+        cd pro__premium_only
+        npm ci --legacy-peer-deps
+
+    - name: Build Current PR
+      run: |
+        npm run build:no-translate
+
+    - name: Build Base Branch
+      run: |
+        cd base-branch
+        npm run build:no-translate
+
+    - name: Create Zip Files
+      run: |
+        # Create zip for current PR
+        cd build/stackable
+        zip -r ../../current-build.zip . -x "*.map" "node_modules/*"
+        
+        # Create zip for base branch
+        cd ../../base-branch/build/stackable
+        zip -r ../../base-build.zip . -x "*.map" "node_modules/*"
+
+    - name: Compare Build Sizes
+      run: |
+        echo "## 📦 Build Size Comparison" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Get file sizes
+        CURRENT_SIZE=$(du -h current-build.zip | cut -f1)
+        BASE_SIZE=$(du -h base-build.zip | cut -f1)
+        
+        # Get exact byte sizes for calculation
+        CURRENT_BYTES=$(stat -c%s current-build.zip)
+        BASE_BYTES=$(stat -c%s base-build.zip)
+        
+        # Calculate difference
+        DIFF_BYTES=$((CURRENT_BYTES - BASE_BYTES))
+        DIFF_PERCENT=$((DIFF_BYTES * 100 / BASE_BYTES))
+        
+        echo "| Build | Size |" >> $GITHUB_STEP_SUMMARY
+        echo "|-------|------|" >> $GITHUB_STEP_SUMMARY
+        echo "| **Current PR** | **$CURRENT_SIZE** |" >> $GITHUB_STEP_SUMMARY
+        echo "| Base Branch | $BASE_SIZE |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ $DIFF_BYTES -gt 0 ]; then
+          echo "📈 **Size increased by** $(numfmt --to=iec $DIFF_BYTES) (+$DIFF_PERCENT%)" >> $GITHUB_STEP_SUMMARY
+        elif [ $DIFF_BYTES -lt 0 ]; then
+          echo "📉 **Size decreased by** $(numfmt --to=iec $((DIFF_BYTES * -1))) (-$((DIFF_PERCENT * -1))%)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "✅ **No size change**" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📁 Build Contents" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Current PR build contents:**" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        unzip -l current-build.zip | head -20 >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-comparison
+        path: |
+          current-build.zip
+          base-build.zip
+        retention-days: 7
