@@ -57,13 +57,16 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 * Register Rest API routes for the design library.
 		 */
 		public function register_route() {
-			register_rest_route( 'stackable/v2', '/design_library(?:/(?P<reset>reset))?', array(
+			register_rest_route( 'stackable/v2', '/design_library/(?P<type>[\w]+)(?:/(?P<reset>reset))?', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_design_library' ),
 				'permission_callback' => function () {
 					return current_user_can( 'edit_posts' );
 				},
 				'args' => array(
+					'type' => array(
+						'validate_callback' => __CLASS__ . '::validate_string'
+					),
 					'reset' => array(
 						'validate_callback' => __CLASS__ . '::validate_string'
 					),
@@ -91,6 +94,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		public function delete_cache_v3() {
 			// Delete design library.
 			delete_transient( 'stackable_get_design_library' );
+			delete_transient( 'stackable_get_design_library_json_v4' );
 
 			// Delete designs.
 			global $wpdb;
@@ -107,8 +111,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 		public function delete_cache() {
 			// Delete design library.
-			delete_transient( 'stackable_get_design_library_json_v4' );
 			delete_transient( 'stackable_get_design_library_v4' );
+			delete_transient( 'stackable_get_design_library_pages_v4' );
 
 			do_action( 'stackable_delete_design_library_cache' );
 		}
@@ -223,15 +227,23 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			), 200 );
 		}
 
-		public function get_design_library_from_cloud() {
-			$designs = get_transient( 'stackable_get_design_library_v4' );
+		public function get_design_library_from_cloud( $type = 'patterns' ) {
+			$transient_name = 'stackable_get_design_library_v4';
+			$filename = 'library.json';
+
+			if ( $type === 'pages' ) {
+				$transient_name = 'stackable_get_design_library_pages_v4';
+				$filename = 'pages.json';
+			}
+
+			$designs = get_transient( $transient_name );
 
 			// Fetch designs.
 			if ( empty( $designs ) ) {
 				$designs = array();
 				$content = null;
 
-				$response = wp_remote_get( self::get_cdn_url() . 'library-v4/library.json' );
+				$response = wp_remote_get( self::get_cdn_url() . 'library-v4/' . $filename );
 
 				if ( is_wp_error( $response ) ) {
 					// Add our error message so we can see it in the network tab.
@@ -241,20 +253,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					);
 				} else {
 					$content_body = wp_remote_retrieve_body( $response );
-					$designs = apply_filters( 'stackable_design_library_retreive_body', $content_body );
-					$designs = json_decode( $designs, true );
-
-					$content = array();
-					foreach ( $designs as $design_id => $design ) {
-						$content[ $design_id ] = array(
-							'title'			=> $design[ 'label' ],
-							'content' 		=> $design[ 'template' ],
-							'category'	 	=> $design[ 'category' ],
-							'description'	=> $design[ 'description' ],
-							'plan'			=> $design[ 'plan' ],
-							'designId'		=> $design_id
-						);
-					}
+					$content = apply_filters( 'stackable_design_library_retreive_body', $content_body );
+					$content = json_decode( $content, true );
 
 					// Add our error message so we can see it in the network tab.
 					if ( empty( $content ) ) {
@@ -262,19 +262,18 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 							'message' => $content_body,
 						);
 					}
-
 				}
 
 				// We add the latest designs in the `v4` area.
 				$designs[ self::API_VERSION ] = $content;
 
-				// Allow deprecated code to fetch other designs
-				$designs = apply_filters( 'stackable_fetch_design_library', $designs );
-
 				// Cache results.
-				set_transient( 'stackable_get_design_library_v4', $designs, 7 * DAY_IN_SECONDS );
+				set_transient( $transient_name, $designs, 7 * DAY_IN_SECONDS );
 			}
 
+			if ( $type === 'pages' ) {
+				return $designs;
+			}
 			return apply_filters( 'stackable_design_library', $designs );
 		}
 
@@ -283,11 +282,12 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 */
 		public function get_design_library( $request ) {
 			$reset = $request->get_param( 'reset' );
+			$type = $request->get_param( 'type' );
 			if ( $reset ) {
 				$this->delete_cache();
 			}
 
-			return rest_ensure_response( $this->get_design_library_from_cloud() );
+			return rest_ensure_response( $this->get_design_library_from_cloud( $type ) );
 		}
 
 

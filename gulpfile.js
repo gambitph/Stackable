@@ -411,81 +411,6 @@ ${ blockDesignSystem });
 	cb()
 } )
 
-gulp.task( 'generate-design-library-default-placeholders-php', function( cb ) {
-	const fs = require( 'fs' )
-
-	let defaultPlaceholders = 'array()'
-
-	const toAssocArray = ( key, value, cb, indent ) => {
-		if ( typeof value === 'object' ) {
-			const parsed = cb( value, indent + 1 )
-			return `"${ key }" => ${ parsed }`
-		}
-
-		return `"${ key }" => "${ value }"`
-	}
-
-	const parsePlaceholders = ( obj, indent ) => {
-		let content = ''
-		const tab = '\t'.repeat( indent )
-
-		if ( typeof obj === 'object' ) {
-			content += 'array(\n'
-
-			Object.entries( obj ).forEach( ( [ key, value ], index, bds ) => {
-				content += tab + toAssocArray( key, value, parsePlaceholders, indent )
-
-				if ( index !== bds.length - 1 ) {
-					content += ',\n'
-				} else {
-					content += '\n'
-				}
-			} )
-			content += `\t`.repeat( indent - 1 ) + ')'
-		}
-		return content
-	}
-
-	const jsonPath = path.resolve( __dirname, `src/components/design-library-list/default.json` )
-	if ( fs.existsSync( jsonPath ) ) {
-		const fileContent = fs.readFileSync( jsonPath, 'utf-8' )
-		const raw = JSON.parse( fileContent )
-		defaultPlaceholders = parsePlaceholders( raw, 4 )
-	}
-
-	// Generate PHP variable string
-	const script = `<?php
-// This is a generated file by gulp generate-design-library-default-placeholders-php
-// Use src/components/design-library-list/default.json if you want to edit this file.
-
-// Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
-if ( ! class_exists( 'Stackable_Design_Library_Placeholders' ) ) {
-	class Stackable_Design_Library_Placeholders {
-
-		function __construct() {
-		}
-
-		public static function get_default() {
-			$default_placeholders = ${ defaultPlaceholders };
-
-			return $default_placeholders;
-		}
-	}
-
-	new Stackable_Design_Library_Placeholders();
-}
-?>
-`
-	// Write PHP variable to file
-	fs.writeFileSync( path.resolve( __dirname, 'src/design-library/default-placeholders.php' ), script )
-
-	cb()
-} )
-
 gulp.task( 'generate-translations-js', gulp.series(
 	// The collect function has an issue where it will not continue if the
 	// folder will it writes to doesn't exist, create it to prevent an error.
@@ -778,7 +703,7 @@ gulp.task( 'style-deprecated', gulp.parallel(
  * END deprecated build styles, we still build these
  ********************************************************************/
 
-gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated', 'generate-translations-js', 'generate-stk-block-typesphp', 'generate-design-library-default-placeholders-php' ) )
+gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated', 'generate-translations-js', 'generate-stk-block-typesphp' ) )
 
 gulp.task( 'build-block-design-system', gulp.parallel( 'generate-block-design-system-php', 'generate-block-design-system-scss' ) )
 
@@ -814,11 +739,6 @@ const watchFuncs = ( basePath = '.' ) => {
 	gulp.watch(
 		[ `${ basePath }/src/block/**/block.json` ],
 		gulp.parallel( [ 'generate-stk-block-typesphp' ] )
-	)
-
-	gulp.watch(
-		[ `${ basePath }/src/components/design-library-list/default.json` ],
-		gulp.parallel( [ 'generate-design-library-default-placeholders-php' ] )
 	)
 }
 
