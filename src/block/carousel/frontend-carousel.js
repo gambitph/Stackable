@@ -95,7 +95,7 @@ class _StackableCarousel {
 					clone.style.zIndex = -1
 
 					clone.style.willChange = 'transform'
-					clone.style.transform = 'TranslateX( 0 )'
+					clone.style.transform = 'translateX( 0 )'
 					original.style.willChange = 'transform'
 					original.style.transform = 'TranslateX( 0 )'
 
