@@ -23,8 +23,9 @@ jobs:
         cache: 'npm'
     - name: Install Dependencies
       run: |
-        npm install
-        cd pro__premium_only && npm install
+        npm ci --legacy-peer-deps
+        cd pro__premium_only
+        npm ci --legacy-peer-deps
     - uses: preactjs/compressed-size-action@v2
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
