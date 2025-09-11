@@ -126,7 +126,7 @@ export const Colors = ( { colors } ) => {
 
 export const Typography = ( { typography } ) => {
 	return <>
-		<h1 className="ugb-style-guide__section-title ugb-style-guide__title">{ __( 'Typography', i18n ) }</h1>
+		<h1 className="ugb-style-guide__section-title ugb-style-guide__title ugb-style-guide__typography-title">{ __( 'Typography', i18n ) }</h1>
 		<div className="ugb-style-guide__columns ugb-style-guide__typography-headings">
 
 			<div className="ugb-style-guide__column">
@@ -309,17 +309,19 @@ export const WebPreview = ( { className } ) => {
 								<div className="has-text-align-center stk-block-content stk-inner-blocks stk-830918c-inner-blocks">
 									<div className="wp-block-stackable-subtitle stk-block-subtitle stk-block stk-fb52f96" data-block-id="fb52f96">
 										<style>{ '.stk-fb52f96 .stk-block-subtitle__text{color:#bbbbbb !important;}' }</style>
-										<p className="stk-block-subtitle__text stk-subtitle has-text-color">{ __( 'Subtitle', i18n ) }</p>
+										<p className="stk-block-subtitle__text stk-subtitle has-text-color">{ __( 'Welcome to Our Company', i18n ) }</p>
 									</div>
 
 									<div className="wp-block-stackable-heading stk-block-heading stk-block-heading--v2 stk-block stk-6602002" id="hero" data-block-id="6602002">
 										<style>{ '.stk-6602002 .stk-block-heading__text{color:#ffffff !important;}' }</style>
-										<h1 className="stk-block-heading__text has-text-color">{ __( 'Hero', i18n ) }</h1>
+										<h1 className="stk-block-heading__text has-text-color">{ __( 'Professional Solutions for Businesses', i18n ) }</h1>
 									</div>
 
 									<div className="wp-block-stackable-text stk-block-text stk-block stk-f9171eb" data-block-id="f9171eb">
 										<style>{ '.stk-f9171eb .stk-block-text__text{color:#ffffff !important;}' }</style>
-										<p className="stk-block-text__text has-text-color">{ LONG_TEXT[ 0 ] }</p>
+										<p className="stk-block-text__text has-text-color">
+											{ __( 'We provide innovative services and support to help your business grow and succeed in a competitive market.', i18n ) }
+										</p>
 									</div>
 
 									<div className="wp-block-stackable-button-group stk-block-button-group stk-block stk-ff42814" data-block-id="ff42814">
@@ -353,11 +355,11 @@ export const WebPreview = ( { className } ) => {
 							<div className="stk-column-wrapper stk-block-column__content stk-container stk-24d7b12-container stk--no-background stk--no-padding">
 								<div className="has-text-align-center stk-block-content stk-inner-blocks stk-24d7b12-inner-blocks">
 									<div className="wp-block-stackable-heading stk-block-heading stk-block-heading--v2 stk-block stk-8b4585e" id="section-title" data-block-id="8b4585e">
-										<h2 className="stk-block-heading__text">{ __( 'Section Title', i18n ) }</h2>
+										<h2 className="stk-block-heading__text">{ __( 'Our Services', i18n ) }</h2>
 									</div>
 
 									<div className="wp-block-stackable-text stk-block-text stk-block stk-111d3c5" data-block-id="111d3c5">
-										<p className="stk-block-text__text">{ __( 'Description', i18n ) }</p>
+										<p className="stk-block-text__text">{ __( 'Explore a wide range of solutions designed to meet your business needs.', i18n ) }</p>
 									</div>
 
 									<div className="wp-block-stackable-columns stk-block-columns stk-block stk-a05e839" data-block-id="a05e839">
@@ -374,11 +376,13 @@ export const WebPreview = ( { className } ) => {
 														</div>
 
 														<div className="wp-block-stackable-heading stk-block-heading stk-block-heading--v2 stk-block stk-3b5efe7" id="grid-item-title" data-block-id="3b5efe7">
-															<h3 className="stk-block-heading__text">{ __( 'Grid Item Title', i18n ) }</h3>
+															<h3 className="stk-block-heading__text">{ __( 'Consulting', i18n ) }</h3>
 														</div>
 
 														<div className="wp-block-stackable-text stk-block-text stk-block stk-b456df6" data-block-id="b456df6">
-															<p className="stk-block-text__text">{ LONG_TEXT[ 1 ] }</p>
+															<p className="stk-block-text__text">
+																{ __( 'Strategic guidance and expert advice to help your organization achieve its objectives.', i18n ) }
+															</p>
 														</div>
 													</div>
 												</div>
@@ -396,11 +400,13 @@ export const WebPreview = ( { className } ) => {
 														</div>
 
 														<div className="wp-block-stackable-heading stk-block-heading stk-block-heading--v2 stk-block stk-8248330" id="grid-item-title" data-block-id="8248330">
-															<h3 className="stk-block-heading__text">{ __( 'Grid Item Title', i18n ) }</h3>
+															<h3 className="stk-block-heading__text">{ __( 'Technology', i18n ) }</h3>
 														</div>
 
 														<div className="wp-block-stackable-text stk-block-text stk-block stk-dd2581b" data-block-id="dd2581b">
-															<p className="stk-block-text__text">{ LONG_TEXT[ 3 ] }</p>
+															<p className="stk-block-text__text">
+																{ __( 'Custom software and IT solutions to streamline your business processes.', i18n ) }
+															</p>
 														</div>
 													</div>
 												</div>
@@ -418,11 +424,13 @@ export const WebPreview = ( { className } ) => {
 														</div>
 
 														<div className="wp-block-stackable-heading stk-block-heading stk-block-heading--v2 stk-block stk-3d2ed89" id="grid-item-title" data-block-id="3d2ed89">
-															<h3 className="stk-block-heading__text">{ __( 'Grid Item Title', i18n ) }</h3>
+															<h3 className="stk-block-heading__text">{ __( 'Support', i18n ) }</h3>
 														</div>
 
 														<div className="wp-block-stackable-text stk-block-text stk-block stk-ffddcf7" data-block-id="ffddcf7">
-															<p className="stk-block-text__text">{ LONG_TEXT[ 4 ] }</p>
+															<p className="stk-block-text__text">
+																{ __( 'Dedicated assistance and ongoing support for all your business needs.', i18n ) }
+															</p>
 														</div>
 													</div>
 												</div>
@@ -460,22 +468,24 @@ export const WebPreview = ( { className } ) => {
 							<div className="stk-column-wrapper stk-block-column__content stk-container stk-d99e48d-container stk--no-background stk--no-padding">
 								<div className="stk-block-content stk-inner-blocks stk-d99e48d-inner-blocks">
 									<div className="wp-block-stackable-subtitle stk-block-subtitle stk-block stk-9514e13" data-block-id="9514e13">
-										<p className="stk-block-subtitle__text stk-subtitle">{ __( 'Subtitle', i18n ) }</p>
+										<p className="stk-block-subtitle__text stk-subtitle">{ __( 'About Our Company', i18n ) }</p>
 									</div>
 
 									<div className="wp-block-stackable-heading stk-block-heading stk-block-heading--v2 stk-block stk-505a24b" id="section-title" data-block-id="505a24b">
-										<h2 className="stk-block-heading__text">{ __( 'Section Title', i18n ) }</h2>
+										<h2 className="stk-block-heading__text">{ __( 'Committed to Your Success', i18n ) }</h2>
 									</div>
 
 									<div className="wp-block-stackable-text stk-block-text stk-block stk-36a0bf6" data-block-id="36a0bf6">
-										<p className="stk-block-text__text">{ LONG_TEXT[ 5 ] }</p>
+										<p className="stk-block-text__text">
+											{ __( 'Our experienced team delivers reliable solutions and outstanding results for businesses of all sizes and industries.', i18n ) }
+										</p>
 									</div>
 
 									<div className="wp-block-stackable-button-group stk-block-button-group stk-block stk-cdea3f4" data-block-id="cdea3f4">
 										<div className="stk-row stk-inner-blocks stk-block-content stk-button-group">
 											<div className="wp-block-stackable-button stk-block-button stk-block stk-96502ae" data-block-id="96502ae">
 												<a className="stk-link stk-button stk--hover-effect-darken" href="#" onClick={ e => e.preventDefault() }>
-													<span className="stk-button__inner-text">{ __( 'Learn More', i18n ) }</span>
+													<span className="stk-button__inner-text">{ __( 'Read More', i18n ) }</span>
 												</a>
 											</div>
 										</div>

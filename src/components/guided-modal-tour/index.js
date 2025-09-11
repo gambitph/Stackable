@@ -106,6 +106,7 @@ const ModalTour = props => {
 	const [ isVisibleDelayed, setIsVisibleDelayed ] = useState( false )
 	const [ forceRefresh, setForceRefresh ] = useState( 0 )
 	const [ isTransitioning, setIsTransitioning ] = useState( false )
+	const [ direction, setDirection ] = useState( 'forward' )
 	const modalRef = useRef( null )
 	const glowElementRef = useRef( null )
 
@@ -128,6 +129,7 @@ const ModalTour = props => {
 		preStep = NOOP, // If provided, this is a function to run before the step is shown.
 		// eslint-disable-next-line no-unused-vars
 		postStep = NOOP, // If provided, this is a function to run after the step is shown.
+		skipIf = NOOP, // If provided, this is a function to check if the step should be skipped.
 	} = steps[ currentStep ]
 
 	// While the modal is visible, just keep on force refreshing the modal in an interval to make sure the modal is always in the correct position.
@@ -147,6 +149,7 @@ const ModalTour = props => {
 		setIsVisible( false )
 		setIsVisibleDelayed( false )
 		setIsTransitioning( true )
+		setDirection( 'forward' )
 
 		// If at the last step, just close
 		if ( currentStep === steps.length - 1 ) {
@@ -160,7 +163,9 @@ const ModalTour = props => {
 					steps[ currentStep ]?.postStep?.( currentStep )
 				}, 50 )
 				const nextStep = currentStep + 1
-				steps[ nextStep ]?.preStep?.( nextStep )
+				setTimeout( () => {
+					steps[ nextStep ]?.preStep?.( nextStep )
+				}, 50 )
 				return nextStep
 			} )
 
@@ -187,6 +192,7 @@ const ModalTour = props => {
 		setIsVisible( false )
 		setIsVisibleDelayed( false )
 		setIsTransitioning( true )
+		setDirection( 'backward' )
 
 		setTimeout( () => {
 			setCurrentStep( currentStep => {
@@ -213,6 +219,17 @@ const ModalTour = props => {
 			setForceRefresh( forceRefresh => forceRefresh + 1 )
 		}, 650 )
 	}, [ currentStep, steps ] )
+
+	// If we just moved to this step, even before showing it check if we should skip it, if so, move to the next/prev step.
+	useEffect( () => {
+		if ( skipIf() ) {
+			if ( direction === 'forward' ) {
+				handleNextEvent()
+			} else {
+				handleBackEvent()
+			}
+		}
+	}, [ currentStep, direction ] )
 
 	// Show modal after 1 second delay
 	useEffect( () => {
@@ -308,20 +325,37 @@ const ModalTour = props => {
 			case 'left':
 				// Left, middle
 				return [ `${ anchorRect.left - modalRect.width - 16 }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
+			case 'left-top':
+				return [ `${ anchorRect.left - modalRect.width - 16 }px`, `${ anchorRect.top + 16 }px` ]
+			case 'left-bottom':
+				return [ `${ anchorRect.left - modalRect.width - 16 }px`, `${ anchorRect.bottom - modalRect.height - 16 }px` ]
 			case 'right':
 				// Right, middle
 				return [ `${ anchorRect.right + 16 }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
+			case 'right-top':
+				return [ `${ anchorRect.right + 16 }px`, `${ anchorRect.top + 16 }px` ]
+			case 'right-bottom':
+				return [ `${ anchorRect.right + 16 }px`, `${ anchorRect.bottom - modalRect.height - 16 }px` ]
 			case 'top':
 				// Center, top
 				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.top - modalRect.height - 16 }px` ]
+			case 'top-left':
+				return [ `${ anchorRect.left + 16 }px`, `${ anchorRect.top - modalRect.height - 16 }px` ]
+			case 'top-right':
+				return [ `${ anchorRect.right - modalRect.width - 16 }px`, `${ anchorRect.top + 16 }px` ]
 			case 'bottom':
 				// Center, bottom
 				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.bottom + 16 }px` ]
+			case 'bottom-left':
+				return [ `${ anchorRect.left + 16 }px`, `${ anchorRect.bottom + 16 }px` ]
+			case 'bottom-right':
+				return [ `${ anchorRect.right - modalRect.width - 16 }px`, `${ anchorRect.bottom + 16 }px` ]
 			case 'center':
-				return [
-					`${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`,
-					`${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px`,
-				]
+				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
+			case 'center-top':
+				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.top + 16 }px` ]
+			case 'center-bottom':
+				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.bottom - modalRect.height - 16 }px` ]
 			default:
 				return defaultOffset
 		}
@@ -380,7 +414,7 @@ const ModalTour = props => {
 			shouldCloseOnClickOutside={ false }
 			size={ size }
 			// onRequestClose={ onClose } // Do not use onRequestClose, it will cause the tour finish
-			className={ classNames( 'ugb-tour-modal', `ugb-tour-modal--${ position }`, {
+			className={ classNames( 'ugb-tour-modal', `ugb-tour-modal--${ position.replace( /-.*$/, '' ) }`, {
 				'ugb-tour-modal--visible': isVisible,
 				'ugb-tour-modal--visible-delayed': isVisibleDelayed,
 			} ) }
