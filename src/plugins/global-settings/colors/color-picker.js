@@ -160,8 +160,6 @@ const ColorPickers = props => {
 			onSortEnd={ onSortEnd }
 			ItemPreview={ ItemPreview }
 			ItemPicker="ColorPicker"
-			wrapItemPicker={ true }
-			wrapperClassName="stk-color-palette-control__popover-content"
 			{ ...props }
 		/>
 	)
