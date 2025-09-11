@@ -144,6 +144,14 @@ export const TOUR_STEPS = {
 					if ( document.querySelector( '.ugb-global-typography__panel:not(.is-opened)' ) ) {
 						document.querySelector( '.ugb-global-typography__panel .components-panel__body-title' )?.click()
 					}
+					const el = document.querySelector( '.ugb-global-settings-font-pair__container' )
+					if ( el ) {
+						// Scroll this to the top.
+						el.scrollTo( {
+							top: 0,
+							behavior: 'instant',
+						} )
+					}
 				},
 			},
 			{
@@ -166,7 +174,7 @@ export const TOUR_STEPS = {
 			},
 			{
 				title: __( 'Share Your Style Guide', i18n ),
-				description: __( 'Lastly, you can easily share your design system with others by exporting your Style Guide as an image. This is perfect for sharing with clients, teammates, or for documentation.', i18n ),
+				description: __( 'You can easily share your design system with others by exporting your Style Guide as an image. This is perfect for sharing with clients, teammates, or for documentation.', i18n ),
 				anchor: '.ugb-style-guide__print-button',
 				position: 'bottom',
 				glowTarget: '.ugb-style-guide__print-button',
@@ -179,6 +187,17 @@ export const TOUR_STEPS = {
 							behavior: 'smooth',
 						} )
 					}
+				},
+			},
+			{
+				title: __( 'You Did It!', i18n ),
+				description: __( 'That\'s it for the tour! Click the X to close the Style Guide. Your new styles are now live on your site. 🎉', i18n ),
+				anchor: '.ugb-style-guide-popover__close-button',
+				position: 'bottom',
+				glowTarget: '.ugb-style-guide-popover__close-button',
+				nextEventTarget: '.ugb-style-guide-popover__close-button',
+				postStep: () => {
+					document.querySelector( '.ugb-style-guide-popover__close-button' )?.click()
 				},
 			},
 		],

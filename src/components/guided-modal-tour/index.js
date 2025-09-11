@@ -153,6 +153,10 @@ const ModalTour = props => {
 
 		// If at the last step, just close
 		if ( currentStep === steps.length - 1 ) {
+			steps[ currentStep ]?.postStep?.( currentStep )
+			if ( hasConfetti ) {
+				throwConfetti()
+			}
 			onClose()
 			return
 		}
@@ -185,7 +189,7 @@ const ModalTour = props => {
 		setTimeout( () => {
 			setForceRefresh( forceRefresh => forceRefresh + 1 )
 		}, 650 )
-	}, [ currentStep, steps ] )
+	}, [ currentStep, steps, hasConfetti ] )
 
 	const handleBackEvent = useCallback( () => {
 		// Hide modal during transition
@@ -465,41 +469,7 @@ const ModalTour = props => {
 				{ showNext && (
 					<Button
 						variant="primary"
-						onClick={ () => {
-							if ( currentStep === steps.length - 1 ) {
-								if ( hasConfetti ) {
-									confetti( {
-										particleCount: 50,
-										angle: 60,
-										spread: 70,
-										origin: { x: 0 },
-										zIndex: 100000,
-										disableForReducedMotion: true,
-									} )
-									confetti( {
-										particleCount: 50,
-										angle: 120,
-										spread: 70,
-										origin: { x: 1 },
-										zIndex: 100000,
-										disableForReducedMotion: true,
-									} )
-									setTimeout( () => {
-										confetti( {
-											particleCount: 50,
-											angle: -90,
-											spread: 90,
-											origin: { y: -0.3 },
-											zIndex: 100000,
-											disableForReducedMotion: true,
-										} )
-									}, 150 )
-								}
-								onClose()
-							} else {
-								handleNextEvent()
-							}
-						} }
+						onClick={ handleNextEvent }
 					>
 						{ currentStep === steps.length - 1 ? (
 							__( 'Finish', i18n )
@@ -515,6 +485,35 @@ const ModalTour = props => {
 			</Flex>
 		</Modal>
 	)
+}
+
+const throwConfetti = () => {
+	confetti( {
+		particleCount: 50,
+		angle: 60,
+		spread: 70,
+		origin: { x: 0 },
+		zIndex: 100000,
+		disableForReducedMotion: true,
+	} )
+	confetti( {
+		particleCount: 50,
+		angle: 120,
+		spread: 70,
+		origin: { x: 1 },
+		zIndex: 100000,
+		disableForReducedMotion: true,
+	} )
+	setTimeout( () => {
+		confetti( {
+			particleCount: 50,
+			angle: -90,
+			spread: 90,
+			origin: { y: -0.3 },
+			zIndex: 100000,
+			disableForReducedMotion: true,
+		} )
+	}, 150 )
 }
 
 const Steps = props => {

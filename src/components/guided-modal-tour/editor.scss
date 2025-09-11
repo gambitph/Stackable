@@ -72,14 +72,19 @@
 	}
 
 	.ugb-tour-modal__help {
+		position: relative;
 		background: #f4fbff;
 		padding: 8px 12px;
+		padding-inline-start: 30px;
 		border-radius: 8px;
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		margin-block: 16px;
 		svg {
 			vertical-align: text-top;
 			margin-inline-end: 8px;
+			margin-top: 1px;
+			position: absolute;
+			inset-inline-start: 9px;
 		}
 	}
 
