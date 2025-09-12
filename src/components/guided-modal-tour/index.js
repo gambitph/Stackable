@@ -261,7 +261,7 @@ const ModalTour = props => {
 		let clickListener = null
 
 		if ( nextEventTarget ) {
-			if ( nextEvent === 'click' ) {
+			if ( nextEvent === 'click' || nextEvent === 'mousedown' ) {
 				clickListener = event => {
 					// Check if the event target matches the selector or is inside an element that matches
 					if (
@@ -273,7 +273,7 @@ const ModalTour = props => {
 				}
 				// Use ownerDocument instead of document directly
 				const doc = modalRef.current?.ownerDocument || document
-				doc.addEventListener( 'click', clickListener )
+				doc.addEventListener( nextEvent, clickListener )
 			} else {
 				const elements = document.querySelectorAll( nextEventTarget )
 				for ( let i = 0; i < elements.length; i++ ) {
@@ -284,10 +284,10 @@ const ModalTour = props => {
 
 		return () => {
 			if ( nextEventTarget ) {
-				if ( nextEvent === 'click' && clickListener ) {
+				if ( ( nextEvent === 'click' || nextEvent === 'mousedown' ) && clickListener ) {
 					// Use ownerDocument instead of document directly
 					const doc = modalRef.current?.ownerDocument || document
-					doc.removeEventListener( 'click', clickListener )
+					doc.removeEventListener( nextEvent, clickListener )
 				} else {
 					const elements = document.querySelectorAll( nextEventTarget )
 					for ( let i = 0; i < elements.length; i++ ) {
@@ -356,7 +356,7 @@ const ModalTour = props => {
 			case 'top-left':
 				return [ `${ anchorRect.left + 16 }px`, `${ anchorRect.top - modalRect.height - 16 }px` ]
 			case 'top-right':
-				return [ `${ anchorRect.right - modalRect.width - 16 }px`, `${ anchorRect.top + 16 }px` ]
+				return [ `${ anchorRect.right - modalRect.width - 16 }px`, `${ anchorRect.top - modalRect.height - 16 }px` ]
 			case 'bottom':
 				// Center, bottom
 				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.bottom + 16 }px` ]

@@ -20,7 +20,14 @@ export const designLibrary = {
 			} ),
 			size: 'medium',
 			nextEventTarget: '.ugb-design-library-item',
+			nextEvent: 'mousedown',
 			offsetX: '-400px',
+			postStep: () => {
+				// Make sure the first one (or at least there is one) that's toggled
+				if ( ! document.querySelector( '.ugb-design-library-item.ugb--is-toggled' ) ) {
+					document.querySelector( '.ugb-design-library-item' )?.click()
+				}
+			},
 		},
 		{
 			title: __( 'Pick Styling Options', i18n ),
@@ -63,15 +70,56 @@ export const designLibrary = {
 		},
 		{
 			title: __( 'Patterns and Full-Pages', i18n ),
-			description: __( 'Great! Your entire library is now styled. Aside from patterns, there are also full-page layouts in the library.', i18n ),
-			help: createInterpolateElement( __( 'Click the <strong>Pages</strong> tab to continue.', i18n ), {
+			description: __( 'Great! Your entire library is now styled. Aside from patterns, Stackable also provides you with full-page layouts.', i18n ),
+			help: createInterpolateElement( __( 'Click the <strong>Next</strong> to continue.', i18n ), {
 				strong: <strong />,
 			} ),
-			// TODO: Change these when we have the pages tab already.
-			anchor: '.ugb-modal-design-library .components-modal__header',
+			anchor: '.stk-design-library-tabs .components-button-group',
 			position: 'bottom',
-			nextEventTarget: '.ugb-modal-design-library .components-modal__header',
-			glowTarget: '.ugb-modal-design-library .components-modal__header',
+			nextEventTarget: '.stk-design-library-tabs .components-button-group',
+			glowTarget: '.stk-design-library-tabs .components-button-group',
+			preStep: () => {
+				// Disable for now the pages tab
+				const pagesButton = document.querySelector( '.stk-design-library-tabs button[value="pages"]' )
+				if ( pagesButton ) {
+					pagesButton.disabled = true
+				}
+			},
+			postStep: () => {
+				// Enable the pages tab
+				const pagesButton = document.querySelector( '.stk-design-library-tabs button[value="pages"]' )
+				if ( pagesButton ) {
+					pagesButton.disabled = false
+				}
+			},
+		},
+		{
+			title: __( 'Let\'s Insert Our Pattern', i18n ),
+			description: __( 'Now let\'s insert our pattern into our page.', i18n ),
+			help: createInterpolateElement( __( 'Click on <strong>Add Designs</strong> to continue.', i18n ), {
+				strong: <strong />,
+			} ),
+			anchor: '.ugb-modal-design-library__add-multi',
+			position: 'top-right',
+			nextEventTarget: '.ugb-modal-design-library__add-multi',
+			glowTarget: '.ugb-modal-design-library__add-multi',
+			preStep: () => {
+				// Make sure the patterns tab is selected
+				document.querySelector( '.ugb-modal-design-library button[value="patterns"]:not(.is-primary)' )?.click()
+
+				// Make sure the first one (or at least there is one) that's toggled
+				if ( ! document.querySelector( '.ugb-design-library-item.ugb--is-toggled' ) ) {
+					document.querySelector( '.ugb-design-library-item' )?.click()
+				}
+			},
+			postStep: () => {
+				setTimeout( () => {
+					// If the design library is still open, click the add button.
+					if ( document.querySelector( '.ugb-modal-design-library' ) ) {
+						document.querySelector( '.ugb-modal-design-library__add-multi' )?.click()
+					}
+				}, 100 )
+			},
 		},
 	],
 }

@@ -145,6 +145,14 @@
 			}
 		}
 	}
+	&.ugb-tour-modal--top-right {
+		.components-modal__content {
+			&::after {
+				left: auto;
+				right: 16px;
+			}
+		}
+	}
 	&.ugb-tour-modal--bottom {
 		.components-modal__content {
 			box-shadow: rgba(0, 0, 0, 0.2) 0px -22px 60px -4px;
