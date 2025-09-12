@@ -201,6 +201,7 @@ export const Edit = memo( props => {
 							selector: ', .stk-block-columns:has( > .stk-inner-blocks > * > * > [data-type="stackable/column"] > * > .stk-%s)',
 							highlight: 'outline-second-offset',
 						} }
+						className="ugb-column-align-control"
 					/>
 				}
 				{ props.hasRowAlignment &&

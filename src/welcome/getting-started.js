@@ -20,6 +20,7 @@ import {
 	styles as stylesIcon,
 	scheduled as scheduledIcon,
 	brush as brushIcon,
+	blockDefault as blockDefaultIcon,
 } from '@wordpress/icons'
 
 /**
@@ -146,6 +147,29 @@ export const GettingStarted = () => {
 									<SVGCheck />
 								</span>
 								{ __( 'Build Now', i18n ) }
+							</a>
+						</div>
+					</div>
+
+					<div className="s-card">
+						<div className="s-quick-button-icon">
+							<Icon icon={ blockDefaultIcon } />
+						</div>
+						<div className="s-quick-button-description">
+							<h3>{ __( 'Stackable Block Settings', i18n ) }</h3>
+							<p>{ __( 'Learn how to use Stackable blocks and get more out of them.', i18n ) }</p>
+						</div>
+						<div className="s-quick-button-button">
+							<a
+								href={ `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=blocks` }
+								className={ classNames( 's-button s-secondary-button uppercase', {
+									's-button--checked': guidedTourStates?.includes( 'blocks' ),
+								} ) }
+							>
+								<span className="s-quick-button-toggle-indicator">
+									<SVGCheck />
+								</span>
+								{ __( 'Use Blocks', i18n ) }
 							</a>
 						</div>
 					</div>

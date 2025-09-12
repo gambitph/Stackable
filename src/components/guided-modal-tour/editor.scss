@@ -45,6 +45,10 @@
 		transform: scale(1);
 	}
 
+	.components-modal__header-heading {
+		line-height: 1.2;
+	}
+
 	.components-button {
 		border-radius: 4px;
 	}
@@ -120,6 +124,13 @@
 			&::after {
 				left: auto;
 				right: -10px;
+			}
+		}
+	}
+	&.ugb-tour-modal--left-top {
+		.components-modal__content {
+			&::after {
+				top: 30px;
 			}
 		}
 	}

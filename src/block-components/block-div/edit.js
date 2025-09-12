@@ -90,6 +90,7 @@ export const Edit = memo( props => {
 					checked={ hasBackground }
 					onChange={ hasBackground => setAttributes( { hasBackground } ) }
 					initialOpen={ initialOpen === 'background' }
+					className="ugb-block-background-panel"
 				>
 					<AdvancedSelectControl
 						label={ __( 'Color Scheme', i18n ) }

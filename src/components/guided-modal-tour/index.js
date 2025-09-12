@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { TOUR_STEPS } from './tour-steps'
+import './editor-block-tour'
 
 /**
  * External dependencies
@@ -46,6 +47,7 @@ const GuidedModalTour = props => {
 		steps = [],
 		condition = null,
 		hasConfetti = true,
+		initialize = NOOP,
 	} = TOUR_STEPS[ tourId ]
 
 	if ( justCompleted ) {
@@ -72,6 +74,7 @@ const GuidedModalTour = props => {
 	return <ModalTour
 		steps={ steps }
 		hasConfetti={ hasConfetti }
+		initialize={ initialize }
 		onClose={ () => {
 			setIsDone( true )
 			setJustCompleted( true )
@@ -99,6 +102,7 @@ const ModalTour = props => {
 		steps,
 		onClose = NOOP,
 		hasConfetti = true,
+		initialize = NOOP,
 	} = props
 
 	const [ currentStep, setCurrentStep ] = useState( 0 )
@@ -131,6 +135,12 @@ const ModalTour = props => {
 		postStep = NOOP, // If provided, this is a function to run after the step is shown.
 		skipIf = NOOP, // If provided, this is a function to check if the step should be skipped.
 	} = steps[ currentStep ]
+
+	useEffect( () => {
+		setTimeout( () => {
+			initialize()
+		}, 50 )
+	}, [ initialize ] )
 
 	// While the modal is visible, just keep on force refreshing the modal in an interval to make sure the modal is always in the correct position.
 	useEffect( () => {
@@ -418,10 +428,14 @@ const ModalTour = props => {
 			shouldCloseOnClickOutside={ false }
 			size={ size }
 			// onRequestClose={ onClose } // Do not use onRequestClose, it will cause the tour finish
-			className={ classNames( 'ugb-tour-modal', `ugb-tour-modal--${ position.replace( /-.*$/, '' ) }`, {
-				'ugb-tour-modal--visible': isVisible,
-				'ugb-tour-modal--visible-delayed': isVisibleDelayed,
-			} ) }
+			className={ classNames(
+				'ugb-tour-modal',
+				`ugb-tour-modal--${ position.replace( /-.*$/, '' ) }`,
+				`ugb-tour-modal--${ position }`,
+				{
+					'ugb-tour-modal--visible': isVisible,
+					'ugb-tour-modal--visible-delayed': isVisibleDelayed,
+				} ) }
 			ref={ modalRef }
 		>
 			<style>
