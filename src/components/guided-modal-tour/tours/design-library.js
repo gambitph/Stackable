@@ -20,7 +20,7 @@ export const designLibrary = {
 			} ),
 			size: 'medium',
 			nextEventTarget: '.ugb-design-library-item',
-			nextEvent: 'mousedown',
+			nextEvent: 'mouseup',
 			offsetX: '-400px',
 			postStep: () => {
 				// Make sure the first one (or at least there is one) that's toggled

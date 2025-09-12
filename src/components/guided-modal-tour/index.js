@@ -261,7 +261,7 @@ const ModalTour = props => {
 		let clickListener = null
 
 		if ( nextEventTarget ) {
-			if ( nextEvent === 'click' || nextEvent === 'mousedown' ) {
+			if ( nextEvent === 'click' || nextEvent === 'mousedown' || nextEvent === 'mouseup' ) {
 				clickListener = event => {
 					// Check if the event target matches the selector or is inside an element that matches
 					if (
@@ -284,7 +284,7 @@ const ModalTour = props => {
 
 		return () => {
 			if ( nextEventTarget ) {
-				if ( ( nextEvent === 'click' || nextEvent === 'mousedown' ) && clickListener ) {
+				if ( ( nextEvent === 'click' || nextEvent === 'mousedown' || nextEvent === 'mouseup' ) && clickListener ) {
 					// Use ownerDocument instead of document directly
 					const doc = modalRef.current?.ownerDocument || document
 					doc.removeEventListener( nextEvent, clickListener )

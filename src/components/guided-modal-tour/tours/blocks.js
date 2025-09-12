@@ -89,10 +89,11 @@ export const blocks = {
 	steps: [
 		{
 			title: '👋 ' + __( 'Welcome to Your Stackable Blocks', i18n ),
-			description: __( 'I\'ve added some Stackable blocks for you. This inspector is contains all the settings for this block, let\'s explore it!', i18n ),
+			description: __( 'This inspector is contains all the settings for this block, let\'s explore it!', i18n ),
 			help: createInterpolateElement( __( 'If you\'re familiar with <strong>page builders</strong>, then you\'ll feel right at home.', i18n ), {
 				strong: <strong />,
 			} ),
+			size: 'medium',
 			anchor: '.ugb--has-panel-tabs',
 			position: 'left',
 			glowTarget: '.ugb--has-panel-tabs',
@@ -103,7 +104,7 @@ export const blocks = {
 		},
 		{
 			title: __( 'The Layout Tab', i18n ),
-			description: __( 'Stackable blocks usually have 3 tabs, each with different settings. The Layout Tab contains layout-related options like flex controls, spacing and margins.', i18n ),
+			description: __( 'Stackable blocks normally have 3 tabs, each with different settings. The Layout Tab contains layout-related options like flex controls, spacing and margins.', i18n ),
 			help: createInterpolateElement( __( 'Open the <strong>Layout Tab</strong> to continue.', i18n ), {
 				strong: <strong />,
 			} ),
@@ -134,7 +135,7 @@ export const blocks = {
 		},
 		{
 			title: __( 'Try Changing Alignments', i18n ),
-			description: __( 'Let\'s try changing the Column Alignment to Center or End, and see how it affects our block.', i18n ),
+			description: __( 'Let\'s try changing this option and see how it affects our block.', i18n ),
 			help: createInterpolateElement( __( 'Pick <strong>Center or End</strong> Column Alignment to continue.', i18n ), {
 				strong: <strong />,
 			} ),
@@ -169,7 +170,7 @@ export const blocks = {
 		},
 		{
 			title: __( 'The Style Tab', i18n ),
-			description: __( 'I\'ve selected the Columns block now, let\'s try to add a background to it. The Style Tab contains style-related options like backgrounds, color, borders and typography.', i18n ),
+			description: __( 'Let\'s try to add a background to the main Columns block. The Style Tab contains style-related options like backgrounds, color, borders and typography.', i18n ),
 			help: createInterpolateElement( __( 'Click the <strong>Style Tab</strong> to continue.', i18n ), {
 				strong: <strong />,
 			} ),
@@ -220,12 +221,14 @@ export const blocks = {
 					document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
 				}, 100 )
 			},
-			postStep: () => {
-				const checkbox = document.querySelector( '.ugb-block-background-panel .components-panel__body-title input[type="checkbox"]' )
-				if ( checkbox && ! checkbox.checked ) {
-					checkbox.click()
-				}
-			},
+			// postStep: () => {
+			// 	setTimeout( () => {
+			// 		const checkbox = document.querySelector( '.ugb-block-background-panel .components-panel__body-title input[type="checkbox"]' )
+			// 		if ( checkbox && checkbox.value !== 'on' ) {
+			// 			checkbox.click()
+			// 		}
+			// 	}, 100 )
+			// },
 		},
 		{
 			title: __( 'The Advanced Tab', i18n ),
@@ -257,6 +260,7 @@ export const blocks = {
 			title: __( 'Consistent Options Everywhere', i18n ),
 			description: __( 'Once you get the hang of these settings, you\'ll spot them in almost every Stackable block. This makes it easy and familiar to build any design you want.', i18n ),
 			anchor: '.ugb--has-panel-tabs',
+			size: 'medium',
 			position: 'left',
 			preStep: () => {
 				// Open the inspector sidebar
