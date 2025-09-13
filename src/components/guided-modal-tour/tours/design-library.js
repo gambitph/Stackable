@@ -14,7 +14,7 @@ export const designLibrary = {
 	steps: [
 		{
 			title: '👋 ' + __( 'Welcome to Your Design Library', i18n ),
-			description: __( 'These are hundreds ofpre-built designs that are style-matched to your block theme. You can insert one or more patterns to quickly build your page.', i18n ),
+			description: __( 'These are hundreds of pre-built designs that are style-matched to your block theme. You can insert one or more patterns to quickly build your page.', i18n ),
 			help: createInterpolateElement( __( 'Pick one of the <strong>designs</strong> to continue.', i18n ), {
 				strong: <strong />,
 			} ),
