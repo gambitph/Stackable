@@ -69,11 +69,11 @@ export const useDesignSystem = () => {
 
 	const buttonIconStyles = useMemo( () => {
 		return renderGlobalBlockLayoutStyles( buttonsAndIcons, blockLayoutDefaults, NOOP, 'normal', null, null, true )?.replaceAll( ':root', '.ugb-style-guide__preview-root' ) || ''
-	}, [ buttonsAndIcons ] )
+	}, [ buttonsAndIcons, blockLayoutDefaults ] )
 
 	const spacingBorderStyles = useMemo( () => {
 		return renderGlobalBlockLayoutStyles( spacingAndBorders, blockLayoutDefaults, NOOP, 'normal', null, null, true )?.replaceAll( ':root', '.ugb-style-guide__preview-root, .ugb-style-guide__preview' ) || ''
-	}, [ spacingAndBorders ] )
+	}, [ spacingAndBorders, blockLayoutDefaults ] )
 
 	const {
 		getSortedColorSchemes,

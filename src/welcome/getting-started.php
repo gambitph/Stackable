@@ -34,6 +34,7 @@ if ( ! class_exists( 'Stackable_Getting_Started_Screen' ) ) {
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
                     'show_in_rest' => array(
 						'schema' => array(
+                            'type' => 'array',
 							'items' => array(
 								'type' => 'string',
 							),
@@ -45,6 +46,9 @@ if ( ! class_exists( 'Stackable_Getting_Started_Screen' ) ) {
         }
 
         public function sanitize_array_setting( $input ) {
+            if ( ! is_array( $input ) ) {
+                return array();
+            }
             return array_map( 'sanitize_text_field', $input );
         }
 

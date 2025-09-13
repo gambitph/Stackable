@@ -20,10 +20,10 @@ export { default as StyleGuidePopover } from './popover'
 
 // TODO: This is not yet finished
 const StyleGuide = props => {
-	const { designSystem, contentRef = null } = props
+	const { designSystem = {}, contentRef = null } = props
 
 	const {
-		colors,
+		colors = [],
 		colorSchemes = DUMMY_COLOR_SCHEMES,
 		typography = {
 			desktop: [], tablet: [], mobile: [],
@@ -33,7 +33,8 @@ const StyleGuide = props => {
 		previewClassNames = '',
 	} = designSystem
 
-	const THEME_STYLES = wpGlobalStylesInlineCss.replaceAll( ':root', '&' ).replace( /[^\-](\bbody)/g, ( match, p1 ) => {
+	const src = typeof wpGlobalStylesInlineCss === 'string' ? wpGlobalStylesInlineCss : ''
+	const THEME_STYLES = src.replaceAll( ':root', '&' ).replace( /[^\-](\bbody)/g, ( match, p1 ) => {
 		return match.replace( p1, '.ugb-style-guide__preview-root' )
 	} )
 

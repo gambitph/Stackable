@@ -1,6 +1,8 @@
 import { i18n } from 'stackable'
 
-import { __, sprintf } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 
 export const LONG_TEXT = [
 	// Translators: This is placeholder text used in the style guide.
@@ -142,7 +144,7 @@ const TIMELINE_TEMPLATE = [
 			left: 0,
 		},
 	}, [
-		[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block. Any text will do.', 'Content placeholder', i18n ) } ],
+		[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do.', 'Content placeholder', i18n ) } ],
 	] ],
 ]
 

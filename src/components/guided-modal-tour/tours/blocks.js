@@ -77,8 +77,8 @@ export const blocks = {
 		)
 
 		// Delete all blocks
-		const allBlocks = select( 'core/block-editor' ).getBlocks()
-		dispatch( 'core/block-editor' ).removeBlocks( allBlocks.map( block => block.clientId ) )
+		// const allBlocks = select( 'core/block-editor' ).getBlocks()
+		// dispatch( 'core/block-editor' ).removeBlocks( allBlocks.map( block => block.clientId ) )
 
 		// Insert our block
 		dispatch( 'core/block-editor' ).insertBlocks( [ blockObject ], 0 )

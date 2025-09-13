@@ -47,6 +47,7 @@ const StyleGuidePopover = props => {
 				className="ugb-style-guide-popover__close-button"
 				variant="tertiary"
 				onClick={ onClose }
+				aria-label={ __( 'Close', i18n ) }
 			>
 				<Icon icon={ closeIcon } />
 			</Button>
@@ -87,7 +88,7 @@ const ExportButton = props => {
 	return (
 		<Button
 			className="ugb-style-guide__print-button"
-			isSecondary
+			variant="secondary"
 			onClick={ handlePrint }
 			icon={ <Icon icon={ downloadIcon } /> }
 			isBusy={ isExporting }

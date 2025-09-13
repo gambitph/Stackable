@@ -157,12 +157,16 @@ const ADDITIONAL_ATTRIBUTES = {
 
 const INNER_BLOCK_CALLBACKS = {
 	'stackable/team-member': innerBlocks => {
-		innerBlocks[ 0 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
+		if ( innerBlocks?.[ 0 ]?.attributes ) {
+			innerBlocks[ 0 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
+		}
 
 		return innerBlocks
 	},
 	'stackable/testimonial': innerBlocks => {
-		innerBlocks[ 1 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
+		if ( innerBlocks?.[ 1 ]?.attributes ) {
+			innerBlocks[ 1 ].attributes.imageExternalUrl = `${ srcUrl }/${ profile }`
+		}
 
 		return innerBlocks
 	},
@@ -199,7 +203,8 @@ export const DefaultOutlineButton = ( {
 }
 
 const getGeneratedCss = ( blocks, generateForInnerBlocks = false ) => {
-	return blocks.map( block => {
+	const list = Array.isArray( blocks ) ? blocks : []
+	return list.map( block => {
 		if ( ! block.attributes.uniqueId ) {
 			block.attributes.uniqueId = createUniqueClass( block.clientId )
 		}
@@ -220,7 +225,7 @@ const getGeneratedCss = ( blocks, generateForInnerBlocks = false ) => {
 
 		block.attributes.generatedCss = saveCss
 
-		if ( generateForInnerBlocks ) {
+		if ( generateForInnerBlocks && Array.isArray( block.innerBlocks ) ) {
 			block.innerBlocks = getGeneratedCss( block.innerBlocks, generateForInnerBlocks )
 		}
 
@@ -290,10 +295,12 @@ export const RenderBlock = props => {
 	} = getSerializedBlock( propsToPass )
 
 	return (
-		<RawHTML>
-			{ cleanSerializedBlock( serialized, SERIALIZE_CALLBACKS[ blockName ], attributes ) }
-			{ `<p>${ name }</p>` }
-		</RawHTML>
+		<>
+			<RawHTML>
+				{ cleanSerializedBlock( serialized, SERIALIZE_CALLBACKS[ blockName ], attributes ) }
+			</RawHTML>
+			<p>{ name }</p>
+		</>
 	)
 }
 

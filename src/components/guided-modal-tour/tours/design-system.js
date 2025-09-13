@@ -82,7 +82,7 @@ export const designSystem = {
 					// Scroll this to the top.
 					el.scrollTo( {
 						top: 0,
-						behavior: 'instant',
+						behavior: 'auto',
 					} )
 				}
 			},

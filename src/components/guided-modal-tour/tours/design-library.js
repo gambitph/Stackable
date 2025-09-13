@@ -42,7 +42,7 @@ export const designLibrary = {
 			postStep: () => {
 				const el = document.querySelector( '.ugb-modal-design-library__enable-background input' )
 				// If the input is not checked, click the button.
-				if ( ! el.checked ) {
+				if ( el && ! el.checked ) {
 					el.click()
 				}
 			},
