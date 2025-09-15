@@ -19,6 +19,11 @@ export const LONG_TEXT = [
 	__( 'Change arrived slowly, then all at once. Some said goodbye, some stayed longer, and some simply evolved.', i18n ),
 ]
 
+const BUTTON_GROUP_TEMPLATE = [
+	[ 'stackable/button', { text: __( 'Button', i18n ) } ],
+	[ 'stackable/button', { text: __( 'Button', i18n ) } ],
+]
+
 const CAROUSEL_TEMPLATE = [
 	[ 'stackable/column', {}, [
 		[ 'stackable/heading', { text: __( 'Slide', i18n ) } ],
@@ -148,7 +153,17 @@ const TIMELINE_TEMPLATE = [
 	] ],
 ]
 
+const playIcon = '<svg data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>'
+
+const VIDEO_POPUP_TEMPLATE = [
+	[ 'stackable/icon', {
+		contentAlign: 'center', icon: playIcon, linkHasLink: false,
+	} ],
+	[ 'stackable/image', { enableHandles: false } ],
+]
+
 export const PLACEHOLDER_INNER_BLOCKS = {
+	'stackable/button-group': BUTTON_GROUP_TEMPLATE,
 	'stackable/carousel': CAROUSEL_TEMPLATE,
 	'stackable/column': COLUMN_TEMPLATE,
 	'stackable/columns': COLUMNS_TEMPLATE,
@@ -160,4 +175,5 @@ export const PLACEHOLDER_INNER_BLOCKS = {
 	'stackable/pricing-box': PRICING_BOX_TEMPLATE,
 	'stackable/tabs': TABS_TEMPLATE,
 	'stackable/timeline': TIMELINE_TEMPLATE,
+	'stackable/video-popup': VIDEO_POPUP_TEMPLATE,
 }

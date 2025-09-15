@@ -298,7 +298,15 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 			width: calc(100% / 3 - 16px);
 		}
 
-		> div > :is(.stk-block-horizontal-scroller, .stk-block-icon-box, .stk-block-icon-label, .stk-block-icon-list, .stk-block-map, .stk-block-number-box, .stk-block-price, .stk-block-pricing-box, .stk-block-progress-circle, .stk-block-table-of-contents) {
+		> div:has(.stk-block-video-popup) {
+			width: calc(100% / 2 - 12px);
+		}
+
+		> div:has(.stk-block-button-group) {
+			width: 100%;
+		}
+
+		> div > :is(.stk-block-horizontal-scroller, .stk-block-icon-box, .stk-block-icon-label, .stk-block-icon-list, .stk-block-map, .stk-block-number-box, .stk-block-price, .stk-block-pricing-box, .stk-block-progress-circle, .stk-block-table-of-contents, .stk-block-button-group, .stk-block-video-popup) {
 			width: 100%;
 		}
 
