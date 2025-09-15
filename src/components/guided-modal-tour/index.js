@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import { TOUR_STEPS } from './tour-steps'
-import './editor-block-tour'
 
 /**
  * External dependencies
