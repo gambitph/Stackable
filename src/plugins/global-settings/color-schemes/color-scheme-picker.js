@@ -18,6 +18,7 @@ import {
 	ColorSchemePreview,
 	ColorSchemePresetPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
+	ALTERNATE_COLOR_SCHEME_COLORS,
 	AdvancedToggleControl,
 	ProControlButton,
 	ControlSeparator,
@@ -116,13 +117,17 @@ const ColorSchemePicker = props => {
 		return ! isEqual( item.colorScheme, DEFAULT_COLOR_SCHEME_COLORS )
 	}
 
+	const showDeleteButton = item => {
+		return item.key === 'scheme-default-3'
+	}
+
 	useEffect( () => {
 		if ( ! itemInEdit ) {
 			setSubHeaderControls( { showTrash: false, showReset: false } )
 			return
 		}
 		const controls = {
-			showTrash: ! itemInEdit.key.startsWith( 'scheme-default' ),
+			showTrash: itemInEdit.key === 'scheme-default-3' || ! itemInEdit.key.startsWith( 'scheme-default' ),
 			showReset: showResetButton( itemInEdit ),
 		}
 
@@ -132,8 +137,38 @@ const ColorSchemePicker = props => {
 	// Get the custom color schemes
 	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
 
+	const saveColorSchemeSettings = updatedColorSchemes => {
+		saveTimeout = setTimeout( () => {
+			const settings = new models.Settings( {
+				stackable_global_color_schemes: updatedColorSchemes, // eslint-disable-line camelcase
+				// Clear the cached CSS when the color scheme is updated
+				stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
+			} )
+			settings.save()
+		}, 300 )
+
+		// Update our store.
+		dispatch( 'stackable/global-color-schemes' ).updateColorSchemes( updatedColorSchemes )
+	}
+
 	// Add a custom color scheme
 	const handleAddItem = ( event, scheme = null ) => {
+		if ( ! colorSchemes.some( scheme => scheme.key === 'scheme-default-3' ) ) {
+			const alternateColorScheme = {
+				name: __( 'Alternate Scheme', i18n ),
+				key: 'scheme-default-3',
+				colorScheme: ALTERNATE_COLOR_SCHEME_COLORS,
+			}
+
+			const updatedColorSchemes = [
+				...colorSchemes,
+				alternateColorScheme,
+			]
+
+			saveColorSchemeSettings( updatedColorSchemes )
+			return
+		}
+
 		doAction( 'stackable.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', scheme, setItemInEdit, saveTimeout )
 	}
 
@@ -154,17 +189,8 @@ const ColorSchemePicker = props => {
 			const currentIndex = colorSchemes.findIndex( c => c.key === currentItem.key )
 			updatedColorSchemes[ currentIndex ] = currentItem
 
-			saveTimeout = setTimeout( () => {
-				const settings = new models.Settings( {
-					stackable_global_color_schemes: updatedColorSchemes, // eslint-disable-line camelcase
-					// Clear the cached CSS when the color scheme is updated
-					stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
-				} )
-				settings.save()
-			}, 300 )
-
-			// Update our store.
-			dispatch( 'stackable/global-color-schemes' ).updateColorSchemes( updatedColorSchemes )
+			clearTimeout( saveTimeout )
+			saveColorSchemeSettings( updatedColorSchemes )
 		}
 	}
 
@@ -285,6 +311,24 @@ const ColorSchemePicker = props => {
 	}
 
 	const onDeleteItem = item => {
+		if ( item.key === 'scheme-default-3' ) {
+			// eslint-disable-next-line no-alert
+			const confirmDelete = window.confirm( __( 'Deleting this color scheme would remove all colors linked to it. Any blocks that use this color scheme will revert to the default scheme. Delete this color scheme?', i18n ) )
+
+			if ( ! confirmDelete ) {
+				return
+			}
+
+			const selectedIndex = colorSchemes.findIndex( c => c.key === item.key )
+			const updatedColorSchemes = cloneDeep( colorSchemes )
+			updatedColorSchemes.splice( selectedIndex, 1 )
+
+			clearTimeout( saveTimeout )
+			saveColorSchemeSettings( updatedColorSchemes )
+			setItemInEdit( null )
+			return
+		}
+
 		// If the color scheme to be deleted is a custom color scheme, customDelete will return true
 		const customDelete = applyFilters( 'stackable.global-settings.global-color-schemes.delete-color-scheme', false, item, setItemInEdit, saveTimeout )
 
@@ -419,9 +463,10 @@ const ColorSchemePicker = props => {
 		ItemPreview={ ItemPreview }
 		ItemPicker={ null }
 		buttonClassName="stk-global-color-scheme__color-scheme-item"
-		enableAddItem={ isPro }
+		enableAddItem={ isPro || ! colorSchemes.some( scheme => scheme.key === 'scheme-default-3' ) }
 		onItemClick={ item => setItemInEdit( item ) }
 		showResetCallback={ item => showResetButton( item ) }
+		showDeleteCallback={ item => showDeleteButton( item ) }
 	/> : <>
 		<InspectorSubHeader
 			title={ ! isPro && itemInEdit.key === 'scheme-default-1'

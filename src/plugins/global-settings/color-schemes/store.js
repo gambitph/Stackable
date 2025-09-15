@@ -81,7 +81,9 @@ domReady( () => {
 			stackable_use_v3_16_0_color_scheme_inheritance: useV3_16_0_ColorSchemeInheritance,
 		} = response
 
-		const colorSchemes = Array.isArray( _colorSchemes ) && _colorSchemes.length > 0 ? _colorSchemes : [ {
+		const colorSchemesRaw = Array.isArray( _colorSchemes ) && _colorSchemes.length > 0 ? [ ..._colorSchemes ] : []
+
+		const defaultScheme = {
 			name: __( 'Default Scheme', i18n ),
 			key: 'scheme-default-1',
 			colorScheme: {
@@ -95,7 +97,9 @@ domReady( () => {
 				buttonOutlineColor: { desktop: '' },
 			},
 			hideInPicker: false,
-		}, {
+		}
+
+		const backgroundScheme = {
 			name: __( 'Background Scheme', i18n ),
 			key: 'scheme-default-2',
 			colorScheme: {
@@ -109,7 +113,22 @@ domReady( () => {
 				buttonOutlineColor: { desktop: '' },
 			},
 			hideInPicker: false,
-		} ]
+		}
+
+		const hasDefaultScheme = colorSchemesRaw.some( scheme => scheme.key === 'scheme-default-1' )
+		const hasBackgroundScheme = colorSchemesRaw.some( scheme => scheme.key === 'scheme-default-2' )
+
+		if ( ! hasDefaultScheme ) {
+			colorSchemesRaw.push( defaultScheme )
+		}
+		if ( ! hasBackgroundScheme ) {
+			colorSchemesRaw.push( backgroundScheme )
+		}
+
+		// Ensure there are a max of three color schemes
+		const colorSchemes = [ ...colorSchemesRaw ].sort( ( a, b ) => {
+			return a.key < b.key ? -1 : ( a.key > b.key ? 1 : 0 )
+		} ).slice( 0, 3 )
 
 		const settings = {
 			colorSchemes,

@@ -113,6 +113,7 @@ const SortablePicker = props => {
 							className={ props.buttonClassName }
 							onItemClick={ props.onItemClick }
 							showReset={ props.showResetCallback ? props.showResetCallback( item ) : true }
+							showDelete={ props.showDeleteCallback ? props.showDeleteCallback( item ) : false }
 						/> )
 					 ) }
 					{ items?.map( ( item, i ) => (
@@ -166,6 +167,7 @@ const LabeledItemIndicator = props => {
 		sortable = true,
 		editableName = true,
 		showReset = true,
+		showDelete = true,
 	} = props
 
 	const [ isFocused, setIsFocused ] = useState( false )
@@ -262,7 +264,7 @@ const LabeledItemIndicator = props => {
 					return <> { ItemPicker && <ItemPicker item={ item } onChange={ onChange } onClose={ onClose } /> } </>
 				} }
 			/>
-			{ sortable &&
+			{ showDelete &&
 				<Button
 					aria-label="Delete"
 					className="stk-global-settings-color-picker__delete-button"
@@ -272,7 +274,7 @@ const LabeledItemIndicator = props => {
 					onClick={ onDelete }
 				/>
 			}
-			{ ! sortable && <ResetButton
+			{ ! showDelete && <ResetButton
 				showReset={ showReset }
 				onChange={ onDelete }
 			/>

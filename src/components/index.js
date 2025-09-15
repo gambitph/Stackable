@@ -125,6 +125,7 @@ export {
 	default as ColorSchemePreview,
 	ColorSchemePresetPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
+	ALTERNATE_COLOR_SCHEME_COLORS,
 	COLOR_SCHEME_PROPERTY_LABELS,
 } from './color-scheme-preview'
 export { ColorSchemesHelp } from './color-schemes-help'
