@@ -114,16 +114,21 @@ const DesignLibraryItem = props => {
 	}
 
 	useEffect( () => {
-		if ( ! itemRef.current ) {
-			return
-		}
-
 		// Use a timeout to ensure designs have finished rendering before calculating visibility.
 		const timeoutRef = setTimeout( () => {
-			const containerRect = document.querySelector( '.ugb-modal-design-library__designs' ).getBoundingClientRect()
-			const itemRect = itemRef.current.getBoundingClientRect()
+			const itemEl = itemRef.current
+			const containerEl = itemEl?.closest( '.ugb-modal-design-library__designs' ) || document.querySelector( '.ugb-modal-design-library__designs' )
 
-			const render = itemRect.bottom >= containerRect.top - 250 && itemRect.top <= containerRect.bottom + 250
+			if ( ! itemEl || ! containerEl ) {
+				return
+			}
+
+			const containerRect = containerEl.getBoundingClientRect()
+			const itemRect = itemEl.getBoundingClientRect()
+
+			const BOUNDARY = 250
+
+			const render = itemRect.bottom >= containerRect.top - BOUNDARY && itemRect.top <= containerRect.bottom + BOUNDARY
 
 			setShouldRender( render )
 		}, 250 )
