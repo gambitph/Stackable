@@ -83,7 +83,6 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 		<button
 			className={ mainClasses }
 			ref={ ref }
-			data-stk-design-id={ props.designId }
 			onClick={ onClickHost }
 			onMouseOut={ onMouseOut }
 			onMouseOver={ onMouseOver }
