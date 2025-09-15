@@ -11,3 +11,7 @@
 	font-size: 56px;
 	line-height: 0.7;
 }
+
+:where(.stk-has-color-schemes .stk-block-price) .stk-block-text {
+	color: var(--stk-text-color);
+}
