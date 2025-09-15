@@ -8,6 +8,8 @@ import { registerPlugin } from '@wordpress/plugins'
 import { useEffect } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 
+import './editor-block-tour'
+
 const TourTrigger = () => {
 	useEffect( () => {
 		// Check the GET parameter for the tour ID.

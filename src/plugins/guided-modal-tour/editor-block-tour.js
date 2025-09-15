@@ -1,6 +1,6 @@
 
 import { registerPlugin } from '@wordpress/plugins'
-import GuidedModalTour from './index'
+import { GuidedModalTour } from '~stackable/components'
 
 const EditorBlockTour = () => {
 	return <GuidedModalTour tourId="blocks" />
