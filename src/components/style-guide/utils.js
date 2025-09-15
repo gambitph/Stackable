@@ -296,10 +296,12 @@ export const RenderBlock = props => {
 
 	return (
 		<>
+			{ /* Insert the label as a string inside RawHTML so that it appears within
+			the <div> wrapper that RawHTML generates, ensuring proper structure. */ }
 			<RawHTML>
 				{ cleanSerializedBlock( serialized, SERIALIZE_CALLBACKS[ blockName ], attributes ) }
+				{ `<p>${ name }</p>` }
 			</RawHTML>
-			<p>{ name }</p>
 		</>
 	)
 }
