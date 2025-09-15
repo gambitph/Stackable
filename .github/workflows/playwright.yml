@@ -80,7 +80,7 @@ jobs:
       continue-on-error: true
     - name: Disable guided tours
       run: |
-        TOUR_STATES='["design-system", "editor", "design-library"]'
+        TOUR_STATES='["design-system", "editor", "design-library", "blocks"]'
         wp-env run tests-cli wp option update stackable_guided_tour_states "$TOUR_STATES" --format=json
     - name: Run playwright tests
       id: run-playwright-tests
