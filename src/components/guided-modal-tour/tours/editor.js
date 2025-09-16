@@ -1,12 +1,13 @@
 import { __ } from '@wordpress/i18n'
-import { i18n } from 'stackable'
+import { i18n, guidedTourStates } from 'stackable'
 import { createInterpolateElement } from '@wordpress/element'
 
 export const editor = {
 	hasConfetti: false,
 	condition: () => { // If provided, true will show the tour (even if it's already done), false will not show the tour, null will show the tour only once.
 		// Do not show the tour if there is a GET parameter that shows another tour.
-		return window?.location?.search?.includes( 'tour=' ) ? false : null
+		return window?.location?.search?.includes( 'tour=' ) ? false
+			: guidedTourStates.includes( 'design-library' ) ? false : null
 	},
 	steps: [
 		{

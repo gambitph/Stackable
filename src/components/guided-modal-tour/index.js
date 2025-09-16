@@ -2,6 +2,13 @@
  * Internal dependencies
  */
 import { TOUR_STEPS } from './tour-steps'
+import {
+	setActiveTour,
+	clearActiveTour,
+	isTourActive,
+	getActiveTourId,
+	addTourStateListener,
+} from './util'
 
 /**
  * External dependencies
@@ -42,6 +49,17 @@ const GuidedModalTour = props => {
 	// We need this to prevent the tour from being shown again if it's just completed.
 	const [ justCompleted, setJustCompleted ] = useState( false )
 
+	// Check if another tour is already active
+	const [ isAnotherTourActive, setIsAnotherTourActive ] = useState( isTourActive() && getActiveTourId() !== tourId )
+
+	// Listen for tour state changes
+	useEffect( () => {
+		const removeListener = addTourStateListener( activeId => {
+			setIsAnotherTourActive( activeId !== null && activeId !== tourId )
+		} )
+		return removeListener
+	}, [ tourId ] )
+
 	const {
 		steps = [],
 		condition = null,
@@ -50,6 +68,11 @@ const GuidedModalTour = props => {
 	} = TOUR_STEPS[ tourId ]
 
 	if ( justCompleted ) {
+		return null
+	}
+
+	// If another tour is already active, don't show this tour
+	if ( isAnotherTourActive ) {
 		return null
 	}
 
@@ -71,12 +94,16 @@ const GuidedModalTour = props => {
 	}
 
 	return <ModalTour
+		tourId={ tourId }
 		steps={ steps }
 		hasConfetti={ hasConfetti }
 		initialize={ initialize }
 		onClose={ () => {
 			setIsDone( true )
 			setJustCompleted( true )
+
+			// Clear the active tour
+			clearActiveTour()
 
 			// Update the stackable_guided_tour_states setting
 			if ( ! guidedTourStates.includes( tourId ) ) {
@@ -98,6 +125,7 @@ const GuidedModalTour = props => {
 
 const ModalTour = props => {
 	const {
+		tourId,
 		steps,
 		onClose = NOOP,
 		hasConfetti = true,
@@ -140,6 +168,22 @@ const ModalTour = props => {
 			initialize()
 		}, 50 )
 	}, [ initialize ] )
+
+	// Set active tour when modal becomes visible
+	useEffect( () => {
+		if ( isVisible ) {
+			setActiveTour( tourId )
+		}
+	}, [ isVisible, tourId ] )
+
+	// Clear active tour when component unmounts
+	useEffect( () => {
+		return () => {
+			if ( getActiveTourId() === tourId ) {
+				clearActiveTour()
+			}
+		}
+	}, [ tourId ] )
 
 	// While the modal is visible, just keep on force refreshing the modal in an interval to make sure the modal is always in the correct position.
 	useEffect( () => {
