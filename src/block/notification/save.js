@@ -80,7 +80,6 @@ export const Save = props => {
 					<button
 						className="stk-block-notification__close-button"
 						{ ...applyFilters( 'stackable.notification.save.close-button-props', {
-							className: 'stk-block-notification__close-button',
 							'aria-label': __( 'Close', i18n ),
 						}, props.version ) }
 					>

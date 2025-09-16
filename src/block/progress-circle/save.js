@@ -66,13 +66,13 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ containerClassNames }>
 				<div
+					className={ divClassNames }
+					role="progressbar"
+					aria-valuemin="0"
+					aria-valuemax="100"
+					aria-valuenow={ progressValue }
+					aria-valuetext={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
 					{ ...applyFilters( 'stackable.progress-circle.div-props', {
-						className: divClassNames,
-						role: 'progressbar',
-						'aria-valuemin': '0',
-						'aria-valuemax': '100',
-						'aria-valuenow': progressValue,
-						'aria-valuetext': attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined,
 						'aria-label': attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined,
 					}, props.version ) }
 				>

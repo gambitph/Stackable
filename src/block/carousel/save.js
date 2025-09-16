@@ -77,11 +77,11 @@ export const Save = props => {
 				<div className="stk-block-carousel__content-wrapper">
 					<div className={ contentClassNames }>
 						<div
+							className="stk-block-carousel__slider"
+							role="list"
+							data-autoplay={ attributes.autoplay ? ( attributes.autoplaySpeed || '4000' ) : undefined }
+							data-label-slide-of={ attributes.ariaLabelPrev || 'Slide %%d of %%d' }
 							{ ...applyFilters( 'stackable.carousel.save.slider-props', {
-								className: 'stk-block-carousel__slider',
-								role: 'list',
-								'data-autoplay': attributes.autoplay ? ( attributes.autoplaySpeed || '4000' ) : undefined,
-								'data-label-slide-of': attributes.ariaLabelPrev || 'Slide %%d of %%d',
 								tabIndex: 0,
 							}, props.version ) }
 						>
