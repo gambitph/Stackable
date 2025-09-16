@@ -18,6 +18,9 @@ $right-space: 28px;
 			margin: 0 !important;
 			font-size: 13px !important;
 		}
+		&:not(:empty) {
+			height: 24px; // Prevent the label from changing sizes if toggle disappears.
+		}
 	}
 	&.stk-control-label--bold {
 		margin-bottom: 16px;
@@ -49,7 +52,7 @@ $right-space: 28px;
 .stk-control__reset-button {
 	position: absolute;
 	right: -28px;
-	top: 4px;
+	top: 7px;
 	margin: 0;
 	width: 24px !important;
 	padding: 0 !important;

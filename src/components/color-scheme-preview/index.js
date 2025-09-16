@@ -97,7 +97,7 @@ export const ColorSchemePresetPicker = ( {
 	label, presets, onPresetClick,
 } ) => {
 	return (
-		<BaseControl label={ label } className="stk-preset-color-schemes__control">
+		<BaseControl label={ label } className="stk-preset-color-schemes__control" __nextHasNoMarginBottom>
 			<div className="stk-preset-color-schemes__preset-wrapper">
 				{ presets.map( ( colors, index ) => {
 					return <ColorSchemePreview

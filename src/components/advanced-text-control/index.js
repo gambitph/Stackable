@@ -66,6 +66,8 @@ const AdvancedTextControl = memo( props => {
 					value={ internalValue }
 					onChange={ internalOnChange }
 					className={ classnames( propsToPass.className, 'ugb-advanced-text-control' ) }
+					__nextHasNoMarginBottom
+					__next40pxDefaultSize
 				/>
 			</DynamicContentControl>
 			<ResetButton

@@ -566,6 +566,8 @@ const DynamicContentControl = ( {
 					<TextControl
 						value={ otherProps.placeholder }
 						disabled={ true }
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 				) }
 				<DynamicContentButton { ...otherProps } />

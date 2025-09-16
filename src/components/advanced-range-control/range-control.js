@@ -163,6 +163,8 @@ const StackableRangeControl = memo( props => {
 				? props.sliderMax
 				: ( props.max === Infinity ? 100 : props.max ) // Dont' allow Infinity on the slider since it will not move.
 			}
+			__next40pxDefaultSize
+			__nextHasNoMarginBottom
 		/>
 		{ withInputField && isNumberControlSupported && (
 			<NumberControl
@@ -177,6 +179,8 @@ const StackableRangeControl = memo( props => {
 				value={ value }
 				placeholder={ placeholderValue }
 				type="text"
+				__next40pxDefaultSize
+				__nextHasNoMarginBottom
 			/>
 		) }
 		{ _children }

@@ -10,9 +10,12 @@ import ColorSchemePicker from './color-scheme-picker'
  */
 import { i18n, showProNotice } from 'stackable'
 import {
-	PanelAdvancedSettings, HelpTooltip,
-	AdvancedSelectControl, SectionSettings,
+	AdvancedSelectControl,
+	AdvancedToggleControl,
+	HelpTooltip,
+	PanelAdvancedSettings,
 	ProControlButton,
+	SectionSettings,
 } from '~stackable/components'
 import { useBlockColorSchemes } from '~stackable/hooks'
 
@@ -22,7 +25,6 @@ import { useBlockColorSchemes } from '~stackable/hooks'
 import { addFilter } from '@wordpress/hooks'
 import { Fragment, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { ToggleControl } from '@wordpress/components'
 import { useSelect, dispatch } from '@wordpress/data'
 import { models } from '@wordpress/api'
 
@@ -145,10 +147,11 @@ addFilter( 'stackable.global-settings.inspector.global-colors.toggle-controls', 
 
 	return <>
 		{ output }
-		<ToggleControl
+		<AdvancedToggleControl
 			label={ __( 'Show Global Color Schemes', i18n ) }
 			checked={ ! hideColorSchemeColors }
 			onChange={ value => onChange( ! value ) }
+			allowReset={ false }
 		/>
 
 	</>

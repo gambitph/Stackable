@@ -100,6 +100,7 @@ const DesignSeparatorControl = props => {
 			id="ugb-design-separator-control"
 			label={ label }
 			help={ help }
+			__nextHasNoMarginBottom
 		>
 			<DesignControl
 				options={ options }

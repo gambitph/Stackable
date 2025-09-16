@@ -18,6 +18,7 @@ const CodeTextareaControl = props => {
 		<BaseControl
 			help={ props.help }
 			className={ classnames( 'stk-code-textarea-control', props.className ) }
+			__nextHasNoMarginBottom
 		>
 			<BaseControlMultiLabel
 				label={ props.label }

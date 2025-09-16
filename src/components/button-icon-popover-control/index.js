@@ -69,6 +69,7 @@ const ButtonIconPopoverControl = memo( props => {
 					label={ props.label }
 					checked={ props.checked }
 					onChange={ props.onToggle }
+					__nextHasNoMarginBottom
 				/>
 			) }
 			<div className="ugb-button-icon-control__wrapper">

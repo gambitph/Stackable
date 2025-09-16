@@ -67,7 +67,7 @@ const SortablePicker = props => {
 	)
 
 	return (
-		<BaseControl className={ classNames } label={ props.label }>
+		<BaseControl className={ classNames } label={ props.label } __nextHasNoMarginBottom>
 			{ enableAddItem && <Dropdown
 				popoverProps={ addItemPopoverProps }
 				renderToggle={ ( { onToggle, isOpen } ) => (

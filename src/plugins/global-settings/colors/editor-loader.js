@@ -48,7 +48,7 @@ const renderGlobalStyles = ( newColors, isEditingTemplate, setStyles ) => {
 export const GlobalColorStyles = () => {
 	const { colors, isEditingTemplate } = useSelect( select => ( {
 		colors: select( 'stackable/global-colors' ).getSettings().stackableColors || [],
-		isEditingTemplate: select( 'core/edit-post' )?.isEditingTemplate?.() || false,
+		isEditingTemplate: select( 'core/editor' )?.getCurrentPostType?.() === 'wp_template' || false,
 	} ) )
 	const [ styles, setStyles ] = useState( '' )
 

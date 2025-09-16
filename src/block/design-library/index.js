@@ -24,6 +24,7 @@ export const settings = {
 	},
 	supports: {
 		stkSaveBlockStyle: false,
+		inserter: false, // Always hide design library from block inserter
 	},
 	example: {
 		attributes: {

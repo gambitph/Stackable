@@ -97,7 +97,10 @@ const applySettingsToMeta = metadata => {
 	if ( typeof metadata.supports === 'undefined' ) {
 		metadata.supports = {}
 	}
-	metadata.supports.inserter = inserter
+
+	if ( typeof metadata.supports.inserter === 'undefined' ) {
+		metadata.supports.inserter = inserter
+	}
 
 	return metadata
 }

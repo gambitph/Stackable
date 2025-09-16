@@ -10,7 +10,7 @@ import { GlobalColorStyles } from './editor-loader'
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { PanelAdvancedSettings } from '~stackable/components'
+import { AdvancedToggleControl, PanelAdvancedSettings } from '~stackable/components'
 import rgba from 'color-rgba'
 
 /**
@@ -21,7 +21,6 @@ import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, useSelect } from '@wordpress/data'
 import { models } from '@wordpress/api'
-import { ToggleControl } from '@wordpress/components'
 
 export { GlobalColorStyles }
 
@@ -70,6 +69,7 @@ addFilter( 'stackable.util.is-dark-color', 'stackable/global-colors', color => {
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', output => {
 	const {
+		stackableColors,
 		hideThemeColors,
 		hideDefaultColors,
 		hideSiteEditorColors,
@@ -109,6 +109,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Color Palette', i18n ) }
+				showModifiedIndicator={ !! stackableColors?.length }
 			>
 				<p className="components-base-control__help">
 					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
@@ -123,22 +124,24 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 					onReset={ () => onChangeUseStackableColorsOnly( false ) }
 				/> */ }
 				{ ColorToggleControls }
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Show Theme Colors', i18n ) }
 					checked={ ! hideThemeColors }
 					onChange={ value => onChangeHideThemeColors( ! value ) }
+					allowReset={ false }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Show Default Colors', i18n ) }
 					checked={ ! hideDefaultColors }
 					onChange={ value => onChangeHideDefaultColors( ! value ) }
+					allowReset={ false }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Show Site Editor Custom Colors', i18n ) }
 					checked={ ! hideSiteEditorColors }
 					onChange={ value => onChangeHideSiteEditorColors( ! value ) }
+					allowReset={ false }
 				/>
-
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

@@ -166,6 +166,7 @@ export const ModalDesignLibrary = props => {
 									}, 100 )
 									props.onClose()
 								} }
+								__nextHasNoMarginBottom
 							/>
 						) }
 						<Button
@@ -247,10 +248,12 @@ export const ModalDesignLibrary = props => {
 							onChange={ value => {
 								setEnableBackground( value )
 							} }
+							__nextHasNoMarginBottom
 						/> }
 						<BaseControl
 							label={ __( 'Background Scheme', i18n ) }
 							className="ugb-modal-design-library__color-scheme-label ugb-modal-design-library__background-scheme"
+							__nextHasNoMarginBottom
 						>
 							<Dropdown
 								className="ugb-modal-design-library__color-scheme-dropdown"
@@ -318,6 +321,7 @@ export const ModalDesignLibrary = props => {
 						<BaseControl
 							label={ __( 'Container Scheme', i18n ) }
 							className="ugb-modal-design-library__color-scheme-label"
+							__nextHasNoMarginBottom
 						>
 							<Dropdown
 								popoverProps={ popoverProps }

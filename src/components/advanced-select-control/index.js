@@ -35,6 +35,8 @@ const AdvancedSelectControl = memo( props => {
 				role="listbox"
 				value={ typeof props.value === 'undefined' ? value : props.value }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+				__nextHasNoMarginBottom
+				__next40pxDefaultSize
 			/>
 			<ResetButton
 				allowReset={ props.allowReset }
