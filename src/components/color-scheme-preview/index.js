@@ -31,7 +31,7 @@ export const ALTERNATE_COLOR_SCHEME_COLORS = {
 	backgroundColor: { desktop: '#0f0e17' },
 	headingColor: { desktop: '#fffffe' },
 	textColor: { desktop: '#fffffe' },
-	linkColor: { desktop: '#fffffe' },
+	linkColor: { desktop: '#f00069' },
 	accentColor: { desktop: '#f00069' },
 	buttonBackgroundColor: { desktop: '#f00069' },
 	buttonTextColor: { desktop: '#fffffe' },

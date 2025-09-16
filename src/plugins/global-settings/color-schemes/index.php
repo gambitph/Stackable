@@ -201,7 +201,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				if ( ! $color_schemes ) {
 					$scheme = array(
 						array(
-							'name' => 'Alternate Scheme',
+							'name' => __( 'Alternate Scheme', STACKABLE_I18N ),
 							'key' => 'scheme-default-3',
 							'colorScheme' => array(
 								'backgroundColor' => array( 'desktop' => '#0f0e17' ),
