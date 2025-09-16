@@ -1,5 +1,9 @@
 .ugb-advanced-autosuggest-control {
 	margin-bottom: 16px;
+
+	.stk-inspector-control__reset-button {
+		transform: translateY(-3px);
+	}
 }
 .ugb-advanced-autosuggest-control__select {
 	> * {
@@ -7,6 +11,7 @@
 	}
 	input {
 		width: 100%;
+		height: 40px; // Follow new WP standard.
 	}
 	.react-autosuggest__suggestions-container {
 		position: absolute;

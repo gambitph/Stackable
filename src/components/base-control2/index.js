@@ -68,6 +68,7 @@ export const BaseControl = props => {
 		<GutBaseControl
 			help={ props.help }
 			className={ className }
+			__nextHasNoMarginBottom
 		>
 			<VisualGuide { ...props.visualGuide }>
 				<div className={ labelClassName }>

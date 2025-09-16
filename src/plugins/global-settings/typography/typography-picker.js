@@ -222,7 +222,7 @@ const TypographyPreview = props => {
 				</div>
 				{ props.help && (
 					<Tooltip
-						position="bottom"
+						placement="bottom"
 						text={ props.help }
 					>
 						<Dashicon icon="editor-help" />

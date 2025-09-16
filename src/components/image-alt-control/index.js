@@ -31,6 +31,7 @@ const ImageAltControl = props => {
 					{ __( 'Leave empty if the image is purely decorative.', i18n ) }
 				</>
 			}
+			__nextHasNoMarginBottom
 		/>
 	)
 }

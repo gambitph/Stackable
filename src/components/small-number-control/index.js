@@ -9,6 +9,7 @@ const SmallNumberControl = props => {
 			type="number"
 			className="ugb-small-number-control"
 			{ ...props }
+			__next40pxDefaultSize
 		/>
 	)
 }

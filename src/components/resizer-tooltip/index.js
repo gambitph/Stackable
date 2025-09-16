@@ -222,6 +222,7 @@ const ResizerTooltip = props => {
 							<BaseControl
 								help={ props.help }
 								className={ classnames( 'stk-control stk--no-padding', props.className ) }
+								__nextHasNoMarginBottom
 							>
 								<div className="stk-control-label">
 									<div className="components-base-control__label"><h3>{ sprintf( __( '%s Size', i18n ), props.label ) }</h3></div>

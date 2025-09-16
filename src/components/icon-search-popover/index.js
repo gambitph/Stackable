@@ -214,6 +214,8 @@ const IconSearchPopover = props => {
 						value={ value }
 						onChange={ setValue }
 						placeholder={ __( 'Type to search icon', i18n ) }
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					{ isPro &&
 						<Button

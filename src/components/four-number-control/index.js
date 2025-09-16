@@ -7,9 +7,7 @@ import Button from '../button'
 /**
  * WordPress dependencies
  */
-import {
-	BaseControl, Dashicon,
-} from '@wordpress/components'
+import { BaseControl, Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -147,6 +145,7 @@ class FourNumberControl extends Component {
 			<BaseControl
 				help={ this.props.help }
 				className={ classnames( 'ugb-four-number-control', this.props.className ) }
+				__nextHasNoMarginBottom
 			>
 				<BaseControlMultiLabel
 					label={ this.props.label }

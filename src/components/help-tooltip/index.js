@@ -54,6 +54,7 @@ const HelpTooltip = props => {
 					className="ugb-help-tooltip__checkbox"
 					checked={ ! props.tooltipsEnabled }
 					onChange={ checked => props.onTooltipsEnabledChange( ! checked ) }
+					__nextHasNoMarginBottom
 				/>
 			}
 		</PanelBody>

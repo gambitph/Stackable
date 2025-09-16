@@ -62,6 +62,7 @@ const LocationControl = props => {
 			onChange={ value => {
 				props.onTextChange( value )
 			} }
+			__next40pxDefaultSize
 		/>
 	)
 }
