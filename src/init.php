@@ -17,12 +17,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 	class Stackable_Init {
 
 		/**
-		 * Holds the scripts which are already enqueued, to ensure we only do it once per script.
-		 * @var Array
-		 */
-		public $scripts_loaded = array();
-
-		/**
 		 * Enqueue the frontend scripts, ensures we only do it once.
 		 *
 		 * @var boolean
@@ -122,19 +116,13 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				wp_register_script( 'ugb-block-frontend-js', null, [], STACKABLE_VERSION );
 			}
 
-			// Register inline frontend styles, these are always loaded.
-			// Register via a dummy style.
-			wp_register_style( 'ugb-style-css-nodep', false );
-			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
-			if ( ! empty( $inline_css ) ) {
-				wp_add_inline_style( 'ugb-style-css-nodep', trim( $inline_css ) );
-			}
-
-			// Register inline frontend styles for theme.json block style inheritance
-			wp_register_style( 'ugb-block-style-inheritance-nodep', false );
-			$block_style_inline_css = apply_filters( 'stackable_block_style_inheritance_inline_styles_nodep', '' );
-			if ( ! empty( $block_style_inline_css ) ) {
-				wp_add_inline_style( 'ugb-block-style-inheritance-nodep', $block_style_inline_css );
+			// Enqueue the global CSS file in the frontend.
+			if ( ! is_admin() && get_option( 'stackable_use_css_files', '1' ) === '1' ) {
+				// The enqueue_global_css_file method now has built-in fallback to inline styles
+				// if CSS file generation fails
+				Stackable_Global_Design_System_CSS_Generator::enqueue_global_css_file();
+			} else {
+				Stackable_Global_Design_System_CSS_Generator::enqueue_global_css_inline();
 			}
 
 			// This is needed for the translation strings in our UI.
@@ -237,17 +225,27 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Enqueue the block script once.
-			if ( ! isset( $this->scripts_loaded[ $block['blockName'] ] ) ) {
-				$stackable_block = substr( $block['blockName'], 10 );
-				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
-				$this->scripts_loaded[ $block['blockName'] ] = true;
+			if ( did_action( 'stackable/' . $block['blockName'] . '/enqueue_scripts' ) === 0 ) {
+				do_action( 'stackable/' . $block['blockName'] . '/enqueue_scripts' );
 			}
 
 			// Check whether the current block needs to enqueue some scripts.
 			// This gets called across all the blocks.
-			do_action( 'stackable/enqueue_scripts', $block_content, $block );
+			if ( did_action( 'stackable/enqueue_scripts' ) === 0 ) {
+				do_action( 'stackable/enqueue_scripts', $block_content, $block );
+			}
 
 			return $block_content;
+		}
+
+		// Register inline frontend styles for theme.json block style inheritance
+		public function enqueue_inline_block_style_inheritance() {
+			// Use the new CSS generator class with built-in fallback to inline styles
+			if ( ! is_admin() && get_option( 'stackable_use_css_files', '1' ) === '1' ) {
+				Stackable_Block_Style_Inheritance_CSS_Generator::enqueue_block_inheritance_css_file();
+			} else {
+				Stackable_Block_Style_Inheritance_CSS_Generator::enqueue_block_inheritance_css_inline();
+			}
 		}
 
 		/**
@@ -259,7 +257,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			$this->register_frontend_assets();
 			wp_enqueue_style( 'ugb-style-css' );
 			if ( is_frontend() ) {
-				wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
+				$this->enqueue_inline_block_style_inheritance();
 			}
 			wp_enqueue_style( 'ugb-style-css-nodep' );
 			wp_enqueue_script( 'ugb-block-frontend-js' );
@@ -302,7 +300,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				// wp-util for wp.ajax.
 				// wp-plugins & wp-edit-post for Gutenberg plugins.
 				array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api', 'lodash' ),
-				STACKABLE_VERSION
+				STACKABLE_VERSION,
+				true
 			);
 
 			// Backend editor scripts: blocks.
@@ -311,7 +310,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
 				// Depend on the window.stk API.
 				apply_filters( 'stackable_editor_js_dependencies', array( 'ugb-stk' ) ),
-				STACKABLE_VERSION
+				STACKABLE_VERSION,
+				true // Load in footer to avoid render blocking
 			);
 
 			// Add translations.
@@ -382,7 +382,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		// Ensure that block style inheritance styles comes after the editor block styles.
 		function enqueue_style_in_editor() {
 			wp_enqueue_style( 'ugb-block-editor-css' );
-			wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
+			$this->enqueue_inline_block_style_inheritance();
 		}
 
 		/**

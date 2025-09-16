@@ -274,6 +274,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/kses.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/css-file-generator.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/styles/block-design-system.php' );
@@ -331,20 +332,21 @@ if ( STACKABLE_BUILD === 'premium' ) {
 	}
 }
 
-// Deprecated.
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/editor-settings.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/navigation-panel-pre-enabled.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/font-awesome-version.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/global-color-schemes.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/block-defaults.php' );
+// Allow users to disable the deprecated code via STACKABLE_DISABLE_DEPRECATED_CODE.
+if ( ! defined( 'STACKABLE_DISABLE_DEPRECATED_CODE' ) ) {
+	// Deprecated.
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/editor-settings.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/navigation-panel-pre-enabled.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/font-awesome-version.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/global-color-schemes.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/block-defaults.php' );
 
-/**
- * V2 Deprecated
- */
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/init.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/blocks.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/disabled-blocks.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/design-library/init.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/optimization-settings.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/global-settings.php' );
+	// V2 Deprecated
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/init.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/blocks.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/disabled-blocks.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/design-library/init.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/optimization-settings.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/global-settings.php' );
+}
