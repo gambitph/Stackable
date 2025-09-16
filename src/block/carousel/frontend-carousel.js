@@ -93,11 +93,15 @@ class _StackableCarousel {
 					const clone = original.cloneNode( true )
 					clone.classList.add( `stk-slide-clone-${ slideIndex + 1 }` )
 					clone.style.zIndex = -1
+
+					clone.style.willChange = 'transform'
+					clone.style.transform = 'translateX( 0 )'
 					original.style.willChange = 'transform'
 					original.style.transform = 'TranslateX( 0 )'
 
 					// prevents flickering when changing the value of TranslateX
 					original.style.transition = 'transform 0s'
+					clone.style.transition = 'transform 0s'
 
 					this.clones.push( clone )
 
@@ -117,11 +121,14 @@ class _StackableCarousel {
 					}
 					step++
 				} else if ( step === 2 ) {
-					const numSlides = this.slideEls.length
-					const slideClientRect = this.slideEls[ 0 ].getBoundingClientRect()
-					const slideWidth = slideClientRect.width
+					// Calculate the difference between the first slide and the first clone
+					// This is used to calculate the translateX values for the slides and clones
+					const slideOffsetLeft = this.slideEls[ 0 ].offsetLeft
+					const cloneOffsetLeft = this.clones[ 0 ].offsetLeft
 
-					this.slideTranslateX = `calc((${ slideWidth }px * ${ numSlides }) + (var(--gap) * ${ numSlides }))`
+					const diff = Math.abs( slideOffsetLeft - cloneOffsetLeft )
+					this.slideTranslateX = ( this.isRTL ? -diff : diff ) + 'px'
+					this.cloneTranslateX = ( this.isRTL ? diff : -diff ) + 'px'
 
 					step++
 				} else if ( step === 3 ) {
@@ -297,12 +304,12 @@ class _StackableCarousel {
 		const needToSwap = this.needToSwapCount( slide )
 		let startIndex = 0
 		let endIndex = 0
-		let slideTranslateXValue = 0
+		let useSlideTranslateX = false
 		if ( needToSwap > 0 && this.swappedSlides < needToSwap ) {
 			startIndex = this.swappedSlides
 			endIndex = needToSwap
 
-			slideTranslateXValue = this.slideTranslateX
+			useSlideTranslateX = true
 
 			this.swappedSlides = endIndex
 		} else if ( this.swappedSlides > needToSwap ) {
@@ -317,7 +324,10 @@ class _StackableCarousel {
 		const runSteps = () => {
 			if ( step === 0 ) {
 				this.slideEls.slice( startIndex, endIndex ).forEach( slide => {
-					slide.style.transform = `TranslateX(${ slideTranslateXValue })`
+					slide.style.transform = `translateX(${ useSlideTranslateX ? this.slideTranslateX : 0 })`
+				} )
+				this.clones.slice( startIndex, endIndex ).forEach( clone => {
+					clone.style.transform = `translateX(${ useSlideTranslateX ? this.cloneTranslateX : 0 })`
 				} )
 				step++
 				requestAnimationFrame( runSteps )
