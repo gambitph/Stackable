@@ -226,6 +226,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					);
 
 					update_option( 'stackable_global_color_schemes', $updated_schemes );
+					delete_option( 'stackable_global_color_scheme_generated_css' );
 				}
 
 			}
