@@ -4,7 +4,7 @@
 import HelpSVG from './images/help.svg'
 import BlockList from './block-list'
 import Button from '../button'
-// import AdvancedToolbarControl from '../advanced-toolbar-control'
+import AdvancedToolbarControl from '../advanced-toolbar-control'
 import DesignLibraryList from '~stackable/components/design-library-list'
 import { getDesigns, filterDesigns } from '~stackable/design-library'
 
@@ -85,15 +85,14 @@ export const ModalDesignLibrary = props => {
 	// Update the designs on the sidebar. (this will trigger the display designs update next)
 	useEffect( () => {
 		setIsBusy( true )
-		if ( doReset ) {
-			setSidebarDesigns( [] )
-			// setDisplayDesigns( [] )
-		}
+		setSidebarDesigns( [] )
+
 		getDesigns( {
 			reset: doReset,
-			tab: selectedTab,
+			type: selectedTab,
 		} ).then( designs => {
 			setSidebarDesigns( designs )
+			setSelectedCategory( '' )
 		} ).finally( () => {
 			setDoReset( false )
 			setIsBusy( false )
@@ -123,12 +122,18 @@ export const ModalDesignLibrary = props => {
 		return false
 	}
 
+	const addDesign = designs => {
+		setIsMultiSelectBusy( true )
+		const cb = () => setIsMultiSelectBusy( false )
+		props.onSelect( designs, cb, selectedTab )
+	}
+
 	return (
 		<Modal
 			title={ __( 'Stackable Design Library', i18n ) }
 			headerActions={ (
 				<>
-					{ /* DEV NOTE: hide for now
+					{ /* DEV NOTE: hide for now */ }
 					<AdvancedToolbarControl
 						className="stk-design-library-tabs"
 						fullwidth={ false }
@@ -141,20 +146,12 @@ export const ModalDesignLibrary = props => {
 								value: 'pages',
 								title: __( 'Pages', i18n ),
 							},
-							{
-								value: 'design-system',
-								title: __( 'Design System', i18n ),
-							},
-							{
-								value: 'site-kits',
-								title: __( 'Site Kits', i18n ),
-							},
 						] }
 						value={ selectedTab }
 						onChange={ setSelectedTab }
 						isToggleOnly={ true }
 						allowReset={ false }
-					/> */ }
+					/>
 
 					<div className="stk-design-library__header-settings">
 						{ devMode && (
@@ -215,7 +212,7 @@ export const ModalDesignLibrary = props => {
 			className={ classnames( 'ugb-modal-design-library', 'ugb-modal-design-library--is-multiselect' ) }
 			onRequestClose={ props.onClose }
 		>
-			<div className="ugb-modal-design-library__wrapper">
+			<div className={ classnames( 'ugb-modal-design-library__wrapper', { 'ugb-modal-design-library__full-pages': selectedTab === 'pages' } ) }>
 				<aside className="ugb-modal-design-library__sidebar">
 					<div className="ugb-modal-design-library__filters">
 						<BlockList
@@ -240,7 +237,7 @@ export const ModalDesignLibrary = props => {
 								<HelpSVG height="14px" width="14px" />
 							</Tooltip>
 						</div>
-						<ToggleControl
+						{ selectedTab === 'patterns' && <ToggleControl
 							className="ugb-modal-design-library__enable-background"
 							label={ __( 'Section Background', i18n ) }
 							checked={ enableBackground }
@@ -248,7 +245,7 @@ export const ModalDesignLibrary = props => {
 								setEnableBackground( value )
 							} }
 							__nextHasNoMarginBottom
-						/>
+						/> }
 						<BaseControl
 							label={ __( 'Background Scheme', i18n ) }
 							className="ugb-modal-design-library__color-scheme-label"
@@ -384,12 +381,23 @@ export const ModalDesignLibrary = props => {
 					className={ `stk-design-library__item-${ selectedTab }` }
 					containerScheme={ selectedContainerScheme }
 					backgroundScheme={ selectedBackgroundScheme }
-					enableBackground={ enableBackground }
+					enableBackground={ selectedTab === 'patterns' ? enableBackground : true }
+					selectedTab={ selectedTab }
 					isBusy={ isBusy }
+					isMultiSelectBusy={ isMultiSelectBusy }
 					designs={ displayDesigns }
 					selectedDesigns={ selectedDesignIds }
 					selectedDesignData={ selectedDesignData }
 					onSelectMulti={ ( designId, category, parsedBlocks, blocksForSubstitution, selectedPreviewSize ) => {
+						if ( selectedTab === 'pages' ) {
+							const selectedDesign = [ {
+								designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
+							} ]
+							addDesign( selectedDesign )
+
+							return
+						}
+
 						const newSelectedDesigns = [ ...selectedDesignIds ]
 						// We also get the design data from displayDesigns
 						// already instead of after clicking the "Add
@@ -415,22 +423,18 @@ export const ModalDesignLibrary = props => {
 					} }
 				/>
 
-				<aside className="ugb-modal-design-library__footer">
+				{ selectedTab === 'patterns' && <aside className="ugb-modal-design-library__footer">
 					<div>{ sprintf( __( `(%d) Selected`, i18n ), selectedDesignIds.length ) }</div>
 					<Button
 						label={ __( 'Add Designs', i18n ) }
 						className="ugb-modal-design-library__add-multi"
 						disabled={ ! selectedDesignIds.length || isMultiSelectBusy }
-						onClick={ () => {
-							setIsMultiSelectBusy( true )
-							const cb = () => setIsMultiSelectBusy( false )
-							props.onSelect( selectedDesignData, cb )
-						} }
+						onClick={ () => addDesign( selectedDesignData ) }
 					>
 						{ __( 'Add Designs', i18n ) }
 						{ isMultiSelectBusy && <Spinner /> }
 					</Button>
-				</aside>
+				</aside> }
 			</div>
 		</Modal>
 	)

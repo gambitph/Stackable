@@ -42,7 +42,8 @@ const wpExternals = [
 	'keyboard-shortcuts',
 	'token-list',
 	'keycodes',
-	'escape-html'
+	'escape-html',
+	'dom'
 ].reduce( ( externals, name ) => ( {
 	...externals,
 	[ `@wordpress/${ name }` ]: `wp.${ camelCaseDash( name ) }`,
