@@ -7,7 +7,6 @@ import { attributes } from './schema'
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
 import {
@@ -24,14 +23,15 @@ import { semverCompare } from '~stackable/util'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.notification.save.close-button', 'stackable/3.19.0', version => {
+addFilter( 'stackable.notification.save.close-button-props', 'stackable/3.19.0', ( buttonProps, version ) => {
 	if ( semverCompare( version, '<', '3.19.0' ) ) {
-		return {}
+		return {
+			...buttonProps,
+			'aria-label': undefined,
+		}
 	}
 
-	return {
-		'aria-label': __( 'Close', i18n ),
-	}
+	return buttonProps
 } )
 
 // Version 3.8 added horizontal flex, this changes the stk--block-orientation-* to stk--block-horizontal-flex.

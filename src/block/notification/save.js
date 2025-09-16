@@ -6,7 +6,7 @@ import SVGCloseIcon from './images/close-icon.svg'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames/dedupe'
 import {
@@ -22,6 +22,7 @@ import {
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
 import { applyFilters } from '@wordpress/hooks'
@@ -78,7 +79,10 @@ export const Save = props => {
 				{ attributes.isDismissible &&
 					<button
 						className="stk-block-notification__close-button"
-						{ ...applyFilters( 'stackable.notification.save.close-button', props.version ) }
+						{ ...applyFilters( 'stackable.notification.save.close-button-props', {
+							className: 'stk-block-notification__close-button',
+							'aria-label': __( 'Close', i18n ),
+						}, props.version ) }
 					>
 						<SVGCloseIcon
 							width={ attributes.dismissibleSize || 16 }

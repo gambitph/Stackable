@@ -10,12 +10,15 @@ import { addFilter } from '@wordpress/hooks'
 import compareVersions from 'compare-versions'
 import { semverCompare } from '~stackable/util'
 
-addFilter( 'stackable.horizontal-scroller.save.scroller', 'stackable/3.19.0', version => {
+addFilter( 'stackable.horizontal-scroller.save.scroller-props', 'stackable/3.19.0', ( scrollerProps, version ) => {
 	if ( semverCompare( version, '<', '3.19.0' ) ) {
-		return {}
+		return {
+			...scrollerProps,
+			tabIndex: undefined,
+		}
 	}
 
-	return { tabIndex: 0 }
+	return scrollerProps
 } )
 
 // Previously, our horizontal scroller always had the stk--fit-content class (which was wrong).

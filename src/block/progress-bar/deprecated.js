@@ -9,21 +9,20 @@ import {
 } from '~stackable/block-components'
 import { semverCompare } from '~stackable/util'
 
-import striptags from 'striptags'
-
 import { addFilter } from '@wordpress/hooks'
 
-const addAriaLabel = ( derivedAriaValue, version ) => {
+const addAriaLabel = ( divProps, version ) => {
 	if ( semverCompare( version, '<', '3.19.0' ) ) {
-		return {}
+		return {
+			...divProps,
+			'aria-label': undefined,
+		}
 	}
 
-	return {
-		'aria-label': derivedAriaValue ? striptags( derivedAriaValue ) : undefined,
-	}
+	return divProps
 }
 
-addFilter( 'stackable.progress-bar.accessibility', 'stackable/3.19.0', addAriaLabel )
+addFilter( 'stackable.progress-bar.div-props', 'stackable/3.19.0', addAriaLabel )
 
 const deprecated = [
 	{
