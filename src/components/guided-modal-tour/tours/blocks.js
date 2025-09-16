@@ -6,7 +6,7 @@ import { createInterpolateElement } from '@wordpress/element'
 export const blocks = {
 	condition: () => { // If provided, true will show the tour (even if it's already done), false will not show the tour, null will show the tour only once.
 		// Force show the tour if there is a GET parameter tour=blocks
-		return window?.location?.search?.includes( 'tour=blocks' ) ? true : null
+		return window?.location?.search?.includes( 'tour=blocks' )
 	},
 	initialize: () => {
 		// Add some default content that we will select
