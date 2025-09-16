@@ -24,9 +24,7 @@ import { ColorIndicator, ColorPicker } from '@wordpress/components'
 
 let saveTimeout = null
 
-// Dev note: Passing this component as a prop breaks dragging functionality in ColorPicker.
-// Exporting it directly ensures dragging works as expected.
-export const ItemPickerColor = ( { item, onChange } ) => {
+const ItemPickerColor = ( { item, onChange } ) => {
 	return <div className="stk-color-palette-control__popover-content">
 		<ColorPicker
 			onChange={ value => onChange( {
@@ -159,9 +157,7 @@ const ColorPickers = props => {
 			handleAddItem={ handleAddIcon }
 			onSortEnd={ onSortEnd }
 			ItemPreview={ ItemPreview }
-			ItemPicker="ColorPicker"
-			wrapItemPicker={ true }
-			wrapperClassName="stk-color-palette-control__popover-content"
+			ItemPicker={ ItemPickerColor }
 			{ ...props }
 		/>
 	)
