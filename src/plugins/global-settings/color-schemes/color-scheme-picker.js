@@ -138,6 +138,7 @@ const ColorSchemePicker = props => {
 	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
 
 	const saveColorSchemeSettings = updatedColorSchemes => {
+		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
 			const settings = new models.Settings( {
 				stackable_global_color_schemes: updatedColorSchemes, // eslint-disable-line camelcase
@@ -153,7 +154,7 @@ const ColorSchemePicker = props => {
 
 	// Add a custom color scheme
 	const handleAddItem = ( event, scheme = null ) => {
-		if ( ! colorSchemes.some( scheme => scheme.key === 'scheme-default-3' ) ) {
+		if ( ! scheme && ! colorSchemes.some( scheme => scheme.key === 'scheme-default-3' ) ) {
 			const alternateColorScheme = {
 				name: __( 'Alternate Scheme', i18n ),
 				key: 'scheme-default-3',
@@ -189,7 +190,6 @@ const ColorSchemePicker = props => {
 			const currentIndex = colorSchemes.findIndex( c => c.key === currentItem.key )
 			updatedColorSchemes[ currentIndex ] = currentItem
 
-			clearTimeout( saveTimeout )
 			saveColorSchemeSettings( updatedColorSchemes )
 		}
 	}
@@ -323,7 +323,6 @@ const ColorSchemePicker = props => {
 			const updatedColorSchemes = cloneDeep( colorSchemes )
 			updatedColorSchemes.splice( selectedIndex, 1 )
 
-			clearTimeout( saveTimeout )
 			saveColorSchemeSettings( updatedColorSchemes )
 			setItemInEdit( null )
 			return
@@ -455,6 +454,8 @@ const ColorSchemePicker = props => {
 		{ ...props }
 		className="stk-global-color-scheme-picker"
 		items={ customColorSchemes }
+		// colorSchemes only contains the the default schemes (keys starting with scheme-default)
+		// ensure there are only a max of three free default schemes
 		nonSortableItems={ colorSchemes.slice( 0, 3 ) }
 		editableName={ false }
 		onDeleteItem={ onDeleteItem }
