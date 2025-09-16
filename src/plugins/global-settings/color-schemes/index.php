@@ -198,12 +198,17 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			if ( empty( $old_version ) || version_compare( $old_version, "3.19.0", "<" ) ) {
 				$color_schemes = self::get_color_schemes_array();
 
-				$add_alternate_scheme = ! $color_schemes || ( is_array( $color_schemes ) && array_reduce( $color_schemes, function( $carry, $scheme ) {
+				$add_alternate_scheme = ! $color_schemes || ( is_array( $color_schemes ) && ! isset( $color_schemes['scheme-default-3'] ) && array_reduce( $color_schemes, function( $carry, $scheme ) {
 					return $carry && Stackable_Global_Color_Schemes::is_scheme_empty( $scheme ?? [] );
 				}, true ) );
 
 				if ( $add_alternate_scheme ) {
 					$updated_schemes = get_option( 'stackable_global_color_schemes', array() );
+
+					if ( ! is_array( $updated_schemes ) ) {
+						$updated_schemes = array();
+					}
+
 					$updated_schemes[] = array(
 						'name' => __( 'Alternate Scheme', STACKABLE_I18N ),
 						'key' => 'scheme-default-3',
