@@ -14,6 +14,7 @@ import classnames from 'classnames'
 import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const { className, attributes } = props
@@ -75,6 +76,7 @@ export const Save = props => {
 					aria-valuemax="100"
 					aria-valuenow={ progressValue }
 					aria-valuetext={ derivedAriaValue ? striptags( derivedAriaValue ) : undefined }
+					{ ...applyFilters( 'stackable.progress-bar.accessibility', derivedAriaValue, props.version ) }
 				>
 					<div className={ barClassNames }>
 						{ attributes.showText && (

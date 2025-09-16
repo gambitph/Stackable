@@ -8,6 +8,15 @@ import {
 } from '~stackable/block-components'
 import { addFilter } from '@wordpress/hooks'
 import compareVersions from 'compare-versions'
+import { semverCompare } from '~stackable/util'
+
+addFilter( 'stackable.horizontal-scroller.save.scroller', 'stackable/3.19.0', version => {
+	if ( semverCompare( version, '<', '3.19.0' ) ) {
+		return {}
+	}
+
+	return { tabIndex: 0 }
+} )
 
 // Previously, our horizontal scroller always had the stk--fit-content class (which was wrong).
 addFilter( 'stackable.horizontal-scroller.save.contentClassNames', 'stackable/3_8_0', ( classes, props ) => {

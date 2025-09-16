@@ -7,6 +7,16 @@ import { Save } from './save'
 import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
+import { addFilter } from '@wordpress/hooks'
+import { semverCompare } from '~stackable/util'
+
+addFilter( 'stackable.carousel.save.slider', 'stackable/3.19.0', version => {
+	if ( semverCompare( version, '<', '3.19.0' ) ) {
+		return {}
+	}
+
+	return { tabIndex: 0 }
+} )
 
 const deprecated = [
 	{

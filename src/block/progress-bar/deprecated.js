@@ -7,6 +7,23 @@ import {
 	deprecateTypographyShadowColor, deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyFontSize,
 	deprecateBlockHeight,
 } from '~stackable/block-components'
+import { semverCompare } from '~stackable/util'
+
+import striptags from 'striptags'
+
+import { addFilter } from '@wordpress/hooks'
+
+const addAriaLabel = ( derivedAriaValue, version ) => {
+	if ( semverCompare( version, '<', '3.19.0' ) ) {
+		return {}
+	}
+
+	return {
+		'aria-label': derivedAriaValue ? striptags( derivedAriaValue ) : undefined,
+	}
+}
+
+addFilter( 'stackable.progress-bar.accessibility', 'stackable/3.19.0', addAriaLabel )
 
 const deprecated = [
 	{
