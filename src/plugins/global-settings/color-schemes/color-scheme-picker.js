@@ -455,7 +455,7 @@ const ColorSchemePicker = props => {
 		{ ...props }
 		className="stk-global-color-scheme-picker"
 		items={ customColorSchemes }
-		nonSortableItems={ colorSchemes }
+		nonSortableItems={ colorSchemes.slice( 0, 3 ) }
 		editableName={ false }
 		onDeleteItem={ onDeleteItem }
 		handleAddItem={ handleAddItem }

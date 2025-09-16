@@ -128,7 +128,7 @@ domReady( () => {
 		// Ensure there are a max of three color schemes
 		const colorSchemes = [ ...colorSchemesRaw ].sort( ( a, b ) => {
 			return a.key < b.key ? -1 : ( a.key > b.key ? 1 : 0 )
-		} ).slice( 0, 3 )
+		} )
 
 		const settings = {
 			colorSchemes,
