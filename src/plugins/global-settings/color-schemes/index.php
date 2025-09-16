@@ -203,25 +203,24 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				}, true ) );
 
 				if ( $add_alternate_scheme ) {
-					$scheme = array(
-						array(
-							'name' => __( 'Alternate Scheme', STACKABLE_I18N ),
-							'key' => 'scheme-default-3',
-							'colorScheme' => array(
-								'backgroundColor' => array( 'desktop' => '#0f0e17' ),
-								'headingColor' => array( 'desktop' => '#fffffe' ),
-								'textColor' => array( 'desktop' => '#fffffe' ),
-								'linkColor' => array( 'desktop' => '#f00069' ),
-								'accentColor' => array( 'desktop' => '#f00069' ),
-								'buttonBackgroundColor' => array( 'desktop' => '#f00069' ),
-								'buttonTextColor' => array( 'desktop' => '#fffffe' ),
-								'buttonOutlineColor' => array( 'desktop' => '#fffffe' ),
-							),
-							'hideInPicker' => false
-						)
+					$updated_schemes = get_option( 'stackable_global_color_schemes', array() );
+					$updated_schemes[] = array(
+						'name' => __( 'Alternate Scheme', STACKABLE_I18N ),
+						'key' => 'scheme-default-3',
+						'colorScheme' => array(
+							'backgroundColor' => array( 'desktop' => '#0f0e17' ),
+							'headingColor' => array( 'desktop' => '#fffffe' ),
+							'textColor' => array( 'desktop' => '#fffffe' ),
+							'linkColor' => array( 'desktop' => '#f00069' ),
+							'accentColor' => array( 'desktop' => '#f00069' ),
+							'buttonBackgroundColor' => array( 'desktop' => '#f00069' ),
+							'buttonTextColor' => array( 'desktop' => '#fffffe' ),
+							'buttonOutlineColor' => array( 'desktop' => '#fffffe' ),
+						),
+						'hideInPicker' => false
 					);
 
-					update_option( 'stackable_global_color_schemes', $scheme );
+					update_option( 'stackable_global_color_schemes', $updated_schemes );
 				}
 
 			}
