@@ -225,13 +225,13 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 		)
 
 		const meta = ( authorShow || dateShow || commentsShow ) && (
-			<aside className={ metaClassNames }>
+			<div className={ metaClassNames }>
 				{ authorShow && author }
 				{ authorShow && author && ( ( dateShow && date ) || ( commentsShow && comments ) ) && separator }
 				{ dateShow && date }
 				{ ( ( authorShow && author ) || ( dateShow && date ) ) && commentsShow && comments && separator }
 				{ commentsShow && comments }
-			</aside>
+			</div>
 		)
 
 		const contentFactory = {
@@ -382,15 +382,25 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 		/>
 	)
 
-	const meta = ( authorShow || dateShow || commentsShow ) && (
-		<aside className={ metaClassNames }>
+	let meta = ( authorShow || dateShow || commentsShow ) && (
+		<div className={ metaClassNames }>
 			{ authorShow && author }
 			{ authorShow && author && ( ( dateShow && date ) || ( commentsShow && comments ) ) && separator }
 			{ dateShow && date }
 			{ ( ( authorShow && author ) || ( dateShow && date ) ) && commentsShow && comments && separator }
 			{ commentsShow && comments }
-		</aside>
+		</div>
 	)
+	meta = applyFilters( 'stackable.posts.meta', meta, {
+		authorShow,
+		dateShow,
+		commentsShow,
+		author,
+		date,
+		comments,
+		separator,
+		metaClassNames,
+	}, version )
 
 	const contentFactory = {
 		'featured-image': imageShow && featuredImage,

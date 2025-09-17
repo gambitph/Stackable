@@ -7,6 +7,22 @@ import {
 	deprecateTypographyShadowColor, deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyFontSize,
 	deprecateBlockHeight,
 } from '~stackable/block-components'
+import { semverCompare } from '~stackable/util'
+
+import { addFilter } from '@wordpress/hooks'
+
+const addAriaLabel = ( divProps, props ) => {
+	if ( semverCompare( props.version, '<', '3.19.0' ) ) {
+		return {
+			...divProps,
+			'aria-label': undefined,
+		}
+	}
+
+	return divProps
+}
+
+addFilter( 'stackable.progress-bar.div-props', 'stackable/3.19.0', addAriaLabel )
 
 const deprecated = [
 	{

@@ -14,11 +14,25 @@ import {
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateBlockHeight,
 	deprecateInnerBlockRowGapAndContainerHeight,
 } from '~stackable/block-components'
+import { semverCompare } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
+
+import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+
+addFilter( 'stackable.notification.save.close-button-props', 'stackable/3.19.0', ( buttonProps, props ) => {
+	if ( semverCompare( props.version, '<', '3.19.0' ) ) {
+		return {
+			...buttonProps,
+			'aria-label': undefined,
+		}
+	}
+
+	return buttonProps
+} )
 
 // Version 3.8 added horizontal flex, this changes the stk--block-orientation-* to stk--block-horizontal-flex.
 addFilter( 'stackable.notification.save.innerClassNames', 'stackable/3.8.0', ( output, props ) => {

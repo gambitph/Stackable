@@ -7,6 +7,19 @@ import { Save } from './save'
 import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
+import { addFilter } from '@wordpress/hooks'
+import { semverCompare } from '~stackable/util'
+
+addFilter( 'stackable.carousel.save.slider-props', 'stackable/3.19.0', ( sliderProps, props ) => {
+	if ( semverCompare( props.version, '<', '3.19.0' ) ) {
+		return {
+			...sliderProps,
+			tabIndex: undefined,
+		}
+	}
+
+	return sliderProps
+} )
 
 const deprecated = [
 	{

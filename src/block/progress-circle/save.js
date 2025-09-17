@@ -14,6 +14,7 @@ import classnames from 'classnames'
 import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const { className, attributes } = props
@@ -71,6 +72,8 @@ export const Save = props => {
 					aria-valuemax="100"
 					aria-valuenow={ progressValue }
 					aria-valuetext={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
+					aria-label={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
+					{ ...applyFilters( 'stackable.progress-circle.div-props', {}, props ) }
 				>
 					<svg>
 						{ attributes.progressColorType === 'gradient' && (

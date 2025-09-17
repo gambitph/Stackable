@@ -22,6 +22,7 @@ import {
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { addFilter } from '@wordpress/hooks'
 import { select } from '@wordpress/data'
+import { semverCompare } from '~stackable/util'
 
 // Version 3.0.2 Deprecations
 const addUndefinedAttributes = ( attributes, version ) => {
@@ -36,10 +37,35 @@ const determineFeatureImage = ( featuredImage, version ) => {
 	return ( compareVersions( '3.6.3', version ) === -1 ) ? featuredImage : <Image.Content />
 }
 
+const fixMetaAccessibility = ( output, metaProps, version ) => {
+	const {
+		authorShow,
+		dateShow,
+		commentsShow,
+		author,
+		date,
+		comments,
+		separator,
+		metaClassNames,
+	} = metaProps
+	if ( semverCompare( version, '<', '3.19.0' ) ) {
+		return ( authorShow || dateShow || commentsShow ) && <aside className={ metaClassNames }>
+			{ authorShow && author }
+			{ authorShow && author && ( ( dateShow && date ) || ( commentsShow && comments ) ) && separator }
+			{ dateShow && date }
+			{ ( ( authorShow && author ) || ( dateShow && date ) ) && commentsShow && comments && separator }
+			{ commentsShow && comments }
+		</aside>
+	}
+
+	return output
+}
+
 addFilter( 'stackable.posts.title.typography-content', 'stackable/3_0_2', addUndefinedAttributes )
 addFilter( 'stackable.posts.title.category-content', 'stackable/3_0_2', addUndefinedAttributes )
 addFilter( 'stackable.posts.title.readmore-content', 'stackable/3_0_2', addUndefinedAttributes )
 addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureImage )
+addFilter( 'stackable.posts.meta', 'stackable/3.19.0', fixMetaAccessibility )
 
 const deprecated = [
 	{
