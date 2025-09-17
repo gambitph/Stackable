@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.2
 Requires PHP: 7.3
-Stable tag: 3.18.1
+Stable tag: 3.19.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,7 +29,9 @@ Stackable is the all-in-one block plugin for creating stunning websites by trans
 Design faster and more efficiently with our global controls, which make designing in one place and applying it to your entire site a breeze.
 
 - Inherit styles from your Block Theme
-- Theme.json Support
+- Theme.json 
+- Pattern Library
+- Full Page Templates
 - Global Design System
 - Global Color Schemes
 - Global Typography
@@ -37,9 +39,10 @@ Design faster and more efficiently with our global controls, which make designin
 
 ## Ready Made Designs & Patterns
 
-Enjoy an impressive Design Library to jumpstart your designing process. Never start from scratch and design like a pro with the help of our stunning and professionally-made designs.
+Enjoy an impressive Design Library to jumpstart your designing process. Never start from scratch and design like a pro with the help of our stunning and professionally-made designs and templates.
 
 - Hundreds of ready-made designs
+- Dozens of ready-made page templates
 - Designs that inherit the styles of your block theme
 - Dozens of block layouts
 - Various shape separator designs
@@ -197,6 +200,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.19 Full Page Templates, Style Guide and Onboarding Tour](https://wpstackable.com/blog/introducing-full-page-templates-style-guide-and-onboarding-tour/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.18 Global Block Styles](https://wpstackable.com/blog/introducing-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.17 New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.16 Theme.json Support, Global Value Presets, Type Scale](https://wpstackable.com/blog/introducing-theme-json-support-global-value-presets-and-type-scale/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -304,6 +308,21 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.0 =
+[Introducing: Full Page Templates, Style Guide and Onboarding Tour](https://wpstackable.com/blog/introducing-full-page-templates-style-guide-and-onboarding-tour/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Full Page Templates - Check the new "Pages" tab in the Design Library, with 40 Page Templates
+* New: Design System Style Guide - See an exportable preview of your entire Design System
+* New: Interactive Onboarding Tour - Learn Stackable with a step-by-step interactive tour inside the editor
+* Change: Design Library - now hidden from the inserter #3581
+* Fixed: Minor block accessibility issues #3593
+* Fixed: Price Block - color schemes do not apply properly #3592
+* Fixed: JavaScript editor warnings #3584
+* Fixed: Design Library - better rendering of items #3591
+* Fixed: Carousel Block - columns can overlap in infinite scroll #3588
+* Fixed: Design System - orange modified indicator does not show up in the Global Color Palette #3576
+* Fixed: Global Color Palette - you cannot drag the color picker #3575
 
 = 3.18.1 =
 * Fixed: Block styles - error encountered when creating divider and icon button block styles #3583
