@@ -74,6 +74,7 @@ const DesignLibraryList = props => {
 							selectedData={ selectedData }
 							selectedTab={ props.selectedTab }
 							scrollTop={ scrollTop }
+							designKey={ i }
 						/>
 					)
 				} ) }
@@ -103,7 +104,7 @@ const DesignLibraryItem = props => {
 	const itemRef = useRef( null )
 	const [ cardHeight, setCardHeight ] = useState( {} )
 	const [ previewSize, setPreviewSize ] = useState( {} )
-	const [ shouldRender, setShouldRender ] = useState( props.testKey < 9 )
+	const [ shouldRender, setShouldRender ] = useState( props.designKey < 9 )
 
 	const previewProps = {
 		..._previewProps,
@@ -113,26 +114,37 @@ const DesignLibraryItem = props => {
 	}
 
 	useEffect( () => {
-		if ( ! itemRef.current ) {
-			return
+		// Use a timeout to ensure designs have finished rendering before calculating visibility.
+		const timeoutRef = setTimeout( () => {
+			const itemEl = itemRef.current
+			const containerEl = itemEl?.closest( '.ugb-modal-design-library__designs' ) || document.querySelector( '.ugb-modal-design-library__designs' )
+
+			if ( ! itemEl || ! containerEl ) {
+				return
+			}
+
+			const containerRect = containerEl.getBoundingClientRect()
+			const itemRect = itemEl.getBoundingClientRect()
+
+			const BOUNDARY = 250
+
+			const render = itemRect.bottom >= containerRect.top - BOUNDARY && itemRect.top <= containerRect.bottom + BOUNDARY
+
+			setShouldRender( render )
+		}, 250 )
+
+		return () => {
+			clearTimeout( timeoutRef )
 		}
-
-		const containerRect = document.querySelector( '.ugb-modal-design-library__designs' ).getBoundingClientRect()
-		const itemRect = itemRef.current.getBoundingClientRect()
-
-		const render = ( itemRect.top > containerRect.top - 250 && itemRect.top < containerRect.bottom + 250 ) ||
-		( itemRect.bottom > containerRect.top - 250 && itemRect.bottom < containerRect.bottom + 250 )
-
-		setShouldRender( render )
-	}, [ scrollTop, props.enableBackground ] )
+	}, [ scrollTop, _previewProps.enableBackground, _previewProps.designId ] )
 
 	const getCardHeight = () => {
-		const key = props.enableBackground ? 'background' : 'noBackground'
+		const key = _previewProps.enableBackground ? 'background' : 'noBackground'
 		return props.selectedTab === 'pages' ? 472 : cardHeight?.[ key ] || 250
 	}
 
 	if ( ! shouldRender && ! props.selectedNum ) {
-		return <div ref={ itemRef } data-stk-design-id={ props.testId } style={ { height: `${ getCardHeight() }px` } } />
+		return <div ref={ itemRef } style={ { height: `${ getCardHeight() }px` } } />
 	}
 
 	return <DesignLibraryListItem
