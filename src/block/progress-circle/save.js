@@ -72,9 +72,8 @@ export const Save = props => {
 					aria-valuemax="100"
 					aria-valuenow={ progressValue }
 					aria-valuetext={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
-					{ ...applyFilters( 'stackable.progress-circle.div-props', {
-						'aria-label': attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined,
-					}, props.version ) }
+					aria-label={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
+					{ ...applyFilters( 'stackable.progress-circle.div-props', {}, props.version ) }
 				>
 					<svg>
 						{ attributes.progressColorType === 'gradient' && (

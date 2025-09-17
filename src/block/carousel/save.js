@@ -81,9 +81,8 @@ export const Save = props => {
 							role="list"
 							data-autoplay={ attributes.autoplay ? ( attributes.autoplaySpeed || '4000' ) : undefined }
 							data-label-slide-of={ attributes.ariaLabelPrev || 'Slide %%d of %%d' }
-							{ ...applyFilters( 'stackable.carousel.save.slider-props', {
-								tabIndex: 0,
-							}, props.version ) }
+							tabIndex={ 0 }
+							{ ...applyFilters( 'stackable.carousel.save.slider-props', {}, props.version ) }
 						>
 							<InnerBlocks.Content />
 						</div>

@@ -76,9 +76,8 @@ export const Save = props => {
 					aria-valuemax="100"
 					aria-valuenow={ progressValue }
 					aria-valuetext={ derivedAriaValue ? striptags( derivedAriaValue ) : undefined }
-					{ ...applyFilters( 'stackable.progress-bar.div-props', {
-						'aria-label': derivedAriaValue ? striptags( derivedAriaValue ) : undefined,
-					}, props.version ) }
+					aria-label={ derivedAriaValue ? striptags( derivedAriaValue ) : undefined }
+					{ ...applyFilters( 'stackable.progress-bar.div-props', {}, props.version ) }
 				>
 					<div className={ barClassNames }>
 						{ attributes.showText && (

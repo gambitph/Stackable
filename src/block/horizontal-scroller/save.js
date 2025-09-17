@@ -56,9 +56,8 @@ export const Save = props => {
 			 <CustomCSS.Content attributes={ attributes } />
 			<div
 				className={ contentClassNames }
-				{ ...applyFilters( 'stackable.horizontal-scroller.save.scroller-props', {
-					tabIndex: 0,
-				}, props.version ) }
+				tabIndex={ 0 }
+				{ ...applyFilters( 'stackable.horizontal-scroller.save.scroller-props', {}, props.version ) }
 			>
 				<InnerBlocks.Content />
 			</div>
