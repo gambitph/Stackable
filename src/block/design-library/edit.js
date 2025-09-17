@@ -169,17 +169,17 @@ const Edit = props => {
 				// For blocks with variations, do not remove the uniqueId
 				// since that will prompt the layout picker to show.
 				const hasVariations = !! getBlockType( blockName ) && getBlockVariations( blockName ).length > 0
-				if ( ! hasVariations && block.attributes.uniqueId ) {
+				if ( ! hasVariations && block.attributes?.uniqueId ) {
 					delete block.attributes.uniqueId
 				}
 
-				const customAttributes = block.attributes.customAttributes
+				const customAttributes = block.attributes?.customAttributes
 
 				const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
 				if ( ! isDesignLibraryDevMode ) {
 					const indexToDelete = customAttributes?.findIndex( attribute => attribute[ 0 ] === 'stk-design-library__bg-target' )
 					if ( customAttributes && indexToDelete !== -1 ) {
-						block.attributes.customAttributes.splice( indexToDelete, 1 )
+						block.attributes?.customAttributes.splice( indexToDelete, 1 )
 					}
 				}
 
