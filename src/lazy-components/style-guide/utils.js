@@ -10,7 +10,7 @@ import {
 	createUniqueClass,
 	blockStyleGenerators,
 } from '~stackable/util'
-import { PLACEHOLDER_INNER_BLOCKS } from '~stackable/util/block-templates'
+import { PLACEHOLDER_INNER_BLOCKS } from './block-templates'
 
 import { __, sprintf } from '@wordpress/i18n'
 import { RawHTML } from '@wordpress/element'

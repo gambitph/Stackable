@@ -13,7 +13,7 @@ import {
 	i18n, srcUrl, homeUrl,
 } from 'stackable'
 import { isDarkColor } from '~stackable/util'
-import { LONG_TEXT } from '~stackable/util/block-templates'
+import { LONG_TEXT } from './block-templates'
 
 import { __, sprintf } from '@wordpress/i18n'
 import {
