@@ -18,6 +18,7 @@ import {
 	isContentOnlyMode,
 	settings,
 } from 'stackable'
+import { GuidedModalTour, StyleGuidePopover } from '~stackable/components'
 import { currentUserHasCapability } from '~stackable/util'
 
 /** WordPress dependencies
@@ -25,11 +26,14 @@ import { currentUserHasCapability } from '~stackable/util'
 import { registerPlugin } from '@wordpress/plugins'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addAction } from '@wordpress/hooks'
-import { useEffect, useState } from '@wordpress/element'
+import {
+	memo, useEffect, useState,
+} from '@wordpress/element'
 import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
-import { PanelBody } from '@wordpress/components'
+import { Icon, layout as layoutIcon } from '@wordpress/icons'
+import { Button, PanelBody } from '@wordpress/components'
 
 // Action used to toggle the global settings panel.
 addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
@@ -43,9 +47,18 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 	}
 } )
 
+// Separate the design system inspector controls into their own component to minimize unnecessary parent re-renders
+const GlobalSettingsInspector = memo( () => {
+	const panels = applyFilters( 'stackable.global-settings.inspector', null )
+
+	return <> { panels } </>
+} )
+
 const GlobalSettings = () => {
 	const [ userCanManageOptions, setUserCanManageOptions ] = useState( false )
-	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id )
+	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id, [] )
+
+	const [ isStyleGuideOpen, setIsStyleGuideOpen ] = useState( false )
 
 	useEffect( () => {
 		const checkCapabilities = async () => {
@@ -58,8 +71,6 @@ const GlobalSettings = () => {
 	// For older WP versions (<6.6), wp.editor.PluginSidebar is undefined,
 	// use wp.editSite.PluginSidebar and wp.editPost.PluginSidebar as fallback
 	const PluginSidebar = window.wp.editor.PluginSidebar || window.wp.editSite?.PluginSidebar || window.wp.editPost?.PluginSidebar
-
-	const globalSettingsInspector = applyFilters( 'stackable.global-settings.inspector', null )
 
 	return (
 		<>
@@ -76,8 +87,20 @@ const GlobalSettings = () => {
 							{ /* &nbsp;
 							<a href="https://docs.wpstackable.com/article/465-how-to-style-the-different-block-hover-states?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">{ __( 'Learn more', i18n ) }</a> */ }
 						</p>
+						<Button
+							isSecondary
+							className="ugb-global-settings__preview-button"
+							onClick={ () => setIsStyleGuideOpen( isOpen => ! isOpen ) }
+							icon={ <Icon icon={ layoutIcon } /> }
+						>
+							{ isStyleGuideOpen ? __( 'Close Preview', i18n ) : __( 'Preview Design System', i18n ) }
+						</Button>
 					</PanelBody>
-					{ globalSettingsInspector }
+					{ isStyleGuideOpen && (
+						<StyleGuidePopover onClose={ () => setIsStyleGuideOpen( false ) } />
+					) }
+					<GlobalSettingsInspector />
+					<GuidedModalTour tourId="design-system" />
 				</PluginSidebar>
 			}
 		</>

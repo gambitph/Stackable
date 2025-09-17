@@ -6,6 +6,7 @@ import BlockList from './block-list'
 import Button from '../button'
 import AdvancedToolbarControl from '../advanced-toolbar-control'
 import DesignLibraryList from '~stackable/components/design-library-list'
+import { GuidedModalTour } from '~stackable/components'
 import { getDesigns, filterDesigns } from '~stackable/design-library'
 
 /**
@@ -213,6 +214,9 @@ export const ModalDesignLibrary = props => {
 			onRequestClose={ props.onClose }
 		>
 			<div className={ classnames( 'ugb-modal-design-library__wrapper', { 'ugb-modal-design-library__full-pages': selectedTab === 'pages' } ) }>
+
+				<GuidedModalTour tourId="design-library" />
+
 				<aside className="ugb-modal-design-library__sidebar">
 					<div className="ugb-modal-design-library__filters">
 						<BlockList
@@ -248,7 +252,7 @@ export const ModalDesignLibrary = props => {
 						/> }
 						<BaseControl
 							label={ __( 'Background Scheme', i18n ) }
-							className="ugb-modal-design-library__color-scheme-label"
+							className="ugb-modal-design-library__color-scheme-label ugb-modal-design-library__background-scheme"
 							__nextHasNoMarginBottom
 						>
 							<Dropdown
@@ -261,7 +265,7 @@ export const ModalDesignLibrary = props => {
 										className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
 									>
 										{ selectedBackgroundScheme !== ''
-											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedBackgroundScheme || backgroundModeColorScheme ].desktopColors } />
+											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedBackgroundScheme || backgroundModeColorScheme ].normal } />
 											: <ColorSchemeTextItem label={ __( 'Default', i18n ) } />
 										}
 									</Button>
@@ -272,6 +276,7 @@ export const ModalDesignLibrary = props => {
 											<p> { __( 'Background Scheme', i18n ) }</p>
 											<Button
 												icon="no"
+												className="ugb-modal-design-library__color-scheme-close-button"
 												onClick={ () => {
 													onClose()
 												} }
@@ -300,7 +305,7 @@ export const ModalDesignLibrary = props => {
 														setSelectedBackgroundScheme( key )
 													} }
 												>
-													<ColorSchemePreview colors={ scheme.desktopColors } isCollapsed={ true } />
+													<ColorSchemePreview colors={ scheme.normal } isCollapsed={ true } />
 													<span className="stk-color-scheme-name"> { scheme.name }</span>
 												</Button>
 											} ) }
@@ -327,7 +332,7 @@ export const ModalDesignLibrary = props => {
 										className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
 									>
 										{ selectedContainerScheme !== ''
-											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedContainerScheme || containerModeColorScheme ].desktopColors } />
+											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedContainerScheme || containerModeColorScheme ].normal } />
 											: <ColorSchemeTextItem label={ __( 'Default', i18n ) } />
 										}
 									</Button>
@@ -360,7 +365,7 @@ export const ModalDesignLibrary = props => {
 														setSelectedContainerScheme( key )
 													} }
 												>
-													<ColorSchemePreview colors={ scheme.desktopColors } isCollapsed={ true } />
+													<ColorSchemePreview colors={ scheme.normal } isCollapsed={ true } />
 													<span className="stk-color-scheme-name"> { scheme.name } </span>
 												</Button>
 											} ) }

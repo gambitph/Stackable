@@ -1,0 +1,236 @@
+.ugb-tour-modal--overlay {
+	z-index: 1000002;
+	background-color: transparent !important;
+	pointer-events: none;
+}
+
+.ugb-tour-modal {
+	pointer-events: all;
+	position: absolute;
+	--offset-x: 0px;
+	--offset-y: 0px;
+	--left: 50%;
+	--top: 50%;
+	left: var(--left);
+	top: var(--top);
+	margin-left: var(--offset-x);
+	margin-top: var(--offset-y);
+	overflow: visible;
+	border-radius: 16px;
+
+	--wp-admin-theme-color: #f00069;
+	--wp-admin-theme-color-darker-10: #e0003c;
+	--wp-admin-theme-color-darker-20: #cb0044;
+
+	// Smoothly transition moving top & left.
+	transition:
+		max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+		left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+		top 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+		margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+		margin-top 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 0.4s ease-in-out,
+		transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+		box-shadow 0.2s ease-in-out;
+	will-change: left, top, max-width;
+
+	display: none;
+	&.ugb-tour-modal--visible {
+		display: block !important;
+		opacity: 0 !important;
+		transform: scale(0.4);
+	}
+	&.ugb-tour-modal--visible-delayed {
+		opacity: 1 !important;
+		transform: scale(1);
+	}
+
+	.components-modal__header-heading {
+		line-height: 1.2;
+	}
+
+	.components-button {
+		border-radius: 4px;
+	}
+
+	.components-modal__content {
+		padding: 2em;
+		margin: 0;
+		position: relative;
+		overflow: visible;
+		z-index: 1;
+		box-shadow: 0 22px 200px 4px #0005;
+		border-radius: 16px;
+		// border: 1px solid #f00069ad;
+	}
+	.components-modal__header {
+		position: relative;
+		padding: 0;
+		margin-bottom: 8px;
+		height: auto;
+		line-height: 1.2;
+	}
+	.ugb-tour-modal__footer {
+		margin-top: 16px;
+		justify-content: flex-end;
+	}
+
+	.ugb-tour-modal__help {
+		position: relative;
+		background: #f4fbff;
+		padding: 8px 12px;
+		padding-inline-start: 30px;
+		border-radius: 8px;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		margin-block: 16px;
+		svg {
+			vertical-align: text-top;
+			margin-inline-end: 8px;
+			margin-top: 1px;
+			position: absolute;
+			inset-inline-start: 9px;
+		}
+	}
+
+	.ugb-tour-modal__cta {
+		width: 100%;
+		justify-content: center;
+		margin: 16px 0 8px;
+	}
+
+	&.ugb-tour-modal--right,
+	&.ugb-tour-modal--left,
+	&.ugb-tour-modal--top,
+	&.ugb-tour-modal--bottom {
+		.components-modal__content {
+			box-shadow: rgba(0, 0, 0, 0.2) -20px 22px 60px -4px;
+			&::after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: -10px;
+				width: 30px;
+				height: 30px;
+				transform: translateY(-50%) rotate(45deg);
+				border-radius: 4px;
+				background-color: #fff;
+				z-index: -1;
+			}
+		}
+	}
+	&.ugb-tour-modal--left {
+		.components-modal__content {
+			box-shadow: rgba(0, 0, 0, 0.2) 20px 22px 60px -4px;
+			&::after {
+				left: auto;
+				right: -10px;
+			}
+		}
+	}
+	&.ugb-tour-modal--left-top {
+		.components-modal__content {
+			&::after {
+				top: 30px;
+			}
+		}
+	}
+	&.ugb-tour-modal--top {
+		.components-modal__content {
+			box-shadow: rgba(0, 0, 0, 0.2) 0px 22px 60px -4px;
+			&::after {
+				top: auto;
+				left: 50%;
+				bottom: -10px;
+				transform: translateX(-50%) rotate(45deg);
+			}
+		}
+	}
+	&.ugb-tour-modal--top-right {
+		.components-modal__content {
+			&::after {
+				left: auto;
+				right: 16px;
+			}
+		}
+	}
+	&.ugb-tour-modal--bottom {
+		.components-modal__content {
+			box-shadow: rgba(0, 0, 0, 0.2) 0px -22px 60px -4px;
+			&::after {
+				left: 50%;
+				top: -10px;
+				transform: translateX(-50%) rotate(45deg);
+			}
+		}
+	}
+}
+
+.ugb-tour-modal__steps {
+	display: flex;
+	gap: 6px;
+	margin-inline-end: auto;
+}
+.ugb-tour-modal__step {
+	width: 8px;
+	height: 8px;
+	border-radius: 20px;
+	background-color: #e1e1e1;
+	// cursor: pointer;
+	padding: 0 !important;
+	margin: 0 !important;
+
+	&--active {
+		background: #f00069;
+		width: 24px;
+		border-radius: 20px;
+	}
+
+	// &:hover {
+	//     background-color: #aaa;
+	// }
+}
+
+.ugb-tour-modal__glow {
+	position: absolute;
+	z-index: 1000001;
+	box-shadow: 0 0 20px #f00069;
+	border-radius: 8px;
+	pointer-events: none;
+	animation: tour-modal-glow 0.7s infinite alternate;
+	mix-blend-mode: multiply;
+	will-change: transform, box-shadow;
+	transition: opacity 0.2s ease-in-out;
+	opacity: 1;
+	&.ugb-tour-modal__glow--hidden {
+		opacity: 0;
+	}
+}
+
+.ugb-tour-modal__glow--medium,
+.ugb-tour-modal__glow--large {
+	animation: tour-modal-glow-small 0.7s infinite alternate;
+}
+
+// Animation keyframes to grow the box-shadow like it's glowing
+@keyframes tour-modal-glow {
+	0% {
+		box-shadow: 0 0 20px #ff2283, 0 0 5px #f00069;
+		transform: scaleX(1) scaleY(1);
+	}
+	100% {
+		box-shadow: 0 0 50px #ff2283, 0 0 5px #f00069;
+		transform: scaleX(1.05) scaleY(1.12);
+	}
+}
+
+// Animation keyframes for small glow
+@keyframes tour-modal-glow-small {
+	0% {
+		box-shadow: 0 0 20px #ff2283, 0 0 5px #f00069;
+		transform: scaleX(1) scaleY(1);
+	}
+	100% {
+		box-shadow: 0 0 50px #ff2283, 0 0 5px #f00069;
+		transform: scaleX(1.02) scaleY(1.02);
+	}
+}

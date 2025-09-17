@@ -56,6 +56,8 @@ export { default as AdminSelectSetting } from './admin-select-setting'
 export { default as TaxonomyControl } from './taxonomy-control'
 export { default as Tooltip } from './tooltip'
 export { default as BlockStyles } from './block-styles'
+export { default as GuidedModalTour } from './guided-modal-tour'
+export { default as StyleGuide, StyleGuidePopover } from './style-guide'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'
@@ -123,5 +125,7 @@ export {
 	default as ColorSchemePreview,
 	ColorSchemePresetPicker,
 	DEFAULT_COLOR_SCHEME_COLORS,
+	ALTERNATE_COLOR_SCHEME_COLORS,
+	COLOR_SCHEME_PROPERTY_LABELS,
 } from './color-scheme-preview'
 export { ColorSchemesHelp } from './color-schemes-help'

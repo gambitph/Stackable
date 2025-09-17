@@ -273,7 +273,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php echo $this->print_tabs() ?>
 				</div>
 				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
-				<section class="s-body-container s-narrow s-body-container-center s-getting-started__body">
+				<section class="s-body-container s-body-container-center s-getting-started__body">
 				</section>
 			</div>
 			<?php

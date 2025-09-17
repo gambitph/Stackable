@@ -4,6 +4,7 @@ import { cloneDeep, kebabCase } from 'lodash'
 import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
+import { getPropertyLabel } from '~stackable/util'
 
 // Check if the color scheme contains a value for any of the states
 const schemeHasValue = scheme => {
@@ -20,6 +21,7 @@ export const useBlockColorSchemes = () => {
 		getColorGroups,
 		allColorSchemes,
 		colorSchemesCollection,
+		getSortedColorSchemes,
 		COLOR_SCHEME_OPTIONS,
 		baseColorScheme,
 		backgroundModeColorScheme,
@@ -55,12 +57,28 @@ export const useBlockColorSchemes = () => {
 			// 	scheme.colorScheme.backgroundColor.desktop = 'var(--stk-block-background-color)'
 			// }
 
-			const desktopColors = Object.fromEntries(
-				Object.entries( scheme.colorScheme ).map( ( [ key, value ] ) => [ key, value.desktop ] )
-			)
+			const desktopColors = {}
+			const desktopHoverColors = {}
+			const desktopParentHoverColors = {}
+
+			Object.entries( scheme.colorScheme ).forEach( ( [ key, value ] ) => {
+				if ( 'desktop' in value ) {
+					desktopColors[ key ] = value.desktop
+				}
+
+				if ( 'desktopHover' in value ) {
+					desktopHoverColors[ key ] = value.desktopHover
+				}
+
+				if ( 'desktopParentHover' in value ) {
+					desktopParentHoverColors[ key ] = value.desktopParentHover
+				}
+			} )
 
 			obj[ scheme.key ] = scheme
-			obj[ scheme.key ].desktopColors = desktopColors
+			obj[ scheme.key ].normal = desktopColors
+			obj[ scheme.key ].hover = desktopHoverColors
+			obj[ scheme.key ].parentHover = desktopParentHoverColors
 
 			return obj
 		}, {} )
@@ -72,18 +90,55 @@ export const useBlockColorSchemes = () => {
 			return COLOR_SCHEME_OPTIONS.find( scheme => scheme.value === key )?.value || ( returnFallback ? fallback : 'scheme-unavailable' )
 		}
 
-		// Converts property name to space separated string (e.g., backgroundColor --> Background Color)
-		const getLabel = property => {
-			const result = property.replace( /([a-z])([A-Z])/g, '$1 $2' )
-				.replace( /^([a-z])/, match => match.toUpperCase() )
-			return result
-		}
-
 		// Converts property name to kebab-cased string with scheme key as prefix
 		// (e.g., backgroundColor --> --stk-scheme-default-1-background-color)
 		const toKebab = ( property, slug ) => {
 			const result = kebabCase( property )
 			return '--stk-' + slug + '-' + result
+		}
+
+		const getSortedColorSchemes = () => {
+			// Get the color schemes in the desired order:
+			// 1. base color scheme
+			// 2. background color scheme
+			// 3. container color scheme
+			// 4. the rest
+
+			const baseKey = getScheme( _baseColorScheme )
+			const backgroundKey = getScheme( _backgroundModeColorScheme, { mode: 'background' } )
+			const containerKey = getScheme( _containerModeColorScheme )
+
+			const sortedArray = []
+
+			if ( baseKey in colorSchemesCollection ) {
+				const baseScheme = colorSchemesCollection[ baseKey ]
+				baseScheme.schemeType = __( 'Base Color Scheme', i18n )
+				sortedArray.push( baseScheme )
+			}
+
+			if ( backgroundKey in colorSchemesCollection ) {
+				const backgroundScheme = colorSchemesCollection[ backgroundKey ]
+				backgroundScheme.schemeType = __( 'Background Color Scheme', i18n )
+				sortedArray.push( backgroundScheme )
+			}
+
+			if ( baseKey !== containerKey && containerKey in colorSchemesCollection ) {
+				const containerScheme = colorSchemesCollection[ containerKey ]
+				containerScheme.schemeType = __( 'Container Color Scheme', i18n )
+				sortedArray.push( containerScheme )
+			} else if ( baseKey in colorSchemesCollection ) {
+				sortedArray[ 0 ].schemeType = __( 'Base/Container Color Scheme', i18n )
+			}
+
+			// Filter out the base, background, and container schemes from the rest
+			const restSchemes = Object.values( colorSchemesCollection ).filter(
+				scheme =>
+					scheme.key !== baseKey &&
+					scheme.key !== backgroundKey &&
+					scheme.key !== containerKey
+			)
+			// Return the sorted array, omitting undefineds if any scheme is missing
+			return sortedArray.concat( restSchemes )
 		}
 
 		// get color groups for color palette picker.
@@ -114,7 +169,7 @@ export const useBlockColorSchemes = () => {
 					if ( value?.desktop.startsWith( 'linear-' ) || value?.desktop.startsWith( 'radial-' ) ) {
 						gradients.push( {
 							gradient: value?.desktop,
-							name: getLabel( property ),
+							name: getPropertyLabel( property ),
 							slug: toKebab( property, scheme.key ),
 						} )
 
@@ -123,7 +178,7 @@ export const useBlockColorSchemes = () => {
 
 					colors.push( {
 						color: value?.desktop,
-						name: getLabel( property ),
+						name: getPropertyLabel( property ),
 						slug: toKebab( property, scheme.key ),
 					} )
 				} )
@@ -153,9 +208,10 @@ export const useBlockColorSchemes = () => {
 			getColorGroups,
 			allColorSchemes,
 			colorSchemesCollection,
+			getSortedColorSchemes,
 			COLOR_SCHEME_OPTIONS,
 			baseColorScheme: getScheme( _baseColorScheme ),
-			backgroundModeColorScheme: getScheme( _backgroundModeColorScheme, 'background' ),
+			backgroundModeColorScheme: getScheme( _backgroundModeColorScheme, { mode: 'background' } ),
 			containerModeColorScheme: getScheme( _containerModeColorScheme ),
 		}
 	}, [] )
@@ -165,6 +221,7 @@ export const useBlockColorSchemes = () => {
 		getColorGroups,
 		allColorSchemes,
 		colorSchemesCollection,
+		getSortedColorSchemes,
 		COLOR_SCHEME_OPTIONS,
 		baseColorScheme,
 		backgroundModeColorScheme,

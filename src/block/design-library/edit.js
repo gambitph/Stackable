@@ -31,6 +31,7 @@ import { applyFilters } from '@wordpress/hooks'
 import {
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	Placeholder, Modal, __experimentalVStack as VStack, Flex,
+	Spinner,
 } from '@wordpress/components'
 import { useBlockProps } from '@wordpress/block-editor'
 import apiFetch from '@wordpress/api-fetch'
@@ -95,6 +96,7 @@ const Edit = props => {
 
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false )
 	const [ isDialogOpen, setIsDialogOpen ] = useState( DIALOG_OPTIONS.CLOSE )
+	const [ isInserting, setIsInserting ] = useState( false )
 
 	const designsRef = useRef( [] )
 	const disabledBlocksRef = useRef( [] )
@@ -167,17 +169,17 @@ const Edit = props => {
 				// For blocks with variations, do not remove the uniqueId
 				// since that will prompt the layout picker to show.
 				const hasVariations = !! getBlockType( blockName ) && getBlockVariations( blockName ).length > 0
-				if ( ! hasVariations && block.attributes.uniqueId ) {
+				if ( ! hasVariations && block.attributes?.uniqueId ) {
 					delete block.attributes.uniqueId
 				}
 
-				const customAttributes = block.attributes.customAttributes
+				const customAttributes = block.attributes?.customAttributes
 
 				const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
 				if ( ! isDesignLibraryDevMode ) {
 					const indexToDelete = customAttributes?.findIndex( attribute => attribute[ 0 ] === 'stk-design-library__bg-target' )
 					if ( customAttributes && indexToDelete !== -1 ) {
-						block.attributes.customAttributes.splice( indexToDelete, 1 )
+						block.attributes?.customAttributes.splice( indexToDelete, 1 )
 					}
 				}
 
@@ -237,11 +239,14 @@ const Edit = props => {
 	}
 
 	const addDesigns = async substituteBlocks => {
+		setIsInserting( true )
 		const { getBlockRootClientId } = select( 'core/block-editor' )
 		const parentClientId = getBlockRootClientId( clientId )
 
 		if ( ! designsRef.current?.length ) {
 			console.error( 'Design library selection failed: No designs found' ) // eslint-disable-line no-console
+			setIsInserting( false )
+			return
 		}
 
 		const designs = designsRef.current
@@ -264,6 +269,7 @@ const Edit = props => {
 		}
 
 		if ( ! blocks.length ) {
+			setIsInserting( false )
 			return
 		}
 
@@ -284,6 +290,8 @@ const Edit = props => {
 		if ( callbackRef.current ) {
 			callbackRef.current()
 		}
+
+		setIsInserting( false )
 	}
 
 	const onClickTertiary = () => {
@@ -395,7 +403,10 @@ const Edit = props => {
 				<Modal
 					className="ugb-design-library__confirm-dialog"
 					title={ __( 'Stackable Design Library', i18n ) }
-					onRequestClose={ () => setIsDialogOpen( DIALOG_OPTIONS.CLOSE ) }
+					onRequestClose={ () => {
+						setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
+						setIsInserting( false )
+					 } }
 				>
 					<VStack spacing={ 8 }>
 						{ isDialogOpen === DIALOG_OPTIONS.REMOVE_BLOCKS && <>
@@ -405,53 +416,55 @@ const Edit = props => {
 								</p>
 							</div>
 							<Flex direction="column" align="stretch">
-								<Button
-									__next40pxDefaultSize
-									variant="primary"
-									onClick={ () => {
-										insertIndexRef.current = 0
-										if ( disabledBlocksRef.current.size ) {
+								{ isInserting ? <Spinner style={ { margin: '0 auto' } } /> : <>
+									<Button
+										__next40pxDefaultSize
+										variant="primary"
+										onClick={ () => {
+											insertIndexRef.current = 0
+											if ( disabledBlocksRef.current.size ) {
 											// Close this dialog and reopen after a while to show the notice for disabled blocks
 											// The existing blocks will be removed later
+												setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
+												setTimeout( () => setIsDialogOpen( DIALOG_OPTIONS.DISABLED_BLOCKS ), 500 )
+												return
+											}
+
+											addDesigns( false )
+										} }
+									>
+										{ __( 'Replace existing content with page design', i18n ) }
+									</Button>
+									<Button
+										__next40pxDefaultSize
+										variant="secondary"
+										onClick={ () => {
+											insertIndexRef.current = blocksToRemoveRef.current.length
+											// When appending the page design, only remove the design library block
+											blocksToRemoveRef.current = [ clientId ]
+
+											if ( disabledBlocksRef.current.size ) {
+												setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
+												setTimeout( () => setIsDialogOpen( DIALOG_OPTIONS.DISABLED_BLOCKS ), 500 )
+
+												return
+											}
+											addDesigns( false )
+										} }
+									>
+										{ __( 'Append page design only', i18n ) }
+									</Button>
+									<Button
+										__next40pxDefaultSize
+										variant="tertiary"
+										onClick={ () => {
+											blocksToRemoveRef.current = []
 											setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
-											setTimeout( () => setIsDialogOpen( DIALOG_OPTIONS.DISABLED_BLOCKS ), 500 )
-											return
-										}
-
-										addDesigns( false )
-									} }
-								>
-									{ __( 'Replace existing content with page design', i18n ) }
-								</Button>
-								<Button
-									__next40pxDefaultSize
-									variant="secondary"
-									onClick={ () => {
-										insertIndexRef.current = blocksToRemoveRef.current.length
-										// When appending the page design, only remove the design library block
-										blocksToRemoveRef.current = [ clientId ]
-
-										if ( disabledBlocksRef.current.size ) {
-											setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
-											setTimeout( () => setIsDialogOpen( DIALOG_OPTIONS.DISABLED_BLOCKS ), 500 )
-
-											return
-										}
-										addDesigns( false )
-									} }
-								>
-									{ __( 'Append page design only', i18n ) }
-								</Button>
-								<Button
-									__next40pxDefaultSize
-									variant="tertiary"
-									onClick={ () => {
-										blocksToRemoveRef.current = []
-										setIsDialogOpen( DIALOG_OPTIONS.CLOSE )
 									 } }
-								>
-									{ __( 'Cancel', i18n ) }
-								</Button>
+									>
+										{ __( 'Cancel', i18n ) }
+									</Button>
+								</> }
 							</Flex>
 						</> }
 						{ isDialogOpen === DIALOG_OPTIONS.DISABLED_BLOCKS && <>
@@ -463,30 +476,33 @@ const Edit = props => {
 								<p> { __( 'These blocks can be enabled in the Stackable settings page. Do you want to keep the disabled blocks or substitute them with other Stackable or core blocks?', i18n ) }</p>
 							</div>
 							<Flex direction="column" align="stretch">
-								<Button
-									__next40pxDefaultSize
-									style={ { textAlign: 'center' } }
-									variant="primary"
-									onClick={ () => onClickPrimary() }
-								>
-									{ __( 'Add patterns and substitute blocks', i18n ) }
-								</Button>
-								<Button
-									__next40pxDefaultSize
-									style={ { textAlign: 'center', marginBottom: '16px' } }
-									variant="secondary"
-									onClick={ () => onClickSecondary() }
-								>
-									{ __( 'Add patterns only (no substitutes)', i18n ) }
-								</Button>
-								<Button
-									__next40pxDefaultSize
-									style={ { textAlign: 'center', marginBottom: '16px' } }
-									variant="tertiary"
-									onClick={ () => onClickTertiary() }
-								>
-									{ __( 'Enable blocks in settings', i18n ) }
-								</Button>
+								{ isInserting ? <Spinner style={ { margin: '0 auto' } } /> : <>
+									<Button
+										__next40pxDefaultSize
+										style={ { textAlign: 'center' } }
+										variant="primary"
+										onClick={ () => onClickPrimary() }
+									>
+										{ __( 'Add patterns and substitute blocks', i18n ) }
+									</Button>
+									<Button
+										__next40pxDefaultSize
+										style={ { textAlign: 'center', marginBottom: '16px' } }
+										variant="secondary"
+										onClick={ () => onClickSecondary() }
+									>
+										{ __( 'Add patterns only (no substitutes)', i18n ) }
+									</Button>
+									<Button
+										__next40pxDefaultSize
+										style={ { textAlign: 'center', marginBottom: '16px' } }
+										variant="tertiary"
+										onClick={ () => onClickTertiary() }
+									>
+										{ __( 'Enable blocks in settings', i18n ) }
+									</Button>
+								</> }
+
 							</Flex>
 						</> }
 					</VStack>

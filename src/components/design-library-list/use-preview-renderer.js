@@ -30,6 +30,7 @@ import {
 } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { serialize } from '@wordpress/blocks'
+import { cleanSerializedBlock } from '~stackable/util'
 
 const DEFAULT_CONTENT = { ...DEFAULT }
 
@@ -169,7 +170,7 @@ export const usePreviewRenderer = (
 
 		preview = replaceImages( preview )
 
-		const cleanedBlock = preview.replace( /<!--[\s\S]*?-->/g, '' ) // removes comment
+		const cleanedBlock = cleanSerializedBlock( preview ) // removes comment
 
 		setBlocks( {
 			parsed: parsedBlocks,

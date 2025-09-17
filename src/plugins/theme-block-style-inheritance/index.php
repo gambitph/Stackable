@@ -22,6 +22,8 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 			add_action( 'body_class', array( $this, 'add_body_class_block_style_inheritance' ) );
 			add_filter( 'stackable_block_style_inheritance_inline_styles_nodep', array( $this, 'add_block_style_inheritance' ) );
 
+			add_filter( 'stackable_js_settings', array( $this, 'add_setting' ) );
+
 			add_filter( 'safecss_filter_attr_allow_css', array( $this, 'allow_css' ), 10, 2 );
 		}
 
@@ -538,6 +540,11 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 
 			return $style_declarations;
 		}
+
+		public function add_setting( $settings ) {
+            $settings['stackable_disable_block_style_inheritance'] = get_option( 'stackable_disable_block_style_inheritance', false );
+            return $settings;
+        }
 	}
 
 	new Stackable_Block_Style_Inheritance();

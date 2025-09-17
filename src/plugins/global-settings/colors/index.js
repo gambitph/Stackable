@@ -17,7 +17,7 @@ import rgba from 'color-rgba'
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { Fragment, useState } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, useSelect } from '@wordpress/data'
 import { models } from '@wordpress/api'
@@ -75,8 +75,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 		hideSiteEditorColors,
 	} = useSelect( select => select( 'stackable/global-colors' ).getSettings() )
 
-	const [ isOpen, setIsOpen ] = useState( false )
-
 	const onChangeHideThemeColors = value => {
 		dispatch( 'stackable/global-colors' ).updateSettings( {
 			hideThemeColors: value,
@@ -111,43 +109,39 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Color Palette', i18n ) }
-				onToggle={ isOpen => setIsOpen( isOpen ) }
 				showModifiedIndicator={ !! stackableColors?.length }
 			>
-				{ isOpen && <>
-					<p className="components-base-control__help">
-						{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
+				<p className="components-base-control__help">
+					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
 					&nbsp;
-						<a href="https://docs.wpstackable.com/article/362-how-to-use-global-colors?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
-							{ __( 'Learn more about Global Colors', i18n ) }
-						</a>
-					</p>
-					<ColorPicker label={ __( 'Global Colors', i18n ) } />
-					{ /* <ColorPicker
+					<a href="https://docs.wpstackable.com/article/362-how-to-use-global-colors?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs" rel="noopener noreferrer">
+						{ __( 'Learn more about Global Colors', i18n ) }
+					</a>
+				</p>
+				<ColorPicker label={ __( 'Global Colors', i18n ) } />
+				{ /* <ColorPicker
 					label={ __( 'Global Gradients', i18n ) }
 					onReset={ () => onChangeUseStackableColorsOnly( false ) }
 				/> */ }
-					{ ColorToggleControls }
-					<AdvancedToggleControl
-						label={ __( 'Show Theme Colors', i18n ) }
-						checked={ ! hideThemeColors }
-						onChange={ value => onChangeHideThemeColors( ! value ) }
-						allowReset={ false }
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Show Default Colors', i18n ) }
-						checked={ ! hideDefaultColors }
-						onChange={ value => onChangeHideDefaultColors( ! value ) }
-						allowReset={ false }
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Show Site Editor Custom Colors', i18n ) }
-						checked={ ! hideSiteEditorColors }
-						onChange={ value => onChangeHideSiteEditorColors( ! value ) }
-						allowReset={ false }
-					/>
-				</> }
-
+				{ ColorToggleControls }
+				<AdvancedToggleControl
+					label={ __( 'Show Theme Colors', i18n ) }
+					checked={ ! hideThemeColors }
+					onChange={ value => onChangeHideThemeColors( ! value ) }
+					allowReset={ false }
+				/>
+				<AdvancedToggleControl
+					label={ __( 'Show Default Colors', i18n ) }
+					checked={ ! hideDefaultColors }
+					onChange={ value => onChangeHideDefaultColors( ! value ) }
+					allowReset={ false }
+				/>
+				<AdvancedToggleControl
+					label={ __( 'Show Site Editor Custom Colors', i18n ) }
+					checked={ ! hideSiteEditorColors }
+					onChange={ value => onChangeHideSiteEditorColors( ! value ) }
+					allowReset={ false }
+				/>
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

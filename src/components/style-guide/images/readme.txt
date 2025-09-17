@@ -1,0 +1,2 @@
+hero-bg image from: https://www.pexels.com/photo/house-near-body-of-water-356807/ by Daniel Frank
+media-text image from: https://www.pexels.com/photo/man-in-black-and-white-long-sleeve-shirt-holding-brown-leather-bag-6649411/ by cottonbro studio

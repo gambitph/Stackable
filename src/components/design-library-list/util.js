@@ -7,8 +7,9 @@ import {
 
 import { parse, serialize } from '@wordpress/blocks'
 import { select } from '@wordpress/data'
+import { META_SEPARATORS } from '~stackable/block/posts/util'
 
-const DEFAULT_CONTENT = { ...DEFAULT }
+export const DEFAULT_CONTENT = { ...DEFAULT }
 const PARSER = new DOMParser()
 
 export const cleanParse = content => {
@@ -237,7 +238,7 @@ export const parseDisabledBlocks = parsedBlocks => {
 
 const IMAGE_STORAGE = cdnUrl.replace( /\/$/, '' ) + '/library-v4/images/'
 
-export const addPlaceholderForPostsBlock = ( content, postsPlaceholder, defaultValues ) => {
+export const addPlaceholderForPostsBlock = ( content, postsPlaceholder, defaultValues, img = null ) => {
 	const remainingPosts = [ ...postsPlaceholder ]
 
 	// Normalize special characters
@@ -260,6 +261,7 @@ export const addPlaceholderForPostsBlock = ( content, postsPlaceholder, defaultV
 
 		const numItems = attrs.numberOfItems ?? 6
 		const width = attrs.imageWidth ? attrs.imageWidth + ( attrs.imageWidthUnit ?? 'px' ) : 'auto'
+		const separator = META_SEPARATORS[ attrs.metaSeparator ?? 'dot' ]
 
 		// Get the post template inside the block
 		const templateMatch = innerHtml.match( /<!--\s*\/stk-start:posts\/template\s*-->([\s\S]*?)<!--\s*\/stk-end:post\/template\s*-->/ )
@@ -268,17 +270,35 @@ export const addPlaceholderForPostsBlock = ( content, postsPlaceholder, defaultV
 		}
 
 		const template = templateMatch[ 1 ].trim()
-		const currentPosts = remainingPosts.splice( 0, numItems ) // Slice the posts for this block
 
-		const renderedPosts = currentPosts.map( ( post, index ) =>
-			template
+		let currentPosts
+		if ( numItems <= remainingPosts.length ) {
+			currentPosts = remainingPosts.slice( 0, numItems )
+		} else {
+			const needed = numItems
+			const postsToUse = [
+				...remainingPosts,
+				...Array.from(
+					{ length: needed - remainingPosts.length },
+					( _, i ) => postsPlaceholder[ i % postsPlaceholder.length ] // reuse placeholders if numberOfItems > 6
+				),
+			]
+			currentPosts = postsToUse.slice( 0, numItems )
+		}
+
+		const renderedPosts = currentPosts.map( ( post, index ) => {
+			const imgSrc = img ?? `${ IMAGE_STORAGE }stk-design-library-image-${ index + 1 }.jpeg`
+			return template
 				.replace( /!#title!#/g, post.title_placeholder )
 				.replace( /!#excerpt!#/g, post.text_placeholder )
+				.replace( /!#authorName!#/g, 'John Doe' )
+				.replaceAll( /!#metaSeparator!#/g, separator )
+				.replace( /!#commentsNum!#/g, '3 comments' )
 				.replace( /!#date!#/g, 'March 1, 2025' )
 				.replace( /!#readmoreText!#/g, defaultValues[ 'post-btn_placeholder' ] )
 				.replace( /!#category!#/g, defaultValues.tag_placeholder )
-				.replace( /img class="stk-img"/g, `img class="stk-img" src="${ IMAGE_STORAGE }stk-design-library-image-${ index + 1 }.jpeg" width="${ width }" style="width: ${ width } !important;"` )
-		).join( '\n' )
+				.replace( /img class="stk-img"/g, `img class="stk-img" src="${ imgSrc }" width="${ width }" style="width: ${ width } !important;"` )
+		} ).join( '\n' )
 
 		// Replace just the template portion, keep rest of the block
 		const updatedInnerHtml = innerHtml.replace(

@@ -28,6 +28,9 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
   		function __construct() {
 			// Register our settings.
 			add_action( 'register_stackable_global_settings', array( $this, 'register_color_schemes' ) );
+
+			add_action( 'stackable_early_version_upgraded', array( $this, 'extend_color_scheme' ), 10, 2 );
+
 			if ( is_frontend() ) {
 
 				/**
@@ -189,6 +192,44 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			}
 
 			return $_properties;
+		}
+
+		public function extend_color_scheme( $old_version, $new_version ) {
+			if ( empty( $old_version ) || version_compare( $old_version, "3.19.0", "<" ) ) {
+				$color_schemes = self::get_color_schemes_array();
+
+				$add_alternate_scheme = ! $color_schemes || ( is_array( $color_schemes ) && ! isset( $color_schemes['scheme-default-3'] ) && array_reduce( $color_schemes, function( $carry, $scheme ) {
+					return $carry && Stackable_Global_Color_Schemes::is_scheme_empty( $scheme ?? [] );
+				}, true ) );
+
+				if ( $add_alternate_scheme ) {
+					$updated_schemes = get_option( 'stackable_global_color_schemes', array() );
+
+					if ( ! is_array( $updated_schemes ) ) {
+						$updated_schemes = array();
+					}
+
+					$updated_schemes[] = array(
+						'name' => __( 'Alternate Scheme', STACKABLE_I18N ),
+						'key' => 'scheme-default-3',
+						'colorScheme' => array(
+							'backgroundColor' => array( 'desktop' => '#0f0e17' ),
+							'headingColor' => array( 'desktop' => '#fffffe' ),
+							'textColor' => array( 'desktop' => '#fffffe' ),
+							'linkColor' => array( 'desktop' => '#f00069' ),
+							'accentColor' => array( 'desktop' => '#f00069' ),
+							'buttonBackgroundColor' => array( 'desktop' => '#f00069' ),
+							'buttonTextColor' => array( 'desktop' => '#fffffe' ),
+							'buttonOutlineColor' => array( 'desktop' => '#fffffe' ),
+						),
+						'hideInPicker' => false
+					);
+
+					update_option( 'stackable_global_color_schemes', $updated_schemes );
+					delete_option( 'stackable_global_color_scheme_generated_css' );
+				}
+
+			}
 		}
 
 		/**-----------------------------------------------------------------------------

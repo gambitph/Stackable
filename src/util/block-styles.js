@@ -4,6 +4,8 @@ import { select } from '@wordpress/data'
 
 const BLOCK_STYLES_FILTER = {
 	'stackable/column': [ 'columnWidth', 'columnAdjacentCount' ],
+	'stackable/table-of-contents': [ 'text', 'headings' ],
+	'stackable/icon-list-item': [ 'parentUniqueId' ],
 }
 
 export const getBlockStyleAttributesFilter = ( blockName, additionalFilters = [] ) => {

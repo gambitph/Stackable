@@ -20,13 +20,14 @@ function appendUnitIfNeeded( value, unit ) {
 	return ( typeof value === 'string' && value.trim().startsWith( 'var' ) ) ? value : `${ value }${ unit }`
 }
 
-const renderGlobalStyles = (
+export const renderGlobalBlockLayoutStyles = (
 	blockLayouts,
 	blockLayoutDefaults,
 	setStyles,
 	currentHoverState,
 	blockUniqueId,
 	parentHoverBlock,
+	returnCss = false,
 	breakDesktop = 1024,
 	breakTablet = 768
 ) => {
@@ -129,6 +130,10 @@ const renderGlobalStyles = (
 		css += `@media screen and (max-width: ${ breakTablet - 1 }px){:root { ${ compact( deviceCss.mobile ).join( '' ) }}}`
 	}
 
+	if ( returnCss ) {
+		return css
+	}
+
 	setStyles( css )
 }
 
@@ -151,7 +156,7 @@ export const useBlockLayoutEditorLoader = ( storeName, classSuffix ) => {
 
 	useEffect( () => {
 		if ( blockLayouts && typeof blockLayouts === 'object' ) {
-			renderGlobalStyles(
+			renderGlobalBlockLayoutStyles(
 				blockLayouts,
 				blockLayoutDefaults,
 				setStyles,

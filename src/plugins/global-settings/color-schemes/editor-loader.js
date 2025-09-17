@@ -21,13 +21,14 @@ import { useEffect, useState } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
-const renderGlobalStyles = (
+export const renderGlobalColorSchemeStyles = (
 	setStyles,
 	colorSchemesArray,
 	baseColorScheme,
 	backgroundModeColorScheme,
 	containerModeColorScheme,
 	currentHoverState,
+	returnCss = false,
 ) => {
 	let css = '',
 		decls
@@ -110,6 +111,10 @@ const renderGlobalStyles = (
 	css += `${ rules.background.join( '\n' ) }`
 	css += `${ rules.container.join( '\n' ) }`
 
+	if ( returnCss ) {
+		return css
+	}
+
 	setStyles( css )
 }
 
@@ -129,7 +134,7 @@ export const GlobalColorSchemeStyles = () => {
 
 	useEffect( () => {
 		if ( allColorSchemes && Array.isArray( allColorSchemes ) ) {
-			renderGlobalStyles(
+			renderGlobalColorSchemeStyles(
 				setStyles,
 				allColorSchemes,
 				baseColorScheme,

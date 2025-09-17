@@ -11,6 +11,7 @@ import {
 	cleanTypographyStyle,
 	getTypographyTypeScale,
 } from './utils'
+import './store'
 
 /**
  * External dependencies
@@ -43,7 +44,7 @@ import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
-import { useSelect } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 
 export { GlobalTypographyStyles }
 
@@ -182,6 +183,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		fetchSettings().then( response => {
 			// Get settings.
 			const _typographySettings = ( head( response.stackable_global_typography ) ) || {}
+
 			setTypographySettings( _typographySettings )
 			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 			setCustomFontPairs( response.stackable_custom_font_pairs || [] )
@@ -195,6 +197,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			setSelectedTypeScale( {
 				desktop: typeScaleDesktop, tablet: typeScaleTablet, mobile: typeScaleMobile,
 			} )
+
+			dispatch( 'stackable/global-typography' ).updateSettings( _typographySettings )
 		} )
 	}, [] )
 
@@ -241,6 +245,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			} )
 			model.save()
 		}, 500 )
+
+		dispatch( 'stackable/global-typography' ).updateSettings( newSettings )
 	}
 
 	const updateSelectedFontPair = name => {

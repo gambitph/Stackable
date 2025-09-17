@@ -12,6 +12,7 @@ import { dispatch, useSelect } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { useCallback } from '@wordpress/element'
 import { ToolbarButton } from '@wordpress/components'
+import { GuidedModalTour } from '~stackable/components'
 
 const DesignLibraryButton = () => {
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
@@ -41,11 +42,15 @@ const DesignLibraryButton = () => {
 	}, [ getEditorDom ] )
 
 	return ( settings.stackable_enable_design_library &&
-		<ToolbarButton
-			onClick={ onClick }
-			className="ugb-insert-library-button"
-			icon={ <SVGStackableIcon /> }
-		>{ __( 'Design Library', i18n ) }</ToolbarButton>
+		<>
+			{ /* TODO: This will need to only play on first time going to the editor, and if there's no quick button that started another tour */ }
+			<GuidedModalTour tourId="editor" />
+			<ToolbarButton
+				onClick={ onClick }
+				className="ugb-insert-library-button"
+				icon={ <SVGStackableIcon /> }
+			>{ __( 'Design Library', i18n ) }</ToolbarButton>
+		</>
 	)
 }
 
