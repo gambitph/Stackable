@@ -4,7 +4,7 @@ import {
 	i18n, srcUrl, version as VERSION,
 } from 'stackable'
 
-import { CssSaveCompiler } from '../block-css'
+import { CssSaveCompiler } from '../../components/block-css'
 import {
 	cleanSerializedBlock,
 	createUniqueClass,
@@ -19,7 +19,7 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 	getBlockVariations,
 } from '@wordpress/blocks'
-import { DEFAULT_CONTENT, addPlaceholderForPostsBlock } from '../design-library-list/util'
+import { DEFAULT_CONTENT, addPlaceholderForPostsBlock } from '../../components/design-library-list/util'
 
 export const DUMMY_COLOR_SCHEMES = [
 	{

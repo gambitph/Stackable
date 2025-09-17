@@ -18,7 +18,6 @@ import {
 	guidedTourStates,
 } from 'stackable'
 import classNames from 'classnames'
-import confetti from 'canvas-confetti'
 
 /**
  * WordPress dependencies
@@ -208,7 +207,7 @@ const ModalTour = props => {
 		if ( currentStep === steps.length - 1 ) {
 			steps[ currentStep ]?.postStep?.( currentStep )
 			if ( hasConfetti ) {
-				throwConfetti()
+				throwConfetti() // Fire and forget - don't wait for confetti
 			}
 			onClose()
 			return
@@ -544,33 +543,42 @@ const ModalTour = props => {
 	)
 }
 
-const throwConfetti = () => {
-	confetti( {
-		particleCount: 50,
-		angle: 60,
-		spread: 70,
-		origin: { x: 0 },
-		zIndex: 100000,
-		disableForReducedMotion: true,
-	} )
-	confetti( {
-		particleCount: 50,
-		angle: 120,
-		spread: 70,
-		origin: { x: 1 },
-		zIndex: 100000,
-		disableForReducedMotion: true,
-	} )
-	setTimeout( () => {
-		confetti( {
+const throwConfetti = async () => {
+	try {
+		// Dynamically import canvas-confetti only when needed
+		const confetti = await import( /* webpackChunkName: "canvas-confetti" */ 'canvas-confetti' )
+
+		confetti.default( {
 			particleCount: 50,
-			angle: -90,
-			spread: 90,
-			origin: { y: -0.3 },
+			angle: 60,
+			spread: 70,
+			origin: { x: 0 },
 			zIndex: 100000,
 			disableForReducedMotion: true,
 		} )
-	}, 150 )
+		confetti.default( {
+			particleCount: 50,
+			angle: 120,
+			spread: 70,
+			origin: { x: 1 },
+			zIndex: 100000,
+			disableForReducedMotion: true,
+		} )
+		setTimeout( () => {
+			confetti.default( {
+				particleCount: 50,
+				angle: -90,
+				spread: 90,
+				origin: { y: -0.3 },
+				zIndex: 100000,
+				disableForReducedMotion: true,
+			} )
+		}, 150 )
+	} catch ( err ) {
+		// Silently fail if confetti can't be loaded
+		// eslint-disable-next-line no-console
+		console.warn( 'Failed to load confetti:', err )
+	}
 }
 
 const Steps = props => {

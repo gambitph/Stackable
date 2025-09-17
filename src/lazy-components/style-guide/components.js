@@ -7,7 +7,7 @@ import {
 } from './utils'
 import heroBg from './images/hero-bg.webp'
 import mediaText from './images/media-text.webp'
-import { COLOR_SCHEME_PROPERTY_LABELS } from '../color-scheme-preview'
+import { COLOR_SCHEME_PROPERTY_LABELS } from '../../components/color-scheme-preview'
 
 import {
 	i18n, srcUrl, homeUrl,

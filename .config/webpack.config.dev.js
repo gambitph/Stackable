@@ -34,7 +34,7 @@ module.exports = [
 
 	output: {
 		filename: '[name].js',
-		chunkFilename: '[name].[contenthash].json', // Output filename for dynamically imported chunks
+		chunkFilename: 'chunks/[name].[contenthash].js', // Output filename for dynamically imported chunks
     },
 
     // Externals are only WordPress loaded libraries.

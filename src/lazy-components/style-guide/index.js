@@ -16,9 +16,6 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 
-export { default as StyleGuidePopover } from './popover'
-
-// TODO: This is not yet finished
 const StyleGuide = props => {
 	const { designSystem = {}, contentRef = null } = props
 

@@ -26,7 +26,7 @@ import { select } from '@wordpress/data'
 
 const loadGoogleFonts = async () => {
 	const { default: fonts } =
-		await import( /* webpackChunkName: "data/google-fonts" */ './google-fonts.json' )
+		await import( /* webpackChunkName: "google-fonts" */ './google-fonts.json' )
 	return fonts.map( font => ( { label: font.family, value: font.family } ) )
 }
 
