@@ -11,8 +11,8 @@ import { semverCompare } from '~stackable/util'
 
 import { addFilter } from '@wordpress/hooks'
 
-const addAriaLabel = ( divProps, version ) => {
-	if ( semverCompare( version, '<', '3.19.0' ) ) {
+const addAriaLabel = ( divProps, props ) => {
+	if ( semverCompare( props.version, '<', '3.19.0' ) ) {
 		return {
 			...divProps,
 			'aria-label': undefined,

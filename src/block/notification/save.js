@@ -80,7 +80,7 @@ export const Save = props => {
 					<button
 						className="stk-block-notification__close-button"
 						aria-label={ __( 'Close', i18n ) }
-						{ ...applyFilters( 'stackable.notification.save.close-button-props', {}, props.version ) }
+						{ ...applyFilters( 'stackable.notification.save.close-button-props', {}, props ) }
 					>
 						<SVGCloseIcon
 							width={ attributes.dismissibleSize || 16 }

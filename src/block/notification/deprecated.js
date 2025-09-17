@@ -23,8 +23,8 @@ import { semverCompare } from '~stackable/util'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.notification.save.close-button-props', 'stackable/3.19.0', ( buttonProps, version ) => {
-	if ( semverCompare( version, '<', '3.19.0' ) ) {
+addFilter( 'stackable.notification.save.close-button-props', 'stackable/3.19.0', ( buttonProps, props ) => {
+	if ( semverCompare( props.version, '<', '3.19.0' ) ) {
 		return {
 			...buttonProps,
 			'aria-label': undefined,

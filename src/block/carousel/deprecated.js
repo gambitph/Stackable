@@ -10,8 +10,8 @@ import { withVersion } from '~stackable/higher-order'
 import { addFilter } from '@wordpress/hooks'
 import { semverCompare } from '~stackable/util'
 
-addFilter( 'stackable.carousel.save.slider-props', 'stackable/3.19.0', ( sliderProps, version ) => {
-	if ( semverCompare( version, '<', '3.19.0' ) ) {
+addFilter( 'stackable.carousel.save.slider-props', 'stackable/3.19.0', ( sliderProps, props ) => {
+	if ( semverCompare( props.version, '<', '3.19.0' ) ) {
 		return {
 			...sliderProps,
 			tabIndex: undefined,

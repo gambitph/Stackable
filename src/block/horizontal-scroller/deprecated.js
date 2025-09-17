@@ -10,8 +10,8 @@ import { addFilter } from '@wordpress/hooks'
 import compareVersions from 'compare-versions'
 import { semverCompare } from '~stackable/util'
 
-addFilter( 'stackable.horizontal-scroller.save.scroller-props', 'stackable/3.19.0', ( scrollerProps, version ) => {
-	if ( semverCompare( version, '<', '3.19.0' ) ) {
+addFilter( 'stackable.horizontal-scroller.save.scroller-props', 'stackable/3.19.0', ( scrollerProps, props ) => {
+	if ( semverCompare( props.version, '<', '3.19.0' ) ) {
 		return {
 			...scrollerProps,
 			tabIndex: undefined,
