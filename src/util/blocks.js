@@ -619,3 +619,11 @@ export const cleanSerializedBlock = ( serialized, cb, attributes = {} ) => {
 
 	return cleanSerialized
 }
+
+export const META_SEPARATORS = {
+	dot: '·',
+	space: ' ',
+	comma: ',',
+	dash: '—',
+	pipe: '|',
+}

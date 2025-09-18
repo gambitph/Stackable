@@ -12,6 +12,7 @@ import {
 	getTypographyClasses,
 } from '~stackable/block-components'
 import { getBlockStyle } from '~stackable/hooks'
+import { META_SEPARATORS } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -26,14 +27,6 @@ import { Fragment } from '@wordpress/element'
  * Internal dependencies
  */
 import variations from './variations'
-
-export const META_SEPARATORS = {
-	dot: '·',
-	space: ' ',
-	comma: ',',
-	dash: '—',
-	pipe: '|',
-}
 
 export const CONTENTS = [
 	{

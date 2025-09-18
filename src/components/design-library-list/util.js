@@ -4,10 +4,10 @@ import DEFAULT from './default.json'
 import {
 	settings, isPro, cdnUrl,
 } from 'stackable'
+import { META_SEPARATORS } from '~stackable/util'
 
 import { parse, serialize } from '@wordpress/blocks'
 import { select } from '@wordpress/data'
-import { META_SEPARATORS } from '~stackable/block/posts/util'
 
 export const DEFAULT_CONTENT = { ...DEFAULT }
 const PARSER = new DOMParser()
