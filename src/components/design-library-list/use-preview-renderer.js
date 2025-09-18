@@ -331,7 +331,7 @@ export const usePreviewRenderer = (
 			cancelAnimationFrame( adjustAnimateFrameRef.current )
 		}
 
-		requestAnimationFrame( () => {
+		adjustAnimateFrameRef.current = requestAnimationFrame( () => {
 			adjustScale()
 			prevSelectedTabRef.current = selectedTab
 	 } )
