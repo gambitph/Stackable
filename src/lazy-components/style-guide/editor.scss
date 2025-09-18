@@ -458,10 +458,10 @@ $guide-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 		margin-top: 10px;
 	}
 
-	> .components-popover__content {
-		margin-top: 20px;
-		margin-left: 20px;
-		width: calc(var(--width) - 40px) !important;
-		height: calc(var(--height) - 40px) !important;
-	}
+	// > .components-popover__content {
+	// 	margin-top: 20px;
+	// 	margin-left: 20px;
+	// 	width: calc(var(--width) - 40px) !important;
+	// 	height: calc(var(--height) - 40px) !important;
+	// }
 }
