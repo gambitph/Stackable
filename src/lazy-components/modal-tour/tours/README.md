@@ -1,10 +1,17 @@
 # Guided Modal Tour Documentation
 
-This directory contains individual tour configurations for the Stackable guided modal tour system. Each tour is defined in its own JavaScript file and automatically imported into the main tour system.
+> For creating new Tours, refer to `src/components/guided-modal-tour/README.MD`
+
+This directory contains individual tour configurations for the Stackable guided
+modal tour system. Each tour is defined in its own JavaScript file and
+automatically imported into the main tour system.
 
 ## How It Works
 
-The tour system uses `require.context()` to automatically discover and import all `.js` files in this directory. Each tour's ID (`tourId`) is derived from its filename in kebab-case (e.g., `design-library.js` becomes `design-library`). Each tour file should export a named export corresponding to the tour's purpose.
+The tour system uses `require.context()` to automatically discover and import
+all `.js` files in this directory. Each tour's ID (`tourId`) is derived from its
+filename in kebab-case (e.g., `design-library.js` becomes `design-library`).
+Each tour file should export a named export corresponding to the tour's purpose.
 
 ## Tour Structure
 

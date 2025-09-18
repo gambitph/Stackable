@@ -3,10 +3,6 @@ import { i18n } from 'stackable'
 import { createInterpolateElement } from '@wordpress/element'
 
 export const designSystem = {
-	condition: () => { // If provided, true will show the tour (even if it's already done), false will not show the tour, null will show the tour only once.
-		// Force show the tour if there is a GET parameter tour=design-system
-		return window?.location?.search?.includes( 'tour=design-system' ) ? true : null
-	},
 	steps: [
 		{
 			title: '👋 ' + __( 'Welcome to Your Design System', i18n ),
