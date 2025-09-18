@@ -364,11 +364,11 @@ const ModalTour = memo( props => {
 			onClose()
 		}
 		if ( modalRef.current ) {
-			modalRef.current.querySelector( '.components-modal__header' ).addEventListener( 'click', handleHeaderClick )
+			modalRef.current.querySelector( '.components-modal__header > .components-button' ).addEventListener( 'click', handleHeaderClick )
 		}
 		return () => {
 			if ( modalRef.current ) {
-				modalRef.current.querySelector( '.components-modal__header' ).removeEventListener( 'click', handleHeaderClick )
+				modalRef.current.querySelector( '.components-modal__header > .components-button' ).removeEventListener( 'click', handleHeaderClick )
 			}
 		}
 	}, [ modalRef.current, onClose ] )
