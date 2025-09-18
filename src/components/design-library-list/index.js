@@ -115,7 +115,10 @@ const DesignLibraryItem = props => {
 		}
 
 		const observer = new IntersectionObserver( ( [ entry ] ) => {
-			setShouldRender( entry.isIntersecting )
+			// reduce flicker during rapid scrolls
+			requestAnimationFrame( () => {
+				requestAnimationFrame( () => setShouldRender( entry.isIntersecting ) )
+			} )
 		}, {
 			root: rootEl,
 			rootMargin: '250px',
