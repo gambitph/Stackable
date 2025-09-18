@@ -29,8 +29,6 @@ const DesignLibraryList = props => {
 	} = props
 	const containerRef = useRef( null )
 
-	const [ scrollTop, setScrollTop ] = useState( 0 )
-
 	const listClasses = classnames( [
 		'ugb-design-library-items',
 		className,
@@ -43,9 +41,6 @@ const DesignLibraryList = props => {
 	return <div
 		className="ugb-modal-design-library__designs"
 		ref={ containerRef }
-		onScroll={ e => {
-			setScrollTop( e.currentTarget.scrollTop )
-		} }
 	>
 		{ isBusy && <Spinner style={ { display: 'block', margin: '0 auto' } } /> }
 		{ ! isBusy && <>
@@ -73,7 +68,6 @@ const DesignLibraryList = props => {
 							selectedNum={ selectedNum }
 							selectedData={ selectedData }
 							selectedTab={ props.selectedTab }
-							scrollTop={ scrollTop }
 							designKey={ i }
 						/>
 					)
@@ -98,9 +92,10 @@ export default DesignLibraryList
 
 const DesignLibraryItem = props => {
 	const {
-		scrollTop, previewProps: _previewProps, ...propsToPass
+		previewProps: _previewProps, ...propsToPass
 	} = props
 
+	const wrapperRef = useRef( null )
 	const itemRef = useRef( null )
 	const [ cardHeight, setCardHeight ] = useState( {} )
 	const [ previewSize, setPreviewSize ] = useState( {} )
@@ -114,43 +109,40 @@ const DesignLibraryItem = props => {
 	}
 
 	useEffect( () => {
-		// Use a timeout to ensure designs have finished rendering before calculating visibility.
-		const timeoutRef = setTimeout( () => {
-			const itemEl = itemRef.current
-			const containerEl = itemEl?.closest( '.ugb-modal-design-library__designs' ) || document.querySelector( '.ugb-modal-design-library__designs' )
-
-			if ( ! itemEl || ! containerEl ) {
-				return
-			}
-
-			const containerRect = containerEl.getBoundingClientRect()
-			const itemRect = itemEl.getBoundingClientRect()
-
-			const BOUNDARY = 250
-
-			const render = itemRect.bottom >= containerRect.top - BOUNDARY && itemRect.top <= containerRect.bottom + BOUNDARY
-
-			setShouldRender( render )
-		}, 250 )
-
-		return () => {
-			clearTimeout( timeoutRef )
+		const rootEl = document.querySelector( '.ugb-modal-design-library__designs' )
+		if ( ! wrapperRef.current || ! rootEl ) {
+			return
 		}
-	}, [ scrollTop, _previewProps.enableBackground, _previewProps.designId ] )
+
+		const observer = new IntersectionObserver( ( [ entry ] ) => {
+			setShouldRender( entry.isIntersecting )
+		}, {
+			root: rootEl,
+			rootMargin: '250px',
+			threshold: 0,
+		} )
+
+		observer.observe( wrapperRef.current )
+		return () => observer.disconnect()
+	}, [] )
 
 	const getCardHeight = () => {
 		const key = _previewProps.enableBackground ? 'background' : 'noBackground'
 		return props.selectedTab === 'pages' ? 472 : cardHeight?.[ key ] || 250
 	}
 
-	if ( ! shouldRender && ! props.selectedNum ) {
-		return <div ref={ itemRef } style={ { height: `${ getCardHeight() }px` } } />
-	}
-
-	return <DesignLibraryListItem
-		ref={ itemRef }
-		previewSize={ previewSize }
-		previewProps={ previewProps }
-		{ ...propsToPass }
-	/>
+	return (
+		<div ref={ wrapperRef }>
+			{ ! shouldRender && ! props.selectedNum ? (
+				<div ref={ itemRef } style={ { height: `${ getCardHeight() }px` } } />
+			) : (
+				<DesignLibraryListItem
+					ref={ itemRef }
+					previewSize={ previewSize }
+					previewProps={ previewProps }
+					{ ...propsToPass }
+				/>
+			) }
+		</div>
+	)
 }

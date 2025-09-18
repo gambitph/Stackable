@@ -71,7 +71,8 @@ export const usePreviewRenderer = (
 	const addHasBackground = selectedTab === 'patterns'
 
 	const adjustScale = ( force = true ) => {
-		const shouldAdjust = ref.current && hostRef.current && shadowRoot &&
+		const parentDiv = ref?.current?.querySelector( '.stk-block-design__design-container' )
+		const shouldAdjust = ref.current && hostRef.current && shadowRoot && parentDiv &&
 			( ! selectedNum || // adjust if design is not selected
 				prevSelectedTabRef.current !== selectedTab ) // adjust if selected tab changed even if design is selected
 
@@ -81,11 +82,15 @@ export const usePreviewRenderer = (
 
 			const cardRect = ref.current.getBoundingClientRect()
 			const hostRect = hostRef.current.getBoundingClientRect()
+			const parentDivRect = parentDiv.getBoundingClientRect()
 
 			const cardWidth = cardRect.width
 			const hostWidth = hostRect.width
 
-			if ( ! force && cardWidth === hostWidth ) {
+			// Consider heights equal if the difference is less than 1px
+			const isEqualHeight = Math.abs( parentDivRect.height - hostRect.height ) < 1
+
+			if ( ! force && cardWidth === hostWidth && isEqualHeight ) {
 				return
 			}
 

@@ -92,7 +92,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			onMouseOver={ onMouseOver }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
-			<div style={ { position: 'relative' } } className={ `${ getDesignPreviewSize() > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
+			<div style={ { position: 'relative' } } className={ `stk-block-design__design-container ${ getDesignPreviewSize() > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
 				{ ! isPro && plan !== 'free' && (
 					<ProControl
 						type="design-library"
