@@ -18,7 +18,6 @@ import { Popover, Button } from '@wordpress/components'
 import {
 	Icon, close as closeIcon, download as downloadIcon,
 } from '@wordpress/icons'
-import { useDesignSystem } from '~stackable/hooks'
 
 const StyleGuidePopover = props => {
 	const { onClose } = props
@@ -32,8 +31,6 @@ const StyleGuidePopover = props => {
 		return [ el, el?.offsetWidth, el?.offsetHeight ]
 	}, [] )
 
-	const designSystem = useDesignSystem()
-
 	// Lazy load the StyleGuide component
 	useEffect( () => {
 		const loadStyleGuide = async () => {
@@ -42,7 +39,7 @@ const StyleGuidePopover = props => {
 				const { default: StyleGuideComponent } = await import(
 					/* webpackChunkName: "style-guide" */
 					/* webpackMode: "lazy" */
-					'../../lazy-components/style-guide'
+					'../../lazy-components/style-guide/editor-style-guide'
 				)
 				setStyleGuide( () => StyleGuideComponent )
 			} catch ( err ) {
@@ -85,7 +82,7 @@ const StyleGuidePopover = props => {
 					{ __( 'Loading style guide…', i18n ) }
 				</div>
 			) : StyleGuide ? (
-				<StyleGuide { ...props } designSystem={ designSystem } contentRef={ styleGuideRef } />
+				<StyleGuide { ...props } contentRef={ styleGuideRef } />
 			) : (
 				<div className="ugb-style-guide__error">
 					{ __( 'Failed to load style guide', i18n ) }
