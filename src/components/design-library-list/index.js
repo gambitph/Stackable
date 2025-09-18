@@ -121,7 +121,7 @@ const DesignLibraryItem = props => {
 			} )
 		}, {
 			root: rootEl,
-			rootMargin: '250px',
+			rootMargin: '500px',
 			threshold: 0,
 		} )
 
