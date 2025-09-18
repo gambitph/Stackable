@@ -50,7 +50,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 	} = usePreviewRenderer(
 		previewProps, previewSize, plan, spacingSize,
 		selectedTab, selectedNum, selectedData,
-		ref, hostRef, shadowRoot, isLoading, setIsLoading,
+		ref, hostRef, shadowRoot, setIsLoading,
 	)
 
 	const {

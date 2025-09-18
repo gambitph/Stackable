@@ -37,7 +37,7 @@ const DEFAULT_CONTENT = { ...DEFAULT }
 export const usePreviewRenderer = (
 	props, previewSize, plan, spacingSize,
 	selectedTab, selectedNum, selectedData,
-	ref, hostRef, shadowRoot, isLoading, setIsLoading
+	ref, hostRef, shadowRoot, setIsLoading
 ) => {
 	const {
 		designId,
