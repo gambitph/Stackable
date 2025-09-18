@@ -526,6 +526,12 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		public function get_posts( $request ) {
 			$args = $request->get_query_params();
 
+			// Enforce safe defaults to avoid exposing sensitive content.
+			// 1) Force post status to publish only (non-sensitive).
+			$args['post_status'] = 'publish';
+			// 2) Exclude password-protected content explicitly.
+			$args['has_password'] = false;
+
 			$query = new WP_Query( $args );
 
 			foreach ( $query->posts as $key=>$post ) {

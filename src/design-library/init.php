@@ -76,7 +76,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				'methods' => 'POST',
 				'callback' => array( $this, 'get_design_library_image' ),
 				'permission_callback' => function () {
-					return current_user_can( 'edit_posts' );
+					return current_user_can( 'upload_files' );
 				},
 				'args' => array(
 					'image_url' => array(
