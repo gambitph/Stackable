@@ -1,5 +1,7 @@
 import heroBg from './images/hero-bg.webp'
 import profile from './images/profile.webp'
+import { blockStyleGenerators } from './block-style-generators'
+
 import {
 	i18n, srcUrl, version as VERSION,
 } from 'stackable'
@@ -8,7 +10,6 @@ import { CssSaveCompiler } from '../../components/block-css'
 import {
 	cleanSerializedBlock,
 	createUniqueClass,
-	blockStyleGenerators,
 } from '~stackable/util'
 import { PLACEHOLDER_INNER_BLOCKS } from './block-templates'
 
