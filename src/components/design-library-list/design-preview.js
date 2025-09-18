@@ -13,7 +13,6 @@ export const DesignPreview = ( {
 	blocks = '',
 	shadowRoot,
 	selectedTab,
-	adjustScale = NOOP,
 	onMouseDown = NOOP,
 } ) => {
 	const ref = useRef( null )
@@ -71,11 +70,6 @@ export const DesignPreview = ( {
 			window.removeEventListener( 'mouseup', handleMouseUp )
 		}
 	}, [ selectedTab ] )
-
-	useEffect( () => {
-		// The scale might not be correct on first load, so adjust it again to be sure.
-		setTimeout( adjustScale, 100 )
-	}, [] )
 
 	const shadowBodyClasses = classnames( applyFilters( 'stackable.global-styles.classnames', [
 		'entry-content',

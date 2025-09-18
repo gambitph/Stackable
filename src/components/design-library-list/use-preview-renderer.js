@@ -37,7 +37,7 @@ const DEFAULT_CONTENT = { ...DEFAULT }
 export const usePreviewRenderer = (
 	props, previewSize, plan, spacingSize,
 	selectedTab, selectedNum, selectedData,
-	ref, shadowRoot, setIsLoading
+	ref, hostRef, shadowRoot, isLoading, setIsLoading
 ) => {
 	const {
 		designId,
@@ -61,23 +61,33 @@ export const usePreviewRenderer = (
 	const hasBackgroundTargetRef = useRef( false )
 	const initialRenderRef = useRef( null )
 	const shadowBodySizeRef = useRef( null )
-	const prevEnableBackgroundRef = useRef( false )
+	const prevEnableBackgroundRef = useRef( null )
 	const prevSelectedTabRef = useRef( selectedTab )
+	const adjustAnimateFrameRef = useRef( null )
 
 	const siteTitle = useSelect( select => select( 'core' ).getEntityRecord( 'root', 'site' )?.title || 'InnovateCo', [] )
 	const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
 
 	const addHasBackground = selectedTab === 'patterns'
 
-	const adjustScale = () => {
-		const shouldAdjust = ref.current && shadowRoot &&
+	const adjustScale = ( force = true ) => {
+		const shouldAdjust = ref.current && hostRef.current && shadowRoot &&
 			( ! selectedNum || // adjust if design is not selected
 				prevSelectedTabRef.current !== selectedTab ) // adjust if selected tab changed even if design is selected
 
 		if ( shouldAdjust ) {
 			const newPreviewSize = { ...previewSize }
 			const newCardHeight = { ...cardHeight }
+
 			const cardRect = ref.current.getBoundingClientRect()
+			const hostRect = hostRef.current.getBoundingClientRect()
+
+			const cardWidth = cardRect.width
+			const hostWidth = hostRect.width
+
+			if ( ! force && cardWidth === hostWidth ) {
+				return
+			}
 
 			const shadowBody = shadowRoot.querySelector( 'body' )
 			if ( shadowBody ) {
@@ -119,6 +129,9 @@ export const usePreviewRenderer = (
 
 			setTimeout( () => setCardHeight( newCardHeight ), 500 )
 		}
+
+		cancelAnimationFrame( adjustAnimateFrameRef.current )
+		adjustAnimateFrameRef.current = requestAnimationFrame( () => adjustScale( false ) )
 	}
 
 	const renderPreview = ( blockContent = content ) => {
@@ -274,7 +287,8 @@ export const usePreviewRenderer = (
 	useEffect( () => {
 		if ( selectedNum === 0 && content && shadowRoot ) {
 			renderPreview()
-			setTimeout( adjustScale, 100 )
+			cancelAnimationFrame( adjustAnimateFrameRef.current )
+			adjustAnimateFrameRef.current = requestAnimationFrame( adjustScale )
 		}
 	}, [ selectedNum ] )
 
@@ -285,7 +299,8 @@ export const usePreviewRenderer = (
 
 		if ( prevEnableBackgroundRef.current !== enableBackground ) {
 			prevEnableBackgroundRef.current = enableBackground
-			adjustScale()
+			cancelAnimationFrame( adjustAnimateFrameRef.current )
+			adjustAnimateFrameRef.current = requestAnimationFrame( adjustScale )
 		}
 	}, [ blocks ] )
 
@@ -294,11 +309,21 @@ export const usePreviewRenderer = (
 		if ( ! content || ! blocks.parsed || ! blocks.serialized ) {
 			return
 		}
-		setTimeout( () => {
+
+		cancelAnimationFrame( adjustAnimateFrameRef.current )
+		requestAnimationFrame( () => {
 			adjustScale()
 			prevSelectedTabRef.current = selectedTab
-		}, 100 )
+	 } )
 	}, [ content ] )
+
+	// cleanup any pending animation on unmount
+	useEffect( () => {
+		return () => {
+			cancelAnimationFrame( adjustAnimateFrameRef.current )
+			adjustAnimateFrameRef.current = null
+		}
+	}, [] )
 
 	const onClickDesign = () => {
 		if ( ! isPro && plan !== 'free' ) {
@@ -319,6 +344,6 @@ export const usePreviewRenderer = (
 	return {
 		blocks: blocks.serialized, enableBackground,
 		shadowBodySizeRef, blocksForSubstitutionRef,
-		adjustScale, onClickDesign,
+		onClickDesign,
 	}
 }

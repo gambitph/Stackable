@@ -45,6 +45,9 @@
 
 		&.ugb-modal-design-library__full-pages {
 			grid-template-rows: auto auto;
+			.ugb-modal-design-library__designs {
+				grid-row: 1 / 4;
+			}
 		}
 	}
 	.ugb-modal-design-library__sidebar {
