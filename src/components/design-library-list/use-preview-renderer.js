@@ -76,66 +76,73 @@ export const usePreviewRenderer = (
 			( ! selectedNum || // adjust if design is not selected
 				prevSelectedTabRef.current !== selectedTab ) // adjust if selected tab changed even if design is selected
 
-		if ( shouldAdjust ) {
-			const newPreviewSize = { ...previewSize }
-			const newCardHeight = { ...cardHeight }
+		if ( ! shouldAdjust ) {
+			return
+		}
+		const newPreviewSize = { ...previewSize }
+		const newCardHeight = { ...cardHeight }
 
-			const cardRect = ref.current.getBoundingClientRect()
-			const hostRect = hostRef.current.getBoundingClientRect()
-			const parentDivRect = parentDiv.getBoundingClientRect()
+		const cardRect = ref.current.getBoundingClientRect()
+		const hostRect = hostRef.current.getBoundingClientRect()
+		const parentDivRect = parentDiv.getBoundingClientRect()
 
-			const cardWidth = cardRect.width
-			const hostWidth = hostRect.width
+		const cardWidth = cardRect.width
+		const hostWidth = hostRect.width
 
-			// Consider heights equal if the difference is less than 1px
-			const isEqualHeight = Math.abs( parentDivRect.height - hostRect.height ) < 1
+		// Consider heights equal if the difference is less than 1px
+		const isEqualHeight = Math.abs( parentDivRect.height - hostRect.height ) < 1
 
-			if ( ! force && cardWidth === hostWidth && isEqualHeight ) {
-				return
+		if ( ! force && cardWidth === hostWidth && isEqualHeight ) {
+			if ( adjustAnimateFrameRef.current !== null ) {
+				cancelAnimationFrame( adjustAnimateFrameRef.current )
 			}
-
-			const shadowBody = shadowRoot.querySelector( 'body' )
-			if ( shadowBody ) {
-				const cardWidth = cardRect.width // Get width of the card
-				const scaleFactor = cardWidth > 0 ? cardWidth / 1300 : 1 	// Divide by 1300, which is the width of preview in the shadow DOM
-				newPreviewSize.scale = scaleFactor
-
-				let _bodyHeight = 1200
-				if ( selectedTab === 'patterns' ) {
-					_bodyHeight = shadowBody.offsetHeight
-				}
-
-				const _height = parseFloat( _bodyHeight ) * scaleFactor	// Also adjust the height
-
-				if ( Object.keys( newPreviewSize ).length === 1 ) {
-					newPreviewSize.heightBackground = _height
-					newPreviewSize.heightNoBackground = _height
-				} else {
-					const heightKey = enableBackground ? 'heightBackground' : 'heightNoBackground'
-					newPreviewSize[ heightKey ] = _height
-				}
-
-				setPreviewSize( newPreviewSize )
-
-				shadowBodySizeRef.current = {
-					clientHeight: shadowBody.clientHeight,
-					scrollHeight: shadowBody.scrollHeight,
-					maxScrollTop: shadowBody.scrollHeight - shadowBody.clientHeight,
-				}
-			}
-
-			if ( ! Object.keys( newCardHeight ).length ) {
-				newCardHeight.background = cardRect.height
-				newCardHeight.noBackground = cardRect.height
-			} else {
-				const CardHeightKey = enableBackground ? 'background' : 'noBackground'
-				newCardHeight[ CardHeightKey ] = cardRect.height
-			}
-
-			setTimeout( () => setCardHeight( newCardHeight ), 500 )
+			adjustAnimateFrameRef.current = null
+			return
 		}
 
-		cancelAnimationFrame( adjustAnimateFrameRef.current )
+		const shadowBody = shadowRoot.querySelector( 'body' )
+		if ( shadowBody ) {
+			const cardWidth = cardRect.width // Get width of the card
+			const scaleFactor = cardWidth > 0 ? cardWidth / 1300 : 1 	// Divide by 1300, which is the width of preview in the shadow DOM
+			newPreviewSize.scale = scaleFactor
+
+			let _bodyHeight = 1200
+			if ( selectedTab === 'patterns' ) {
+				_bodyHeight = shadowBody.offsetHeight
+			}
+
+			const _height = parseFloat( _bodyHeight ) * scaleFactor	// Also adjust the height
+
+			if ( Object.keys( newPreviewSize ).length === 1 ) {
+				newPreviewSize.heightBackground = _height
+				newPreviewSize.heightNoBackground = _height
+			} else {
+				const heightKey = enableBackground ? 'heightBackground' : 'heightNoBackground'
+				newPreviewSize[ heightKey ] = _height
+			}
+
+			setPreviewSize( newPreviewSize )
+
+			shadowBodySizeRef.current = {
+				clientHeight: shadowBody.clientHeight,
+				scrollHeight: shadowBody.scrollHeight,
+				maxScrollTop: shadowBody.scrollHeight - shadowBody.clientHeight,
+			}
+		}
+
+		if ( ! Object.keys( newCardHeight ).length ) {
+			newCardHeight.background = cardRect.height
+			newCardHeight.noBackground = cardRect.height
+		} else {
+			const CardHeightKey = enableBackground ? 'background' : 'noBackground'
+			newCardHeight[ CardHeightKey ] = cardRect.height
+		}
+
+		setTimeout( () => setCardHeight( newCardHeight ), 500 )
+
+		if ( adjustAnimateFrameRef.current !== null ) {
+			cancelAnimationFrame( adjustAnimateFrameRef.current )
+		}
 		adjustAnimateFrameRef.current = requestAnimationFrame( () => adjustScale( false ) )
 	}
 
@@ -292,7 +299,9 @@ export const usePreviewRenderer = (
 	useEffect( () => {
 		if ( selectedNum === 0 && content && shadowRoot ) {
 			renderPreview()
-			cancelAnimationFrame( adjustAnimateFrameRef.current )
+			if ( adjustAnimateFrameRef.current !== null ) {
+				cancelAnimationFrame( adjustAnimateFrameRef.current )
+			}
 			adjustAnimateFrameRef.current = requestAnimationFrame( adjustScale )
 		}
 	}, [ selectedNum ] )
@@ -304,7 +313,10 @@ export const usePreviewRenderer = (
 
 		if ( prevEnableBackgroundRef.current !== enableBackground ) {
 			prevEnableBackgroundRef.current = enableBackground
-			cancelAnimationFrame( adjustAnimateFrameRef.current )
+
+			if ( adjustAnimateFrameRef.current !== null ) {
+				cancelAnimationFrame( adjustAnimateFrameRef.current )
+			}
 			adjustAnimateFrameRef.current = requestAnimationFrame( adjustScale )
 		}
 	}, [ blocks ] )
@@ -315,7 +327,10 @@ export const usePreviewRenderer = (
 			return
 		}
 
-		cancelAnimationFrame( adjustAnimateFrameRef.current )
+		if ( adjustAnimateFrameRef.current !== null ) {
+			cancelAnimationFrame( adjustAnimateFrameRef.current )
+		}
+
 		requestAnimationFrame( () => {
 			adjustScale()
 			prevSelectedTabRef.current = selectedTab
