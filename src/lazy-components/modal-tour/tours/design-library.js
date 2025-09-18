@@ -3,10 +3,6 @@ import { i18n } from 'stackable'
 import { createInterpolateElement } from '@wordpress/element'
 
 export const designLibrary = {
-	condition: () => { // If provided, true will show the tour (even if it's already done), false will not show the tour, null will show the tour only once.
-		// Force show the tour if there is a GET parameter tour=design-library
-		return window?.location?.search?.includes( 'tour=design-library' ) ? true : null
-	},
 	initialize: () => {
 		// Make sure the patterns tab is selected
 		document.querySelector( '.ugb-modal-design-library button[value="patterns"]:not(.is-primary)' )?.click()

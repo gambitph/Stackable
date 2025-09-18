@@ -1,0 +1,30 @@
+import { guidedTourStates } from 'stackable'
+
+// For each condition, true will show the tour (even if it's already done), false will not show the tour, null will show the tour only once.
+export const TOUR_CONDITIONS = {
+	blocks: () => {
+		// Force show the tour if there is a GET parameter tour=blocks
+		return window?.location?.search?.includes( 'tour=blocks' )
+	},
+	'design-library': () => {
+		// Force show the tour if there is a GET parameter tour=design-library
+		return window?.location?.search?.includes( 'tour=design-library' ) ? true : null
+	},
+	'design-system-picker': () => {
+		// Force show the tour if there is a GET parameter tour=design-system-picker
+		return window?.location?.search?.includes( 'tour=design-system-picker' ) ? true : null
+	},
+	'design-system': () => {
+		// Force show the tour if there is a GET parameter tour=design-system
+		return window?.location?.search?.includes( 'tour=design-system' ) ? true : null
+	},
+	editor: () => {
+		// Do not show the tour if there is a GET parameter that shows another tour.
+		return window?.location?.search?.includes( 'tour=' ) ? false
+			: guidedTourStates.includes( 'design-library' ) ? false : null
+	},
+	'site-kit': () => {
+		// Force show the tour if there is a GET parameter tour=site-kit
+		return window?.location?.search?.includes( 'tour=site-kit' ) ? true : null
+	},
+}
