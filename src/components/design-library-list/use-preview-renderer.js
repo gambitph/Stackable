@@ -62,6 +62,7 @@ export const usePreviewRenderer = (
 	const initialRenderRef = useRef( null )
 	const shadowBodySizeRef = useRef( null )
 	const prevEnableBackgroundRef = useRef( false )
+	const prevSelectedTabRef = useRef( selectedTab )
 
 	const siteTitle = useSelect( select => select( 'core' ).getEntityRecord( 'root', 'site' )?.title || 'InnovateCo', [] )
 	const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
@@ -69,7 +70,11 @@ export const usePreviewRenderer = (
 	const addHasBackground = selectedTab === 'patterns'
 
 	const adjustScale = () => {
-		if ( ref.current && shadowRoot && ! selectedNum ) {
+		const shouldAdjust = ref.current && shadowRoot &&
+			( ! selectedNum || // adjust if design is not selected
+				prevSelectedTabRef.current !== selectedTab ) // adjust if selected tab changed even if design is selected
+
+		if ( shouldAdjust ) {
 			const newPreviewSize = { ...previewSize }
 			const newCardHeight = { ...cardHeight }
 			const cardRect = ref.current.getBoundingClientRect()
@@ -77,7 +82,7 @@ export const usePreviewRenderer = (
 			const shadowBody = shadowRoot.querySelector( 'body' )
 			if ( shadowBody ) {
 				const cardWidth = cardRect.width // Get width of the card
-				const scaleFactor = cardWidth > 0 ? cardWidth / 1300 : 1 	// Divide by 1200, which is the width of preview in the shadow DOM
+				const scaleFactor = cardWidth > 0 ? cardWidth / 1300 : 1 	// Divide by 1300, which is the width of preview in the shadow DOM
 				newPreviewSize.scale = scaleFactor
 
 				let _bodyHeight = 1200
@@ -256,7 +261,8 @@ export const usePreviewRenderer = (
 
 		if ( ! content ||
 			! shadowRoot ||
-			selectedNum
+			// don't re-render if design is selected and tab didn't change
+			( selectedNum && prevSelectedTabRef.current === selectedTab )
 		) {
 			return
 		}
@@ -268,7 +274,7 @@ export const usePreviewRenderer = (
 	useEffect( () => {
 		if ( selectedNum === 0 && content && shadowRoot ) {
 			renderPreview()
-			adjustScale()
+			setTimeout( adjustScale, 100 )
 		}
 	}, [ selectedNum ] )
 
@@ -288,7 +294,10 @@ export const usePreviewRenderer = (
 		if ( ! content || ! blocks.parsed || ! blocks.serialized ) {
 			return
 		}
-		setTimeout( adjustScale, 100 )
+		setTimeout( () => {
+			adjustScale()
+			prevSelectedTabRef.current = selectedTab
+		}, 100 )
 	}, [ content ] )
 
 	const onClickDesign = () => {
