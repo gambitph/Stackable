@@ -46,11 +46,11 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 	const {
 		blocks, enableBackground,
 		shadowBodySizeRef, blocksForSubstitutionRef,
-		adjustScale, onClickDesign,
+		onClickDesign,
 	} = usePreviewRenderer(
 		previewProps, previewSize, plan, spacingSize,
 		selectedTab, selectedNum, selectedData,
-		ref, shadowRoot, setIsLoading
+		ref, hostRef, shadowRoot, setIsLoading,
 	)
 
 	const {
@@ -58,6 +58,10 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 	} = useAutoScroll( hostRef, shadowBodySizeRef, selectedTab )
 
 	const getDesignPreviewSize = () => {
+		if ( ! shadowRoot || isLoading ) {
+			return 0
+		}
+
 		return selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
 			: ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground )
 	}
@@ -88,7 +92,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			onMouseOver={ onMouseOver }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
-			<div style={ { position: 'relative' } } className={ `${ getDesignPreviewSize() > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
+			<div style={ { position: 'relative' } } className={ `stk-block-design__design-container ${ getDesignPreviewSize() > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
 				{ ! isPro && plan !== 'free' && (
 					<ProControl
 						type="design-library"
@@ -106,11 +110,10 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 					} }
 				>
 					<div className="stk-block-design__host" ref={ hostRef }>
-						{ shadowRoot && <DesignPreview
+						{ shadowRoot && ! isLoading && <DesignPreview
 							blocks={ blocks }
 							shadowRoot={ shadowRoot }
 							selectedTab={ selectedTab }
-							adjustScale={ adjustScale }
 							onMouseDown={ onMouseDown }
 						/> }
 					</div>
