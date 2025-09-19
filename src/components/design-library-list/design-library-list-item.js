@@ -135,7 +135,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 				<div>
 					{ selectedNum !== 0 &&
 						<Tooltip text={ __( 'Style options are locked for this design because it is selected.', i18n ) }>
-							<Dashicon icon="lock" size={ 16 } />
+							<Dashicon icon="editor-help" size={ 16 } />
 						</Tooltip>
 					}
 					{ selectedTab === 'patterns' ? <span className="stk-block-design__selected-num">{ selectedNum === 0 ? '' : selectedNum }</span>
