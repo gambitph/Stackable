@@ -324,6 +324,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Design System - orange modified indicator does not show up in the Global Color Palette #3576
 * Fixed: Global Color Palette - you cannot drag the color picker #3575
 * Fixed: Better permissions for editor Rest API endpoints #533ab8f
+* Fixed: Minor UI improvements #3599 #391
 
 = 3.18.1 =
 * Fixed: Block styles - error encountered when creating divider and icon button block styles #3583
