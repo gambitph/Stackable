@@ -26,6 +26,24 @@ addFilter( 'stackable.progress-bar.div-props', 'stackable/3.19.0', addAriaLabel 
 
 const deprecated = [
 	{
+		// Trigger the migration for adding aria-label
+		// add anchor in the attributes to fix block validation error for blocks with anchors
+		attributes: {
+			...attributes( '3.18.1' ),
+			anchor: {
+			   attribute: 'id',
+			   selector: '*',
+			   source: 'attribute',
+			   type: 'string',
+			},
+	   },
+		// dev note: using withVersion HOC still results to a block validation error so we manually add the version here
+		save: ( props => {
+			props.version = '3.18.1'
+			return Save( props )
+		} ),
+	},
+	{
 		// Handle the migration of shadow attributes with the change of type in 3.15.3
 		attributes: attributes( '3.16.2' ),
 		save: withVersion( '3.16.2' )( Save ),
