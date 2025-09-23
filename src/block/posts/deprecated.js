@@ -69,6 +69,24 @@ addFilter( 'stackable.posts.meta', 'stackable/3.19.0', fixMetaAccessibility )
 
 const deprecated = [
 	{
+		// Handle the migration for changing the HTML tag of meta props for accessibility
+		// add anchor in the attributes to fix block validation error for blocks with anchors
+		attributes: {
+			 ...attributes( '3.18.1' ),
+			 anchor: {
+				attribute: 'id',
+				selector: '*',
+				source: 'attribute',
+				type: 'string',
+			 },
+		},
+		// dev note: using withVersion HOC still results to a block validation error so we manually add the version here
+		save: ( props => {
+			props.version = '3.18.1'
+			return Save( props )
+		} ),
+	},
+	{
 		// Support the change of type for border radius
 		attributes: attributes( '3.16.3' ),
 		save: withVersion( '3.16.3' )( Save ),

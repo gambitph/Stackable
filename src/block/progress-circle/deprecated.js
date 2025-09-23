@@ -27,7 +27,16 @@ addFilter( 'stackable.progress-circle.div-props', 'stackable/3.19.0', addAriaLab
 const deprecated = [
 	{
 		// Trigger the migration for adding aria-label
-		attributes: attributes( '3.18.1' ),
+		// add anchor in the attributes to fix block validation error for blocks with anchors
+		attributes: {
+			...attributes( '3.18.1' ),
+			anchor: {
+			   attribute: 'id',
+			   selector: '*',
+			   source: 'attribute',
+			   type: 'string',
+			},
+	   },
 		// dev note: using withVersion HOC still results to a block validation error so we manually add the version here
 		save: ( props => {
 			props.version = '3.18.1'
