@@ -188,6 +188,14 @@
 
 .stk-block-design__host-container {
 	position: relative;
+	transition: opacity 0.3s cubic-bezier(0.2, 0.6, 0.4, 1);
+  	will-change: opacity;
+	&.stk-is-loading {
+		opacity: 0;
+	}
+	&.stk-show {
+		opacity: 1;
+	}
 }
 
 .stk--design-preview-large {
@@ -233,7 +241,7 @@
 	}
 
 	&.stk-design-library__item-pages .stk-spinner-container {
-		height: 343px;
+		height: 100%;
 		display: flex;
 		.components-spinner {
 			margin: auto;

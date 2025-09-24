@@ -56,10 +56,6 @@ const DesignLibraryListItem = props => {
 	} = useAutoScroll( hostRef, shadowBodySizeRef, selectedTab )
 
 	const getDesignPreviewSize = () => {
-		if ( ! shadowRoot || isLoading ) {
-			return 0
-		}
-
 		return selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
 			: ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground )
 	}
@@ -109,7 +105,7 @@ const DesignLibraryListItem = props => {
 				) }
 				{ isLoading && <div className="stk-spinner-container"><Spinner /></div> }
 				<div
-					className="stk-block-design__host-container"
+					className={ `stk-block-design__host-container ${ ! shadowRoot || isLoading ? 'stk-is-loading' : 'stk-show' }` }
 					style={ {
 						transform: `scale(${ selectedNum && selectedData ? selectedData.selectedPreviewSize.scale : previewSize?.scale })`,
 						transformOrigin: 'top left',
@@ -117,13 +113,14 @@ const DesignLibraryListItem = props => {
 					} }
 				>
 					<div className="stk-block-design__host" ref={ hostRef }>
-						{ shadowRoot && ! isLoading && <DesignPreview
+						{ shadowRoot && <DesignPreview
 							blocks={ blocks }
 							shadowRoot={ shadowRoot }
 							selectedTab={ selectedTab }
 							designIndex={ props.designIndex }
 							onMouseDown={ onMouseDown }
 							updateShadowBodySize={ updateShadowBodySize }
+							setIsLoading={ setIsLoading }
 						/> }
 					</div>
 				</div>

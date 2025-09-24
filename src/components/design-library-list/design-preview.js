@@ -16,6 +16,7 @@ export const DesignPreview = ( {
 	designIndex,
 	onMouseDown = NOOP,
 	updateShadowBodySize = NOOP,
+	setIsLoading,
 } ) => {
 	const ref = useRef( null )
 	const wrapperRef = useRef( null )
@@ -96,10 +97,15 @@ export const DesignPreview = ( {
 			return
 		}
 
+		setIsLoading( true )
+
 		requestAnimationFrame( () => {
 			ric( () => {
 				wrapper.innerHTML = sanitizedHTML
 				updateShadowBodySize()
+				requestAnimationFrame( () => {
+					ric( () => setIsLoading( false ) )
+				} )
 			} )
 		} )
 	}, [ blocks ] )
