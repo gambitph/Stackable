@@ -103,9 +103,9 @@ const DesignLibraryListItem = props => {
 						showHideNote={ false }
 					/>
 				) }
-				{ isLoading && <div className="stk-spinner-container"><Spinner /></div> }
+				<div className={ `stk-spinner-container ${ isLoading ? '' : 'stk-hide-spinner' }` }><Spinner /></div>
 				<div
-					className={ `stk-block-design__host-container ${ ! shadowRoot || isLoading ? 'stk-is-loading' : 'stk-show' }` }
+					className="stk-block-design__host-container"
 					style={ {
 						transform: `scale(${ selectedNum && selectedData ? selectedData.selectedPreviewSize.scale : previewSize?.scale })`,
 						transformOrigin: 'top left',
