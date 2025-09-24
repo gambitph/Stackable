@@ -101,7 +101,7 @@ const DesignLibraryItem = props => {
 			id = requestIdleCallback( () => setShouldRender( true ) )
 		} else {
 			// fallback
-			id = setTimeout( () => setShouldRender( true ), 0 )
+			id = setTimeout( () => setShouldRender( true ), props.designIndex * 20 )
 		}
 
 		return () => {

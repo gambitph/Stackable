@@ -62,7 +62,7 @@ const DesignLibraryListItem = props => {
 
 	const getCardHeight = () => {
 		const key = props.enableBackground ? 'background' : 'noBackground'
-		return cardHeight?.[ key ] || ( props.selectedTab === 'pages' ? 413 : 250 )
+		return cardHeight?.[ key ] ?? ( props.selectedTab === 'pages' ? 413 : 250 )
 	}
 
 	if ( ! shouldRender && ! props.selectedNum ) {

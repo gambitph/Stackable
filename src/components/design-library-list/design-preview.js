@@ -84,16 +84,17 @@ export const DesignPreview = ( {
 	useEffect( () => {
 		const wrapper = wrapperRef.current
 
-		if ( ! wrapper ) {
+		if ( ! wrapper || ! blocks ) {
 			return
 		}
 
-		const ric = window.requestIdleCallback || window.requestAnimationFrame
+		const ric = window.requestIdleCallback || ( cb => setTimeout( cb, designIndex * 20 ) )
 		const sanitizedHTML = safeHTML( blocks )
 
 		if ( selectedTab !== 'pages' || designIndex < 9 ) {
 			// insert HTML for patterns and for the first 9 pages
 			wrapper.innerHTML = sanitizedHTML
+			// No need to call setIsLoading(false) here; isLoading is already false at this point.
 			return
 		}
 
@@ -108,7 +109,7 @@ export const DesignPreview = ( {
 				} )
 			} )
 		} )
-	}, [ blocks ] )
+	}, [ blocks ] ) // Only depend on blocks; selectedTab and designIndex changes will cause blocks to update
 
 	return createPortal( <>
 		<body
