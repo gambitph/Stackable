@@ -26,6 +26,7 @@ const DesignLibraryList = props => {
 		onSelectMulti,
 		selectedDesigns = [],
 		selectedDesignData = [],
+		selectedTab,
 	} = props
 	const containerRef = useRef( null )
 
@@ -45,7 +46,7 @@ const DesignLibraryList = props => {
 		{ isBusy && <Spinner style={ { display: 'block', margin: '0 auto' } } /> }
 		{ ! isBusy && <>
 			<div className={ listClasses }>
-				{ ( designs || [] ).map( ( design, i ) => {
+				{ ( designs || [] ).map( design => {
 					const selectedNum = selectedDesigns.indexOf( design.id || design.designId ) + 1
 					const selectedData = selectedNum ? selectedDesignData[ selectedNum - 1 ] : null
 
@@ -61,14 +62,13 @@ const DesignLibraryList = props => {
 
 					return (
 						<DesignLibraryItem
-							key={ i }
+							key={ design.id || design.designId }
 							plan={ design.plan }
 							label={ design.label || design.title }
-							previewProps={ previewProps }
 							selectedNum={ selectedNum }
 							selectedData={ selectedData }
-							selectedTab={ props.selectedTab }
-							designKey={ i }
+							selectedTab={ selectedTab }
+							{ ...previewProps }
 						/>
 					)
 				} ) }
@@ -91,22 +91,8 @@ DesignLibraryList.defaultProps = {
 export default DesignLibraryList
 
 const DesignLibraryItem = props => {
-	const {
-		previewProps: _previewProps, ...propsToPass
-	} = props
-
 	const wrapperRef = useRef( null )
-	const itemRef = useRef( null )
-	const [ cardHeight, setCardHeight ] = useState( {} )
-	const [ previewSize, setPreviewSize ] = useState( {} )
-	const [ shouldRender, setShouldRender ] = useState( props.designKey < 9 )
-
-	const previewProps = {
-		..._previewProps,
-		setPreviewSize: previewSize => setPreviewSize( previewSize ),
-		setCardHeight: height => setCardHeight( height ),
-		cardHeight,
-	}
+	const [ shouldRender, setShouldRender ] = useState( false )
 
 	useEffect( () => {
 		const rootEl = document.querySelector( '.ugb-modal-design-library__designs' )
@@ -121,7 +107,7 @@ const DesignLibraryItem = props => {
 			} )
 		}, {
 			root: rootEl,
-			rootMargin: '500px',
+			rootMargin: '500px 0px',
 			threshold: 0,
 		} )
 
@@ -129,23 +115,9 @@ const DesignLibraryItem = props => {
 		return () => observer.disconnect()
 	}, [] )
 
-	const getCardHeight = () => {
-		const key = _previewProps.enableBackground ? 'background' : 'noBackground'
-		return props.selectedTab === 'pages' ? 472 : cardHeight?.[ key ] || 250
-	}
-
 	return (
 		<div ref={ wrapperRef }>
-			{ ! shouldRender && ! props.selectedNum ? (
-				<div ref={ itemRef } style={ { height: `${ getCardHeight() }px` } } />
-			) : (
-				<DesignLibraryListItem
-					ref={ itemRef }
-					previewSize={ previewSize }
-					previewProps={ previewProps }
-					{ ...propsToPass }
-				/>
-			) }
+			<DesignLibraryListItem { ...props } shouldRender={ shouldRender } />
 		</div>
 	)
 }

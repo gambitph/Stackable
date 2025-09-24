@@ -35,35 +35,38 @@ import { cleanSerializedBlock } from '~stackable/util'
 const DEFAULT_CONTENT = { ...DEFAULT }
 
 export const usePreviewRenderer = (
-	props, previewSize, plan, spacingSize,
-	selectedTab, selectedNum, selectedData,
+	props, shouldRender, spacingSize,
 	ref, hostRef, shadowRoot, setIsLoading
 ) => {
 	const {
 		designId,
 		template,
 		category,
+		plan,
 		containerScheme,
 		backgroundScheme,
 		enableBackground,
+		selectedTab,
+		selectedNum,
+		selectedData,
 		onClick,
-		cardHeight,
-		setCardHeight,
-		setPreviewSize,
 	} = props
 
 	const [ blocks, setBlocks ] = useState( { parsed: null, serialized: '' } )
 	const [ content, setContent ] = useState( '' )
 	const [ contentForInsertion, setContentForInsertion ] = useState( null )
 
+	const [ cardHeight, setCardHeight ] = useState( {} )
+	const [ previewSize, setPreviewSize ] = useState( {} )
+
 	const categoriesRef = useRef( [] )
 	const blocksForSubstitutionRef = useRef( false )
 	const hasBackgroundTargetRef = useRef( false )
-	const initialRenderRef = useRef( null )
 	const shadowBodySizeRef = useRef( null )
 	const prevEnableBackgroundRef = useRef( null )
 	const prevSelectedTabRef = useRef( selectedTab )
 	const adjustAnimateFrameRef = useRef( null )
+	const renderedTemplate = useRef( false )
 
 	const siteTitle = useSelect( select => select( 'core' ).getEntityRecord( 'root', 'site' )?.title || 'InnovateCo', [] )
 	const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
@@ -79,8 +82,6 @@ export const usePreviewRenderer = (
 		if ( ! shouldAdjust ) {
 			return
 		}
-		const newPreviewSize = { ...previewSize }
-		const newCardHeight = { ...cardHeight }
 
 		const cardRect = ref.current.getBoundingClientRect()
 		const hostRect = hostRef.current.getBoundingClientRect()
@@ -102,9 +103,7 @@ export const usePreviewRenderer = (
 
 		const shadowBody = shadowRoot.querySelector( 'body' )
 		if ( shadowBody ) {
-			const cardWidth = cardRect.width // Get width of the card
-			const scaleFactor = cardWidth > 0 ? cardWidth / 1300 : 1 	// Divide by 1300, which is the width of preview in the shadow DOM
-			newPreviewSize.scale = scaleFactor
+			const scaleFactor = cardWidth > 0 ? cardWidth / 1300 : 1 // Divide by 1300, which is the width of preview in the shadow DOM
 
 			let _bodyHeight = 1200
 			if ( selectedTab === 'patterns' ) {
@@ -113,15 +112,20 @@ export const usePreviewRenderer = (
 
 			const _height = parseFloat( _bodyHeight ) * scaleFactor	// Also adjust the height
 
-			if ( Object.keys( newPreviewSize ).length === 1 ) {
-				newPreviewSize.heightBackground = _height
-				newPreviewSize.heightNoBackground = _height
-			} else {
-				const heightKey = enableBackground ? 'heightBackground' : 'heightNoBackground'
-				newPreviewSize[ heightKey ] = _height
-			}
+			// Update preview size more efficiently
+			setPreviewSize( prev => {
+				const newPreviewSize = { ...prev, scale: scaleFactor }
 
-			setPreviewSize( newPreviewSize )
+				if ( Object.keys( prev ).length === 1 ) {
+					newPreviewSize.heightBackground = _height
+					newPreviewSize.heightNoBackground = _height
+				} else {
+					const heightKey = enableBackground ? 'heightBackground' : 'heightNoBackground'
+					newPreviewSize[ heightKey ] = _height
+				}
+
+				return newPreviewSize
+			} )
 
 			shadowBodySizeRef.current = {
 				clientHeight: shadowBody.clientHeight,
@@ -130,15 +134,20 @@ export const usePreviewRenderer = (
 			}
 		}
 
-		if ( ! Object.keys( newCardHeight ).length ) {
-			newCardHeight.background = cardRect.height
-			newCardHeight.noBackground = cardRect.height
-		} else {
-			const CardHeightKey = enableBackground ? 'background' : 'noBackground'
-			newCardHeight[ CardHeightKey ] = cardRect.height
-		}
+		// Update card height more efficiently
+		setCardHeight( prev => {
+			const newCardHeight = { ...prev }
 
-		setTimeout( () => setCardHeight( newCardHeight ), 500 )
+			if ( ! Object.keys( prev ).length ) {
+				newCardHeight.background = cardRect.height
+				newCardHeight.noBackground = cardRect.height
+			} else {
+				const CardHeightKey = enableBackground ? 'background' : 'noBackground'
+				newCardHeight[ CardHeightKey ] = cardRect.height
+			}
+
+			return newCardHeight
+		} )
 
 		if ( adjustAnimateFrameRef.current !== null ) {
 			cancelAnimationFrame( adjustAnimateFrameRef.current )
@@ -210,6 +219,10 @@ export const usePreviewRenderer = (
 
 	// Replace the placeholders with the default content
 	useEffect( () => {
+		if ( ! shouldRender || renderedTemplate.current === template ) {
+			return
+		}
+
 		let _parsedBlocks = []
 		let _parsedBlocksForInsertion = null
 		const initialize = async () => {
@@ -231,31 +244,42 @@ export const usePreviewRenderer = (
 				_parsedBlocks = cleanParse( _contentForPreview )
 				_parsedBlocksForInsertion = isDesignLibraryDevMode ? cleanParse( _contentForInsertion ) : null
 			} else {
+				// Fetch all designs first, then run cleanParse once for all
+				const designIds = _content.map( section => section.designId || section.id )
+				const designs = await Promise.all( designIds.map( id => fetchDesign( id ) ) )
+				const categorySlugs = designIds.map( id => getCategorySlug( id ) )
+
+				// For preview: always replace placeholders (ignore dev mode)
+				const designsContentForPreview = designs.map( ( design, i ) =>
+					replacePlaceholders( design.template || design.content, categorySlugs[ i ], false )
+				).join( '\n' )
+				// For insertion: only create separate content if dev mode is enabled
+				const designsContentForInsertion = isDesignLibraryDevMode
+					? designs.map( ( design, i ) =>
+						replacePlaceholders( design.template || design.content, categorySlugs[ i ], true )
+					)
+					: designsContentForPreview
+
+				categoriesRef.current.push( ...categorySlugs )
+
+				// Run cleanParse once for all preview contents
+				const blocks = cleanParse( designsContentForPreview )
+				const blocksForInsertion = isDesignLibraryDevMode ? cleanParse( designsContentForInsertion ) : null
+
 				for ( let i = 0; i < _content.length; i++ ) {
-					const section = _content[ i ]
-					const design = await fetchDesign( section.designId || section.id )
-					const categorySlug = getCategorySlug( section.designId || section.id )
+					let _block = blocks[ i ]
+					let _blockForInsertion = isDesignLibraryDevMode && blocksForInsertion ? blocksForInsertion[ i ] : null
 
-					// For preview: always replace placeholders (ignore dev mode)
-					const designContentForPreview = replacePlaceholders( design.template || design.content, categorySlug, false )
-					// For insertion: only create separate content if dev mode is enabled
-					const designContentForInsertion = isDesignLibraryDevMode ? replacePlaceholders( design.template || design.content, categorySlug, true ) : designContentForPreview
-
-					categoriesRef.current.push( categorySlug )
-
-					let _block = cleanParse( designContentForPreview )[ 0 ]
-					let _blockForInsertion = isDesignLibraryDevMode ? cleanParse( designContentForInsertion )[ 0 ] : null
-
-					if ( section.bg ) {
+					if ( _content[ i ].bg ) {
 						_block = addBackgroundScheme( [ _block ], true, '' )[ 0 ]
 						if ( _blockForInsertion ) {
 							_blockForInsertion = addBackgroundScheme( [ _blockForInsertion ], true, '' )[ 0 ]
 						}
 					}
 
-					adjustPatternSpacing( _block.attributes, categorySlug, spacingSize, false )
+					adjustPatternSpacing( _block.attributes, categorySlugs[ i ], spacingSize, false )
 					if ( _blockForInsertion ) {
-						adjustPatternSpacing( _blockForInsertion.attributes, categorySlug, spacingSize, true )
+						adjustPatternSpacing( _blockForInsertion.attributes, categorySlugs[ i ], spacingSize, true )
 					}
 					_parsedBlocks.push( _block )
 					if ( _blockForInsertion ) {
@@ -275,39 +299,39 @@ export const usePreviewRenderer = (
 		    setContent( parsedBlocks )
 		    setContentForInsertion( parsedBlocksForInsertion )
 			setIsLoading( false )
+			renderedTemplate.current = template
 		} )
-	}, [ template ] )
+	}, [ template, shouldRender ] )
 
 	useEffect( () => {
-		if ( ! initialRenderRef.current ) {
-			initialRenderRef.current = true
+		if ( ! shouldRender ) {
 			return
 		}
 
-		if ( ! content ||
-			! shadowRoot ||
-			// don't re-render if design is selected and tab didn't change
-			( selectedNum && prevSelectedTabRef.current === selectedTab )
-		) {
+		if ( ! content || ! shadowRoot ) {
 			return
 		}
 
-		renderPreview()
-	}, [ content, containerScheme, backgroundScheme, enableBackground ] )
+		// Don't re-render if design is selected and tab didn't change
+		if ( selectedNum && prevSelectedTabRef.current === selectedTab ) {
+			return
+		}
 
-	// Re-render and adjust scale if design was unselected.
-	useEffect( () => {
-		if ( selectedNum === 0 && content && shadowRoot ) {
+		// Render preview when content or schemes change
+		if ( content ) {
 			renderPreview()
-			if ( adjustAnimateFrameRef.current !== null ) {
-				cancelAnimationFrame( adjustAnimateFrameRef.current )
-			}
-			adjustAnimateFrameRef.current = requestAnimationFrame( adjustScale )
 		}
-	}, [ selectedNum ] )
 
+		// Schedule scale adjustment
+		if ( adjustAnimateFrameRef.current !== null ) {
+			cancelAnimationFrame( adjustAnimateFrameRef.current )
+		}
+		adjustAnimateFrameRef.current = requestAnimationFrame( adjustScale )
+	}, [ content, containerScheme, backgroundScheme, enableBackground, selectedNum, shouldRender, shadowRoot ] )
+
+	// Handle background changes separately to avoid unnecessary re-renders
 	useEffect( () => {
-		if ( ! blocks.parsed || ! blocks.serialized ) {
+		if ( ! blocks.parsed || ! blocks.serialized || ! shouldRender ) {
 			return
 		}
 
@@ -319,23 +343,7 @@ export const usePreviewRenderer = (
 			}
 			adjustAnimateFrameRef.current = requestAnimationFrame( adjustScale )
 		}
-	}, [ blocks ] )
-
-	// If categories change, adjust preview sizes
-	useEffect( () => {
-		if ( ! content || ! blocks.parsed || ! blocks.serialized ) {
-			return
-		}
-
-		if ( adjustAnimateFrameRef.current !== null ) {
-			cancelAnimationFrame( adjustAnimateFrameRef.current )
-		}
-
-		adjustAnimateFrameRef.current = requestAnimationFrame( () => {
-			adjustScale()
-			prevSelectedTabRef.current = selectedTab
-	 } )
-	}, [ content ] )
+	}, [ blocks, enableBackground ] )
 
 	// cleanup any pending animation on unmount
 	useEffect( () => {
@@ -364,6 +372,6 @@ export const usePreviewRenderer = (
 	return {
 		blocks: blocks.serialized, enableBackground,
 		shadowBodySizeRef, blocksForSubstitutionRef,
-		onClickDesign,
+		previewSize, cardHeight, onClickDesign,
 	}
 }

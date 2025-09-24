@@ -19,20 +19,18 @@ import { Tooltip } from '~stackable/components'
 /**
  * WordPress dependencies.
  */
-import { forwardRef, useState } from '@wordpress/element'
+import { useState, useRef } from '@wordpress/element'
 import { Dashicon, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
-const DesignLibraryListItem = forwardRef( ( props, ref ) => {
+const DesignLibraryListItem = props => {
 	const {
-		label,
-		plan,
-		selectedNum = false,
-		selectedData = null,
-		previewSize,
-		previewProps,
 		selectedTab,
+		plan, label,
+		selectedNum,
+		selectedData,
 		isMultiSelectBusy,
+		shouldRender,
 	} = props
 
 	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
@@ -41,17 +39,16 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 
 	const [ isLoading, setIsLoading ] = useState( true )
 
-	const { hostRef, shadowRoot } = useShadowRoot()
+	const { hostRef, shadowRoot } = useShadowRoot( shouldRender )
+
+	const ref = useRef( null )
 
 	const {
 		blocks, enableBackground,
 		shadowBodySizeRef, blocksForSubstitutionRef,
-		onClickDesign,
-	} = usePreviewRenderer(
-		previewProps, previewSize, plan, spacingSize,
-		selectedTab, selectedNum, selectedData,
-		ref, hostRef, shadowRoot, setIsLoading,
-	)
+		previewSize, cardHeight, onClickDesign,
+	} = usePreviewRenderer( props, shouldRender, spacingSize,
+		ref, hostRef, shadowRoot, setIsLoading )
 
 	const {
 		onMouseOut, onMouseOver, onMouseDown,
@@ -64,6 +61,15 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 
 		return selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
 			: ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground )
+	}
+
+	const getCardHeight = () => {
+		const key = props.enableBackground ? 'background' : 'noBackground'
+		return cardHeight?.[ key ] || props.selectedTab === 'pages' ? 413 : 250
+	}
+
+	if ( ! shouldRender && ! props.selectedNum ) {
+		return <div style={ { height: `${ getCardHeight() }px` } } />
 	}
 
 	const mainClasses = classnames( [
@@ -155,7 +161,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 			</footer>
 		</button>
 	)
-} )
+}
 
 DesignLibraryListItem.defaultProps = {
 	designId: '',
