@@ -46,7 +46,7 @@ const DesignLibraryList = props => {
 		{ isBusy && <Spinner style={ { display: 'block', margin: '0 auto' } } /> }
 		{ ! isBusy && <>
 			<div className={ listClasses }>
-				{ ( designs || [] ).map( design => {
+				{ ( designs || [] ).map( ( design, i ) => {
 					const selectedNum = selectedDesigns.indexOf( design.id || design.designId ) + 1
 					const selectedData = selectedNum ? selectedDesignData[ selectedNum - 1 ] : null
 
@@ -68,6 +68,7 @@ const DesignLibraryList = props => {
 							selectedNum={ selectedNum }
 							selectedData={ selectedData }
 							selectedTab={ selectedTab }
+							designIndex={ i }
 							{ ...previewProps }
 						/>
 					)

@@ -13,6 +13,7 @@ export const DesignPreview = ( {
 	blocks = '',
 	shadowRoot,
 	selectedTab,
+	designIndex,
 	onMouseDown = NOOP,
 	updateShadowBodySize = NOOP,
 } ) => {
@@ -89,7 +90,8 @@ export const DesignPreview = ( {
 		const ric = window.requestIdleCallback || window.requestAnimationFrame
 		const sanitizedHTML = safeHTML( blocks )
 
-		if ( selectedTab !== 'pages' ) {
+		if ( selectedTab !== 'pages' || designIndex < 9 ) {
+			// insert HTML for patterns and for the first 9 pages
 			wrapper.innerHTML = sanitizedHTML
 			return
 		}

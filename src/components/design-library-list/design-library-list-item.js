@@ -121,6 +121,7 @@ const DesignLibraryListItem = props => {
 							blocks={ blocks }
 							shadowRoot={ shadowRoot }
 							selectedTab={ selectedTab }
+							designIndex={ props.designIndex }
 							onMouseDown={ onMouseDown }
 							updateShadowBodySize={ updateShadowBodySize }
 						/> }
