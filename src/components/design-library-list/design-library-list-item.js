@@ -47,6 +47,7 @@ const DesignLibraryListItem = props => {
 		blocks, enableBackground,
 		shadowBodySizeRef, blocksForSubstitutionRef,
 		previewSize, cardHeight, onClickDesign,
+		updateShadowBodySize,
 	} = usePreviewRenderer( props, shouldRender, spacingSize,
 		ref, hostRef, shadowRoot, setIsLoading )
 
@@ -65,7 +66,7 @@ const DesignLibraryListItem = props => {
 
 	const getCardHeight = () => {
 		const key = props.enableBackground ? 'background' : 'noBackground'
-		return cardHeight?.[ key ] || props.selectedTab === 'pages' ? 413 : 250
+		return cardHeight?.[ key ] || ( props.selectedTab === 'pages' ? 413 : 250 )
 	}
 
 	if ( ! shouldRender && ! props.selectedNum ) {
@@ -121,6 +122,7 @@ const DesignLibraryListItem = props => {
 							shadowRoot={ shadowRoot }
 							selectedTab={ selectedTab }
 							onMouseDown={ onMouseDown }
+							updateShadowBodySize={ updateShadowBodySize }
 						/> }
 					</div>
 				</div>

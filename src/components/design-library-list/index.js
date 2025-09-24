@@ -95,24 +95,21 @@ const DesignLibraryItem = props => {
 	const [ shouldRender, setShouldRender ] = useState( false )
 
 	useEffect( () => {
-		const rootEl = document.querySelector( '.ugb-modal-design-library__designs' )
-		if ( ! wrapperRef.current || ! rootEl ) {
-			return
+		let id
+		if ( typeof requestIdleCallback !== 'undefined' ) {
+			id = requestIdleCallback( () => setShouldRender( true ) )
+		} else {
+			// fallback
+			id = setTimeout( () => setShouldRender( true ), 0 )
 		}
 
-		const observer = new IntersectionObserver( ( [ entry ] ) => {
-			// reduce flicker during rapid scrolls
-			requestAnimationFrame( () => {
-				requestAnimationFrame( () => setShouldRender( entry.isIntersecting ) )
-			} )
-		}, {
-			root: rootEl,
-			rootMargin: '500px 0px',
-			threshold: 0,
-		} )
-
-		observer.observe( wrapperRef.current )
-		return () => observer.disconnect()
+		return () => {
+			if ( typeof cancelIdleCallback !== 'undefined' ) {
+				cancelIdleCallback( id )
+			} else {
+				clearTimeout( id )
+			}
+		}
 	}, [] )
 
 	return (

@@ -14,8 +14,10 @@ export const DesignPreview = ( {
 	shadowRoot,
 	selectedTab,
 	onMouseDown = NOOP,
+	updateShadowBodySize = NOOP,
 } ) => {
 	const ref = useRef( null )
+	const wrapperRef = useRef( null )
 
 	const isDragging = useRef( false )
 	const lastY = useRef( 0 )
@@ -77,13 +79,32 @@ export const DesignPreview = ( {
 		'preview-pages': selectedTab === 'pages',
 	} )
 
+	useEffect( () => {
+		const wrapper = wrapperRef.current
+
+		if ( ! wrapper ) {
+			return
+		}
+
+		if ( selectedTab !== 'pages' ) {
+			wrapper.innerHTML = safeHTML( blocks )
+		}
+
+		requestAnimationFrame( () => {
+			requestIdleCallback( () => {
+				wrapper.innerHTML = safeHTML( blocks )
+				updateShadowBodySize()
+			} )
+		} )
+	}, [ blocks ] )
+
 	return createPortal( <>
 		<body
 			ref={ ref }
 			className={ shadowBodyClasses }
 		>
 			<div
-				dangerouslySetInnerHTML={ { __html: safeHTML( blocks ) } }
+				ref={ wrapperRef }
 				style={ { pointerEvents: 'none' } }	// prevent blocks from being clicked
 			/>
 		</body>

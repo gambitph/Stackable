@@ -73,6 +73,18 @@ export const usePreviewRenderer = (
 
 	const addHasBackground = selectedTab === 'patterns'
 
+	const updateShadowBodySize = _shadowBody => {
+		const shadowBody = _shadowBody || shadowRoot?.querySelector( 'body' )
+
+		if ( shadowBody ) {
+			shadowBodySizeRef.current = {
+				clientHeight: shadowBody.clientHeight,
+				scrollHeight: shadowBody.scrollHeight,
+				maxScrollTop: shadowBody.scrollHeight - shadowBody.clientHeight,
+			}
+		}
+	}
+
 	const adjustScale = ( force = true ) => {
 		const parentDiv = ref?.current?.querySelector( '.stk-block-design__design-container' )
 		const shouldAdjust = ref.current && hostRef.current && shadowRoot && parentDiv &&
@@ -127,11 +139,7 @@ export const usePreviewRenderer = (
 				return newPreviewSize
 			} )
 
-			shadowBodySizeRef.current = {
-				clientHeight: shadowBody.clientHeight,
-				scrollHeight: shadowBody.scrollHeight,
-				maxScrollTop: shadowBody.scrollHeight - shadowBody.clientHeight,
-			}
+			updateShadowBodySize( shadowBody )
 		}
 
 		// Update card height more efficiently
@@ -304,6 +312,10 @@ export const usePreviewRenderer = (
 	}, [ template, shouldRender ] )
 
 	useEffect( () => {
+		prevSelectedTabRef.current = selectedTab
+	}, [ selectedTab ] )
+
+	useEffect( () => {
 		if ( ! shouldRender ) {
 			return
 		}
@@ -373,5 +385,6 @@ export const usePreviewRenderer = (
 		blocks: blocks.serialized, enableBackground,
 		shadowBodySizeRef, blocksForSubstitutionRef,
 		previewSize, cardHeight, onClickDesign,
+		updateShadowBodySize,
 	}
 }
