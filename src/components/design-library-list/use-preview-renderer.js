@@ -128,7 +128,7 @@ export const usePreviewRenderer = (
 			setPreviewSize( prev => {
 				const newPreviewSize = { ...prev, scale: scaleFactor }
 
-				if ( Object.keys( prev ).length === 1 ) {
+				if ( Object.keys( prev ).length === 0 ) {
 					newPreviewSize.heightBackground = _height
 					newPreviewSize.heightNoBackground = _height
 				} else {
@@ -230,6 +230,11 @@ export const usePreviewRenderer = (
 		if ( ! shouldRender || renderedTemplate.current === template ) {
 			return
 		}
+
+		// Reset per-template state and show spinner
+		setIsLoading( true )
+		categoriesRef.current = []
+		hasBackgroundTargetRef.current = false
 
 		let _parsedBlocks = []
 		let _parsedBlocksForInsertion = null

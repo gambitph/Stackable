@@ -86,13 +86,17 @@ export const DesignPreview = ( {
 			return
 		}
 
+		const ric = window.requestIdleCallback || window.requestAnimationFrame
+		const sanitizedHTML = safeHTML( blocks )
+
 		if ( selectedTab !== 'pages' ) {
-			wrapper.innerHTML = safeHTML( blocks )
+			wrapper.innerHTML = sanitizedHTML
+			return
 		}
 
 		requestAnimationFrame( () => {
-			requestIdleCallback( () => {
-				wrapper.innerHTML = safeHTML( blocks )
+			ric( () => {
+				wrapper.innerHTML = sanitizedHTML
 				updateShadowBodySize()
 			} )
 		} )
