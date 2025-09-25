@@ -19,11 +19,13 @@ import { Tooltip } from '~stackable/components'
 /**
  * WordPress dependencies.
  */
-import { useState, useRef } from '@wordpress/element'
+import {
+	useState, useRef, memo,
+} from '@wordpress/element'
 import { Dashicon, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
-const DesignLibraryListItem = props => {
+const DesignLibraryListItem = memo( props => {
 	const {
 		selectedTab,
 		plan, label,
@@ -161,7 +163,7 @@ const DesignLibraryListItem = props => {
 			</footer>
 		</button>
 	)
-}
+} )
 
 DesignLibraryListItem.defaultProps = {
 	designId: '',

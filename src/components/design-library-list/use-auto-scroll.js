@@ -1,7 +1,9 @@
 /**
  * WordPress dependencies
  */
-import { useRef, useEffect } from '@wordpress/element'
+import {
+	useRef, useEffect, useCallback,
+} from '@wordpress/element'
 
 const NOOP = () => {}
 
@@ -101,7 +103,7 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 		}
 	}
 
-	const onMouseDownImpl = () => {
+	const onMouseDownImpl = useCallback( () => {
 		// Stop auto-scrolling when user interacts
 		isScrollingRef.current = false
 		if ( animationFrameRef.current ) {
@@ -115,7 +117,7 @@ export const useAutoScroll = ( hostRef, shadowBodySizeRef, selectedTab ) => {
 			delayTimeoutRef.current = null
 		}
 		scrollPositionRef.current = -1
-	}
+	}, [] )
 
 	// Cleanup any pending animation on unmount.
 	useEffect( () => {
