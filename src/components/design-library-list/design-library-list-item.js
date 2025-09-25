@@ -35,7 +35,9 @@ const DesignLibraryListItem = memo( props => {
 		presetMarks,
 	} = props
 
-	const spacingSize = ! presetMarks || ! Array.isArray( presetMarks ) ? 120 : presetMarks[ presetMarks.length - 2 ].value
+	const spacingSize = Array.isArray( presetMarks ) && presetMarks.length >= 2
+		? presetMarks[ presetMarks.length - 2 ].value
+		: 120
 
 	const [ isLoading, setIsLoading ] = useState( true )
 
