@@ -163,7 +163,7 @@ export const ModalDesignLibrary = props => {
 			} )
 			setSelectedDesignData( newSelectedDesignData )
 		}
-	}, [] )
+	}, [ selectedTab, selectedDesignIds, selectedDesignData ] )
 
 	return (
 		<Modal

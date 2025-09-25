@@ -113,7 +113,7 @@ const DesignLibraryListItem = memo( props => {
 				>
 					<div className="stk-block-design__host" ref={ hostRef }>
 						{ shouldRender && shadowRoot && <DesignPreview
-							blocks={ blocks }s
+							blocks={ blocks }
 							shadowRoot={ shadowRoot }
 							selectedTab={ selectedTab }
 							designIndex={ props.designIndex }

@@ -254,7 +254,7 @@ export const usePreviewRenderer = (
 				const designsContentForInsertion = isDesignLibraryDevMode
 					? designs.map( ( design, i ) =>
 						replacePlaceholders( design.template || design.content, categorySlugs[ i ], true )
-					)
+					).join( '\n' )
 					: designsContentForPreview
 
 				categoriesRef.current.push( ...categorySlugs )
