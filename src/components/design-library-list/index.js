@@ -102,6 +102,9 @@ const DesignLibraryItem = props => {
 	const presetMarks = useMemo( () => getPresetMarks() || null, [] )
 
 	useEffect( () => {
+		if ( selectedTab !== 'pages' ) {
+			return
+		}
 		let id
 		if ( typeof requestIdleCallback !== 'undefined' ) {
 			id = requestIdleCallback( () => ! shouldRender ? setShouldRender( true ) : {} )
@@ -117,7 +120,7 @@ const DesignLibraryItem = props => {
 				clearTimeout( id )
 			}
 		}
-	}, [] )
+	}, [ selectedTab ] )
 
 	useEffect( () => {
 		if ( selectedTab === 'pages' ) {

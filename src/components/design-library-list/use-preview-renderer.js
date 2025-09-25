@@ -56,7 +56,6 @@ export const usePreviewRenderer = (
 	const [ content, setContent ] = useState( '' )
 	const [ contentForInsertion, setContentForInsertion ] = useState( null )
 
-	const [ cardHeight, setCardHeight ] = useState( {} )
 	const [ previewSize, setPreviewSize ] = useState( {} )
 
 	const categoriesRef = useRef( [] )
@@ -141,21 +140,6 @@ export const usePreviewRenderer = (
 
 			updateShadowBodySize( shadowBody )
 		}
-
-		// Update card height more efficiently
-		setCardHeight( prev => {
-			const newCardHeight = { ...prev }
-
-			if ( ! Object.keys( prev ).length ) {
-				newCardHeight.background = cardRect.height
-				newCardHeight.noBackground = cardRect.height
-			} else {
-				const CardHeightKey = enableBackground ? 'background' : 'noBackground'
-				newCardHeight[ CardHeightKey ] = cardRect.height
-			}
-
-			return newCardHeight
-		} )
 
 		if ( adjustAnimateFrameRef.current !== null ) {
 			cancelAnimationFrame( adjustAnimateFrameRef.current )
@@ -389,7 +373,7 @@ export const usePreviewRenderer = (
 	return {
 		blocks: blocks.serialized, enableBackground,
 		shadowBodySizeRef, blocksForSubstitutionRef,
-		previewSize, cardHeight, onClickDesign,
+		previewSize, onClickDesign,
 		updateShadowBodySize,
 	}
 }

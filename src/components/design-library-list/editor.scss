@@ -234,17 +234,10 @@
 		transition: opacity 0.3s cubic-bezier(0.2, 0.6, 0.4, 1);
   		will-change: opacity;
 		opacity: 1;
+		display: flex;
 		&.stk-hide-spinner {
 			opacity: 0;
 		}
-		.components-spinner {
-			display: block;
-			margin: 50px auto;
-		}
-	}
-
-	&.stk-design-library__item-pages .stk-spinner-container {
-		display: flex;
 		.components-spinner {
 			margin: auto;
 		}

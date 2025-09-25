@@ -88,17 +88,19 @@ export const DesignPreview = ( {
 			return
 		}
 
+		setIsLoading( true )
+
 		const ric = window.requestIdleCallback || ( cb => setTimeout( cb, designIndex * 20 ) )
 		const sanitizedHTML = safeHTML( blocks )
 
 		if ( selectedTab !== 'pages' || designIndex < 9 ) {
 			// insert HTML for patterns and for the first 9 pages
 			wrapper.innerHTML = sanitizedHTML
-			// No need to call setIsLoading(false) here; isLoading is already false at this point.
+			requestAnimationFrame( () => {
+				ric( () => setIsLoading( false ) )
+			} )
 			return
 		}
-
-		setIsLoading( true )
 
 		requestAnimationFrame( () => {
 			ric( () => {

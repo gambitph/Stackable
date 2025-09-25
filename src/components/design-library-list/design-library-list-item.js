@@ -46,7 +46,7 @@ const DesignLibraryListItem = memo( props => {
 	const {
 		blocks, enableBackground,
 		shadowBodySizeRef, blocksForSubstitutionRef,
-		previewSize, cardHeight, onClickDesign,
+		previewSize, onClickDesign,
 		updateShadowBodySize,
 	} = usePreviewRenderer( props, shouldRender, spacingSize,
 		ref, hostRef, shadowRoot, setIsLoading )
@@ -56,17 +56,16 @@ const DesignLibraryListItem = memo( props => {
 	} = useAutoScroll( hostRef, shadowBodySizeRef, selectedTab )
 
 	const getDesignPreviewSize = () => {
-		return selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
+		const tempHeight = selectedTab === 'pages' ? 345 : 100
+
+		const previewHeight = selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
 			: ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground )
-	}
 
-	const getCardHeight = () => {
-		const key = props.enableBackground ? 'background' : 'noBackground'
-		return cardHeight?.[ key ] ?? ( props.selectedTab === 'pages' ? 413 : 250 )
-	}
+		if ( ! blocks || ! previewHeight ) {
+			return tempHeight
+		}
 
-	if ( ! shouldRender && ! props.selectedNum ) {
-		return <div style={ { height: `${ getCardHeight() }px` } } />
+		return previewHeight
 	}
 
 	const mainClasses = classnames( [
@@ -103,18 +102,18 @@ const DesignLibraryListItem = memo( props => {
 						showHideNote={ false }
 					/>
 				) }
-				<div className={ `stk-spinner-container ${ isLoading ? '' : 'stk-hide-spinner' }` }><Spinner /></div>
+				<div className={ `stk-spinner-container ${ isLoading || ! shouldRender ? '' : 'stk-hide-spinner' }` }><Spinner /></div>
 				<div
 					className="stk-block-design__host-container"
 					style={ {
 						transform: `scale(${ selectedNum && selectedData ? selectedData.selectedPreviewSize.scale : previewSize?.scale })`,
 						transformOrigin: 'top left',
-						height: ! blocks ? ( selectedTab === 'pages' ? 345 : 100 ) : getDesignPreviewSize(),
+						height: getDesignPreviewSize(),
 					} }
 				>
 					<div className="stk-block-design__host" ref={ hostRef }>
-						{ shadowRoot && <DesignPreview
-							blocks={ blocks }
+						{ shouldRender && shadowRoot && <DesignPreview
+							blocks={ blocks }s
 							shadowRoot={ shadowRoot }
 							selectedTab={ selectedTab }
 							designIndex={ props.designIndex }
