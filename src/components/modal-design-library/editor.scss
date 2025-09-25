@@ -44,9 +44,8 @@
 		height: 100%;
 
 		&.ugb-modal-design-library__full-pages {
-			grid-template-rows: auto auto;
 			.ugb-modal-design-library__designs {
-				grid-row: 1 / -1;
+				grid-row: 1 / 4;
 			}
 		}
 	}

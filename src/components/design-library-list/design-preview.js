@@ -109,7 +109,7 @@ export const DesignPreview = ( {
 				} )
 			} )
 		} )
-	}, [ blocks ] ) // Only depend on blocks; selectedTab and designIndex changes will cause blocks to update
+	}, [ blocks, shadowRoot ] ) // Only depend on blocks and shadowRoot; selectedTab and designIndex changes will cause blocks to update
 
 	return createPortal( <>
 		<body

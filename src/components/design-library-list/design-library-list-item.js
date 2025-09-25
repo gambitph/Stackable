@@ -11,7 +11,6 @@ import { useAutoScroll } from './use-auto-scroll'
 /**
  * External dependencies.
  */
-import { usePresetControls } from '~stackable/hooks'
 import { isPro, i18n } from 'stackable'
 import classnames from 'classnames'
 import { Tooltip } from '~stackable/components'
@@ -19,11 +18,13 @@ import { Tooltip } from '~stackable/components'
 /**
  * WordPress dependencies.
  */
-import { useState, useRef } from '@wordpress/element'
+import {
+	useState, useRef, memo,
+} from '@wordpress/element'
 import { Dashicon, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
-const DesignLibraryListItem = props => {
+const DesignLibraryListItem = memo( props => {
 	const {
 		selectedTab,
 		plan, label,
@@ -31,9 +32,8 @@ const DesignLibraryListItem = props => {
 		selectedData,
 		isMultiSelectBusy,
 		shouldRender,
+		presetMarks,
 	} = props
-
-	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
 
 	const spacingSize = ! presetMarks || ! Array.isArray( presetMarks ) ? 120 : presetMarks[ presetMarks.length - 2 ].value
 
@@ -109,7 +109,7 @@ const DesignLibraryListItem = props => {
 					style={ {
 						transform: `scale(${ selectedNum && selectedData ? selectedData.selectedPreviewSize.scale : previewSize?.scale })`,
 						transformOrigin: 'top left',
-						height: getDesignPreviewSize(),
+						height: ! blocks ? ( selectedTab === 'pages' ? 345 : 100 ) : getDesignPreviewSize(),
 					} }
 				>
 					<div className="stk-block-design__host" ref={ hostRef }>
@@ -161,7 +161,7 @@ const DesignLibraryListItem = props => {
 			</footer>
 		</button>
 	)
-}
+} )
 
 DesignLibraryListItem.defaultProps = {
 	designId: '',

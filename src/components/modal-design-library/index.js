@@ -7,7 +7,7 @@ import { ModalDesignLibrary } from './modal'
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo } from '@wordpress/element'
+import { useMemo, useCallback } from '@wordpress/element'
 import { useLocalStorage } from '~stackable/util'
 
 export const Switcher = props => {
@@ -25,11 +25,13 @@ export const Switcher = props => {
 		return applyFilters( 'stackable.design-library.modal-component', ModalDesignLibrary, apiVersion )
 	}, [ apiVersion ] )
 
+	const onChangeApiVersion = useCallback( v => setApiVersion( v ), [] )
+
 	return (
 		<ModalComponent
 			hasVersionSwitcher={ versions.length > 1 }
 			apiVersion={ apiVersion }
-			onChangeApiVersion={ setApiVersion }
+			onChangeApiVersion={ onChangeApiVersion }
 			{ ...props }
 		/>
 	)

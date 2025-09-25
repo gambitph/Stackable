@@ -15,10 +15,11 @@ import classnames from 'classnames'
 import { Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
-	useState, useEffect, useRef,
+	useState, useEffect, useRef, memo, useMemo,
 } from '@wordpress/element'
+import { usePresetControls } from '~stackable/hooks'
 
-const DesignLibraryList = props => {
+const DesignLibraryList = memo( props => {
 	const {
 		className = '',
 		designs,
@@ -80,7 +81,7 @@ const DesignLibraryList = props => {
 			</div>
 		</> }
 	</div>
-}
+} )
 
 DesignLibraryList.defaultProps = {
 	designs: [],
@@ -92,16 +93,21 @@ DesignLibraryList.defaultProps = {
 export default DesignLibraryList
 
 const DesignLibraryItem = props => {
+	const { selectedTab, designIndex } = props
 	const wrapperRef = useRef( null )
-	const [ shouldRender, setShouldRender ] = useState( false )
+	const [ shouldRender, setShouldRender ] = useState( designIndex < 9 )
+	const { getPresetMarks } = usePresetControls( 'spacingSizes' )
+
+	// Intentionally no dependencies: presetMarks won't change while the design library is open
+	const presetMarks = useMemo( () => getPresetMarks() || null, [] )
 
 	useEffect( () => {
 		let id
 		if ( typeof requestIdleCallback !== 'undefined' ) {
-			id = requestIdleCallback( () => setShouldRender( true ) )
+			id = requestIdleCallback( () => ! shouldRender ? setShouldRender( true ) : {} )
 		} else {
 			// fallback
-			id = setTimeout( () => setShouldRender( true ), props.designIndex * 20 )
+			id = setTimeout( () => setShouldRender( true ), designIndex * 20 )
 		}
 
 		return () => {
@@ -113,9 +119,36 @@ const DesignLibraryItem = props => {
 		}
 	}, [] )
 
+	useEffect( () => {
+		if ( selectedTab === 'pages' ) {
+			return
+		}
+
+		const rootEl = document.querySelector( '.ugb-modal-design-library__designs' )
+		if ( ! wrapperRef.current || ! rootEl ) {
+			return
+		}
+
+		const observer = new IntersectionObserver( ( [ entry ] ) => {
+			// reduce flicker during rapid scrolls
+			requestAnimationFrame( () => {
+				requestAnimationFrame( () => setShouldRender( entry.isIntersecting ) )
+			} )
+		}, {
+			root: rootEl,
+			rootMargin: '500px',
+			scrollMargin: '500px',
+			threshold: 0,
+		} )
+
+		observer.observe( wrapperRef.current )
+
+		return () => observer.disconnect()
+	}, [ selectedTab ] )
+
 	return (
 		<div ref={ wrapperRef }>
-			<DesignLibraryListItem { ...props } shouldRender={ shouldRender } />
+			<DesignLibraryListItem { ...props } shouldRender={ shouldRender } presetMarks={ presetMarks } />
 		</div>
 	)
 }
