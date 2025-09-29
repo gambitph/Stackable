@@ -91,7 +91,7 @@ const DesignLibraryItem = memo( props => {
 		const selectedData = selectedNum ? selectedDesignData[ selectedNum - 1 ] : null
 
 		return { selectedNum, selectedData }
-	}, [ selectedDesignIds ] )
+	}, [ selectedDesignIds, selectedDesignData ] )
 
 	const previewProps = useMemo( () => ( {
 		designId: design.id || design.designId,

@@ -60,6 +60,8 @@
 	}
 	&.ugb--is-hidden {
 		opacity: 0;
+		pointer-events: none;
+		visibility: hidden;
 	}
 	footer {
 		line-height: 18px;

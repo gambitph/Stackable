@@ -19,11 +19,16 @@ import {
 
 import { __ } from '@wordpress/i18n'
 
-const PLAN_OPTIONS = [ { key: '', label: __( 'All', i18n ) }, { key: 'free', label: __( 'Free', i18n ) }, { key: 'premium', label: __( 'Premium', i18n ) } ]
+export const PLAN_OPTIONS = [ { key: '', label: __( 'All', i18n ) }, { key: 'free', label: __( 'Free', i18n ) }, { key: 'premium', label: __( 'Premium', i18n ) } ]
 
 export const HeaderActions = props => {
 	const {
-		selectedTab, setSelectedTab, selectedPlan, setSelectedPlan, setDoReset,
+		selectedTab,
+		setSelectedTab,
+		selectedPlan,
+		setSelectedPlan,
+		setDoReset,
+		onClose,
 	} = props
 	return <>
 		{ /* DEV NOTE: hide for now */ }
@@ -54,9 +59,9 @@ export const HeaderActions = props => {
 					onChange={ value => {
 						localStorage.setItem( 'stk__design_library__dev_mode', value ? '1' : '' )
 						setTimeout( () => {
-							document?.querySelector( '.ugb-insert-library-button__wrapper .ugb-insert-library-button' ).click()
+							document?.querySelector( '.ugb-insert-library-button__wrapper .ugb-insert-library-button' )?.click()
 						}, 100 )
-						props.onClose()
+						onClose()
 					} }
 					__nextHasNoMarginBottom
 				/>

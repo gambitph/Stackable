@@ -34,7 +34,7 @@ import { useBlockColorSchemes } from '~stackable/hooks'
 import ColorSchemePreview from '../color-scheme-preview'
 import { ColorSchemesHelp } from '../color-schemes-help'
 import Tooltip from '../tooltip'
-import { HeaderActions } from './header-actions'
+import { HeaderActions, PLAN_OPTIONS } from './header-actions'
 
 const popoverProps = {
 	className: 'ugb-design-library__color-scheme-popover',
@@ -66,7 +66,7 @@ export const ModalDesignLibrary = props => {
 
 	const [ selectedTab, setSelectedTab ] = useLocalStorage( 'stk__design_library__block-list__view_by', 'patterns' )
 	const [ selectedCategory, setSelectedCategory ] = useLocalStorage( 'stk__design_library__block-list__selected', '' )
-	const [ selectedPlan, setSelectedPlan ] = useLocalStorage( 'stk__design_library__view-plan', '' )
+	const [ selectedPlan, setSelectedPlan ] = useLocalStorage( 'stk__design_library__view-plan', PLAN_OPTIONS[ 0 ] )
 
 	// The sidebar designs are used to update the list of blocks in the sidebar.
 	const [ sidebarDesigns, setSidebarDesigns ] = useState( [] )
@@ -181,8 +181,9 @@ export const ModalDesignLibrary = props => {
 			selectedPlan={ selectedPlan }
 			setSelectedPlan={ setSelectedPlan }
 			setDoReset={ setDoReset }
+			onClose={ props.onClose }
 		/>
-	}, [ selectedTab ] )
+	}, [ selectedTab, selectedPlan, setSelectedTab, setSelectedPlan, setDoReset, props.onClose ] )
 
 	// Memoize the context value to prevent unnecessary rerenders
 	const contextValue = useMemo(
