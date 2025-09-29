@@ -13,9 +13,13 @@ export const DesignPreview = ( {
 	blocks = '',
 	shadowRoot,
 	selectedTab,
+	designIndex,
 	onMouseDown = NOOP,
+	updateShadowBodySize = NOOP,
+	setIsLoading,
 } ) => {
 	const ref = useRef( null )
+	const wrapperRef = useRef( null )
 
 	const isDragging = useRef( false )
 	const lastY = useRef( 0 )
@@ -77,13 +81,45 @@ export const DesignPreview = ( {
 		'preview-pages': selectedTab === 'pages',
 	} )
 
+	useEffect( () => {
+		const wrapper = wrapperRef.current
+
+		if ( ! wrapper || ! blocks ) {
+			return
+		}
+
+		setIsLoading( true )
+
+		const ric = window.requestIdleCallback || ( cb => setTimeout( cb, designIndex * 20 ) )
+		const sanitizedHTML = safeHTML( blocks )
+
+		if ( selectedTab !== 'pages' || designIndex < 9 ) {
+			// insert HTML for patterns and for the first 9 pages
+			wrapper.innerHTML = sanitizedHTML
+			requestAnimationFrame( () => {
+				ric( () => setIsLoading( false ) )
+			} )
+			return
+		}
+
+		requestAnimationFrame( () => {
+			ric( () => {
+				wrapper.innerHTML = sanitizedHTML
+				updateShadowBodySize()
+				requestAnimationFrame( () => {
+					ric( () => setIsLoading( false ) )
+				} )
+			} )
+		} )
+	}, [ blocks, shadowRoot ] ) // Only depend on blocks and shadowRoot; selectedTab and designIndex changes will cause blocks to update
+
 	return createPortal( <>
 		<body
 			ref={ ref }
 			className={ shadowBodyClasses }
 		>
 			<div
-				dangerouslySetInnerHTML={ { __html: safeHTML( blocks ) } }
+				ref={ wrapperRef }
 				style={ { pointerEvents: 'none' } }	// prevent blocks from being clicked
 			/>
 		</body>

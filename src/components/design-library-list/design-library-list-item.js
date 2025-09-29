@@ -11,7 +11,6 @@ import { useAutoScroll } from './use-auto-scroll'
 /**
  * External dependencies.
  */
-import { usePresetControls } from '~stackable/hooks'
 import { isPro, i18n } from 'stackable'
 import classnames from 'classnames'
 import { Tooltip } from '~stackable/components'
@@ -19,51 +18,56 @@ import { Tooltip } from '~stackable/components'
 /**
  * WordPress dependencies.
  */
-import { forwardRef, useState } from '@wordpress/element'
+import {
+	useState, useRef, memo,
+} from '@wordpress/element'
 import { Dashicon, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
-const DesignLibraryListItem = forwardRef( ( props, ref ) => {
+const DesignLibraryListItem = memo( props => {
 	const {
-		label,
-		plan,
-		selectedNum = false,
-		selectedData = null,
-		previewSize,
-		previewProps,
 		selectedTab,
+		plan, label,
+		selectedNum,
+		selectedData,
 		isMultiSelectBusy,
+		shouldRender,
+		presetMarks,
 	} = props
 
-	const presetMarks = usePresetControls( 'spacingSizes' )?.getPresetMarks() || null
-
-	const spacingSize = ! presetMarks || ! Array.isArray( presetMarks ) ? 120 : presetMarks[ presetMarks.length - 2 ].value
+	const spacingSize = Array.isArray( presetMarks ) && presetMarks.length >= 2
+		? presetMarks[ presetMarks.length - 2 ].value
+		: 120
 
 	const [ isLoading, setIsLoading ] = useState( true )
 
-	const { hostRef, shadowRoot } = useShadowRoot()
+	const { hostRef, shadowRoot } = useShadowRoot( shouldRender )
+
+	const ref = useRef( null )
 
 	const {
 		blocks, enableBackground,
 		shadowBodySizeRef, blocksForSubstitutionRef,
-		onClickDesign,
-	} = usePreviewRenderer(
-		previewProps, previewSize, plan, spacingSize,
-		selectedTab, selectedNum, selectedData,
-		ref, hostRef, shadowRoot, setIsLoading,
-	)
+		previewSize, onClickDesign,
+		updateShadowBodySize,
+	} = usePreviewRenderer( props, shouldRender, spacingSize,
+		ref, hostRef, shadowRoot, setIsLoading )
 
 	const {
 		onMouseOut, onMouseOver, onMouseDown,
 	} = useAutoScroll( hostRef, shadowBodySizeRef, selectedTab )
 
 	const getDesignPreviewSize = () => {
-		if ( ! shadowRoot || isLoading ) {
-			return 0
+		const tempHeight = selectedTab === 'pages' ? 345 : 100
+
+		const previewHeight = selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
+			: ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground )
+
+		if ( ! blocks || ! previewHeight ) {
+			return tempHeight
 		}
 
-		return selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
-			: ( enableBackground ? previewSize.heightBackground : previewSize.heightNoBackground )
+		return previewHeight
 	}
 
 	const mainClasses = classnames( [
@@ -100,7 +104,7 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 						showHideNote={ false }
 					/>
 				) }
-				{ isLoading && <div className="stk-spinner-container"><Spinner /></div> }
+				<div className={ `stk-spinner-container ${ isLoading || ! shouldRender ? '' : 'stk-hide-spinner' }` }><Spinner /></div>
 				<div
 					className="stk-block-design__host-container"
 					style={ {
@@ -110,11 +114,14 @@ const DesignLibraryListItem = forwardRef( ( props, ref ) => {
 					} }
 				>
 					<div className="stk-block-design__host" ref={ hostRef }>
-						{ shadowRoot && ! isLoading && <DesignPreview
+						{ shouldRender && shadowRoot && <DesignPreview
 							blocks={ blocks }
 							shadowRoot={ shadowRoot }
 							selectedTab={ selectedTab }
+							designIndex={ props.designIndex }
 							onMouseDown={ onMouseDown }
+							updateShadowBodySize={ updateShadowBodySize }
+							setIsLoading={ setIsLoading }
 						/> }
 					</div>
 				</div>

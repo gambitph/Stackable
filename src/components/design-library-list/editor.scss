@@ -58,6 +58,7 @@
 	}
 	footer {
 		line-height: 18px;
+		background-color: #fff;
 	}
 	.ugb-design-library-item__spinner {
 		position: absolute;
@@ -227,14 +228,17 @@
 
 
 .ugb-design-library-items {
-	.stk-spinner-container .components-spinner {
-		display: block;
-		margin: 50px auto;
-	}
-
-	&.stk-design-library__item-pages .stk-spinner-container {
-		height: 400px;
+	.stk-spinner-container {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		transition: opacity 0.3s cubic-bezier(0.2, 0.6, 0.4, 1);
+  		will-change: opacity;
+		opacity: 1;
 		display: flex;
+		&.stk-hide-spinner {
+			opacity: 0;
+		}
 		.components-spinner {
 			margin: auto;
 		}

@@ -63,6 +63,11 @@ export const getDesigns = async ( {
 } ) => {
 	const designLibrary = await fetchDesignLibrary( reset, LATEST_API_VERSION, type )
 
+	// pre-fetch patterns
+	if ( type === 'pages' ) {
+		await fetchDesignLibrary()
+	}
+
 	return Object.values( designLibrary )
 }
 

@@ -1,13 +1,15 @@
 import { wpGlobalStylesInlineCss } from 'stackable'
 import { getAdditionalStylesForPreview } from './util'
 
-import { useEffect, useRef } from '@wordpress/element'
+import {
+	useEffect, useRef, useState,
+} from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 
-export const useShadowRoot = () => {
+export const useShadowRoot = shouldRender => {
 	const hostRef = useRef( null )
-	const shadowRoot = useRef( null )
+	const [ shadowRoot, setShadowRoot ] = useState( null )
 
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 	const editorDom = getEditorDom()
@@ -21,7 +23,7 @@ export const useShadowRoot = () => {
 	] )
 
 	useEffect( () => {
-	  if ( hostRef.current ) {
+	  if ( shouldRender && hostRef.current ) {
 			const shadow = hostRef.current.shadowRoot || hostRef.current.attachShadow( { mode: 'open' } )
 
 			const styleNodes = STYLE_IDS.map( id => {
@@ -67,9 +69,9 @@ export const useShadowRoot = () => {
 				shadow.appendChild( node )
 			} )
 
-			shadowRoot.current = shadow
+			setShadowRoot( shadow )
 	  }
-	}, [] )
+	}, [ shouldRender ] )
 
-	return { hostRef, shadowRoot: shadowRoot.current }
+	return { hostRef, shadowRoot }
 }

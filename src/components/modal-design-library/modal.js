@@ -29,7 +29,9 @@ import {
 	Spinner,
 	ToggleControl,
 } from '@wordpress/components'
-import { useEffect, useState } from '@wordpress/element'
+import {
+	useEffect, useState, useCallback,
+} from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { useBlockColorSchemes } from '~stackable/hooks'
 import ColorSchemePreview from '../color-scheme-preview'
@@ -128,6 +130,40 @@ export const ModalDesignLibrary = props => {
 		const cb = () => setIsMultiSelectBusy( false )
 		props.onSelect( designs, cb, selectedTab )
 	}
+
+	const onSelectDesign = useCallback( ( designId, category, parsedBlocks, blocksForSubstitution, selectedPreviewSize ) => {
+		if ( selectedTab === 'pages' ) {
+			const selectedDesign = [ {
+				designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
+			} ]
+			addDesign( selectedDesign )
+
+			return
+		}
+
+		const newSelectedDesigns = [ ...selectedDesignIds ]
+		// We also get the design data from displayDesigns
+		// already instead of after clicking the "Add
+		// Designs" button since displayDesigns can change
+		// when the user is switching tabs (block/ui
+		// kits/wireframes) and the data can be lost.
+		const newSelectedDesignData = [ ...selectedDesignData ]
+
+		if ( newSelectedDesigns.includes( designId ) ) {
+			const i = newSelectedDesigns.indexOf( designId )
+			newSelectedDesigns.splice( i, 1 )
+			setSelectedDesignIds( newSelectedDesigns )
+			newSelectedDesignData.splice( i, 1 )
+			setSelectedDesignData( newSelectedDesignData )
+		} else {
+			newSelectedDesigns.push( designId )
+			setSelectedDesignIds( newSelectedDesigns )
+			newSelectedDesignData.push( {
+				designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
+			} )
+			setSelectedDesignData( newSelectedDesignData )
+		}
+	}, [ selectedTab, selectedDesignIds, selectedDesignData ] )
 
 	return (
 		<Modal
@@ -393,39 +429,7 @@ export const ModalDesignLibrary = props => {
 					designs={ displayDesigns }
 					selectedDesigns={ selectedDesignIds }
 					selectedDesignData={ selectedDesignData }
-					onSelectMulti={ ( designId, category, parsedBlocks, blocksForSubstitution, selectedPreviewSize ) => {
-						if ( selectedTab === 'pages' ) {
-							const selectedDesign = [ {
-								designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
-							} ]
-							addDesign( selectedDesign )
-
-							return
-						}
-
-						const newSelectedDesigns = [ ...selectedDesignIds ]
-						// We also get the design data from displayDesigns
-						// already instead of after clicking the "Add
-						// Designs" button since displayDesigns can change
-						// when the user is switching tabs (block/ui
-						// kits/wireframes) and the data can be lost.
-						const newSelectedDesignData = [ ...selectedDesignData ]
-
-						if ( newSelectedDesigns.includes( designId ) ) {
-							const i = newSelectedDesigns.indexOf( designId )
-							newSelectedDesigns.splice( i, 1 )
-							setSelectedDesignIds( newSelectedDesigns )
-							newSelectedDesignData.splice( i, 1 )
-							setSelectedDesignData( newSelectedDesignData )
-						} else {
-							newSelectedDesigns.push( designId )
-							setSelectedDesignIds( newSelectedDesigns )
-							newSelectedDesignData.push( {
-								designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
-							} )
-							setSelectedDesignData( newSelectedDesignData )
-						}
-					} }
+					onSelectMulti={ onSelectDesign }
 				/>
 
 				{ selectedTab === 'patterns' && <aside className="ugb-modal-design-library__footer">

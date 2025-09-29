@@ -26,7 +26,9 @@ import { dispatch, select } from '@wordpress/data'
 import {
 	createBlock, createBlocksFromInnerBlocksTemplate, getBlockVariations, getBlockType,
 } from '@wordpress/blocks'
-import { useRef, useState } from '@wordpress/element'
+import {
+	useRef, useState, useCallback,
+} from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import {
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
@@ -326,6 +328,47 @@ const Edit = props => {
 		await addDesigns( true )
 	}
 
+	const onClose = useCallback( () => setIsLibraryOpen( false ), [] )
+
+	const onSelect = useCallback( async ( _designs, callback, type ) => {
+		const designs = []
+		let disabledBlocks = new Set()
+
+		_designs.forEach( design => {
+			const {
+				designData, blocksForSubstitution, category,
+			} = design
+
+			if ( blocksForSubstitution.size ) {
+				disabledBlocks = disabledBlocks.union( blocksForSubstitution )
+			}
+
+			designs.push( { designData, category } )
+		} )
+
+		designsRef.current = designs
+		disabledBlocksRef.current = disabledBlocks
+		callbackRef.current = callback
+
+		if ( type === 'pages' ) {
+			const allBlocks = select( 'core/block-editor' ).getBlockOrder()
+			const blocksToRemove = allBlocks.filter( id => id !== clientId )
+
+			if ( blocksToRemove.length ) {
+				blocksToRemoveRef.current = allBlocks
+				setIsDialogOpen( DIALOG_OPTIONS.REMOVE_BLOCKS )
+				return
+			}
+		}
+
+		if ( disabledBlocks.size ) {
+			setIsDialogOpen( DIALOG_OPTIONS.DISABLED_BLOCKS )
+			return
+		}
+
+		await addDesigns( false )
+	}, [] )
+
 	if ( attributes.previewMode ) {
 		const src = previewImage.match( /https?:/i ) ? previewImage
 			: srcUrl ? `${ srcUrl }/${ previewImage }`
@@ -356,47 +399,8 @@ const Edit = props => {
 
 			{ isLibraryOpen &&
 				<ModalDesignLibrary
-					onClose={ () => {
-						setIsLibraryOpen( false )
-					} }
-					onSelect={ async ( _designs, callback, type ) => {
-						const designs = []
-						let disabledBlocks = new Set()
-
-						_designs.forEach( design => {
-							const {
-								designData, blocksForSubstitution, category,
-							} = design
-
-							if ( blocksForSubstitution.size ) {
-								disabledBlocks = disabledBlocks.union( blocksForSubstitution )
-							}
-
-							designs.push( { designData, category } )
-						} )
-
-						designsRef.current = designs
-						disabledBlocksRef.current = disabledBlocks
-						callbackRef.current = callback
-
-						if ( type === 'pages' ) {
-							const allBlocks = select( 'core/block-editor' ).getBlockOrder()
-							const blocksToRemove = allBlocks.filter( id => id !== clientId )
-
-							if ( blocksToRemove.length ) {
-								blocksToRemoveRef.current = allBlocks
-								setIsDialogOpen( DIALOG_OPTIONS.REMOVE_BLOCKS )
-								return
-							}
-						}
-
-						if ( disabledBlocks.size ) {
-							setIsDialogOpen( DIALOG_OPTIONS.DISABLED_BLOCKS )
-							return
-						}
-
-						await addDesigns( false )
-					} }
+					onClose={ onClose }
+					onSelect={ onSelect }
 				/>
 			}
 			{ isDialogOpen !== DIALOG_OPTIONS.CLOSE &&

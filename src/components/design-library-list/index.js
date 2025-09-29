@@ -15,10 +15,11 @@ import classnames from 'classnames'
 import { Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
-	useState, useEffect, useRef,
+	useState, useEffect, useRef, memo, useMemo,
 } from '@wordpress/element'
+import { usePresetControls } from '~stackable/hooks'
 
-const DesignLibraryList = props => {
+const DesignLibraryList = memo( props => {
 	const {
 		className = '',
 		designs,
@@ -26,6 +27,7 @@ const DesignLibraryList = props => {
 		onSelectMulti,
 		selectedDesigns = [],
 		selectedDesignData = [],
+		selectedTab,
 	} = props
 	const containerRef = useRef( null )
 
@@ -61,14 +63,14 @@ const DesignLibraryList = props => {
 
 					return (
 						<DesignLibraryItem
-							key={ i }
+							key={ design.id || design.designId }
 							plan={ design.plan }
 							label={ design.label || design.title }
-							previewProps={ previewProps }
 							selectedNum={ selectedNum }
 							selectedData={ selectedData }
-							selectedTab={ props.selectedTab }
-							designKey={ i }
+							selectedTab={ selectedTab }
+							designIndex={ i }
+							{ ...previewProps }
 						/>
 					)
 				} ) }
@@ -79,7 +81,7 @@ const DesignLibraryList = props => {
 			</div>
 		</> }
 	</div>
-}
+} )
 
 DesignLibraryList.defaultProps = {
 	designs: [],
@@ -91,24 +93,40 @@ DesignLibraryList.defaultProps = {
 export default DesignLibraryList
 
 const DesignLibraryItem = props => {
-	const {
-		previewProps: _previewProps, ...propsToPass
-	} = props
-
+	const { selectedTab, designIndex } = props
 	const wrapperRef = useRef( null )
-	const itemRef = useRef( null )
-	const [ cardHeight, setCardHeight ] = useState( {} )
-	const [ previewSize, setPreviewSize ] = useState( {} )
-	const [ shouldRender, setShouldRender ] = useState( props.designKey < 9 )
+	const [ shouldRender, setShouldRender ] = useState( designIndex < 9 )
+	const { getPresetMarks } = usePresetControls( 'spacingSizes' )
 
-	const previewProps = {
-		..._previewProps,
-		setPreviewSize: previewSize => setPreviewSize( previewSize ),
-		setCardHeight: height => setCardHeight( height ),
-		cardHeight,
-	}
+	// Intentionally no dependencies: presetMarks won't change while the design library is open
+	const presetMarks = useMemo( () => getPresetMarks() || null, [] )
 
 	useEffect( () => {
+		if ( selectedTab !== 'pages' ) {
+			return
+		}
+		let id
+		if ( typeof requestIdleCallback !== 'undefined' ) {
+			id = requestIdleCallback( () => ! shouldRender ? setShouldRender( true ) : {} )
+		} else {
+			// fallback
+			id = setTimeout( () => setShouldRender( true ), designIndex * 20 )
+		}
+
+		return () => {
+			if ( typeof cancelIdleCallback !== 'undefined' ) {
+				cancelIdleCallback( id )
+			} else {
+				clearTimeout( id )
+			}
+		}
+	}, [ selectedTab ] )
+
+	useEffect( () => {
+		if ( selectedTab === 'pages' ) {
+			return
+		}
+
 		const rootEl = document.querySelector( '.ugb-modal-design-library__designs' )
 		if ( ! wrapperRef.current || ! rootEl ) {
 			return
@@ -122,30 +140,18 @@ const DesignLibraryItem = props => {
 		}, {
 			root: rootEl,
 			rootMargin: '500px',
+			scrollMargin: '500px',
 			threshold: 0,
 		} )
 
 		observer.observe( wrapperRef.current )
-		return () => observer.disconnect()
-	}, [] )
 
-	const getCardHeight = () => {
-		const key = _previewProps.enableBackground ? 'background' : 'noBackground'
-		return props.selectedTab === 'pages' ? 472 : cardHeight?.[ key ] || 250
-	}
+		return () => observer.disconnect()
+	}, [ selectedTab ] )
 
 	return (
 		<div ref={ wrapperRef }>
-			{ ! shouldRender && ! props.selectedNum ? (
-				<div ref={ itemRef } style={ { height: `${ getCardHeight() }px` } } />
-			) : (
-				<DesignLibraryListItem
-					ref={ itemRef }
-					previewSize={ previewSize }
-					previewProps={ previewProps }
-					{ ...propsToPass }
-				/>
-			) }
+			<DesignLibraryListItem { ...props } shouldRender={ shouldRender } presetMarks={ presetMarks } />
 		</div>
 	)
 }
