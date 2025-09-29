@@ -26,14 +26,15 @@ import { __ } from '@wordpress/i18n'
 
 const DesignLibraryListItem = memo( props => {
 	const {
-		selectedTab,
-		plan, label,
-		selectedNum,
-		selectedData,
-		isMultiSelectBusy,
 		shouldRender,
 		presetMarks,
+		previewProps,
+		isMultiSelectBusy,
 	} = props
+
+	const {
+		selectedTab, selectedNum, selectedData, plan, label,
+	} = previewProps
 
 	const spacingSize = Array.isArray( presetMarks ) && presetMarks.length >= 2
 		? presetMarks[ presetMarks.length - 2 ].value
@@ -50,7 +51,7 @@ const DesignLibraryListItem = memo( props => {
 		shadowBodySizeRef, blocksForSubstitutionRef,
 		previewSize, onClickDesign,
 		updateShadowBodySize,
-	} = usePreviewRenderer( props, shouldRender, spacingSize,
+	} = usePreviewRenderer( previewProps, shouldRender, spacingSize,
 		ref, hostRef, shadowRoot, setIsLoading )
 
 	const {
@@ -76,6 +77,7 @@ const DesignLibraryListItem = memo( props => {
 	], {
 		[ `ugb--is-${ plan }` ]: ! isPro && plan !== 'free',
 		'ugb--is-toggled': selectedNum,
+		'ugb--is-hidden': ! shouldRender,
 	} )
 
 	const onClickHost = e => {

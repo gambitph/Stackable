@@ -18,16 +18,13 @@ import {
 	useState, useEffect, useRef, memo, useMemo,
 } from '@wordpress/element'
 import { usePresetControls } from '~stackable/hooks'
+import { useDesignLibraryContext } from '../modal-design-library/modal'
 
 const DesignLibraryList = memo( props => {
 	const {
 		className = '',
 		designs,
 		isBusy,
-		onSelectMulti,
-		selectedDesigns = [],
-		selectedDesignData = [],
-		selectedTab,
 	} = props
 	const containerRef = useRef( null )
 
@@ -48,29 +45,11 @@ const DesignLibraryList = memo( props => {
 		{ ! isBusy && <>
 			<div className={ listClasses }>
 				{ ( designs || [] ).map( ( design, i ) => {
-					const selectedNum = selectedDesigns.indexOf( design.id || design.designId ) + 1
-					const selectedData = selectedNum ? selectedDesignData[ selectedNum - 1 ] : null
-
-					const previewProps = {
-						designId: design.id || design.designId,
-						template: design.template || design.content,
-						category: design.category,
-						containerScheme: props.containerScheme,
-						backgroundScheme: props.backgroundScheme,
-						enableBackground: props.enableBackground,
-						onClick: onSelectMulti,
-					}
-
 					return (
 						<DesignLibraryItem
+							design={ design }
 							key={ design.id || design.designId }
-							plan={ design.plan }
-							label={ design.label || design.title }
-							selectedNum={ selectedNum }
-							selectedData={ selectedData }
-							selectedTab={ selectedTab }
 							designIndex={ i }
-							{ ...previewProps }
 						/>
 					)
 				} ) }
@@ -92,10 +71,53 @@ DesignLibraryList.defaultProps = {
 
 export default DesignLibraryList
 
-const DesignLibraryItem = props => {
-	const { selectedTab, designIndex } = props
+const DesignLibraryItem = memo( props => {
+	const { design, designIndex } = props
 	const wrapperRef = useRef( null )
 	const [ shouldRender, setShouldRender ] = useState( designIndex < 9 )
+
+	const [ selectedTab,
+		selectedDesignIds,
+		selectedDesignData,
+		onSelectDesign,
+		isMultiSelectBusy,
+		containerScheme,
+		backgroundScheme,
+		enableBackground,
+	] = useDesignLibraryContext()
+
+	const { selectedNum, selectedData } = useMemo( () => {
+		const selectedNum = selectedDesignIds.indexOf( design.id || design.designId ) + 1
+		const selectedData = selectedNum ? selectedDesignData[ selectedNum - 1 ] : null
+
+		return { selectedNum, selectedData }
+	}, [ selectedDesignIds ] )
+
+	const previewProps = useMemo( () => ( {
+		designId: design.id || design.designId,
+		template: design.template || design.content,
+		category: design.category,
+		plan: design.plan,
+		label: design.label,
+		containerScheme,
+		backgroundScheme,
+		enableBackground: selectedTab !== 'pages' ? enableBackground : true,
+		selectedTab,
+		selectedNum,
+		selectedData,
+		onClick: onSelectDesign,
+	} ), [
+		// Only track designId for memoization; other design properties will update when designId changes
+		design.id || design.designId,
+		containerScheme,
+		backgroundScheme,
+		enableBackground,
+		selectedTab,
+		// selectedNum and selectedData are always in sync; updating selectedNum also updates selectedData
+		selectedNum,
+		onSelectDesign,
+	] )
+
 	const { getPresetMarks } = usePresetControls( 'spacingSizes' )
 
 	// Intentionally no dependencies: presetMarks won't change while the design library is open
@@ -135,7 +157,7 @@ const DesignLibraryItem = props => {
 		const observer = new IntersectionObserver( ( [ entry ] ) => {
 			// reduce flicker during rapid scrolls
 			requestAnimationFrame( () => {
-				requestAnimationFrame( () => setShouldRender( entry.isIntersecting ) )
+				requestAnimationFrame( () => setShouldRender( entry.isIntersecting || entry.intersectionRatio > 0 ) )
 			} )
 		}, {
 			root: rootEl,
@@ -151,7 +173,11 @@ const DesignLibraryItem = props => {
 
 	return (
 		<div ref={ wrapperRef }>
-			<DesignLibraryListItem { ...props } shouldRender={ shouldRender } presetMarks={ presetMarks } />
+			<DesignLibraryListItem
+				previewProps={ previewProps }
+				isMultiSelectBusy={ isMultiSelectBusy }
+				shouldRender={ shouldRender }
+				presetMarks={ presetMarks } />
 		</div>
 	)
-}
+} )
