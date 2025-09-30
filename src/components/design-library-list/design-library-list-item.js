@@ -41,11 +41,11 @@ const DesignLibraryListItem = memo( props => {
 		: 120
 
 	const [ isLoading, setIsLoading ] = useState( true )
+	const [ selected, setSelected ] = useState( false )
 
 	const { hostRef, shadowRoot } = useShadowRoot( shouldRender )
 
 	const ref = useRef( null )
-	const insertButtonRef = useRef( null )
 
 	const {
 		blocks, enableBackground,
@@ -151,14 +151,12 @@ const DesignLibraryListItem = memo( props => {
 					{ selectedTab === 'patterns' ? <span className="stk-block-design__selected-num">{ selectedNum === 0 ? '' : selectedNum }</span>
 						: <div>
 							<Button
-								ref={ insertButtonRef }
 								label={ __( 'Insert', i18n ) }
 								className="ugb-modal-design-library__add-multi"
 								disabled={ isMultiSelectBusy }
+								data-selected={ selected }
 								onClick={ () => {
-									if ( insertButtonRef.current ) {
-										insertButtonRef.current.style.opacity = 1
-									}
+									setSelected( true )
 									onClickDesign()
 								} }
 							>
