@@ -41,6 +41,7 @@ const DesignLibraryListItem = memo( props => {
 		: 120
 
 	const [ isLoading, setIsLoading ] = useState( true )
+	const [ selected, setSelected ] = useState( false )
 
 	const { hostRef, shadowRoot } = useShadowRoot( shouldRender )
 
@@ -151,9 +152,12 @@ const DesignLibraryListItem = memo( props => {
 						: <div>
 							<Button
 								label={ __( 'Insert', i18n ) }
-								className="ugb-modal-design-library__add-multi"
+								className={ `ugb-modal-design-library__add-multi ${ selected ? 'stk--is-selected' : '' }` }
 								disabled={ isMultiSelectBusy }
-								onClick={ () => onClickDesign() }
+								onClick={ () => {
+									setSelected( true )
+									onClickDesign()
+								} }
 							>
 								{ __( 'Insert', i18n ) }
 								{ isMultiSelectBusy && <Spinner /> }
