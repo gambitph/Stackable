@@ -152,9 +152,8 @@ const DesignLibraryListItem = memo( props => {
 						: <div>
 							<Button
 								label={ __( 'Insert', i18n ) }
-								className="ugb-modal-design-library__add-multi"
+								className={ `ugb-modal-design-library__add-multi ${ selected ? 'stk--is-selected' : '' }` }
 								disabled={ isMultiSelectBusy }
-								data-selected={ selected }
 								onClick={ () => {
 									setSelected( true )
 									onClickDesign()

@@ -50,7 +50,7 @@
 		@media (hover: none) {
 			opacity: 1;
 		}
-		&[data-selected="true"] {
+		&.stk--is-selected {
 			opacity: 1;
 		}
 	}
