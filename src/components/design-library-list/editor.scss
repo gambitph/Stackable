@@ -42,6 +42,8 @@
 	// box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 	border: 1px solid #0000001a;
 	box-shadow: none;
+	opacity: 1;
+	will-change: opacity;
 	.ugb-button-component {
 		transition: opacity 0.4s cubic-bezier(0.2, 0.6, 0.4, 1);
 		opacity: 0;
@@ -55,6 +57,11 @@
 		.ugb-button-component {
 			opacity: 1;
 		}
+	}
+	&.ugb--is-hidden {
+		opacity: 0;
+		pointer-events: none;
+		visibility: hidden;
 	}
 	footer {
 		line-height: 18px;

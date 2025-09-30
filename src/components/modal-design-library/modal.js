@@ -4,7 +4,6 @@
 import HelpSVG from './images/help.svg'
 import BlockList from './block-list'
 import Button from '../button'
-import AdvancedToolbarControl from '../advanced-toolbar-control'
 import DesignLibraryList from '~stackable/components/design-library-list'
 import { GuidedModalTour } from '~stackable/components'
 import { getDesigns, filterDesigns } from '~stackable/design-library'
@@ -12,9 +11,7 @@ import { getDesigns, filterDesigns } from '~stackable/design-library'
 /**
  * External deprendencies
  */
-import {
-	i18n, isPro, devMode,
-} from 'stackable'
+import { i18n } from 'stackable'
 import classnames from 'classnames'
 import { useLocalStorage } from '~stackable/util'
 
@@ -23,22 +20,22 @@ import { useLocalStorage } from '~stackable/util'
  */
 import {
 	BaseControl,
-	Dashicon,
 	Dropdown,
 	Modal,
 	Spinner,
 	ToggleControl,
 } from '@wordpress/components'
 import {
-	useEffect, useState, useCallback,
+	useEffect, useState, createContext, useContext, useCallback,
+	useMemo,
 } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { useBlockColorSchemes } from '~stackable/hooks'
 import ColorSchemePreview from '../color-scheme-preview'
 import { ColorSchemesHelp } from '../color-schemes-help'
 import Tooltip from '../tooltip'
+import { HeaderActions, PLAN_OPTIONS } from './header-actions'
 
-const PLAN_OPTIONS = [ { key: '', label: __( 'All', i18n ) }, { key: 'free', label: __( 'Free', i18n ) }, { key: 'premium', label: __( 'Premium', i18n ) } ]
 const popoverProps = {
 	className: 'ugb-design-library__color-scheme-popover',
 	placement: 'right-start',
@@ -48,6 +45,12 @@ const popoverProps = {
 // Reset the local storage values for the design library block list.
 // This is to make sure that the design library shows "all" at the start.
 localStorage?.setItem( 'stk__design_library__block-list__selected', '' )
+
+export const DesignLibraryContext = createContext( null )
+
+export const useDesignLibraryContext = () => {
+	return useContext( DesignLibraryContext )
+}
 
 export const ModalDesignLibrary = props => {
 	const {
@@ -141,310 +144,268 @@ export const ModalDesignLibrary = props => {
 			return
 		}
 
-		const newSelectedDesigns = [ ...selectedDesignIds ]
-		// We also get the design data from displayDesigns
-		// already instead of after clicking the "Add
-		// Designs" button since displayDesigns can change
-		// when the user is switching tabs (block/ui
-		// kits/wireframes) and the data can be lost.
-		const newSelectedDesignData = [ ...selectedDesignData ]
+		// Use functional updates to avoid depending on current state values
+		setSelectedDesignIds( currentSelectedDesigns => {
+			const newSelectedDesigns = [ ...currentSelectedDesigns ]
 
-		if ( newSelectedDesigns.includes( designId ) ) {
-			const i = newSelectedDesigns.indexOf( designId )
-			newSelectedDesigns.splice( i, 1 )
-			setSelectedDesignIds( newSelectedDesigns )
-			newSelectedDesignData.splice( i, 1 )
-			setSelectedDesignData( newSelectedDesignData )
-		} else {
-			newSelectedDesigns.push( designId )
-			setSelectedDesignIds( newSelectedDesigns )
-			newSelectedDesignData.push( {
-				designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
-			} )
-			setSelectedDesignData( newSelectedDesignData )
-		}
-	}, [ selectedTab, selectedDesignIds, selectedDesignData ] )
+			if ( newSelectedDesigns.includes( designId ) ) {
+				const i = newSelectedDesigns.indexOf( designId )
+				newSelectedDesigns.splice( i, 1 )
+			} else {
+				newSelectedDesigns.push( designId )
+			}
+
+			return newSelectedDesigns
+		} )
+
+		setSelectedDesignData( currentSelectedDesignData => {
+			const newSelectedDesignData = [ ...currentSelectedDesignData ]
+
+			if ( currentSelectedDesignData.some( design => design.designId === designId ) ) {
+				const i = newSelectedDesignData.findIndex( design => design.designId === designId )
+				newSelectedDesignData.splice( i, 1 )
+			} else {
+				newSelectedDesignData.push( {
+					designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
+				} )
+			}
+
+			return newSelectedDesignData
+		} )
+	}, [ selectedTab ] )
+
+	const headerActions = useMemo( () => {
+		return <HeaderActions
+			selectedTab={ selectedTab }
+			setSelectedTab={ setSelectedTab }
+			selectedPlan={ selectedPlan }
+			setSelectedPlan={ setSelectedPlan }
+			setDoReset={ setDoReset }
+			onClose={ props.onClose }
+		/>
+	}, [ selectedTab, selectedPlan, setSelectedTab, setSelectedPlan, setDoReset, props.onClose ] )
+
+	// Memoize the context value to prevent unnecessary rerenders
+	const contextValue = useMemo(
+		() => [
+			selectedTab,
+			selectedDesignIds,
+			selectedDesignData,
+			onSelectDesign,
+			isMultiSelectBusy,
+			selectedContainerScheme,
+			selectedBackgroundScheme,
+			enableBackground,
+		],
+		[
+			selectedTab,
+			selectedDesignIds,
+			selectedDesignData,
+			onSelectDesign,
+			isMultiSelectBusy,
+			selectedContainerScheme,
+			selectedBackgroundScheme,
+			enableBackground,
+		]
+	)
 
 	return (
 		<Modal
 			title={ __( 'Stackable Design Library', i18n ) }
-			headerActions={ (
-				<>
-					{ /* DEV NOTE: hide for now */ }
-					<AdvancedToolbarControl
-						className="stk-design-library-tabs"
-						fullwidth={ false }
-						controls={ [
-							{
-								value: 'patterns',
-								title: __( 'Patterns', i18n ),
-							},
-							{
-								value: 'pages',
-								title: __( 'Pages', i18n ),
-							},
-						] }
-						value={ selectedTab }
-						onChange={ setSelectedTab }
-						isToggleOnly={ true }
-						allowReset={ false }
-					/>
-
-					<div className="stk-design-library__header-settings">
-						{ devMode && (
-							<ToggleControl
-								label="Dev Mode"
-								checked={ !! localStorage.getItem( 'stk__design_library__dev_mode' ) || false }
-								onChange={ value => {
-									localStorage.setItem( 'stk__design_library__dev_mode', value ? '1' : '' )
-									setTimeout( () => {
-										document?.querySelector( '.ugb-insert-library-button__wrapper .ugb-insert-library-button' ).click()
-									}, 100 )
-									props.onClose()
-								} }
-								__nextHasNoMarginBottom
-							/>
-						) }
-						<Button
-							icon="image-rotate"
-							iconSize={ 14 }
-							label={ __( 'Refresh Library', i18n ) }
-							className="ugb-modal-design-library__refresh"
-							onClick={ () => setDoReset( true ) }
-						/>
-						{ ! isPro && <Dropdown
-							focusOnMount="container"
-							renderToggle={ ( { onToggle } ) => (
-								<Button
-									onClick={ onToggle }
-									style={ { height: 'auto' } }
-									icon="arrow-down-alt2"
-									iconSize={ 12 }
-									iconPosition="right"
-									variant="secondary"
-								>
-									<Dashicon icon="lock" size={ 12 } />
-									<span>{ selectedPlan.label }</span>
-								</Button>
-							) }
-							renderContent={ ( { onClose } ) => (
-								<div className="stk-design-library__plan-dropdown">
-									{ PLAN_OPTIONS.map( ( plan, i ) => {
-										return <Button
-											key={ i }
-											onClick={ () => {
-												setSelectedPlan( plan )
-												onClose()
-											} }
-										>
-											{ plan.label }
-										</Button>
-									} ) }
-								</div>
-							) }
-						/> }
-					</div>
-				</>
-			) }
+			headerActions={ headerActions }
 			className={ classnames( 'ugb-modal-design-library', 'ugb-modal-design-library--is-multiselect' ) }
 			onRequestClose={ props.onClose }
 		>
-			<div className={ classnames( 'ugb-modal-design-library__wrapper', { 'ugb-modal-design-library__full-pages': selectedTab === 'pages' } ) }>
+			<DesignLibraryContext.Provider value={ contextValue }>
+				<div className={ classnames( 'ugb-modal-design-library__wrapper', { 'ugb-modal-design-library__full-pages': selectedTab === 'pages' } ) }>
 
-				<GuidedModalTour tourId="design-library" />
+					<GuidedModalTour tourId="design-library" />
 
-				<aside className="ugb-modal-design-library__sidebar">
-					<div className="ugb-modal-design-library__filters">
-						<BlockList
-							designs={ sidebarDesigns }
-							viewBy={ selectedTab }
-							plan={ selectedPlan.key }
-							selected={ selectedCategory }
-							onSelect={ id => setSelectedCategory( id ) }
-							isBusy={ isBusy }
-						/>
-					</div>
-					<div className="ugb-modal-design-library__style-options">
-						<div>
-							<h4>{ __( 'Style Options', i18n ) }</h4>
-							<Tooltip className="ugb-modal-design-library__style-options-tooltip" placement="top" text={ <>
-								{ __( 'Customize patterns using the options below.', i18n ) }
-								&nbsp;
-								<a href="https://docs.wpstackable.com/article/343-using-the-design-library#Design-Library-Style-Options-Pswi5" target="_docs">
-									{ __( 'Learn how to use style options.', i18n ) }
-								</a>
-							</> }>
-								<HelpSVG height="14px" width="14px" />
-							</Tooltip>
+					<aside className="ugb-modal-design-library__sidebar">
+						<div className="ugb-modal-design-library__filters">
+							<BlockList
+								designs={ sidebarDesigns }
+								viewBy={ selectedTab }
+								plan={ selectedPlan.key }
+								selected={ selectedCategory }
+								onSelect={ id => setSelectedCategory( id ) }
+								isBusy={ isBusy }
+							/>
 						</div>
-						{ selectedTab === 'patterns' && <ToggleControl
-							className="ugb-modal-design-library__enable-background"
-							label={ __( 'Section Background', i18n ) }
-							checked={ enableBackground }
-							onChange={ value => {
-								setEnableBackground( value )
-							} }
-							__nextHasNoMarginBottom
-						/> }
-						<BaseControl
-							label={ __( 'Background Scheme', i18n ) }
-							className="ugb-modal-design-library__color-scheme-label ugb-modal-design-library__background-scheme"
-							__nextHasNoMarginBottom
-						>
-							<Dropdown
-								className="ugb-modal-design-library__color-scheme-dropdown"
-								popoverProps={ popoverProps }
-								focusOnMount="container"
-								renderToggle={ ( { onToggle } ) => (
-									<Button
-										onClick={ onToggle }
-										className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
-									>
-										{ selectedBackgroundScheme !== ''
-											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedBackgroundScheme || backgroundModeColorScheme ].normal } />
-											: <ColorSchemeTextItem label={ __( 'Default', i18n ) } />
-										}
-									</Button>
-								) }
-								renderContent={ ( { onClose } ) => (
-									<div>
-										<div className="ugb-modal-design-library__stk-color-scheme-list-header">
-											<p> { __( 'Background Scheme', i18n ) }</p>
-											<Button
-												icon="no"
-												className="ugb-modal-design-library__color-scheme-close-button"
-												onClick={ () => {
-													onClose()
-												} }
-											/>
-										</div>
-										<div className="ugb-modal-design-library__stk-color-scheme-list">
-											<Button
-												className={ `ugb-modal-design-library__stk-color-scheme${ selectedBackgroundScheme === '' ? ' stk-color-scheme__selected' : '' }` }
-												onClick={ () => {
-													if ( ! enableBackground ) {
-														setEnableBackground( true )
-													}
-													setSelectedBackgroundScheme( '' )
-												} }
-											>
-												<span className="stk-color-scheme-name stk-color-scheme__none"> { __( 'Default', i18n ) } </span>
-											</Button>
-											{ Object.entries( colorSchemesCollection ).map( ( [ key, scheme ], i ) => {
-												return <Button
-													key={ i }
-													className={ `ugb-modal-design-library__stk-color-scheme${ selectedBackgroundScheme === key ? ' stk-color-scheme__selected' : '' }` }
+						<div className="ugb-modal-design-library__style-options">
+							<div>
+								<h4>{ __( 'Style Options', i18n ) }</h4>
+								<Tooltip className="ugb-modal-design-library__style-options-tooltip" placement="top" text={ <>
+									{ __( 'Customize patterns using the options below.', i18n ) }
+								&nbsp;
+									<a href="https://docs.wpstackable.com/article/343-using-the-design-library#Design-Library-Style-Options-Pswi5" target="_docs">
+										{ __( 'Learn how to use style options.', i18n ) }
+									</a>
+								</> }>
+									<HelpSVG height="14px" width="14px" />
+								</Tooltip>
+							</div>
+							{ selectedTab === 'patterns' && <ToggleControl
+								className="ugb-modal-design-library__enable-background"
+								label={ __( 'Section Background', i18n ) }
+								checked={ enableBackground }
+								onChange={ value => {
+									setEnableBackground( value )
+								} }
+								__nextHasNoMarginBottom
+							/> }
+							<BaseControl
+								label={ __( 'Background Scheme', i18n ) }
+								className="ugb-modal-design-library__color-scheme-label ugb-modal-design-library__background-scheme"
+								__nextHasNoMarginBottom
+							>
+								<Dropdown
+									className="ugb-modal-design-library__color-scheme-dropdown"
+									popoverProps={ popoverProps }
+									focusOnMount="container"
+									renderToggle={ ( { onToggle } ) => (
+										<Button
+											onClick={ onToggle }
+											className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
+										>
+											{ selectedBackgroundScheme !== ''
+												? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedBackgroundScheme || backgroundModeColorScheme ].normal } />
+												: <ColorSchemeTextItem label={ __( 'Default', i18n ) } />
+											}
+										</Button>
+									) }
+									renderContent={ ( { onClose } ) => (
+										<div>
+											<div className="ugb-modal-design-library__stk-color-scheme-list-header">
+												<p> { __( 'Background Scheme', i18n ) }</p>
+												<Button
+													icon="no"
+													className="ugb-modal-design-library__color-scheme-close-button"
+													onClick={ () => {
+														onClose()
+													} }
+												/>
+											</div>
+											<div className="ugb-modal-design-library__stk-color-scheme-list">
+												<Button
+													className={ `ugb-modal-design-library__stk-color-scheme${ selectedBackgroundScheme === '' ? ' stk-color-scheme__selected' : '' }` }
 													onClick={ () => {
 														if ( ! enableBackground ) {
 															setEnableBackground( true )
 														}
-														setSelectedBackgroundScheme( key )
+														setSelectedBackgroundScheme( '' )
 													} }
 												>
-													<ColorSchemePreview colors={ scheme.normal } isCollapsed={ true } />
-													<span className="stk-color-scheme-name"> { scheme.name }</span>
+													<span className="stk-color-scheme-name stk-color-scheme__none"> { __( 'Default', i18n ) } </span>
 												</Button>
-											} ) }
-											{ Object.keys( colorSchemesCollection ).length
-												? <ColorSchemesHelp customText="" callback={ colorSchemeHelpCallback } className="ugb-design-library__manage-scheme" />
-												: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ colorSchemeHelpCallback } />
+												{ Object.entries( colorSchemesCollection ).map( ( [ key, scheme ], i ) => {
+													return <Button
+														key={ i }
+														className={ `ugb-modal-design-library__stk-color-scheme${ selectedBackgroundScheme === key ? ' stk-color-scheme__selected' : '' }` }
+														onClick={ () => {
+															if ( ! enableBackground ) {
+																setEnableBackground( true )
+															}
+															setSelectedBackgroundScheme( key )
+														} }
+													>
+														<ColorSchemePreview colors={ scheme.normal } isCollapsed={ true } />
+														<span className="stk-color-scheme-name"> { scheme.name }</span>
+													</Button>
+												} ) }
+												{ Object.keys( colorSchemesCollection ).length
+													? <ColorSchemesHelp customText="" callback={ colorSchemeHelpCallback } className="ugb-design-library__manage-scheme" />
+													: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ colorSchemeHelpCallback } />
+												}
+											</div>
+										</div>
+									) }
+								/>
+							</BaseControl>
+							<BaseControl
+								label={ __( 'Container Scheme', i18n ) }
+								className="ugb-modal-design-library__color-scheme-label"
+								__nextHasNoMarginBottom
+							>
+								<Dropdown
+									popoverProps={ popoverProps }
+									focusOnMount="container"
+									renderToggle={ ( { onToggle } ) => (
+										<Button
+											onClick={ onToggle }
+											className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
+										>
+											{ selectedContainerScheme !== ''
+												? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedContainerScheme || containerModeColorScheme ].normal } />
+												: <ColorSchemeTextItem label={ __( 'Default', i18n ) } />
 											}
-										</div>
-									</div>
-								) }
-							/>
-						</BaseControl>
-						<BaseControl
-							label={ __( 'Container Scheme', i18n ) }
-							className="ugb-modal-design-library__color-scheme-label"
-							__nextHasNoMarginBottom
-						>
-							<Dropdown
-								popoverProps={ popoverProps }
-								focusOnMount="container"
-								renderToggle={ ( { onToggle } ) => (
-									<Button
-										onClick={ onToggle }
-										className="ugb-modal-design-library__stk-color-scheme stk-color-scheme__toggle"
-									>
-										{ selectedContainerScheme !== ''
-											? <ColorSchemePreview isCollapsed={ true } colors={ colorSchemesCollection[ selectedContainerScheme || containerModeColorScheme ].normal } />
-											: <ColorSchemeTextItem label={ __( 'Default', i18n ) } />
-										}
-									</Button>
-								) }
-								renderContent={ ( { onClose } ) => (
-									<div>
-										<div className="ugb-modal-design-library__stk-color-scheme-list-header">
-											<p> { __( 'Container Scheme', i18n ) }</p>
-											<Button
-												icon="no"
-												onClick={ () => {
-													onClose()
-												} }
-											/>
-										</div>
-										<div className="ugb-modal-design-library__stk-color-scheme-list">
-											<Button
-												className={ `ugb-modal-design-library__stk-color-scheme${ selectedContainerScheme === '' ? ' stk-color-scheme__selected' : '' }` }
-												onClick={ () => {
-													setSelectedContainerScheme( '' )
-												} }
-											>
-												<span className="stk-color-scheme-name stk-color-scheme__none"> { __( 'Default', i18n ) } </span>
-											</Button>
-											{ Object.entries( colorSchemesCollection ).map( ( [ key, scheme ], i ) => {
-												return <Button
-													key={ i }
-													className={ `ugb-modal-design-library__stk-color-scheme${ selectedContainerScheme === key ? ' stk-color-scheme__selected' : '' }` }
+										</Button>
+									) }
+									renderContent={ ( { onClose } ) => (
+										<div>
+											<div className="ugb-modal-design-library__stk-color-scheme-list-header">
+												<p> { __( 'Container Scheme', i18n ) }</p>
+												<Button
+													icon="no"
 													onClick={ () => {
-														setSelectedContainerScheme( key )
+														onClose()
+													} }
+												/>
+											</div>
+											<div className="ugb-modal-design-library__stk-color-scheme-list">
+												<Button
+													className={ `ugb-modal-design-library__stk-color-scheme${ selectedContainerScheme === '' ? ' stk-color-scheme__selected' : '' }` }
+													onClick={ () => {
+														setSelectedContainerScheme( '' )
 													} }
 												>
-													<ColorSchemePreview colors={ scheme.normal } isCollapsed={ true } />
-													<span className="stk-color-scheme-name"> { scheme.name } </span>
+													<span className="stk-color-scheme-name stk-color-scheme__none"> { __( 'Default', i18n ) } </span>
 												</Button>
-											} ) }
-											{ Object.keys( colorSchemesCollection ).length
-												? <ColorSchemesHelp customText="" callback={ colorSchemeHelpCallback } className="ugb-design-library__manage-scheme" />
-												: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ colorSchemeHelpCallback } />
-											}
+												{ Object.entries( colorSchemesCollection ).map( ( [ key, scheme ], i ) => {
+													return <Button
+														key={ i }
+														className={ `ugb-modal-design-library__stk-color-scheme${ selectedContainerScheme === key ? ' stk-color-scheme__selected' : '' }` }
+														onClick={ () => {
+															setSelectedContainerScheme( key )
+														} }
+													>
+														<ColorSchemePreview colors={ scheme.normal } isCollapsed={ true } />
+														<span className="stk-color-scheme-name"> { scheme.name } </span>
+													</Button>
+												} ) }
+												{ Object.keys( colorSchemesCollection ).length
+													? <ColorSchemesHelp customText="" callback={ colorSchemeHelpCallback } className="ugb-design-library__manage-scheme" />
+													: <ColorSchemesHelp customText={ __( 'You do not have any color schemes.', i18n ) } callback={ colorSchemeHelpCallback } />
+												}
+											</div>
 										</div>
-									</div>
-								) }
-							/>
-						</BaseControl>
+									) }
+								/>
+							</BaseControl>
 
-					</div>
-				</aside>
+						</div>
+					</aside>
 
-				<DesignLibraryList
-					className={ `stk-design-library__item-${ selectedTab }` }
-					containerScheme={ selectedContainerScheme }
-					backgroundScheme={ selectedBackgroundScheme }
-					enableBackground={ selectedTab === 'patterns' ? enableBackground : true }
-					selectedTab={ selectedTab }
-					isBusy={ isBusy }
-					isMultiSelectBusy={ isMultiSelectBusy }
-					designs={ displayDesigns }
-					selectedDesigns={ selectedDesignIds }
-					selectedDesignData={ selectedDesignData }
-					onSelectMulti={ onSelectDesign }
-				/>
+					<DesignLibraryList
+						className={ `stk-design-library__item-${ selectedTab }` }
+						isBusy={ isBusy }
+						designs={ displayDesigns }
+					/>
 
-				{ selectedTab === 'patterns' && <aside className="ugb-modal-design-library__footer">
-					<div>{ sprintf( __( `(%d) Selected`, i18n ), selectedDesignIds.length ) }</div>
-					<Button
-						label={ __( 'Add Designs', i18n ) }
-						className="ugb-modal-design-library__add-multi"
-						disabled={ ! selectedDesignIds.length || isMultiSelectBusy }
-						onClick={ () => addDesign( selectedDesignData ) }
-					>
-						{ __( 'Add Designs', i18n ) }
-						{ isMultiSelectBusy && <Spinner /> }
-					</Button>
-				</aside> }
-			</div>
+					{ selectedTab === 'patterns' && <aside className="ugb-modal-design-library__footer">
+						<div>{ sprintf( __( `(%d) Selected`, i18n ), selectedDesignIds.length ) }</div>
+						<Button
+							label={ __( 'Add Designs', i18n ) }
+							className="ugb-modal-design-library__add-multi"
+							disabled={ ! selectedDesignIds.length || isMultiSelectBusy }
+							onClick={ () => addDesign( selectedDesignData ) }
+						>
+							{ __( 'Add Designs', i18n ) }
+							{ isMultiSelectBusy && <Spinner /> }
+						</Button>
+					</aside> }
+				</div>
+			</DesignLibraryContext.Provider>
 		</Modal>
 	)
 }
