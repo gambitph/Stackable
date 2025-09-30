@@ -174,7 +174,7 @@
 		text-transform: uppercase;
 		&[disabled] {
 			background: #efefef;
-			opacity: 1;
+			// opacity: 1;
 		}
 		&:not([disabled]) {
 			background: linear-gradient(131.34deg, #ee006b -0.77%, #b300be 94.57%);
