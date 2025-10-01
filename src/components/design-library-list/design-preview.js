@@ -90,9 +90,8 @@ export const DesignPreview = ( {
 
 		setIsLoading( true )
 
-		// Comment this since our requestIdleCallback is not called
-		// const ric = window.requestIdleCallback || ( cb => setTimeout( cb, designIndex * 20 ) )
-		const ric = cb => setTimeout( cb, designIndex * 20 )
+		const ric = window.requestIdleCallback ? ( cb => window.requestIdleCallback( cb, { timeout: 5000 } ) )
+			: ( cb => setTimeout( cb, designIndex * 20 ) )
 		const sanitizedHTML = safeHTML( blocks )
 
 		if ( selectedTab !== 'pages' || designIndex < 9 ) {

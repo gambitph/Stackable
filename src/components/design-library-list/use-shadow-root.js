@@ -10,6 +10,7 @@ import { applyFilters } from '@wordpress/hooks'
 export const useShadowRoot = shouldRender => {
 	const hostRef = useRef( null )
 	const [ shadowRoot, setShadowRoot ] = useState( null )
+	const [ stylesLoaded, setStylesLoaded ] = useState( 0 )
 
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 	const editorDom = getEditorDom()
@@ -25,6 +26,12 @@ export const useShadowRoot = shouldRender => {
 	useEffect( () => {
 	  if ( shouldRender && hostRef.current ) {
 			const shadow = hostRef.current.shadowRoot || hostRef.current.attachShadow( { mode: 'open' } )
+			setStylesLoaded( 0 )
+
+			// Track existing style/link nodes in the shadow root to avoid duplicates
+			const existingIds = new Set(
+				Array.from( shadow.querySelectorAll( 'style[id],link[id]' ) ).map( n => n.id )
+			)
 
 			const styleNodes = STYLE_IDS.map( id => {
 				let style = null
@@ -48,30 +55,52 @@ export const useShadowRoot = shouldRender => {
 			} ).filter( node => node !== null )
 
 			// Add global and theme styles
-			const globalStylesNode = document.createElement( 'style' )
-			globalStylesNode.setAttribute( 'id', 'global-styles-inline-css' )
-			globalStylesNode.innerHTML = wpGlobalStylesInlineCss
-			styleNodes.push( globalStylesNode )
+			if ( ! existingIds.has( 'global-styles-inline-css' ) ) {
+				const globalStylesNode = document.createElement( 'style' )
+				globalStylesNode.setAttribute( 'id', 'global-styles-inline-css' )
+				globalStylesNode.innerHTML = wpGlobalStylesInlineCss
+				styleNodes.push( globalStylesNode )
+			}
 
-			const hostStyles = document.createElement( 'style' )
-			hostStyles.setAttribute( 'id', 'stk-design-library-styles' )
+			if ( ! existingIds.has( 'stk-design-library-styles' ) ) {
+				const hostStyles = document.createElement( 'style' )
+				hostStyles.setAttribute( 'id', 'stk-design-library-styles' )
 
-			// Additional styles for blocks to render properly in the preview
-			hostStyles.innerHTML += getAdditionalStylesForPreview()
-
-			styleNodes.push( hostStyles )
+				// Additional styles for blocks to render properly in the preview
+				hostStyles.innerHTML += getAdditionalStylesForPreview()
+				styleNodes.push( hostStyles )
+			}
 
 			styleNodes.forEach( node => {
+				if ( node.id && existingIds.has( node.id ) ) {
+					return
+				}
+
+				if ( node.href ) {
+					node.onload = () => {
+						setStylesLoaded( prev => prev + 1 )
+					}
+					node.onerror = () => {
+						setStylesLoaded( prev => prev + 1 )
+					}
+				}
+
 				if ( node.textContent ) {
 					// we use :host in the shadow DOM to target the root
 					node.textContent = node.textContent.replace( /:root/g, ':host' )
 				}
 				shadow.appendChild( node )
+
+				if ( node.id ) {
+					existingIds.add( node.id )
+				}
 			} )
 
 			setShadowRoot( shadow )
 	  }
 	}, [ shouldRender ] )
 
-	return { hostRef, shadowRoot }
+	return {
+		hostRef, shadowRoot, stylesLoaded,
+	}
 }
