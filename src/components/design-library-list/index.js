@@ -129,7 +129,7 @@ const DesignLibraryItem = memo( props => {
 		}
 		let id
 		if ( typeof requestIdleCallback !== 'undefined' ) {
-			id = requestIdleCallback( () => ! shouldRender ? setShouldRender( true ) : {} )
+			id = requestIdleCallback( () => ! shouldRender ? setShouldRender( true ) : {}, { timeout: 3000 } )
 		} else {
 			// fallback
 			id = setTimeout( () => setShouldRender( true ), designIndex * 20 )

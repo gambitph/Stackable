@@ -90,7 +90,7 @@ export const DesignPreview = ( {
 
 		setIsLoading( true )
 
-		const ric = window.requestIdleCallback ? ( cb => window.requestIdleCallback( cb, { timeout: 1500 } ) )
+		const ric = window.requestIdleCallback ? ( cb => window.requestIdleCallback( cb, { timeout: 3000 } ) )
 			: ( cb => setTimeout( cb, designIndex * 20 ) )
 		const sanitizedHTML = safeHTML( blocks )
 
