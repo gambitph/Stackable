@@ -323,6 +323,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Carousel Block - columns can overlap in infinite scroll #3588
 * Fixed: Design System - orange modified indicator does not show up in the Global Color Palette #3576
 * Fixed: Global Color Palette - you cannot drag the color picker #3575
+* Fixed: Minor WPML compatibility issue when fields are missing #3603
 * Fixed: Better permissions for editor Rest API endpoints #533ab8f
 * Fixed: Minor UI improvements #3599 #391
 
