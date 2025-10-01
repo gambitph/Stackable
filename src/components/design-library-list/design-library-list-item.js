@@ -20,6 +20,7 @@ import { Tooltip } from '~stackable/components'
  */
 import {
 	useState, useRef, memo,
+	useMemo,
 } from '@wordpress/element'
 import { Dashicon, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
@@ -43,7 +44,9 @@ const DesignLibraryListItem = memo( props => {
 	const [ isLoading, setIsLoading ] = useState( true )
 	const [ selected, setSelected ] = useState( false )
 
-	const { hostRef, shadowRoot } = useShadowRoot( shouldRender )
+	const {
+		hostRef, shadowRoot, stylesLoaded,
+	} = useShadowRoot( shouldRender )
 
 	const ref = useRef( null )
 
@@ -53,13 +56,13 @@ const DesignLibraryListItem = memo( props => {
 		previewSize, onClickDesign,
 		updateShadowBodySize,
 	} = usePreviewRenderer( previewProps, shouldRender, spacingSize,
-		ref, hostRef, shadowRoot, setIsLoading )
+		ref, hostRef, shadowRoot, setIsLoading, stylesLoaded )
 
 	const {
 		onMouseOut, onMouseOver, onMouseDown,
 	} = useAutoScroll( hostRef, shadowBodySizeRef, selectedTab )
 
-	const getDesignPreviewSize = () => {
+	const designPreviewSize = useMemo( () => {
 		const tempHeight = selectedTab === 'pages' ? 345 : 100
 
 		const previewHeight = selectedNum && selectedData ? selectedData.selectedPreviewSize.preview
@@ -70,7 +73,7 @@ const DesignLibraryListItem = memo( props => {
 		}
 
 		return previewHeight
-	}
+	}, [ selectedTab, selectedNum, selectedData, previewSize, blocks, enableBackground ] )
 
 	const mainClasses = classnames( [
 		'ugb-design-library-item',
@@ -99,7 +102,7 @@ const DesignLibraryListItem = memo( props => {
 			onMouseOver={ onMouseOver }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
-			<div style={ { position: 'relative' } } className={ `stk-block-design__design-container ${ getDesignPreviewSize() > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
+			<div style={ { position: 'relative' } } className={ `stk-block-design__design-container ${ designPreviewSize > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
 				{ ! isPro && plan !== 'free' && (
 					<ProControl
 						type="design-library"
@@ -113,7 +116,7 @@ const DesignLibraryListItem = memo( props => {
 					style={ {
 						transform: `scale(${ selectedNum && selectedData ? selectedData.selectedPreviewSize.scale : previewSize?.scale })`,
 						transformOrigin: 'top left',
-						height: getDesignPreviewSize(),
+						height: designPreviewSize,
 					} }
 				>
 					<div className="stk-block-design__host" ref={ hostRef }>

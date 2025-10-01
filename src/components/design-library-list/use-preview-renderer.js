@@ -36,7 +36,7 @@ const DEFAULT_CONTENT = { ...DEFAULT }
 
 export const usePreviewRenderer = (
 	props, shouldRender, spacingSize,
-	ref, hostRef, shadowRoot, setIsLoading
+	ref, hostRef, shadowRoot, setIsLoading, stylesLoaded
 ) => {
 	const {
 		designId,
@@ -84,13 +84,13 @@ export const usePreviewRenderer = (
 		}
 	}
 
-	const adjustScale = ( force = true ) => {
+	const adjustScale = ( force = 2, callCount = 0 ) => {
 		const parentDiv = ref?.current?.querySelector( '.stk-block-design__design-container' )
 		const shouldAdjust = ref.current && hostRef.current && shadowRoot && parentDiv &&
 			( ! selectedNum || // adjust if design is not selected
 				prevSelectedTabRef.current !== selectedTab ) // adjust if selected tab changed even if design is selected
 
-		if ( ! shouldAdjust ) {
+		if ( ! shouldAdjust || ! force || callCount > 3 ) {
 			return
 		}
 
@@ -103,17 +103,17 @@ export const usePreviewRenderer = (
 
 		// Consider heights equal if the difference is less than 1px
 		const isEqualHeight = Math.abs( parentDivRect.height - hostRect.height ) < 1
+		const isEqualWidth = Math.abs( cardWidth - hostWidth ) < 1
 
-		if ( ! force && cardWidth === hostWidth && isEqualHeight ) {
-			if ( adjustAnimateFrameRef.current !== null ) {
-				cancelAnimationFrame( adjustAnimateFrameRef.current )
-			}
-			adjustAnimateFrameRef.current = null
-			return
+		let recompute = true
+
+		if ( isEqualWidth && isEqualHeight ) {
+			force -= 1
+			recompute = false
 		}
 
 		const shadowBody = shadowRoot.querySelector( 'body' )
-		if ( shadowBody ) {
+		if ( shadowBody && recompute ) {
 			const scaleFactor = cardWidth > 0 ? cardWidth / 1300 : 1 // Divide by 1300, which is the width of preview in the shadow DOM
 
 			let _bodyHeight = 1200
@@ -144,7 +144,7 @@ export const usePreviewRenderer = (
 		if ( adjustAnimateFrameRef.current !== null ) {
 			cancelAnimationFrame( adjustAnimateFrameRef.current )
 		}
-		adjustAnimateFrameRef.current = requestAnimationFrame( () => adjustScale( false ) )
+		adjustAnimateFrameRef.current = requestAnimationFrame( () => adjustScale( force, ++callCount ) )
 	}
 
 	const renderPreview = ( blockContent = content ) => {
@@ -327,7 +327,7 @@ export const usePreviewRenderer = (
 		if ( adjustAnimateFrameRef.current !== null ) {
 			cancelAnimationFrame( adjustAnimateFrameRef.current )
 		}
-		adjustAnimateFrameRef.current = requestAnimationFrame( adjustScale )
+		adjustAnimateFrameRef.current = requestAnimationFrame( () => adjustScale() )
 	}, [ content, containerScheme, backgroundScheme, enableBackground, selectedNum, shouldRender, shadowRoot ] )
 
 	// Handle background changes separately to avoid unnecessary re-renders
@@ -342,9 +342,21 @@ export const usePreviewRenderer = (
 			if ( adjustAnimateFrameRef.current !== null ) {
 				cancelAnimationFrame( adjustAnimateFrameRef.current )
 			}
-			adjustAnimateFrameRef.current = requestAnimationFrame( adjustScale )
+			adjustAnimateFrameRef.current = requestAnimationFrame( () => adjustScale() )
 		}
 	}, [ blocks, enableBackground ] )
+
+	useEffect( () => {
+		if ( ! blocks.parsed || ! blocks.serialized || ! shouldRender ) {
+			return
+		}
+
+		if ( adjustAnimateFrameRef.current !== null ) {
+			cancelAnimationFrame( adjustAnimateFrameRef.current )
+		}
+
+		adjustAnimateFrameRef.current = requestAnimationFrame( () => adjustScale() )
+	}, [ stylesLoaded ] )
 
 	// cleanup any pending animation on unmount
 	useEffect( () => {

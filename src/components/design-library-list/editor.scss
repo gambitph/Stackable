@@ -246,11 +246,11 @@
 		will-change: opacity;
 		opacity: 1;
 		display: flex;
-		// background-color: #fff;
-		// z-index: 1;
+		background-color: #fff;
+		z-index: 1;
 		&.stk-hide-spinner {
 			opacity: 0;
-			// z-index: -1;
+			z-index: -1;
 		}
 		.components-spinner {
 			margin: auto;
