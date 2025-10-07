@@ -54,3 +54,19 @@
 .wp-block-stackable-column {
 	min-width: 0;
 }
+
+/**
+* Add support for native image block alignment inside inner column
+* using margin, since it uses display: block in the editor.
+*
+* @see https://github.com/gambitph/Stackable/issues/3610
+*/
+.wp-block-stackable-column .wp-block-image {
+	.components-resizable-box__container {
+		&,
+		img {
+			margin-left: var(--stk-alignment-margin-left, auto);
+			margin-right: var(--stk-alignment-margin-right, auto);
+		}
+	}
+}
