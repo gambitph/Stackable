@@ -54,6 +54,8 @@
 
 @include desktop-tablet {
 	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-content-align:not(.alignwide):not(.alignfull),
+	// Dev note: add selector for carousel because it has an extra wrapper before the inner blocks.
+	.stk-block-carousel:is(.aligncenter, .alignwide, .alignfull) > :where(.stk-block-carousel__content-wrapper) > .stk-content-align:not(.alignwide):not(.alignfull),
 	.stk-block .stk-block.aligncenter {
 		// --stk-block-default-width is a Stackable setting
 		// --stk-block-width-default-detected is from the fallback autodetected value.
