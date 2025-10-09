@@ -1,3 +1,5 @@
+@import "common";
+
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-table-of-contents {
 	.stk-table-of-contents__table {
@@ -40,7 +42,7 @@
 }
 
 // These are styles added from the global color schemes.
-:where(.stk-has-color-schemes) {
+:where(#{$stk-has-color-schemes-selector}) {
 	.stk-block-table-of-contents {
 		// Add this so that it inherits the color from global color schemes.
 		::marker {

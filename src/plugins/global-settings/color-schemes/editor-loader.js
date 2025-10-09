@@ -161,29 +161,52 @@ export const GlobalColorSchemeStyles = () => {
 	// Adds a class to the editor body DOM to indicate that there are global styles for `color schemes`.
 	useEffect( () => {
 		if ( editorEl ) {
-			if ( styles !== '' && editorEl.classList.contains( 'stk-has-color-schemes' ) === false ) {
-				editorEl.classList.add( 'stk-has-color-schemes' )
-				addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
-					classnames.push( 'stk-has-color-schemes' )
-					return classnames
-				} )
-			}
-			if ( styles === '' ) {
-				editorEl.classList.remove( 'stk-has-color-schemes' )
-			}
+			const addClassNames = editor => {
+				const classNamesToAdd = []
+				const classNamesToRemove = []
+				if ( styles === '' ) {
+					editor.classList.remove( 'stk--has-base-scheme', 'stk--has-background-scheme', 'stk--has-container-scheme' )
+				} else {
+					if ( ! styles.includes( ':root' ) ) {
+						classNamesToRemove.push( 'stk--has-base-scheme' )
+					} else if ( editor.classList.contains( 'stk--has-base-scheme' ) === false ) {
+						classNamesToAdd.push( 'stk--has-base-scheme' )
+					}
 
-			// At first load of the editor, the `stk-has-color-schemes` is removed, so we have to re-add it.
-			const mo = onClassChange( editorEl, () => {
-				if ( styles !== '' && editorEl?.classList.contains( 'stk-has-color-schemes' ) === false ) {
-					editorEl?.classList.add( 'stk-has-color-schemes' )
+					if ( ! styles.includes( '.stk-block-background' ) ) {
+						classNamesToRemove.push( 'stk--has-background-scheme' )
+					} else if ( editor.classList.contains( 'stk--has-background-scheme' ) === false ) {
+						classNamesToAdd.push( 'stk--has-background-scheme' )
+					}
+
+					if ( ! styles.includes( '.stk-container:where(:not(.stk--no-background))' ) ) {
+						classNamesToRemove.push( 'stk--has-container-scheme' )
+					} else if ( editor.classList.contains( 'stk--has-container-scheme' ) === false ) {
+						classNamesToAdd.push( 'stk--has-container-scheme' )
+					}
+
+					editor.classList.add( ...classNamesToAdd )
+					editor.classList.remove( ...classNamesToRemove )
+
 					addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
-						classnames.push( 'stk-has-color-schemes' )
-						return classnames
+					// Remove any classNamesToRemove from classnames
+						const updatedClassnames = classnames.filter( name => ! classNamesToRemove.includes( name ) )
+						// Add classNamesToAdd if not already present
+						classNamesToAdd.forEach( name => {
+							if ( ! updatedClassnames.includes( name ) ) {
+								updatedClassnames.push( name )
+							}
+						} )
+						return updatedClassnames
 					} )
 				}
-				if ( styles === '' ) {
-					editorEl?.classList.remove( 'stk-has-color-schemes' )
-				}
+			}
+
+			addClassNames( editorEl )
+
+			// At first load of the editor, the color scheme classnames removed, so we have to re-add it.
+			const mo = onClassChange( editorEl, () => {
+				addClassNames( editorEl )
 			} )
 
 			return () => mo.disconnect()
