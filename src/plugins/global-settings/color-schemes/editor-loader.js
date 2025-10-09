@@ -69,6 +69,15 @@ export const renderGlobalColorSchemeStyles = (
 		css += bgcss
 	}
 
+	// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
+	const addContainerSchemeDefaultColors = containerModeColorScheme in colorSchemes && ! schemeHasValue( colorSchemes[ containerModeColorScheme ] ) &&
+		(
+			// Add default container scheme if background scheme has value
+			( backgroundModeColorScheme in colorSchemes && schemeHasValue( colorSchemes[ backgroundModeColorScheme ] ) ) ||
+			// Add default container scheme if there are color schemes other than the default scheme and background scheme
+			( colorSchemesArray.length !== 2 )
+		)
+
 	if ( containerModeColorScheme in colorSchemes && schemeHasValue( colorSchemes[ containerModeColorScheme ] ) ) {
 		decls = getCSS( colorSchemes[ containerModeColorScheme ], currentHoverState, 'container' )
 		let containercss = ''
@@ -79,8 +88,7 @@ export const renderGlobalColorSchemeStyles = (
 			containercss += `.stk-container:where(:not(.stk--no-background):hover), :where(.stk-hover-parent:hover) .stk-container:where(:not(.stk--no-background)){ ${ decls.desktopParentHover.join( '' ) } }\n`
 		}
 		css += containercss
-	// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
-	} else if ( containerModeColorScheme in colorSchemes && ! schemeHasValue( colorSchemes[ containerModeColorScheme ] ) ) {
+	} else if ( addContainerSchemeDefaultColors	) {
 		const containercss = `.stk-container:where(:not(.stk--no-background)){ ${ getDefaultColors() } }\n`
 
 		css += applyFilters( 'stackable.global-settings.global-color-schemes.default-container-scheme', containercss )
