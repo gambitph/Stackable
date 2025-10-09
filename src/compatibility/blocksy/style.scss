@@ -1,0 +1,4 @@
+:where(.stk--is-blocksy-theme.stk-has-color-schemes) {
+	--stk-heading-color: var(--theme-heading-color, var(--theme-heading-2-color, var(--theme-headings-color)));
+	--stk-text-color: var(--theme-text-color);
+}
