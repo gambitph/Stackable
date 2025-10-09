@@ -126,6 +126,8 @@ export const renderGlobalColorSchemeStyles = (
 	setStyles( css )
 }
 
+let filterRegistered = false
+
 export const GlobalColorSchemeStyles = () => {
 	const {
 		allColorSchemes,
@@ -187,19 +189,29 @@ export const GlobalColorSchemeStyles = () => {
 
 					editor.classList.add( ...classNamesToAdd )
 					editor.classList.remove( ...classNamesToRemove )
-
-					addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
-					// Remove any classNamesToRemove from classnames
-						const updatedClassnames = classnames.filter( name => ! classNamesToRemove.includes( name ) )
-						// Add classNamesToAdd if not already present
-						classNamesToAdd.forEach( name => {
-							if ( ! updatedClassnames.includes( name ) ) {
-								updatedClassnames.push( name )
-							}
-						} )
-						return updatedClassnames
-					} )
 				}
+			}
+
+			if ( ! filterRegistered ) {
+				addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
+				// Access current values via closure or alternative state management
+					const editor = editorEl
+					const hasBase = editor.classList.contains( 'stk--has-base-scheme' )
+					const hasBackground = editor.classList.contains( 'stk--has-background-scheme' )
+					const hasContainer = editor.classList.contains( 'stk--has-container-scheme' )
+
+					if ( hasBase && ! classnames.includes( 'stk--has-base-scheme' ) ) {
+						classnames.push( 'stk--has-base-scheme' )
+					}
+					if ( hasBackground && ! classnames.includes( 'stk--has-background-scheme' ) ) {
+						classnames.push( 'stk--has-background-scheme' )
+					}
+					if ( hasContainer && ! classnames.includes( 'stk--has-container-scheme' ) ) {
+						classnames.push( 'stk--has-container-scheme' )
+					}
+					return classnames
+				} )
+				filterRegistered = true
 			}
 
 			addClassNames( editorEl )

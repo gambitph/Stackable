@@ -388,7 +388,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					$classes[] = 'stk--has-background-scheme';
 				}
 
-				if ( strpos( $color_scheme_css, '.stk-container:where(:not(.stk--no-background))' ) ) {
+				if ( strpos( $color_scheme_css, '.stk-container:where(:not(.stk--no-background))' ) !== false ) {
 					$classes[] = 'stk--has-container-scheme';
 				}
 			}
