@@ -491,9 +491,9 @@ class _StackableCarousel {
 	onWheel = e => {
 		const sliderElScrollLeft = this.sliderEl.scrollLeft
 		const lastSlideOffset = this.slideEls[ this.slideEls.length - 1 ].offsetLeft
-		const firstCloneOffset = this.clones[ 0 ].offsetLeft
 		const slidesOffset = this.slideEls.map( slide => slide.offsetLeft )
-		const clonesOffset = this.clones.map( slide => slide.offsetLeft )
+		const firstCloneOffset = this.infiniteScroll && this.clones.length ? this.clones[ 0 ].offsetLeft : 0
+		const clonesOffset = this.infiniteScroll && this.clones.length ? this.clones.map( slide => slide.offsetLeft ) : []
 		if ( this.type === 'fade' ) {
 			if ( this.wheelTimeout ) {
 				return
@@ -549,7 +549,7 @@ class _StackableCarousel {
 		let dx = e.clientX - this.initialClientX
 		const sliderElScrollLeft = this.sliderEl.scrollLeft
 		const lastSlideOffsetLeft = this.slideEls[ this.slideEls.length - 1 ].offsetLeft
-		const firstCloneOffsetLeft = this.clones[ 0 ].offsetLeft
+		const firstCloneOffsetLeft = this.infiniteScroll && this.clones.length ? this.clones[ 0 ].offsetLeft : 0
 
 		if ( this.type === 'slide' ) {
 			if ( this.infiniteScroll && sliderElScrollLeft === 0 && dx > 0 ) {
