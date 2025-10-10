@@ -187,6 +187,12 @@ export const GlobalColorSchemeStyles = () => {
 						classNamesToAdd.push( 'stk--has-container-scheme' )
 					}
 
+					if ( ! styles.includes( '--stk-default-container-background-color' ) ) {
+						classNamesToRemove.push( 'stk--has-default-container-scheme' )
+					} else if ( editor.classList.contains( 'stk--has-container-scheme' ) === false ) {
+						classNamesToAdd.push( 'stk--has-default-container-scheme' )
+					}
+
 					editor.classList.add( ...classNamesToAdd )
 					editor.classList.remove( ...classNamesToRemove )
 				}
@@ -199,6 +205,7 @@ export const GlobalColorSchemeStyles = () => {
 					const hasBase = editor.classList.contains( 'stk--has-base-scheme' )
 					const hasBackground = editor.classList.contains( 'stk--has-background-scheme' )
 					const hasContainer = editor.classList.contains( 'stk--has-container-scheme' )
+					const hasDefaultContainer = editor.classList.contains( 'stk--has-default-container-scheme' )
 
 					if ( hasBase && ! classnames.includes( 'stk--has-base-scheme' ) ) {
 						classnames.push( 'stk--has-base-scheme' )
@@ -208,6 +215,9 @@ export const GlobalColorSchemeStyles = () => {
 					}
 					if ( hasContainer && ! classnames.includes( 'stk--has-container-scheme' ) ) {
 						classnames.push( 'stk--has-container-scheme' )
+					}
+					if ( hasDefaultContainer && ! classnames.includes( 'stk--has-default-container-scheme' ) ) {
+						classnames.push( 'stk--has-default-container-scheme' )
 					}
 					return classnames
 				} )
