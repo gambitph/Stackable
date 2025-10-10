@@ -1,3 +1,5 @@
+@import "common";
+
 .stk-block-price {
 	line-height: 1;
 	.stk-block-text {
@@ -12,6 +14,6 @@
 	line-height: 0.7;
 }
 
-:where(.stk-has-color-schemes .stk-block-price) .stk-block-text {
+:where(#{$stk-has-color-schemes-selector}) :where(.stk-block-price) .stk-block-text {
 	color: var(--stk-text-color);
 }

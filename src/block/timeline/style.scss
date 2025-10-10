@@ -21,7 +21,7 @@
 }
 
 // These are styles added from the global color schemes.
-:where(.stk-has-color-schemes) {
+:where(#{$stk-has-color-schemes-selector}) {
 	.stk-block-timeline {
 		--line-accent-bg-color: var(--stk-accent-color, #000);
 	}

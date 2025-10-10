@@ -1,3 +1,5 @@
+@import "common";
+
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-icon-list {
 	.stk-block-icon-list--grid:is(ul, ol) {
@@ -92,7 +94,7 @@
 	}
 }
 
-:where(.stk-has-color-schemes) {
+:where(#{$stk-has-color-schemes-selector}) {
 	.stk-block-icon-list {
 		--stk-icon-list-marker-color: var(--stk-accent-color);
 		:where(.stk-block-icon-list-item) {

@@ -1,0 +1,6 @@
+// Use Blocksy theme colors as fallback defaults for container color schemes.
+// These defaults apply when the default container color scheme is unset, but background or custom schemes exist.
+:where(.stk--is-blocksy-theme.stk--has-container-scheme) {
+	--stk-default-heading-color: var(--theme-heading-color, var(--theme-heading-2-color, var(--theme-headings-color)));
+	--stk-default-link-color: var(--theme-link-initial-color);
+}

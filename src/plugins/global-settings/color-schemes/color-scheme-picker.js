@@ -137,11 +137,19 @@ const ColorSchemePicker = props => {
 	// Get the custom color schemes
 	const customColorSchemes = applyFilters( 'stackable.global-settings.global-color-schemes.custom-color-schemes', [] )
 
+	// Checks if there are any color schemes with set values
+	const hasNoColorSchemes = currentColorSchemes => {
+		return ! currentColorSchemes.some( item => schemeHasValue( item.colorScheme ) )
+	}
+
 	const saveColorSchemeSettings = updatedColorSchemes => {
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
 			const settings = new models.Settings( {
-				stackable_global_color_schemes: updatedColorSchemes, // eslint-disable-line camelcase
+				// Store an empty array if all color schemes have no values,
+				// which optimizes the frontend by skipping unnecessary color scheme calculations.
+				// Otherwise, save the provided updatedColorSchemes array.
+				stackable_global_color_schemes: hasNoColorSchemes( updatedColorSchemes ) ? [] : updatedColorSchemes, // eslint-disable-line camelcase
 				// Clear the cached CSS when the color scheme is updated
 				stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
 			} )

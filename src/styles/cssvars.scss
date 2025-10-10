@@ -118,3 +118,10 @@ $_cssvars: ();
 
 	@return var(--stk-#{ $name });
 }
+
+$stk-has-color-schemes-selector:
+	"[class*='stk--background-scheme']", // For custom background schemes
+	"[class*='stk--container-scheme']", // For custom container schemes
+	".stk--has-base-scheme", // For base scheme
+	".stk--has-background-scheme .stk-block-background", // For default background schemes
+	".stk--has-container-scheme .stk-container:not(.stk--no-background)"; // For default container schemes

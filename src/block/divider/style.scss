@@ -8,7 +8,7 @@
 }
 
 // These are styles added from the global color schemes.
-:where(.stk-has-color-schemes) {
+:where(#{$stk-has-color-schemes-selector}) {
 	.stk-block.stk-block-divider {
 		hr.stk-block-divider__hr,
 		.stk-block-divider__dot {

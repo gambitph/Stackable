@@ -69,6 +69,15 @@ export const renderGlobalColorSchemeStyles = (
 		css += bgcss
 	}
 
+	// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
+	const addContainerSchemeDefaultColors = containerModeColorScheme in colorSchemes && ! schemeHasValue( colorSchemes[ containerModeColorScheme ] ) &&
+		(
+			// Add default container scheme if background scheme has value
+			( backgroundModeColorScheme in colorSchemes && schemeHasValue( colorSchemes[ backgroundModeColorScheme ] ) ) ||
+			// Add default container scheme if there are color schemes other than the default scheme and background scheme
+			( colorSchemesArray.length > 2 )
+		)
+
 	if ( containerModeColorScheme in colorSchemes && schemeHasValue( colorSchemes[ containerModeColorScheme ] ) ) {
 		decls = getCSS( colorSchemes[ containerModeColorScheme ], currentHoverState, 'container' )
 		let containercss = ''
@@ -79,8 +88,7 @@ export const renderGlobalColorSchemeStyles = (
 			containercss += `.stk-container:where(:not(.stk--no-background):hover), :where(.stk-hover-parent:hover) .stk-container:where(:not(.stk--no-background)){ ${ decls.desktopParentHover.join( '' ) } }\n`
 		}
 		css += containercss
-	// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
-	} else if ( containerModeColorScheme in colorSchemes && ! schemeHasValue( colorSchemes[ containerModeColorScheme ] ) ) {
+	} else if ( addContainerSchemeDefaultColors	) {
 		const containercss = `.stk-container:where(:not(.stk--no-background)){ ${ getDefaultColors() } }\n`
 
 		css += applyFilters( 'stackable.global-settings.global-color-schemes.default-container-scheme', containercss )
@@ -118,6 +126,8 @@ export const renderGlobalColorSchemeStyles = (
 	setStyles( css )
 }
 
+let filterRegistered = false
+
 export const GlobalColorSchemeStyles = () => {
 	const {
 		allColorSchemes,
@@ -153,29 +163,62 @@ export const GlobalColorSchemeStyles = () => {
 	// Adds a class to the editor body DOM to indicate that there are global styles for `color schemes`.
 	useEffect( () => {
 		if ( editorEl ) {
-			if ( styles !== '' && editorEl.classList.contains( 'stk-has-color-schemes' ) === false ) {
-				editorEl.classList.add( 'stk-has-color-schemes' )
-				addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
-					classnames.push( 'stk-has-color-schemes' )
-					return classnames
-				} )
-			}
-			if ( styles === '' ) {
-				editorEl.classList.remove( 'stk-has-color-schemes' )
+			const addClassNames = editor => {
+				const classNamesToAdd = []
+				const classNamesToRemove = []
+				if ( styles === '' ) {
+					editor.classList.remove( 'stk--has-base-scheme', 'stk--has-background-scheme', 'stk--has-container-scheme' )
+				} else {
+					if ( ! styles.includes( ':root' ) ) {
+						classNamesToRemove.push( 'stk--has-base-scheme' )
+					} else if ( editor.classList.contains( 'stk--has-base-scheme' ) === false ) {
+						classNamesToAdd.push( 'stk--has-base-scheme' )
+					}
+
+					if ( ! styles.includes( '.stk-block-background' ) ) {
+						classNamesToRemove.push( 'stk--has-background-scheme' )
+					} else if ( editor.classList.contains( 'stk--has-background-scheme' ) === false ) {
+						classNamesToAdd.push( 'stk--has-background-scheme' )
+					}
+
+					if ( ! styles.includes( '.stk-container:where(:not(.stk--no-background))' ) ) {
+						classNamesToRemove.push( 'stk--has-container-scheme' )
+					} else if ( editor.classList.contains( 'stk--has-container-scheme' ) === false ) {
+						classNamesToAdd.push( 'stk--has-container-scheme' )
+					}
+
+					editor.classList.add( ...classNamesToAdd )
+					editor.classList.remove( ...classNamesToRemove )
+				}
 			}
 
-			// At first load of the editor, the `stk-has-color-schemes` is removed, so we have to re-add it.
+			if ( ! filterRegistered ) {
+				addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
+				// Access current values via closure or alternative state management
+					const editor = editorEl
+					const hasBase = editor.classList.contains( 'stk--has-base-scheme' )
+					const hasBackground = editor.classList.contains( 'stk--has-background-scheme' )
+					const hasContainer = editor.classList.contains( 'stk--has-container-scheme' )
+
+					if ( hasBase && ! classnames.includes( 'stk--has-base-scheme' ) ) {
+						classnames.push( 'stk--has-base-scheme' )
+					}
+					if ( hasBackground && ! classnames.includes( 'stk--has-background-scheme' ) ) {
+						classnames.push( 'stk--has-background-scheme' )
+					}
+					if ( hasContainer && ! classnames.includes( 'stk--has-container-scheme' ) ) {
+						classnames.push( 'stk--has-container-scheme' )
+					}
+					return classnames
+				} )
+				filterRegistered = true
+			}
+
+			addClassNames( editorEl )
+
+			// At first load of the editor, the color scheme classnames removed, so we have to re-add it.
 			const mo = onClassChange( editorEl, () => {
-				if ( styles !== '' && editorEl?.classList.contains( 'stk-has-color-schemes' ) === false ) {
-					editorEl?.classList.add( 'stk-has-color-schemes' )
-					addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.color-schemes`, classnames => {
-						classnames.push( 'stk-has-color-schemes' )
-						return classnames
-					} )
-				}
-				if ( styles === '' ) {
-					editorEl?.classList.remove( 'stk-has-color-schemes' )
-				}
+				addClassNames( editorEl )
 			} )
 
 			return () => mo.disconnect()

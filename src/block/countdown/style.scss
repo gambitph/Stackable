@@ -1,3 +1,5 @@
+@import "common";
+
 .stk-block.stk-block-countdown {
 	text-align: center;
 	&.stk-block-countdown--aligned {
@@ -61,7 +63,7 @@
 }
 
 // These are styles added from the global color schemes.
-:where(.stk-has-color-schemes) {
+:where(#{$stk-has-color-schemes-selector}) {
 	.stk-block-countdown__digit {
 		color: var(--stk-accent-color);
 		&:where(:hover) {

@@ -112,7 +112,7 @@
 }
 
 // These are the global styles for color schemes.
-:where(.stk-has-color-schemes) {
+:where(#{$stk-has-color-schemes-selector}) {
 	div.stk-block > :is(h1,h2,h3,h4,h5,h6) {
 		color: var(--stk-heading-color);
 	}
@@ -180,13 +180,17 @@
 		}
 	}
 
-	.stk--is-hovered .stk-container:not(.stk--no-background) {
-		background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
-		background-image: var(--stk-container-background-color-hover, cssvar(container-background-color));
-	}
 
-	[data-type^="stackable/"] .stk--is-hovered.stk-block-background {
-		background-image: var(--stk-block-background-color-hover, cssvar(block-background-color));
-		background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
-	}
+}
+
+:where(.stk--has-container-scheme) .stk--is-hovered .stk-container:not(.stk--no-background),
+.stk--is-hovered .stk-container:not(.stk--no-background):where([class*="stk--container-scheme"]) {
+	background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
+	background-image: var(--stk-container-background-color-hover, var(--stk-container-background-color, none));
+}
+
+:where(.stk--has-container-scheme) [data-type^="stackable/"] .stk--is-hovered.stk-block-background,
+[data-type^="stackable/"] .stk--is-hovered.stk-block-background:where([class*="stk--background-scheme"]) {
+	background-image: var(--stk-block-background-color-hover, var(--stk-block-background-color, none));
+	background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
 }

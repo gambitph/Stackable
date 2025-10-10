@@ -55,7 +55,7 @@
 }
 
 // These are styles added from the global color schemes.
-:where(.stk-has-color-schemes) {
+:where(#{$stk-has-color-schemes-selector}) {
 	.stk-block-progress-circle {
 		--progress-color-1: var(--stk-accent-color);
 	}

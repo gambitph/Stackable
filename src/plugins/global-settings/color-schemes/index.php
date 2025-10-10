@@ -262,7 +262,9 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			// If there is cached CSS, use it
 			if ( $cached_color_scheme_css ) {
 				// Add a body class if there are any global color schemes styles.
-				add_filter( 'body_class', array( $this, 'add_body_class_color_schemes' ) );
+				add_filter( 'body_class', function( $classes ) use ( $cached_color_scheme_css ) {
+					return $this->add_body_class_color_schemes( $classes, $cached_color_scheme_css );
+				} );
 				$current_css .= $cached_color_scheme_css;
 				return apply_filters( 'stackable_frontend_css' , $current_css );
 			}
@@ -339,8 +341,15 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			}
 
 			// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
-			if ( isset( $this->color_schemes[ $container_default ] ) && $this::is_scheme_empty( $this->color_schemes[ $container_default ] ) ) {
-				$styles = $this->getDefaultContainerColors( $styles, $default_color_schemes[ 2 ] );
+			$add_default_container_colors = isset( $this->color_schemes[ $container_default ] ) && $this::is_scheme_empty( $this->color_schemes[ $container_default ] ) && (
+				// Add default container scheme if background scheme has value
+				( isset( $this->color_schemes[ $background_default ] ) && ! $this::is_scheme_empty( $this->color_schemes[ $background_default ] ) ) ||
+				// Add default container scheme if there are color schemes other than the default scheme and background scheme
+				count( $this->color_schemes ) > 2
+			);
+
+			if ( $add_default_container_colors ) {
+				$styles = $this->get_default_container_colors( $styles, $default_color_schemes[ 2 ] );
 			}
 
 			$color_scheme_css = '';
@@ -364,7 +373,9 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 
 			// Add a body class if there are any global color schemes styles.
 			if ( $color_scheme_css !== '' ) {
-				add_filter( 'body_class', array( $this, 'add_body_class_color_schemes' ) );
+				add_filter( 'body_class', function( $classes ) use ( $color_scheme_css ) {
+					return $this->add_body_class_color_schemes( $classes, $color_scheme_css );
+				}  );
 			}
 
 			// Add the generated CSS to the database
@@ -374,8 +385,20 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			return apply_filters( 'stackable_frontend_css' , $current_css );
 		}
 
-		public function add_body_class_color_schemes( $classes ) {
-			$classes[] = 'stk-has-color-schemes';
+		public function add_body_class_color_schemes( $classes, $color_scheme_css ) {
+			if ( $color_scheme_css ) {
+				if ( strpos( $color_scheme_css, ':root' ) !== false ) {
+					$classes[] = 'stk--has-base-scheme';
+				}
+
+				if ( strpos( $color_scheme_css, '.stk-block-background' ) !== false ) {
+					$classes[] = 'stk--has-background-scheme';
+				}
+
+				if ( strpos( $color_scheme_css, '.stk-container:where(:not(.stk--no-background))' ) !== false ) {
+					$classes[] = 'stk--has-container-scheme';
+				}
+			}
 			return $classes;
 		}
 
@@ -492,7 +515,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		}
 
 		// These colors are used when there are color schemes but the default container scheme is empty
-		public function getDefaultContainerColors( $styles, $scheme ) {
+		public function get_default_container_colors( $styles, $scheme ) {
 			$selectors = $scheme[ 'selectors' ];
 
 			$default_styles = array();
@@ -514,8 +537,8 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 
 			$default_styles = apply_filters( 'stackable.global-settings.global-color-schemes.default-container-scheme', $default_styles );
 
-			foreach ( $default_styles as $styles ) {
-				$styles[] = $default_styles;
+			foreach ( $default_styles as $default_style ) {
+				$styles[] = $default_style;
 			}
 
 

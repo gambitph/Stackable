@@ -313,7 +313,7 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 }
 
 // These are the global styles for color schemes.
-:where(.stk-has-color-schemes) {
+:where(#{$stk-has-color-schemes-selector}) {
 	:where(.stk-block) > :is(p, div) {
 		color: var(--stk-text-color);
 	}
@@ -384,22 +384,6 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 		}
 	}
 
-	.stk-container:not(.stk--no-background) {
-		background-image: cssvar(container-background-color);
-		&:hover {
-			background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
-			background-image: var(--stk-container-background-color-hover, cssvar(container-background-color));
-		}
-	}
-
-	.stk-block-background {
-		background-image: cssvar(block-background-color);
-		&:hover {
-			background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
-			background-image: var(--stk-block-background-color-hover, cssvar(block-background-color));
-		}
-	}
-
 	.stk--inner-svg {
 		border-color: var(--stk-default-icon-color, var(--stk-accent-color, cssvar(icon-color)));
 		svg:last-child:not(.ugb-custom-icon):not(.stk-custom-icon) {
@@ -436,8 +420,26 @@ body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-col
 	}
 }
 
+:where(.stk--has-container-scheme) .stk-container:not(.stk--no-background),
+.stk-container:not(.stk--no-background):where([class*="stk--container-scheme"]) {
+	background-image: var(--stk-container-background-color, none);
+	&:hover {
+		background-color: var(--stk-container-background-color-hover, cssvar(container-background-color));
+		background-image: var(--stk-container-background-color-hover, var(--stk-container-background-color, none));
+	}
+}
+
+:where(.stk--has-background-scheme) .stk-block-background,
+.stk-block-background:where([class*="stk--background-scheme"]) {
+	background-image: var(--stk-block-background-color, none);
+	&:hover {
+		background-color: var(--stk-block-background-color-hover, cssvar(block-background-color));
+		background-image: var(--stk-block-background-color-hover, var(--stk-block-background-color, none));
+	}
+}
+
 // These are the global styles applied when theme block styles are inherited and when there are color schemes.
-:where(.stk-has-block-style-inheritance.stk-has-color-schemes) {
+:where(.stk-has-block-style-inheritance):where(#{$stk-has-color-schemes-selector}) {
 	.stk-block:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 		&:not(.is-style-link) .stk-button {
 			color: var(--stk-button-text-color-hover, cssvar(button-text-color));
