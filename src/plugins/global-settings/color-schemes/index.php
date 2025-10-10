@@ -341,8 +341,15 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			}
 
 			// This fixes the issue wherein if there is a background scheme and no container/base scheme, the container inherits the background scheme which may cause the text to be unreadable
-			if ( isset( $this->color_schemes[ $container_default ] ) && $this::is_scheme_empty( $this->color_schemes[ $container_default ] ) ) {
-				$styles = $this->getDefaultContainerColors( $styles, $default_color_schemes[ 2 ] );
+			$add_default_container_colors = isset( $this->color_schemes[ $container_default ] ) && $this::is_scheme_empty( $this->color_schemes[ $container_default ] ) && (
+				// Add default container scheme if background scheme has value
+				( isset( $this->color_schemes[ $background_default ] ) && ! $this::is_scheme_empty( $this->color_schemes[ $background_default ] ) ) ||
+				// Add default container scheme if there are color schemes other than the default scheme and background scheme
+				count( $this->color_schemes ) > 2
+			);
+
+			if ( $add_default_container_colors ) {
+				$styles = $this->get_default_container_colors( $styles, $default_color_schemes[ 2 ] );
 			}
 
 			$color_scheme_css = '';
@@ -508,7 +515,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		}
 
 		// These colors are used when there are color schemes but the default container scheme is empty
-		public function getDefaultContainerColors( $styles, $scheme ) {
+		public function get_default_container_colors( $styles, $scheme ) {
 			$selectors = $scheme[ 'selectors' ];
 
 			$default_styles = array();

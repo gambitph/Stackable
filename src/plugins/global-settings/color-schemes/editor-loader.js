@@ -75,7 +75,7 @@ export const renderGlobalColorSchemeStyles = (
 			// Add default container scheme if background scheme has value
 			( backgroundModeColorScheme in colorSchemes && schemeHasValue( colorSchemes[ backgroundModeColorScheme ] ) ) ||
 			// Add default container scheme if there are color schemes other than the default scheme and background scheme
-			( colorSchemesArray.length !== 2 )
+			( colorSchemesArray.length > 2 )
 		)
 
 	if ( containerModeColorScheme in colorSchemes && schemeHasValue( colorSchemes[ containerModeColorScheme ] ) ) {
