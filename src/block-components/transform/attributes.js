@@ -5,7 +5,7 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
-			transitionOrigin: {
+			transformOrigin: {
 				type: 'string',
 				default: '',
 			},
