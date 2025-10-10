@@ -70,6 +70,10 @@
 			line-height: 0;
 		}
 	}
+
+	> svg [id^="stk-icon-list__icon-svg-def"] svg {
+		width: initial;
+	}
 }
 
 // Alignments when the icon list is aligned.
