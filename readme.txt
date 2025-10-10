@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.2
 Requires PHP: 7.3
-Stable tag: 3.19.0
+Stable tag: 3.19.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -308,6 +308,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.1 =
+* Fixed: Color schemes - some styles can change when there is a color scheme present #3624
+* Fixed: Carousel block - console error when carousel is sliding #3615
+* Fixed: Carousel block - content alignment does not get followed #3616
+* Fixed: Posts block - html inside Read More link show incorrectly #3618
+* Fixed: Transform origin settings reset back to defaults #3608
+* Fixed: Content alignment option are not applied to native Image Blocks #3601
 
 = 3.19.0 =
 [Introducing: Full Page Templates, Style Guide and Onboarding Tour](https://wpstackable.com/blog/introducing-full-page-templates-style-guide-and-onboarding-tour/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

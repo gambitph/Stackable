@@ -2051,6 +2051,33 @@
     ]
   },
   {
+    "family": "BBH Sans Bartle",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "BBH Sans Bogle",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "BBH Sans Hegarty",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "BIZ UDGothic",
     "variants": [
       "regular",
