@@ -398,6 +398,10 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				if ( strpos( $color_scheme_css, '.stk-container:where(:not(.stk--no-background))' ) !== false ) {
 					$classes[] = 'stk--has-container-scheme';
 				}
+
+				if ( strpos( $color_scheme_css, '--stk-default-container-background-color' ) !== false ) {
+					$classes[] = 'stk--has-default-container-scheme';
+				}
 			}
 			return $classes;
 		}
