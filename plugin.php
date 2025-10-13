@@ -26,7 +26,8 @@ if ( ! function_exists( 'stackable_multiple_plugins_check' ) ) {
 	}
 }
 
-if ( defined('STACKABLE_FILE') && STACKABLE_FILE !== __FILE__ && ! isset( $GLOBALS['OTHER_STACKABLE_FILE'] ) ) {
+if ( defined('STACKABLE_FILE') && STACKABLE_FILE !== __FILE__ && ! isset( $GLOBALS['OTHER_STACKABLE_FILE'] ) &&
+	defined( 'STACKABLE_BUILD' ) && defined( 'STACKABLE_VERSION' ) ) {
 	// Get relative file path of the other Stackable version.
 	$GLOBALS['OTHER_STACKABLE_FILE'] = plugin_basename( STACKABLE_FILE );
 
