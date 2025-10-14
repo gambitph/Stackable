@@ -150,6 +150,14 @@ const LABELS = {
 			<li>{ __( 'Override styles while keeping them synced', i18n ) }</li>
 		</ul>,
 	},
+	'design-library-saved-patterns': {
+		title: __( 'Design Library Saved Patterns', i18n ),
+		description: <ul>
+			<li>{ __( 'Save your own patterns', i18n ) }</li>
+			<li>{ __( 'Edit and manage your own library of reusable patterns', i18n ) }</li>
+			<li>{ __( 'Import and export saved patterns between sites', i18n ) }</li>
+		</ul>,
+	},
 }
 
 const ProControl = props => {

@@ -464,3 +464,9 @@ div.ugb-modal-design-library__enable-background {
 		min-width: unset;
 	}
 }
+
+body:has(.stk-design-library__item-saved) {
+	.components-snackbar-list {
+		z-index: 100001;
+	}
+}

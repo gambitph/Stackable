@@ -3,10 +3,11 @@
  */
 import HelpSVG from './images/help.svg'
 import BlockList from './block-list'
+import { HeaderActions, PLAN_OPTIONS } from './header-actions'
 import Button from '../button'
-import DesignLibraryList from '~stackable/components/design-library-list'
-import { GuidedModalTour } from '~stackable/components'
-import { getDesigns, filterDesigns } from '~stackable/design-library'
+import Tooltip from '../tooltip'
+import ColorSchemePreview from '../color-scheme-preview'
+import { ColorSchemesHelp } from '../color-schemes-help'
 
 /**
  * External deprendencies
@@ -14,6 +15,10 @@ import { getDesigns, filterDesigns } from '~stackable/design-library'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
 import { useLocalStorage } from '~stackable/util'
+import DesignLibraryList from '~stackable/components/design-library-list'
+import { GuidedModalTour } from '~stackable/components'
+import { getDesigns, filterDesigns } from '~stackable/design-library'
+import { useBlockColorSchemes } from '~stackable/hooks'
 
 /**
  * WordPress deprendencies
@@ -29,12 +34,8 @@ import {
 	useEffect, useState, createContext, useContext, useCallback,
 	useMemo,
 } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 import { sprintf, __ } from '@wordpress/i18n'
-import { useBlockColorSchemes } from '~stackable/hooks'
-import ColorSchemePreview from '../color-scheme-preview'
-import { ColorSchemesHelp } from '../color-schemes-help'
-import Tooltip from '../tooltip'
-import { HeaderActions, PLAN_OPTIONS } from './header-actions'
 
 const popoverProps = {
 	className: 'ugb-design-library__color-scheme-popover',
@@ -77,6 +78,8 @@ export const ModalDesignLibrary = props => {
 	const [ selectedContainerScheme, setSelectedContainerScheme ] = useState( '' )
 	const [ selectedBackgroundScheme, setSelectedBackgroundScheme ] = useState( '' )
 
+	const savedPatterns = applyFilters( 'stackable.design-library.patterns', selectedTab )
+
 	// For version 4, the default tab is now 'patterns' and for category, we use '' instead of 'All'.
 	// So we need to update the local storage values here.
 	useEffect( () => {
@@ -90,6 +93,14 @@ export const ModalDesignLibrary = props => {
 
 	// Update the designs on the sidebar. (this will trigger the display designs update next)
 	useEffect( () => {
+		if ( selectedTab === 'saved' ) {
+			setSidebarDesigns( savedPatterns )
+			setSelectedCategory( '' )
+			setDoReset( false )
+			setIsBusy( false )
+			return
+		}
+
 		setIsBusy( true )
 		setSidebarDesigns( [] )
 
@@ -103,7 +114,7 @@ export const ModalDesignLibrary = props => {
 			setDoReset( false )
 			setIsBusy( false )
 		} )
-	}, [ doReset, selectedTab ] )
+	}, [ doReset, selectedTab, savedPatterns ] )
 
 	// This updates the displayed designs the user can pick.
 	useEffect( () => {
@@ -111,6 +122,7 @@ export const ModalDesignLibrary = props => {
 			library: sidebarDesigns,
 			category: selectedCategory,
 			plan: selectedPlan.key,
+			type: selectedTab,
 		} ).then( designs => {
 			setDisplayDesigns( designs )
 		} )
@@ -137,7 +149,7 @@ export const ModalDesignLibrary = props => {
 	const onSelectDesign = useCallback( ( designId, category, parsedBlocks, blocksForSubstitution, selectedPreviewSize ) => {
 		if ( selectedTab === 'pages' ) {
 			const selectedDesign = [ {
-				designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
+				designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize, type: selectedTab,
 			} ]
 			addDesign( selectedDesign )
 
@@ -167,6 +179,7 @@ export const ModalDesignLibrary = props => {
 			} else {
 				newSelectedDesignData.push( {
 					designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
+					type: selectedTab,
 				} )
 			}
 
@@ -245,7 +258,7 @@ export const ModalDesignLibrary = props => {
 									<HelpSVG height="14px" width="14px" />
 								</Tooltip>
 							</div>
-							{ selectedTab === 'patterns' && <ToggleControl
+							{ selectedTab !== 'pages' && <ToggleControl
 								className="ugb-modal-design-library__enable-background"
 								label={ __( 'Section Background', i18n ) }
 								checked={ enableBackground }
@@ -390,9 +403,10 @@ export const ModalDesignLibrary = props => {
 						className={ `stk-design-library__item-${ selectedTab }` }
 						isBusy={ isBusy }
 						designs={ displayDesigns }
+						selectedTab={ selectedTab }
 					/>
 
-					{ selectedTab === 'patterns' && <aside className="ugb-modal-design-library__footer">
+					{ selectedTab !== 'pages' && <aside className="ugb-modal-design-library__footer">
 						<div>{ sprintf( __( `(%d) Selected`, i18n ), selectedDesignIds.length ) }</div>
 						<Button
 							label={ __( 'Add Designs', i18n ) }

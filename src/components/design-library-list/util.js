@@ -180,7 +180,11 @@ export const adjustPatternSpacing = ( attributes, category, spacingSize, isDesig
 	}
 }
 
-export const replacePlaceholders = ( designContent, designCategory, isDesignLibraryDevMode ) => {
+export const replacePlaceholders = ( designContent, designCategory, isDesignLibraryDevMode, type ) => {
+	if ( type === 'saved' ) {
+		return designContent
+	}
+
 	const defaultValues = DEFAULT_CONTENT[ designCategory ]
 
 	if ( defaultValues && ! isDesignLibraryDevMode ) {

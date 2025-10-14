@@ -55,7 +55,7 @@ export const DesignPreview = ( {
 
 	useEffect( () => {
 		const container = ref.current
-		if ( ! container || selectedTab === 'patterns' ) {
+		if ( ! container || selectedTab !== 'pages' ) {
 			return
 		}
 
@@ -121,6 +121,7 @@ export const DesignPreview = ( {
 		>
 			<div
 				ref={ wrapperRef }
+				className="is-layout-constrained"
 				style={ { pointerEvents: 'none' } }	// prevent blocks from being clicked
 			/>
 		</body>

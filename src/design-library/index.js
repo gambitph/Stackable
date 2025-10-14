@@ -29,13 +29,13 @@ export const fetchDesignLibrary = async ( forceReset = false, version = '', type
 		designLibrary[ type ] = designsPerType
 
 		if ( type === 'patterns' ) {
-			designs = designsPerType[ LATEST_API_VERSION ]
+			designs = designsPerType[ LATEST_API_VERSION ] || {}
 		} else {
-			pages = designsPerType[ LATEST_API_VERSION ]
+			pages = designsPerType[ LATEST_API_VERSION ] || {}
 		}
 	}
 
-	return designLibrary[ type ][ version || LATEST_API_VERSION ]
+	return designLibrary[ type ]?.[ version || LATEST_API_VERSION ] || {}
 }
 
 export const fetchDesign = async designId => {
@@ -75,8 +75,9 @@ export const filterDesigns = async ( {
 	library = [],
 	plan: isPlan = '',
 	category: isCategory = '',
+	type = 'patterns',
 } ) => {
-	if ( isPlan ) {
+	if ( isPlan && type !== 'saved' ) {
 		library = library.filter( ( { plan } ) => plan === isPlan )
 	}
 

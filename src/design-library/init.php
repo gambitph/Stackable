@@ -29,6 +29,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		public function __construct() {
 			add_action( 'rest_api_init', array( $this, 'register_route' ) );
 
+			add_action( 'register_stackable_global_settings', array( $this, 'register_saved_patterns' ) );
+
 			add_action( 'stackable_delete_design_library_cache', array( $this, 'delete_cache_v3' ) );
 		}
 
@@ -86,6 +88,37 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					),
 				),
 			) );
+		}
+
+		public function register_saved_patterns() {
+			register_setting(
+				'stackable_design_library',
+				'stackable_design_library_saved_patterns',
+				array(
+					'type' => 'array',
+					'description' => __( 'Stackable Design Library User-Saved Patterns', STACKABLE_I18N ),
+					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
+					'show_in_rest' => array(
+						'schema' => array(
+							'items' => array(
+								'type'=>'object',
+								'properties'=> array(
+									'id' => array( 'type' => 'string' ),
+									'label' => array( 'type' => 'string' ),
+									'description' => array( 'type' => 'string' ),
+									'category' => array( 'type' => 'string' ),
+									'template' => array( 'type' => 'string' )
+								)
+							)
+						)
+					),
+					'default' => '',
+				)
+			);
+		}
+
+		public function sanitize_array_setting( $input ) {
+			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
 		/**
@@ -285,6 +318,11 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			$type = $request->get_param( 'type' );
 			if ( $reset ) {
 				$this->delete_cache();
+			}
+
+			if ( $type === 'saved' ) {
+				$saved_patterns = get_option( 'stackable_design_library_saved_patterns', [] );
+				return rest_ensure_response( $saved_patterns );
 			}
 
 			return rest_ensure_response( $this->get_design_library_from_cloud( $type ) );

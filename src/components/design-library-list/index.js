@@ -6,7 +6,7 @@ import DesignLibraryListItem from './design-library-list-item'
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 import classnames from 'classnames'
 
 /**
@@ -19,12 +19,14 @@ import {
 } from '@wordpress/element'
 import { usePresetControls } from '~stackable/hooks'
 import { useDesignLibraryContext } from '../modal-design-library/modal'
+import ProControl from '../pro-control'
 
 const DesignLibraryList = memo( props => {
 	const {
 		className = '',
 		designs,
 		isBusy,
+		selectedTab,
 	} = props
 	const containerRef = useRef( null )
 
@@ -41,24 +43,27 @@ const DesignLibraryList = memo( props => {
 		className="ugb-modal-design-library__designs"
 		ref={ containerRef }
 	>
-		{ isBusy && <Spinner style={ { display: 'block', margin: '0 auto' } } /> }
-		{ ! isBusy && <>
-			<div className={ listClasses }>
-				{ ( designs || [] ).map( ( design, i ) => {
-					return (
-						<DesignLibraryItem
-							design={ design }
-							key={ design.id || design.designId }
-							designIndex={ i }
-						/>
-					)
-				} ) }
+		{ selectedTab === 'saved' && ! isPro
+			? <ProControl type="design-library-saved-patterns" />
+			: <>
+				{ isBusy && <Spinner style={ { display: 'block', margin: '0 auto' } } /> }
+				{ ! isBusy && <div className={ listClasses }>
+					{ ( designs || [] ).map( ( design, i ) => {
+						return (
+							<DesignLibraryItem
+								design={ design }
+								key={ design.id || design.designId }
+								designIndex={ i }
+							/>
+						)
+					} ) }
 
-				{ ! ( designs || [] ).length &&
-					<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
-				}
-			</div>
-		</> }
+					{ ! ( designs || [] ).length &&
+						<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
+					}
+				</div> }
+			</>
+		}
 	</div>
 } )
 
