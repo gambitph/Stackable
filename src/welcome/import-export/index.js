@@ -140,22 +140,30 @@ const getExportFileName = () => {
 	return `stackable-export-${ y }${ m }${ d }-${ h }${ min }${ s }.json`
 }
 
-const ExportSettings = ( { settings, onClose } ) => {
+const ExportSettings = ( {
+	settings, onClose, setNotice,
+} ) => {
 	const [ exportedSettings, setExportedSettings ] = useState( {} )
 
 	const handleExport = () => {
-		const dataStr = JSON.stringify( exportedSettings, null, 4 )
-		const blob = new Blob( [ dataStr ], { type: 'application/json' } )
-		const url = URL.createObjectURL( blob )
-		const a = document.createElement( 'a' )
-		a.href = url
+		try {
+			const dataStr = JSON.stringify( exportedSettings, null, 4 )
+			const blob = new Blob( [ dataStr ], { type: 'application/json' } )
+			const url = URL.createObjectURL( blob )
+			const a = document.createElement( 'a' )
+			a.href = url
 
-		a.download = getExportFileName()
-		document.body.appendChild( a )
-		a.click()
-		document.body.removeChild( a )
-		URL.revokeObjectURL( url )
-		onClose()
+			a.download = getExportFileName()
+			document.body.appendChild( a )
+			a.click()
+			document.body.removeChild( a )
+			URL.revokeObjectURL( url )
+			onClose()
+		} catch ( e ) {
+			setNotice( __( 'Failed to export settings.', i18n ) )
+			// eslint-disable-next-line no-console
+			console.error( sprintf( __( 'Stackable: Export error - %s', i18n ), e ) )
+		}
 	}
 
 	const AllExportSettings = useMemo( () => applyFilters( 'stackable.admin-settings.export-settings', Fragment ), [] )

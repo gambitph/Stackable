@@ -68,11 +68,17 @@
 		display: flex;
 		gap: 24px;
 		visibility: hidden;
+		@media (hover: none) {
+			opacity: 1;
+		}
 
 		.ugb-button-component {
 			width: 100%;
 			justify-content: center;
 			pointer-events: none;
+			@media (hover: none) {
+				pointer-events: auto;
+			}
 		}
 	}
 	&:hover {
