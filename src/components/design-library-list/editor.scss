@@ -67,10 +67,12 @@
 		right: 0;
 		display: flex;
 		gap: 24px;
+		visibility: hidden;
 
 		.ugb-button-component {
 			width: 100%;
 			justify-content: center;
+			pointer-events: none;
 		}
 	}
 	&:hover {
@@ -81,8 +83,10 @@
 		}
 
 		.stk-block-design__edit-btn-container {
+			visibility: visible;
 			opacity: 1;
 			transition-delay: 1s;
+			pointer-events: initial;
 		}
 	}
 

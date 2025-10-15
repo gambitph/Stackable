@@ -90,6 +90,9 @@ export const DesignPreview = ( {
 
 		setIsLoading( true )
 
+		// Prevent interaction and focus within the preview content
+		wrapper.setAttribute( 'inert', '' )
+
 		const ric = window.requestIdleCallback ? ( cb => window.requestIdleCallback( cb, { timeout: 5000 } ) )
 			: ( cb => setTimeout( cb, designIndex * 20 ) )
 		const sanitizedHTML = safeHTML( blocks )

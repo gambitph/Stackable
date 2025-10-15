@@ -94,6 +94,12 @@ const DesignLibraryListItem = memo( props => {
 		tabIndex: 0,
 		role: 'button',
 		onClick: onClickHost,
+		onKeyDown: e => {
+			if ( e.key === 'Enter' || e.key === ' ' ) {
+				e.preventDefault()
+				onClickHost( e )
+			}
+		},
 	}
 
 	return (

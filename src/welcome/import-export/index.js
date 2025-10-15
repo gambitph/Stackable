@@ -4,7 +4,7 @@ import './design-library'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import {
 	Button, Modal, Snackbar, TabPanel,
 } from '@wordpress/components'
@@ -62,7 +62,7 @@ const ImportSettings = ( {
 		}, importedSettings, settings )
 	}, [ importedSettings ] )
 
-	const handleImport = () => {
+	const handleImport = async () => {
 		if ( ! ( 'settings' in importedSettings ) ) {
 			onClose()
 			return
@@ -70,12 +70,20 @@ const ImportSettings = ( {
 
 		if ( Object.keys( errors ).length ) {
 			setNotice( __( 'Failed to import settings.', i18n ) )
+			// eslint-disable-next-line no-console
+			console.error( sprintf( __( 'Stackable: Import error - %s', i18n ), Object.values( errors ).join( '\n' ) ) )
 		} else if ( Object.keys( settingsToSave ).length === 0 ) {
 			setNotice( __( 'No settings imported.', i18n ) )
 		} else {
 			const model = new models.Settings( settingsToSave )
-			model.save()
-			setNotice( __( 'Settings imported successfully.', i18n ) )
+			try {
+				await model.save()
+				setNotice( __( 'Settings imported successfully.', i18n ) )
+			} catch ( e ) {
+				setNotice( __( 'Failed to import settings.', i18n ) )
+				// eslint-disable-next-line no-console
+				console.error( sprintf( __( 'Stackable: Import error - %s', i18n ), e ) )
+			}
 		 }
 
 		onClose()
