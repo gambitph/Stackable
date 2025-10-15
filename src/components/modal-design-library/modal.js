@@ -78,7 +78,7 @@ export const ModalDesignLibrary = props => {
 	const [ selectedContainerScheme, setSelectedContainerScheme ] = useState( '' )
 	const [ selectedBackgroundScheme, setSelectedBackgroundScheme ] = useState( '' )
 
-	const savedPatterns = applyFilters( 'stackable.design-library.patterns', selectedTab )
+	const savedPatterns = applyFilters( 'stackable.design-library.patterns', [], selectedTab )
 
 	// For version 4, the default tab is now 'patterns' and for category, we use '' instead of 'All'.
 	// So we need to update the local storage values here.
