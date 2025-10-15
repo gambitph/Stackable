@@ -112,10 +112,11 @@ if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
 
 			foreach ( $blocksy_static_files as $file ) {
 				if ( isset( $file['url'] ) ) {
-					$file_url = get_template_directory_uri() . $file['url'];
-					$response = wp_remote_get( $file_url );
-					if ( ! is_wp_error( $response ) ) {
-						$styles .= wp_remote_retrieve_body( $response );
+					$file_path = get_template_directory() . $file['url'];
+					$mime = mime_content_type( $file_path );
+					$is_valid_mime = $mime === 'text/css' || $mime === 'text/plain';
+					if ( file_exists( $file_path ) && is_readable( $file_path ) && $is_valid_mime ) {
+						$styles .= file_get_contents( $file_path );
 					}
 				}
 			}
