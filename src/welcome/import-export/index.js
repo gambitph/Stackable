@@ -72,21 +72,24 @@ const ImportSettings = ( {
 			setNotice( __( 'Failed to import settings.', i18n ) )
 			// eslint-disable-next-line no-console
 			console.error( sprintf( __( 'Stackable: Import error - %s', i18n ), Object.values( errors ).join( '\n' ) ) )
-		} else if ( Object.keys( settingsToSave ).length === 0 ) {
-			setNotice( __( 'No settings imported.', i18n ) )
-		} else {
-			const model = new models.Settings( settingsToSave )
-			try {
-				await model.save()
-				setNotice( __( 'Settings imported successfully.', i18n ) )
-			} catch ( e ) {
-				setNotice( __( 'Failed to import settings.', i18n ) )
-				// eslint-disable-next-line no-console
-				console.error( sprintf( __( 'Stackable: Import error - %s', i18n ), e ) )
-			}
-		 }
+			return
+		}
 
-		onClose()
+		if ( Object.keys( settingsToSave ).length === 0 ) {
+			setNotice( __( 'No settings imported.', i18n ) )
+			return
+		}
+
+		const model = new models.Settings( settingsToSave )
+		try {
+			await model.save()
+			setNotice( __( 'Settings imported successfully.', i18n ) )
+			onClose()
+		} catch ( e ) {
+			setNotice( __( 'Failed to import settings.', i18n ) )
+			// eslint-disable-next-line no-console
+			console.error( sprintf( __( 'Stackable: Import error - %s', i18n ), e ) )
+		}
 	}
 
 	const AllImportSettings = useMemo( () => applyFilters( 'stackable.admin-settings.import-settings', Fragment ), [] )

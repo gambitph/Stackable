@@ -21,6 +21,7 @@ import { Tooltip } from '~stackable/components'
 import {
 	useState, useRef, memo,
 	useMemo,
+	Fragment,
 } from '@wordpress/element'
 import { Dashicon, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
@@ -120,7 +121,7 @@ const DesignLibraryListItem = memo( props => {
 						showHideNote={ false }
 					/>
 				) }
-				{ isPro && applyFilters( 'stackable.design-library.pattern-actions', previewProps ) }
+				{ isPro && applyFilters( 'stackable.design-library.pattern-actions', Fragment, previewProps ) }
 				<div className={ `stk-spinner-container ${ isLoading || ! shouldRender ? '' : 'stk-hide-spinner' }` }><Spinner /></div>
 				<div
 					className="stk-block-design__host-container"
