@@ -88,3 +88,41 @@ if ( ! function_exists( 'stackable_blocksy_global_color_schemes_compatibility' )
 
 	add_filter( 'stackable.global-settings.global-color-schemes.add-theme-compatibility', 'stackable_blocksy_global_color_schemes_compatibility', 10, 6 );
 }
+
+if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
+	function stackable_blocksy_theme_global_styles( $styles ) {
+
+		if ( function_exists( 'blocksy_manager' ) ) {
+			$blocksy_css = blocksy_manager()->dynamic_css->load_backend_dynamic_css([
+				'echo' => false
+			] );
+
+			$styles .= $blocksy_css;
+		}
+
+		if ( class_exists( 'Blocksy_Static_Css_Files' ) ) {
+			$blocksy_static_files = ( new Blocksy_Static_Css_Files() )->all_static_files();
+
+			$blocksy_static_files = array_filter(
+				$blocksy_static_files,
+				function( $file ) {
+					return isset( $file['id'] ) && in_array( $file['id'], array( 'ct-main-styles', 'ct-stackable-styles' ), true );
+				}
+			);
+
+			foreach ( $blocksy_static_files as $file ) {
+				if ( isset( $file['url'] ) ) {
+					$file_url = get_template_directory_uri() . $file['url'];
+					$response = wp_remote_get( $file_url );
+					if ( ! is_wp_error( $response ) ) {
+						$styles .= wp_remote_retrieve_body( $response );
+					}
+				}
+			}
+		}
+
+		return $styles;
+	}
+
+	add_filter( 'stackable.design-library.global-theme-styles', 'stackable_blocksy_theme_global_styles' );
+}
