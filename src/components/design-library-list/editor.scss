@@ -57,7 +57,7 @@
 	.stk-block-design__edit-btn-container {
 		opacity: 0;
 		z-index: 2;
-		transition: opacity 0.4s cubic-bezier(0.2, 0.6, 0.4, 1);
+		transition: opacity 0.4s cubic-bezier(0.2, 0.6, 0.4, 1), visibility 0.4s cubic-bezier(0.2, 0.6, 0.4, 1);
 		position: absolute;
 		padding: 60px 30px 30px;
 		background: linear-gradient(180deg, transparent, #fffe 40px, #fff) !important;
@@ -86,7 +86,10 @@
 			visibility: visible;
 			opacity: 1;
 			transition-delay: 1s;
-			pointer-events: initial;
+
+			.ugb-button-component {
+				pointer-events: initial;
+			}
 		}
 	}
 

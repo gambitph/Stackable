@@ -34,6 +34,7 @@ import {
 	useEffect, useState, createContext, useContext, useCallback,
 	useMemo,
 } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 import { sprintf, __ } from '@wordpress/i18n'
 
@@ -78,7 +79,9 @@ export const ModalDesignLibrary = props => {
 	const [ selectedContainerScheme, setSelectedContainerScheme ] = useState( '' )
 	const [ selectedBackgroundScheme, setSelectedBackgroundScheme ] = useState( '' )
 
-	const savedPatterns = applyFilters( 'stackable.design-library.patterns', [], selectedTab )
+	const savedPatterns = useSelect( select => {
+		return applyFilters( 'stackable.design-library.patterns', [], select )
+	}, [] )
 
 	// For version 4, the default tab is now 'patterns' and for category, we use '' instead of 'All'.
 	// So we need to update the local storage values here.
