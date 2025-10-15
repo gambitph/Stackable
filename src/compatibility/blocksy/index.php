@@ -90,6 +90,38 @@ if ( ! function_exists( 'stackable_blocksy_global_color_schemes_compatibility' )
 }
 
 if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
+	function stackable_sanitize_css_string( $css ) {
+		if ( ! is_string( $css ) ) {
+			return '';
+		}
+
+		// sanitize css content
+		$css = wp_strip_all_tags( $css );
+		$css = preg_replace('/\bexpression\s*\([^)]*\)/i', '', $css);
+		$css = preg_replace('/\bjavascript\s*:/i', '', $css);
+
+		// clean urls
+		$css = preg_replace('/url\(\s*[\'"]?\s*https?:\/\/[^\'")]+\s*[\'"]?\s*\)/i', 'url("")', $css);
+
+		// Block unsafe tokens
+		$css = preg_replace('/\b(?:eval|mocha)\b(\s*:|\s*\()/i', '/* blocked */$1', $css);
+
+		// Block behavior and vendor-prefixed behavior
+		$css = preg_replace('/(?<![a-zA-Z0-9-])(?:-+[a-zA-Z]*behavior|behavior)\b(\s*:|\s*\()/i', '/* blocked */$1', $css);
+
+		// Remove redundant semicolons
+		$css = preg_replace('/;+/', ';', $css);
+
+		// Remove empty rule blocks (e.g. ".selector { }")
+		$css = preg_replace('/[^{]+\{\s*\}/m', '', $css);
+
+		// Normalize spacing and line breaks
+		$css = preg_replace('/\s+/', ' ', $css);
+		$css = trim($css);
+
+		return $css;
+	}
+
 	function stackable_blocksy_theme_global_styles( $styles ) {
 
 		if ( function_exists( 'blocksy_manager' ) ) {
@@ -122,6 +154,8 @@ if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
 			}
 		}
 
+		// sanitize all added styles once
+		$styles = stackable_sanitize_css_string( $styles );
 		return $styles;
 	}
 
