@@ -100,8 +100,18 @@ if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
 		$css = preg_replace('/\bexpression\s*\([^)]*\)/i', '', $css);
 		$css = preg_replace('/\bjavascript\s*:/i', '', $css);
 
-		// clean urls
-		$css = preg_replace('/url\(\s*[\'"]?\s*https?:\/\/[^\'")]+\s*[\'"]?\s*\)/i', 'url("")', $css);
+		// Only allow URLs from the theme directory
+		$theme_uri = preg_quote( get_template_directory_uri(), '/' );
+		$css = preg_replace_callback(
+			'/url\(\s*[\'"]?\s*(https?:\/\/[^\'")]+)\s*[\'"]?\s*\)/i',
+			function( $matches ) use ( $theme_uri ) {
+				if ( preg_match( "/^{$theme_uri}/i", $matches[1] ) ) {
+					return $matches[0]; // Keep theme URLs
+				}
+				return 'url("")'; // Remove others
+			},
+			$css
+		);
 
 		// Block unsafe tokens
 		$css = preg_replace('/\b(?:eval|mocha)\b(\s*:|\s*\()/i', '/* blocked */$1', $css);
@@ -145,10 +155,28 @@ if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
 			foreach ( $blocksy_static_files as $file ) {
 				if ( isset( $file['url'] ) ) {
 					$file_path = get_template_directory() . $file['url'];
-					$mime = mime_content_type( $file_path );
-					$is_valid_mime = $mime === 'text/css' || $mime === 'text/plain';
-					if ( file_exists( $file_path ) && is_readable( $file_path ) && $is_valid_mime ) {
-						$styles .= file_get_contents( $file_path );
+
+					// Normalize and validate the path to prevent traversal
+					$file_url = ltrim( $file['url'], '/' );
+					$file_path = get_template_directory() . '/' . $file_url;
+					$file_path = realpath( $file_path );
+					$theme_dir = realpath( get_template_directory() );
+
+					// Ensure the resolved path is within the theme directory
+					if ( ! $file_path || strpos( $file_path, $theme_dir ) !== 0 ) {
+						continue;
+					}
+
+					if ( file_exists( $file_path ) && is_readable( $file_path ) ) {
+						$extension = strtolower( pathinfo( $file_path, PATHINFO_EXTENSION ) );
+						if ( $extension !== 'css' ) {
+							continue;
+						}
+						$content = file_get_contents( $file_path );
+						if ( $content !== false ) {
+							$styles .= $content;
+						}
+
 					}
 				}
 			}
