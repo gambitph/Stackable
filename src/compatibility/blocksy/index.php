@@ -155,8 +155,6 @@ if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
 			$styles_from_files = '';
 			foreach ( $blocksy_static_files as $file ) {
 				if ( isset( $file['url'] ) ) {
-					$file_path = get_template_directory() . $file['url'];
-
 					// Normalize and validate the path to prevent traversal
 					$file_url = ltrim( $file['url'], '/' );
 					$file_path = get_template_directory() . '/' . $file_url;
