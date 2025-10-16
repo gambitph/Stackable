@@ -179,12 +179,14 @@ if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
 					}
 				}
 			}
+
+			if ( $styles_from_files ) {
+				// sanitize styles from files
+				$styles_from_files = stackable_sanitize_css_string( $styles_from_files );
+				$styles .= $styles_from_files;
+			}
 		}
 
-		// sanitize styles from files
-		$styles_from_files = stackable_sanitize_css_string( $styles_from_files );
-
-		$styles .= $styles_from_files;
 		return $styles;
 	}
 
