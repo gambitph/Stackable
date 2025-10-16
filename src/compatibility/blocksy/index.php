@@ -152,6 +152,7 @@ if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
 				}
 			);
 
+			$styles_from_files = '';
 			foreach ( $blocksy_static_files as $file ) {
 				if ( isset( $file['url'] ) ) {
 					$file_path = get_template_directory() . $file['url'];
@@ -174,7 +175,7 @@ if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
 						}
 						$content = file_get_contents( $file_path );
 						if ( $content !== false ) {
-							$styles .= $content;
+							$styles_from_files .= $content;
 						}
 
 					}
@@ -182,8 +183,10 @@ if ( ! function_exists( 'stackable_blocksy_theme_global_styles' ) ) {
 			}
 		}
 
-		// sanitize all added styles once
-		$styles = stackable_sanitize_css_string( $styles );
+		// sanitize styles from files
+		$styles_from_files = stackable_sanitize_css_string( $styles_from_files );
+
+		$styles .= $styles_from_files;
 		return $styles;
 	}
 
