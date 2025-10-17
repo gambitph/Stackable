@@ -20,7 +20,7 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 	getBlockVariations,
 } from '@wordpress/blocks'
-import { DEFAULT_CONTENT, addPlaceholderForPostsBlock } from '../../components/design-library-list/util'
+import { DEFAULT_CONTENT, addPlaceholderForPostsBlock } from '../design-library/util'
 
 export const DUMMY_COLOR_SCHEMES = [
 	{

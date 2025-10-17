@@ -2,11 +2,13 @@
  * Internal dependencies
  */
 import DesignLibraryListItem from './design-library-list-item'
+import { useDesignLibraryContext } from '../context'
 
 /**
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { usePresetControls } from '~stackable/hooks'
 import classnames from 'classnames'
 
 /**
@@ -17,8 +19,6 @@ import { __ } from '@wordpress/i18n'
 import {
 	useState, useEffect, useRef, memo, useMemo,
 } from '@wordpress/element'
-import { usePresetControls } from '~stackable/hooks'
-import { useDesignLibraryContext } from '../modal-design-library/modal'
 
 const DesignLibraryList = memo( props => {
 	const {
