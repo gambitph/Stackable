@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.2
 Requires PHP: 7.3
-Stable tag: 3.19.1
+Stable tag: 3.19.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -308,6 +308,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.2 =
+* Fixed: Blocksy theme styles now reflected in the Design Library #3630
+* Fixed: Rendering issues in design library when switching categories #3627
+* Fixed: Carousel block - fixed content wide not followed #3628
 
 = 3.19.1 =
 * Fixed: Color schemes - some styles can change when there is a color scheme present #3624
