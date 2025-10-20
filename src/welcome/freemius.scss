@@ -128,9 +128,8 @@
  * Contact and pricing/checkout pages have an SSL banner on the top, add more space.
  */
 body.stackable_page_stackable-contact {
-	.s-header {
-		padding-top: 65px !important;
-		padding-bottom: 100px !important;
+	.s-header-wrap {
+		padding-top: 10px !important;
 	}
 }
 body.stackable_page_stackable-pricing {
