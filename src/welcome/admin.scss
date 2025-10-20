@@ -344,7 +344,7 @@ body[class*="page_stk-"] {
 	margin-bottom: 32px;
 	padding-bottom: 0;
 }
-body.settings_page_stackable {
+body.stackable_page_stackable-settings {
 	#wpwrap {
 		background: #fff;
 	}
@@ -352,8 +352,8 @@ body.settings_page_stackable {
 		box-shadow: none !important;
 	}
 }
-body.settings_page_stackable,
-body.settings_page_stackable-getting-started {
+body.stackable_page_stackable-settings,
+body.toplevel_page_stackable {
 	// Hide admin notices to not mess up the welcome screen.
 	.s-header > *:not(h1):not(img) {
 		display: none !important;
@@ -369,9 +369,10 @@ body.settings_page_stackable-getting-started {
 		padding-bottom: 0;
 	}
 }
-body.settings_page_stackable,
-body.settings_page_stackable-getting-started,
-body.toplevel_page_stk-custom-fields {
+body.stackable_page_stackable-settings,
+body.toplevel_page_stackable,
+body.stackable_page_stk-custom-fields,
+body.stackable_page_stackable-go-premium {
 	img {
 		max-width: 100%;
 	}
@@ -909,6 +910,29 @@ body.toplevel_page_stk-custom-fields {
 	}
 	p {
 		margin-bottom: 2em;
+	}
+}
+
+body.stackable_page_stackable-go-premium {
+	.s-side {
+		display: grid;
+		padding: 50px;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		grid-column-gap: 50px;
+		align-items: start;
+	}
+
+	.s-premium-box {
+		grid-row: 1/3;
+		.s-check-list {
+			margin: auto;
+			width: fit-content;
+			text-align: left;
+		}
+	}
+	.s-box {
+		text-align: center;
 	}
 }
 

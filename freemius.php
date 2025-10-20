@@ -25,7 +25,7 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 			// Do not redirect to the getting started when in network activating
 			// in multisite or in the mainsite because it will redirect to a 404
 			// page.
-			$first_path = 'options-general.php?page=stackable-getting-started';
+			$first_path = 'admin.php?page=stackable';
 			if ( is_multisite() && is_main_site() ) {
 				$first_path = 'plugins.php';
 			}
@@ -34,7 +34,7 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 			// https://github.com/Freemius/wordpress-sdk/issues/674 If the menu
 			// slug is options-general, for a network activated plugin, all
 			// admin URLs will be broken. This is a temporary fix.
-			$menu_slug = 'options-general.php';
+			$menu_slug = 'stackable';
 			if ( is_multisite() && is_main_site() && is_plugin_active_for_network( plugin_basename( STACKABLE_FILE ) ) ) {
 				if ( ! empty( $_SERVER ) && isset( $_SERVER['REQUEST_URI'] ) && stripos( $_SERVER['REQUEST_URI'], '/admin.php' ) !== false ) {
 					$menu_slug = 'admin.php';
