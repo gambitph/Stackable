@@ -36,7 +36,7 @@ test( 'Stackable settings should be saved', async ( {
 	// Start waiting for Stackable Settings JSON Response before visiting the page
 	let settings = stackable.waitForSettings()
 
-	await admin.visitAdminPage( 'options-general.php?page=stackable' )
+	await admin.visitAdminPage( 'admin.php?page=stackable-settings' )
 	// Make sure all Stackable settings are loaded
 	await settings
 
