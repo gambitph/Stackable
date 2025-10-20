@@ -355,11 +355,17 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 		public function redirect_to_docs_newtab() {
 			?>
-			<script>
+			<script id='stk-documentation-set-target'>
 			document.addEventListener('DOMContentLoaded', function() {
 				const link = document.querySelector('a[href="admin.php?page=stackable-documentation"]');
 				if (link) link.setAttribute('target', '_blank');
 			});
+
+			// Remove this script from the DOM after execution to clean up
+			const currentScript = document.getElementById('stk-documentation-set-target');
+				if (currentScript) {
+					currentScript.parentNode.removeChild(currentScript);
+				}
 			</script>
 			<?php
 		}
@@ -375,7 +381,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			// Settings link.
 			if ( current_user_can( 'manage_options' ) ) {
 				$settings_link = sprintf( '<a href="%s">%s</a>',
-					admin_url( 'options-general.php?page=stackable' ),
+					admin_url( 'admin.php?page=stackable-settings' ),
 					__( 'Settings', STACKABLE_I18N )
 				);
 
