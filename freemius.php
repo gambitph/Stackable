@@ -54,8 +54,8 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 				'menu'                => array(
 					'slug'       => 'stackable',
 					'first-path'  => $first_path,
-					'account'    => true,
-					'pricing'    => true,
+					'account'    => false,
+					'pricing'    => false,
 					'contact'    => true,
                     'support'    => false,
                     'affiliation' => false,

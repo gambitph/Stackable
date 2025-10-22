@@ -16,9 +16,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_dashboard_script' ) );
 
 			add_action( 'admin_init', array( $this, 'redirect_to_welcome_page' ) );
-			add_action('admin_init', array( $this, 'redirect_to_docs' ) );
+			add_action('admin_init', array( $this, 'redirect_submenus' ) );
 
-			add_action('admin_head', array( $this, 'redirect_to_docs_newtab' ) );
+			add_action('admin_head', array( $this, 'redirect_submenus_newtab' ) );
 
 			$plugin = plugin_basename( STACKABLE_FILE );
 			add_filter( 'plugin_action_links_' . $plugin, array( $this, 'add_settings_link' ) );
@@ -77,7 +77,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					__( 'Go Premium', STACKABLE_I18N ), // Menu title.
 					'manage_options', // Capability.
 					'stackable-go-premium', // Menu slug.
-					array( $this, 'stackable_go_premium_content' ),
+					'__return_null',
 				);
 			}
 		}
@@ -195,13 +195,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						<span><?php _e( 'Contact Us', STACKABLE_I18N ) ?></span>
 					</a>
 				<?php } ?>
-
-				<?php if ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-go-premium' ? 's-active' : '' ?>"
-						href="<?php echo admin_url( 'admin.php?page=stackable-go-premium' )?>">
-						<span><?php _e( 'Go Premium', STACKABLE_I18N ) ?></span>
-					</a>
-				<?php } ?>
 			</div>
 			<?php
 		}
@@ -251,65 +244,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			<?php
 		}
 
-		public function stackable_go_premium_content() {
-			?>
-			<div class="wrap wrap-settings">
-				<div class="s-header-wrap s-header-settings">
-					<?php $this->print_header() ?>
-					<?php echo $this->print_premium_button() ?>
-					<?php echo $this->print_tabs() ?>
-				</div>
-				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
-				<section id="settings-notice">
-					<div class="s-rest-settings-notice"></div>
-					<div class="s-save-settings-notice"></div>
-				</section>
-				<?php stackable_welcome_notification() ?>
-				<section class="s-body-container s-body-container-with-sidenav">
-					<div class="s-side">
-						<?php if ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ) : ?>
-						<aside class="s-box s-premium-box">
-							<h3><?php _e( '🚀 Stackable Premium', STACKABLE_I18N ) ?></h3>
-							<p><?php _e( 'If you are ready for even more, upgrade to Premium and get:', STACKABLE_I18N ) ?></p>
-								<ul class="s-check-list">
-									<li><?php _e( '54+ Additional Block Layouts', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '230+ Additional Library Designs', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Dynamic Content', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Motion Effects', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Conditionally Display Blocks', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'User Role Manager', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Font Awesome Pro Integration', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Custom Block CSS', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '1 Year of Updates', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '1 Year of Support', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'No Ads', STACKABLE_I18N ) ?></li>
-								</ul>
-							</p>
-							<p>
-								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=gopremium&utm_medium=wp-dashboard" class="s-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>" target="_new"><?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?></a>
-							</p>
-							<p>
-								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=learnmore&utm_medium=wp-dashboard" title="<?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?> →</a>
-							</p>
-						</aside>
-						<?php endif; ?>
-						<aside class="s-box s-left-align">
-							<h3><?php _e( '🎉 Join the Community', STACKABLE_I18N ) ?></h3>
-							<p><?php _e( 'Join the very active Stackable Community in Facebook, join thousands of like-minded people who are also building their websites and crafting beautiful and impactful web pages.', STACKABLE_I18N ) ?></p>
-							<p><a href="https://www.facebook.com/groups/wpstackable" class="s-button" target="_new" title="<?php esc_attr_e( 'Join Facebook Community', STACKABLE_I18N ) ?>"><?php _e( 'Join Facebook Community', STACKABLE_I18N ) ?></a></p>
-						</aside>
-						<aside class="s-box s-news-box s-left-align">
-							<h3><?php _e( '🗞 Stackable Blog', STACKABLE_I18N ) ?></h3>
-							<div class="s-news-box-content"><?php stackable_news_feed_links_cached() ?></div>
-							<p><?php _e( 'Keep up to date by subscribing to our newsletter.', STACKABLE_I18N ) ?></p>
-							<p><a href="http://eepurl.com/dJY9xI" class="s-button" target="_new" title="<?php esc_attr_e( 'Subscribe', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe', STACKABLE_I18N ) ?></a></p>
-						</aside>
-					</div>
-				</section>
-			</div>
-			<?php
-		}
-
 		/**
 		 * Gets the video URL. If we are in development mode, display the source video,
 		 * if in an actual site, use the one in the CDN.
@@ -340,9 +274,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		}
 
 		/**
-		 * Redirect to the Stackable Documentation page.
+		 * Redirect to the Stackable Documentation/Premium page.
 		*/
-		public function redirect_to_docs() {
+		public function redirect_submenus() {
 			if ( empty( $_GET['page'] ) ) {
 				return;
 			}
@@ -351,14 +285,21 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				wp_redirect('https://docs.wpstackable.com');
 				exit;
 			}
+
+			if ( 'stackable-go-premium' === $_GET['page'] ) {
+				wp_redirect('https://wpstackable.com/premium/?utm_source=wp-settings-tabs&utm_campaign=gopremium&utm_medium=wp-dashboard');
+				exit;
+			}
 		}
 
-		public function redirect_to_docs_newtab() {
+		public function redirect_submenus_newtab() {
 			?>
 			<script id='stk-documentation-set-target'>
 			document.addEventListener('DOMContentLoaded', function() {
-				const link = document.querySelector('a[href="admin.php?page=stackable-documentation"]');
-				if (link) link.setAttribute('target', '_blank');
+				const docs = document.querySelector('a[href="admin.php?page=stackable-documentation"]');
+				if (docs) docs.setAttribute('target', '_blank');
+				const premium = document.querySelector('a[href="admin.php?page=stackable-go-premium"]');
+				if (premium) premium.setAttribute('target', '_blank');
 			});
 
 			// Remove this script from the DOM after execution to clean up
