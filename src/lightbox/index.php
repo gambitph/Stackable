@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'stackable_load_lightbox_frontend_script' ) ) {
-	function stackable_load_lightbox_frontend_script( $block_content, $block ) {
+	function stackable_load_lightbox_frontend_script( $block_content ) {
 		if ( strpos( $block_content, 'stk--has-lightbox' ) !== false ) {
 			wp_enqueue_script(
 				'stk-frontend-image-lightbox',

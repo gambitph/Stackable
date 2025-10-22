@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'stackable_load_image_optimizer_polyfill_frontend_script' ) ) {
-	function stackable_load_image_optimizer_polyfill_frontend_script( $block_content, $block ) {
+	function stackable_load_image_optimizer_polyfill_frontend_script( $block_content ) {
 		// If Easy IO setting is activated for EWWW Image Optimizer, dynamic images becomes blurry.
 		// Load the script to fix the issue.
 		if ( ! is_admin() ) {
