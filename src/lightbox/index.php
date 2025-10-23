@@ -32,6 +32,6 @@ if ( ! function_exists( 'stackable_load_lightbox_frontend_script' ) ) {
 	}
 
 	if ( ! is_admin() ) {
-		add_action( 'stackable/enqueue_scripts', 'stackable_load_lightbox_frontend_script', 10, 2 );
+		add_action( 'stackable/enqueue_scripts', 'stackable_load_lightbox_frontend_script' );
 	}
 }
