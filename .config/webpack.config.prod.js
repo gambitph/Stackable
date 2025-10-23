@@ -163,6 +163,7 @@ module.exports = [
 		'frontend_block_horizontal_scroller': path.resolve( __dirname, '../src/block/horizontal-scroller/frontend-horizontal-scroller.js' ),
 		'frontend_block_tabs': path.resolve( __dirname, '../src/block/tabs/frontend-tabs.js' ),
 		'frontend_image_optimizer_polyfill': path.resolve( __dirname, '../src/block-components/image/image-optimizer-polyfill.js' ),
+		'stk_cimo_notice': path.resolve( __dirname, '../src/compatibility/cimo/index.js' ),
 	},
 
 	output: {
