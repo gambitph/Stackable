@@ -66,7 +66,7 @@ const ModalDesignLibrary = props => {
 	// The display designs are used to list the available designs the user can choose.
 	const [ displayDesigns, setDisplayDesigns ] = useState( [] )
 
-	const [ errors, setErrors ] = useState( [] )
+	const [ errors, setErrors ] = useState( null )
 
 	const [ enableBackground, setEnableBackground ] = useState( false )
 	const [ selectedContainerScheme, setSelectedContainerScheme ] = useState( '' )
@@ -87,7 +87,7 @@ const ModalDesignLibrary = props => {
 	useEffect( () => {
 		setIsBusy( true )
 		setSidebarDesigns( [] )
-		setErrors( [] )
+		setErrors( null )
 
 		getDesigns( {
 			reset: doReset,
