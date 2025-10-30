@@ -345,7 +345,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
 				'cdnUrl' => STACKABLE_DESIGN_LIBRARY_URL,
 				'currentTheme' => esc_html( get_template() ),
-				'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
+				'settingsUrl' => admin_url( 'admin.php?page=stackable-settings' ),
 				'version' => array_shift( $version_parts ),
 				'wpVersion' => ! empty( $wp_version ) ? preg_replace( '/-.*/', '', $wp_version ) : $wp_version, // Ensure semver, strip out after dash
 				'adminUrl' => admin_url(),
