@@ -18,11 +18,21 @@ const CimoDownloadNotice = props => {
 	const onDismiss = () => {
 		const settings = new models.Settings( { stackable_hide_cimo_notice: true } ) // eslint-disable-line camelcase
 		settings.save()
+
+		if ( cimo ) {
+			cimo.hideNotice = true
+		}
+
+		// Update the global stackable.cimo hideNotice variable
+		if ( typeof window !== 'undefined' && window.stackable?.cimo ) {
+			window.stackable.cimo.hideNotice = true
+		}
+
 		props?.onDismiss?.()
 	}
 
 	// Polls the Cimo plugin status to detect installation or activation state changes
-	const pollStatus = ( action, pollOnce = false ) => {
+	const pollStatus = ( action, link, pollOnce = false ) => {
 		fetch( ajaxUrl, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -30,20 +40,35 @@ const CimoDownloadNotice = props => {
 			  action: 'stackable_check_cimo_status',
 			  // eslint-disable-next-line camelcase
 			  user_action: action,
+			  nonce: cimo.nonce,
 			} ),
 			credentials: 'same-origin',
-		  } ).then( res => res.json() ).then( _data => {
+		  } ).then( res => res.json() ).then( res => {
+			if ( ! res.success ) {
+				setData( { status: 'error', action: '' } )
+
+				const errorMessage = res?.data?.message ? res.data.message : 'Server error'
+
+				throw new Error( 'Stackable: ' + errorMessage )
+			}
+
+			if ( pollCountRef.current === 0 && link ) {
+				window.open( link, '_blank' )
+			}
+
 			pollCountRef.current += 1
+
+			const _data = res.data
 
 			if ( data.status !== _data.status ) {
 				setData( _data )
 
 				// Update the global stackable.cimo status/action variables
 				// so new image block selections reflect the latest Cimo installation state
-				// eslint-disable-next-line no-undef
-				stackable.cimo.status = _data.status
-				// eslint-disable-next-line no-undef
-				stackable.cimo.action = _data.action
+				if ( typeof window !== 'undefined' && window.stackable?.cimo ) {
+					window.stackable.cimo.status = _data.status
+					window.stackable.cimo.action = _data.action
+				}
 			}
 
 			// Stop polling if it has reached 3 attempts, or plugin status indicates installation/activation is complete
@@ -57,6 +82,9 @@ const CimoDownloadNotice = props => {
 			setTimeout( () => {
 				pollStatus( action )
 			}, 3000 * pollCountRef.current )
+		  } ).catch( e => {
+			// eslint-disable-next-line no-console
+			console.error( e.message )
 		  } )
 	}
 
@@ -77,32 +105,28 @@ const CimoDownloadNotice = props => {
 					}
 
 					if ( data.status === 'not_installed' ) {
-						pollStatus( 'install', true )
+						pollStatus( 'install', null, true )
 						return
 					}
 
-					pollStatus( 'activate', true )
+					pollStatus( 'activate', null, true )
 				} )
 			},
 		} )
 	}, [] )
 
-	const onActionClick = async () => {
+	const onActionClick = e => {
+		e.preventDefault()
 		pollCountRef.current = 0
 
 		if ( data.status === 'not_installed' ) {
 			setData( { status: 'installing', action: '' } )
-			setTimeout( () => {
-				pollStatus( 'install' )
-			}, 3000 )
-
+			pollStatus( 'install', e.currentTarget.href )
 			return
 		}
 
 		setData( { status: 'activating', action: '' } )
-		setTimeout( () => {
-			pollStatus( 'activate' )
-		}, 3000 )
+		pollStatus( 'activate', e.currentTarget.href )
 	}
 
 	return ( <>
@@ -134,8 +158,8 @@ const CimoDownloadNoticeWrapper = props => {
 export default CimoDownloadNoticeWrapper
 
 domReady( () => {
-	if ( ! cimo || cimo.status === 'activated' || cimo.hideNotice || typeof wp === 'undefined' || ! wp.media || ! wp.media.view ||
-		! wp.media.view.Attachment || ! wp.media.view.Attachment.Details
+	if ( ! cimo || cimo.status === 'activated' || cimo.hideNotice ||
+		typeof wp === 'undefined' || ! wp?.media?.view?.Attachment?.Details
 	) {
 		return
 	}
@@ -146,6 +170,10 @@ domReady( () => {
 	const CustomDetailsView = CurrentDetailsView.extend( {
 		render() {
 			const result = CurrentDetailsView.prototype.render.apply( this, arguments )
+
+			if ( cimo?.hideNotice ) {
+				return result
+			}
 
 			const details = this.el.querySelector( '.attachment-info .details' )
 			if ( details && ! this.el.querySelector( '.stk-cimo-notice' ) ) {

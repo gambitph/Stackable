@@ -16,7 +16,6 @@ if ( ! class_exists( 'Stackable_Cimo_Notice' ) ) {
 
 		function __construct() {
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
-			add_action( 'rest_api_init', array( $this, 'register_settings' ) );
 
 			// For polling the status
 			add_action('wp_ajax_stackable_check_cimo_status', array( $this, 'check_cimo_status' ) );
@@ -34,7 +33,7 @@ if ( ! class_exists( 'Stackable_Cimo_Notice' ) ) {
 				array(
 					'type' => 'boolean',
 					'description' => __( 'Hides the Cimo download notice.', STACKABLE_I18N ),
-					'sanitize_callback' => 'sanitize_text_field',
+					'sanitize_callback' => 'rest_sanitize_boolean',
 					'show_in_rest' => true,
 					'default' => false,
 				)
@@ -108,6 +107,7 @@ if ( ! class_exists( 'Stackable_Cimo_Notice' ) ) {
 			$data = array(
 				'status' => $cimo_status,
 				'action' => html_entity_decode( $cimo_action ),
+				'nonce' => wp_create_nonce( 'stackable_cimo_status' )
 			);
 
 			// Expose the Cimo plugin status and action URL for use in JS
@@ -141,11 +141,28 @@ if ( ! class_exists( 'Stackable_Cimo_Notice' ) ) {
 		 * Used for polling Cimo plugin status changes via AJAX in the admin UI.
 		 */
 		function check_cimo_status() {
-			$action = sanitize_text_field( $_POST['user_action'] );
+			// Verify nonce
+			if ( ! check_ajax_referer( 'stackable_cimo_status', 'nonce', false ) ) {
+				wp_send_json_error( array( 'status' => 'error', 'message' => 'Security check failed.' ), 403 );
+				return;
+			}
+
+			$action = isset( $_POST['user_action'] ) ? sanitize_text_field( $_POST['user_action'] ) : '';
 			$response = array(
 				'status' => 'activated',
 				'action' => ''
 			);
+
+			if ( ! $action || ( $action !== 'install' && $action !== 'activate' ) ) {
+				wp_send_json_error( array( 'status' => 'error', 'message' => 'Invalid request action.' ), 400 );
+				return;
+			}
+
+			if ( ( $action === 'install' && ! current_user_can( 'install_plugins' ) ) ||
+				( $action === 'activate' && ! current_user_can( 'activate_plugins' ) ) ) {
+				wp_send_json_error( array( 'status' => 'error', 'message' => 'Insufficient permissions.' ), 403 );
+				return;
+			}
 
 			if ( $action === 'install' && ! self::is_plugin_installed() ) {
 				$response[ 'status' ] = 'installing';
@@ -163,7 +180,7 @@ if ( ! class_exists( 'Stackable_Cimo_Notice' ) ) {
 				) ) : '';
 			}
 
-			wp_send_json( $response );
+			wp_send_json_success( $response );
 		}
 	}
 
