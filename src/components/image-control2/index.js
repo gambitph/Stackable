@@ -11,7 +11,7 @@ import Button from '../button'
  * External dependencies
  */
 import classnames from 'classnames'
-import { i18n } from 'stackable'
+import { i18n, cimo } from 'stackable'
 import {
 	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext,
 } from '~stackable/hooks'
@@ -20,8 +20,11 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Fragment, memo } from '@wordpress/element'
+import {
+	Fragment, memo, useEffect, useState,
+} from '@wordpress/element'
 import { MediaUpload } from '@wordpress/block-editor'
+import { currentUserHasCapability } from '~stackable/util'
 
 const ImageControl = memo( props => {
 	const attrNameId = useAttributeName( `${ props.attribute }Id`, props.responsive, props.hover )
@@ -81,7 +84,37 @@ const ImageControl = memo( props => {
 		} )
 	}
 
-	return (
+	const [ CimoDownloadNotice, setCimoDownloadNotice ] = useState( null )
+
+	useEffect( () => {
+		// Skip displaying the Cimo notice if the plugin is already activated or the user has chosen to hide the notice
+		if ( ! cimo || cimo.hideNotice || cimo.status === 'activated' ) {
+			return
+		}
+
+		const userCanInstall = currentUserHasCapability( 'install_plugins' )
+		const userCanActivate = currentUserHasCapability( 'activate_plugins' )
+		// Show the Cimo notice only if the user has permissions to install or activate plugins
+		if ( ( cimo.status === 'not_installed' && userCanInstall ) || ( cimo.status === 'installed' && userCanActivate ) ) {
+			const loadNotice = async () => {
+				try {
+					// Import the Cimo notice component with explicit chunk naming
+					const { default: CimoNoticeComponent } = await import(
+						/* webpackChunkName: "cimo-download-notice" */
+						/* webpackMode: "lazy" */
+						'../../lazy-components/cimo'
+					)
+					setCimoDownloadNotice( () => CimoNoticeComponent )
+				} catch ( err ) {
+					// eslint-disable-next-line no-console
+					console.error( 'Failed to load Cimo download notice component:', err )
+				}
+			}
+			loadNotice()
+		}
+	}, [] )
+
+	return ( <>
 		<AdvancedControl
 			{ ...controlProps }
 			valueCheckAttribute={ props.attribute + 'Url' }
@@ -112,7 +145,7 @@ const ImageControl = memo( props => {
 										/>
 									) }
 									{ type === 'image' && (
-									// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+										// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
 										<img
 											className="ugb-image-preview"
 											draggable="false"
@@ -172,6 +205,8 @@ const ImageControl = memo( props => {
 				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 			/>
 		</AdvancedControl>
+		{ CimoDownloadNotice && <CimoDownloadNotice onDismiss={ () => setCimoDownloadNotice( null ) } /> }
+	</>
 	)
 } )
 

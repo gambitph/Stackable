@@ -1,0 +1,47 @@
+.stk-cimo-notice {
+	clear: both;
+	padding: 16px;
+	border: 2px solid #16a249;
+	background: #fff;
+	margin: 12px 0;
+	border-radius: 4px;
+	box-shadow: 0 1px 4px #33533f70;
+	position: relative;
+
+	button {
+		background: none;
+		border: none;
+		height: 14px;
+		width: 14px;
+		position: absolute;
+		right: 4px;
+		top: 4px;
+		cursor: pointer;
+	}
+
+	.dashicon {
+		font-size: 14px;
+		height: 14px;
+		width: 14px;
+		&:hover {
+			color: var(--stk-skin-error, #f15449);
+		}
+	}
+
+	p {
+		margin: 0;
+		font-size: 12px;
+
+		a {
+			color: inherit;
+			font-weight: 700;
+
+			&:hover {
+				color: #16a249;
+			}
+		}
+		span {
+			font-weight: 700;
+		}
+	}
+}
