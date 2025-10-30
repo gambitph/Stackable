@@ -29,13 +29,13 @@ export const fetchDesignLibrary = async ( forceReset = false, version = '', type
 		designLibrary[ type ] = designsPerType
 
 		if ( type === 'patterns' ) {
-			designs = designsPerType[ LATEST_API_VERSION ]
+			designs = designsPerType[ LATEST_API_VERSION ] ?? {}
 		} else {
-			pages = designsPerType[ LATEST_API_VERSION ]
+			pages = designsPerType[ LATEST_API_VERSION ] ?? {}
 		}
 	}
 
-	return designLibrary[ type ][ version || LATEST_API_VERSION ]
+	return designLibrary[ type ]?.[ version || LATEST_API_VERSION ] ?? designLibrary[ type ]
 }
 
 export const fetchDesign = async designId => {
@@ -62,6 +62,13 @@ export const getDesigns = async ( {
 	type = 'patterns',
 } ) => {
 	const designLibrary = await fetchDesignLibrary( reset, LATEST_API_VERSION, type )
+
+	if ( designLibrary.wp_remote_get_error || designLibrary.content_error ) {
+		const error = designLibrary.wp_remote_get_error ?? designLibrary.content_error
+		// eslint-disable-next-line no-console
+		console.error( 'Stackable: ', error )
+		return { error }
+	}
 
 	// pre-fetch patterns
 	if ( type === 'pages' ) {

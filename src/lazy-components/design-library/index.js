@@ -66,6 +66,8 @@ const ModalDesignLibrary = props => {
 	// The display designs are used to list the available designs the user can choose.
 	const [ displayDesigns, setDisplayDesigns ] = useState( [] )
 
+	const [ errors, setErrors ] = useState( [] )
+
 	const [ enableBackground, setEnableBackground ] = useState( false )
 	const [ selectedContainerScheme, setSelectedContainerScheme ] = useState( '' )
 	const [ selectedBackgroundScheme, setSelectedBackgroundScheme ] = useState( '' )
@@ -85,12 +87,20 @@ const ModalDesignLibrary = props => {
 	useEffect( () => {
 		setIsBusy( true )
 		setSidebarDesigns( [] )
+		setErrors( [] )
 
 		getDesigns( {
 			reset: doReset,
 			type: selectedTab,
 		} ).then( designs => {
-			setSidebarDesigns( designs )
+			let _designs = designs
+
+			if ( typeof designs === 'object' && designs.error ) {
+				_designs = []
+				setErrors( designs.error )
+			}
+
+			setSidebarDesigns( _designs )
 			setSelectedCategory( '' )
 		} ).finally( () => {
 			setDoReset( false )
@@ -383,6 +393,7 @@ const ModalDesignLibrary = props => {
 						className={ `stk-design-library__item-${ selectedTab }` }
 						isBusy={ isBusy }
 						designs={ displayDesigns }
+						errors={ errors }
 					/>
 
 					{ selectedTab === 'patterns' && <aside className="ugb-modal-design-library__footer">

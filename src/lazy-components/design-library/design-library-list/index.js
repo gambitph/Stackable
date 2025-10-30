@@ -25,6 +25,7 @@ const DesignLibraryList = memo( props => {
 		className = '',
 		designs,
 		isBusy,
+		errors,
 	} = props
 	const containerRef = useRef( null )
 
@@ -57,6 +58,12 @@ const DesignLibraryList = memo( props => {
 				{ ! ( designs || [] ).length &&
 					<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
 				}
+				{ typeof errors === 'object' && Object.keys( errors ).length &&
+					<p className="components-base-control__help">
+						<strong>{ __( 'An error has occurred:', i18n ) }</strong>
+						<br />
+						{ Object.values( errors ).join( '; ' ) }
+					</p> }
 			</div>
 		</> }
 	</div>
