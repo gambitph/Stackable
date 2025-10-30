@@ -64,6 +64,7 @@ export const usePreviewRenderer = (
 	const shadowBodySizeRef = useRef( null )
 	const prevEnableBackgroundRef = useRef( null )
 	const prevSelectedTabRef = useRef( selectedTab )
+	const prevSelectedNumRef = useRef( selectedNum )
 	const adjustAnimateFrameRef = useRef( null )
 	const renderedTemplate = useRef( false )
 
@@ -304,12 +305,31 @@ export const usePreviewRenderer = (
 		prevSelectedTabRef.current = selectedTab
 	}, [ selectedTab ] )
 
+	// Handles rendering of preview for selected patterns when category or tab changes.
 	useEffect( () => {
-		if ( ! shouldRender ) {
+		if ( ! shouldRender || ! content || ! shadowRoot ) {
 			return
 		}
 
-		if ( ! content || ! shadowRoot ) {
+		// Prevent unnecessary re-renders when the selection state transitions:
+		// - If changing from unselected (0) to selected (number), or currently unselected, just update the ref.
+		// - If changing from selected to unselected, re-rendering is handled in a separate effect to avoid duplicate renders here.
+		if ( ( ! prevSelectedNumRef.current && prevSelectedNumRef.current !== selectedNum ) || ! selectedNum ) {
+			prevSelectedNumRef.current = selectedNum
+			return
+		}
+
+		prevSelectedNumRef.current = selectedNum
+
+		if ( content ) {
+			renderPreview()
+		}
+	}, [ selectedNum, shadowRoot ] )
+
+	// Effect for handling preview re-render and scale adjustment
+	// when content, color schemes, or selection state changes (e.g., toggling from selected to unselected).
+	useEffect( () => {
+		if ( ! shouldRender || ! content || ! shadowRoot ) {
 			return
 		}
 
