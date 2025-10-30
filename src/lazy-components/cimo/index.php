@@ -75,10 +75,19 @@ if ( ! class_exists( 'Stackable_Cimo_Notice' ) ) {
 				return;
 			}
 
+			$is_installed = self::is_plugin_installed();
+
+			// Prevent exposing Cimo plugin status and action URLs to users lacking the necessary install or activate plugin capabilities.
+			if ( ( ! $is_installed && ! current_user_can( 'install_plugins' ) ) ||
+				 ( $is_installed && ! current_user_can( 'activate_plugins' ) )
+			) {
+				return;
+			}
+
 			$cimo_status = 'activated';
 			$cimo_action = '';
 
-			if ( ! self::is_plugin_installed() ) {
+			if ( ! $is_installed ) {
 				$cimo_status = 'not_installed';
 				$cimo_action = wp_nonce_url(
 					add_query_arg(
@@ -102,6 +111,11 @@ if ( ! class_exists( 'Stackable_Cimo_Notice' ) ) {
 					),
 					'activate-plugin_' . self::$CIMO_FULL_SLUG
 				);
+			}
+
+			// No need to expose plugin status and action URL if it's activated.
+			if ( $cimo_status === 'activated' ) {
+				return;
 			}
 
 			$data = array(
