@@ -289,7 +289,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/block-s
 require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/compatibility/index.php' );
 
-// For cross-selling
+// For cross-marketing
 require_once( plugin_dir_path( __FILE__ ) . 'src/lazy-components/cimo/index.php' );
 
 if ( ! is_admin() ) {
