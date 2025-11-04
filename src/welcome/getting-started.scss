@@ -194,7 +194,7 @@
 			justify-content: flex-end;
 		}
 
-		svg {
+		:not(.s-quick-buttons-arrow) svg {
 			height: 24px;
 			width: 24px;
 		}
@@ -236,7 +236,7 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 .s-getting-started__quick-start-wrapper {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: 40px;
+	gap: 24px;
 	margin: 1em 0 64px;
 	align-items: flex-start;
 
@@ -245,24 +245,25 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 		border-radius: 16px;
 		@include s-shadow;
 		overflow: hidden;
+		grid-row: 1/4;
+		grid-column: 2/3;
 	}
 
-	.s-quick-buttons-wrapper {
+	.s-card:not(.s-getting-started-video) {
 		position: relative;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 		gap: 24px;
-		.s-card {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			gap: 24px;
 
-			@media screen and (max-width: 1200px) {
-				flex-direction: column;
-				align-items: flex-start;
-			}
+		@media screen and (max-width: 1200px) {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		&:nth-child(2) {
+			overflow: visible;
 		}
 	}
 	.s-quick-button-icon {

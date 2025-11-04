@@ -112,134 +112,54 @@ const EssentialsCard = ( {
 	</div>
 }
 
+const QUICK_BUTTONS = [ {
+	id: 'design-library',
+	icon: addTemplateIcon,
+	title: __( 'Build Pages in Seconds', i18n ),
+	description: __( 'Jump straight into our Design Library and insert polished, pre-built sections; no more blank-page overwhelm.', i18n ),
+	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=design-library`,
+	cta: __( 'Build Now', i18n ),
+}, {
+	id: 'blocks',
+	icon: blockDefaultIcon,
+	title: __( 'Stackable Block Settings', i18n ),
+	description: __( 'Learn how to use Stackable blocks and get more out of them.', i18n ),
+	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=blocks`,
+	cta: __( 'Use Blocks', i18n ),
+}, {
+	id: 'design-system',
+	icon: stylesIcon,
+	title: __( 'Apply Global Styles Instantly', i18n ),
+	description: __( 'Set your brand\'s colors, fonts, and spacing once in the Design System; every Stackable block updates automatically.', i18n ),
+	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=design-system`,
+	cta: __( 'Try Now', i18n ),
+}, {
+	id: 'site-kit',
+	icon: scheduledIcon,
+	title: __( 'Start with a Complete Site Kit', i18n ),
+	description: __( 'Pick a ready-made website template to kickstart your project — fully built layouts and styles, just swap in your content.', i18n ),
+	link: '/wp-admin/post-new.php?post_type=page',
+	cta: __( 'Select Kit', i18n ),
+	style: { display: 'none' },
+}, {
+	id: 'design-system-picker',
+	icon: brushIcon,
+	title: __( 'Pre-set Design Systems', i18n ),
+	description: __( 'Browse curated Design System presets — apply a professional look instantly without building from scratch.', i18n ),
+	link: '/wp-admin/post-new.php?post_type=page',
+	cta: __( 'Pick A System', i18n ),
+	style: { display: 'none' },
+} ]
+
 export const GettingStarted = () => {
 	return <>
 
 		<div className="s-body">
 			<div className="s-getting-started__centered">
 				<div className="tag">{ __( 'Welcome to Stackable', i18n ) }</div>
-				{ /* <h2 className="title">{ __( 'Let\'s build something amazing!', i18n ) }</h2> */ }
 				<h2 className="title">{ __( 'Welcome to Your New Block Editor Workflow!', i18n ) }</h2>
 			</div>
 			<div className="s-getting-started__quick-start-wrapper">
-
-				<div className="s-quick-buttons-wrapper">
-					<div className="s-quick-buttons-arrow">
-						<SVGQuickButtonsArrow />
-						<span>{ __( 'Quick Start', i18n ) }</span>
-					</div>
-					<div className="s-card">
-						<div className="s-quick-button-icon">
-							<Icon icon={ addTemplateIcon } />
-						</div>
-						<div className="s-quick-button-description">
-							<h3>{ __( 'Build Pages in Seconds', i18n ) }</h3>
-							<p>{ __( 'Jump straight into our Design Library and insert polished, pre-built sections; no more blank-page overwhelm.', i18n ) }</p>
-						</div>
-						<div className="s-quick-button-button">
-							<a
-								href={ `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=design-library` }
-								className={ classNames( 's-button s-secondary-button uppercase', {
-									's-button--checked': guidedTourStates?.includes( 'design-library' ),
-								} ) }
-							>
-								<span className="s-quick-button-toggle-indicator">
-									<SVGCheck />
-								</span>
-								{ __( 'Build Now', i18n ) }
-							</a>
-						</div>
-					</div>
-
-					<div className="s-card">
-						<div className="s-quick-button-icon">
-							<Icon icon={ blockDefaultIcon } />
-						</div>
-						<div className="s-quick-button-description">
-							<h3>{ __( 'Stackable Block Settings', i18n ) }</h3>
-							<p>{ __( 'Learn how to use Stackable blocks and get more out of them.', i18n ) }</p>
-						</div>
-						<div className="s-quick-button-button">
-							<a
-								href={ `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=blocks` }
-								className={ classNames( 's-button s-secondary-button uppercase', {
-									's-button--checked': guidedTourStates?.includes( 'blocks' ),
-								} ) }
-							>
-								<span className="s-quick-button-toggle-indicator">
-									<SVGCheck />
-								</span>
-								{ __( 'Use Blocks', i18n ) }
-							</a>
-						</div>
-					</div>
-
-					<div className="s-card">
-						<div className="s-quick-button-icon">
-							<Icon icon={ stylesIcon } />
-						</div>
-						<div className="s-quick-button-description">
-							<h3>{ __( 'Apply Global Styles Instantly', i18n ) }</h3>
-							<p>{ __( 'Set your brand\'s colors, fonts, and spacing once in the Design System; every Stackable block updates automatically.', i18n ) }</p>
-						</div>
-						<div className="s-quick-button-button">
-							<a
-								href={ `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=design-system` }
-								className={ classNames( 's-button s-secondary-button uppercase', {
-									's-button--checked': guidedTourStates?.includes( 'design-system' ),
-								} ) }
-							>
-								<span className="s-quick-button-toggle-indicator">
-									<SVGCheck />
-								</span>
-								{ __( 'Try Now', i18n ) }
-							</a>
-						</div>
-					</div>
-
-					{ /* TODO: Hide this for now */ }
-					<div className="s-card" style={ { display: 'none' } }>
-						<div className="s-quick-button-icon">
-							<Icon icon={ scheduledIcon } />
-						</div>
-						<div className="s-quick-button-description">
-							<h3>{ __( 'Start with a Complete Site Kit', i18n ) }</h3>
-							<p>{ __( 'Pick a ready-made website template to kickstart your project — fully built layouts and styles, just swap in your content.', i18n ) }</p>
-						</div>
-						<div className="s-quick-button-button">
-							<a
-								href="/wp-admin/post-new.php?post_type=page"
-								className={ classNames( 's-button s-secondary-button uppercase', {
-									's-button--checked': guidedTourStates?.includes( 'site-kit' ),
-								} ) }
-							>
-								{ __( 'Select Kit', i18n ) }
-							</a>
-						</div>
-					</div>
-
-					{ /* TODO: Hide this for now */ }
-					<div className="s-card" style={ { display: 'none' } }>
-						<div className="s-quick-button-icon">
-							<Icon icon={ brushIcon } />
-						</div>
-						<div className="s-quick-button-description">
-							<h3>{ __( 'Pre-set Design Systems', i18n ) }</h3>
-							<p>{ __( 'Browse curated Design System presets — apply a professional look instantly without building from scratch.', i18n ) }</p>
-						</div>
-						<div className="s-quick-button-button">
-							<a
-								href="/wp-admin/post-new.php?post_type=page"
-								className={ classNames( 's-button s-secondary-button uppercase', {
-									's-button--checked': guidedTourStates?.includes( 'design-system-picker' ),
-								} ) }
-							>
-								{ __( 'Pick A System', i18n ) }
-							</a>
-						</div>
-					</div>
-				</div>
-
 				<div className="s-getting-started-video s-card">
 					<div className="s-video-wrapper s-card-top">
 						<iframe className="s-video" src="https://www.youtube.com/embed/WP2LHxGulps" title={ __( 'Getting Started', i18n ) } allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowFullScreen></iframe>
@@ -247,6 +167,34 @@ export const GettingStarted = () => {
 					<h3>{ __( 'Getting Started with Stackable', i18n ) }</h3>
 					<p>{ __( 'Watch this video to get started with Stackable in within 5 minutes.', i18n ) }</p>
 				</div>
+				{ QUICK_BUTTONS.map( ( item, i ) => {
+					return <div className="s-card" key={ i } style={ item.style ?? {} }>
+						{ i === 0 && <div className="s-quick-buttons-arrow">
+							<SVGQuickButtonsArrow />
+							<span>{ __( 'Quick Start', i18n ) }</span>
+						</div> }
+						<div className="s-quick-button-icon">
+							<Icon icon={ item.icon } />
+						</div>
+						<div className="s-quick-button-description">
+							<h3>{ item.title }</h3>
+							<p>{ item.description }</p>
+						</div>
+						<div className="s-quick-button-button">
+							<a
+								href={ item.link }
+								className={ classNames( 's-button s-secondary-button uppercase', {
+									's-button--checked': guidedTourStates?.includes( item.id ),
+								} ) }
+							>
+								<span className="s-quick-button-toggle-indicator">
+									<SVGCheck />
+								</span>
+								{ item.cta }
+							</a>
+						</div>
+					</div>
+				} ) }
 			</div>
 
 			<SVGDivider className="s-divider" />
