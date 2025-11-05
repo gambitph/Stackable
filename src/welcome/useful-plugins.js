@@ -73,6 +73,7 @@ const PluginCard = ( { plugin } ) => {
 
 		// formData is empty
 		if ( formData.entries().next().done ) {
+			setStatus( prevStatus )
 			return
 		}
 
