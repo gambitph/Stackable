@@ -289,9 +289,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/global-settings/block-s
 require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/compatibility/index.php' );
 
-// For cross-marketing
-require_once( plugin_dir_path( __FILE__ ) . 'src/lazy-components/cimo/index.php' );
-
 if ( ! is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/lightbox/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php' );
@@ -318,6 +315,7 @@ if ( ! is_admin() ) {
  */
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/getting-started.php' );
 if ( is_admin() ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/useful-plugins.php' ); // For cross-marketing
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/news.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/freemius.php' );
