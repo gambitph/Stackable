@@ -218,16 +218,16 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			$slug = isset( $_POST['slug'] ) ? sanitize_text_field( $_POST['slug'] ) : '';
 			$full_slug = isset( $_POST['full_slug'] ) ? sanitize_text_field( $_POST['full_slug'] ) : '';
 			if ( ! $slug || ! $full_slug ) {
-				wp_send_json_error( array( 'status' => 'error', 'message' => 'Invalid slug.' ), 400 );
+				wp_send_json_error( array( 'status' => 'error', 'message' => __( 'Invalid slug.', STACKABLE_I18N ) ), 400 );
 			}
 
 			if ( ! check_ajax_referer( 'stk_activate_useful_plugin', 'nonce', false ) ) {
-				wp_send_json_error( array( 'status' => 'error', 'message' => 'Security check failed.' ), 403 );
+				wp_send_json_error( array( 'status' => 'error', 'message' => __( 'Security check failed.', STACKABLE_I18N ) ), 403 );
 				return;
 			}
 
 			if ( ! current_user_can( 'activate_plugins' ) ) {
-				wp_send_json_error( array( 'status' => 'error', 'message' => 'Insufficient permissions.' ), 403 );
+				wp_send_json_error( array( 'status' => 'error', 'message' => __( 'Insufficient permissions.', STACKABLE_I18N ) ), 403 );
 				return;
 			}
 
@@ -241,11 +241,11 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			$result = activate_plugin( $full_slug, '', false, true );
 
 			if ( is_wp_error( $result ) ) {
-				wp_send_json_error( array( 'status' => 'error', 'message' => 'Failed to activate plugin.' ), 500 );
+				wp_send_json_error( array( 'status' => 'error', 'message' => __( 'Failed to activate plugin.', STACKABLE_I18N ) ), 500 );
 				return;
 			}
 
-			wp_send_json_success( array( 'status' => 'success', 'message' => 'Successfully activated plugin.' ), 200 );
+			wp_send_json_success( array( 'status' => 'success', 'message' => __( 'Successfully activated plugin.', STACKABLE_I18N ) ), 200 );
 		}
 
 
@@ -260,7 +260,7 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			$slug = 'cimo-image-optimizer';
 			// Verify nonce
 			if ( ! check_ajax_referer( 'stackable_cimo_status', 'nonce', false ) ) {
-				wp_send_json_error( array( 'status' => 'error', 'message' => 'Security check failed.' ), 403 );
+				wp_send_json_error( array( 'status' => 'error', 'message' => __( 'Security check failed.', STACKABLE_I18N ) ), 403 );
 				return;
 			}
 
@@ -271,20 +271,20 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			);
 
 			if ( ! $action || ( $action !== 'install' && $action !== 'activate' ) ) {
-				wp_send_json_error( array( 'status' => 'error', 'message' => 'Invalid request action.' ), 400 );
+				wp_send_json_error( array( 'status' => 'error', 'message' => __( 'Invalid request action.', STACKABLE_I18N ) ), 400 );
 				return;
 			}
 
 			if ( ( $action === 'install' && ! current_user_can( 'install_plugins' ) ) ||
 				( $action === 'activate' && ! current_user_can( 'activate_plugins' ) ) ) {
-				wp_send_json_error( array( 'status' => 'error', 'message' => 'Insufficient permissions.' ), 403 );
+				wp_send_json_error( array( 'status' => 'error', 'message' => __( 'Insufficient permissions.', STACKABLE_I18N ) ), 403 );
 				return;
 			}
 
 			$full_slug = self::$PLUGINS[ $slug ][ 'full_slug' ];
 
 			// Clear plugin cache to ensure we get the most current status
-+			wp_clean_plugins_cache();
+			wp_clean_plugins_cache();
 
 			if ( $action === 'install' && ! self::is_plugin_installed( $full_slug ) ) {
 				$response[ 'status' ] = 'installing';

@@ -88,7 +88,7 @@ const PluginCard = ( { plugin } ) => {
 					pluginData.status = successStatus
 					setStatus( successStatus )
 				} else {
-					usefulPlugins[ plugin.id ].status = prevStatus
+					pluginData.status = prevStatus
 					setStatus( prevStatus )
 				}
 			}, 1000 ) // Add small delay to avoid race conditions with plugin activation/installation
