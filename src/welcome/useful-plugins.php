@@ -107,32 +107,13 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 
 			foreach ( self::$PLUGINS as $key => $plugin ) {
 				$status = 'not_installed';
-				$action_link = '';
-
-				if ( $current_user_cap === 2 ) { // user can install plugins
-					$action_link = wp_nonce_url(
-						add_query_arg( [
-							'action' => 'install-plugin',
-							'plugin' => $plugin['slug'],
-						], admin_url( 'update.php' ) ),
-						'install-plugin_' . $plugin['slug']
-					);
-				}
 
 				if ( isset( $all_plugins[ $plugin['full_slug'] ] ) ) {
 					$status = 'installed';
-					$action_link = wp_nonce_url(
-						add_query_arg( [
-							'action' => 'activate',
-							'plugin' => $plugin['full_slug'],
-						], admin_url( 'plugins.php' ) ),
-						'activate-plugin_' . $plugin['full_slug']
-					);
 				}
 
 				if ( is_plugin_active( $plugin['full_slug'] ) ) {
 					$status = 'activated';
-					$action_link = ''; // nothing to do
 				}
 
 				$plugin_info = plugins_api( 'plugin_information', [
@@ -152,21 +133,57 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			}
 
 			// Make Cimo available in the block editor
-			add_filter( 'stackable_localize_script', function ( $args ) use( $data_to_localize, $action_link ) {
-				$cimo_data = $data_to_localize[ 'cimo-image-optimizer' ];
-				$cimo_data[ 'action' ] = html_entity_decode( $action_link );
-				$cimo_data['nonce'] = wp_create_nonce( 'stackable_cimo_status' );
+			$this->add_cimo_args_to_localize_editor( $data_to_localize, $current_user_cap );
+			// Make all plugin data and the ajax url available in the admin settings
+			$this->add_args_to_localize_admin( $data_to_localize );
+		}
+
+		public function add_cimo_args_to_localize_editor( $data_to_localize, $current_user_cap ) {
+			$slug = 'cimo-image-optimizer';
+			$full_slug = self::$PLUGINS[ $slug ][ 'full_slug' ];
+
+			$cimo_data = $data_to_localize[ $slug ];
+			$cimo_data['nonce'] = wp_create_nonce( 'stackable_cimo_status' );
+			$action_link = '';
+
+			if ( $current_user_cap === 2 && $cimo_data[ 'status' ] === 'not_installed' ) {
+				$action_link = wp_nonce_url(
+					add_query_arg(
+						[
+							'action' => 'install-plugin',
+							'plugin' => $slug,
+						],
+						admin_url( 'update.php' )
+					),
+					'install-plugin_' . $slug
+				);
+			} else if ( $current_user_cap >= 1 && $cimo_data[ 'status' ] === 'installed' ) {
+				$action_link = wp_nonce_url(
+					add_query_arg( [
+						'action' => 'activate',
+						'plugin' => $full_slug,
+					], admin_url( 'plugins.php' ) ),
+					'activate-plugin_' . $full_slug
+				);
+			}
+
+			$cimo_data[ 'action' ] = $action_link;
+
+			add_filter( 'stackable_localize_script', function ( $args ) use( $cimo_data ) {
 				return $this->add_localize_script( $args, 'cimo', $cimo_data );
 			}, 1 );
 
-			// Make all plugin data and the ajax url available in the admin settings
-			add_filter( 'stackable_localize_settings_script', function ( $args ) use( $data_to_localize ) {
-				$argsToAdd = array(
-					'usefulPlugins' => $data_to_localize,
-					'installerNonce' => wp_create_nonce( "updates" ),
-					'activateNonce' => wp_create_nonce( "stk_activate_useful_plugin" ),
-					'ajaxUrl' => admin_url('admin-ajax.php')
-				);
+		}
+
+		public function add_args_to_localize_admin( $data_to_localize ) {
+			$argsToAdd = array(
+				'usefulPlugins' => $data_to_localize,
+				'installerNonce' => wp_create_nonce( "updates" ),
+				'activateNonce' => wp_create_nonce( "stk_activate_useful_plugin" ),
+				'ajaxUrl' => admin_url('admin-ajax.php')
+			);
+
+			add_filter( 'stackable_localize_settings_script', function ( $args ) use( $argsToAdd ) {
 				return $this->add_localize_script( $args, '', $argsToAdd );
 			} );
 		}
