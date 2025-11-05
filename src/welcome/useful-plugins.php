@@ -121,9 +121,11 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 					'fields' =>[ 'icons' => true, 'sections' => false ],
 					] );
 
-				$icon_url = $plugin_info && isset( $plugin_info->icons )
-					&& is_array( $plugin_info->icons ) && ! empty( $plugin_info->icons )
-					? array_values( $plugin_info->icons )[0] : '';
+				$icon_url = '';
+				if ( ! is_wp_error( $plugin_info ) && isset( $plugin_info->icons )
+				&& is_array( $plugin_info->icons ) && ! empty( $plugin_info->icons ) ) {
+					$icon_url = array_values( $plugin_info->icons )[0];
+				}
 
 				$data_to_localize[ $key ] = array(
 					'status' => $status,
