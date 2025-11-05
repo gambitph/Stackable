@@ -94,11 +94,7 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			if ( ! function_exists( 'plugins_api' ) ) {
 				include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 			}
-			if ( ! function_exists( 'get_plugins' ) ) {
-				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-			}
-
-			if ( ! function_exists( 'is_plugin_active' ) ) {
+			if ( ! function_exists( 'get_plugins' ) || ! function_exists( 'is_plugin_active' ) ) {
 				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 			}
 
@@ -123,7 +119,8 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 
 				$icon_url = '';
 				if ( ! is_wp_error( $plugin_info ) && isset( $plugin_info->icons )
-				&& is_array( $plugin_info->icons ) && ! empty( $plugin_info->icons ) ) {
+					&& is_array( $plugin_info->icons ) && ! empty( $plugin_info->icons )
+				) {
 					$icon_url = array_values( $plugin_info->icons )[0];
 				}
 
@@ -169,7 +166,7 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 				);
 			}
 
-			$cimo_data[ 'action' ] = $action_link;
+			$cimo_data[ 'action' ] = html_entity_decode( $action_link );
 
 			add_filter( 'stackable_localize_script', function ( $args ) use( $cimo_data ) {
 				return $this->add_localize_script( $args, 'cimo', $cimo_data );
@@ -285,6 +282,9 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			}
 
 			$full_slug = self::$PLUGINS[ $slug ][ 'full_slug' ];
+
+			// Clear plugin cache to ensure we get the most current status
++			wp_clean_plugins_cache();
 
 			if ( $action === 'install' && ! self::is_plugin_installed( $full_slug ) ) {
 				$response[ 'status' ] = 'installing';

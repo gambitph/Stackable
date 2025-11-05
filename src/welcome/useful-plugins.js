@@ -71,6 +71,11 @@ const PluginCard = ( { plugin } ) => {
 			return newStatus
 		} )
 
+		// formData is empty
+		if ( formData.entries().next().done ) {
+			return
+		}
+
 		// Perform Ajax request to install or activate plugin
 		apiFetch( {
 			url: ajaxUrl,
