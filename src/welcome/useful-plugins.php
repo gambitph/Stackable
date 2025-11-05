@@ -202,12 +202,10 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			$slug = isset( $_POST['slug'] ) ? sanitize_text_field( $_POST['slug'] ) : '';
 			$full_slug = isset( $_POST['full_slug'] ) ? sanitize_text_field( $_POST['full_slug'] ) : '';
 			if ( ! $slug || ! $full_slug ) {
-				error_log( 'invalid slug' );
 				wp_send_json_error( array( 'status' => 'error', 'message' => 'Invalid slug.' ), 400 );
 			}
 
 			if ( ! check_ajax_referer( 'stk_activate_useful_plugin', 'nonce', false ) ) {
-				error_log( 'security failed' );
 				wp_send_json_error( array( 'status' => 'error', 'message' => 'Security check failed.' ), 403 );
 				return;
 			}
@@ -227,7 +225,6 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			$result = activate_plugin( $full_slug, '', false, true );
 
 			if ( is_wp_error( $result ) ) {
-				error_log( 'failed to activate ' . print_r( $result, true ));
 				wp_send_json_error( array( 'status' => 'error', 'message' => 'Failed to activate plugin.' ), 500 );
 				return;
 			}

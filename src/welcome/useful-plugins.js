@@ -35,7 +35,12 @@ const BUTTON_LABELS = {
 }
 
 const PluginCard = ( { plugin } ) => {
-	const [ status, setStatus ] = useState( usefulPlugins[ plugin.id ].status )
+	const pluginData = usefulPlugins?.[ plugin.id ] ?? null
+	const [ status, setStatus ] = useState( pluginData?.status ?? PLUGIN_STATUS.ACTIVATED )
+
+	if ( ! pluginData ) {
+		return null
+	}
 	const onClickAction = () => {
 		if ( status === PLUGIN_STATUS.ACTIVATED ||
 			status === PLUGIN_STATUS.INSTALLING ||
@@ -59,7 +64,7 @@ const PluginCard = ( { plugin } ) => {
 				formData.append( 'action', 'stackable_useful_plugins_activate' )
 				formData.append( 'nonce', activateNonce )
 				formData.append( 'slug', plugin.id )
-				formData.append( 'full_slug', usefulPlugins[ plugin.id ].fullSlug )
+				formData.append( 'full_slug', pluginData.fullSlug )
 				newStatus = PLUGIN_STATUS.ACTIVATING
 				successStatus = PLUGIN_STATUS.ACTIVATED
 			}
@@ -74,8 +79,8 @@ const PluginCard = ( { plugin } ) => {
 		} ).then( response => {
 			setTimeout( () => {
 				// Mark as succeeded if operation successful or folder already exists after install
-				if ( response.success || response.data.errorCode === 'folder_exists' ) {
-					usefulPlugins[ plugin.id ].status = successStatus
+				if ( response.success || response.data?.errorCode === 'folder_exists' ) {
+					pluginData.status = successStatus
 					setStatus( successStatus )
 				} else {
 					usefulPlugins[ plugin.id ].status = prevStatus
@@ -85,14 +90,14 @@ const PluginCard = ( { plugin } ) => {
 		} ).catch( e => {
 			// eslint-disable-next-line no-console
 			console.error( 'Stackable: ', e )
-			usefulPlugins[ plugin.id ].status = prevStatus
+			pluginData.status = prevStatus
 			setStatus( prevStatus )
 		} )
 	}
 
 	return <div key={ plugin.id } className="s-card">
 		<div className="s-plugin-title">
-			<img className="s-plugin-icon" src={ usefulPlugins[ plugin.id ].icon } alt={ __( 'Plugin icon', i18n ) } />
+			<img className="s-plugin-icon" src={ pluginData.icon } alt={ __( 'Plugin icon', i18n ) } />
 			<h3 className="s-card-title">{ plugin.title }</h3>
 		</div>
 		<p>{ plugin.description }</p>
