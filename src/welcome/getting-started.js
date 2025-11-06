@@ -119,21 +119,24 @@ const QUICK_BUTTONS = [ {
 	description: __( 'Jump straight into our Design Library and insert polished, pre-built sections; no more blank-page overwhelm.', i18n ),
 	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=design-library`,
 	cta: __( 'Build Now', i18n ),
-}, {
+},
+{
 	id: 'blocks',
 	icon: blockDefaultIcon,
 	title: __( 'Stackable Block Settings', i18n ),
 	description: __( 'Learn how to use Stackable blocks and get more out of them.', i18n ),
 	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=blocks`,
 	cta: __( 'Use Blocks', i18n ),
-}, {
+},
+{
 	id: 'design-system',
 	icon: stylesIcon,
 	title: __( 'Apply Global Styles Instantly', i18n ),
 	description: __( 'Set your brand\'s colors, fonts, and spacing once in the Design System; every Stackable block updates automatically.', i18n ),
 	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=design-system`,
 	cta: __( 'Try Now', i18n ),
-}, {
+},
+{
 	id: 'site-kit',
 	icon: scheduledIcon,
 	title: __( 'Start with a Complete Site Kit', i18n ),
@@ -141,7 +144,8 @@ const QUICK_BUTTONS = [ {
 	link: '/wp-admin/post-new.php?post_type=page',
 	cta: __( 'Select Kit', i18n ),
 	style: { display: 'none' },
-}, {
+},
+{
 	id: 'design-system-picker',
 	icon: brushIcon,
 	title: __( 'Pre-set Design Systems', i18n ),
@@ -149,6 +153,30 @@ const QUICK_BUTTONS = [ {
 	link: '/wp-admin/post-new.php?post_type=page',
 	cta: __( 'Pick A System', i18n ),
 	style: { display: 'none' },
+},
+{
+	id: 'block-backgrounds',
+	icon: brushIcon,
+	title: __( 'Block Backgrounds & Containers', i18n ),
+	description: __( 'Use backgrounds to create stunning full-width sections, and containers to add boxed content for organizing your page.', i18n ),
+	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=block-backgrounds`,
+	cta: __( 'Try Now', i18n ),
+},
+{
+	id: 'responsive-controls',
+	icon: brushIcon,
+	title: __( 'Responsive Controls', i18n ),
+	description: __( 'Adjust styles for desktop, tablet, and mobile — easily control layout, spacing, and appearance for a seamless experience on any device.', i18n ),
+	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=responsive-controls`,
+	cta: __( 'Try Now', i18n ),
+},
+{
+	id: 'hover-states',
+	icon: brushIcon,
+	title: __( 'Styling Hover States', i18n ),
+	description: __( 'Adjust styles for different hover states — create engaging effects when users interact with your designs.', i18n ),
+	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=hover-states`,
+	cta: __( 'Try Now', i18n ),
 } ]
 
 export const GettingStarted = () => {
