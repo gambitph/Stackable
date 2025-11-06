@@ -31,4 +31,8 @@ export const TOUR_CONDITIONS = {
 		// Force show the tour if there is a GET parameter tour=block-backgrounds
 		return window?.location?.search?.includes( 'tour=block-backgrounds' ) ? true : null
 	},
+	'responsive-controls': () => {
+		// Force show the tour if there is a GET parameter tour=responsive-controls
+		return window?.location?.search?.includes( 'tour=responsive-controls' ) ? true : null
+	},
 }
