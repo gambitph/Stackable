@@ -3,7 +3,7 @@ import { i18n } from 'stackable'
 import { dispatch, select } from '@wordpress/data'
 import { createInterpolateElement } from '@wordpress/element'
 
-export const blocks = {
+export const responsiveControls = {
 	initialize: () => {
 		// Add some default content that we will select
 

@@ -35,4 +35,8 @@ export const TOUR_CONDITIONS = {
 		// Force show the tour if there is a GET parameter tour=responsive-controls
 		return window?.location?.search?.includes( 'tour=responsive-controls' ) ? true : null
 	},
+	'hover-states': () => {
+		// Force show the tour if there is a GET parameter tour=hover-states
+		return window?.location?.search?.includes( 'tour=hover-states' ) ? true : null
+	},
 }
