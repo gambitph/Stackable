@@ -58,7 +58,7 @@ const DesignLibraryList = memo( props => {
 				{ ! ( designs || [] ).length &&
 					<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
 				}
-				{ typeof errors === 'object' && Object.keys( errors ).length &&
+				{ typeof errors === 'object' && errors && Object.keys( errors ).length &&
 					<p className="components-base-control__help">
 						<strong>{ __( 'An error has occurred:', i18n ) }</strong>
 						<br />
