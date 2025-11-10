@@ -350,10 +350,29 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	const resetStyles = selector => {
 		let newSettings = {}
-		const currentFontPair = getCurrentFontPair()
-		if ( ! isEditingFontPair && currentFontPair ) {
-			newSettings = { ...typographySettings, [ selector ]: currentFontPair.typography[ selector ] }
+
+		const deviceFontSizeKey = getDevicePropertyKey( 'fontSize', deviceType )
+		const deviceFontSizeUnitKey = getDevicePropertyKey( 'fontSizeUnit', deviceType )
+		const deviceLineHeightKey = getDevicePropertyKey( 'lineHeight', deviceType )
+		const deviceLetterSpacingKey = getDevicePropertyKey( 'letterSpacing', deviceType )
+
+		newSettings = {
+			...typographySettings,
+			[ selector ]: {
+				...typographySettings[ selector ],
+				fontFamily: getDefaultFontFamily( selector ),
+				fontWeight: '',
+				textTransform: '',
+				// Only reset the properties on to the current device type values
+				[ deviceFontSizeKey ]: '',
+				[ deviceFontSizeUnitKey ]: '',
+				[ deviceLineHeightKey ]: '',
+				[ deviceLetterSpacingKey ]: '',
+			},
 		}
+
+		// Remove the keys with empty string
+		 newSettings[ selector ] = cleanTypographyStyle( newSettings[ selector ] ) || {}
 
 		doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
 
@@ -369,20 +388,40 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 	const getIsAllowReset = selector => {
 		const currentFontPair = getCurrentFontPair()
-		const typographyStyle = cleanTypographyStyle( typographySettings[ selector ] ) || {}
+		const typographyStyle = typographySettings[ selector ]
+
+		const deviceFontSizeKey = getDevicePropertyKey( 'fontSize', deviceType )
+		const deviceFontSizeUnitKey = getDevicePropertyKey( 'fontSizeUnit', deviceType )
+		const deviceLineHeightKey = getDevicePropertyKey( 'lineHeight', deviceType )
+		const deviceLetterSpacingKey = getDevicePropertyKey( 'letterSpacing', deviceType )
+
+		// Create a temporary typography style on the current device type for comparison
+		const typographyStyleOnCurrentDevice = cleanTypographyStyle( {
+			fontFamily: typographyStyle?.fontFamily || '',
+			fontWeight: typographyStyle?.fontWeight || '',
+			textTransform: typographyStyle?.textTransform || '',
+			[ deviceFontSizeKey ]: typographyStyle?.[ deviceFontSizeKey ] || '',
+			[ deviceFontSizeUnitKey ]: typographyStyle?.[ deviceFontSizeUnitKey ] || '',
+			[ deviceLineHeightKey ]: typographyStyle?.[ deviceLineHeightKey ] || '',
+			[ deviceLetterSpacingKey ]: typographyStyle?.[ deviceLetterSpacingKey ] || '',
+		} ) || {}
+
 		if ( ! isEditingFontPair && currentFontPair ) {
 			// Clean style object to be consistent with changeStyles operation
 			const fontPairStyle = cleanTypographyStyle( currentFontPair.typography?.[ selector ] ) || {}
-			if ( ! isEqual( fontPairStyle, typographyStyle ) && ! Array.isArray( typographyStyle ) ) {
+			if ( ! isEqual( fontPairStyle, typographyStyleOnCurrentDevice ) &&
+				! Array.isArray( typographyStyleOnCurrentDevice )
+			) {
 				return true
 			}
 			return false
-		} else if ( typographyStyle && ( typographyStyle.fontFamily ||
-			typographyStyle.fontSize || typographyStyle.tabletFontSize || typographyStyle.mobileFontSize ||
-			typographyStyle.fontWeight ||
-			typographyStyle.textTransform ||
-			typographyStyle.lineHeight || typographyStyle.tabletLineHeight || typographyStyle.mobileLineHeight ||
-			typographyStyle.letterSpacing || typographyStyle.tabletLetterSpacing || typographyStyle.mobileLetterSpacing ) ) {
+		} else if ( typographyStyleOnCurrentDevice && ( typographyStyleOnCurrentDevice.fontFamily ||
+			typographyStyleOnCurrentDevice[ deviceFontSizeKey ] ||
+			typographyStyleOnCurrentDevice[ deviceFontSizeUnitKey ] ||
+			typographyStyleOnCurrentDevice[ deviceLineHeightKey ] ||
+			typographyStyleOnCurrentDevice[ deviceLetterSpacingKey ] ||
+			typographyStyleOnCurrentDevice.fontWeight ||
+			typographyStyleOnCurrentDevice.textTransform ) ) {
 			return true
 		}
 		return false
