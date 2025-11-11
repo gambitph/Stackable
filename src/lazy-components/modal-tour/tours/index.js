@@ -1,9 +1,14 @@
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
 // This file automatically imports all tour files from the tours directory
 // and exports them as a single object for use in TOUR_STEPS
 
 // Dynamically import all tour files from the tours directory
 const tourContext = require.context( './', false, /\.js$/ )
-const tours = {}
+let tours = {}
 
 // Import all tour files and populate the tours object using the filename as the key
 tourContext.keys().forEach( fileName => {
@@ -29,6 +34,8 @@ tourContext.keys().forEach( fileName => {
 		}
 	}
 } )
+
+tours = applyFilters( 'stackable.guided-tour.tours', tours )
 
 // Export all tours as a single object
 export { tours }

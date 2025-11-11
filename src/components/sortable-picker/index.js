@@ -207,6 +207,7 @@ const LabeledItemIndicator = props => {
 								}
 							} }
 							isPressed={ isOpen }
+							data-item-key={ item.key }
 						>
 							<HStack justify="flex-start">
 								<ItemPreview item={ item } />

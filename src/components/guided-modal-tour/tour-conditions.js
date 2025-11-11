@@ -39,4 +39,12 @@ export const TOUR_CONDITIONS = {
 		// Force show the tour if there is a GET parameter tour=hover-states
 		return window?.location?.search?.includes( 'tour=hover-states' ) ? true : null
 	},
+	'advanced-hover-states': () => {
+		// Force show the tour if there is a GET parameter tour=hover-states
+		return window?.location?.search?.includes( 'tour=advanced-hover-states' ) ? true : null
+	},
+	'global-color-schemes': () => {
+		// Force show the tour if there is a GET parameter tour=global-color-schemes
+		return window?.location?.search?.includes( 'tour=global-color-schemes' ) ? true : null
+	},
 }

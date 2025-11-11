@@ -79,6 +79,9 @@ const ModalTour = memo( props => {
 	useEffect( () => {
 		setTimeout( () => {
 			initialize()
+			if ( currentStep === 0 && preStep ) {
+				preStep( currentStep )
+			}
 		}, 50 )
 	}, [ initialize ] )
 

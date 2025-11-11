@@ -291,11 +291,20 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 	}
 	.s-quick-button-button {
 		white-space: nowrap;
+
+		.s-button--disabled,
+		.s-button--disabled:hover {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
 	}
 
 	.s-quick-button-description {
 		> *:first-child {
 			margin-top: 0;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
 		}
 		> *:last-child {
 			margin-bottom: 0;

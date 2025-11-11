@@ -137,7 +137,7 @@ export const blockBackgrounds = {
 			nextEvent: 'mousedown',
 			preStep: () => {
 				// Toggle background on
-				document.querySelector( '.ugb-block-background-panel:not(is-opened)' )?.click()
+				document.querySelector( '.ugb-block-background-panel:not(is-opened) button' )?.click()
 				document.querySelector( '.ugb-block-background-panel .ugb-toggle-panel-form-toggle:not(is-checked) input' )?.click()
 			},
 			postStep: () => {
@@ -151,9 +151,9 @@ export const blockBackgrounds = {
 			help: createInterpolateElement( __( 'Choose a <strong>Color</strong> from the palette to apply it.', i18n ), {
 				strong: <strong />,
 			} ),
-			anchor: '.stk-color-palette-control__popover-content',
+			anchor: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
 			position: 'left',
-			glowTarget: '.stk-color-palette-control__popover-content',
+			glowTarget: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
 			nextEvent: 'mousedown',
 			nextEventTarget: '.stk-color-palette-control__popover-content *',
 			postStep: () => {

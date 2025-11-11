@@ -26,7 +26,9 @@ import {
 /**
  * External dependencies
  */
-import { i18n, guidedTourStates } from 'stackable'
+import {
+	i18n, guidedTourStates, isPro,
+} from 'stackable'
 import classNames from 'classnames'
 
 const generalProps = [
@@ -177,11 +179,80 @@ const QUICK_BUTTONS = [ {
 	description: __( 'Adjust styles for different hover states — create engaging effects when users interact with your designs.', i18n ),
 	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=hover-states`,
 	cta: __( 'Try Now', i18n ),
+},
+{
+	id: 'advanced-hover-states',
+	icon: brushIcon,
+	title: __( 'Styling Hover States - Advanced', i18n ),
+	description: __( 'Style containers and their contents together—apply hover effects to multiple blocks at once for seamless interactive designs.', i18n ),
+	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=advanced-hover-states`,
+	cta: __( 'Try Now', i18n ),
+},
+{
+	id: 'global-color-schemes',
+	icon: brushIcon,
+	title: __( 'Global Color Schemes', i18n ),
+	description: __( 'Create and apply color schemes to your entire website—maintain consistent branding across all pages with ease.', i18n ),
+	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=global-color-schemes`,
+	cta: __( 'Try Now', i18n ),
+},
+{
+	id: 'block-styles',
+	icon: brushIcon,
+	title: __( 'Re-using Block Styles', i18n ),
+	description: __( 'Re-use block styles sitewide for consistent branding. Save and quickly apply your favorite style combinations to any block.', i18n ),
+	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=block-styles` : '',
+	cta: __( 'Try Now', i18n ),
+	premium: true,
+},
+{
+	id: 'dynamic-content',
+	icon: brushIcon,
+	title: __( 'Dynamic Content', i18n ),
+	description: __( 'Dynamically display content based on user interactions, site conditions, or time-based triggers.', i18n ),
+	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=dynamic-content` : '',
+	cta: __( 'Try Now', i18n ),
+	premium: true,
+},
+{
+	id: 'conditional-display',
+	icon: brushIcon,
+	title: __( 'Conditional Display', i18n ),
+	description: __( 'Show or hide blocks based on specific conditions, such as user roles, device type, or custom criteria.', i18n ),
+	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=conditional-display` : '',
+	cta: __( 'Try Now', i18n ),
+	premium: true,
+},
+{
+	id: 'motion-effects',
+	icon: brushIcon,
+	title: __( 'Motion Effects', i18n ),
+	description: __( 'Add animations and transitions to your blocks for a more engaging and interactive user experience.', i18n ),
+	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=motion-effects` : '',
+	cta: __( 'Try Now', i18n ),
+	premium: true,
+},
+{
+	id: 'custom-css',
+	icon: brushIcon,
+	title: __( 'Custom CSS', i18n ),
+	description: __( 'Add custom CSS to your blocks for precise control over their appearance and behavior.', i18n ),
+	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=custom-css` : '',
+	cta: __( 'Try Now', i18n ),
+	premium: true,
+},
+{
+	id: 'copy-paste-styles',
+	icon: brushIcon,
+	title: __( 'Copy & Paste Styles', i18n ),
+	description: __( 'Quickly apply styles from one block to another for consistent design and branding.', i18n ),
+	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=copy-paste-styles` : '',
+	cta: __( 'Try Now', i18n ),
+	premium: true,
 } ]
 
 export const GettingStarted = () => {
 	return <>
-
 		<div className="s-body">
 			<div className="s-getting-started__centered">
 				<div className="tag">{ __( 'Welcome to Stackable', i18n ) }</div>
@@ -205,7 +276,10 @@ export const GettingStarted = () => {
 							<Icon icon={ item.icon } />
 						</div>
 						<div className="s-quick-button-description">
-							<h3>{ item.title }</h3>
+							<h3>
+								{ ! isPro && item.premium && <span className="stk-pulsating-circle" role="presentation" /> }
+								<span>{ item.title }</span>
+							</h3>
 							<p>{ item.description }</p>
 						</div>
 						<div className="s-quick-button-button">
@@ -213,6 +287,7 @@ export const GettingStarted = () => {
 								href={ item.link }
 								className={ classNames( 's-button s-secondary-button uppercase', {
 									's-button--checked': guidedTourStates?.includes( item.id ),
+									's-button--disabled': item.premium && ! isPro,
 								} ) }
 							>
 								<span className="s-quick-button-toggle-indicator">
