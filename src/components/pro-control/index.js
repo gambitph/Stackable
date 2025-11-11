@@ -153,9 +153,9 @@ const LABELS = {
 	'design-library-saved-patterns': {
 		title: __( 'Design Library Saved Patterns', i18n ),
 		description: <ul>
-			<li>{ __( 'Save your own patterns', i18n ) }</li>
-			<li>{ __( 'Edit and manage your own library of reusable patterns', i18n ) }</li>
-			<li>{ __( 'Import and export saved patterns between sites', i18n ) }</li>
+			<li>{ __( 'Save entire block layouts in a click', i18n ) }</li>
+			<li>{ __( 'Apply styling options to each saved pattern', i18n ) }</li>
+			<li>{ __( 'Import and export your custom patterns across sites', i18n ) }</li>
 		</ul>,
 	},
 }
