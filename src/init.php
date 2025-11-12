@@ -384,6 +384,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'version' => array_shift( $version_parts ),
 				'wpVersion' => ! empty( $wp_version ) ? preg_replace( '/-.*/', '', $wp_version ) : $wp_version, // Ensure semver, strip out after dash
 				'adminUrl' => admin_url(),
+				'ajaxUrl' => admin_url('admin-ajax.php'),
 
 				// Fonts.
 				'locale' => get_locale(),
