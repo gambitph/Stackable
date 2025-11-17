@@ -74,6 +74,7 @@ const ModalTour = memo( props => {
 		// eslint-disable-next-line no-unused-vars
 		postStep = NOOP, // If provided, this is a function to run after the step is shown.
 		skipIf = NOOP, // If provided, this is a function to check if the step should be skipped.
+		modalDelay = 200, // If provided, this is the delay in milliseconds to show the modal.
 	} = steps[ currentStep ]
 
 	useEffect( () => {
@@ -149,7 +150,7 @@ const ModalTour = memo( props => {
 					setIsVisibleDelayed( true )
 					setIsTransitioning( false )
 				}, 150 )
-			}, 200 )
+			}, modalDelay )
 		}, 100 )
 
 		setTimeout( () => {
