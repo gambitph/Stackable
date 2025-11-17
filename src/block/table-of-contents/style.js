@@ -121,7 +121,7 @@ blockStyles.addBlockStyles( 'isSmoothScroll', [ {
 	valueCallback: value => ( value ? 'smooth' : undefined ),
 } ] )
 
-blockStyles.addBlockStyle( 'scrollTopOffset', [ {
+blockStyles.addBlockStyles( 'scrollTopOffset', [ {
 	selector: 'html',
 	styleRule: 'scroll-padding-top',
 	attrName: 'scrollTopOffset',
