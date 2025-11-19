@@ -235,7 +235,7 @@ const QUICK_BUTTONS = [ {
 {
 	id: 'custom-css',
 	icon: brushIcon,
-	title: __( 'Custom CSS', i18n ),
+	title: __( 'Applying CSS per Block', i18n ),
 	description: __( 'Add custom CSS to your blocks for precise control over their appearance and behavior.', i18n ),
 	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=custom-css` : '',
 	cta: __( 'Try Now', i18n ),
