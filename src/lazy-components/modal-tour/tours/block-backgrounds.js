@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import { dispatch, select } from '@wordpress/data'
 import { createInterpolateElement } from '@wordpress/element'
+import { waitForElement } from '../utils'
 
 export const blockBackgrounds = {
 	initialize: () => {
@@ -118,10 +119,10 @@ export const blockBackgrounds = {
 					dispatch( 'core/block-editor' ).selectBlock( columnsBlock.clientId )
 				}
 
-				setTimeout( () => {
+				waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' ).then( () => {
 					// Click the tab
 					document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
-				}, 100 )
+				} )
 			},
 		},
 		{
@@ -181,9 +182,9 @@ export const blockBackgrounds = {
 				if ( columnsBlock && columnsBlock.innerBlocks[ 0 ] ) {
 					dispatch( 'core/block-editor' ).selectBlock( columnsBlock.innerBlocks[ 0 ].clientId )
 					document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--layout:not(.is-active)' )?.click()
-					setTimeout( () => {
+					waitForElement( '.ugb-panel--layout.is-opened .components-panel__body-title button' ).then( () => {
 						document.querySelector( '.ugb-panel--layout.is-opened .components-panel__body-title button' )?.click()
-					}, 100 )
+					} )
 				}
 			},
 		},

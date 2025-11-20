@@ -1,7 +1,8 @@
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
-import { dispatch } from '@wordpress/data'
+import { dispatch, select } from '@wordpress/data'
 import { createInterpolateElement } from '@wordpress/element'
+import { waitForElement } from '../utils'
 
 export const hoverStates = {
 	initialize: () => {
@@ -21,14 +22,14 @@ export const hoverStates = {
 		// Select the inner columns block for the tour
 		dispatch( 'core/block-editor' ).selectBlock( blockObject.clientId )
 
-		setTimeout( () => {
+		waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' ).then( () => {
 			document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
 			setTimeout( () => {
 				document.querySelector( '.ugb-panel--image:not(.is-opened)' )?.click()
 				const target = document.querySelector( '.stk-control:has([data-attribute="imageZoom"])' )
 				target?.scrollIntoView( { behavior: 'auto', block: 'center' } )
 			}, 100 )
-		}, 200 )
+		} )
 	},
 	steps: [
 		{
@@ -41,6 +42,12 @@ export const hoverStates = {
 			position: 'left',
 			glowTarget: '.stk-control:has([data-attribute="imageZoom"]) .stk-control-label button[data-value="normal"]',
 			nextEventTarget: '.stk-control:has([data-attribute="imageZoom"]) .stk-control-label button',
+			preStep: () => {
+				waitForElement( '.stk-control:has([data-attribute="imageZoom"])', 3000 ).then( () => {
+					const target = document.querySelector( '.stk-control:has([data-attribute="imageZoom"])' )
+					target?.scrollIntoView( { behavior: 'auto', block: 'center' } )
+				} )
+			},
 		},
 		{
 			title: __( 'Different Hover States', i18n ),
@@ -74,10 +81,10 @@ export const hoverStates = {
 			},
 			postStep: () => {
 				// Update the order of the columns for mobile by dispatching an attribute update.
-				const allBlocks = wp.data.select( 'core/block-editor' ).getBlocks()
+				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const imageBlock = allBlocks.find( block => block.name === 'stackable/image' )
 				if ( imageBlock && ! imageBlock.attributes?.imageZoomHover ) {
-					wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( imageBlock.clientId, {
+					dispatch( 'core/block-editor' ).updateBlockAttributes( imageBlock.clientId, {
 						imageZoomHover: 1.5,
 					} )
 				}
@@ -107,9 +114,9 @@ export const hoverStates = {
 			},
 			postStep: () => {
 				document.querySelector( '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper:not(.is-open) button' )?.click()
-				setTimeout( () => {
+				waitForElement( '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper button:not(.is-active)[data-value="normal"]' ).then( () => {
 					document.querySelector( '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper button:not(.is-active)[data-value="normal"]' )?.click()
-				}, 100 )
+				} )
 			},
 		},
 		{

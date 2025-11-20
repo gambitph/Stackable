@@ -282,7 +282,7 @@ export const GettingStarted = () => {
 						return null
 					}
 
-					return <div className="s-card" key={ i }>
+					return <div className="s-card" key={ item.id }>
 						{ i === 0 && <div className="s-quick-buttons-arrow">
 							<SVGQuickButtonsArrow />
 							<span>{ __( 'Quick Start', i18n ) }</span>
@@ -299,7 +299,8 @@ export const GettingStarted = () => {
 						</div>
 						<div className="s-quick-button-button">
 							<a
-								href={ item.link }
+								href={ item.premium && ! isPro ? undefined : item.link }
+								aria-disabled={ item.premium && ! isPro }
 								className={ classNames( 's-button s-secondary-button uppercase', {
 									's-button--checked': guidedTourStates?.includes( item.id ),
 									's-button--disabled': item.premium && ! isPro,

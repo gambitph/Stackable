@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import { dispatch, select } from '@wordpress/data'
 import { createInterpolateElement } from '@wordpress/element'
+import { waitForElement } from '../utils'
 
 export const responsiveControls = {
 	initialize: () => {
@@ -83,7 +84,7 @@ export const responsiveControls = {
 			position: 'left',
 			glowTarget: '.ugb-sort-control.components-base-control .stk-control-responsive-toggle',
 			nextEventTarget: '.ugb-sort-control.components-base-control .stk-control-responsive-toggle button',
-			preStep: () => {
+			preStep: async () => {
 				dispatch( 'core/edit-post' ).openGeneralSidebar( 'edit-post/block' )
 				// Make sure the Columns block is selected
 				const allBlocks = select( 'core/block-editor' ).getBlocks()
@@ -91,13 +92,12 @@ export const responsiveControls = {
 				if ( columnsBlock ) {
 					dispatch( 'core/block-editor' ).selectBlock( columnsBlock.clientId )
 				}
-				setTimeout( () => {
-					// Open Layout tab if it's not open
-					document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--layout:not(.is-active)' )?.click()
-				}, 100 )
-				setTimeout( () => {
-					document.querySelector( '.ugb-panel--layout:not(.is-opened)' )?.click()
-				}, 200 )
+				await waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--layout:not(.is-active)' )
+				// Open Layout tab if it's not open
+				document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--layout:not(.is-active)' )?.click()
+
+				await waitForElement( '.ugb-panel--layout:not(.is-opened)' )
+				document.querySelector( '.ugb-panel--layout:not(.is-opened)' )?.click()
 			},
 			postStep: () => {
 				document.querySelector( '.ugb-sort-control .stk-control-responsive-toggle:not(.is-open) button' )?.click()
@@ -145,12 +145,12 @@ export const responsiveControls = {
 			glowTarget: '.ugb-sort-control .stk-control-content .ugb-sort-control__container',
 			postStep: () => {
 			// Update the order of the columns for mobile by dispatching an attribute update.
-				const allBlocks = wp.data.select( 'core/block-editor' ).getBlocks()
+				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
 				if ( columnsBlock ) {
 				// Reverse the order of columns for mobile by updating the mobileOrder attribute.
 				// The default order is [0, 1]. Swapping makes it [1, 0].
-					wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( columnsBlock.clientId, {
+					dispatch( 'core/block-editor' ).updateBlockAttributes( columnsBlock.clientId, {
 						columnArrangementMobile: '2,1',
 					} )
 				}
@@ -170,11 +170,11 @@ export const responsiveControls = {
 			preStep: () => {
 				document.querySelector( '.ugb-sort-control .stk-control-responsive-toggle:not(.is-open) button' )?.click()
 			},
-			postStep: () => {
+			postStep: async () => {
 				document.querySelector( '.ugb-sort-control .stk-control-responsive-toggle:not(.is-open) button' )?.click()
-				setTimeout( () => {
-					document.querySelector( '.ugb-sort-control .stk-control-responsive-toggle button:not(.is-active)[data-value="desktop"]' )?.click()
-				}, 100 )
+
+				await waitForElement( '.ugb-sort-control .stk-control-responsive-toggle button:not(.is-active)[data-value="desktop"]' )
+				document.querySelector( '.ugb-sort-control .stk-control-responsive-toggle button:not(.is-active)[data-value="desktop"]' )?.click()
 			},
 		},
 		{

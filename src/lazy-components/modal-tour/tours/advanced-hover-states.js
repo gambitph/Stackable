@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
-import { dispatch } from '@wordpress/data'
+import { dispatch, select } from '@wordpress/data'
 import { createInterpolateElement } from '@wordpress/element'
 
 export const advancedHoverStates = {
@@ -126,10 +126,10 @@ export const advancedHoverStates = {
 			nextEvent: 'mousedown',
 			nextEventTarget: '.stk-color-palette-control__popover-content *',
 			postStep: () => {
-				const allBlocks = wp.data.select( 'core/block-editor' ).getBlocks()
+				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
 				if ( columnsBlock?.innerBlocks?.[ 0 ] && ! columnsBlock.innerBlocks[ 0 ].attributes?.containerBackgroundColorHover ) {
-					wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( columnsBlock.innerBlocks[ 0 ].clientId, {
+					dispatch( 'core/block-editor' ).updateBlockAttributes( columnsBlock.innerBlocks[ 0 ].clientId, {
 						containerBackgroundColorHover: '#2b2b2b',
 					} )
 				}
@@ -145,10 +145,10 @@ export const advancedHoverStates = {
 			} ),
 			offsetX: '300px',
 			postStep: () => {
-				const allBlocks = wp.data.select( 'core/block-editor' ).getBlocks()
+				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
 				if ( columnsBlock?.innerBlocks?.[ 0 ]?.innerBlocks?.[ 0 ] ) {
-					wp.data.dispatch( 'core/block-editor' ).selectBlock( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 0 ].clientId )
+					dispatch( 'core/block-editor' ).selectBlock( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 0 ].clientId )
 				}
 			},
 		},
@@ -215,10 +215,10 @@ export const advancedHoverStates = {
 			nextEvent: 'mousedown',
 			nextEventTarget: '.stk-color-palette-control__popover-content *',
 			postStep: () => {
-				const allBlocks = wp.data.select( 'core/block-editor' ).getBlocks()
+				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
 				if ( columnsBlock?.innerBlocks?.[ 0 ]?.innerBlocks?.[ 0 ] && ! columnsBlock.innerBlocks[ 0 ].innerBlocks[ 0 ].attributes?.textColor1ParentHover ) {
-					wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 0 ].clientId, {
+					dispatch( 'core/block-editor' ).updateBlockAttributes( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 0 ].clientId, {
 						textColor1ParentHover: '#ffffff',
 					} )
 				}
@@ -231,10 +231,10 @@ export const advancedHoverStates = {
 			description: __( 'Now the heading block is readable when your mouse hovers over the container. Let\'s do the same for the text color in the text block.', i18n ),
 			offsetX: '300px',
 			postStep: () => {
-				const allBlocks = wp.data.select( 'core/block-editor' ).getBlocks()
+				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
 				if ( columnsBlock?.innerBlocks?.[ 0 ]?.innerBlocks?.[ 1 ] ) {
-					wp.data.dispatch( 'core/block-editor' ).selectBlock( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 1 ].clientId )
+					dispatch( 'core/block-editor' ).selectBlock( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 1 ].clientId )
 				}
 			},
 		},
@@ -250,14 +250,18 @@ export const advancedHoverStates = {
 			position: 'left',
 			glowTarget: '.stk-control:has([data-attribute="textColor1"])',
 			nextEventTarget: '.stk-control:has([data-attribute="textColor1"]) .stk-control-content button',
+			modalDelay: 150,
 			preStep: () => {
 				setTimeout( () => {
 					const targetElTop = document.querySelector( '.stk-control:has([data-attribute="textColor1"])' )?.getBoundingClientRect()?.top
 					const editorSidebar = document.querySelector( '.editor-sidebar.ugb--has-panel-tabs' )
-					editorSidebar.scrollTo( {
-						top: targetElTop - editorSidebar.getBoundingClientRect().top - 100,
-						behavior: 'smooth',
-					} )
+
+					if ( editorSidebar && typeof targetElTop === 'number' ) {
+						editorSidebar.scrollTo( {
+							top: targetElTop - editorSidebar.getBoundingClientRect().top - 100,
+							behavior: 'smooth',
+						} )
+					}
 				}, 100 )
 			},
 			postStep: () => {
@@ -273,10 +277,10 @@ export const advancedHoverStates = {
 			nextEvent: 'mousedown',
 			nextEventTarget: '.stk-color-palette-control__popover-content *',
 			postStep: () => {
-				const allBlocks = wp.data.select( 'core/block-editor' ).getBlocks()
+				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
 				if ( columnsBlock?.innerBlocks?.[ 0 ]?.innerBlocks?.[ 1 ] && ! columnsBlock.innerBlocks[ 0 ].innerBlocks[ 1 ].attributes?.textColor1ParentHover ) {
-					wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 1 ].clientId, {
+					dispatch( 'core/block-editor' ).updateBlockAttributes( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 1 ].clientId, {
 						textColor1ParentHover: '#ffffff',
 					} )
 				}

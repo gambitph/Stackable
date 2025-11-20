@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import { dispatch, select } from '@wordpress/data'
 import { createInterpolateElement } from '@wordpress/element'
+import { waitForElement } from '../utils'
 
 export const globalColorSchemes = {
 	initialize: () => {
@@ -159,14 +160,17 @@ export const globalColorSchemes = {
 			position: 'left',
 			nextEventTarget: '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(8)',
 			glowTarget: '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(8)',
+			modalDelay: 150,
 			preStep: () => {
 				setTimeout( () => {
 					const targetElTop = document.querySelector( '.stk-preset-color-schemes__preset-wrapper' )?.getBoundingClientRect()?.top
 					const editorSidebar = document.querySelector( '.interface-complementary-area.editor-sidebar' )
-					editorSidebar.scrollTo( {
-						top: targetElTop - editorSidebar.getBoundingClientRect().top - 300,
-						behavior: 'smooth',
-					} )
+					if ( editorSidebar && typeof targetElTop === 'number' ) {
+						editorSidebar.scrollTo( {
+							top: targetElTop - editorSidebar.getBoundingClientRect().top - 300,
+							behavior: 'smooth',
+						} )
+					}
 				}, 100 )
 			},
 			postStep: () => {
@@ -190,7 +194,7 @@ export const globalColorSchemes = {
 			offsetX: '-8px',
 			glowTarget: '[aria-controls="edit-post:block"]',
 			nextEventTarget: '[aria-controls="edit-post:block"]',
-			postStep: () => {
+			postStep: async () => {
 				dispatch( 'core/edit-post' ).openGeneralSidebar( 'edit-post/block' )
 				// Make sure the Inner Column is selected.
 				const block = select( 'core/block-editor' ).getSelectedBlock()
@@ -200,12 +204,11 @@ export const globalColorSchemes = {
 					const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
 					if ( columnsBlock ) {
 						dispatch( 'core/block-editor' ).selectBlock( columnsBlock.clientId )
-						setTimeout( () => {
-							document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
-							setTimeout( () => {
-								document.querySelector( '.ugb-block-background-panel:not(is-opened) button' )?.click()
-							}, 100 )
-						}, 100 )
+						await waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )
+						document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
+
+						await waitForElement( '.ugb-block-background-panel:not(.is-opened) button' )
+						document.querySelector( '.ugb-block-background-panel:not(.is-opened) button' )?.click()
 					}
 				}
 			},
