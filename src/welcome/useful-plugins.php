@@ -287,9 +287,10 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			wp_clean_plugins_cache();
 
 			if ( $action === 'install' && ! self::is_plugin_installed( $full_slug ) ) {
-				$response[ 'status' ] = 'installing';
+				$response[ 'status' ] = 'not_installed';
 			} else if ( ! self::is_plugin_activated( $full_slug ) ) {
-				$response[ 'status' ] = $action === 'install' ? 'installed' : 'activating';
+				$response[ 'status' ] = 'installed';
+				// If the plugin is installed and not activated, provide the action link to activate it
 				$response[ 'action' ] = $action === 'install' ? html_entity_decode( wp_nonce_url(
 					add_query_arg(
 						[

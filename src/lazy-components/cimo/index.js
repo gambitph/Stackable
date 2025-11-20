@@ -11,7 +11,10 @@ import {
 } from '@wordpress/element'
 import { models } from '@wordpress/api'
 
+let isPolling = false
+
 const CimoDownloadNotice = props => {
+	const { inMediaLibrary = false } = props
 	const [ data, setData ] = useState( { status: cimo?.status, action: cimo?.action } )
 	const pollCountRef = useRef( 0 )
 
@@ -33,6 +36,12 @@ const CimoDownloadNotice = props => {
 
 	// Polls the Cimo plugin status to detect installation or activation state changes
 	const pollStatus = ( action, link, pollOnce = false ) => {
+		if ( isPolling ) {
+			return
+		}
+
+		isPolling = true
+
 		fetch( ajaxUrl, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -76,6 +85,7 @@ const CimoDownloadNotice = props => {
 				( action === 'install' && ( _data.status === 'installed' || _data.status === 'activated' ) ) ||
 				( action === 'activate' && _data.status === 'activated' )
 			) {
+				isPolling = false
 				return
 			}
 
@@ -89,6 +99,10 @@ const CimoDownloadNotice = props => {
 	}
 
 	useEffect( () => {
+		if ( inMediaLibrary ) {
+			return
+		}
+
 		const _media = wp.media
 		const old = _media.view.MediaFrame.Select
 
@@ -186,7 +200,7 @@ domReady( () => {
 					}
 				}
 
-				createRoot( noticeDiv ).render( <CimoDownloadNotice onDismiss={ onDismiss } /> )
+				createRoot( noticeDiv ).render( <CimoDownloadNotice onDismiss={ onDismiss } inMediaLibrary={ true } /> )
 				details.insertAdjacentElement( 'afterend', noticeDiv )
 			}
 
