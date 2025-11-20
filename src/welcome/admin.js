@@ -42,6 +42,7 @@ import { GettingStarted } from './getting-started'
 import { BLOCK_STATE } from '~stackable/util/blocks'
 import { BlockToggler, OptimizationSettings } from '~stackable/deprecated/v2/welcome/admin'
 import blockData from '~stackable/deprecated/v2/welcome/blocks'
+import { UsefulPlugins } from './useful-plugins'
 
 const [ FREE_BLOCKS, BLOCK_DEPENDENCIES ] = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 
@@ -1656,6 +1657,14 @@ domReady( () => {
 			document.querySelector( '.s-content' )
 		).render(
 			<Settings />
+		)
+	}
+
+	if ( document.getElementById( 's-useful-plugins' ) ) {
+		createRoot(
+			document.getElementById( 's-useful-plugins' )
+		).render(
+			<UsefulPlugins />
 		)
 	}
 } )

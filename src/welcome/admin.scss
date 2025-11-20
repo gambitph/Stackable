@@ -8,6 +8,15 @@
 	--stk-welcome-light-border: #d0d5dd;
 }
 
+@mixin s-shadow {
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+	transition: all 0.3s ease-in-out;
+	&:hover {
+		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+	}
+}
+
+
 // Make scroll smooth with inline navigation.
 html {
 	scroll-behavior: smooth;
@@ -17,6 +26,9 @@ html {
 
 body[class*="page_stackable"],
 body[class*="page_stk-"] {
+	--wp-components-color-accent: var(--stk-welcome-primary);
+	--wp-components-color-accent-darker-20: var(--stk-welcome-secondary);
+	--wp-components-color-accent-inverted: var(--stk-welcome-secondary);
 	#wpcontent {
 		padding-left: 0;
 	}
@@ -152,6 +164,54 @@ body[class*="page_stk-"] {
 	padding: 0;
 	display: flex !important;
 	align-items: center;
+}
+
+
+.s-card {
+	padding: 1.5em;
+	display: flex;
+	flex-direction: column;
+	border-radius: 16px;
+	@include s-shadow;
+	background: #fff;
+	overflow: hidden;
+
+	.s-card-title,
+	h3 {
+		margin: 0 0 0.5em;
+	}
+	.s-card-subtitle,
+	p {
+		margin: 0;
+	}
+	> *:last-child {
+		margin-bottom: 0;
+	}
+
+	.s-video-wrapper {
+		align-items: center;
+	}
+
+	.s-icon-wrapper {
+		border: 1px solid #eaecf0;
+		border-radius: 8px;
+		padding: 10px;
+		display: flex;
+		align-items: center;
+		max-width: fit-content;
+		margin-bottom: 20px;
+	}
+
+	.s-bottom-icon-wrapper {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	:not(.s-quick-buttons-arrow) svg {
+		height: 24px;
+		width: 24px;
+	}
+
 }
 
 .s-admin-notice-marker {
@@ -369,10 +429,8 @@ body.toplevel_page_stackable {
 		padding-bottom: 0;
 	}
 }
-body.stackable_page_stackable-settings,
 body.toplevel_page_stackable,
-body.stackable_page_stk-custom-fields,
-body.stackable_page_stackable-go-premium {
+body[class*="page_stackable"] {
 	img {
 		max-width: 100%;
 	}
@@ -939,3 +997,4 @@ body.stackable_page_stackable-go-premium {
 @import "news";
 @import "getting-started";
 @import "freemius";
+@import "useful-plugins";

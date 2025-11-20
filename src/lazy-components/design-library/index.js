@@ -3,10 +3,9 @@
  */
 import HelpSVG from './images/help.svg'
 import BlockList from './block-list'
-import Button from '../button'
-import DesignLibraryList from '~stackable/components/design-library-list'
-import { GuidedModalTour } from '~stackable/components'
-import { getDesigns, filterDesigns } from '~stackable/design-library'
+import { HeaderActions, PLAN_OPTIONS } from './header-actions'
+import DesignLibraryList from './design-library-list'
+import { DesignLibraryContext } from './context'
 
 /**
  * External deprendencies
@@ -14,6 +13,11 @@ import { getDesigns, filterDesigns } from '~stackable/design-library'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
 import { useLocalStorage } from '~stackable/util'
+import { useBlockColorSchemes } from '~stackable/hooks'
+import {
+	GuidedModalTour, Button, ColorSchemePreview, ColorSchemesHelp, Tooltip,
+} from '~stackable/components'
+import { getDesigns, filterDesigns } from '~stackable/design-library'
 
 /**
  * WordPress deprendencies
@@ -26,15 +30,10 @@ import {
 	ToggleControl,
 } from '@wordpress/components'
 import {
-	useEffect, useState, createContext, useContext, useCallback,
+	useEffect, useState, useCallback,
 	useMemo,
 } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
-import { useBlockColorSchemes } from '~stackable/hooks'
-import ColorSchemePreview from '../color-scheme-preview'
-import { ColorSchemesHelp } from '../color-schemes-help'
-import Tooltip from '../tooltip'
-import { HeaderActions, PLAN_OPTIONS } from './header-actions'
 
 const popoverProps = {
 	className: 'ugb-design-library__color-scheme-popover',
@@ -46,13 +45,7 @@ const popoverProps = {
 // This is to make sure that the design library shows "all" at the start.
 localStorage?.setItem( 'stk__design_library__block-list__selected', '' )
 
-export const DesignLibraryContext = createContext( null )
-
-export const useDesignLibraryContext = () => {
-	return useContext( DesignLibraryContext )
-}
-
-export const ModalDesignLibrary = props => {
+const ModalDesignLibrary = props => {
 	const {
 		backgroundModeColorScheme, containerModeColorScheme, colorSchemesCollection,
 	} = useBlockColorSchemes()
@@ -73,6 +66,8 @@ export const ModalDesignLibrary = props => {
 	// The display designs are used to list the available designs the user can choose.
 	const [ displayDesigns, setDisplayDesigns ] = useState( [] )
 
+	const [ errors, setErrors ] = useState( null )
+
 	const [ enableBackground, setEnableBackground ] = useState( false )
 	const [ selectedContainerScheme, setSelectedContainerScheme ] = useState( '' )
 	const [ selectedBackgroundScheme, setSelectedBackgroundScheme ] = useState( '' )
@@ -92,12 +87,20 @@ export const ModalDesignLibrary = props => {
 	useEffect( () => {
 		setIsBusy( true )
 		setSidebarDesigns( [] )
+		setErrors( null )
 
 		getDesigns( {
 			reset: doReset,
 			type: selectedTab,
 		} ).then( designs => {
-			setSidebarDesigns( designs )
+			let _designs = designs
+
+			if ( typeof designs === 'object' && designs.error ) {
+				_designs = []
+				setErrors( designs.error )
+			}
+
+			setSidebarDesigns( _designs )
 			setSelectedCategory( '' )
 		} ).finally( () => {
 			setDoReset( false )
@@ -390,6 +393,7 @@ export const ModalDesignLibrary = props => {
 						className={ `stk-design-library__item-${ selectedTab }` }
 						isBusy={ isBusy }
 						designs={ displayDesigns }
+						errors={ errors }
 					/>
 
 					{ selectedTab === 'patterns' && <aside className="ugb-modal-design-library__footer">
@@ -419,6 +423,8 @@ ModalDesignLibrary.defaultProps = {
 	apiVersion: '',
 	onChangeApiVersion: () => {},
 }
+
+export default ModalDesignLibrary
 
 const ColorSchemeTextItem = props => {
 	return <div style={ { position: 'relative' } }>

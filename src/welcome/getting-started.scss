@@ -2,14 +2,6 @@
 * Styles used by the Getting Started section.
 */
 
-@mixin s-shadow {
-	box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-	transition: all 0.3s ease-in-out;
-	&:hover {
-		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-	}
-}
-
 .toplevel_page_stackable {
 	.s-body {
 		max-width: 1200px;
@@ -152,53 +144,6 @@
 		.s-card {
 			width: calc(30% - 32px);
 		}
-	}
-
-	.s-card {
-		padding: 1.5em;
-		display: flex;
-		flex-direction: column;
-		border-radius: 16px;
-		@include s-shadow;
-		background: #fff;
-		overflow: hidden;
-
-		.s-card-title,
-		h3 {
-			margin: 0 0 0.5em;
-		}
-		.s-card-subtitle,
-		p {
-			margin: 0;
-		}
-		> *:last-child {
-			margin-bottom: 0;
-		}
-
-		.s-video-wrapper {
-			align-items: center;
-		}
-
-		.s-icon-wrapper {
-			border: 1px solid #eaecf0;
-			border-radius: 8px;
-			padding: 10px;
-			display: flex;
-			align-items: center;
-			max-width: fit-content;
-			margin-bottom: 20px;
-		}
-
-		.s-bottom-icon-wrapper {
-			display: flex;
-			justify-content: flex-end;
-		}
-
-		:not(.s-quick-buttons-arrow) svg {
-			height: 24px;
-			width: 24px;
-		}
-
 	}
 
 	.s-divider {

@@ -1,13 +1,10 @@
 /**
- * Internal dependencies
- */
-import { ModalDesignLibrary } from './modal'
-
-/**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo, useCallback } from '@wordpress/element'
+import {
+	useMemo, useCallback, Suspense, lazy,
+} from '@wordpress/element'
 import { useLocalStorage } from '~stackable/util'
 
 export const Switcher = props => {
@@ -21,19 +18,25 @@ export const Switcher = props => {
 	// disabled, always default to the first version
 	const apiVersion = versions.includes( _apiVersion ) ? _apiVersion : versions[ 0 ]
 
+	// Lazy-load the ModalDesignLibrary to reduce initial bundle size
+	// Note: We import the named export and set it as default for React.lazy
+	const LazyModalDesignLibrary = lazy( () => import( /* webpackChunkName: "design-library" */ '~stackable/lazy-components/design-library' ) )
+
 	const ModalComponent = useMemo( () => {
-		return applyFilters( 'stackable.design-library.modal-component', ModalDesignLibrary, apiVersion )
+		return applyFilters( 'stackable.design-library.modal-component', LazyModalDesignLibrary, apiVersion )
 	}, [ apiVersion ] )
 
 	const onChangeApiVersion = useCallback( v => setApiVersion( v ), [] )
 
 	return (
-		<ModalComponent
-			hasVersionSwitcher={ versions.length > 1 }
-			apiVersion={ apiVersion }
-			onChangeApiVersion={ onChangeApiVersion }
-			{ ...props }
-		/>
+		<Suspense fallback={ null }>
+			<ModalComponent
+				hasVersionSwitcher={ versions.length > 1 }
+				apiVersion={ apiVersion }
+				onChangeApiVersion={ onChangeApiVersion }
+				{ ...props }
+			/>
+		</Suspense>
 	)
 }
 
