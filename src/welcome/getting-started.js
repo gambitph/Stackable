@@ -9,6 +9,8 @@ import SVGArrowUpRightIcon from './images/arrow-up-right.svg'
 import SVGDivider from './images/divider.svg'
 import SVGQuickButtonsArrow from './images/quick-buttons-arrow.svg'
 import SVGCheck from './images/check.svg'
+import SVGStateHoverIcon from '../components/base-control2/images/state-hover.svg'
+import SVGStateParentHoverIcon from '../components/base-control2/images/state-parent-hover.svg'
 
 /**
  * WordPress dependencies
@@ -21,6 +23,15 @@ import {
 	scheduled as scheduledIcon,
 	brush as brushIcon,
 	blockDefault as blockDefaultIcon,
+	desktop as desktopIcon,
+	cog as cogIcon,
+	column as columnIcon,
+	copy as copyIcon,
+	filter as filterIcon,
+	reusableBlock as reusableBlockIcon,
+	symbol as symbolIcon,
+	archive as archiveIcon,
+	globe as globeIcon,
 } from '@wordpress/icons'
 
 /**
@@ -145,7 +156,7 @@ const QUICK_BUTTONS = [ {
 	description: __( 'Pick a ready-made website template to kickstart your project — fully built layouts and styles, just swap in your content.', i18n ),
 	link: '/wp-admin/post-new.php?post_type=page',
 	cta: __( 'Select Kit', i18n ),
-	style: { display: 'none' },
+	display: false,
 },
 {
 	id: 'design-system-picker',
@@ -154,11 +165,11 @@ const QUICK_BUTTONS = [ {
 	description: __( 'Browse curated Design System presets — apply a professional look instantly without building from scratch.', i18n ),
 	link: '/wp-admin/post-new.php?post_type=page',
 	cta: __( 'Pick A System', i18n ),
-	style: { display: 'none' },
+	display: false,
 },
 {
 	id: 'block-backgrounds',
-	icon: brushIcon,
+	icon: columnIcon,
 	title: __( 'Block Backgrounds & Containers', i18n ),
 	description: __( 'Use backgrounds to create stunning full-width sections, and containers to add boxed content for organizing your page.', i18n ),
 	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=block-backgrounds`,
@@ -166,7 +177,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'responsive-controls',
-	icon: brushIcon,
+	icon: desktopIcon,
 	title: __( 'Responsive Controls', i18n ),
 	description: __( 'Adjust styles for desktop, tablet, and mobile — easily control layout, spacing, and appearance for a seamless experience on any device.', i18n ),
 	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=responsive-controls`,
@@ -174,7 +185,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'hover-states',
-	icon: brushIcon,
+	icon: <span className="s-custom-icon-wrapper"><SVGStateHoverIcon /></span>,
 	title: __( 'Styling Hover States', i18n ),
 	description: __( 'Adjust styles for different hover states — create engaging effects when users interact with your designs.', i18n ),
 	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=hover-states`,
@@ -182,7 +193,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'advanced-hover-states',
-	icon: brushIcon,
+	icon: <span className="s-custom-icon-wrapper"><SVGStateParentHoverIcon /></span>,
 	title: __( 'Styling Hover States - Advanced', i18n ),
 	description: __( 'Style containers and their contents together—apply hover effects to multiple blocks at once for seamless interactive designs.', i18n ),
 	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=advanced-hover-states`,
@@ -190,7 +201,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'global-color-schemes',
-	icon: brushIcon,
+	icon: globeIcon,
 	title: __( 'Global Color Schemes', i18n ),
 	description: __( 'Create and apply color schemes to your entire website—maintain consistent branding across all pages with ease.', i18n ),
 	link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=global-color-schemes`,
@@ -198,7 +209,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'block-styles',
-	icon: brushIcon,
+	icon: reusableBlockIcon,
 	title: __( 'Re-using Block Styles', i18n ),
 	description: __( 'Re-use block styles sitewide for consistent branding. Save and quickly apply your favorite style combinations to any block.', i18n ),
 	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=block-styles` : '',
@@ -207,7 +218,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'dynamic-content',
-	icon: brushIcon,
+	icon: archiveIcon,
 	title: __( 'Dynamic Content', i18n ),
 	description: __( 'Dynamically display content based on user interactions, site conditions, or time-based triggers.', i18n ),
 	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=dynamic-content` : '',
@@ -216,7 +227,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'conditional-display',
-	icon: brushIcon,
+	icon: cogIcon,
 	title: __( 'Conditional Display', i18n ),
 	description: __( 'Show or hide blocks based on specific conditions, such as user roles, device type, or custom criteria.', i18n ),
 	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=conditional-display` : '',
@@ -225,7 +236,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'motion-effects',
-	icon: brushIcon,
+	icon: symbolIcon,
 	title: __( 'Motion Effects', i18n ),
 	description: __( 'Add animations and transitions to your blocks for a more engaging and interactive user experience.', i18n ),
 	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=motion-effects` : '',
@@ -234,7 +245,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'custom-css',
-	icon: brushIcon,
+	icon: filterIcon,
 	title: __( 'Applying CSS per Block', i18n ),
 	description: __( 'Add custom CSS to your blocks for precise control over their appearance and behavior.', i18n ),
 	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=custom-css` : '',
@@ -243,7 +254,7 @@ const QUICK_BUTTONS = [ {
 },
 {
 	id: 'copy-paste-styles',
-	icon: brushIcon,
+	icon: copyIcon,
 	title: __( 'Copy & Paste Styles', i18n ),
 	description: __( 'Quickly apply styles from one block to another for consistent design and branding.', i18n ),
 	link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=copy-paste-styles` : '',
@@ -267,7 +278,11 @@ export const GettingStarted = () => {
 					<p>{ __( 'Watch this video to get started with Stackable in within 5 minutes.', i18n ) }</p>
 				</div>
 				{ QUICK_BUTTONS.map( ( item, i ) => {
-					return <div className="s-card" key={ i } style={ item.style ?? {} }>
+					if ( item.display === false ) {
+						return null
+					}
+
+					return <div className="s-card" key={ i }>
 						{ i === 0 && <div className="s-quick-buttons-arrow">
 							<SVGQuickButtonsArrow />
 							<span>{ __( 'Quick Start', i18n ) }</span>
