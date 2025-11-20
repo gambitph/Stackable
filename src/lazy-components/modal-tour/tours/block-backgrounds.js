@@ -119,7 +119,7 @@ export const blockBackgrounds = {
 					dispatch( 'core/block-editor' ).selectBlock( columnsBlock.clientId )
 				}
 
-				waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' ).then( () => {
+				waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--style' ).then( () => {
 					// Click the tab
 					document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
 				} )

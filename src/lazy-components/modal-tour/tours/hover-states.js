@@ -22,7 +22,7 @@ export const hoverStates = {
 		// Select the inner columns block for the tour
 		dispatch( 'core/block-editor' ).selectBlock( blockObject.clientId )
 
-		waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' ).then( () => {
+		waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--style' ).then( () => {
 			document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
 			setTimeout( () => {
 				document.querySelector( '.ugb-panel--image:not(.is-opened)' )?.click()
@@ -114,7 +114,7 @@ export const hoverStates = {
 			},
 			postStep: () => {
 				document.querySelector( '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper:not(.is-open) button' )?.click()
-				waitForElement( '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper button:not(.is-active)[data-value="normal"]' ).then( () => {
+				waitForElement( '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper button[data-value="normal"]' ).then( () => {
 					document.querySelector( '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper button:not(.is-active)[data-value="normal"]' )?.click()
 				} )
 			},

@@ -92,11 +92,11 @@ export const responsiveControls = {
 				if ( columnsBlock ) {
 					dispatch( 'core/block-editor' ).selectBlock( columnsBlock.clientId )
 				}
-				await waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--layout:not(.is-active)' )
+				await waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--layout' )
 				// Open Layout tab if it's not open
 				document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--layout:not(.is-active)' )?.click()
 
-				await waitForElement( '.ugb-panel--layout:not(.is-opened)' )
+				await waitForElement( '.ugb-panel--layout' )
 				document.querySelector( '.ugb-panel--layout:not(.is-opened)' )?.click()
 			},
 			postStep: () => {
@@ -173,7 +173,7 @@ export const responsiveControls = {
 			postStep: async () => {
 				document.querySelector( '.ugb-sort-control .stk-control-responsive-toggle:not(.is-open) button' )?.click()
 
-				await waitForElement( '.ugb-sort-control .stk-control-responsive-toggle button:not(.is-active)[data-value="desktop"]' )
+				await waitForElement( '.ugb-sort-control .stk-control-responsive-toggle button[data-value="desktop"]' )
 				document.querySelector( '.ugb-sort-control .stk-control-responsive-toggle button:not(.is-active)[data-value="desktop"]' )?.click()
 			},
 		},

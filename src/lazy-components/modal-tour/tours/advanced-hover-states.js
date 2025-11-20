@@ -164,14 +164,17 @@ export const advancedHoverStates = {
 			position: 'left',
 			glowTarget: '.stk-control:has([data-attribute="textColor1"]) .stk-label-unit-toggle__wrapper button[data-value="parent-hover"]',
 			nextEventTarget: '.stk-control:has([data-attribute="textColor1"]) .stk-label-unit-toggle__wrapper button:not(.is-active)[data-value="parent-hover"]',
+			modalDelay: 150,
 			preStep: () => {
 				setTimeout( () => {
 					const targetElTop = document.querySelector( '.stk-control:has([data-attribute="textColor1"])' )?.getBoundingClientRect()?.top
 					const editorSidebar = document.querySelector( '.editor-sidebar.ugb--has-panel-tabs' )
-					editorSidebar.scrollTo( {
-						top: targetElTop - editorSidebar.getBoundingClientRect().top - 100,
-						behavior: 'smooth',
-					} )
+					if ( editorSidebar && typeof targetElTop === 'number' ) {
+						editorSidebar.scrollTo( {
+							top: targetElTop - editorSidebar.getBoundingClientRect().top - 100,
+							behavior: 'smooth',
+						} )
+					}
 
 					document.querySelector( '.stk-control:has([data-attribute="textColor1"]) .stk-label-unit-toggle__wrapper:not(.is-open) button' )?.click()
 				}, 100 )

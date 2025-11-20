@@ -204,10 +204,10 @@ export const globalColorSchemes = {
 					const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
 					if ( columnsBlock ) {
 						dispatch( 'core/block-editor' ).selectBlock( columnsBlock.clientId )
-						await waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )
+						await waitForElement( '.edit-post-sidebar__panel-tab.ugb-tab--style' )
 						document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
 
-						await waitForElement( '.ugb-block-background-panel:not(.is-opened) button' )
+						await waitForElement( '.ugb-block-background-panel button' )
 						document.querySelector( '.ugb-block-background-panel:not(.is-opened) button' )?.click()
 					}
 				}
