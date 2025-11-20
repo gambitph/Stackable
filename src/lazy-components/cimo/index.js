@@ -52,7 +52,9 @@ const CimoDownloadNotice = props => {
 			  nonce: cimo.nonce,
 			} ),
 			credentials: 'same-origin',
-		  } ).then( res => res.json() ).then( res => {
+		} ).then( res => res.json() ).then( res => {
+			isPolling = false
+
 			if ( ! res.success ) {
 				setData( { status: 'error', action: '' } )
 
@@ -85,17 +87,18 @@ const CimoDownloadNotice = props => {
 				( action === 'install' && ( _data.status === 'installed' || _data.status === 'activated' ) ) ||
 				( action === 'activate' && _data.status === 'activated' )
 			) {
-				isPolling = false
 				return
 			}
 
 			setTimeout( () => {
 				pollStatus( action )
 			}, 3000 * pollCountRef.current )
-		  } ).catch( e => {
+		} ).catch( e => {
 			// eslint-disable-next-line no-console
 			console.error( e.message )
-		  } )
+		} ).finally( () => {
+			isPolling = false
+		} )
 	}
 
 	useEffect( () => {
