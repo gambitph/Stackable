@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.5.5
 Tested up to: 6.8.2
 Requires PHP: 7.3
-Stable tag: 3.19.3
+Stable tag: 3.19.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -308,6 +308,15 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.4 =
+* New: Moved Stackable admin settings to its own top level menu #3633 #394
+* New: Design Library module now lazy loads for faster initial loading performance #3597
+* New: Added new `enqueue_frontend_assets_for_content( $content )` function for enqueueing js & css files in the current page #3634
+* Change: Added notice for Cimo in relevant areas #3635 #3642
+* Fixed: Global typography - resets for tablet and mobile when reseting for desktop #3550
+* Fixed: Table of contents - scroll top effect not working properly #3640
+* Fixed: Video popup - update date error on newly uploaded videos #3641
 
 = 3.19.3 =
 * Fixed: Display Condition - PHP warning when using date & time condition #395
