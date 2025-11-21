@@ -12,10 +12,11 @@ import {
 import { models } from '@wordpress/api'
 
 let isPolling = false
+let cimoData = { status: cimo?.status, action: cimo?.action }
 
 const CimoDownloadNotice = props => {
 	const { inMediaLibrary = false } = props
-	const [ data, setData ] = useState( { status: cimo?.status, action: cimo?.action } )
+	const [ data, setData ] = useState( cimoData )
 	const pollCountRef = useRef( 0 )
 
 	const onDismiss = () => {
@@ -71,8 +72,13 @@ const CimoDownloadNotice = props => {
 
 			const _data = res.data
 
-			if ( data.status !== _data.status ) {
-				setData( _data )
+			// Stop polling if it has reached 3 attempts, or plugin status indicates installation/activation is complete
+			if ( pollOnce || pollCountRef.current >= 3 ||
+				( action === 'install' && ( _data.status === 'installed' || _data.status === 'activated' ) ) ||
+				( action === 'activate' && _data.status === 'activated' )
+			) {
+				cimoData = _data
+				setData( cimoData )
 
 				// Update the global stackable.cimo status/action variables
 				// so new image block selections reflect the latest Cimo installation state
@@ -80,13 +86,6 @@ const CimoDownloadNotice = props => {
 					window.stackable.cimo.status = _data.status
 					window.stackable.cimo.action = _data.action
 				}
-			}
-
-			// Stop polling if it has reached 3 attempts, or plugin status indicates installation/activation is complete
-			if ( pollOnce || pollCountRef.current >= 3 ||
-				( action === 'install' && ( _data.status === 'installed' || _data.status === 'activated' ) ) ||
-				( action === 'activate' && _data.status === 'activated' )
-			) {
 				return
 			}
 
@@ -117,16 +116,15 @@ const CimoDownloadNotice = props => {
 
 				this.on( 'close', () => {
 					pollCountRef.current = 0
-					if ( data.status === 'activated' ) {
-						return
-					}
+					const action = ( cimoData.status === 'installing' ) ? 'install'
+								 : ( cimoData.status === 'activating' ) ? 'activate' : false
 
-					if ( data.status === 'not_installed' ) {
-						pollStatus( 'install', null, true )
-						return
+					if ( action ) {
+						setData( cimoData )
+						setTimeout( () => {
+							pollStatus( action, null )
+						}, 1000 )
 					}
-
-					pollStatus( 'activate', null, true )
 				} )
 			},
 		} )
@@ -137,12 +135,14 @@ const CimoDownloadNotice = props => {
 		pollCountRef.current = 0
 
 		if ( data.status === 'not_installed' ) {
-			setData( { status: 'installing', action: '' } )
+			cimoData = { status: 'installing', action: '' }
+			setData( cimoData )
 			pollStatus( 'install', e.currentTarget.href )
 			return
 		}
 
-		setData( { status: 'activating', action: '' } )
+		cimoData = { status: 'activating', action: '' }
+		setData( cimoData )
 		pollStatus( 'activate', e.currentTarget.href )
 	}
 
