@@ -183,12 +183,24 @@ const InspectorControls = memo( props => {
 							videoUploadDate: '',
 						} ) }
 						onChange={ media => {
+							let videoUploadDate = null
+
+							if ( media.date ) {
+								try {
+									videoUploadDate = media.date instanceof Date
+										? media.date.toISOString()
+										: new Date( media.date ).toISOString()
+								} catch ( error ) {
+									videoUploadDate = null
+								}
+							}
+
 							props.setAttributes( {
 								videoLink: media.url,
 								videoId: media.url,
 								videoName: media.title, // Use title, description and date from media library for video schema
-								videoDescription: media.description,
-								videoUploadDate: media.date.toISOString(),
+								videoDescription: media.description || '',
+								videoUploadDate: videoUploadDate ?? undefined,
 							} )
 						} }
 						imageId={ urlIsVideo( props.videoLink ) ? props.videoId : '' }
