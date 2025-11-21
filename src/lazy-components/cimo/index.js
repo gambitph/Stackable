@@ -11,8 +11,12 @@ import {
 } from '@wordpress/element'
 import { models } from '@wordpress/api'
 
+let isPolling = false
+let cimoData = { status: cimo?.status, action: cimo?.action }
+
 const CimoDownloadNotice = props => {
-	const [ data, setData ] = useState( { status: cimo?.status, action: cimo?.action } )
+	const { inMediaLibrary = false } = props
+	const [ data, setData ] = useState( cimoData )
 	const pollCountRef = useRef( 0 )
 
 	const onDismiss = () => {
@@ -33,6 +37,12 @@ const CimoDownloadNotice = props => {
 
 	// Polls the Cimo plugin status to detect installation or activation state changes
 	const pollStatus = ( action, link, pollOnce = false ) => {
+		if ( isPolling ) {
+			return
+		}
+
+		isPolling = true
+
 		fetch( ajaxUrl, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -43,7 +53,9 @@ const CimoDownloadNotice = props => {
 			  nonce: cimo.nonce,
 			} ),
 			credentials: 'same-origin',
-		  } ).then( res => res.json() ).then( res => {
+		} ).then( res => res.json() ).then( res => {
+			isPolling = false
+
 			if ( ! res.success ) {
 				setData( { status: 'error', action: '' } )
 
@@ -60,8 +72,13 @@ const CimoDownloadNotice = props => {
 
 			const _data = res.data
 
-			if ( data.status !== _data.status ) {
-				setData( _data )
+			// Stop polling if it has reached 3 attempts, or plugin status indicates installation/activation is complete
+			if ( pollOnce || pollCountRef.current >= 3 ||
+				( action === 'install' && ( _data.status === 'installed' || _data.status === 'activated' ) ) ||
+				( action === 'activate' && _data.status === 'activated' )
+			) {
+				cimoData = _data
+				setData( cimoData )
 
 				// Update the global stackable.cimo status/action variables
 				// so new image block selections reflect the latest Cimo installation state
@@ -69,26 +86,25 @@ const CimoDownloadNotice = props => {
 					window.stackable.cimo.status = _data.status
 					window.stackable.cimo.action = _data.action
 				}
-			}
-
-			// Stop polling if it has reached 3 attempts, or plugin status indicates installation/activation is complete
-			if ( pollOnce || pollCountRef.current >= 3 ||
-				( action === 'install' && ( _data.status === 'installed' || _data.status === 'activated' ) ) ||
-				( action === 'activate' && _data.status === 'activated' )
-			) {
 				return
 			}
 
 			setTimeout( () => {
 				pollStatus( action )
 			}, 3000 * pollCountRef.current )
-		  } ).catch( e => {
+		} ).catch( e => {
 			// eslint-disable-next-line no-console
 			console.error( e.message )
-		  } )
+		} ).finally( () => {
+			isPolling = false
+		} )
 	}
 
 	useEffect( () => {
+		if ( inMediaLibrary ) {
+			return
+		}
+
 		const _media = wp.media
 		const old = _media.view.MediaFrame.Select
 
@@ -100,16 +116,15 @@ const CimoDownloadNotice = props => {
 
 				this.on( 'close', () => {
 					pollCountRef.current = 0
-					if ( data.status === 'activated' ) {
-						return
-					}
+					const action = ( cimoData.status === 'installing' ) ? 'install'
+								 : ( cimoData.status === 'activating' ) ? 'activate' : false
 
-					if ( data.status === 'not_installed' ) {
-						pollStatus( 'install', null, true )
-						return
+					if ( action ) {
+						setData( cimoData )
+						setTimeout( () => {
+							pollStatus( action, null )
+						}, 1000 )
 					}
-
-					pollStatus( 'activate', null, true )
 				} )
 			},
 		} )
@@ -120,12 +135,14 @@ const CimoDownloadNotice = props => {
 		pollCountRef.current = 0
 
 		if ( data.status === 'not_installed' ) {
-			setData( { status: 'installing', action: '' } )
+			cimoData = { status: 'installing', action: '' }
+			setData( cimoData )
 			pollStatus( 'install', e.currentTarget.href )
 			return
 		}
 
-		setData( { status: 'activating', action: '' } )
+		cimoData = { status: 'activating', action: '' }
+		setData( cimoData )
 		pollStatus( 'activate', e.currentTarget.href )
 	}
 
@@ -186,7 +203,7 @@ domReady( () => {
 					}
 				}
 
-				createRoot( noticeDiv ).render( <CimoDownloadNotice onDismiss={ onDismiss } /> )
+				createRoot( noticeDiv ).render( <CimoDownloadNotice onDismiss={ onDismiss } inMediaLibrary={ true } /> )
 				details.insertAdjacentElement( 'afterend', noticeDiv )
 			}
 
