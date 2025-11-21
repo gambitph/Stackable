@@ -148,6 +148,18 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
+	attrObject.add( {
+		attributes: {
+			scrollTopOffset: {
+				type: 'number',
+				default: '',
+				stkResponsive: true,
+			},
+		},
+		versionAdded: '3.19.3',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 export default attributes( VERSION )
