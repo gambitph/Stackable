@@ -237,7 +237,8 @@ const ColorSchemePicker = props => {
 		}
 
 		setItemInEdit( prevItem => {
-			const currentItem = prevItem
+			// clone deep causes the color picker to jump when dragging, so we use a spread operator to create a new object
+			const currentItem = { ...prevItem }
 
 			if ( ! schemeHasValue( currentItem.colorScheme ) && changeDefaultName ) {
 				currentItem.name = currentItem?.key === 'scheme-default-1' ? 'Color Scheme 1' : 'Color Scheme 2'
