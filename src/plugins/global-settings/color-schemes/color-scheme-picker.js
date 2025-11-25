@@ -236,22 +236,24 @@ const ColorSchemePicker = props => {
 			}
 		}
 
-		const currentItem = cloneDeep( itemInEdit )
+		setItemInEdit( prevItem => {
+			const currentItem = prevItem
 
-		if ( ! schemeHasValue( currentItem.colorScheme ) && changeDefaultName ) {
-			currentItem.name = currentItem?.key === 'scheme-default-1' ? 'Color Scheme 1' : 'Color Scheme 2'
-		}
+			if ( ! schemeHasValue( currentItem.colorScheme ) && changeDefaultName ) {
+				currentItem.name = currentItem?.key === 'scheme-default-1' ? 'Color Scheme 1' : 'Color Scheme 2'
+			}
 
-		currentItem.colorScheme[ property ][ currentState ] = color
+			currentItem.colorScheme[ property ][ currentState ] = color
 
-		if ( property === 'backgroundColor' && isGradient( color ) ) {
-			currentItem.colorScheme[ property ].desktopHover = ''
-			currentItem.colorScheme[ property ].desktopParentHover = ''
-		}
+			if ( property === 'backgroundColor' && isGradient( color ) ) {
+				currentItem.colorScheme[ property ].desktopHover = ''
+				currentItem.colorScheme[ property ].desktopParentHover = ''
+			}
 
-		setItemInEdit( currentItem )
+			updateColorSchemes( currentItem )
 
-		updateColorSchemes( currentItem )
+			return currentItem
+		} )
 	}
 
 	// For updating option to show the color scheme in color pickers
