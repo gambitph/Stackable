@@ -16,12 +16,6 @@
 		border-width: 1px;
 		border-color: rgba(0, 0, 0, 0.4);
 	}
-
-	// Apply the color to the SVG path on the defintion
-	svg.ugb-custom-icon :is(g,path,rect,polygon,ellipse) {
-		fill: var(--stk-icon-list-marker-color) !important;
-		color: var(--stk-icon-list-marker-color) !important;
-	}
 }
 
 .stk-block-icon-list-item__content {
@@ -48,13 +42,17 @@
 				width: var(--stk-icon-height, var(--stk-icon-list-icon-size, 16px));
 				transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
 				opacity: var(--stk-icon-list-icon-opacity, 1);
-				fill: var(--stk-icon-list-marker-color);
-				color: var(--stk-icon-list-marker-color);
 				position: relative;
 
-				:is(use,g,path,rect,polygon,ellipse) {
+				// Do not apply the color to custom icons.
+				&:not(.ugb-custom-icon) {
 					fill: var(--stk-icon-list-marker-color);
 					color: var(--stk-icon-list-marker-color);
+
+					:is(use,g,path,rect,polygon,ellipse) {
+						fill: var(--stk-icon-list-marker-color);
+						color: var(--stk-icon-list-marker-color);
+					}
 				}
 			}
 		}
