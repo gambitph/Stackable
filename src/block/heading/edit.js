@@ -103,11 +103,12 @@ const Edit = props => {
 	// Auto-generate anchors in Stackable headings.
 	const [ prevText, setPrevText ] = useState( props.attributes.text )
 	const updateTimeout = useRef( null )
+	const isFirstRender = useRef( true )
 
 	useEffect( () => {
 		// Use updateTimeout to skip effect on first render
-		if ( updateTimeout.current === null ) {
-			updateTimeout.current = true
+		if ( isFirstRender.current ) {
+			isFirstRender.current = false
 			return
 		}
 
