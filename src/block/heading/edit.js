@@ -105,6 +105,12 @@ const Edit = props => {
 	const updateTimeout = useRef( null )
 
 	useEffect( () => {
+		// Use updateTimeout to skip effect on first render
+		if ( updateTimeout.current === null ) {
+			updateTimeout.current = true
+			return
+		}
+
 		clearTimeout( updateTimeout.current )
 		const anchor = props.attributes.anchor
 		const text = props.attributes.text
