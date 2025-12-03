@@ -22,9 +22,6 @@ jobs:
             wp_version: 6.6.4
 
           - php_version: '8.2'
-            wp_version: 6.6.4
-
-          - php_version: '8.2'
             wp_version: 6.7.2
 
           - php_version: '8.2'
