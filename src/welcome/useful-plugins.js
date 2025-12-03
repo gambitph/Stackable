@@ -101,9 +101,21 @@ const PluginCard = ( { plugin } ) => {
 		} )
 	}
 
+	// Validate URL before using
+	const isValidUrl = url => {
+		try {
+			const parsed = new URL( url )
+			return [ 'http:', 'https:' ].includes( parsed.protocol )
+		} catch {
+			return false
+		}
+	}
+
 	return <div key={ plugin.id } className="s-card">
 		<div className="s-plugin-title">
-			<img className="s-plugin-icon" src={ pluginData.icon } alt={ __( 'Plugin icon', i18n ) } />
+			{ pluginData.icon && isValidUrl( pluginData.icon ) && (
+				<img className="s-plugin-icon" src={ pluginData.icon } alt={ __( 'Plugin icon', i18n ) } />
+			) }
 			<h3 className="s-card-title">{ plugin.title }</h3>
 		</div>
 		<p>{ plugin.description }</p>
