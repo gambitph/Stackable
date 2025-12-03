@@ -87,10 +87,10 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			$all_plugins = get_plugins();
 			$data_to_localize = array();
 
+			$has_premium = false;
 			foreach ( self::$PLUGINS as $key => $plugin ) {
 				$status = 'not_installed';
 				$full_slug_to_use = $plugin['full_slug'];
-				$has_premium = false;
 
 				// Check for premium version first if it exists (premium takes precedence)
 				$premium_installed = false;
@@ -122,8 +122,8 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 
 				$plugin_info = plugins_api( 'plugin_information', [
 					'slug' => $plugin['slug'],
-					'fields' =>[ 'icons' => true, 'sections' => false ],
-					] );
+					'fields' => [ 'icons' => true, 'sections' => false ],
+				] );
 
 				$icon_url = '';
 				if ( ! is_wp_error( $plugin_info ) && isset( $plugin_info->icons )
@@ -147,6 +147,9 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 
 		public function add_cimo_args_to_localize_editor( $data_to_localize, $current_user_cap, $has_premium ) {
 			$slug = 'cimo-image-optimizer';
+			if ( ! isset( $data_to_localize[ $slug ] ) ) {
+				return;
+			}
 			$full_slug = $data_to_localize[ $slug ][ 'fullSlug' ];
 
 
@@ -266,7 +269,6 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 		 * Used for polling Cimo plugin status changes via AJAX in the admin UI.
 		 */
 		function check_cimo_status() {
-			$slug = 'cimo-image-optimizer';
 			// Verify nonce
 			if ( ! check_ajax_referer( 'stackable_cimo_status', 'nonce', false ) ) {
 				wp_send_json_error( array( 'status' => 'error', 'message' => __( 'Security check failed.', STACKABLE_I18N ) ), 403 );
@@ -290,7 +292,7 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 				return;
 			}
 
-			$plugin_config = self::$PLUGINS[ $slug ];
+			$plugin_config = self::$PLUGINS['cimo-image-optimizer'];
 			$premium_full_slug = isset( $plugin_config['premium_full_slug'] ) ? $plugin_config['premium_full_slug'] : null;
 			$full_slug = $plugin_config['full_slug'];
 
