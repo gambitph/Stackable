@@ -32,6 +32,18 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		public function register_settings() {
 			register_setting(
 				'stackable_editor_settings',
+				'stackable_hide_cimo_notice',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Hides the Cimo download notice.', STACKABLE_I18N ),
+					'sanitize_callback' => 'rest_sanitize_boolean',
+					'show_in_rest' => true,
+					'default' => false,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
 				'stackable_block_states',
 				// Use an object to store the block names as keys and the value that represents if disabled or hidden.
 				// Enabled blocks are not stored in the object to save memory.
