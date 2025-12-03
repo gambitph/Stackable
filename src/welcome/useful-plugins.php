@@ -19,12 +19,12 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			'cimo-image-optimizer' => array(
 				'slug' => 'cimo-image-optimizer',
 				'full_slug' => 'cimo-image-optimizer/cimo.php',
+				'premium_slug' => 'cimo-image-optimizer-premium',
+				'premium_full_slug' => 'cimo-image-optimizer-premium/cimo.php',
 			),
 		);
 
 		function __construct() {
-			add_action( 'admin_init', array( $this, 'register_settings' ) );
-
 			// Register action on 'admin_menu' to ensure filters for the editor and admin settings
 			// are added early, before those scripts are enqueued and filters are applied.
 			add_action( 'admin_menu', array( $this, 'get_useful_plugins_info' ) );
@@ -40,20 +40,6 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			if ( is_admin() ) {
 				add_filter( 'stackable_localize_script', array( $this, 'localize_hide_cimo_notice' ) );
 			}
-		}
-
-		public function register_settings() {
-			register_setting(
-				'stackable_editor_settings',
-				'stackable_hide_cimo_notice',
-				array(
-					'type' => 'boolean',
-					'description' => __( 'Hides the Cimo download notice.', STACKABLE_I18N ),
-					'sanitize_callback' => 'rest_sanitize_boolean',
-					'show_in_rest' => true,
-					'default' => false,
-				)
-			);
 		}
 
 		public static function is_plugin_installed( $plugin_slug ) {
@@ -103,13 +89,35 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 
 			foreach ( self::$PLUGINS as $key => $plugin ) {
 				$status = 'not_installed';
+				$full_slug_to_use = $plugin['full_slug'];
+				$has_premium = false;
 
-				if ( isset( $all_plugins[ $plugin['full_slug'] ] ) ) {
-					$status = 'installed';
+				// Check for premium version first if it exists (premium takes precedence)
+				$premium_installed = false;
+				$premium_activated = false;
+				if ( isset( $plugin['premium_full_slug'] ) ) {
+					$premium_installed = isset( $all_plugins[ $plugin['premium_full_slug'] ] );
+					$premium_activated = is_plugin_active( $plugin['premium_full_slug'] );
+
+					if ( $premium_installed ) {
+						$has_premium = true;
+						$full_slug_to_use = $plugin['premium_full_slug'];
+					}
+
+					$status = $premium_activated ? 'activated' : ( $premium_installed ? 'installed' : 'not_installed' );
 				}
 
-				if ( is_plugin_active( $plugin['full_slug'] ) ) {
-					$status = 'activated';
+				// If premium is not installed/activated, check free version
+				if ( $status === 'not_installed' ) {
+					if ( isset( $all_plugins[ $plugin['full_slug'] ] ) ) {
+						$status = 'installed';
+						$full_slug_to_use = $plugin['full_slug'];
+					}
+
+					if ( is_plugin_active( $plugin['full_slug'] ) ) {
+						$status = 'activated';
+						$full_slug_to_use = $plugin['full_slug'];
+					}
 				}
 
 				$plugin_info = plugins_api( 'plugin_information', [
@@ -127,25 +135,26 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 				$data_to_localize[ $key ] = array(
 					'status' => $status,
 					'icon'   => $icon_url,
-					'fullSlug' => $plugin[ 'full_slug' ],
+					'fullSlug' => $full_slug_to_use,
 				);
 			}
 
 			// Make Cimo available in the block editor
-			$this->add_cimo_args_to_localize_editor( $data_to_localize, $current_user_cap );
+			$this->add_cimo_args_to_localize_editor( $data_to_localize, $current_user_cap, $has_premium );
 			// Make all plugin data and the ajax url available in the admin settings
 			$this->add_args_to_localize_admin( $data_to_localize );
 		}
 
-		public function add_cimo_args_to_localize_editor( $data_to_localize, $current_user_cap ) {
+		public function add_cimo_args_to_localize_editor( $data_to_localize, $current_user_cap, $has_premium ) {
 			$slug = 'cimo-image-optimizer';
-			$full_slug = self::$PLUGINS[ $slug ][ 'full_slug' ];
+			$full_slug = $data_to_localize[ $slug ][ 'fullSlug' ];
+
 
 			$cimo_data = $data_to_localize[ $slug ];
 			$cimo_data['nonce'] = wp_create_nonce( 'stackable_cimo_status' );
 			$action_link = '';
 
-			if ( $current_user_cap === 2 && $cimo_data[ 'status' ] === 'not_installed' ) {
+			if ( $current_user_cap === 2 && $cimo_data[ 'status' ] === 'not_installed' && ! $has_premium ) {
 				$action_link = wp_nonce_url(
 					add_query_arg(
 						[
@@ -281,25 +290,42 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 				return;
 			}
 
-			$full_slug = self::$PLUGINS[ $slug ][ 'full_slug' ];
+			$plugin_config = self::$PLUGINS[ $slug ];
+			$premium_full_slug = isset( $plugin_config['premium_full_slug'] ) ? $plugin_config['premium_full_slug'] : null;
+			$full_slug = $plugin_config['full_slug'];
 
 			// Clear plugin cache to ensure we get the most current status
 			wp_clean_plugins_cache();
 
-			if ( $action === 'install' && ! self::is_plugin_installed( $full_slug ) ) {
-				$response[ 'status' ] = 'not_installed';
-			} else if ( ! self::is_plugin_activated( $full_slug ) ) {
-				$response[ 'status' ] = 'installed';
-				// If the plugin is installed and not activated, provide the action link to activate it
-				$response[ 'action' ] = $action === 'install' ? html_entity_decode( wp_nonce_url(
+			// Check premium version first
+			$is_premium_installed = $premium_full_slug && self::is_plugin_installed( $premium_full_slug );
+			$is_premium_activated = $premium_full_slug && self::is_plugin_activated( $premium_full_slug );
+			$is_regular_installed = self::is_plugin_installed( $full_slug );
+			$is_regular_activated = self::is_plugin_activated( $full_slug );
+
+			// Determine which version to use (premium takes precedence)
+			$full_slug_to_use = null;
+			if ( $is_premium_activated || $is_premium_installed ) {
+				$full_slug_to_use = $premium_full_slug;
+				$response['status'] = $is_premium_activated ? 'activated' : 'installed';
+			} else if ( $is_regular_activated || $is_regular_installed ) {
+				$full_slug_to_use = $full_slug;
+				$response['status'] = $is_regular_activated ? 'activated' : 'installed';
+			} else {
+				$response['status'] = 'not_installed';
+			}
+
+			// If plugin is installed but not activated, provide activation link
+			if ( $response['status'] === 'installed' && $full_slug_to_use ) {
+				$response['action'] = $action === 'install' ? html_entity_decode( wp_nonce_url(
 					add_query_arg(
 						[
 							'action' => 'activate',
-							'plugin' => $full_slug,
+							'plugin' => $full_slug_to_use,
 						],
 						admin_url( 'plugins.php' )
 					),
-					'activate-plugin_' . $full_slug
+					'activate-plugin_' . $full_slug_to_use
 				) ) : '';
 			}
 
