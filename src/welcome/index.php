@@ -95,8 +95,8 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		public function enqueue_dashboard_script( $hook ) {
 			// For stackable pages, show our admin css.
 			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false || stripos( $hook, 'page_stk' ) !== false ) {
-				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array() );
-				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array() );
+				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array(), STACKABLE_VERSION );
+				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array(), STACKABLE_VERSION );
 				do_action( 'stackable_settings_admin_enqueue_styles' );
 			}
 
