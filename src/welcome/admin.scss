@@ -430,7 +430,8 @@ body.toplevel_page_stackable {
 	}
 }
 body.toplevel_page_stackable,
-body[class*="page_stackable"] {
+body[class*="page_stackable"],
+body[class*="page_stk"] {
 	img {
 		max-width: 100%;
 	}
