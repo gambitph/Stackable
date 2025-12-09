@@ -1,5 +1,6 @@
 import './store'
 import { useSelect } from '@wordpress/data'
+import { safeHTML } from '@wordpress/dom'
 
 /**
  * Parse SVG string to extract attributes and innerHTML without DOM manipulation
@@ -28,7 +29,7 @@ const parseSVGString = svgString => {
 		return null
 	}
 
-	const innerHTML = svgString.substring( svgTagEnd, closingTagIndex )
+	const innerHTML = safeHTML( svgString.substring( svgTagEnd, closingTagIndex ) )
 
 	// Extract attributes from the SVG tag
 	const svgAttributes = {}
