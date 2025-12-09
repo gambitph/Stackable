@@ -206,7 +206,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					</a>
 				<?php } ?>
 
-				<?php if ( current_user_can( 'install_plugins' ) || current_user_can( 'activate_plugins' ) ) { ?>
+				<?php if ( current_user_can( 'install_plugins' ) && current_user_can( 'activate_plugins' ) ) { ?>
 					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-useful-plugins' ? 's-active' : '' ?>"
 						href="<?php echo admin_url( 'admin.php?page=stackable-useful-plugins' ) ?>">
 						<span><?php _e( 'Useful Plugins', STACKABLE_I18N ) ?></span>
