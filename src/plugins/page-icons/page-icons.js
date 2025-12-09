@@ -29,7 +29,36 @@ const parseSVGString = svgString => {
 		return null
 	}
 
-	const innerHTML = safeHTML( svgString.substring( svgTagEnd, closingTagIndex ) )
+	//SVG sanitization
+	let rawInnerSVG = svgString.substring( svgTagEnd, closingTagIndex )
+
+	// Remove <foreignObject>, <script>, <style>, <iframe>, and <filter> blocks
+	rawInnerSVG = rawInnerSVG.replace( /<(foreignObject|script|style|iframe|filter)[^>]*>[\s\S]*?<\/\1\s*>/gi, '' )
+
+	// Remove standalone <foreignObject>, <script>, <style>, <iframe>, <filter/> self-closing tags
+	rawInnerSVG = rawInnerSVG.replace( /<(foreignObject|script|style|iframe|filter)\b[^>]*\/?>/gi, '' )
+
+	// Remove all attributes that are namespaced (e.g. xlink:href, xml:space)
+	rawInnerSVG = rawInnerSVG.replace( /\s[\w-]+:[\w-]+="[^"]*"/g, '' )
+	rawInnerSVG = rawInnerSVG.replace( /\s[\w-]+:[\w-]+='[^']*'/g, '' )
+	rawInnerSVG = rawInnerSVG.replace( /\s[\w-]+:[\w-]+=[^\s"'=<>`]+/g, '' )
+
+	// Remove href/data-href/src attributes containing data: uris
+	rawInnerSVG = rawInnerSVG.replace(
+		/\s(?:href|data-href|src)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi,
+		match => {
+			const protocols = /(data|javascript|vbscript|file)\s*:/i
+			const urlEncoded = /(data|javascript|vbscript|file)%3a/i
+			const hasEntity = /&#x?[0-9a-f]+;/i.test( match )
+
+			if ( protocols.test( match ) || urlEncoded.test( match ) || hasEntity ) {
+				return ''
+			}
+			return match
+		}
+	)
+
+	const innerHTML = safeHTML( rawInnerSVG )
 
 	// Extract attributes from the SVG tag
 	const svgAttributes = {}
