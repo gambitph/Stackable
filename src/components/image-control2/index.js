@@ -11,7 +11,9 @@ import Button from '../button'
  * External dependencies
  */
 import classnames from 'classnames'
-import { i18n, cimo } from 'stackable'
+import {
+	i18n, cimo, isPro,
+} from 'stackable'
 import {
 	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext,
 } from '~stackable/hooks'
@@ -88,7 +90,7 @@ const ImageControl = memo( props => {
 
 	useEffect( () => {
 		// Skip displaying the Cimo notice if the plugin is already activated or the user has chosen to hide the notice
-		if ( ! cimo || cimo.hideNotice || cimo.status === 'activated' ) {
+		if ( isPro || ! cimo || cimo.hideNotice || cimo.status === 'activated' ) {
 			return
 		}
 
