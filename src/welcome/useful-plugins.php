@@ -81,7 +81,7 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 			);
 
 			if ( ! $current_user_cap ) {
-				return;
+				return $args;
 			}
 
 			if ( ! function_exists( 'get_plugins' ) || ! function_exists( 'is_plugin_active' ) ) {
@@ -138,7 +138,7 @@ if ( ! class_exists( 'Stackable_Useful_Plugins' ) ) {
 		public function add_cimo_args_to_localize_editor( $args, $data_to_localize, $current_user_cap, $has_premium ) {
 			$slug = 'cimo-image-optimizer';
 			if ( ! isset( $data_to_localize[ $slug ] ) ) {
-				return;
+				return $args;
 			}
 			$full_slug = $data_to_localize[ $slug ][ 'fullSlug' ];
 
