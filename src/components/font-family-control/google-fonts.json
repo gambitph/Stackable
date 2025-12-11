@@ -858,6 +858,29 @@
     ]
   },
   {
+    "family": "Amarna",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Amatic SC",
     "variants": [
       "regular",
@@ -2051,7 +2074,7 @@
     ]
   },
   {
-    "family": "BBH Sans Bartle",
+    "family": "BBH Bartle",
     "variants": [
       "regular"
     ],
@@ -2060,7 +2083,7 @@
     ]
   },
   {
-    "family": "BBH Sans Bogle",
+    "family": "BBH Bogle",
     "variants": [
       "regular"
     ],
@@ -2069,7 +2092,7 @@
     ]
   },
   {
-    "family": "BBH Sans Hegarty",
+    "family": "BBH Hegarty",
     "variants": [
       "regular"
     ],
@@ -4209,6 +4232,24 @@
       "latin-ext",
       "runic",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Cause",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -7710,6 +7751,30 @@
     ]
   },
   {
+    "family": "Geom",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Georama",
     "variants": [
       "100",
@@ -7965,6 +8030,46 @@
     ]
   },
   {
+    "family": "Google Sans",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "armenian",
+      "bengali",
+      "canadian-aboriginal",
+      "cyrillic",
+      "cyrillic-ext",
+      "devanagari",
+      "ethiopic",
+      "georgian",
+      "greek",
+      "greek-ext",
+      "gujarati",
+      "gurmukhi",
+      "hebrew",
+      "khmer",
+      "lao",
+      "latin",
+      "latin-ext",
+      "malayalam",
+      "oriya",
+      "sinhala",
+      "symbols",
+      "tamil",
+      "telugu",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Google Sans Code",
     "variants": [
       "300",
@@ -7997,7 +8102,15 @@
   {
     "family": "Google Sans Flex",
     "variants": [
-      "regular"
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "canadian-aboriginal",
@@ -11618,6 +11731,34 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Lilex",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "symbols2",
+      "vietnamese"
     ]
   },
   {
@@ -22365,6 +22506,16 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Sekuya",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {

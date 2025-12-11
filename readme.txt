@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.6.4
 Tested up to: 6.9
 Requires PHP: 7.3
-Stable tag: 3.19.4
+Stable tag: 3.19.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -308,6 +308,20 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.5 =
+
+* New: Icon list block - new option to retain custom SVG colors #3512
+* Fixed: WordPress 6.9 compatibility - text block menu bar may get hidden #3654
+* Fixed: WordPress 6.9 compatibility - better text compatibility #3654
+* Fixed: Optimized icon performance inside the block editor  #3660
+* Fixed: Global color scheme - when changing colors the drag handle jitters #3638
+* Fixed: Displays correct value when selecting a theme color #3631
+* Fixed: Block error encountered when getting filtered attributes #3646
+* Fixed: Icon block - multicolor styling not applying correctly to some icons #3428
+* Fixed: No longer queries WP API for useful plugins tab #3664
+* Fixed: Removed Cimo cross marketing from premium build #3659
+* Fixed: Ensure useful plugins tab is only visible if user has correct capabilities #3661
 
 = 3.19.4 =
 * New: Moved Stackable admin settings to its own top level menu #3633 #394
