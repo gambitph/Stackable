@@ -184,6 +184,8 @@ export const Icon = props => {
 
 	const ShapeComp = useMemo( () => getShapeSVG( getAttribute( 'backgroundShape' ) || 'blob1' ), [ getAttribute( 'backgroundShape' ) ] )
 
+	const iconColorType = getAttribute( 'iconColorType' )
+
 	const _icon = value || getAttribute( 'icon' )
 	const currentIconRef = useRef( _icon )
 	const processedIconRef = useRef( null )
@@ -204,7 +206,14 @@ export const Icon = props => {
 
 		// Don't use page icons for multicolor icons
 		// because we target svg elements with the :nth-of-type() selector to apply the multicolor styles.
-		if ( getAttribute( 'iconColorType' ) === 'multicolor' ) {
+		if ( iconColorType === 'multicolor' ) {
+			// Clean up if this icon was previously in the page-icons store
+			if ( processedIconRef.current === _icon && _icon ) {
+				dispatch( 'stackable/page-icons' ).removePageIcon( _icon )
+				processedIconRef.current = null
+				setIcon( _icon ) // Use the original icon directly
+				lastIconValueRef.current = _icon
+			}
 			return
 		}
 
@@ -288,7 +297,7 @@ export const Icon = props => {
 				lastIconValueRef.current = null
 			}
 		}
-	}, [ _icon ] )
+	}, [ _icon, iconColorType ] )
 
 	useEffect( () => {
 		return () => {
