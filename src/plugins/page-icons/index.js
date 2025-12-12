@@ -28,7 +28,8 @@ pageIconsWrapper?.setAttribute( 'id', 'stk-page-icons' )
 domReady( () => {
 	if ( pageIconsWrapper ) {
 		pageIconsWrapper.setAttribute( 'id', 'stk-page-icons' )
-		pageIconsWrapper.setAttribute( 'style', 'display: none;' )
+		// Don't use `display: none` to hide the page icons because it prevents gradients from being applied.
+		pageIconsWrapper.setAttribute( 'style', 'position: absolute; top: 0; left: -9999px; width: 0; height: 0; visibility: hidden;' )
 		createRoot( pageIconsWrapper ).render( <PageIcons /> )
 	}
 } )

@@ -202,6 +202,12 @@ export const Icon = props => {
 			return
 		}
 
+		// Don't use page icons for multicolor icons
+		// because we target svg elements with the :nth-of-type() selector to apply the multicolor styles.
+		if ( getAttribute( 'iconColorType' ) === 'multicolor' ) {
+			return
+		}
+
 		// Check if icon exists in pageIcons Map
 		// The Map structure is: [SVG string (key), { id: iconId, count: number } (value)]
 		if ( _icon ) {
