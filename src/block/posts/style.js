@@ -281,13 +281,29 @@ Image.addStyles( blockStyles, {
 		const blockStyle = getBlockStyle( variations, className )
 		return ! [ 'list', 'horizontal', 'horizontal-2', 'portfolio', 'portfolio-2', 'vertical-card-2' ].includes( blockStyle?.name )
 	},
+	saveEnableWidthCallback: getAttribute => {
+		const className = getAttribute( 'className' )
+		const imageHasLink = getAttribute( 'imageHasLink' )
+		const blockStyle = getBlockStyle( variations, className )
+
+		if ( [ 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ) ) {
+			// If the image has a link and the width unit is %, return false
+			// because the we have set a custom selector for the image width that uses the % unit.
+			if ( imageHasLink && ( getAttribute( 'imageWidthUnit' ) === '%' ||
+			getAttribute( 'imageWidthUnitTablet' ) === '%' ) ) {
+				return false
+			}
+			return true
+		}
+		return true
+	},
 	selectorCallback: ( getAttribute, _attributes, _clientId, props ) => {
 		const className = getAttribute( 'className' )
 		const blockStyle = getBlockStyle( variations, className )
 		const imageHasLink = getAttribute( 'imageHasLink' )
 
 		const selector = props.selector
-		if ( [ 'list', 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ) && imageHasLink ) {
+		if ( [ 'list' ].includes( blockStyle?.name ) && imageHasLink ) {
 			return Array.isArray( selector )
 				? [ ...selector, `${ itemSelector } .stk-block-posts__image-link` ]
 				: [ selector, `${ itemSelector } .stk-block-posts__image-link` ]
@@ -299,7 +315,7 @@ Image.addStyles( blockStyles, {
 		const blockStyle = getBlockStyle( variations, className )
 		const imageHasLink = getAttribute( 'imageHasLink' )
 
-		if ( [ 'list', 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ) && imageHasLink ) {
+		if ( [ 'list' ].includes( blockStyle?.name ) && imageHasLink ) {
 			return 'flexBasis'
 		}
 		return 'width'
