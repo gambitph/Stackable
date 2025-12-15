@@ -288,7 +288,7 @@ Image.addStyles( blockStyles, {
 
 		if ( [ 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ) ) {
 			// If the image has a link and the width unit is %, return false
-			// because the we have set a custom selector for the image width that uses the % unit.
+			// because we have set a custom selector for the image width that uses the % unit.
 			if ( imageHasLink && ( getAttribute( 'imageWidthUnit' ) === '%' ||
 			getAttribute( 'imageWidthUnitTablet' ) === '%' ) ) {
 				return false
