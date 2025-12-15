@@ -211,9 +211,9 @@ export const Icon = props => {
 			if ( processedIconRef.current === _icon && _icon ) {
 				dispatch( 'stackable/page-icons' ).removePageIcon( _icon )
 				processedIconRef.current = null
-				setIcon( _icon ) // Use the original icon directly
-				lastIconValueRef.current = _icon
 			}
+			setIcon( _icon ) // Use the original icon directly
+			lastIconValueRef.current = _icon
 			return
 		}
 
