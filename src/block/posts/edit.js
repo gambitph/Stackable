@@ -182,7 +182,7 @@ const Edit = props => {
 				blockState={ props.blockState }
 				contentOrderOptions={ contentOrderOptions }
 				contentOrder={ contentOrder }
-				DefaultContentOrder={ defaultContentOrder }
+				defaultContentOrder={ defaultContentOrder }
 				orderBy={ orderBy }
 				order={ order }
 				type={ type }
