@@ -307,6 +307,19 @@ Image.addStyles( blockStyles, {
 		}
 		return selector
 	},
+	hoverSelectorCallback: getAttribute => {
+		const className = getAttribute( 'className' )
+		const blockStyle = getBlockStyle( variations, className )
+
+		if ( [ 'portfolio', 'portfolio-2' ].includes( blockStyle?.name ) ) {
+			return `${ itemSelector }:hover .stk-img-wrapper img`
+		}
+
+		if ( [ 'image-card' ].includes( blockStyle?.name ) ) {
+			return `.stk-block-posts__image-card-container:hover img`
+		}
+		return '.stk-img-wrapper:hover img'
+	},
 	widthStyleRuleCallback: getAttribute => {
 		const className = getAttribute( 'className' )
 		const blockStyle = getBlockStyle( variations, className )
