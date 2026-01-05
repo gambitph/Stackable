@@ -58,6 +58,10 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			if ( empty( $title ) ) {
 				$title = __( '(Untitled)', STACKABLE_I18N );
 			}
+
+			// Escape title output to prevent XSS
+			$title = esc_html( $title );
+
 			$new_template = str_replace( '!#title!#', $title, $new_template );
 		}
 
