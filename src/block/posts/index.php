@@ -58,6 +58,10 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			if ( empty( $title ) ) {
 				$title = __( '(Untitled)', STACKABLE_I18N );
 			}
+
+			// Escape title output to prevent XSS
+			$title = esc_html( $title );
+
 			$new_template = str_replace( '!#title!#', $title, $new_template );
 		}
 
@@ -67,10 +71,13 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			if ( $category_highlighted ) {
 				preg_match_all( '/<a href="([^"]*)"[^>]*>([^<]*)<\/a>/', $category, $matches );
 				foreach ( $matches[0] as $i=>$match ) {
-					$href = $matches[1][$i];
-					$category_title = $matches[2][$i];
-					$category = str_replace( "<a href=\"$href\"", "<a class=\"stk-button\" href=\"$href\"", $category );
-					$category = str_replace( ">$category_title<", "><span class=\"stk-button__inner-text\">$category_title</span><", $category );
+					$original_href = $matches[1][$i];
+					$original_title = $matches[2][$i];
+					// Escape values to prevent XSS
+					$escaped_href = esc_url( $original_href );
+					$escaped_title = esc_html( $original_title );
+					$category = str_replace( "<a href=\"$original_href\"", "<a class=\"stk-button\" href=\"$escaped_href\"", $category );
+					$category = str_replace( ">$original_title<", "><span class=\"stk-button__inner-text\">$escaped_title</span><", $category );
 				}
 			}
 
@@ -80,6 +87,8 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		// Separator.
 		if ( strpos( $new_template, '!#metaSeparator!#' ) !== false ) {
 			$separator = Stackable_Posts_Block::meta_separators[ $meta_separator ];
+			// Escape separator output to prevent XSS
+			$separator = esc_html( $separator );
 			$new_template = str_replace( '!#metaSeparator!#', $separator, $new_template );
 		}
 
@@ -100,6 +109,9 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 				$date_format = 'F j, Y';
 			}
 			$date = wp_date( $date_format, $post_date->getTimestamp() );
+			// Escape date output to prevent XSS
+			$datetime = esc_attr( $datetime );
+			$date = esc_html( $date );
 			$new_template = str_replace( '!#dateTime!#', $datetime, $new_template );
 			$new_template = str_replace( '!#date!#', $date, $new_template );
 		}
@@ -108,6 +120,8 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		if ( strpos( $new_template, '!#commentsNum!#' ) !== false ) {
 			$num = get_comments_number( $post_id );
 			$num = sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
+			// Escape comments number output to prevent XSS
+			$num = esc_html( $num );
 			$new_template = str_replace( '!#commentsNum!#', $num, $new_template );
 		}
 
