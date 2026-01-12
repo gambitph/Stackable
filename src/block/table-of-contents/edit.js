@@ -54,7 +54,7 @@ import {
 } from '@wordpress/components'
 import { useSelect, dispatch } from '@wordpress/data'
 import {
-	useEffect, useState, useCallback, memo,
+	useEffect, useState, useCallback, memo, useRef,
 } from '@wordpress/element'
 import {
 	__, _x, sprintf,
@@ -154,6 +154,8 @@ const Edit = props => {
 	const { getBlock } = useSelect( 'core/block-editor' )
 	// This is used by the generate anchors button to force the update of heading data.
 	const [ forceUpdateHeadings, setForceUpdateHeadings ] = useState( 0 )
+	// Keep the previous post content as reference for checking for heading updates.
+	const oldContentRef = useRef( null )
 
 	const getClonedHeadings = () => {
 		const updatedHeadings = cloneDeep( headings )
@@ -198,10 +200,9 @@ const Edit = props => {
 
 	// Watch for any heading block changes, update the heading text, level and anchor.
 	useEffect( () => {
-		let postContent = getEditedPostContent()
 		const unsubscribe = wp.data.subscribe( debounce( () => {
 			const newPostContent = getEditedPostContent()
-			if ( ! isSelected && ! isEqual( postContent, newPostContent ) ) {
+			if ( ! isSelected && ! isEqual( oldContentRef.current, newPostContent ) ) {
 				// Make sure to also filter excluded headings to avoid
 				// comparing heading with wrong index.
 				const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
@@ -224,8 +225,8 @@ const Edit = props => {
 					} )
 				setHeadings( editorHeadings )
 			}
-			postContent = newPostContent
-		}, 300 ) )
+			oldContentRef.current = newPostContent
+		}, 700 ) )
 
 		return () => unsubscribe()
 	}, [ isSelected ] )

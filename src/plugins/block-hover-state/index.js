@@ -15,25 +15,31 @@ export const BlockHoverState = () => {
 	const {
 		getEditorDom,
 		selectedClientId,
-		selectedParent,
+		selectedParentClientId,
 		selectedParentHoverBlock,
 		hoverStateClientId,
 	} = useSelect( select => {
 		const selectedClientId = select( 'core/block-editor' ).getSelectedBlockClientId() || select( 'core/block-editor' ).getFirstMultiSelectedBlockClientId()
 
 		const parentClientId = select( 'core/block-editor' ).getBlockRootClientId( selectedClientId )
+		// Extract only the parent block's clientId instead of the entire block object
+		// This prevents unnecessary re-renders when the block object reference changes
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentClientId )
+		const selectedParentClientId = parentBlock?.clientId || null
+
 		return {
 			getEditorDom: select( 'stackable/editor-dom' ).getEditorDom,
 			selectedClientId,
-			selectedParent: select( 'core/block-editor' ).getBlock( parentClientId ),
+			selectedParentClientId,
 			selectedParentHoverBlock: select( 'stackable/hover-state' ).getSelectedParentHoverBlock(),
 			hoverStateClientId: select( 'stackable/hover-state' ).getSelectedBlock(),
 		}
-	}, [] )
+	} )
 
 	// Update the selected id in the store if the selected block changes.
 	useEffect( () => {
-		if ( hoverStateClientId !== selectedClientId || selectedParentHoverBlock !== selectedParent ) {
+		// Compare clientIds instead of object references for better performance
+		if ( hoverStateClientId !== selectedClientId || selectedParentHoverBlock !== selectedParentClientId ) {
 			if ( selectedClientId ) {
 				dispatch( 'stackable/hover-state' ).updateSelectedBlock( selectedClientId, getEditorDom() )
 			} else {
@@ -41,7 +47,7 @@ export const BlockHoverState = () => {
 				dispatch( 'stackable/hover-state' ).clearSelectedBlock()
 			}
 		}
-	}, [ getEditorDom, selectedParent, selectedClientId, hoverStateClientId ] )
+	}, [ getEditorDom, selectedParentClientId, selectedClientId, hoverStateClientId, selectedParentHoverBlock ] )
 
 	// Don't render anything.
 	return null
