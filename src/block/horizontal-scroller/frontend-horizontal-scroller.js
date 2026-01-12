@@ -94,14 +94,6 @@ class StackableHorizontalScroller {
 			el.addEventListener( 'mousedown', mouseDownHandler )
 
 			el._StackableHasInitHorizontalScroller = true
-
-			// Fixes grid rendering issues by toggling the gridAutoFlow property
-			requestAnimationFrame( () => {
-				el.style.gridAutoFlow = 'row'
-				requestAnimationFrame( () => {
-					el.style.gridAutoFlow = 'column'
-				} )
-			} )
 		} )
 	}
 }
