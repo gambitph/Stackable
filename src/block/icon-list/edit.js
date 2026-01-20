@@ -7,7 +7,11 @@ import blockStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { i18n, version as VERSION } from 'stackable'
+import {
+	i18n,
+	version as VERSION,
+	settings,
+} from 'stackable'
 import {
 	InspectorTabs,
 	InspectorStyleControls,
@@ -50,7 +54,7 @@ import { compose } from '@wordpress/compose'
 import { useInnerBlocksProps } from '@wordpress/block-editor'
 import { dispatch, useSelect } from '@wordpress/data'
 import { addFilter } from '@wordpress/hooks'
-import { memo } from '@wordpress/element'
+import { memo, useEffect } from '@wordpress/element'
 import { useBlockLayoutDefaults } from '~stackable/hooks'
 import { ToggleControl } from '@wordpress/components'
 
@@ -200,6 +204,13 @@ const Edit = props => {
 		blockState: props.blockState,
 		version: VERSION,
 	} )
+
+	// Set icon default value from setting on first load
+	useEffect( () => {
+		if ( attributes.icon === undefined || attributes.icon === '' ) {
+			setAttributes( { icon: settings.stackable_icon_list_block_default_icon || DEFAULT_SVG } )
+		}
+	}, [] )
 
 	return (
 		<>

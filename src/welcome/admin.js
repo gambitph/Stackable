@@ -38,6 +38,7 @@ import AdminSelectSetting from '~stackable/components/admin-select-setting'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 import AdminToolbarSetting from '~stackable/components/admin-toolbar-setting'
+import AdminIconSetting from '~stackable/components/admin-icon-setting'
 import { GettingStarted } from './getting-started'
 import { BLOCK_STATE } from '~stackable/util/blocks'
 import { BlockToggler, OptimizationSettings } from '~stackable/deprecated/v2/welcome/admin'
@@ -79,6 +80,14 @@ const SEARCH_TREE = [
 				children: [
 					__( 'Nested Block Width', i18n ),
 					__( 'Nested Wide Block Width', i18n ),
+				],
+			},
+			{
+				id: 'block-defaults',
+				children: [
+					__( 'Default to Theme Margins for Headings (Posts)', i18n ),
+					__( 'Default to Theme Margins for Headings (Non-Posts)', i18n ),
+					__( 'Default Icon for Icon List Block', i18n ),
 				],
 			},
 			{
@@ -631,6 +640,7 @@ const EditorSettings = props => {
 
 	const groups = filteredSearchTree.find( tab => tab.id === 'editor-settings' ).groups
 	const blocks = groups.find( group => group.id === 'blocks' )
+	const blockDefaults = groups.find( group => group.id === 'block-defaults' )
 	const editor = groups.find( group => group.id === 'editor' )
 	const toolbar = groups.find( group => group.id === 'toolbar' )
 	const inspector = groups.find( group => group.id === 'inspector' )
@@ -665,6 +675,39 @@ const EditorSettings = props => {
 									handleSettingsChange( { stackable_block_wide_width: value } ) // eslint-disable-line camelcase
 								} }
 								help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
+							/>
+						</div>
+					}
+					{ ( blockDefaults.children === null || blockDefaults.children.length > 0 ) &&
+						<div className="s-setting-group">
+							<h2>{ __( 'Block Defaults', i18n ) }</h2>
+							<p className="s-settings-subtitle">{ __( 'Adjust the default behavior of some Stackable blocks.', i18n ) }</p>
+							<AdminToggleSetting
+								label={ __( 'Default to Theme Margins for Headings (Posts)', i18n ) }
+								searchedSettings={ blockDefaults.children }
+								value={ settings.stackable_enable_heading_default_theme_margins_posts }
+								onChange={ value => {
+									handleSettingsChange( { stackable_enable_heading_default_theme_margins_posts: value } ) // eslint-disable-line camelcase
+								} }
+								help={ __( "When enabled, newly added Stackable Heading blocks in Posts will use the theme's default margins automatically. Existing blocks are not affected.", i18n ) }
+							/>
+							<AdminToggleSetting
+								label={ __( 'Default to Theme Margins for Headings (Non-Posts)', i18n ) }
+								searchedSettings={ blockDefaults.children }
+								value={ settings.stackable_enable_heading_default_theme_margins_non_posts }
+								onChange={ value => {
+									handleSettingsChange( { stackable_enable_heading_default_theme_margins_non_posts: value } ) // eslint-disable-line camelcase
+								} }
+								help={ __( "When enabled, newly added Stackable Heading blocks in non-Post content (Pages and custom post types) will use the theme's default margins automatically. Existing blocks are not affected.", i18n ) }
+							/>
+							<AdminIconSetting
+								label={ __( 'Default Icon for Icon List Block', i18n ) }
+								searchedSettings={ blockDefaults.children }
+								value={ settings.stackable_icon_list_block_default_icon }
+								onChange={ value => {
+									handleSettingsChange( { stackable_icon_list_block_default_icon: value } ) // eslint-disable-line camelcase
+								} }
+								help={ __( 'Choose the default icon that will be used when adding a new Icon List block.', i18n ) }
 							/>
 						</div>
 					}

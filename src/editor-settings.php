@@ -241,10 +241,60 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'default' => false,
 				)
 			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_heading_default_theme_margins_posts',
+				array(
+					'type' => 'boolean',
+					'description' => __( "When enabled, newly added Stackable Heading blocks in Posts will use the theme's default margins automatically.", STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => false,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_heading_default_theme_margins_non_posts',
+				array(
+					'type' => 'boolean',
+					'description' => __( "When enabled, newly added Stackable Heading blocks in non-Post content (Pages and custom post types) will use the theme's default margins automatically.", STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => false,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_icon_list_block_default_icon',
+				array(
+					'type' => 'string',
+					'description' => __( 'Choose the default icon that will be used when adding a new Icon List block.', STACKABLE_I18N ),
+					'sanitize_callback' => array( $this, 'sanitize_svg_setting' ),
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
 		}
 
 		public function sanitize_array_setting( $input ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
+		}
+
+		public function sanitize_svg_setting( $input ) {
+			if ( empty( $input ) ) {
+				return '';
+			}
+
+			// Remove scripts, event handlers, foreignObject, iframe, embeds
+			$input = preg_replace( '/<\s*(script|iframe|embed|object|foreignObject)[^>]*>.*?<\s*\/\s*\1\s*>/is', '', $input );
+			$input = preg_replace( '/on\w+\s*=\s*"[^"]*"/i', '', $input );
+			$input = preg_replace( "/on\w+\s*=\s*'[^']*'/i", '', $input );
+			$input = preg_replace( '/javascript:/i', '', $input );
+
+			return $input;
 		}
 
 		/**
@@ -267,6 +317,9 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_enable_reset_layout'] = get_option( 'stackable_enable_reset_layout' );
 			$settings['stackable_enable_save_as_default_block'] = get_option( 'stackable_enable_save_as_default_block' );
 			$settings['stackable_enable_text_default_block'] = get_option( 'stackable_enable_text_default_block' );
+			$settings['stackable_enable_heading_default_theme_margins_posts'] = get_option( 'stackable_enable_heading_default_theme_margins_posts' );
+			$settings['stackable_enable_heading_default_theme_margins_non_posts'] = get_option( 'stackable_enable_heading_default_theme_margins_non_posts' );
+			$settings['stackable_icon_list_block_default_icon'] = get_option( 'stackable_icon_list_block_default_icon' );
 
 			return $settings;
 		}

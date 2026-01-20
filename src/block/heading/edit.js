@@ -22,7 +22,11 @@ import {
 	Transform,
 	useUniqueId,
 } from '~stackable/block-components'
-import { version as VERSION, i18n } from 'stackable'
+import {
+	version as VERSION,
+	i18n,
+	settings,
+} from 'stackable'
 import classnames from 'classnames'
 import { kebabCase } from 'lodash'
 import {
@@ -75,13 +79,28 @@ const Edit = props => {
 		attributes,
 	} = props
 
-	const { parentBlock } = useSelect( select => {
+	const { parentBlock, postType } = useSelect( select => {
 		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
 		const parentClientId = getBlockRootClientId( props.clientId )
 		return {
 			parentBlock: getBlock( parentClientId ),
+			postType: select( 'core/editor' ).getCurrentPostType(),
 		}
 	}, [ props.clientId ] )
+
+	// Set useThemeTextMargins default value from setting on first load
+	useEffect( () => {
+		if ( attributes.useThemeTextMargins === undefined || attributes.useThemeTextMargins === '' ) {
+			const isPost = postType === 'post'
+
+			const defaultThemeMargins = isPost
+				? !! settings.stackable_enable_heading_default_theme_margins_posts
+				: !! settings.stackable_enable_heading_default_theme_margins_non_posts
+
+			setAttributes( { useThemeTextMargins: defaultThemeMargins } )
+		}
+	}, [] )
+
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockClassNames = classnames( [
