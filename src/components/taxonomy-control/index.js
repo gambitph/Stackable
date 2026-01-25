@@ -149,6 +149,7 @@ class TaxonomyControl extends Component {
 							this.props.onChangePostType( value )
 							this.props.onChangeTaxonomyType( taxonomyTypesAvailable.length ? taxonomyTypesAvailable[ 0 ] : '' )
 							this.props.onChangeTaxonomy( '' )
+							this.props.onChangeTaxonomyTypeToDisplay( taxonomyTypesAvailable.length ? taxonomyTypesAvailable[ 0 ] : '' )
 						} }
 						default="post"
 					/>
@@ -193,6 +194,19 @@ class TaxonomyControl extends Component {
 							} }
 						/>
 					</Fragment>
+				}
+				{ taxonomyTypeOptions.length > 0 &&
+					<AdvancedSelectControl
+						label={ __( 'Taxonomy to Display', i18n ) }
+						options={ taxonomyTypeOptions }
+						value={ this.props.taxonomyTypeToDisplay }
+						allowReset={ allowReset }
+						onChange={ value => {
+							this.props.onChangeTaxonomyTypeToDisplay( value )
+						} }
+						default={ taxonomyTypeOptions[ 0 ]?.value || 'category' }
+						help={ __( 'Taxonomy to display instead of Category.', i18n ) }
+					/>
 				}
 			</div>
 		)
