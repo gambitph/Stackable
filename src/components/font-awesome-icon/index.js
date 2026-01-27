@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	faGetIcon, faFetchIcon, createElementFromHTMLString,
-} from '~stackable/util'
+import { faGetIcon, faFetchIcon } from '~stackable/util'
 import { pick } from 'lodash'
 
 /**
@@ -55,6 +53,7 @@ const addSVGAriaLabel = ( _svgHTML, ariaLabel = '' ) => {
 /**
  * Given an SVG markup, sets an HTML attribute to the
  * HTML tag.
+ * Optimized version using string manipulation instead of DOM operations
  *
  * @param {string} svgHTML
  * @param {Object} attributesToAdd
@@ -63,24 +62,62 @@ const addSVGAriaLabel = ( _svgHTML, ariaLabel = '' ) => {
  * @return {string} modified SVG HTML
  */
 const addSVGAttributes = ( svgHTML, attributesToAdd = {}, attributesToRemove = [] ) => {
-	const svgNode = createElementFromHTMLString( svgHTML )
-	if ( ! svgNode ) {
+	if ( ! svgHTML || typeof svgHTML !== 'string' ) {
 		return ''
 	}
 
-	Object.keys( attributesToAdd ).forEach( key => {
-		svgNode.setAttribute( key, attributesToAdd[ key ] )
-	} )
+	// Find the opening <svg> tag (handles <svg>, <svg >, <svg...>)
+	const svgTagMatch = svgHTML.match( /<svg\s*[^>]*>/i )
+	if ( ! svgTagMatch ) {
+		return svgHTML
+	}
 
+	const svgTagStart = svgTagMatch.index
+	const svgTagEnd = svgTagStart + svgTagMatch[ 0 ].length
+	const svgTag = svgTagMatch[ 0 ]
+	const restOfSvg = svgHTML.substring( svgTagEnd )
+
+	// Extract existing attributes from the SVG tag
+	// Handles: key="value", key='value', key=value, and boolean attributes
+	const attributes = {}
+	// Extract the content between <svg and > (the attributes part)
+	const attributesPart = svgTag.replace( /^<svg\s*/i, '' ).replace( />$/, '' )
+	if ( attributesPart ) {
+		// Match attribute name followed by = and value (with quotes or without)
+		const attrRegex = /([\w:-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g
+		let attrMatch
+		while ( ( attrMatch = attrRegex.exec( attributesPart ) ) !== null ) {
+			const key = attrMatch[ 1 ]
+			// Value can be in double quotes, single quotes, or unquoted
+			const value = attrMatch[ 2 ] || attrMatch[ 3 ] || attrMatch[ 4 ] || ''
+			attributes[ key ] = value
+		}
+	}
+
+	// Remove specified attributes
 	attributesToRemove.forEach( key => {
-		svgNode.removeAttribute( key )
+		delete attributes[ key ]
 	} )
 
-	return svgNode.outerHTML
+	// Add or update attributes
+	Object.assign( attributes, attributesToAdd )
+
+	// Rebuild the SVG tag
+	const newAttributes = Object.keys( attributes )
+		.map( key => {
+			const value = attributes[ key ]
+			// Escape double quotes in attribute values and wrap in double quotes
+			const escapedValue = String( value ).replace( /"/g, '&quot;' )
+			return `${ key }="${ escapedValue }"`
+		} )
+		.join( ' ' )
+
+	const newSvgTag = newAttributes ? `<svg ${ newAttributes }>` : '<svg>'
+	return svgHTML.substring( 0, svgTagStart ) + newSvgTag + restOfSvg
 }
 
 const FontAwesomeIcon = memo( props => {
-	const { 
+	const {
 		svgAttrsToAdd = { width: '32', height: '32' },
 		svgAttrsToRemove = [ 'id', 'data-name' ],
 	} = props

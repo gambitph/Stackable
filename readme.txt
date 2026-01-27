@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.5.5
-Tested up to: 6.8.2
+Requires at least: 6.6.4
+Tested up to: 6.9
 Requires PHP: 7.3
-Stable tag: 3.19.3
+Stable tag: 3.19.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -308,6 +308,35 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.6 =
+
+* Change: Carousels and Horizontal scroller block - images inside will not lazy load to prevent layout shifts #3672
+* Change: Removed setting to enable/disable lazy loading of images inside carousels #3672
+* Fixed: Posts block - improved text escaping #3669
+
+= 3.19.5 =
+
+* New: Icon list block - new option to retain custom SVG colors #3512
+* Fixed: WordPress 6.9 compatibility - text block menu bar may get hidden #3654
+* Fixed: WordPress 6.9 compatibility - better text compatibility #3654
+* Fixed: Optimized icon performance inside the block editor  #3660
+* Fixed: Global color scheme - when changing colors the drag handle jitters #3638
+* Fixed: Displays correct value when selecting a theme color #3631
+* Fixed: Block error encountered when getting filtered attributes #3646
+* Fixed: Icon block - multicolor styling not applying correctly to some icons #3428
+* Fixed: No longer queries WP API for useful plugins tab #3664
+* Fixed: Removed Cimo cross marketing from premium build #3659
+* Fixed: Ensure useful plugins tab is only visible if user has correct capabilities #3661
+
+= 3.19.4 =
+* New: Moved Stackable admin settings to its own top level menu #3633 #394
+* New: Design Library module now lazy loads for faster initial loading performance #3597
+* New: Added new `enqueue_frontend_assets_for_content( $content )` function for enqueueing js & css files in the current page #3634
+* Change: Added notice for Cimo in relevant areas #3635 #3642
+* Fixed: Global typography - resets for tablet and mobile when reseting for desktop #3550
+* Fixed: Table of contents - scroll top effect not working properly #3640
+* Fixed: Video popup - update date error on newly uploaded videos #3641
 
 = 3.19.3 =
 * Fixed: Display Condition - PHP warning when using date & time condition #395

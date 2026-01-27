@@ -1,5 +1,8 @@
+import CimoIcon from './images/cimo-icon.png'
+import InteractionsIcon from './images/interactions-icon.png'
+
 import {
-	i18n, usefulPlugins, ajaxUrl, installerNonce, activateNonce,
+	i18n, usefulPlugins, ajaxUrl, installerNonce, activateNonce, srcUrl,
 } from 'stackable'
 
 import { Button, Spinner } from '@wordpress/components'
@@ -10,10 +13,12 @@ import { __ } from '@wordpress/i18n'
 // List of plugins to display in the Useful Plugins section
 const PLUGINS = [ {
 	id: 'interactions',
+	icon: InteractionsIcon,
 	title: __( 'Interactions', i18n ),
 	description: __( 'Easily add animations and interactive experiences to your web pages using the block editor. Craft interactions from subtle hover effects to attention-grabbing story-telling animations.', i18n ),
 }, {
 	id: 'cimo-image-optimizer',
+	icon: CimoIcon,
 	title: __( 'Cimo - Image Optimizer', i18n ),
 	description: __( 'A game-changer for image optimization. Cimo optimizes and converts your images instantly as you upload — even before the files are added to your Media Library.', i18n ),
 } ]
@@ -103,7 +108,9 @@ const PluginCard = ( { plugin } ) => {
 
 	return <div key={ plugin.id } className="s-card">
 		<div className="s-plugin-title">
-			<img className="s-plugin-icon" src={ pluginData.icon } alt={ __( 'Plugin icon', i18n ) } />
+			{ plugin.icon && (
+				<img className="s-plugin-icon" src={ `${ srcUrl }/${ plugin.icon }` } alt={ __( 'Plugin icon', i18n ) } />
+			) }
 			<h3 className="s-card-title">{ plugin.title }</h3>
 		</div>
 		<p>{ plugin.description }</p>

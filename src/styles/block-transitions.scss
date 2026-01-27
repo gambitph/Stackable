@@ -40,6 +40,13 @@ body.stk--anim-init {
 	#{$stk-anim-selectors-pseudo} {
 		transition: var(--stk-transition-default, all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), flex 0s, max-width 0s, visibility 0s); // Don't include flex & max-width since column widths would animate.
 	}
+
+	// WP 6.9 Compatibility: Remove the transition for Core Stretchy Paragraph blocks inside Stackable blocks
+	// This is to prevent the text from flickering.
+	.stk-block .has-fit-text {
+		transition: font-size 0s;
+	}
+
 	:where(#{$stk-anim-selectors}),
 	#{$stk-anim-selectors-pseudo} {
 		border-width: 1px;
