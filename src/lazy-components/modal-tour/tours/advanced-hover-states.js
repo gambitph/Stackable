@@ -56,9 +56,9 @@ export const advancedHoverStates = {
 	},
 	steps: [
 		{
-			title: __( 'Styling Containers with Hover Styles', i18n ),
+			title: __( 'Advnaced Hover State Styling', i18n ),
 			description: createInterpolateElement(
-				__( 'Styling the container with hover styles is a great way to add interactivity to your designs. Click the <strong>hover toggle</strong> next to <strong>Background Color</strong> to start.', i18n ),
+				__( 'Learn how to style containers and their contents together by applying hover effects to multiple blocks at once.', i18n ),
 				{ strong: <strong /> }
 			),
 			help: createInterpolateElement( __( 'Click the <strong>hover toggle</strong> next to <strong>Background Color</strong> to start.', i18n ), {
@@ -82,12 +82,12 @@ export const advancedHoverStates = {
 		{
 			title: __( 'Selecting the Hover State', i18n ),
 			description: createInterpolateElement(
-				__( 'Now select the <strong>hover button</strong>. This lets you adjust how the container will look when hovered.', i18n ),
+				__( 'Now select the <strong>Hovered State</strong> button. This lets you adjust how the container will look when hovered.', i18n ),
 				{ strong: <strong /> }
 			),
-			anchor: '.stk-control:has([data-attribute="containerBackgroundColor"]) .stk-label-unit-toggle__wrapper',
+			anchor: '.stk-control:has([data-attribute="containerBackgroundColor"]) .stk-label-unit-toggle__wrapper button[data-value="hover"]',
 			position: 'left',
-			glowTarget: '.stk-control:has([data-attribute="containerBackgroundColor"]) .stk-label-unit-toggle__wrapper',
+			glowTarget: '.stk-control:has([data-attribute="containerBackgroundColor"]) .stk-label-unit-toggle__wrapper button[data-value="hover"]',
 			nextEventTarget: '.stk-control:has([data-attribute="containerBackgroundColor"]) .stk-label-unit-toggle__wrapper button:not(.is-active)[data-value="hover"]',
 			nextEvent: 'mousedown',
 			preStep: () => {
@@ -98,9 +98,9 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Adjusting the Background Color on Hover', i18n ),
+			title: __( 'Hover Background Color', i18n ),
 			description: createInterpolateElement(
-				__( 'The controls now affect the <strong>Hover</strong> state only. Try adjusting the <strong>Background Color</strong> value and see how the preview changes when hovered.', i18n ),
+				__( 'The controls now affect the <strong>Hover</strong> state only. Let\'s try adjusting the <strong>Background Color</strong> to black.', i18n ),
 				{ strong: <strong /> }
 			),
 			help: createInterpolateElement( __( 'Click on <strong>Background Color</strong> to open the color picker and select a color.', i18n ), {
@@ -118,13 +118,14 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Pick a Color', i18n ),
-			description: __( 'Select a color from the palette to apply it.', i18n ),
+			title: __( 'Pick a Dark Color', i18n ),
+			description: __( 'Select a black or another dark color from the palette to apply it to the hovered state of this container.', i18n ),
 			anchor: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
 			position: 'left',
+			help: createInterpolateElement( __( 'Click next to continue.', i18n ), {
+				strong: <strong />,
+			} ),
 			glowTarget: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
-			nextEvent: 'mousedown',
-			nextEventTarget: '.stk-color-palette-control__popover-content *',
 			postStep: () => {
 				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
@@ -138,9 +139,9 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Preview Your Hover Effect', i18n ),
-			description: __( 'Now the background will turn dark when your mouse hovers over the container, however the text is now hard to read, let\'s change it.', i18n ),
-			help: createInterpolateElement( __( 'Select the <strong>Heading Block</strong> to continue.', i18n ), {
+			title: __( 'Text is Now Unreadable', i18n ),
+			description: __( 'On hover, the background will now be black, but now we cannot read the Heading text properly! Let\'s change it!', i18n ),
+			help: createInterpolateElement( __( 'Select the <strong>Heading Block</strong> and click next to continue.', i18n ), {
 				strong: <strong />,
 			} ),
 			offsetX: '300px',
@@ -153,8 +154,8 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Selecting the Parent Container Hover State', i18n ),
-			description: createInterpolateElement( __( 'Now select the <strong>parent container hover state</strong>. This lets you adjust how the heading text will look when the parent container is hovered.', i18n ), {
+			title: __( 'Parent Hovered State', i18n ),
+			description: createInterpolateElement( __( 'Now select the <strong>Parent Container Hover State</strong>. This lets you adjust how the heading text will look when the parent container is hovered.', i18n ), {
 				strong: <strong />,
 			} ),
 			help: createInterpolateElement( __( 'Select the <strong>parent container hover state</strong> to continue.', i18n ), {
@@ -164,6 +165,7 @@ export const advancedHoverStates = {
 			position: 'left',
 			glowTarget: '.stk-control:has([data-attribute="textColor1"]) .stk-label-unit-toggle__wrapper button[data-value="parent-hover"]',
 			nextEventTarget: '.stk-control:has([data-attribute="textColor1"]) .stk-label-unit-toggle__wrapper button:not(.is-active)[data-value="parent-hover"]',
+			nextEvent: 'mousedown',
 			modalDelay: 150,
 			preStep: () => {
 				setTimeout( () => {
@@ -187,7 +189,7 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Selecting the Heading Color', i18n ),
+			title: __( 'Heading Color', i18n ),
 			description: createInterpolateElement( __( 'Now select the <strong>heading color</strong> to open the color picker.', i18n ), {
 				strong: <strong />,
 			} ),
@@ -210,13 +212,14 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Pick a Text Color', i18n ),
-			description: __( 'Select a text color from the palette to apply it.', i18n ),
+			title: __( 'Make the Heading White', i18n ),
+			description: __( 'Select white from the palette to apply it to the hovered state of the heading text.', i18n ),
+			help: createInterpolateElement( __( 'Click next to continue.', i18n ), {
+				strong: <strong />,
+			} ),
 			anchor: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
 			position: 'left',
 			glowTarget: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
-			nextEvent: 'mousedown',
-			nextEventTarget: '.stk-color-palette-control__popover-content *',
 			postStep: () => {
 				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
@@ -230,23 +233,11 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Heading Block is Now Readable', i18n ),
-			description: __( 'Now the heading block is readable when your mouse hovers over the container. Let\'s do the same for the text color in the text block.', i18n ),
-			offsetX: '300px',
-			postStep: () => {
-				const allBlocks = select( 'core/block-editor' ).getBlocks()
-				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
-				if ( columnsBlock?.innerBlocks?.[ 0 ]?.innerBlocks?.[ 1 ] ) {
-					dispatch( 'core/block-editor' ).selectBlock( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 1 ].clientId )
-				}
-			},
-		},
-		{
-			title: __( 'Selecting the Text Color for Parent Hover State', i18n ),
-			description: createInterpolateElement( __( 'Now select the <strong>parent container hover state</strong>. This lets you adjust how the text block will look when the parent container is hovered.', i18n ), {
+			title: __( 'Text Color', i18n ),
+			description: createInterpolateElement( __( 'Now that\'s better! Let\'s do the same for the text block.', i18n ), {
 				strong: <strong />,
 			} ),
-			help: createInterpolateElement( __( 'Select the <strong>parent container hover state</strong> to continue.', i18n ), {
+			help: createInterpolateElement( __( 'Select the <strong>text color</strong> to open the color picker.', i18n ), {
 				strong: <strong />,
 			} ),
 			anchor: '.stk-control:has([data-attribute="textColor1"])',
@@ -256,6 +247,12 @@ export const advancedHoverStates = {
 			modalDelay: 150,
 			preStep: () => {
 				setTimeout( () => {
+					const allBlocks = select( 'core/block-editor' ).getBlocks()
+					const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
+					if ( columnsBlock?.innerBlocks?.[ 0 ]?.innerBlocks?.[ 1 ] ) {
+						dispatch( 'core/block-editor' ).selectBlock( columnsBlock.innerBlocks[ 0 ].innerBlocks[ 1 ].clientId )
+					}
+
 					const targetElTop = document.querySelector( '.stk-control:has([data-attribute="textColor1"])' )?.getBoundingClientRect()?.top
 					const editorSidebar = document.querySelector( '.editor-sidebar.ugb--has-panel-tabs' )
 
@@ -272,13 +269,14 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Pick a Text Color', i18n ),
-			description: __( 'Select a text color from the palette to apply it.', i18n ),
+			title: __( 'Make the Text White', i18n ),
+			description: __( 'With the Text block now selected, pick white from the palette to apply it to the hovered state of the text block.', i18n ),
+			help: createInterpolateElement( __( 'Click next to continue.', i18n ), {
+				strong: <strong />,
+			} ),
 			anchor: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
 			position: 'left',
 			glowTarget: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
-			nextEvent: 'mousedown',
-			nextEventTarget: '.stk-color-palette-control__popover-content *',
 			postStep: () => {
 				const allBlocks = select( 'core/block-editor' ).getBlocks()
 				const columnsBlock = allBlocks.find( block => block.name === 'stackable/columns' )
@@ -292,16 +290,14 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Text Block is also now readable', i18n ),
-			description: __( 'Now the text block is also readable when your mouse hovers over the container.', i18n ),
-			offsetX: '300px',
-		},
-		{
-			title: __( 'Return to Normal State', i18n ),
+			title: __( 'Back to Normal State', i18n ),
 			description: createInterpolateElement(
-				__( 'Switch back to the normal state by clicking the <strong>cursor icon</strong> to test the hover states in action.', i18n ),
+				__( 'Our block looks good! Now let\'s switch back to the normal state by clicking the <strong>Normal State</strong> button.', i18n ),
 				{ strong: <strong /> }
 			),
+			help: createInterpolateElement( __( 'You can also de-select the block to return to the normal state.', i18n ), {
+				strong: <strong />,
+			} ),
 			anchor: '.stk-control:has([data-attribute="textColor1"]) .stk-label-unit-toggle__wrapper button[data-value="normal"]',
 			position: 'left',
 			glowTarget: '.stk-control:has([data-attribute="textColor1"]) .stk-label-unit-toggle__wrapper button[data-value="normal"]',
@@ -318,22 +314,24 @@ export const advancedHoverStates = {
 			},
 		},
 		{
-			title: __( 'Back on Normal State', i18n ),
+			title: __( 'We\'re Done!', i18n ),
 			description: createInterpolateElement(
-				__( 'You are now back on the <strong>normal</strong> state. You can now test the hover states in action.', i18n ),
+				__( 'You are now seeing the block in its <strong>normal</strong> state. Hover over the block to see the hover states in action.', i18n ),
 				{ strong: <strong /> }
 			),
+			help: createInterpolateElement( __( 'Hover your mouse over the block and see it switch live.', i18n ), {
+				strong: <strong />,
+			} ),
 			offsetX: '300px',
 		},
 		{
-			title: __( 'Prop Tip: The Levels of Hover States', i18n ),
+			title: __( 'Pro Tip: Different Hover States', i18n ),
 			description: createInterpolateElement(
-				__( 'There are <strong>three levels of hover states</strong> you can style: <ul><li><strong>Normal State</strong>: when the mouse is not over any block</li><li><strong>Container Hover</strong>: when the mouse is hovering over a container</li><li><strong>Block Hover</strong>: when the mouse is directly over a block</li></ul>With Stackable, you can customize the appearance for all these states, making your designs more interactive and visually appealing.', i18n ),
+				__( 'There are <strong>three levels of hover states</strong> you can style: <ul><li><strong>Normal State</strong>: when the mouse is not over any block</li><li><strong>Block Hover</strong>: when the mouse is directly over a block</li><li><strong>Container Hover</strong>: when the mouse is hovering over a container</li></ul>You can customize the appearance for all these states, making your designs more interactive and visually appealing.', i18n ),
 				{
 					strong: <strong />, ul: <ul />, li: <li />,
 				}
 			),
-			offsetX: '300px',
 		},
 	],
 }

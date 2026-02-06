@@ -77,10 +77,13 @@ export const responsiveControls = {
 		{
 			title: __( 'Enable Responsive Controls', i18n ),
 			description: createInterpolateElement(
-				__( 'Click the <strong>responsive toggle</strong> beside <strong>Column Arrangement</strong> to open the device options.', i18n ),
+				__( 'Block options with a <strong>responsive toggle</strong> on them can be adjusted for different devices.', i18n ),
 				{ strong: <strong /> }
 			),
-			anchor: '.ugb-sort-control .stk-control-responsive-toggle',
+			help: createInterpolateElement( __( 'Click the <strong>responsive toggle</strong> beside <strong>Column Arrangement</strong> to open the device options.', i18n ), {
+				strong: <strong />,
+			} ),
+			anchor: '.ugb-sort-control',
 			position: 'left',
 			glowTarget: '.ugb-sort-control.components-base-control .stk-control-responsive-toggle',
 			nextEventTarget: '.ugb-sort-control.components-base-control .stk-control-responsive-toggle button',
@@ -140,6 +143,7 @@ export const responsiveControls = {
 				__( 'On mobile, it usually looks better to show the <strong>image before the text</strong>. Drag the first column below the second to rearrange them for mobile devices.', i18n ),
 				{ strong: <strong /> }
 			),
+			help: __( 'Click next when done.', i18n ),
 			anchor: '.ugb-sort-control .stk-control-content',
 			position: 'left',
 			glowTarget: '.ugb-sort-control .stk-control-content .ugb-sort-control__container',
@@ -188,9 +192,9 @@ export const responsiveControls = {
 			glowTarget: '.ugb-sort-control.components-base-control .stk-control-responsive-toggle',
 		},
 		{
-			title: __( 'Tip: Preview Responsively!', i18n ),
+			title: __( 'Tip: Responsive Preview Works Too!', i18n ),
 			description: createInterpolateElement(
-				__( 'You can use the <strong>preview button</strong> at the top of the editor to instantly see how your arrangement looks in desktop, tablet, and mobile. Try it out!', i18n ),
+				__( 'You can also use the <strong>preview button</strong> to see and change values for different devices.', i18n ),
 				{ strong: <strong /> }
 			),
 			anchor: '.editor-header__settings .editor-preview-dropdown',

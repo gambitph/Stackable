@@ -149,14 +149,14 @@ export const blockBackgrounds = {
 		{
 			title: __( 'Pick Your Brand Color', i18n ),
 			description: __( 'Select a color that matches your brand or mood. Try out different colors and instantly see the changes on your block.', i18n ),
-			help: createInterpolateElement( __( 'Choose a <strong>Color</strong> from the palette to apply it.', i18n ), {
+			help: createInterpolateElement( __( 'Choose a <strong>Color</strong> from the palette to apply it, click next when done.', i18n ), {
 				strong: <strong />,
 			} ),
 			anchor: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
 			position: 'left',
 			glowTarget: '.components-popover__content:has(.stk-color-palette-control__popover-content)',
-			nextEvent: 'mousedown',
-			nextEventTarget: '.stk-color-palette-control__popover-content *',
+			// nextEvent: 'mousedown',
+			// nextEventTarget: '.stk-color-palette-control__popover-content *',
 			postStep: () => {
 				// Click the color picker
 				document.querySelector( '.ugb-block-background-panel .stk-color-palette-control .block-editor-panel-color-gradient-settings__dropdown.is-open' )?.click()

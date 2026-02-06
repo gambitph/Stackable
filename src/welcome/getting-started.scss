@@ -159,7 +159,7 @@
 	width: calc(100% + 100px);
 	background-position: center;
 	background-size: cover;
-	margin-bottom: 100px;
+	margin-bottom: 2.5em;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -179,19 +179,69 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 }
 
 .s-getting-started__quick-start-wrapper {
+	h2 {
+		font-size: 1.125rem;
+		margin: 0;
+		+ p {
+			margin: 0.5em 0 1.5em;
+		}
+		span {
+			font-size: 1rem;
+			font-weight: normal;
+			color: #777;
+			margin-inline-start: 0.5em;
+		}
+	}
+}
+.s-getting-started__progress {
+	margin-bottom: 2.5em;
+}
+.s-getting-started__progress-labels-title {
+	font-weight: bold;
+	margin: 0;
+}
+.s-getting-started__progress-labels {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1em;
+}
+.s-getting-started__progress-bar {
+	height: 8px;
+	background: #f4f4f5;
+	border-radius: 16px;
+	.s-getting-started__progress-bar-fill {
+		background: #e92063;
+		height: 100%;
+		border-radius: 16px;
+	}
+}
+.s-guided-tours-container-inner {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	margin-bottom: 2.5em;
+}
+.s-card {
+	overflow: visible;
+}
+.s-card:has(.s-quick-buttons-arrow):has(.s-button--checked) .s-quick-buttons-arrow {
+	display: none !important;
+}
+.s-getting-started__quick-start-wrapper {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
 	gap: 24px;
 	margin: 1em 0 64px;
 	align-items: flex-start;
 
+	.s-getting-started-video-wrapper {
+		grid-column: 2/3;
+		grid-row: 1/-1;
+	}
 	.s-getting-started-video {
 		flex-direction: column;
 		border-radius: 16px;
 		@include s-shadow;
 		overflow: hidden;
-		grid-row: 1/4;
-		grid-column: 2/3;
 	}
 
 	.s-card:not(.s-getting-started-video) {
@@ -251,6 +301,7 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 	}
 
 	.s-quick-button-description {
+		flex: 1;
 		> *:first-child {
 			margin-top: 0;
 			display: inline-flex;
@@ -302,15 +353,38 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 			filter: drop-shadow(1px 1px 2px #0006);
 		}
 	}
-	.s-button:not(.s-button--checked) {
+	.s-button:not(.s-button--checked):not(.s-button--unlock) {
 		.s-quick-button-toggle-indicator svg {
 			display: none;
 		}
 	}
-	.s-button.s-button--checked {
-		background: #555 !important;
+	.s-button.s-button--checked:not(.s-button--unlock) {
+		background: #20ac6b !important;
 		.s-quick-button-toggle-indicator {
 			background: #0000004f;
+		}
+	}
+	.s-card:has(.s-button--checked) {
+		background: #f9fcfb;
+	}
+	.s-button.s-button--unlock {
+		.s-quick-button-toggle-indicator {
+			background: transparent;
+			svg {
+				fill: #fff;
+				height: 16px;
+				width: 14px;
+				left: 2px;
+				top: 1px;
+			}
+		}
+	}
+
+	.s-card:has(.s-button--unlock) {
+		background: #fff5fa;
+		opacity: 0.8;
+		&:hover {
+			opacity: 1;
 		}
 	}
 }

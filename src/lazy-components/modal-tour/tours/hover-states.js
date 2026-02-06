@@ -35,9 +35,12 @@ export const hoverStates = {
 		{
 			title: __( 'Using the Hover Effect Controls', i18n ),
 			description: createInterpolateElement(
-				__( 'Locate the <strong>hover toggle</strong> next to <strong> Zoom</strong>. Click it to show the different hover state options.', i18n ),
+				__( 'Block options with a <strong>hover toggle</strong> on them can be adjusted for different hover states.', i18n ),
 				{ strong: <strong /> }
 			),
+			help: createInterpolateElement( __( 'Click the <strong>hover toggle</strong> beside <strong> Zoom</strong> to open the hover state options.', i18n ), {
+				strong: <strong />,
+			} ),
 			anchor: '.stk-control:has([data-attribute="imageZoom"])',
 			position: 'left',
 			glowTarget: '.stk-control:has([data-attribute="imageZoom"]) .stk-control-label button[data-value="normal"]',
@@ -52,12 +55,15 @@ export const hoverStates = {
 		{
 			title: __( 'Different Hover States', i18n ),
 			description: createInterpolateElement(
-				__( 'Now select the <strong>hover button</strong>. This lets you adjust how the image will look when hovered.', i18n ),
+				__( 'Now select the <strong>Hovered State button</strong>. This lets you adjust how the image will look when hovered.', i18n ),
 				{ strong: <strong /> }
 			),
+			help: createInterpolateElement( __( 'Click the <strong>Second button from the list</strong> to toggle this hover state.', i18n ), {
+				strong: <strong />,
+			} ),
 			anchor: '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper',
 			position: 'left',
-			glowTarget: '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper',
+			glowTarget: '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper button[data-value="hover"]',
 			nextEventTarget: '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle__wrapper button:not(.is-active)[data-value="hover"]',
 			nextEvent: 'mousedown',
 			preStep: () => {
@@ -73,6 +79,9 @@ export const hoverStates = {
 				__( 'The controls now affect the <strong>Hover</strong> state only. Try adjusting the <strong>Image Zoom</strong> value and see how the preview changes when hovered.', i18n ),
 				{ strong: <strong /> }
 			),
+			help: createInterpolateElement( __( 'Pick a zoom value of <strong>1.2</strong> to see the hover effect then click on next.', i18n ), {
+				strong: <strong />,
+			} ),
 			anchor: '.stk-control:has([data-attribute="imageZoom"])',
 			position: 'left',
 			glowTarget: '.stk-control:has([data-attribute="imageZoom"]) .stk-control-content',
@@ -85,17 +94,18 @@ export const hoverStates = {
 				const imageBlock = allBlocks.find( block => block.name === 'stackable/image' )
 				if ( imageBlock && ! imageBlock.attributes?.imageZoomHover ) {
 					dispatch( 'core/block-editor' ).updateBlockAttributes( imageBlock.clientId, {
-						imageZoomHover: 1.5,
+						imageZoomHover: 1.2,
 					} )
 				}
 			},
 		},
 		{
-			title: __( 'Preview Your Hover Effect', i18n ),
+			title: __( 'Hover State Preview', i18n ),
 			description: createInterpolateElement(
-				__( 'The image on the canvas is now showing your <strong>new hover zoom effect</strong>. No need to hover—this view already reflects the hover state.', i18n ),
+				__( 'Notice that the image block is now zoomed in. Any changes you make to the block will be reflected in the hover state only.', i18n ),
 				{ strong: <strong /> }
 			),
+			help: __( 'Click next to continue.', i18n ),
 			offsetX: '300px',
 		},
 		{
@@ -122,20 +132,31 @@ export const hoverStates = {
 		{
 			title: __( 'Back on Normal State', i18n ),
 			description: createInterpolateElement(
-				__( 'You are now back on the <strong>normal</strong> state. Notice the hover toggle is <strong>yellow</strong> - that means a custom hover effect has been saved!', i18n ),
+				__( 'You are now back on the <strong>normal</strong> state. Notice the hover toggle is <strong>yellow</strong>, this means there is a value set for the hover state!', i18n ),
 				{ strong: <strong /> }
 			),
-			anchor: '.stk-control:has([data-attribute="imageZoom"]) .stk-control-label button',
+			anchor: '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle',
 			position: 'left',
-			glowTarget: '.stk-control:has([data-attribute="imageZoom"]) .stk-control-label button',
+			glowTarget: '.stk-control:has([data-attribute="imageZoom"]) .stk-label-unit-toggle',
 		},
 		{
-			title: __( 'Pro Tip: Only Some Controls Feature Hover Toggle', i18n ),
+			title: __( 'Hover Over the Image', i18n ),
 			description: createInterpolateElement(
-				__( 'Tip: Watch out—for some controls you <strong>won\'t see the hover state toggle</strong>. Only certain options support hover states. If you don\'t see the toggle, that control doesn\'t have hover customization!', i18n ),
+				__( 'Hover over the image block to see the hover effect in action.', i18n ),
 				{ strong: <strong /> }
 			),
+			help: __( 'Click next to continue.', i18n ),
 			offsetX: '300px',
+		},
+		{
+			title: __( 'Tip: Not All Controls Have Hover States', i18n ),
+			description: createInterpolateElement(
+				__( 'Only certain options support hover states. If you see the toggle on another option (like <strong>Image Shadow</strong>), that means the control has hover states!', i18n ),
+				{ strong: <strong /> }
+			),
+			anchor: '.stk-control:has([data-attribute="imageShadow"])',
+			position: 'left',
+			glowTarget: '.stk-control:has([data-attribute="imageShadow"])',
 		},
 	],
 }
