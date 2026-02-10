@@ -89,7 +89,7 @@ export const globalColorSchemes = {
 		},
 		{
 			title: __( 'Default Color Scheme', i18n ),
-			description: __( 'The default color scheme is the color scheme that is applied to your entire website by default.', i18n ),
+			description: __( 'The default color scheme is the color scheme that is applied to all Stackable blocks across your entire website by default.', i18n ),
 			help: createInterpolateElement( __( 'Click the <strong>Default Color Scheme</strong> button to continue.', i18n ), {
 				strong: <strong />,
 			} ),
@@ -104,22 +104,37 @@ export const globalColorSchemes = {
 		{
 			title: __( 'Setting the Default Color Scheme', i18n ),
 			description: __( 'To make things easy, we\'ve added some color scheme presets. Pick the 2nd one to quickly see how your entire design system will instantly change in the Style Guide preview below.', i18n ),
-			help: createInterpolateElement( __( 'Click this <strong>color scheme preset</strong> to continue.', i18n ), {
+			help: createInterpolateElement( __( '<strong>Warning: This will change the colors of all Stackable blocks across your entire website.</strong><br/><br/>Click this <strong>color scheme preset</strong> or <strong>next</strong> to continue.', i18n ), {
 				strong: <strong />,
+				br: <br />,
 			} ),
 			size: 'medium',
 			anchor: '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(2)',
 			position: 'left',
 			nextEventTarget: '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(2)',
 			glowTarget: '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(2)',
-			postStep: () => {
-				document.querySelector( '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(2) button' )?.click()
-			},
+			// postStep: () => {
+			// 	document.querySelector( '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(2) button' )?.click()
+			// },
 		},
 		{
 			title: __( 'See the Stackable Blocks Change Colors', i18n ),
 			description: __( 'Notice how all Stackable blocks changed their colors across your site. You can further customize the colors below to match your brand or style.', i18n ),
 			offsetX: '300px',
+		},
+		{
+			title: __( 'Refine Your Color Scheme', i18n ),
+			description: __( 'You can further customize the colors below to match your brand or style.', i18n ),
+			help: createInterpolateElement( __( 'Click the <strong>next</strong> button to continue.', i18n ), {
+				strong: <strong />,
+			} ),
+			anchor: '.ugb-global-color-schemes__panel > .stk-color-scheme__heading-color',
+			position: 'left',
+			glowTarget: '.ugb-global-color-schemes__panel > .stk-color-scheme__heading-color',
+			modalDelay: 350,
+			preStep: () => {
+				document.querySelector( '.stk-color-scheme__heading-color' )?.scrollIntoView( { behavior: 'smooth', block: 'center' } )
+			},
 		},
 		{
 			title: __( 'Go Back to Color Schemes', i18n ),
@@ -131,6 +146,10 @@ export const globalColorSchemes = {
 			position: 'left',
 			glowTarget: '.stk-inspector-sub-header button',
 			nextEventTarget: '.stk-inspector-sub-header button',
+			modalDelay: 350,
+			preStep: () => {
+				document.querySelector( '.stk-inspector-sub-header' )?.scrollIntoView( { behavior: 'smooth', block: 'center' } )
+			},
 			postStep: () => {
 				document.querySelector( '.stk-inspector-sub-header button' )?.click()
 			},
@@ -152,13 +171,13 @@ export const globalColorSchemes = {
 		{
 			title: __( 'Pick a Darker Background Color Scheme', i18n ),
 			description: __( 'Let\'s choose a darker color scheme preset for the background. This background color scheme will be used on blocks when the block background is enabled, giving your design more contrast and customization.', i18n ),
-			help: createInterpolateElement( __( 'Click this <strong>color scheme preset</strong> to continue.', i18n ), {
+			help: createInterpolateElement( __( '<strong>Warning: This will change the colors of all Stackable blocks across your entire website.</strong><br/><br/>Click this <strong>color scheme preset</strong> or <strong>next</strong> to continue.', i18n ), {
 				strong: <strong />,
+				br: <br />,
 			} ),
 			size: 'medium',
 			anchor: '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(8)',
 			position: 'left',
-			nextEventTarget: '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(8)',
 			glowTarget: '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(8)',
 			modalDelay: 150,
 			preStep: () => {
@@ -173,9 +192,6 @@ export const globalColorSchemes = {
 					}
 				}, 100 )
 			},
-			postStep: () => {
-				document.querySelector( '.stk-preset-color-schemes__preset-wrapper > .stk-global-color-scheme__preview:nth-child(8) button' )?.click()
-			},
 		},
 		{
 			title: __( 'Looking Good! Background Scheme Updated', i18n ),
@@ -184,7 +200,7 @@ export const globalColorSchemes = {
 		},
 		{
 			title: __( 'Open the Inspector Sidebar', i18n ),
-			description: __( 'Now let\'s open the Inspector sidebar so you can see where to further customize this color scheme.', i18n ),
+			description: __( 'Now let\'s open the Inspector sidebar so we can see how Color Schemes can affect your workflow.', i18n ),
 			help: createInterpolateElement( __( 'Click the <strong>Inspector Controls</strong> button to continue.', i18n ), {
 				strong: <strong />,
 			} ),
@@ -214,8 +230,23 @@ export const globalColorSchemes = {
 			},
 		},
 		{
+			title: __( 'Color Schemes in Action', i18n ),
+			description: __( 'Color Schemes help maintain consistency. With Block Background enabled, all the inner blocks adjust to have different colors applied automatically.', i18n ),
+			help: createInterpolateElement( __( 'Disable the <strong>Block Background</strong> and see how the block colors changes back to the default color scheme. Click next to continue.', i18n ), {
+				strong: <strong />,
+			} ),
+			anchor: '.ugb-block-background-panel .ugb-toggle-panel-form-toggle',
+			position: 'left',
+			glowTarget: '.ugb-block-background-panel .ugb-toggle-panel-form-toggle',
+			nextEventTarget: '.ugb-block-background-panel .components-form-toggle__input',
+			nextEvent: 'click',
+			postStep: () => {
+				document.querySelector( '.ugb-block-background-panel .components-form-toggle__input' )?.click()
+			},
+		},
+		{
 			title: __( 'Switch Between Color Schemes Anytime', i18n ),
-			description: __( 'If you have multiple global color schemes set up, you can easily change your block\'s style by switching the color scheme option here to instantly apply a new look.', i18n ),
+			description: __( 'If you have multiple global color schemes set up, you can also easily change your block\'s style by switching the color scheme option here to instantly apply a new look.', i18n ),
 			anchor: '.stk-control:has([data-attribute="backgroundColorScheme"])',
 			position: 'left',
 			glowTarget: '.stk-control:has([data-attribute="backgroundColorScheme"])',
@@ -229,3 +260,7 @@ export const globalColorSchemes = {
 		},
 	],
 }
+
+// TODO: clicking on background colro scheme doesn't move the next
+// TODO: add a turn off block background to see the color scheme switch from background to the default color scheme
+// TODO: last step is you can pick a different color scheme if you have many
