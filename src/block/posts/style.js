@@ -287,7 +287,10 @@ Image.addStyles( blockStyles, {
 		const blockStyle = getBlockStyle( variations, className )
 
 		if ( [ 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ) ) {
-			if ( imageHasLink ) {
+			// If the image has a link and the width unit is %, return false
+			// because we have set a custom selector for the image width that uses the % unit.
+			if ( imageHasLink && ( getAttribute( 'imageWidthUnit' ) === '%' ||
+			getAttribute( 'imageWidthUnitTablet' ) === '%' ) ) {
 				return false
 			}
 			return true
