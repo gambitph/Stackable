@@ -2860,6 +2860,46 @@
     ]
   },
   {
+    "family": "Betania Patmos",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Betania Patmos GDL",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Betania Patmos In",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Betania Patmos In GDL",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Beth Ellen",
     "variants": [
       "regular"
@@ -8442,6 +8482,16 @@
     ]
   },
   {
+    "family": "Gveret Levin",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "hebrew",
+      "latin"
+    ]
+  },
+  {
     "family": "Gwendolyn",
     "variants": [
       "regular",
@@ -9343,6 +9393,18 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Idiqlat",
+    "variants": [
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "syriac"
     ]
   },
   {
@@ -10584,6 +10646,7 @@
       "900"
     ],
     "subsets": [
+      "beria-erfe",
       "latin"
     ]
   },
@@ -11012,6 +11075,22 @@
       "cyrillic",
       "cyrillic-ext",
       "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "LINE Seed JP",
+    "variants": [
+      "100",
+      "regular",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "cyrillic",
+      "greek-ext",
+      "japanese",
       "latin",
       "latin-ext"
     ]
@@ -15718,6 +15797,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "myanmar"
     ]
   },
@@ -19644,6 +19725,27 @@
     ]
   },
   {
+    "family": "Playwrite NZ Basic",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Playwrite NZ Basic Guides",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Playwrite NZ Guides",
     "variants": [
       "regular"
@@ -20673,6 +20775,16 @@
       "japanese",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Ramsina",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "syriac"
     ]
   },
   {
@@ -21923,6 +22035,34 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "SN Pro",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
