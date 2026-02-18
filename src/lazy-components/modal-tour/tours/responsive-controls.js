@@ -200,6 +200,8 @@ export const responsiveControls = {
 			anchor: '.editor-header__settings .editor-preview-dropdown',
 			position: 'bottom',
 			glowTarget: '.editor-header__settings .editor-preview-dropdown',
+			nextEventTarget: '.editor-header__settings .editor-preview-dropdown',
+			nextEvent: 'mousedown',
 		},
 	],
 }
