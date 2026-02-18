@@ -232,7 +232,7 @@ export const globalColorSchemes = {
 		{
 			title: __( 'Color Schemes in Action', i18n ),
 			description: __( 'Color Schemes help maintain consistency. With Block Background enabled, all the inner blocks adjust to have different colors applied automatically.', i18n ),
-			help: createInterpolateElement( __( 'Disable the <strong>Block Background</strong> and see how the block colors changes back to the default color scheme. Click next to continue.', i18n ), {
+			help: createInterpolateElement( __( 'Disable the <strong>Block Background</strong> and see how the block colors change back to the default color scheme. Click next to continue.', i18n ), {
 				strong: <strong />,
 			} ),
 			anchor: '.ugb-block-background-panel .ugb-toggle-panel-form-toggle',

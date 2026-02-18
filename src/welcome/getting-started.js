@@ -345,7 +345,7 @@ export const GettingStarted = () => {
 				>
 					<div
 						className="s-getting-started__progress-bar-fill"
-						style={ { width: `${ ( totalDone / totalGuidedTours ) * 100 }%` } }
+						style={ { width: `${ totalGuidedTours ? ( totalDone / totalGuidedTours ) * 100 : 0 }%` } }
 					></div>
 				</div>
 			</section>
@@ -366,7 +366,7 @@ export const GettingStarted = () => {
 							></iframe>
 						</div>
 						<h3 id="video-tutorial-title">{ __( 'Getting Started with Stackable', i18n ) }</h3>
-						<p id="video-tutorial-desc">{ __( 'Watch this video to get started with Stackable in within 5 minutes.', i18n ) }</p>
+						<p id="video-tutorial-desc">{ __( 'Watch this video to get started with Stackable within 5 minutes.', i18n ) }</p>
 					</div>
 				</div>
 				<div className="s-guided-tours-container" role="list" aria-label={ __( 'Guided Tutorials', i18n ) }>
@@ -434,7 +434,7 @@ export const GettingStarted = () => {
 															// 's-button--disabled': item.premium && ! isPro,
 														} ) }
 														role="button"
-														tabIndex={ item.premium && ! isPro ? -1 : 0 }
+														tabIndex={ 0 }
 														aria-pressed={ !! guidedTourStates?.includes( item.id ) }
 														aria-label={
 															`${ item.title }: ${ item.description }` +

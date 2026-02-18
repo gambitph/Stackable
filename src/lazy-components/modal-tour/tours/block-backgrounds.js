@@ -93,8 +93,10 @@ export const blockBackgrounds = {
 				}
 			},
 			postStep: () => {
-				// Click the tab
-				document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
+				setTimeout( () => {
+					// Click the tab
+					document.querySelector( '.edit-post-sidebar__panel-tab.ugb-tab--style:not(.is-active)' )?.click()
+				}, 100 )
 			},
 		},
 		{
@@ -138,12 +140,14 @@ export const blockBackgrounds = {
 			nextEvent: 'mousedown',
 			preStep: () => {
 				// Toggle background on
-				document.querySelector( '.ugb-block-background-panel:not(is-opened) button' )?.click()
-				document.querySelector( '.ugb-block-background-panel .ugb-toggle-panel-form-toggle:not(is-checked) input' )?.click()
+				document.querySelector( '.ugb-block-background-panel:not(.is-opened) button' )?.click()
+				document.querySelector( '.ugb-block-background-panel .ugb-toggle-panel-form-toggle:not(.is-checked) input' )?.click()
 			},
 			postStep: () => {
-				// Click the tab
-				document.querySelector( '.ugb-block-background-panel .stk-color-palette-control .block-editor-panel-color-gradient-settings__dropdown:not(is-open)' )?.click()
+				setTimeout( () => {
+					// Click the tab
+					document.querySelector( '.ugb-block-background-panel .stk-color-palette-control .block-editor-panel-color-gradient-settings__dropdown:not(.is-open)' )?.click()
+				}, 100 )
 			},
 		},
 		{
@@ -158,8 +162,10 @@ export const blockBackgrounds = {
 			// nextEvent: 'mousedown',
 			// nextEventTarget: '.stk-color-palette-control__popover-content *',
 			postStep: () => {
-				// Click the color picker
-				document.querySelector( '.ugb-block-background-panel .stk-color-palette-control .block-editor-panel-color-gradient-settings__dropdown.is-open' )?.click()
+				setTimeout( () => {
+					// Click the color picker
+					document.querySelector( '.ugb-block-background-panel .stk-color-palette-control .block-editor-panel-color-gradient-settings__dropdown.is-open' )?.click()
+				}, 100 )
 			},
 		},
 		{
@@ -193,8 +199,8 @@ export const blockBackgrounds = {
 			description: __( 'Great job! You\'ve learned how to add and customize block backgrounds and containers. These features are available in most Stackable blocks, helping you create beautiful, consistent layouts with ease.', i18n ),
 			preStep: () => {
 				// Toggle background on
-				document.querySelector( '.ugb-panel--container-size:not(is-opened)' )?.click()
-				document.querySelector( '.ugb-panel--container-size .ugb-toggle-panel-form-toggle:not(is-checked) input' )?.click()
+				document.querySelector( '.ugb-panel--container-size:not(.is-opened)' )?.click()
+				document.querySelector( '.ugb-panel--container-size .ugb-toggle-panel-form-toggle:not(.is-checked) input' )?.click()
 			},
 		},
 		{

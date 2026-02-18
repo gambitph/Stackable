@@ -56,7 +56,7 @@ export const advancedHoverStates = {
 	},
 	steps: [
 		{
-			title: __( 'Advnaced Hover State Styling', i18n ),
+			title: __( 'Advanced Hover State Styling', i18n ),
 			description: createInterpolateElement(
 				__( 'Learn how to style containers and their contents together by applying hover effects to multiple blocks at once.', i18n ),
 				{ strong: <strong /> }
