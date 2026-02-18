@@ -127,7 +127,8 @@
 			}
 		}
 	}
-	&.ugb-tour-modal--left-top {
+	&.ugb-tour-modal--left-top,
+	&.ugb-tour-modal--right-top {
 		.components-modal__content {
 			&::after {
 				top: 30px;

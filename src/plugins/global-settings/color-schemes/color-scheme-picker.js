@@ -55,6 +55,7 @@ const COLOR_SETTINGS = [ {
 		hover: sprintf( __( 'Changing the %s is not allowed for %s state.', i18n ),
 			__( 'Heading Color', i18n ), __( 'hover', i18n ) ),
 	},
+	className: 'stk-color-scheme__heading-color',
 }, {
 	label: __( 'Text Color', i18n ),
 	property: 'textColor',
@@ -549,6 +550,7 @@ const ColorSchemePicker = props => {
 				enableGradient={ currentHoverState === 'normal' || settings.property === 'buttonBackgroundColor' }
 				additionalToggleProps={ getToggleProps( settings ) }
 				allowReset={ ! isDisabled( settings.property ) }
+				className={ settings.className }
 			/>
 		) ) }
 	</>
