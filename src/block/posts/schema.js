@@ -319,7 +319,7 @@ export const attributes = ( version = VERSION ) => {
 				default: 'category',
 			},
 		},
-		versionAdded: '3.19.8',
+		versionAdded: '3.19.7',
 		versionDeprecated: '',
 	} )
 
