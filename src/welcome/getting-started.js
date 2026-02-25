@@ -137,7 +137,7 @@ const QUICK_BUTTONS = [
 				title: __( 'Start Building with the Design Library', i18n ),
 				description: __( 'Jump straight into our Design Library and insert polished, pre-built sections; no more blank-page overwhelm.', i18n ),
 				link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=design-library`,
-				cta: __( 'Build Now', i18n ),
+				cta: __( 'Try Now', i18n ),
 			},
 			{
 				id: 'blocks',
@@ -145,7 +145,7 @@ const QUICK_BUTTONS = [
 				title: __( 'Stackable Block Settings', i18n ),
 				description: __( 'Learn how to use Stackable blocks and get more out of them.', i18n ),
 				link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Stackable', i18n ) }&tour=blocks`,
-				cta: __( 'Use Blocks', i18n ),
+				cta: __( 'Try Now', i18n ),
 			},
 			{
 				id: 'block-backgrounds',
@@ -161,7 +161,7 @@ const QUICK_BUTTONS = [
 				title: __( 'Start with a Complete Site Kit', i18n ),
 				description: __( 'Pick a ready-made website template to kickstart your project — fully built layouts and styles, just swap in your content.', i18n ),
 				link: '/wp-admin/post-new.php?post_type=page',
-				cta: __( 'Select Kit', i18n ),
+				cta: __( 'Try Now', i18n ),
 				display: false,
 			},
 		],
@@ -223,7 +223,7 @@ const QUICK_BUTTONS = [
 				title: __( 'Pre-set Design Systems', i18n ),
 				description: __( 'Browse curated Design System presets — apply a professional look instantly without building from scratch.', i18n ),
 				link: '/wp-admin/post-new.php?post_type=page',
-				cta: __( 'Pick A System', i18n ),
+				cta: __( 'Try Now', i18n ),
 				display: false,
 			},
 			{
