@@ -15,6 +15,11 @@ const EditorBlockTour = () => {
 		}
 	}, [] )
 
+	// Do not load if there is no tourId.
+	if ( ! tourId ) {
+		return null
+	}
+
 	return <>
 		<GuidedModalTour tourId={ tourId } />
 	</>

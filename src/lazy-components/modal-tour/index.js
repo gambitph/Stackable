@@ -51,7 +51,7 @@ const ModalTour = memo( props => {
 		hasConfetti = true,
 		initialize = NOOP,
 	} = useMemo( () =>
-		TOUR_STEPS[ tourId ],
+		TOUR_STEPS[ tourId ] || {},
 	[ tourId ] )
 
 	const {

@@ -71,6 +71,11 @@ const GuidedModalTour = memo( props => {
 		}
 	}
 
+	// Do not load if there is no tourId.
+	if ( ! tourId ) {
+		return null
+	}
+
 	// Only lazy-load ModalTour when we're actually going to render it
 	const ModalTour = lazy( () => import( /* webpackChunkName: "modal-tour" */ '~stackable/lazy-components/modal-tour' ) )
 
