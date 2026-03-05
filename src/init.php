@@ -237,7 +237,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Enqueue the block script once.
-			if ( ! isset( self::$scripts_loaded[ $block['blockName'] ] ) ) {
+			// Do not enqueue if the block content is empty (e.g. due to conditional display)
+			if ( ! isset( self::$scripts_loaded[ $block['blockName'] ] ) && $block_content !== '' ) {
 				$stackable_block = substr( $block['blockName'], 10 );
 				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
 				self::$scripts_loaded[ $block['blockName'] ] = true;
