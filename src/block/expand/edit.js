@@ -38,6 +38,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 const TEMPLATE = [
 	[ 'stackable/text', {
@@ -70,6 +71,12 @@ const Edit = props => {
 	} = props
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const { hasInnerBlocks } = useSelect( select => {
+		const { getBlockOrder } = select( 'core/block-editor' )
+		return {
+			hasInnerBlocks: getBlockOrder( props.clientId ).length > 0,
+		}
+	}, [ props.clientId ] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -110,7 +117,7 @@ const Edit = props => {
 			>
 				<div className={ contentClassNames }>
 					<InnerBlocks
-						template={ TEMPLATE }
+						template={ hasInnerBlocks ? undefined : TEMPLATE }
 						templateLock="all"
 						orientation="horizontal"
 					/>

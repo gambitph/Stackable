@@ -103,7 +103,7 @@ const Edit = props => {
 
 				<ContainerDiv className={ contentClassNames }>
 					<InnerBlocks
-						template={ TEMPLATE }
+						template={ hasInnerBlocks ? undefined : TEMPLATE }
 						templateLock="all"
 					/>
 				</ContainerDiv>
