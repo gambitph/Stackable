@@ -40,13 +40,12 @@ export const getShapeCSS = ( shape, shapeFlipX, shapeFlipY, shapeStretch ) => {
 		const scaleY = shapeFlipY ? -1 : 1
 
 		// Extract viewBox to compute translate offset
-		const viewBoxMatch = svgString.match( /viewBox="([^"]+)"/ )
-		const [ _minX, _minY, width, height ] = viewBoxMatch
-			? viewBoxMatch[ 1 ].split( ' ' ).map( Number )
-			: [ 0, 0, 100, 100 ]
+		const viewBoxMatch = svgString.match( /viewBox=["']([^"']+)["']/ )
+		const [ minX, minY, width, height ] = viewBoxMatch
+			? viewBoxMatch[ 1 ].trim().split( /[\s,]+/ ).map( Number ) : [ 0, 0, 100, 100 ]
 
-		const translateX = shapeFlipX ? width : 0
-		const translateY = shapeFlipY ? height : 0
+		const translateX = shapeFlipX ? width + ( 2 * minX ) : 0
+		const translateY = shapeFlipY ? height + ( 2 * minY ) : 0
 
 		// SVG transform are applied right to left
 		// Scale first (flip) and translate (reposition to view)
