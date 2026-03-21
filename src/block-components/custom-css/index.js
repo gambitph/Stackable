@@ -2,8 +2,14 @@ import { addAttributes } from './attributes'
 import { Edit } from './edit'
 
 import { applyFilters } from '@wordpress/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 
 export const CustomCSS = props => {
+	// Don't do anything if the custom CSS is not set.
+	const customCSS = useBlockAttributesContext( attributes => attributes.customCSS )
+	if ( ! customCSS ) {
+		return null
+	}
 	return applyFilters( 'stackable.block-component.custom-css', null, props )
 }
 
