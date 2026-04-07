@@ -1,6 +1,5 @@
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { register, createReduxStore, useSelect } from '@wordpress/data'
-// import { useMemo } from '@wordpress/element'
+import { register, createReduxStore, useSelect, createRegistrySelector } from '@wordpress/data'
 
 // Include all the stored state.
 const DEFAULT_STATE = {
@@ -10,6 +9,11 @@ const DEFAULT_STATE = {
 	selectedParentHoverBlock: null,
 	selectedParentHoverChildren: [],
 	selectedHoverChildren: [],
+
+	// O(1) membership for hover-class derivation (mirrors the arrays above).
+	parentHoverChildrenIdSet: new Set(),
+	hoverChildrenIdSet: new Set(),
+	collapsedChildrenIdSet: new Set(),
 
 	// Accordion collapsed state.
 	hasCollapsedState: false,
@@ -62,6 +66,110 @@ const STORE_ACTIONS = {
 	} ),
 }
 
+/**
+ * @param {typeof DEFAULT_STATE} state
+ * @param {string} clientId
+ * @param {string[]} multiSelectedClientIds
+ * @returns {string}
+ */
+function computeBlockHoverClass( state, clientId, multiSelectedClientIds ) {
+	const hoverStateMode = state.hoverState
+	const hoverStateClientId = state.selectedBlock
+	const parentHoverClientId = state.selectedParentHoverBlock
+	const parentHoverSet = state.parentHoverChildrenIdSet
+	const hoverChildrenSet = state.hoverChildrenIdSet
+
+	const isHoverActive = hoverStateMode === 'hover' || hoverStateMode === 'parent-hover'
+
+	const isBlockSelected = clientId === hoverStateClientId || multiSelectedClientIds.includes( clientId )
+	if ( isBlockSelected ) {
+		return isHoverActive ? 'stk--is-hovered' : ''
+	}
+	if ( clientId === parentHoverClientId ) {
+		return isHoverActive ? 'stk--is-hovered' : ''
+	}
+	if ( parentHoverSet.has( clientId ) || hoverChildrenSet.has( clientId ) ) {
+		return isHoverActive ? 'stk--is-hovered' : ''
+	}
+	return ''
+}
+
+/**
+ * @param {typeof DEFAULT_STATE} state
+ * @param {string} clientId
+ * @param {string[]} multiSelectedClientIds
+ * @param {boolean} forceUpdateHoverState
+ */
+function computeBlockHoverEditState( state, clientId, multiSelectedClientIds, forceUpdateHoverState ) {
+	const hoverState = state.hoverState
+	const hoverStateClientId = state.selectedBlock
+	const parentHoverClientId = state.selectedParentHoverBlock
+	const hasParentHoverState = state.hasParentHoverState
+	const collapsedClientId = state.selectedCollapsedBlock
+	const parentHoverSet = state.parentHoverChildrenIdSet
+	const hoverChildrenSet = state.hoverChildrenIdSet
+	const collapsedChildrenSet = state.collapsedChildrenIdSet
+
+	const isHoverActive = hoverState === 'hover' || hoverState === 'parent-hover'
+
+	const blockHoverClass = computeBlockHoverClass( state, clientId, multiSelectedClientIds )
+
+	const isBlockSelected = clientId === hoverStateClientId || multiSelectedClientIds.includes( clientId )
+	const isParentHoverBlock = clientId === parentHoverClientId
+	const isCollapsedBlock = clientId === collapsedClientId
+
+	let currentHoverState = 'normal'
+	if ( isBlockSelected ) {
+		currentHoverState = hoverState
+		if ( ! hasParentHoverState && hoverState === 'parent-hover' ) {
+			currentHoverState = 'hover'
+		}
+	} else if ( isParentHoverBlock ) {
+		if ( isHoverActive ) {
+			currentHoverState = 'hover'
+		}
+	} else {
+		const isChildOfParentHover = parentHoverSet.has( clientId )
+		const isChildOfHoverBlock = hoverChildrenSet.has( clientId )
+		const isChildOfCollapsedBlock = collapsedChildrenSet.has( clientId )
+
+		if ( isChildOfParentHover || isChildOfHoverBlock ) {
+			if ( isHoverActive ) {
+				currentHoverState = 'parent-hover'
+			}
+		} else if ( isChildOfCollapsedBlock || isCollapsedBlock ) {
+			currentHoverState = 'collapsed'
+		}
+	}
+
+	if ( forceUpdateHoverState ) {
+		currentHoverState = hoverState
+	}
+
+	return {
+		currentHoverState,
+		blockHoverClass,
+		hasParentHoverState: state.hasParentHoverState,
+		hasCollapsedState: state.hasCollapsedState,
+		isCollapsedBlock,
+	}
+}
+
+const getBlockHoverClass = createRegistrySelector( select => ( state, clientId ) => {
+	const multiIds = select( 'core/block-editor' ).getMultiSelectedBlockClientIds()
+	return computeBlockHoverClass( state, clientId, multiIds )
+} )
+
+const getBlockHoverEditState = createRegistrySelector( select => ( state, clientId, forceUpdateHoverState ) => {
+	const multiIds = select( 'core/block-editor' ).getMultiSelectedBlockClientIds()
+	return computeBlockHoverEditState( state, clientId, multiIds, forceUpdateHoverState )
+} )
+
+const shouldShowHoverClass = createRegistrySelector( select => ( state, clientId ) => {
+	const multiIds = select( 'core/block-editor' ).getMultiSelectedBlockClientIds()
+	return computeBlockHoverClass( state, clientId, multiIds ) !== ''
+} )
+
 const STORE_SELECTORS = {
 	getSelectedBlock: state => state.selectedBlock,
 	getHoverState: state => state.hoverState,
@@ -72,6 +180,9 @@ const STORE_SELECTORS = {
 	getHasCollapsedState: state => state.hasCollapsedState,
 	getSelectedCollapsedBlock: state => state.selectedCollapsedBlock,
 	getSelectedCollapsedBlockChildren: state => state.selectedCollapsedChildren,
+	getBlockHoverClass,
+	getBlockHoverEditState,
+	shouldShowHoverClass,
 }
 
 const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
@@ -85,11 +196,14 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 				hasParentHoverState: action.hasParentHoverState,
 				selectedParentHoverChildren: action.parentHoverChildrenClientIds,
 				selectedHoverChildren: action.hoverChildrenClientIds,
+				parentHoverChildrenIdSet: new Set( action.parentHoverChildrenClientIds || [] ),
+				hoverChildrenIdSet: new Set( action.hoverChildrenClientIds || [] ),
 
 				// Accordion collapsed state.
 				hasCollapsedState: action.hasCollapsedState,
 				selectedCollapsedBlock: action.collapsedClientId,
 				selectedCollapsedChildren: action.collapsedChildrenClientIds,
+				collapsedChildrenIdSet: new Set( action.collapsedChildrenClientIds || [] ),
 			}
 		}
 		case 'CLEAR_SELECTED_BLOCK': {
@@ -115,155 +229,25 @@ register( createReduxStore( 'stackable/hover-state', {
 
 export const useBlockHoverState = ( { forceUpdateHoverState = false } = {} ) => {
 	const { clientId } = useBlockEditContext()
-	const clientIds = useSelect( select => select( 'core/block-editor' ).getMultiSelectedBlockClientIds() )
 
-	const {
-		currentHoverState,
-		blockHoverClass,
-		hasParentHoverState,
-		hasCollapsedState,
-		isCollapsedBlock,
-	} = useSelect( select => {
-		const hoverState = select( 'stackable/hover-state' ).getHoverState()
-		const hoverStateClientId = select( 'stackable/hover-state' ).getSelectedBlock()
-
+	return useSelect( select => {
 		const {
-			getSelectedParentHoverBlock,
-			getSelectedParentHoverBlockChildren,
-			getSelectedHoverChildren,
-			getHasParentHoverState,
-			getHasCollapsedState,
-			getSelectedCollapsedBlock,
-			getSelectedCollapsedBlockChildren,
-		} = select( 'stackable/hover-state' )
-
-		const hasParentHoverState = getHasParentHoverState()
-		const parentHoverClientId = getSelectedParentHoverBlock()
-		const hasCollapsedState = getHasCollapsedState()
-		const collapsedClientId = getSelectedCollapsedBlock()
-
-		// return useMemo( () => {
-		const isBlockSelected = clientId === hoverStateClientId || clientIds.includes( clientId )
-		const isParentHoverBlock = clientId === parentHoverClientId
-		const isCollapsedBlock = clientId === collapsedClientId
-
-		// The hover state only applies to the currently selected block.
-		let blockHoverClass = ''
-		let currentHoverState = 'normal'
-		if ( isBlockSelected ) {
-			if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
-				blockHoverClass = 'stk--is-hovered'
-			}
-
-			currentHoverState = hoverState
-
-			// If we changed the hover state to parent-hover, but the block
-			// doesn't have a parent to hover, make it hover instead.
-			if ( ! hasParentHoverState && hoverState === 'parent-hover' ) {
-				currentHoverState = 'hover'
-			}
-
-		// Also change the hover states of the other
-		} else if ( isParentHoverBlock ) {
-			if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
-				blockHoverClass = 'stk--is-hovered'
-				currentHoverState = 'hover'
-			}
-
-		} else {
-
-			const parentHoverChildrenClientIds = getSelectedParentHoverBlockChildren()
-			const hoverChildrenClientIds = getSelectedHoverChildren()
-			const collapsedChildrenClientIds = getSelectedCollapsedBlockChildren()
-
-			const isChildOfParentHover = parentHoverChildrenClientIds.includes( clientId )
-			const isChildOfHoverBlock = hoverChildrenClientIds.includes( clientId )
-			const isChildOfCollapsedBlock = collapsedChildrenClientIds.includes( clientId )
-
-			if ( isChildOfParentHover || isChildOfHoverBlock ) {
-				if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
-					blockHoverClass = 'stk--is-hovered'
-					currentHoverState = 'parent-hover'
-				}
-			} else if ( isChildOfCollapsedBlock || isCollapsedBlock ) {
-				// We won't add any classes here anymore.
-				currentHoverState = 'collapsed'
-			}
-		}
-
-		if ( forceUpdateHoverState ) {
-			currentHoverState = hoverState
-		}
-
-		return {
 			currentHoverState,
 			blockHoverClass,
 			hasParentHoverState,
 			hasCollapsedState,
 			isCollapsedBlock,
-		}
-	}, [ clientId, clientIds ] )
+		} = select( 'stackable/hover-state' ).getBlockHoverEditState( clientId, forceUpdateHoverState )
 
-	return [ currentHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
+		return [ currentHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
+	}, [ clientId, forceUpdateHoverState ] )
 }
 
-// This just returns the `blockHoverClass` value from the useBlockHoverState
-// hook above. But we separate the logic for better performance.
+// Single useSelect: derivation runs in the store selector (registry + hover slice + Sets).
 export const useBlockHoverClass = () => {
 	const { clientId } = useBlockEditContext()
-	const clientIds = useSelect( select => select( 'core/block-editor' ).getMultiSelectedBlockClientIds() )
-	const {
-		hoverState,
-		parentHoverChildrenClientIds,
-	} = useSelect( select => {
-		return {
-			hoverState: select( 'stackable/hover-state' ).getHoverState(),
-			parentHoverChildrenClientIds: select( 'stackable/hover-state' ).getSelectedParentHoverBlockChildren(),
-		}
-	}, [] )
-
-	const {
-		getSelectedBlock,
-		getSelectedParentHoverBlock,
-		getSelectedParentHoverBlockChildren,
-		getSelectedHoverChildren,
-	} = useSelect( 'stackable/hover-state' )
-
-	const hoverStateClientId = getSelectedBlock()
-	const parentHoverClientId = getSelectedParentHoverBlock()
-
-	// return useMemo( () => {
-
-		const isBlockSelected = clientId === hoverStateClientId || clientIds.includes( clientId )
-		const isParentHoverBlock = clientId === parentHoverClientId
-
-		// The hover state only applies to the currently selected block.
-		let blockHoverClass = ''
-		if ( isBlockSelected ) {
-			if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
-				blockHoverClass = 'stk--is-hovered'
-			}
-
-		// Also change the hover states of the other
-		} else if ( isParentHoverBlock ) {
-			if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
-				blockHoverClass = 'stk--is-hovered'
-			}
-
-		} else {
-
-			const hoverChildrenClientIds = getSelectedHoverChildren()
-
-			const isChildOfParentHover = parentHoverChildrenClientIds.includes( clientId )
-			const isChildOfHoverBlock = hoverChildrenClientIds.includes( clientId )
-
-			if ( isChildOfParentHover || isChildOfHoverBlock ) {
-				if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
-					blockHoverClass = 'stk--is-hovered'
-				}
-			}
-		}
-
-		return blockHoverClass
-	// }, [ hoverState, clientId, hoverStateClientId, parentHoverClientId ] )
+	return useSelect(
+		select => select( 'stackable/hover-state' ).getBlockHoverClass( clientId ),
+		[ clientId ]
+	)
 }
