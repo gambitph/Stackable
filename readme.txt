@@ -2,7 +2,7 @@
 Contributors: bfintal, gambitph
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.6.4
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.3
 Stable tag: 3.19.7
 License: GPLv3
