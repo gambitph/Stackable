@@ -681,6 +681,15 @@
     ]
   },
   {
+    "family": "Allkin",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Allura",
     "variants": [
       "regular"
@@ -833,6 +842,24 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Alyamama",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "arabic",
+      "greek",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -2154,6 +2181,19 @@
       "japanese",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "BJCree",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "canadian-aboriginal",
+      "latin"
     ]
   },
   {
@@ -3588,6 +3628,39 @@
     ]
   },
   {
+    "family": "Bpmf Huninn",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chinese-traditional",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Bpmf Iansui",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chinese-traditional",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Bpmf Zihi Kai Std",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chinese-traditional",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Braah One",
     "variants": [
       "regular"
@@ -4783,6 +4856,8 @@
       "regular"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext"
     ]
@@ -5235,7 +5310,8 @@
       "900"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -5542,6 +5618,24 @@
     ],
     "subsets": [
       "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Datatype",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]
@@ -8352,22 +8446,22 @@
     "family": "Grenze",
     "variants": [
       "100",
-      "100italic",
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
-      "800italic",
       "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -9695,6 +9789,60 @@
       "greek-ext",
       "latin",
       "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Iosevka Charon",
+    "variants": [
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "armenian",
+      "braille",
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "symbols2",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Iosevka Charon Mono",
+    "variants": [
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "armenian",
+      "braille",
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "symbols2",
       "vietnamese"
     ]
   },
@@ -13232,6 +13380,23 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Miranda Sans",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -22257,6 +22422,34 @@
     ]
   },
   {
+    "family": "Saira Stencil",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Saira Stencil One",
     "variants": [
       "regular"
@@ -26339,7 +26532,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -26364,7 +26558,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -26389,7 +26584,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
