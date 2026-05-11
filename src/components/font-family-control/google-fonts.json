@@ -11714,14 +11714,7 @@
       "regular"
     ],
     "subsets": [
-      "cyrillic",
-      "cyrillic-ext",
-      "greek",
-      "greek-ext",
-      "latin",
-      "latin-ext",
-      "math",
-      "vietnamese"
+      "latin"
     ]
   },
   {
@@ -15795,9 +15788,7 @@
       "regular"
     ],
     "subsets": [
-      "cyrillic",
-      "latin",
-      "math"
+      "latin"
     ]
   },
   {
@@ -22228,6 +22219,15 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "STIX Two Math",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
     ]
   },
   {
