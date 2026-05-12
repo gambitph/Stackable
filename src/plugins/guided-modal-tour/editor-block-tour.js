@@ -3,6 +3,13 @@ import { registerPlugin } from '@wordpress/plugins'
 import { useEffect, useState } from '@wordpress/element'
 import { GuidedModalTour } from '~stackable/components'
 
+// These tours render inside their own modal.
+// Rendering the tours here creates duplicate tour modals and
+// can close the owning modal unexpectedly.
+const MODAL_OWNED_TOURS = [
+	'design-library',
+]
+
 const EditorBlockTour = () => {
 	const [ tourId, setTourId ] = useState( 'blocks' )
 	useEffect( () => {
@@ -16,7 +23,7 @@ const EditorBlockTour = () => {
 	}, [] )
 
 	// Do not load if there is no tourId.
-	if ( ! tourId ) {
+	if ( ! tourId || MODAL_OWNED_TOURS.includes( tourId ) ) {
 		return null
 	}
 
