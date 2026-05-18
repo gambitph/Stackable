@@ -1,7 +1,7 @@
 @import "common";
 @import "./deprecated-style";
 
-.stk--flex > .stk-block-column {
+.stk--flex:not(.stk--column-wrap-desktop) > .stk-block-column {
 	width: fit-content;
 	flex: 0 1 auto !important;
 	min-width: 24px;
