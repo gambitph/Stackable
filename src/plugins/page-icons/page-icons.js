@@ -43,9 +43,9 @@ const parseSVGString = svgString => {
 	rawInnerSVG = rawInnerSVG.replace( /\s[\w-]+:[\w-]+=[^\s"'=<>`]+/g, '' )
 
 	// Mimic safeHTML's event handler cleanup without parsing the SVG as HTML.
-	rawInnerSVG = rawInnerSVG.replace( /\son[\w-]+="[^"]*"/gi, '' )
-	rawInnerSVG = rawInnerSVG.replace( /\son[\w-]+='[^']*'/gi, '' )
-	rawInnerSVG = rawInnerSVG.replace( /\son[\w-]+=[^\s"'=<>`]+/gi, '' )
+	rawInnerSVG = rawInnerSVG.replace( /\son[\w-]+\s*=\s*"[^"]*"/gi, '' )
+	rawInnerSVG = rawInnerSVG.replace( /\son[\w-]+\s*=\s*'[^']*'/gi, '' )
+	rawInnerSVG = rawInnerSVG.replace( /\son[\w-]+\s*=\s*[^\s"'=<>`]+/gi, '' )
 
 	// Remove href/data-href/src attributes containing data: uris
 	rawInnerSVG = rawInnerSVG.replace(
