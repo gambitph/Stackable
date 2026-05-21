@@ -677,8 +677,9 @@ class _StackableCarousel {
 				return result
 			}, { slide: 1, offsetDiff: 1000 } )
 
-			if ( this.infiniteScroll && slide > this.slideEls.length ) {
-				slide -= this.slideEls.length
+			if ( this.infiniteScroll ) {
+				// Clamp clone indexes back to the original slide range.
+				slide = ( ( slide - 1 ) % this.slideEls.length ) + 1
 			}
 
 			this.currentSlide = slide
