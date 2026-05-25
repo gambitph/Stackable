@@ -13,7 +13,7 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 				'api_version' => '3',
 				'name' => 'stackable/accordion',
 				'title' => __( 'Accordion', STACKABLE_I18N ),
-				'description' => __( 'A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.', STACKABLE_I18N ),
+				'description' => __( 'A title that your visitors can toggle to view more text.', STACKABLE_I18N ),
 				'category' => 'stackable',
 				'uses_context' => [
 					'postId',

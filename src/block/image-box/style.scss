@@ -2,7 +2,7 @@
 	.stk-block-column .stk-block-column__content {
 		justify-content: center;
 	}
-	.stk-inner-blocks {
+	> .stk-block-image-box__content {
 		display: grid;
 		> .stk-block {
 			grid-column: 1 / 2;

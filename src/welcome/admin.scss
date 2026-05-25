@@ -439,6 +439,10 @@ body[class*="page_stk"] {
 		padding-left: 2em;
 		list-style-type: circle;
 	}
+	.fs-section ul {
+		list-style-type: none;
+	}
+
 	.s-box {
 		background-color: #fff;
 		border-radius: 0;

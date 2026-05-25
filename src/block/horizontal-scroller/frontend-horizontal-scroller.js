@@ -68,12 +68,13 @@ class StackableHorizontalScroller {
 					behavior: 'smooth',
 				} )
 
+				children.forEach( child => {
+					// this enables the links after dragging
+					child.removeEventListener( 'click', onClickHandler, true )
+				} )
+
 				dragTimeout = setTimeout( () => {
 					el.classList.remove( 'stk--snapping-deactivated' )
-					children.forEach( child => {
-						// this enables the links after dragging
-						child.removeEventListener( 'click', onClickHandler, true )
-					 } )
 				}, 500 )
 			}
 

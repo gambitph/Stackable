@@ -1,6 +1,5 @@
 import './store'
 import { useSelect } from '@wordpress/data'
-import { safeHTML } from '@wordpress/dom'
 
 /**
  * Parse SVG string to extract attributes and innerHTML without DOM manipulation
@@ -43,6 +42,11 @@ const parseSVGString = svgString => {
 	rawInnerSVG = rawInnerSVG.replace( /\s[\w-]+:[\w-]+='[^']*'/g, '' )
 	rawInnerSVG = rawInnerSVG.replace( /\s[\w-]+:[\w-]+=[^\s"'=<>`]+/g, '' )
 
+	// Mimic safeHTML's event handler cleanup without parsing the SVG as HTML.
+	rawInnerSVG = rawInnerSVG.replace( /\son[\w-]+\s*=\s*"[^"]*"/gi, '' )
+	rawInnerSVG = rawInnerSVG.replace( /\son[\w-]+\s*=\s*'[^']*'/gi, '' )
+	rawInnerSVG = rawInnerSVG.replace( /\son[\w-]+\s*=\s*[^\s"'=<>`]+/gi, '' )
+
 	// Remove href/data-href/src attributes containing data: uris
 	rawInnerSVG = rawInnerSVG.replace(
 		/\s(?:href|data-href|src)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi,
@@ -58,8 +62,6 @@ const parseSVGString = svgString => {
 		}
 	)
 
-	const innerHTML = safeHTML( rawInnerSVG )
-
 	// Extract attributes from the SVG tag
 	const svgAttributes = {}
 	const attributesPart = svgTag.replace( /^<svg\s*/i, '' ).replace( />$/, '' )
@@ -71,7 +73,7 @@ const parseSVGString = svgString => {
 			const key = attrMatch[ 1 ]
 			const attrNameLower = key.toLowerCase()
 			// Skip width and height as symbols don't need them
-			if ( attrNameLower !== 'width' && attrNameLower !== 'height' ) {
+			if ( attrNameLower !== 'width' && attrNameLower !== 'height' && ! attrNameLower.startsWith( 'on' ) ) {
 				// Value can be in double quotes, single quotes, or unquoted
 				const value = attrMatch[ 2 ] || attrMatch[ 3 ] || attrMatch[ 4 ] || ''
 				svgAttributes[ key ] = value
@@ -79,7 +81,7 @@ const parseSVGString = svgString => {
 		}
 	}
 
-	return { attributes: svgAttributes, innerHTML }
+	return { attributes: svgAttributes, innerHTML: rawInnerSVG }
 }
 
 export const PageIcons = () => {
