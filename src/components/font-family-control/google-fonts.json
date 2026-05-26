@@ -306,6 +306,29 @@
     ]
   },
   {
+    "family": "Akt",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Aladin",
     "variants": [
       "regular"
@@ -6626,6 +6649,26 @@
     ]
   },
   {
+    "family": "Estedad",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Estonia",
     "variants": [
       "regular"
@@ -6994,22 +7037,63 @@
     ]
   },
   {
-    "family": "Finlandica",
+    "family": "Finlandica Headline",
     "variants": [
+      "100",
+      "200",
+      "300",
       "regular",
       "500",
       "600",
       "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
       "italic",
       "500italic",
       "600italic",
-      "700italic"
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "cyrillic",
       "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Finlandica Text",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -7725,12 +7809,23 @@
       "600",
       "700",
       "800",
-      "900"
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "cyrillic",
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -7744,12 +7839,24 @@
       "600",
       "700",
       "800",
-      "900"
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "cyrillic",
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "symbols2",
+      "vietnamese"
     ]
   },
   {
@@ -12486,6 +12593,27 @@
       "japanese",
       "latin",
       "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "M PLUS U",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext",
+      "symbols2",
       "vietnamese"
     ]
   },
@@ -22450,17 +22578,6 @@
     ]
   },
   {
-    "family": "Saira Stencil One",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Salsa",
     "variants": [
       "regular"
@@ -24158,6 +24275,21 @@
     "family": "Strait",
     "variants": [
       "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Strichpunkt Sans",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",

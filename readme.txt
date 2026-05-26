@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.6.4
 Tested up to: 7.0
 Requires PHP: 7.3
-Stable tag: 3.19.8
+Stable tag: 3.19.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -308,6 +308,17 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.9 =
+
+* Fixed: Tablet and mobile preview styles now apply correctly in WP 7.0 #3711
+* Fixed: Columns block - column justify now working when column wrapping is enabled #3703
+* Fixed: Horizontal scroller - fixed first click handling issues #3697
+* Fixed: Carousel - fixed JS error encountered with infinite scroll #3695
+* Fixed: Tour - First Stackable tour closes right away #3699
+* Fixed: Motion effects - fixed scroll position issue if there is a video near the top of the page #401
+* Fixed: Image box - button group overlap #3706
+* Fixed: Icon block - custom SVG can be not visible in the editor #3707
 
 = 3.19.8 =
 
