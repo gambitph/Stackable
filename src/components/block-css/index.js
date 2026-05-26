@@ -535,9 +535,11 @@ function createCssEdit( selector, rule, value, device = 'desktop', vendorPrefixe
 	}
 	css = `\n${ selector } {\n\t${ css }\n}`
 
-	// The Block Editor has these fixed breakpoints.
-	const tabletBreakpoint = 781
-	const mobileBreakpoint = 361
+	// Match the Block Editor's fixed preview widths
+	// In WordPress 7.0, the preview widths have changed,
+	// see https://github.com/WordPress/gutenberg/pull/74339
+	const tabletBreakpoint = 782
+	const mobileBreakpoint = 480
 
 	const mediaQuery = getMediaQuery( device, tabletBreakpoint, mobileBreakpoint )
 	if ( mediaQuery ) {
