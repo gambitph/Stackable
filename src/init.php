@@ -543,7 +543,7 @@ if ( ! function_exists( 'stackable_load_js_translations' ) ) {
 	 * @return void
 	 */
 	function stackable_load_js_translations() {
-		wp_enqueue_script( 'stackable-strings', plugins_url( 'dist/translation-strings.js', STACKABLE_FILE ), array() );
+		wp_enqueue_script( 'stackable-strings', plugins_url( 'dist/translation-strings.js', STACKABLE_FILE ), array(), STACKABLE_VERSION );
 		wp_set_script_translations( 'stackable-strings', STACKABLE_I18N );
 	}
 }
