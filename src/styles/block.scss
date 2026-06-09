@@ -173,6 +173,12 @@
 	> *:last-child {
 		margin-bottom: 0;
 	}
+
+	// Separators inside .stk-inner-blocks become flex items. Explicitly setting width to 100%
+	// restores the expected full-width separator behavior.
+	.wp-block-separator {
+		width: 100%;
+	}
 }
 // Column with a block background has a padding that might not be obvious.
 .stk-block-background {
