@@ -1357,6 +1357,7 @@ const Integrations = props => {
 								searchedSettings={ propsToPass.integrations.children }
 								value={ settings.stackable_google_maps_api_key }
 								type="text"
+								maskValue={ true }
 								onChange={ value => {
 									handleSettingsChange( { stackable_google_maps_api_key: value } ) // eslint-disable-line camelcase
 								} }

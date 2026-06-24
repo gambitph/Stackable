@@ -36,6 +36,24 @@ import { compare } from 'compare-versions'
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
 /**
+ * Masks a sensitive string for display while keeping it recognizable.
+ *
+ * Shows the first 6 and last 6 characters, and replaces the middle characters
+ * with asterisks. Values with 12 or fewer characters are returned as-is.
+ *
+ * @param {string} value The sensitive value to mask.
+ *
+ * @return {string} Masked value for display.
+ */
+export const maskSensitiveValue = value => {
+	if ( ! value || value.length <= 12 ) {
+		return value
+	}
+
+	return `${ value.slice( 0, 6 ) }${ '*'.repeat( value.length - 12 ) }${ value.slice( -6 ) }`
+}
+
+/**
  * Returns an array range of numbers.
  *
  * @param {number} start Starting number range.
