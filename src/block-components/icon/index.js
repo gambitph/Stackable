@@ -20,6 +20,7 @@ import { addStyles } from './style'
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { dispatch, select } from '@wordpress/data'
 import {
 	useMemo, useState, useRef, useEffect, renderToString,
 } from '@wordpress/element'
@@ -56,6 +57,67 @@ const LinearGradient = ( {
 }
 
 const NOOP = () => {}
+
+const getSvgDef = ( href, viewBox = '0 0 24 24' ) => {
+	return `<svg viewBox="${ viewBox }"><use href="${ href }" xlink:href="${ href }"></use></svg>`
+}
+
+const generateIconId = () => {
+	return Math.floor( Math.random() * new Date().getTime() ) % 100000
+}
+
+/**
+ * Extract viewBox, width, and height from SVG string without DOM manipulation
+ * Only checks for the specific attributes we need (case-insensitive)
+ *
+ * @param {string} svgString The SVG string to parse
+ * @return {Object} Object with viewBox, width, and height
+ */
+const extractSVGDimensions = svgString => {
+	if ( ! svgString || typeof svgString !== 'string' ) {
+		return {
+			viewBox: null,
+			width: null,
+			height: null,
+		}
+	}
+
+	// Find the opening <svg> tag
+	const svgTagMatch = svgString.match( /<svg\s*[^>]*>/i )
+	if ( ! svgTagMatch ) {
+		return {
+			viewBox: null,
+			width: null,
+			height: null,
+		}
+	}
+
+	const svgTag = svgTagMatch[ 0 ]
+
+	// Extract only the attributes we need (case-insensitive)
+	// Pattern: attribute name (case-insensitive) = "value" or 'value' or value
+	const getAttribute = attrName => {
+		const regex = new RegExp( `${ attrName }\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, 'i' )
+		const match = svgTag.match( regex )
+		if ( match ) {
+			return match[ 1 ] || match[ 2 ] || match[ 3 ] || ''
+		}
+		return null
+	}
+
+	const viewBox = getAttribute( 'viewBox' )
+	const widthStr = getAttribute( 'width' )
+	const heightStr = getAttribute( 'height' )
+
+	const width = widthStr ? parseInt( widthStr, 10 ) : null
+	const height = heightStr ? parseInt( heightStr, 10 ) : null
+
+	return {
+		viewBox,
+		width,
+		height,
+	}
+}
 
 export const Icon = props => {
 	const {
@@ -122,7 +184,129 @@ export const Icon = props => {
 
 	const ShapeComp = useMemo( () => getShapeSVG( getAttribute( 'backgroundShape' ) || 'blob1' ), [ getAttribute( 'backgroundShape' ) ] )
 
-	const icon = value || getAttribute( 'icon' )
+	const iconColorType = getAttribute( 'iconColorType' )
+
+	const _icon = value || getAttribute( 'icon' )
+	const currentIconRef = useRef( _icon )
+	const processedIconRef = useRef( null )
+	const lastIconValueRef = useRef( null )
+	const [ icon, setIcon ] = useState( _icon )
+
+	const addPageIconCount = ( svg, id ) => {
+		dispatch( 'stackable/page-icons' ).addPageIcon( svg, id )
+	}
+
+	useEffect( () => {
+		currentIconRef.current = _icon
+
+		// Skip if we've already processed this icon
+		if ( processedIconRef.current === _icon ) {
+			return
+		}
+
+		// Don't use page icons for multicolor icons
+		// because we target svg elements with the :nth-of-type() selector to apply the multicolor styles.
+		if ( iconColorType === 'multicolor' ) {
+			// Clean up if this icon was previously in the page-icons store
+			if ( processedIconRef.current === _icon && _icon ) {
+				dispatch( 'stackable/page-icons' ).removePageIcon( _icon )
+				processedIconRef.current = null
+			}
+			setIcon( _icon ) // Use the original icon directly
+			lastIconValueRef.current = _icon
+			return
+		}
+
+		// Check if icon exists in pageIcons Map
+		// The Map structure is: [SVG string (key), { id: iconId, count: number } (value)]
+		if ( _icon ) {
+			const iconStr = String( _icon )
+			let originalSvg = null
+			let iconId = null
+
+			// Get the current state of the store
+			const pageIcons = select( 'stackable/page-icons' ).getPageIcons()
+
+			// First, check if icon already exists in the store
+			if ( pageIcons.has( iconStr ) ) {
+				// Icon exists, use the existing ID and increment count
+				const iconData = pageIcons.get( iconStr )
+				iconId = iconData?.id || iconData
+				originalSvg = iconStr
+				addPageIconCount( iconStr, iconId )
+
+				// Re-check after dispatch to get the actual ID (handles race conditions)
+				const updatedPageIcons = select( 'stackable/page-icons' ).getPageIcons()
+				if ( updatedPageIcons.has( iconStr ) ) {
+					const iconData = updatedPageIcons.get( iconStr )
+					iconId = iconData?.id || iconData || iconId
+				}
+			} else if ( iconStr && iconStr.trim().startsWith( '<svg' ) && ! iconStr.includes( '<use' ) ) {
+				// Icon doesn't exist, generate new ID and add it
+				originalSvg = iconStr
+				iconId = generateIconId()
+				addPageIconCount( iconStr, iconId )
+
+				// After dispatch, immediately check the store again to get the actual ID
+				// This handles the race condition where another component might have added
+				// the same icon with a different ID
+				const updatedPageIcons = select( 'stackable/page-icons' ).getPageIcons()
+				if ( updatedPageIcons.has( iconStr ) ) {
+					const iconData = updatedPageIcons.get( iconStr )
+					// Use the ID from the store
+					iconId = iconData?.id || iconData || iconId
+				}
+			}
+
+			if ( originalSvg && iconId ) {
+				let viewBox = '0 0 24 24' // Default viewBox
+				// Extract viewBox from the original SVG for proper dimensions
+				const {
+					viewBox: vb,
+					width,
+					height,
+				} = extractSVGDimensions( originalSvg )
+				if ( vb ) {
+					viewBox = vb
+				} else {
+					// Fallback to width/height if viewBox is not available
+					const finalWidth = width || 24
+					const finalHeight = height || 24
+					viewBox = `0 0 ${ finalWidth } ${ finalHeight }`
+				}
+				const newIcon = getSvgDef( `#stk-page-icons__${ iconId }`, viewBox )
+
+				// Only update state if the icon actually changed
+				if ( newIcon !== lastIconValueRef.current ) {
+					setIcon( newIcon )
+					lastIconValueRef.current = newIcon
+				}
+				processedIconRef.current = _icon
+			} else if ( ! _icon ) {
+				// Clear processed ref when icon is removed
+				processedIconRef.current = null
+				if ( lastIconValueRef.current !== null ) {
+					setIcon( null )
+					lastIconValueRef.current = null
+				}
+			}
+		} else {
+			processedIconRef.current = null
+			if ( lastIconValueRef.current !== null ) {
+				setIcon( null )
+				lastIconValueRef.current = null
+			}
+		}
+	}, [ _icon, iconColorType ] )
+
+	useEffect( () => {
+		return () => {
+			if ( currentIconRef.current ) {
+				dispatch( 'stackable/page-icons' ).removePageIcon( currentIconRef.current )
+			}
+		}
+	}, [] )
+
 	if ( ! icon ) {
 		return null
 	}
@@ -171,6 +355,7 @@ export const Icon = props => {
 					__deprecateUseRef={ popoverEl }
 					onClose={ () => setIsOpen( false ) }
 					onChange={ icon => {
+						dispatch( 'stackable/page-icons' ).removePageIcon( _icon )
 						if ( onChange === NOOP ) {
 							updateAttributeHandler( 'icon' )( icon )
 						} else {

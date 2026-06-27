@@ -2,14 +2,6 @@
 * Styles used by the Getting Started section.
 */
 
-@mixin s-shadow {
-	box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-	transition: all 0.3s ease-in-out;
-	&:hover {
-		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-	}
-}
-
 .toplevel_page_stackable {
 	.s-body {
 		max-width: 1200px;
@@ -154,53 +146,6 @@
 		}
 	}
 
-	.s-card {
-		padding: 1.5em;
-		display: flex;
-		flex-direction: column;
-		border-radius: 16px;
-		@include s-shadow;
-		background: #fff;
-		overflow: hidden;
-
-		.s-card-title,
-		h3 {
-			margin: 0 0 0.5em;
-		}
-		.s-card-subtitle,
-		p {
-			margin: 0;
-		}
-		> *:last-child {
-			margin-bottom: 0;
-		}
-
-		.s-video-wrapper {
-			align-items: center;
-		}
-
-		.s-icon-wrapper {
-			border: 1px solid #eaecf0;
-			border-radius: 8px;
-			padding: 10px;
-			display: flex;
-			align-items: center;
-			max-width: fit-content;
-			margin-bottom: 20px;
-		}
-
-		.s-bottom-icon-wrapper {
-			display: flex;
-			justify-content: flex-end;
-		}
-
-		svg {
-			height: 24px;
-			width: 24px;
-		}
-
-	}
-
 	.s-divider {
 		width: 150px;
 		margin: 64px auto;
@@ -214,7 +159,7 @@
 	width: calc(100% + 100px);
 	background-position: center;
 	background-size: cover;
-	margin-bottom: 100px;
+	margin-bottom: 2.5em;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -234,12 +179,64 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 }
 
 .s-getting-started__quick-start-wrapper {
+	h2 {
+		font-size: 1.125rem;
+		margin: 0;
+		+ p {
+			margin: 0.5em 0 1.5em;
+		}
+		span {
+			font-size: 1rem;
+			font-weight: normal;
+			color: #777;
+			margin-inline-start: 0.5em;
+		}
+	}
+}
+.s-getting-started__progress {
+	margin-bottom: 2.5em;
+}
+.s-getting-started__progress-labels-title {
+	font-weight: bold;
+	margin: 0;
+}
+.s-getting-started__progress-labels {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1em;
+}
+.s-getting-started__progress-bar {
+	height: 8px;
+	background: #f4f4f5;
+	border-radius: 16px;
+	.s-getting-started__progress-bar-fill {
+		background: #e92063;
+		height: 100%;
+		border-radius: 16px;
+	}
+}
+.s-guided-tours-container-inner {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 40px;
+	gap: 12px;
+	margin-bottom: 2.5em;
+}
+.s-card {
+	overflow: visible;
+}
+.s-card:has(.s-quick-buttons-arrow):has(.s-button--checked) .s-quick-buttons-arrow {
+	display: none !important;
+}
+.s-getting-started__quick-start-wrapper {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 24px;
 	margin: 1em 0 64px;
 	align-items: flex-start;
 
+	.s-getting-started-video-wrapper {
+		grid-column: 2/3;
+		grid-row: 1/-1;
+	}
 	.s-getting-started-video {
 		flex-direction: column;
 		border-radius: 16px;
@@ -247,22 +244,21 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 		overflow: hidden;
 	}
 
-	.s-quick-buttons-wrapper {
+	.s-card:not(.s-getting-started-video) {
 		position: relative;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 		gap: 24px;
-		.s-card {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			gap: 24px;
 
-			@media screen and (max-width: 1200px) {
-				flex-direction: column;
-				align-items: flex-start;
-			}
+		@media screen and (max-width: 1200px) {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		&:nth-child(2) {
+			overflow: visible;
 		}
 	}
 	.s-quick-button-icon {
@@ -273,28 +269,44 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 		border-radius: 8px;
 	}
 	// Succeeding icon colors are different.
-	.s-card:nth-child(3) {
+	.s-card:nth-child(5n + 3) {
 		.s-quick-button-icon {
 			background: #f00069;
 		}
 	}
-	.s-card:nth-child(4) {
+	.s-card:nth-child(5n + 4) {
 		.s-quick-button-icon {
 			background: #d000ff;
 		}
 	}
-	.s-card:nth-child(5) {
+	.s-card:nth-child(5n) {
 		.s-quick-button-icon {
 			background: #f89347;
 		}
 	}
+
+	.s-card:nth-child(5n + 6) {
+		.s-quick-button-icon {
+			background: #00c49a;
+		}
+	}
 	.s-quick-button-button {
 		white-space: nowrap;
+
+		.s-button--disabled,
+		.s-button--disabled:hover {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
 	}
 
 	.s-quick-button-description {
+		flex: 1;
 		> *:first-child {
 			margin-top: 0;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
 		}
 		> *:last-child {
 			margin-bottom: 0;
@@ -310,6 +322,7 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 		right: 69px;
 		svg {
 			width: 64px;
+			height: auto;
 			transform: scaleX(-1);
 		}
 		span {
@@ -340,15 +353,51 @@ body.settings_page_stackable-getting-started .s-body-container > .s-getting-star
 			filter: drop-shadow(1px 1px 2px #0006);
 		}
 	}
-	.s-button:not(.s-button--checked) {
+	.s-button:not(.s-button--checked):not(.s-button--unlock) {
 		.s-quick-button-toggle-indicator svg {
 			display: none;
 		}
 	}
-	.s-button.s-button--checked {
-		background: #555 !important;
+	.s-button.s-button--checked:not(.s-button--unlock) {
+		background: #20ac6b !important;
 		.s-quick-button-toggle-indicator {
 			background: #0000004f;
 		}
+	}
+	.s-card:has(.s-button--checked) {
+		background: #f9fcfb;
+	}
+	.s-button.s-button--unlock {
+		.s-quick-button-toggle-indicator {
+			background: transparent;
+			svg {
+				fill: #fff;
+				height: 16px;
+				width: 14px;
+				left: 2px;
+				top: 1px;
+			}
+		}
+	}
+
+	.s-card:has(.s-button--unlock) {
+		background: #fff5fa;
+		opacity: 0.8;
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+.s-custom-icon-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+
+	svg {
+		height: 16px !important;
+		width: 16px;
 	}
 }

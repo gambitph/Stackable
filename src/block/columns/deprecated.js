@@ -36,7 +36,23 @@ addFilter( 'stackable.columns.save.contentClassNames', 'stackable/3.8.0', ( clas
 	return classes
 } )
 
+// Column wrapping now adds the stk--column-wrap-desktop class.
+addFilter( 'stackable.columns.save.contentClassNames', 'stackable/3.19.8', ( classes, props ) => {
+	if ( semverCompare( props.version, '<', '3.19.8' ) ) {
+		return classes.filter( className => {
+			return ! className?.[ 'stk--column-wrap-desktop' ]
+		} )
+	}
+
+	return classes
+} )
+
 const deprecated = [
+	{
+		// Support Columns blocks saved before the column wrapping marker was added.
+		attributes: attributes( '3.19.7' ),
+		save: withVersion( '3.19.7' )( Save ),
+	},
 	{
 		// Handle the migration of shadow attributes with the change of type in 3.15.3
 		attributes: attributes( '3.16.2' ),

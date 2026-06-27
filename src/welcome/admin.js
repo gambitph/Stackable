@@ -42,6 +42,7 @@ import { GettingStarted } from './getting-started'
 import { BLOCK_STATE } from '~stackable/util/blocks'
 import { BlockToggler, OptimizationSettings } from '~stackable/deprecated/v2/welcome/admin'
 import blockData from '~stackable/deprecated/v2/welcome/blocks'
+import { UsefulPlugins } from './useful-plugins'
 
 const [ FREE_BLOCKS, BLOCK_DEPENDENCIES ] = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 
@@ -144,7 +145,6 @@ const SEARCH_TREE = [
 				id: 'optimizations',
 				children: [
 					__( 'Optimize Inline CSS', i18n ),
-					__( 'Lazy Load Images within Carousels', i18n ),
 				],
 			},
 		],
@@ -1177,15 +1177,6 @@ const Optimizations = props => {
 								} }
 								help={ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
 							/>
-							<AdminToggleSetting
-								label={ __( 'Lazy Load Images within Carousels', i18n ) }
-								searchedSettings={ optimizations.children }
-								value={ settings.stackable_enable_carousel_lazy_loading }
-								onChange={ value => {
-									handleSettingsChange( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
-								} }
-								help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
-							/>
 						</div>
 					}
 				</>
@@ -1656,6 +1647,14 @@ domReady( () => {
 			document.querySelector( '.s-content' )
 		).render(
 			<Settings />
+		)
+	}
+
+	if ( document.getElementById( 's-useful-plugins' ) ) {
+		createRoot(
+			document.getElementById( 's-useful-plugins' )
+		).render(
+			<UsefulPlugins />
 		)
 	}
 } )

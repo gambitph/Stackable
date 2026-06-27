@@ -221,6 +221,8 @@ export const BlockStylesControl = props => {
 		} else {
 			setOpenProNotice( value => ! value )
 		}
+
+		setOpenPopover( false )
 	}
 
 	const SaveUpdateModal = applyFilters( 'stackable.global-settings.global-block-styles.save-update-modal', Fragment )
@@ -233,11 +235,13 @@ export const BlockStylesControl = props => {
 				>
 					<Button
 						variant="tertiary"
-						className="ugb-block-styles-controls__block-style-button"
+						className={ classnames( 'ugb-block-styles-controls__block-style-button', {
+							'is-opened': openPopover,
+						} ) }
 						size="small"
 						icon="edit"
 						iconSize={ 12 }
-						onMouseDown={ () => setOpenPopover( isOpen => ! isOpen ) }
+						onClick={ () => setOpenPopover( isOpen => ! isOpen ) }
 						ref={ buttonRef }
 					>
 						{ `${ __( 'Block Style', i18n ) }:` } <wbr /> { blockStyleLabel }{ isModified && inBlockStyleOptions ? <span className="stk-panel-modified-indicator stk--visible"></span> : '' }
@@ -267,7 +271,6 @@ export const BlockStylesControl = props => {
 					className="ugb-button-icon-control__popover ugb-block-styles-controls__popover"
 					anchor={ buttonRef.current }
 					onEscape={ () => setOpenPopover( false ) }
-					onClose={ () => setOpenPopover( false ) }
 					focusOnMount={ false }
 					placement="left-start"
 					resize={ false }
@@ -297,6 +300,8 @@ export const BlockStylesControl = props => {
 										onClick={ () => onSelectBlockStyle( option.slug, index + 1 ) }
 										className={ blockStyle === option.slug ? 'ugb-block-styles-controls__selected' : '' }
 										tabIndex={ 0 }
+										data-slug={ option.slug }
+										data-name={ option.name }
 									>
 										{ blockStyle === option.slug && <span className="ugb-block-styles-controls__selected-icon"> <Dashicon icon="saved" /> </span> }
 										<span className="ugb-block-styles-controls__label">
@@ -313,6 +318,7 @@ export const BlockStylesControl = props => {
 								blockStyle={ blockStyle }
 								inOptions={ inBlockStyleOptions }
 								isModified={ isModified }
+								buttonClassName={ `${ openSaveModal ? 'is-opened' : '' }` }
 								setOpenSaveModal={ setOpenSaveModal }
 								onAddBlockStyle={ onAddBlockStyle }
 							/>
@@ -347,6 +353,8 @@ const SaveUpdateButtons = props => {
 					variant="primary"
 					onClick={ () => onAddBlockStyle() }
 					size="small"
+					data-action="save-style"
+					className={ props.buttonClassName }
 				>
 					{ __( 'Save New Block Style', i18n ) }
 					{ ! isPro && <span className="stk-pulsating-circle" role="presentation" /> }

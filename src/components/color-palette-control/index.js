@@ -213,6 +213,7 @@ const ColorPaletteControl = memo( props => {
 			{ ...controlProps }
 			className={ classnames( [ className, 'editor-color-palette-control', 'stk-color-palette-control' ] ) }
 			label={ label }
+			data-attribute={ props.attribute }
 		>
 			{ props.isExpanded && colorPalette }
 			{ ! props.isExpanded && (

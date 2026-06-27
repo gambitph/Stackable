@@ -91,7 +91,9 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	], getContentAlignmentClasses( props.attributes, 'column', instanceId ) )
+	], {
+		'stk--column-wrap-desktop': props.attributes.columnWrapDesktop,
+	}, getContentAlignmentClasses( props.attributes, 'column', instanceId ) )
 
 	// Generate the CSS styles for the block.
 	const blockCss = useBlockCssGenerator( {

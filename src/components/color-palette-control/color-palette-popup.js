@@ -4,6 +4,7 @@
 
 import { AdvancedToolbarControl } from '..'
 import { i18n } from 'stackable'
+import { extractColor } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -38,6 +39,8 @@ export const ColorPalettePopup = memo( props => {
 		gradients,
 		isGradient,
 	} = props
+
+	const extractedValue = extractColor( value )
 
 	const [ tab, setTab ] = useState( value.startsWith( 'linear-' ) || value.startsWith( 'radial-' ) ? 'gradient' : '' )
 	const allColors = colors.reduce( ( colors, group ) => {
@@ -87,7 +90,7 @@ export const ColorPalettePopup = memo( props => {
 					onChange={ newValue => {
 						onChange( preOnChange( newValue, value ) )
 					} }
-					color={ value }
+					color={ extractedValue }
 					enableAlpha={ true }
 				/>
 			}

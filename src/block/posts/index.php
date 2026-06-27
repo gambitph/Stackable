@@ -58,19 +58,29 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			if ( empty( $title ) ) {
 				$title = __( '(Untitled)', STACKABLE_I18N );
 			}
+
+			// Escape title output to prevent XSS
+			$title = esc_html( $title );
+
 			$new_template = str_replace( '!#title!#', $title, $new_template );
 		}
 
 		// Category.
 		if ( strpos( $new_template, '!#category!#' ) !== false ) {
-			$category = Stackable_Posts_Block::get_category_list_by_id( $post_id );
+			// If taxonomyTypeToDisplay is set, display that taxonomy instead of category.
+			$taxonomy_type = isset( $attributes['taxonomyTypeToDisplay'] ) ? $attributes['taxonomyTypeToDisplay'] : 'category';
+			$category = Stackable_Posts_Block::get_taxonomy_term_list_by_id( $post_id, $taxonomy_type );
+			
 			if ( $category_highlighted ) {
 				preg_match_all( '/<a href="([^"]*)"[^>]*>([^<]*)<\/a>/', $category, $matches );
 				foreach ( $matches[0] as $i=>$match ) {
-					$href = $matches[1][$i];
-					$category_title = $matches[2][$i];
-					$category = str_replace( "<a href=\"$href\"", "<a class=\"stk-button\" href=\"$href\"", $category );
-					$category = str_replace( ">$category_title<", "><span class=\"stk-button__inner-text\">$category_title</span><", $category );
+					$original_href = $matches[1][$i];
+					$original_title = $matches[2][$i];
+					// Escape values to prevent XSS
+					$escaped_href = esc_url( $original_href );
+					$escaped_title = esc_html( $original_title );
+					$category = str_replace( "<a href=\"$original_href\"", "<a class=\"stk-button\" href=\"$escaped_href\"", $category );
+					$category = str_replace( ">$original_title<", "><span class=\"stk-button__inner-text\">$escaped_title</span><", $category );
 				}
 			}
 
@@ -80,6 +90,8 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		// Separator.
 		if ( strpos( $new_template, '!#metaSeparator!#' ) !== false ) {
 			$separator = Stackable_Posts_Block::meta_separators[ $meta_separator ];
+			// Escape separator output to prevent XSS
+			$separator = esc_html( $separator );
 			$new_template = str_replace( '!#metaSeparator!#', $separator, $new_template );
 		}
 
@@ -100,6 +112,9 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 				$date_format = 'F j, Y';
 			}
 			$date = wp_date( $date_format, $post_date->getTimestamp() );
+			// Escape date output to prevent XSS
+			$datetime = esc_attr( $datetime );
+			$date = esc_html( $date );
 			$new_template = str_replace( '!#dateTime!#', $datetime, $new_template );
 			$new_template = str_replace( '!#date!#', $date, $new_template );
 		}
@@ -108,6 +123,8 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		if ( strpos( $new_template, '!#commentsNum!#' ) !== false ) {
 			$num = get_comments_number( $post_id );
 			$num = sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
+			// Escape comments number output to prevent XSS
+			$num = esc_html( $num );
 			$new_template = str_replace( '!#commentsNum!#', $num, $new_template );
 		}
 
@@ -428,14 +445,35 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		}
 
 		/**
-		 * Get the category list by post id
+		 * Get the taxonomy term list by post id
 		 *
-		 * @param string post id
+		 * @param string $post_id
+		 * @param string $taxonomy
 		 *
-		 * @return string the category list
+		 * @return string the taxonomy term list
 		 */
-		public static function get_category_list_by_id( $id ) {
-			return get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $id );
+		public static function get_taxonomy_term_list_by_id( $post_id, $taxonomy ) {
+			if ( $taxonomy === 'category' ) {
+				return get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $post_id );
+			}
+
+			$terms = get_the_terms( $post_id, $taxonomy );
+			
+			if ( is_wp_error( $terms ) || empty( $terms ) ) {
+				return '';
+			}
+			
+			$separator = esc_html__( ', ', STACKABLE_I18N );
+			$term_links = array();
+			
+			foreach ( $terms as $term ) {
+				$term_link = get_term_link( $term, $taxonomy );
+				if ( ! is_wp_error( $term_link ) ) {
+					$term_links[] = '<a href="' . esc_url( $term_link ) . '">' . esc_html( $term->name ) . '</a>';
+				}
+			}
+			
+			return implode( $separator, $term_links );
 		}
 
 		/**
@@ -545,7 +583,11 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 
 				$query->posts[$key]->comments_num = $this->get_comments_number( $post_array );
 				$query->posts[$key]->author_info = $this->get_author_info( $post_array );
-				$query->posts[$key]->category_list = $this->get_category_list_by_id( $post->ID );
+				
+				// If taxonomy_type_to_display is set, get terms from that taxonomy instead of category.
+				$taxonomy_type = isset( $args['taxonomy_type_to_display'] ) ? $args['taxonomy_type_to_display'] : 'category';
+				$query->posts[$key]->category_list = $this->get_taxonomy_term_list_by_id( $post->ID, $taxonomy_type );
+
 				$query->posts[$key]->featured_image_urls = $this->get_featured_image_urls_from_attachment_id( get_post_thumbnail_id($post->ID) );
 			}
 

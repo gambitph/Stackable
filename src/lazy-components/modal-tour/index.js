@@ -51,7 +51,7 @@ const ModalTour = memo( props => {
 		hasConfetti = true,
 		initialize = NOOP,
 	} = useMemo( () =>
-		TOUR_STEPS[ tourId ],
+		TOUR_STEPS[ tourId ] || {},
 	[ tourId ] )
 
 	const {
@@ -74,11 +74,17 @@ const ModalTour = memo( props => {
 		// eslint-disable-next-line no-unused-vars
 		postStep = NOOP, // If provided, this is a function to run after the step is shown.
 		skipIf = NOOP, // If provided, this is a function to check if the step should be skipped.
+		modalDelay = 200, // If provided, this is the delay in milliseconds to show the modal.
+		anchorInIframe = false,
+		glowTargetInIframe = false,
 	} = steps[ currentStep ]
 
 	useEffect( () => {
 		setTimeout( () => {
 			initialize()
+			if ( currentStep === 0 && preStep ) {
+				preStep( currentStep )
+			}
 		}, 50 )
 	}, [ initialize ] )
 
@@ -146,7 +152,7 @@ const ModalTour = memo( props => {
 					setIsVisibleDelayed( true )
 					setIsTransitioning( false )
 				}, 150 )
-			}, 200 )
+			}, modalDelay )
 		}, 100 )
 
 		setTimeout( () => {
@@ -285,47 +291,60 @@ const ModalTour = memo( props => {
 
 		// Based on the anchor and position, calculate the X and Y offsets of the modal relative to the anchor.
 		// We have the modalRef.current which we can use to get the modal's bounding client rect.
-		const anchorRect = document.querySelector( anchor )?.getBoundingClientRect()
+		let anchorRect = null
+
+		let iframeRect = null
+		if ( anchorInIframe ) {
+			const iframe = document.querySelector( 'iframe[name="editor-canvas"]' )
+			iframeRect = iframe?.getBoundingClientRect()
+			anchorRect = iframe?.contentDocument?.querySelector( anchor )?.getBoundingClientRect()
+		} else {
+			anchorRect = document.querySelector( anchor )?.getBoundingClientRect()
+		}
 
 		if ( ! anchorRect ) {
 			return defaultOffset
 		}
 
+		const offsetCoord = ( x, y ) => {
+			if ( anchorInIframe && iframeRect ) {
+				return [ `${ x + iframeRect.left }px`, `${ y + iframeRect.top }px` ]
+			}
+			return [ `${ x }px`, `${ y }px` ]
+		}
+
 		switch ( position ) {
 			case 'left':
 				// Left, middle
-				return [ `${ anchorRect.left - modalRect.width - 16 }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
+				return offsetCoord( anchorRect.left - modalRect.width - 16, anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) )
 			case 'left-top':
-				return [ `${ anchorRect.left - modalRect.width - 16 }px`, `${ anchorRect.top + 16 }px` ]
+				return offsetCoord( anchorRect.left - modalRect.width - 16, anchorRect.top + 16 )
 			case 'left-bottom':
-				return [ `${ anchorRect.left - modalRect.width - 16 }px`, `${ anchorRect.bottom - modalRect.height - 16 }px` ]
+				return offsetCoord( anchorRect.left - modalRect.width - 16, anchorRect.bottom - modalRect.height - 16 )
 			case 'right':
-				// Right, middle
-				return [ `${ anchorRect.right + 16 }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
+				return offsetCoord( anchorRect.right + 16, anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) )
 			case 'right-top':
-				return [ `${ anchorRect.right + 16 }px`, `${ anchorRect.top + 16 }px` ]
+				return offsetCoord( anchorRect.right + 16, anchorRect.top + 16 )
 			case 'right-bottom':
-				return [ `${ anchorRect.right + 16 }px`, `${ anchorRect.bottom - modalRect.height - 16 }px` ]
+				return offsetCoord( anchorRect.right + 16, anchorRect.bottom - modalRect.height - 16 )
 			case 'top':
-				// Center, top
-				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.top - modalRect.height - 16 }px` ]
+				return offsetCoord( anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ), anchorRect.top - modalRect.height - 16 )
 			case 'top-left':
-				return [ `${ anchorRect.left + 16 }px`, `${ anchorRect.top - modalRect.height - 16 }px` ]
+				return offsetCoord( anchorRect.left + 16, anchorRect.top - modalRect.height - 16 )
 			case 'top-right':
-				return [ `${ anchorRect.right - modalRect.width - 16 }px`, `${ anchorRect.top - modalRect.height - 16 }px` ]
+				return offsetCoord( anchorRect.right - modalRect.width - 16, anchorRect.top - modalRect.height - 16 )
 			case 'bottom':
-				// Center, bottom
-				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.bottom + 16 }px` ]
+				return offsetCoord( anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ), anchorRect.bottom + 16 )
 			case 'bottom-left':
-				return [ `${ anchorRect.left + 16 }px`, `${ anchorRect.bottom + 16 }px` ]
+				return offsetCoord( anchorRect.left + 16, anchorRect.bottom + 16 )
 			case 'bottom-right':
-				return [ `${ anchorRect.right - modalRect.width - 16 }px`, `${ anchorRect.bottom + 16 }px` ]
+				return offsetCoord( anchorRect.right - modalRect.width - 16, anchorRect.bottom + 16 )
 			case 'center':
-				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) }px` ]
+				return offsetCoord( anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ), anchorRect.top + ( anchorRect.height / 2 ) - ( modalRect.height / 2 ) )
 			case 'center-top':
-				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.top + 16 }px` ]
+				return offsetCoord( anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ), anchorRect.top + 16 )
 			case 'center-bottom':
-				return [ `${ anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ) }px`, `${ anchorRect.bottom - modalRect.height - 16 }px` ]
+				return offsetCoord( anchorRect.left + ( anchorRect.width / 2 ) - ( modalRect.width / 2 ), anchorRect.bottom - modalRect.height - 16 )
 			default:
 				return defaultOffset
 		}
@@ -335,7 +354,12 @@ const ModalTour = memo( props => {
 	useEffect( () => {
 		if ( glowTarget && isVisibleDelayed ) {
 			// Get the top, left, width, and height of the target.
-			const target = document.querySelector( glowTarget )
+			let target = null
+			if ( glowTargetInIframe ) {
+				target = document.querySelector( 'iframe[name="editor-canvas"]' )?.contentDocument?.querySelector( glowTarget )
+			} else {
+				target = document.querySelector( glowTarget )
+			}
 			if ( target ) {
 				const targetRect = target.getBoundingClientRect()
 
@@ -347,8 +371,18 @@ const ModalTour = memo( props => {
 				// Create the element.
 				if ( glowElementRef.current ) {
 					glowElementRef.current.className = `ugb-tour-modal__glow ugb-tour-modal__glow--${ glowTargetSize }`
-					glowElementRef.current.style.top = `${ targetRect.top - 8 }px`
-					glowElementRef.current.style.left = `${ targetRect.left - 8 }px`
+					let top = targetRect.top - 8
+					let left = targetRect.left - 8
+					if ( glowTargetInIframe ) {
+						const iframe = document.querySelector( 'iframe[name="editor-canvas"]' )
+						if ( iframe ) {
+							const iframeRect = iframe.getBoundingClientRect()
+							left += iframeRect.left
+							top += iframeRect.top
+						}
+					}
+					glowElementRef.current.style.top = `${ top }px`
+					glowElementRef.current.style.left = `${ left }px`
 					glowElementRef.current.style.width = `${ targetRect.width + 16 }px`
 					glowElementRef.current.style.height = `${ targetRect.height + 16 }px`
 				}
