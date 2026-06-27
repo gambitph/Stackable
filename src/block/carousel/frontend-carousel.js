@@ -44,6 +44,13 @@ class _StackableCarousel {
 		this.liveregion.setAttribute( 'class', 'liveregion stk--hidden' )
 		this.wrapper.appendChild( this.liveregion )
 
+		// Get all images and set loading to eager to make the browser
+		// calculate the grid height correctly
+		const images = this.el.querySelectorAll( 'img' )
+		images.forEach( image => {
+			image.loading = 'eager'
+		} )
+
 		this.fixChildrenAccessibility() // This needs to be first before infinte scrolling clones slides.
 		this.initProperties()
 	}
@@ -670,8 +677,9 @@ class _StackableCarousel {
 				return result
 			}, { slide: 1, offsetDiff: 1000 } )
 
-			if ( this.infiniteScroll && slide > this.slideEls.length ) {
-				slide -= this.slideEls.length
+			if ( this.infiniteScroll ) {
+				// Clamp clone indexes back to the original slide range.
+				slide = ( ( slide - 1 ) % this.slideEls.length ) + 1
 			}
 
 			this.currentSlide = slide

@@ -30,6 +30,14 @@ export const numShapesInSvg = svgString => {
  * @return {*} DOM Element
  */
 export const createElementFromHTMLString = htmlString => {
+	// Use DOMParser (modern browsers) when available
+	if ( typeof DOMParser !== 'undefined' ) {
+		const parser = new DOMParser()
+		const doc = parser.parseFromString( htmlString, 'text/html' )
+		return doc.body.firstElementChild
+	}
+
+	// Fallback for older browsers
 	const parentElement = document.createElement( 'div' )
 	parentElement.innerHTML = htmlString
 

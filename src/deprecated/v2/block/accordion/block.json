@@ -1,7 +1,7 @@
 {
 	"name": "ugb/accordion",
 	"title": "Accordion",
-	"description": "A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.",
+	"description": "A title that your visitors can toggle to view more text.",
 	"category": "stackable-v2",
 	"keywords": [
 		"Toggle",

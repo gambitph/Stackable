@@ -70,3 +70,11 @@
 		border-radius: 9999px !important;
 	}
 }
+
+// This is needed to fix the images rendering as lines when lazy-loaded in Safari. We target only the known issue here based on lazy loading from another plugin so as not to affect other uses of the image
+// Targets Safari 9+ on iOS and macOS, works as of late 2025.
+@supports (font: -apple-system-body) {
+	img.stk-img.lazyloaded {
+		will-change: transform;
+	}
+}

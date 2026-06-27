@@ -53,12 +53,12 @@ const transforms = {
 			transform: blockAttributes => {
 				let childBlocks = []
 				if ( blockAttributes.length > 1 ) {
-					childBlocks = blockAttributes.map( ( { content } ) => {
-						return createBlock( 'stackable/icon-list-item', { text: content } )
+					childBlocks = blockAttributes.map( ( { content, text } ) => {
+						return createBlock( 'stackable/icon-list-item', { text: content ?? text ?? '' } )
 					} )
 				} else if ( blockAttributes.length === 1 ) {
 					const value = create( {
-						html: blockAttributes[ 0 ].content,
+						html: blockAttributes[ 0 ].content ?? blockAttributes[ 0 ].text ?? '',
 					} )
 					childBlocks = split( value, '\n' ).map( result => {
 						return createBlock( 'stackable/icon-list-item', {

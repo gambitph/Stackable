@@ -107,6 +107,7 @@ const Edit = props => {
 		taxonomyType = 'category',
 		taxonomy = '',
 		taxonomyFilterType = '__in',
+		taxonomyTypeToDisplay = 'category',
 		contentOrder = DEFAULT_ORDER,
 		uniqueId,
 	} = attributes
@@ -189,6 +190,7 @@ const Edit = props => {
 				taxonomyType={ taxonomyType }
 				taxonomy={ taxonomy }
 				taxonomyFilterType={ taxonomyFilterType }
+				taxonomyTypeToDisplay={ taxonomyTypeToDisplay }
 				blockStyle={ blockStyle }
 				focalPointPlaceholder={ focalPointPlaceholder }
 			/>
@@ -319,6 +321,8 @@ const InspectorControls = memo( props => {
 						onChangeTaxonomy={ taxonomy => props.setAttributes( { taxonomy } ) }
 						taxonomyFilterType={ props.taxonomyFilterType }
 						onChangeTaxonomyFilterType={ taxonomyFilterType => props.setAttributes( { taxonomyFilterType } ) }
+						taxonomyTypeToDisplay={ props.taxonomyTypeToDisplay }
+						onChangeTaxonomyTypeToDisplay={ taxonomyTypeToDisplay => props.setAttributes( { taxonomyTypeToDisplay } ) }
 						stkVersion="3"
 					/>
 					{ showProNotice && <ProControlButton type="posts" /> }

@@ -55,6 +55,7 @@ const COLOR_SETTINGS = [ {
 		hover: sprintf( __( 'Changing the %s is not allowed for %s state.', i18n ),
 			__( 'Heading Color', i18n ), __( 'hover', i18n ) ),
 	},
+	className: 'stk-color-scheme__heading-color',
 }, {
 	label: __( 'Text Color', i18n ),
 	property: 'textColor',
@@ -236,22 +237,25 @@ const ColorSchemePicker = props => {
 			}
 		}
 
-		const currentItem = cloneDeep( itemInEdit )
+		setItemInEdit( prevItem => {
+			// clone deep causes the color picker to jump when dragging, so we use a spread operator to create a new object
+			const currentItem = { ...prevItem }
 
-		if ( ! schemeHasValue( currentItem.colorScheme ) && changeDefaultName ) {
-			currentItem.name = currentItem?.key === 'scheme-default-1' ? 'Color Scheme 1' : 'Color Scheme 2'
-		}
+			if ( ! schemeHasValue( currentItem.colorScheme ) && changeDefaultName ) {
+				currentItem.name = currentItem?.key === 'scheme-default-1' ? 'Color Scheme 1' : 'Color Scheme 2'
+			}
 
-		currentItem.colorScheme[ property ][ currentState ] = color
+			currentItem.colorScheme[ property ][ currentState ] = color
 
-		if ( property === 'backgroundColor' && isGradient( color ) ) {
-			currentItem.colorScheme[ property ].desktopHover = ''
-			currentItem.colorScheme[ property ].desktopParentHover = ''
-		}
+			if ( property === 'backgroundColor' && isGradient( color ) ) {
+				currentItem.colorScheme[ property ].desktopHover = ''
+				currentItem.colorScheme[ property ].desktopParentHover = ''
+			}
 
-		setItemInEdit( currentItem )
+			updateColorSchemes( currentItem )
 
-		updateColorSchemes( currentItem )
+			return currentItem
+		} )
 	}
 
 	// For updating option to show the color scheme in color pickers
@@ -546,6 +550,7 @@ const ColorSchemePicker = props => {
 				enableGradient={ currentHoverState === 'normal' || settings.property === 'buttonBackgroundColor' }
 				additionalToggleProps={ getToggleProps( settings ) }
 				allowReset={ ! isDisabled( settings.property ) }
+				className={ settings.className }
 			/>
 		) ) }
 	</>

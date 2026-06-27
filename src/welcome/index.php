@@ -80,18 +80,28 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'__return_null',
 				);
 			}
+
+			// Our settings page.
+			add_submenu_page(
+				'stackable', // Parent slug.
+				__( 'Useful Plugins', STACKABLE_I18N ), // Page title.
+				__( 'Useful Plugins', STACKABLE_I18N ), // Menu title.
+				'manage_options', // Capability.
+				'stackable-useful-plugins', // Menu slug.
+				function() { $this->stackable_content('s-useful-plugins'); }
+			);
 		}
 
 		public function enqueue_dashboard_script( $hook ) {
 			// For stackable pages, show our admin css.
 			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false || stripos( $hook, 'page_stk' ) !== false ) {
-				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array() );
-				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array() );
+				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array(), STACKABLE_VERSION );
+				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array(), STACKABLE_VERSION );
 				do_action( 'stackable_settings_admin_enqueue_styles' );
 			}
 
 			// For the options page, load our options script.
-			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable-settings' ) !== false || 'toplevel_page_stackable' === $hook ) {
+			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false || 'toplevel_page_stackable' === $hook ) {
 
 				wp_enqueue_script( 'wp-i18n' );
 				wp_enqueue_script( 'wp-element' );
@@ -195,6 +205,14 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						<span><?php _e( 'Contact Us', STACKABLE_I18N ) ?></span>
 					</a>
 				<?php } ?>
+
+				<?php if ( current_user_can( 'install_plugins' ) && current_user_can( 'activate_plugins' ) ) { ?>
+					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-useful-plugins' ? 's-active' : '' ?>"
+						href="<?php echo admin_url( 'admin.php?page=stackable-useful-plugins' ) ?>">
+						<span><?php _e( 'Useful Plugins', STACKABLE_I18N ) ?></span>
+					</a>
+				<?php } ?>
+
 			</div>
 			<?php
 		}
@@ -239,6 +257,26 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						<div class="s-content" id="settings-content"></div>
 						<?php do_action( 'stackable_settings_page_mid' ); ?>
 					</div>
+				</section>
+			</div>
+			<?php
+		}
+
+		public function stackable_content($id) {
+			?>
+			<div class="wrap wrap-settings">
+				<div class="s-header-wrap s-header-settings">
+					<?php $this->print_header() ?>
+					<?php echo $this->print_premium_button() ?>
+					<?php echo $this->print_tabs() ?>
+				</div>
+				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
+				<section id="settings-notice">
+					<div class="s-rest-settings-notice"></div>
+					<div class="s-save-settings-notice"></div>
+				</section>
+				<?php stackable_welcome_notification() ?>
+				<section class="s-body-container" id="<?php echo esc_attr( $id ); ?>">
 				</section>
 			</div>
 			<?php
