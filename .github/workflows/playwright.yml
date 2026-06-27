@@ -15,7 +15,7 @@ jobs:
           - php_version: '7.3'
             wp_version: 6.6.4
 
-          - php_version: '7.3'
+          - php_version: '7.4'
             wp_version: null
 
           - php_version: '8.2'

@@ -52,6 +52,7 @@ import { dispatch, useSelect } from '@wordpress/data'
 import { addFilter } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
 import { useBlockLayoutDefaults } from '~stackable/hooks'
+import { ToggleControl } from '@wordpress/components'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/icon-list-item' ]
 
@@ -143,6 +144,7 @@ const Edit = props => {
 		listItemBorderColor,
 		listDisplayStyle,
 		listFullWidth,
+		useCustomIconColor,
 	} = attributes
 
 	const wrapList = ! listFullWidth && listDisplayStyle !== 'grid'
@@ -163,7 +165,9 @@ const Edit = props => {
 		'stk-block-icon-list',
 		blockAlignmentClass,
 		textClasses,
-	] )
+	], {
+		'stk__use-custom-icon-color': useCustomIconColor,
+	} )
 
 	const tagNameClassNames = classnames( [
 		ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul',
@@ -209,6 +213,7 @@ const Edit = props => {
 				listItemBorderStyle={ listItemBorderStyle }
 				listItemBorderColor={ listItemBorderColor }
 				resetCustomIcons={ resetCustomIcons }
+				useCustomIconColor={ useCustomIconColor }
 			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
@@ -339,7 +344,7 @@ const InspectorControls = memo( props => {
 						default="unordered"
 					/>
 
-					{ ! props.ordered && (
+					{ ! props.ordered && <>
 						<IconControl
 							label={ __( 'Icon', i18n ) }
 							value={ props.icon }
@@ -350,7 +355,13 @@ const InspectorControls = memo( props => {
 							} }
 							defaultValue={ DEFAULT_SVG }
 						/>
-					) }
+
+						<ToggleControl
+							label={ __( 'Use Custom Icon Color', i18n ) }
+							checked={ props.useCustomIconColor }
+							onChange={ useCustomIconColor => props.setAttributes( { useCustomIconColor } ) }
+						/>
+					</> }
 
 					{ props.ordered && (
 						<AdvancedSelectControl

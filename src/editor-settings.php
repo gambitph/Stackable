@@ -172,18 +172,6 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 
 			register_setting(
 				'stackable_editor_settings',
-				'stackable_enable_carousel_lazy_loading',
-				array(
-					'type' => 'boolean',
-					'description' => __( 'Disables image lazy loading when using images inside carousel-type blocks to prevent space or layout issues .', STACKABLE_I18N ),
-					'sanitize_callback' => 'sanitize_text_field',
-					'show_in_rest' => true,
-					'default' => true,
-				)
-			);
-
-			register_setting(
-				'stackable_editor_settings',
 				'stackable_enable_text_highlight',
 				array(
 					'type' => 'boolean',
@@ -273,7 +261,6 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
 			$settings['stackable_enable_global_settings'] = get_option( 'stackable_enable_global_settings' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
-			$settings['stackable_enable_carousel_lazy_loading'] = get_option( 'stackable_enable_carousel_lazy_loading' );
 			$settings['stackable_enable_text_highlight'] = get_option( 'stackable_enable_text_highlight' );
 			$settings['stackable_enable_dynamic_content'] = get_option( 'stackable_enable_dynamic_content' );
 			$settings['stackable_enable_copy_paste_styles'] = get_option( 'stackable_enable_copy_paste_styles' );

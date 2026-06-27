@@ -599,7 +599,7 @@ export const getFilteredAttributes = ( attributes, filter ) => {
 	} )
 
 	Object.entries( blockAttrs ).forEach( ( [ key, value ] ) => {
-		if ( 'default' in value ) {
+		if ( value && typeof value === 'object' && 'default' in value ) {
 			filteredAttributes[ key ] = value.default
 		} else {
 			filteredAttributes[ key ] = undefined

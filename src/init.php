@@ -237,7 +237,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Enqueue the block script once.
-			if ( ! isset( self::$scripts_loaded[ $block['blockName'] ] ) ) {
+			// Do not enqueue if the block content is empty (e.g. due to conditional display)
+			if ( ! isset( self::$scripts_loaded[ $block['blockName'] ] ) && $block_content !== '' ) {
 				$stackable_block = substr( $block['blockName'], 10 );
 				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
 				self::$scripts_loaded[ $block['blockName'] ] = true;
@@ -542,7 +543,7 @@ if ( ! function_exists( 'stackable_load_js_translations' ) ) {
 	 * @return void
 	 */
 	function stackable_load_js_translations() {
-		wp_enqueue_script( 'stackable-strings', plugins_url( 'dist/translation-strings.js', STACKABLE_FILE ), array() );
+		wp_enqueue_script( 'stackable-strings', plugins_url( 'dist/translation-strings.js', STACKABLE_FILE ), array(), STACKABLE_VERSION );
 		wp_set_script_translations( 'stackable-strings', STACKABLE_I18N );
 	}
 }

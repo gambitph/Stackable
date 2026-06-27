@@ -31,6 +31,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { Fragment, useMemo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
+import { dispatch } from '@wordpress/data'
 
 export const Edit = props => {
 	const {
@@ -92,6 +93,8 @@ export const Edit = props => {
 				value={ attributes.icon }
 				defaultValue={ defaultValue }
 				onChange={ icon => {
+					dispatch( 'stackable/page-icons' ).removePageIcon( attributes.icon )
+
 					if ( onChangeIcon ) {
 						onChangeIcon( icon )
 					} else {

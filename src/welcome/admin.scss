@@ -430,7 +430,8 @@ body.toplevel_page_stackable {
 	}
 }
 body.toplevel_page_stackable,
-body[class*="page_stackable"] {
+body[class*="page_stackable"],
+body[class*="page_stk"] {
 	img {
 		max-width: 100%;
 	}
@@ -438,6 +439,10 @@ body[class*="page_stackable"] {
 		padding-left: 2em;
 		list-style-type: circle;
 	}
+	.fs-section ul {
+		list-style-type: none;
+	}
+
 	.s-box {
 		background-color: #fff;
 		border-radius: 0;

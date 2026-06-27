@@ -27,4 +27,24 @@ export const TOUR_CONDITIONS = {
 		// Force show the tour if there is a GET parameter tour=site-kit
 		return window?.location?.search?.includes( 'tour=site-kit' ) ? true : null
 	},
+	'block-backgrounds': () => {
+		// Force show the tour if there is a GET parameter tour=block-backgrounds
+		return window?.location?.search?.includes( 'tour=block-backgrounds' ) ? true : null
+	},
+	'responsive-controls': () => {
+		// Force show the tour if there is a GET parameter tour=responsive-controls
+		return window?.location?.search?.includes( 'tour=responsive-controls' ) ? true : null
+	},
+	'hover-states': () => {
+		// Force show the tour if there is a GET parameter tour=hover-states
+		return window?.location?.search?.includes( 'tour=hover-states' ) ? true : null
+	},
+	'advanced-hover-states': () => {
+		// Force show the tour if there is a GET parameter tour=advanced-hover-states
+		return window?.location?.search?.includes( 'tour=advanced-hover-states' ) ? true : null
+	},
+	'global-color-schemes': () => {
+		// Force show the tour if there is a GET parameter tour=global-color-schemes
+		return window?.location?.search?.includes( 'tour=global-color-schemes' ) ? true : null
+	},
 }

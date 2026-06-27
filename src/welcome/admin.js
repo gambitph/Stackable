@@ -145,7 +145,6 @@ const SEARCH_TREE = [
 				id: 'optimizations',
 				children: [
 					__( 'Optimize Inline CSS', i18n ),
-					__( 'Lazy Load Images within Carousels', i18n ),
 				],
 			},
 		],
@@ -1177,15 +1176,6 @@ const Optimizations = props => {
 									handleSettingsChange( { stackable_optimize_inline_css: value } ) // eslint-disable-line camelcase
 								} }
 								help={ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
-							/>
-							<AdminToggleSetting
-								label={ __( 'Lazy Load Images within Carousels', i18n ) }
-								searchedSettings={ optimizations.children }
-								value={ settings.stackable_enable_carousel_lazy_loading }
-								onChange={ value => {
-									handleSettingsChange( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
-								} }
-								help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
 							/>
 						</div>
 					}

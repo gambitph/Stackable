@@ -109,7 +109,7 @@ export const BaseControl = props => {
 						{ props.after }
 					</div>
 				</div>
-				<div className="stk-control-content">
+				<div className="stk-control-content" data-attribute={ props.attribute }>
 					{ props.children }
 				</div>
 			</VisualGuide>

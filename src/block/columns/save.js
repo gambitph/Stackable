@@ -45,6 +45,9 @@ export const Save = props => {
 			blockAlignmentClass,
 			'stk-block-content',
 		],
+		{
+			'stk--column-wrap-desktop': attributes.columnWrapDesktop,
+		},
 		getContentAlignmentClasses( props.attributes ),
 	], props ) )
 

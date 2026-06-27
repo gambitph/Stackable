@@ -28,3 +28,12 @@
 		box-sizing: border-box;
 	}
 }
+
+// Force Safari to render the SVG on its own layer to prevent shifting
+// during parent transition.
+// @see https://github.com/gambitph/Stackable/issues/3687
+@supports (font: -apple-system-body) {
+	.stk-button svg {
+		will-change: transform;
+	}
+}

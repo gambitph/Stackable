@@ -28,6 +28,7 @@ export const usePostsQuery = attributes => {
 		taxonomyType,
 		taxonomy,
 		taxonomyFilterType,
+		taxonomyTypeToDisplay,
 		postOffset,
 		postExclude,
 		postInclude,
@@ -47,6 +48,7 @@ export const usePostsQuery = attributes => {
 				orderby: [ orderBy, 'ID' ].join( ' ' ),
 				posts_per_page: numberOfItems, // eslint-disable-line camelcase
 				max_excerpt: excerptLength, // eslint-disable-line camelcase
+				taxonomy_type_to_display: taxonomyTypeToDisplay, // eslint-disable-line camelcase
 			}, attributes ),
 		}, value => {
 			// Exludes and includes can be empty.
@@ -82,6 +84,7 @@ export const usePostsQuery = attributes => {
 		taxonomyType,
 		taxonomy,
 		taxonomyFilterType,
+		taxonomyTypeToDisplay,
 		postOffset,
 		postExclude,
 		postInclude,
