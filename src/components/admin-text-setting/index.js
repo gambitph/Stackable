@@ -1,10 +1,11 @@
 import AdminBaseSetting from '../admin-base-setting'
-import { createRef } from '@wordpress/element'
+import { createRef, useState } from '@wordpress/element'
 import { maskSensitiveValue } from '~stackable/util'
 
 const AdminTextSetting = props => {
 	const ref = createRef()
-	const maskedValue = props.maskValue ? maskSensitiveValue( props.value ) : props.value
+	const [ isEditing, setIsEditing ] = useState( false )
+	const value = props.maskValue && ! isEditing ? maskSensitiveValue( props.value ) : props.value
 
 	return (
 		<AdminBaseSetting
@@ -21,16 +22,20 @@ const AdminTextSetting = props => {
 				ref={ ref }
 				className="ugb-admin-text-setting"
 				type={ props.type }
-				value={ maskedValue }
+				value={ value }
 				placeholder={ props.placeholder }
 				autoComplete={ props.maskValue ? 'off' : undefined }
 				onFocus={ () => {
 					if ( props.maskValue ) {
-						ref.current.select()
+						setIsEditing( true )
+						setTimeout( () => ref.current?.select() )
 					}
 				} }
+				onBlur={ () => {
+					setIsEditing( false )
+				} }
 				onChange={ event => {
-					if ( props.maskValue && event.target.value === maskedValue ) {
+					if ( props.maskValue && ! isEditing ) {
 						return
 					}
 					props.onChange( event.target.value )
