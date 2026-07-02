@@ -1,9 +1,9 @@
 import AdminBaseSetting from '../admin-base-setting'
-import { createRef, useState } from '@wordpress/element'
+import { useRef, useState } from '@wordpress/element'
 import { maskSensitiveValue } from '~stackable/util'
 
 const AdminTextSetting = props => {
-	const ref = createRef()
+	const ref = useRef()
 	const [ isEditing, setIsEditing ] = useState( false )
 	const value = props.maskValue && ! isEditing ? maskSensitiveValue( props.value ) : props.value
 
