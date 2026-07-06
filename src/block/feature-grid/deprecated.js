@@ -43,6 +43,33 @@ addFilter( 'stackable.feature-grid.save.blockClassNames', 'stackable/3.13.3', ( 
 	return classnames
 } )
 
+// Column wrapping now adds the stk--column-wrap-desktop class to the content
+// wrapper. For older saves, keep the marker on the block wrapper so existing
+// Feature Grid markup validates without cloning the Save component.
+addFilter( 'stackable.feature-grid.save.blockClassNames', 'stackable/3.19.9', ( output, props ) => {
+	if ( compareVersions( props.version, '3.19.8' ) === 0 ) {
+		return [
+			...output,
+			{
+				'stk--column-wrap-desktop': props.attributes.columnWrapDesktop,
+			},
+		]
+	}
+
+	return output
+} )
+
+addFilter( 'stackable.feature-grid.save.contentClassNames', 'stackable/3.19.9', ( classes, props ) => {
+	if ( compareVersions( props.version, '3.19.8' ) === 0 ) {
+		// The old save shape did not include the wrap marker on stk-block-content.
+		return classes.filter( className => {
+			return ! className?.[ 'stk--column-wrap-desktop' ]
+		} )
+	}
+
+	return classes
+} )
+
 // Version 3.1.0 Deprecations
 addFilter( 'stackable.feature-grid.save.blockClassNames', 'stackable/3.1.0', ( output, props ) => {
 	if ( compareVersions( props.version, '3.1.0' ) === 1 ) {
@@ -61,6 +88,12 @@ addFilter( 'stackable.feature-grid.save.blockClassNames', 'stackable/3.1.0', ( o
 } )
 
 const deprecated = [
+	{
+		// Support Feature Grid blocks saved before the column wrapping marker
+		// moved from the block wrapper to the content wrapper.
+		attributes: attributes( '3.19.8' ),
+		save: withVersion( '3.19.8' )( Save ),
+	},
 	{
 		// Handle the migration of shadow attributes with the change of type in 3.15.3
 		attributes: attributes( '3.16.2' ),
