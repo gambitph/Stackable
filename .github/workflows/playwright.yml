@@ -64,8 +64,22 @@ jobs:
       run: |
         npm ci --legacy-peer-deps
         npm run build:no-translate
+    - name: Cache Playwright Browsers
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
     - name: Install Playwright Browsers
-      run: npx playwright install chromium --with-deps
+      timeout-minutes: 15
+      run: |
+        for attempt in 1 2 3; do
+          npx playwright install chromium --with-deps && exit 0
+          echo "Playwright install failed on attempt $attempt"
+          sleep $((attempt * 30))
+        done
+        exit 1
     - name: Install wp-env
       run: |
         npm install -g @wordpress/env
