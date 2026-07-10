@@ -1,0 +1,70 @@
+---
+description: GitHub issue label taxonomy for triage and classification
+alwaysApply: true
+---
+
+# GitHub Issue Labels
+
+Use this label set when triaging, creating, or updating issues in https://github.com/gambitph/Stackable
+
+Priority, release target, and status belong on the [release project board](https://github.com/orgs/gambitph/projects/2/views/1) — not labels.
+
+## Type (exactly one)
+
+| Label | Use for |
+|-------|---------|
+| `bug` | Something broken in the current release |
+| `enhancement` | Improvement to an existing feature |
+| `feature-request` | New block, capability, or workflow |
+| `question` | How-to, support, or unclear reports |
+| `documentation` | Docs, readme, or in-plugin help |
+
+## Triage (zero or one, temporary)
+
+| Label | Use for |
+|-------|---------|
+| `needs-reproduction` | Cannot verify; waiting on repro steps |
+| `might-be-fixed` | Likely fixed; checking changelog or codebase |
+| `not-planned` | Valid request, explicitly out of scope |
+| `duplicate` | Same as another issue |
+| `invalid` | Not actionable |
+| `wontfix` | Will not be addressed |
+
+Remove triage labels when closing or confirming status.
+
+## Area (zero or one)
+
+| Label | Use for |
+|-------|---------|
+| `compatibility` | Theme, plugin, browser, WordPress, or Gutenberg conflicts |
+| `accessibility` | a11y |
+| `premium` | Premium-only code (`pro__premium_only`) |
+| `editor` | Block editor UI, inspector, toolbar |
+| `frontend` | Saved markup, CSS, or JS on the site |
+| `design-library` | Designs, patterns, site kits, layout picker |
+| `global-settings` | Colors, typography, presets, block styles, role manager |
+| `performance` | Speed, caching, asset size |
+| `migration` | v2→v3, deprecations, block recovery |
+
+## Community (optional)
+
+| Label | Use for |
+|-------|---------|
+| `good first issue` | Good for new contributors |
+| `help wanted` | Extra attention welcome |
+
+## Pull requests
+
+| Label | Use for |
+|-------|---------|
+| `pr: needs review` | Awaiting review |
+| `pr: reviewed` | Reviewed with comments |
+| `pr: good to merge` | Approved |
+
+## Rules
+
+- Apply **one type** label per issue.
+- Apply **at most one** triage label and **at most one** area label.
+- Do **not** use per-block labels — put the block name in the issue title or body.
+- Do **not** use priority or version labels.
+- When closing obsolete v2 issues, remove legacy labels if editing the issue.
