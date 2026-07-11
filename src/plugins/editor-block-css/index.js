@@ -48,7 +48,6 @@ const readoptAllFromStore = editorDom => {
 
 let rafId = 0
 const pendingKeys = new Set()
-let pendingRemovals = new Set()
 
 const scheduleStyleUpdates = () => {
 	if ( rafId ) {
@@ -61,12 +60,6 @@ const scheduleStyleUpdates = () => {
 		const editorDom = select( 'stackable/editor-dom' ).getEditorDom()
 		const blockStyles = select( 'stackable/editor-block-css' ).getBlockStyles()
 
-		const hadRemovals = pendingRemovals.size > 0
-		pendingRemovals.forEach( key => {
-			removeBlockStyleSheet( key, editorDom )
-		} )
-		pendingRemovals = new Set()
-
 		const keysToUpdate = [ ...pendingKeys ]
 		pendingKeys.clear()
 
@@ -78,7 +71,7 @@ const scheduleStyleUpdates = () => {
 			}
 		} )
 
-		if ( shouldUseConstructableStyleSheets( editorDom ) && ( keysToUpdate.length || hadRemovals ) ) {
+		if ( shouldUseConstructableStyleSheets( editorDom ) && keysToUpdate.length ) {
 			adoptBlockStyleSheets( editorDom )
 		}
 	} )
@@ -92,15 +85,16 @@ if ( ! window.__stkEditorBlockCssSubscribed ) {
 			return
 		}
 
-		if ( lastChange.type === 'SET' ) {
-			pendingKeys.add( lastChange.key )
-			pendingRemovals.delete( lastChange.key )
-		} else if ( lastChange.type === 'REMOVE' ) {
-			pendingKeys.delete( lastChange.key )
-			pendingRemovals.add( lastChange.key )
+		if ( lastChange.type === 'REMOVE' ) {
+			const editorDom = select( 'stackable/editor-dom' ).getEditorDom()
+			removeBlockStyleSheet( lastChange.key, editorDom )
+			return
 		}
 
-		scheduleStyleUpdates()
+		if ( lastChange.type === 'SET' ) {
+			pendingKeys.add( lastChange.key )
+			scheduleStyleUpdates()
+		}
 	}, 'stackable/editor-block-css' )
 }
 

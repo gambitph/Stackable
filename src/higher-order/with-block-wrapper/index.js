@@ -12,7 +12,7 @@
  * Internal dependencies
  */
 import { BlockWrapper } from '~stackable/components'
-import { useBlockHoverState } from '~stackable/hooks'
+import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -75,6 +75,7 @@ let selectedBlock = null
  */
 export const useDevicePreviewOptimization = blockProps => {
 	const { clientId, isSelected } = blockProps
+	const deviceType = useDeviceType()
 	const { rootBlockClientId } = useSelect(
 		select => {
 			const { getBlockRootClientId } = select( 'core/block-editor' )
@@ -107,20 +108,28 @@ export const useDevicePreviewOptimization = blockProps => {
 	// block error when switching from tablet to desktop.  Also, always display
 	// the block if it's nested (not a root block), since if we delay the
 	// display, it will look like the blocks are slowly loading.
-	const displayedByDefault = ! isRootBlock || selectedBlock === clientId || firstLoad
+	// In tablet/mobile iframe preview, skip the mount delay so styles apply immediately.
+	const skipMountDelay = deviceType !== 'Desktop'
+	const displayedByDefault = ! isRootBlock || selectedBlock === clientId || firstLoad || skipMountDelay
 
 	const [ isDisplayed, setIsDisplayed ] = useState( displayedByDefault )
 
-	// If the block isn't displayed, display it after a delay, this trick
-	// apparently makes Desktop -> Tablet/Mobile previews fast.
+	// Delay mounting root blocks on desktop only (original preview-switch optimization).
 	useEffect( () => {
+		if ( skipMountDelay ) {
+			setIsDisplayed( true )
+			return undefined
+		}
+
 		if ( ! isDisplayed ) {
 			const t = setTimeout( () => {
 				setIsDisplayed( true )
 			}, 300 )
 			return () => clearTimeout( t )
 		}
-	}, [ isDisplayed ] )
+
+		return undefined
+	}, [ isDisplayed, skipMountDelay ] )
 
 	return isDisplayed
 }

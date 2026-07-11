@@ -2,7 +2,7 @@ import { useQueryLoopInstanceId } from '~stackable/util'
 import {
 	useLayoutEffect, useMemo, useRef,
 } from '@wordpress/element'
-import { dispatch } from '@wordpress/data'
+import { dispatch, select } from '@wordpress/data'
 import { useRafEffect } from '~stackable/hooks'
 import CssSaveCompiler from './css-save-compiler'
 
@@ -81,9 +81,14 @@ export const useBlockCssGenerator = props => {
 	useLayoutEffect( () => {
 		dispatch( 'stackable/editor-block-css' ).setBlockCss( styleKey, editCss || '' )
 		return () => {
-			dispatch( 'stackable/editor-block-css' ).removeBlockCss( styleKey )
+			// Keep CSS in the store across preview remounts. Only remove when the
+			// block was actually deleted from the editor.
+			const block = select( 'core/block-editor' )?.getBlock( clientId )
+			if ( ! block ) {
+				dispatch( 'stackable/editor-block-css' ).removeBlockCss( styleKey )
+			}
 		}
-	}, [ styleKey, editCss ] )
+	}, [ styleKey, editCss, clientId ] )
 
 	// We used to return the CSS here, but for optimization, now
 	// CSS is injected via the unified editor stylesheet plugin.
