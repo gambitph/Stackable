@@ -15,6 +15,7 @@ export const useBlockCssGenerator = props => {
 		context,
 		attributes,
 		blockState,
+		setAttributes,
 	} = props
 
 	// Keep the filtered block styles that we will update.
@@ -65,12 +66,17 @@ export const useBlockCssGenerator = props => {
 			}
 		)
 
-		// Quietly save the styles. We cannot use setAttributes here because it
-		// will cause the block and this hook to rerender.
-		// dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-		// setAttributes( { generatedCss: saveCss } )
-		attributes.generatedCss = saveCss
-	}, [ styleFingerprint, version, blockStyles ] )
+		// If the generated CSS is the same as the one already saved, we don't need to update it.
+		if ( ! setAttributes || attributes.generatedCss === saveCss ) {
+			return
+		}
+
+		// Use setAttributes to reliably update the generated CSS.
+		// Mutating the attributes directly will not trigger a re-render,
+		// but might not properly save the changes.
+		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+		setAttributes( { generatedCss: saveCss } )
+	}, [ styleFingerprint, version, blockStyles, setAttributes ] )
 
 	const styleKey = `${ clientId }-${ instanceId }`
 
