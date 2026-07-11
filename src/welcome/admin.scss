@@ -8,6 +8,15 @@
 	--stk-welcome-light-border: #d0d5dd;
 }
 
+@mixin s-shadow {
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+	transition: all 0.3s ease-in-out;
+	&:hover {
+		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+	}
+}
+
+
 // Make scroll smooth with inline navigation.
 html {
 	scroll-behavior: smooth;
@@ -17,6 +26,9 @@ html {
 
 body[class*="page_stackable"],
 body[class*="page_stk-"] {
+	--wp-components-color-accent: var(--stk-welcome-primary);
+	--wp-components-color-accent-darker-20: var(--stk-welcome-secondary);
+	--wp-components-color-accent-inverted: var(--stk-welcome-secondary);
 	#wpcontent {
 		padding-left: 0;
 	}
@@ -152,6 +164,54 @@ body[class*="page_stk-"] {
 	padding: 0;
 	display: flex !important;
 	align-items: center;
+}
+
+
+.s-card {
+	padding: 1.5em;
+	display: flex;
+	flex-direction: column;
+	border-radius: 16px;
+	@include s-shadow;
+	background: #fff;
+	overflow: hidden;
+
+	.s-card-title,
+	h3 {
+		margin: 0 0 0.5em;
+	}
+	.s-card-subtitle,
+	p {
+		margin: 0;
+	}
+	> *:last-child {
+		margin-bottom: 0;
+	}
+
+	.s-video-wrapper {
+		align-items: center;
+	}
+
+	.s-icon-wrapper {
+		border: 1px solid #eaecf0;
+		border-radius: 8px;
+		padding: 10px;
+		display: flex;
+		align-items: center;
+		max-width: fit-content;
+		margin-bottom: 20px;
+	}
+
+	.s-bottom-icon-wrapper {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	svg {
+		height: 24px;
+		width: 24px;
+	}
+
 }
 
 .s-admin-notice-marker {
@@ -344,7 +404,7 @@ body[class*="page_stk-"] {
 	margin-bottom: 32px;
 	padding-bottom: 0;
 }
-body.settings_page_stackable {
+body.stackable_page_stackable-settings {
 	#wpwrap {
 		background: #fff;
 	}
@@ -352,8 +412,8 @@ body.settings_page_stackable {
 		box-shadow: none !important;
 	}
 }
-body.settings_page_stackable,
-body.settings_page_stackable-getting-started {
+body.stackable_page_stackable-settings,
+body.toplevel_page_stackable {
 	// Hide admin notices to not mess up the welcome screen.
 	.s-header > *:not(h1):not(img) {
 		display: none !important;
@@ -369,9 +429,9 @@ body.settings_page_stackable-getting-started {
 		padding-bottom: 0;
 	}
 }
-body.settings_page_stackable,
-body.settings_page_stackable-getting-started,
-body.toplevel_page_stk-custom-fields {
+body.toplevel_page_stackable,
+body[class*="page_stackable"],
+body[class*="page_stk"] {
 	img {
 		max-width: 100%;
 	}
@@ -379,6 +439,10 @@ body.toplevel_page_stk-custom-fields {
 		padding-left: 2em;
 		list-style-type: circle;
 	}
+	.fs-section ul {
+		list-style-type: none;
+	}
+
 	.s-box {
 		background-color: #fff;
 		border-radius: 0;
@@ -912,7 +976,31 @@ body.toplevel_page_stk-custom-fields {
 	}
 }
 
+body.stackable_page_stackable-go-premium {
+	.s-side {
+		display: grid;
+		padding: 50px;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		grid-column-gap: 50px;
+		align-items: start;
+	}
+
+	.s-premium-box {
+		grid-row: 1/3;
+		.s-check-list {
+			margin: auto;
+			width: fit-content;
+			text-align: left;
+		}
+	}
+	.s-box {
+		text-align: center;
+	}
+}
+
 @import "news";
 @import "getting-started";
 @import "freemius";
 @import "import-export/import-export";
+@import "useful-plugins";

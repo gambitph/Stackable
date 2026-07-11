@@ -1,8 +1,6 @@
 /**
  * Internal dependencies.
  */
-import ProControl from '../pro-control'
-import Button from '../button'
 import { DesignPreview } from './design-preview'
 import { useShadowRoot } from './use-shadow-root'
 import { usePreviewRenderer } from './use-preview-renderer'
@@ -13,7 +11,9 @@ import { useAutoScroll } from './use-auto-scroll'
  */
 import { isPro, i18n } from 'stackable'
 import classnames from 'classnames'
-import { Tooltip } from '~stackable/components'
+import {
+	Tooltip, Button, ProControl,
+} from '~stackable/components'
 
 /**
  * WordPress dependencies.

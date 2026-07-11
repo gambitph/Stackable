@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.5.5
-Tested up to: 6.8.2
+Requires at least: 6.6.4
+Tested up to: 7.0
 Requires PHP: 7.3
-Stable tag: 3.19.1
+Stable tag: 3.19.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -308,6 +308,74 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.9 =
+
+* Fixed: Tablet and mobile preview styles now apply correctly in WP 7.0 #3711
+* Fixed: Columns block - column justify now working when column wrapping is enabled #3703
+* Fixed: Horizontal scroller - fixed first click handling issues #3697
+* Fixed: Carousel - fixed JS error encountered with infinite scroll #3695
+* Fixed: Tour - First Stackable tour closes right away #3699
+* Fixed: Motion effects - fixed scroll position issue if there is a video near the top of the page #401
+* Fixed: Image box - button group overlap #3706
+* Fixed: Icon block - custom SVG can be not visible in the editor #3707
+
+= 3.19.8 =
+
+* Fixed: Dynamic content - prevent looping over itself when used with Query Loop block #2568
+* Fixed: Dynamic content - improved performance #3160
+* Fixed: Image block - fixed shape flip in iOS #3650
+* Fixed: Admin UI improvements #3681
+* Fixed: Text block - transforming to icon list now works properly #3682
+* Fixed: Fixed rendering issues with lazy loaded images #3684
+* Fixed: Icon block - fixed visual glitch in Safari #3687
+* Fixed: Carousel block - loading issue edge case when used with display conditions #3688
+* Fixed: Motion effects - loading issue when used together with display conditions #3693
+
+= 3.19.7 =
+
+* New: Additional 11 guided tours to help you master Stackable
+* New: Posts block - you can now pick taxonomy terms for CPTs #3678
+* Fixed: Posts block - formatting breaks on horizontal layours #3554
+* Fixed: Posts block - hover effects not working on some layouts #2583
+* Fixed: Posts block - links are now not clickable in porfolio layouts #398
+
+= 3.19.6 =
+
+* Change: Carousels and Horizontal scroller block - images inside will not lazy load to prevent layout shifts #3672
+* Change: Removed setting to enable/disable lazy loading of images inside carousels #3672
+* Fixed: Posts block - improved text escaping #3669
+
+= 3.19.5 =
+
+* New: Icon list block - new option to retain custom SVG colors #3512
+* Fixed: WordPress 6.9 compatibility - text block menu bar may get hidden #3654
+* Fixed: WordPress 6.9 compatibility - better text compatibility #3654
+* Fixed: Optimized icon performance inside the block editor  #3660
+* Fixed: Global color scheme - when changing colors the drag handle jitters #3638
+* Fixed: Displays correct value when selecting a theme color #3631
+* Fixed: Block error encountered when getting filtered attributes #3646
+* Fixed: Icon block - multicolor styling not applying correctly to some icons #3428
+* Fixed: No longer queries WP API for useful plugins tab #3664
+* Fixed: Removed Cimo cross marketing from premium build #3659
+* Fixed: Ensure useful plugins tab is only visible if user has correct capabilities #3661
+
+= 3.19.4 =
+* New: Moved Stackable admin settings to its own top level menu #3633 #394
+* New: Design Library module now lazy loads for faster initial loading performance #3597
+* New: Added new `enqueue_frontend_assets_for_content( $content )` function for enqueueing js & css files in the current page #3634
+* Change: Added notice for Cimo in relevant areas #3635 #3642
+* Fixed: Global typography - resets for tablet and mobile when reseting for desktop #3550
+* Fixed: Table of contents - scroll top effect not working properly #3640
+* Fixed: Video popup - update date error on newly uploaded videos #3641
+
+= 3.19.3 =
+* Fixed: Display Condition - PHP warning when using date & time condition #395
+
+= 3.19.2 =
+* Fixed: Blocksy theme styles now reflected in the Design Library #3630
+* Fixed: Rendering issues in design library when switching categories #3627
+* Fixed: Carousel block - fixed content wide not followed #3628
 
 = 3.19.1 =
 * Fixed: Color schemes - some styles can change when there is a color scheme present #3624

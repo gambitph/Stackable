@@ -18,13 +18,15 @@ test( 'Activating Stackable should redirect to the Getting Started Page', async 
 	await activate.click()
 
 	try {
-		await expect( page ).toHaveURL( /stackable-getting-started/ )
+		await expect( page ).toHaveURL( /stackable/ )
+		await expect( page.getByText( 'Welcome to Stackable' ) ).toBeVisible()
 	} catch {
 		await expect( page ).toHaveURL( /page=stackable/ )
 		await expect( page.getByRole( 'link', { name: 'Activate Free Version' } ) ).toBeVisible()
 		await page.getByRole( 'link', { name: 'Activate Free Version' } ).click()
 		await page.getByRole( 'link', { name: 'Skip', exact: true } ).click()
-		await expect( page ).toHaveURL( /stackable-getting-started/ )
+		await expect( page ).toHaveURL( /stackable/ )
+		await expect( page.getByText( 'Welcome to Stackable' ) ).toBeVisible()
 	}
 } )
 
@@ -36,7 +38,7 @@ test( 'Stackable settings should be saved', async ( {
 	// Start waiting for Stackable Settings JSON Response before visiting the page
 	let settings = stackable.waitForSettings()
 
-	await admin.visitAdminPage( 'options-general.php?page=stackable' )
+	await admin.visitAdminPage( 'admin.php?page=stackable-settings' )
 	// Make sure all Stackable settings are loaded
 	await settings
 

@@ -156,7 +156,7 @@ const Edit = props => {
 							openEvenIfUnselected={ true }
 							hasLinearGradient={ false }
 						/> }
-					{ ! ordered && ! icon &&
+					{ ! ordered && ! icon && parentUniqueId &&
 						<Icon
 							value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) }
 							openEvenIfUnselected={ true }

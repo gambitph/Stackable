@@ -2,7 +2,7 @@
 name: "\U0001F195 Block request"
 about: Suggest a block for this project
 title: ''
-labels: new block
+labels: feature-request
 assignees: ''
 
 ---

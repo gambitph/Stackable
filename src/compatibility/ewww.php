@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'stackable_load_image_optimizer_polyfill_frontend_script' ) ) {
-	function stackable_load_image_optimizer_polyfill_frontend_script( $block_content, $block ) {
+	function stackable_load_image_optimizer_polyfill_frontend_script( $block_content ) {
 		// If Easy IO setting is activated for EWWW Image Optimizer, dynamic images becomes blurry.
 		// Load the script to fix the issue.
 		if ( ! is_admin() ) {
@@ -26,7 +26,7 @@ if ( ! function_exists( 'stackable_load_image_optimizer_polyfill_frontend_script
 	function stackable_ewww_image_optimzer_plugin_checker() {
 		if ( ! is_admin() && defined( 'EWWW_IMAGE_OPTIMIZER_PLUGIN_FILE' ) ) {
 			// Load the script in the frontend if EWWW Image Optimizer is active.
-			add_action( 'stackable/enqueue_scripts', 'stackable_load_image_optimizer_polyfill_frontend_script', 10, 2 );
+			add_action( 'stackable/enqueue_scripts', 'stackable_load_image_optimizer_polyfill_frontend_script' );
 		}
 	}
 

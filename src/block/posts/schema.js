@@ -312,6 +312,17 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
+	attrObject.add( {
+		attributes: {
+			taxonomyTypeToDisplay: {
+				type: 'string',
+				default: 'category',
+			},
+		},
+		versionAdded: '3.19.7',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 

@@ -1,12 +1,10 @@
-
-import AdvancedToolbarControl from '../advanced-toolbar-control'
-import Button from '../button'
 /**
  * External deprendencies
  */
 import {
 	i18n, isPro, devMode, showProNotice,
 } from 'stackable'
+import { AdvancedToolbarControl, Button } from '~stackable/components'
 
 /**
  * WordPress deprendencies

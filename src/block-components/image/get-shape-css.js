@@ -30,9 +30,31 @@ export const getShapeCSS = ( shape, shapeFlipX, shapeFlipY, shapeStretch ) => {
 	const MaskImage = getShapeSVG( shape )
 	const MaskComp = <MaskImage
 		preserveAspectRatio={ ! [ '', 'square' ].includes( shape ) && shapeStretch ? 'none' : undefined }
-		transform={ ! shapeFlipX && ! shapeFlipY ? undefined : `scale(${ shapeFlipX ? -1 : 1 },${ shapeFlipY ? -1 : 1 })` }
 	/>
-	const maskString = btoa( svgRenderToString( MaskComp ) )
 
+	let svgString = svgRenderToString( MaskComp )
+
+	// Safari fix: instead of transform on <svg>, wrap contents in a <g> with transform
+	if ( shapeFlipX || shapeFlipY ) {
+		const scaleX = shapeFlipX ? -1 : 1
+		const scaleY = shapeFlipY ? -1 : 1
+
+		// Extract viewBox to compute translate offset
+		const viewBoxMatch = svgString.match( /viewBox=["']([^"']+)["']/ )
+		const [ minX, minY, width, height ] = viewBoxMatch
+			? viewBoxMatch[ 1 ].trim().split( /[\s,]+/ ).map( Number ) : [ 0, 0, 100, 100 ]
+
+		const translateX = shapeFlipX ? width + ( 2 * minX ) : 0
+		const translateY = shapeFlipY ? height + ( 2 * minY ) : 0
+
+		// SVG transform are applied right to left
+		// Scale first (flip) and translate (reposition to view)
+		svgString = svgString.replace(
+			/(<svg[^>]*>)([\s\S]*)(<\/svg>)/,
+			`$1<g transform="translate(${ translateX },${ translateY }) scale(${ scaleX },${ scaleY })">$2</g>$3`
+		)
+	}
+
+	const maskString = btoa( svgString )
 	return `url('data:image/svg+xml;base64,${ maskString }')`
 }

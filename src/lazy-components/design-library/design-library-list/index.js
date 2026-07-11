@@ -2,11 +2,14 @@
  * Internal dependencies
  */
 import DesignLibraryListItem from './design-library-list-item'
+import { useDesignLibraryContext } from '../context'
 
 /**
  * External dependencies
  */
 import { i18n, isPro } from 'stackable'
+import { usePresetControls } from '~stackable/hooks'
+import { ProControl } from '~stackable/components'
 import classnames from 'classnames'
 
 /**
@@ -17,9 +20,6 @@ import { __ } from '@wordpress/i18n'
 import {
 	useState, useEffect, useRef, memo, useMemo,
 } from '@wordpress/element'
-import { usePresetControls } from '~stackable/hooks'
-import { useDesignLibraryContext } from '../modal-design-library/modal'
-import ProControl from '../pro-control'
 
 const DesignLibraryList = memo( props => {
 	const {
@@ -27,6 +27,7 @@ const DesignLibraryList = memo( props => {
 		designs,
 		isBusy,
 		selectedTab,
+		errors,
 	} = props
 	const containerRef = useRef( null )
 
@@ -61,6 +62,12 @@ const DesignLibraryList = memo( props => {
 					{ ! ( designs || [] ).length &&
 						<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
 					}
+					{ typeof errors === 'object' && errors && Object.keys( errors ).length &&
+						<p className="components-base-control__help">
+							<strong>{ __( 'An error has occurred:', i18n ) }</strong>
+							<br />
+							{ Object.values( errors ).join( '; ' ) }
+						</p> }
 				</div> }
 			</>
 		}

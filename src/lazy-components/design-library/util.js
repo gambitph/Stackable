@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import DEFAULT from './default.json'
+import DEFAULT from './design-library-list/default.json'
 
 import {
 	settings, isPro, cdnUrl,

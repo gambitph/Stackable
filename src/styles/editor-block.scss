@@ -113,7 +113,8 @@
 }
 
 :where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:is([data-align="wide"], [data-align="full"]) > .stk-block > .stk-inner-blocks.alignwide),
-:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:is([data-align="wide"], [data-align="full"]) [data-type^="stackable/"][data-align="wide"]) {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:is([data-align="wide"], [data-align="full"]) [data-type^="stackable/"][data-align="wide"]),
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:is([data-align="wide"], [data-align="full"]) > .stk-block-carousel > :where(.stk-block-carousel__content-wrapper) > .stk-inner-blocks.alignwide) {
 	// --stk-block-default-width is a Stackable setting
 	// --stk-block-width-default-detected is from the fallback autodetected value.
 	max-width: var(--stk-block-wide-width, var(--stk-block-width-wide-detected, calc(80vw - 280px))) !important; // Make way for the inspector

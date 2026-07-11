@@ -16,6 +16,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_dashboard_script' ) );
 
 			add_action( 'admin_init', array( $this, 'redirect_to_welcome_page' ) );
+			add_action('admin_init', array( $this, 'redirect_submenus' ) );
+
+			add_action('admin_head', array( $this, 'redirect_submenus_newtab' ) );
 
 			$plugin = plugin_basename( STACKABLE_FILE );
 			add_filter( 'plugin_action_links_' . $plugin, array( $this, 'add_settings_link' ) );
@@ -23,39 +26,82 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 		public function add_dashboard_page() {
 
-			// Our settings page.
-			add_submenu_page(
-				'options-general.php', // Parent slug.
+			$icon = 'data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMDAgMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZmZmIj48cGF0aCBkPSJtMTc2LjIgMjQuMmMtLjUtMS44LTIuMi0zLTQtMi44aC0xMDBsLTM5LjEgNDEuMmMtMi43IDIuNy0uOSA2LjQgMyA2LjRoODQuMWw1NC42LTQwLjZjMS4yLTEgMS44LTIuNiAxLjQtNC4yeiIvPjxwYXRoIGQ9Im0xNjcuMiAxMTUuNy0zOC40LTM3LjkuMS0uMWgtOTMuOGMtMS44IDAtMy4zIDEuNS0zLjMgMy4zIDAgLjkuNCAxLjcgMSAyLjNsMzguMiAzNy45LS4xLjFoOTQuMWMxLjgtLjEgMy4yLTEuNiAzLjItMy40IDAtLjgtLjQtMS42LTEtMi4yeiIvPjxwYXRoIGQ9Im0xNjcuMiAxMzEuMWMtLjctLjYtMS42LTEtMi41LTFoLTg0LjhsLTU0LjYgNDAuN2MtMS43IDEuMi0yLjEgMy42LS44IDUuNC44IDEuMSAyLjEgMS43IDMuNCAxLjZoMTAwbDM5LjUtNDEuNWMxLjItMS42IDEuMi0zLjktLjItNS4yeiIvPjwvZz48L3N2Zz4=';
+
+			add_menu_page(
 				__( 'Stackable', STACKABLE_I18N ), // Page title.
 				__( 'Stackable', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu title.
 				'manage_options', // Capability.
 				'stackable', // Menu slug.
-				array( $this, 'stackable_settings_content' ), // Callback function.
-				null // Position
+				array( $this, 'stackable_getting_started_content' ), // Callback function.
+				$icon,
+				25
 			);
 
 			// Our getting started page.
 			add_submenu_page(
-				isset( $_GET['page'] ) && $_GET['page'] === 'stackable-getting-started' ? 'options-general.php' : '', // Parent slug. Only show when in the page.
-				__( 'Get Started', STACKABLE_I18N ), // Page title.
-				'<span class="fs-submenu-item fs-sub"></span>' . __( 'Get Started', STACKABLE_I18N ), // Menu title.
+				'stackable', // Parent slug.
+				__( 'Getting Started', STACKABLE_I18N ), // Page title.
+				__( 'Getting Started', STACKABLE_I18N ), // Menu title.
 				'manage_options', // Capability.
-				'stackable-getting-started', // Menu slug.
+				'stackable', // Menu slug.
 				array( $this, 'stackable_getting_started_content' ), // Callback function.
-				null // Position
+			);
+
+			// Our settings page.
+			add_submenu_page(
+				'stackable', // Parent slug.
+				__( 'Stackable', STACKABLE_I18N ), // Page title.
+				__( 'Settings', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu title.
+				'manage_options', // Capability.
+				'stackable-settings', // Menu slug.
+				array( $this, 'stackable_settings_content' ), // Callback function.
+			);
+
+			do_action( 'stackable_submenu_register' );
+
+			// Documentation
+			add_submenu_page(
+				'stackable', // Parent slug.
+				__( 'Documentation', STACKABLE_I18N ), // Page title.
+				__( 'Documentation', STACKABLE_I18N ), // Menu title.
+				'manage_options', // Capability.
+				'stackable-documentation', // Menu slug.
+				'__return_null',
+			);
+
+			if ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ) {
+				add_submenu_page(
+					'stackable', // Parent slug.
+					__( 'Go Premium', STACKABLE_I18N ), // Page title.
+					__( 'Go Premium', STACKABLE_I18N ), // Menu title.
+					'manage_options', // Capability.
+					'stackable-go-premium', // Menu slug.
+					'__return_null',
+				);
+			}
+
+			// Our settings page.
+			add_submenu_page(
+				'stackable', // Parent slug.
+				__( 'Useful Plugins', STACKABLE_I18N ), // Page title.
+				__( 'Useful Plugins', STACKABLE_I18N ), // Menu title.
+				'manage_options', // Capability.
+				'stackable-useful-plugins', // Menu slug.
+				function() { $this->stackable_content('s-useful-plugins'); }
 			);
 		}
 
 		public function enqueue_dashboard_script( $hook ) {
 			// For stackable pages, show our admin css.
 			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false || stripos( $hook, 'page_stk' ) !== false ) {
-				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array() );
-				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array() );
+				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array(), STACKABLE_VERSION );
+				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array(), STACKABLE_VERSION );
 				do_action( 'stackable_settings_admin_enqueue_styles' );
 			}
 
 			// For the options page, load our options script.
-			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable-settings' ) !== false || 'settings_page_stackable-getting-started' === $hook ) {
+			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false || 'toplevel_page_stackable' === $hook ) {
 
 				wp_enqueue_script( 'wp-i18n' );
 				wp_enqueue_script( 'wp-element' );
@@ -95,7 +141,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			$display_account_tab = true;
 			$display_contact_tab = true;
 			$account_url = STACKABLE_BUILD === 'free' ? '' : sugb_fs()->get_account_url();
-			$contact_url = admin_url( 'options-general.php?page=stackable-contact' );
+			$contact_url = admin_url( 'admin.php?page=stackable-contact' );
 
 			// If network activated and in multisite, the accounts page is in a different URL.
 			if ( STACKABLE_BUILD === 'free' ) {
@@ -117,48 +163,56 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 			?>
 			<div class="s-body s-tabs">
-				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-getting-started' ? 's-active' : '' ?>"
-					href="<?php echo admin_url( 'options-general.php?page=stackable-getting-started' ) ?>">
+				<a class="s-tab <?php echo $screen->base === 'toplevel_page_stackable' ? 's-active' : '' ?>"
+					href="<?php echo admin_url( 'admin.php?page=stackable' ) ?>">
 					<span><?php _e( 'Getting Started', STACKABLE_I18N ) ?></span>
 				</a>
 
-				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable' ? 's-active' : '' ?>"
-					href="<?php echo admin_url( 'options-general.php?page=stackable' ) ?>">
+				<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-settings' ? 's-active' : '' ?>"
+					href="<?php echo admin_url( 'admin.php?page=stackable-settings' ) ?>">
 					<span><?php _e( 'Settings', STACKABLE_I18N ) ?></span>
 				</a>
 
 				<?php if ( $display_account_tab && STACKABLE_BUILD !== 'free' && sugb_fs()->get_user() ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-account' ? 's-active' : '' ?>"
+					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-account' ? 's-active' : '' ?>"
 						href="<?php echo $account_url ?>">
 						<span><?php _e( 'Account', STACKABLE_I18N ) ?></span>
 					</a>
 				<?php } ?>
 
 				<?php if ( STACKABLE_BUILD !== 'free' && sugb_fs()->has_affiliate_program() ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-affiliation' ? 's-active' : '' ?>"
+					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-affiliation' ? 's-active' : '' ?>"
 						href="<?php echo admin_url( 'options-general.php?page=stackable-affiliation' ) ?>">
 						<span><?php _e( 'Affiliation', STACKABLE_I18N ) ?></span>
 					</a>
+				<?php } ?>
+
+				<?php if ( function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
+					<?php if ( stackable_is_custom_fields_enabled() && current_user_can( 'manage_stackable_custom_fields' ) ) { ?>
+						<a class="s-tab <?php echo $screen->base === 'stackable_page_stk-custom-fields' ? 's-active' : '' ?>"
+							href="<?php echo admin_url( 'admin.php?page=stk-custom-fields' ) ?>">
+							<span><?php _e( 'Custom Fields', STACKABLE_I18N ) ?></span>
+						</a>
+					<?php } ?>
 				<?php } ?>
 
 				<a class="s-tab" href="https://docs.wpstackable.com" target="_docs">
 				<span><?php _e( 'Documentation', STACKABLE_I18N ) ?></span></a>
 
 				<?php if ( $display_contact_tab && STACKABLE_BUILD !== 'free' ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-contact' ? 's-active' : '' ?>"
+					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-contact' ? 's-active' : '' ?>"
 						href="<?php echo $contact_url ?>">
 						<span><?php _e( 'Contact Us', STACKABLE_I18N ) ?></span>
 					</a>
 				<?php } ?>
 
-				<?php if ( function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
-					<?php if ( stackable_is_custom_fields_enabled() && current_user_can( 'manage_stackable_custom_fields' ) ) { ?>
-						<a class="s-tab <?php echo $screen->base === 'toplevel_page_stk-custom-fields' ? 's-active' : '' ?>"
-							href="<?php echo admin_url( 'admin.php?page=stk-custom-fields' ) ?>">
-							<span><?php _e( 'Custom Fields', STACKABLE_I18N ) ?></span>
-						</a>
-					<?php } ?>
+				<?php if ( current_user_can( 'install_plugins' ) && current_user_can( 'activate_plugins' ) ) { ?>
+					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-useful-plugins' ? 's-active' : '' ?>"
+						href="<?php echo admin_url( 'admin.php?page=stackable-useful-plugins' ) ?>">
+						<span><?php _e( 'Useful Plugins', STACKABLE_I18N ) ?></span>
+					</a>
 				<?php } ?>
+
 			</div>
 			<?php
 		}
@@ -203,48 +257,26 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						<div class="s-content" id="settings-content"></div>
 						<?php do_action( 'stackable_settings_page_mid' ); ?>
 					</div>
-					<!-- <div class="s-side">
-						<?php if ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ) : ?>
-						<aside class="s-box s-premium-box">
-							<h3><?php _e( '🚀 Stackable Premium', STACKABLE_I18N ) ?></h3>
-							<p><?php _e( 'If you are ready for even more, upgrade to Premium and get:', STACKABLE_I18N ) ?></p>
-								<ul class="s-check-list">
-									<li><?php _e( '54+ Additional Block Layouts', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '230+ Additional Library Designs', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Dynamic Content', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Motion Effects', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Conditionally Display Blocks', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'User Role Manager', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Font Awesome Pro Integration', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Custom Block CSS', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '1 Year of Updates', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '1 Year of Support', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'No Ads', STACKABLE_I18N ) ?></li>
-								</ul>
-							</p>
-							<p>
-								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=gopremium&utm_medium=wp-dashboard" class="s-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>" target="_new"><?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?></a>
-							</p>
-							<p>
-								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=learnmore&utm_medium=wp-dashboard" title="<?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?> →</a>
-							</p>
-						</aside>
-						<?php endif; ?>
-						<aside class="s-box s-left-align">
-							<h3><?php _e( '🎉 Join the Community', STACKABLE_I18N ) ?></h3>
-							<p><?php _e( 'Join the very active Stackable Community in Facebook, join thousands of like-minded people who are also building their websites and crafting beautiful and impactful web pages.', STACKABLE_I18N ) ?></p>
-							<p><a href="https://www.facebook.com/groups/wpstackable" class="s-button" target="_new" title="<?php esc_attr_e( 'Join Facebook Community', STACKABLE_I18N ) ?>"><?php _e( 'Join Facebook Community', STACKABLE_I18N ) ?></a></p>
-						</aside>
-						<aside class="s-box s-news-box s-left-align">
-							<h3><?php _e( '🗞 Stackable Blog', STACKABLE_I18N ) ?></h3>
-							<div class="s-news-box-content"><?php stackable_news_feed_links_cached() ?></div>
-							<p><?php _e( 'Keep up to date by subscribing to our newsletter.', STACKABLE_I18N ) ?></p>
-							<p><a href="http://eepurl.com/dJY9xI" class="s-button" target="_new" title="<?php esc_attr_e( 'Subscribe', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe', STACKABLE_I18N ) ?></a></p>
-						</aside>
-					</div> -->
+				</section>
+			</div>
+			<?php
+		}
 
-
-
+		public function stackable_content($id) {
+			?>
+			<div class="wrap wrap-settings">
+				<div class="s-header-wrap s-header-settings">
+					<?php $this->print_header() ?>
+					<?php echo $this->print_premium_button() ?>
+					<?php echo $this->print_tabs() ?>
+				</div>
+				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
+				<section id="settings-notice">
+					<div class="s-rest-settings-notice"></div>
+					<div class="s-save-settings-notice"></div>
+				</section>
+				<?php stackable_welcome_notification() ?>
+				<section class="s-body-container" id="<?php echo esc_attr( $id ); ?>">
 				</section>
 			</div>
 			<?php
@@ -280,6 +312,44 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		}
 
 		/**
+		 * Redirect to the Stackable Documentation/Premium page.
+		*/
+		public function redirect_submenus() {
+			if ( empty( $_GET['page'] ) ) {
+				return;
+			}
+
+			if ( 'stackable-documentation' === $_GET['page'] ) {
+				wp_redirect('https://docs.wpstackable.com');
+				exit;
+			}
+
+			if ( 'stackable-go-premium' === $_GET['page'] ) {
+				wp_redirect('https://wpstackable.com/premium/?utm_source=wp-settings-tabs&utm_campaign=gopremium&utm_medium=wp-dashboard');
+				exit;
+			}
+		}
+
+		public function redirect_submenus_newtab() {
+			?>
+			<script id='stk-documentation-set-target'>
+			document.addEventListener('DOMContentLoaded', function() {
+				const docs = document.querySelector('a[href="admin.php?page=stackable-documentation"]');
+				if (docs) docs.setAttribute('target', '_blank');
+				const premium = document.querySelector('a[href="admin.php?page=stackable-go-premium"]');
+				if (premium) premium.setAttribute('target', '_blank');
+			});
+
+			// Remove this script from the DOM after execution to clean up
+			const currentScript = document.getElementById('stk-documentation-set-target');
+				if (currentScript) {
+					currentScript.parentNode.removeChild(currentScript);
+				}
+			</script>
+			<?php
+		}
+
+		/**
 		 * Adds links to the plugins page entry.
 		 *
 		 * @param Array $links
@@ -290,7 +360,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			// Settings link.
 			if ( current_user_can( 'manage_options' ) ) {
 				$settings_link = sprintf( '<a href="%s">%s</a>',
-					admin_url( 'options-general.php?page=stackable' ),
+					admin_url( 'admin.php?page=stackable-settings' ),
 					__( 'Settings', STACKABLE_I18N )
 				);
 
@@ -342,7 +412,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				}
 
 				// Or go to the getting started page.
-				wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-getting-started' ) ) );
+				wp_redirect( esc_url( admin_url( 'admin.php?page=stackable' ) ) );
 
 				die();
 			}

@@ -103,11 +103,21 @@ test.describe( 'Block Editor', () => {
 	} ) => {
 		await editor.insertBlock( {
 			name: 'stackable/text',
-			attributes: {
-				text: 'test',
-				textColor1: '#ff0000',
-			},
 		} )
+
+		const settings = page.getByLabel( 'Settings', { exact: true } )
+
+		if ( await settings.getAttribute( 'aria-pressed' ) === 'false' ) {
+			await settings.click()
+		}
+
+		// Add content and color to Stackable Text Block
+		await editor.canvas.locator( '[data-type="stackable/text"] > .stk-block-text > p[role="textbox"]' ).fill( 'test' )
+		await page.locator( '.stk-color-palette-control .stk-control-content > .components-dropdown > .components-button' ).first().click()
+		await page.getByLabel( 'Hex color' ).fill( 'ff0000' )
+
+		// Click on the body to close the Color Picker popup
+		await editor.canvas.locator( 'body' ).click()
 
 		const clientId = await editor.canvas.getByLabel( 'Block: Text' ).getAttribute( 'data-block' )
 		const uniqueId = ( await editor.getBlockAttributes( clientId ) ).uniqueId

@@ -148,6 +148,16 @@ export const attributes = ( version = VERSION ) => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
+	attrObject.add( {
+		attributes: {
+			useCustomIconColor: {
+				type: 'boolean',
+				default: false,
+			},
+		},
+		versionAdded: '3.14.4',
+		versionDeprecated: '',
+	} )
 
 	return attrObject.getMerged( version )
 }

@@ -17,10 +17,12 @@ class StackableHorizontalScroller {
 			// get all links, because we will need to disable them during drag
 			const children = el.querySelectorAll( '.stk-block-link, a' )
 
-			// Get all images and set draggable to false
+			// Get all images, set draggable to false
+			// and loading to eager to make the browser calculate the grid height correctly
 			const images = el.querySelectorAll( 'img' )
 			images.forEach( image => {
 				image.draggable = false
+				image.loading = 'eager'
 			} )
 
 			// prevents redirecting to the inner column link
@@ -66,12 +68,13 @@ class StackableHorizontalScroller {
 					behavior: 'smooth',
 				} )
 
+				children.forEach( child => {
+					// this enables the links after dragging
+					child.removeEventListener( 'click', onClickHandler, true )
+				} )
+
 				dragTimeout = setTimeout( () => {
 					el.classList.remove( 'stk--snapping-deactivated' )
-					children.forEach( child => {
-						// this enables the links after dragging
-						child.removeEventListener( 'click', onClickHandler, true )
-					 } )
 				}, 500 )
 			}
 

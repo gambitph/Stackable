@@ -287,7 +287,10 @@ Image.addStyles( blockStyles, {
 		const blockStyle = getBlockStyle( variations, className )
 
 		if ( [ 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ) ) {
-			if ( imageHasLink ) {
+			// If the image has a link and the width unit is %, return false
+			// because we have set a custom selector for the image width that uses the % unit.
+			if ( imageHasLink && ( getAttribute( 'imageWidthUnit' ) === '%' ||
+			getAttribute( 'imageWidthUnitTablet' ) === '%' ) ) {
 				return false
 			}
 			return true
@@ -306,6 +309,19 @@ Image.addStyles( blockStyles, {
 				: [ selector, `${ itemSelector } .stk-block-posts__image-link` ]
 		}
 		return selector
+	},
+	hoverSelectorCallback: getAttribute => {
+		const className = getAttribute( 'className' )
+		const blockStyle = getBlockStyle( variations, className )
+
+		if ( [ 'portfolio', 'portfolio-2' ].includes( blockStyle?.name ) ) {
+			return `${ itemSelector }:hover .stk-img-wrapper img`
+		}
+
+		if ( [ 'image-card' ].includes( blockStyle?.name ) ) {
+			return `.stk-block-posts__image-card-container:hover img`
+		}
+		return '.stk-img-wrapper:hover img'
 	},
 	widthStyleRuleCallback: getAttribute => {
 		const className = getAttribute( 'className' )

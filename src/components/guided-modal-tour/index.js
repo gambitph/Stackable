@@ -22,6 +22,7 @@ import { models } from '@wordpress/api'
 import {
 	useEffect, useState, lazy, Suspense, memo,
 } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 // The main tour component.
 const GuidedModalTour = memo( props => {
@@ -59,7 +60,8 @@ const GuidedModalTour = memo( props => {
 	// condition can be true, false, or null. true will show the tour (even if
 	// it's already done), false will not show the tour, null will show the tour
 	// only once (normal behavior).
-	const condition = TOUR_CONDITIONS[ tourId ]
+	const conditions = applyFilters( 'stackable.guided-tour.conditions', TOUR_CONDITIONS )
+	const condition = conditions[ tourId ]
 	const conditionResult = condition ? condition() : null
 	if ( conditionResult === false ) {
 		return null
@@ -67,6 +69,11 @@ const GuidedModalTour = memo( props => {
 		if ( isDone ) {
 			return null
 		}
+	}
+
+	// Do not load if there is no tourId.
+	if ( ! tourId ) {
+		return null
 	}
 
 	// Only lazy-load ModalTour when we're actually going to render it

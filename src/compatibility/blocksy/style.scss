@@ -3,6 +3,7 @@
 :where(.stk--is-blocksy-theme.stk--has-default-container-scheme) {
 	--stk-default-link-color: var(--theme-link-initial-color);
 	--stk-default-heading-color: var(--theme-heading-color, var(--theme-headings-color));
+	--stk-default-button-background-color: var(--theme-button-background-initial-color);
 
 	:where(.stk-block-heading) {
 		@for $i from 1 through 6 {

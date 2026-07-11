@@ -32,6 +32,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			add_action( 'register_stackable_global_settings', array( $this, 'register_saved_patterns' ) );
 
 			add_action( 'stackable_delete_design_library_cache', array( $this, 'delete_cache_v3' ) );
+
+			add_filter( 'stackable_localize_script', array( $this, 'add_wp_theme_global_styles' ) );
 		}
 
 		public static function validate_string( $value, $request, $param ) {
@@ -112,13 +114,13 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 							)
 						)
 					),
-					'default' => '',
+					'default' => array(),
 				)
 			);
 		}
 
 		public function sanitize_array_setting( $input ) {
-			return ! is_array( $input ) ? array( array() ) : $input;
+			return is_array( $input ) ? $input : array();
 		}
 
 		/**
@@ -336,6 +338,16 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 */
 		public static function get_cdn_url() {
 			return trailingslashit( STACKABLE_DESIGN_LIBRARY_URL );
+		}
+
+		public function add_wp_theme_global_styles( $args ) {
+			$wp_global_styles = apply_filters( 'stackable.design-library.global-theme-styles', '' );
+
+			$wp_global_styles .= wp_get_global_stylesheet();
+
+			$args['wpGlobalStylesInlineCss'] = $wp_global_styles;
+
+			return $args;
 		}
 	}
 

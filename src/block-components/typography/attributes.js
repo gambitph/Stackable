@@ -85,6 +85,13 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 					multiline,
 					default: defaultText,
 					__unstableMultilineWrapperTags,
+					/**
+					 * Starting from WP 6.9, the toolbar gets hidden when the text block is set as the default block.
+					 * Setting the role to 'content' will prevent the toolbar from being hidden.
+					 * see https://github.com/WordPress/gutenberg/pull/70897
+					 */
+					role: 'content',
+					__experimentalRole: 'content',
 				},
 			} : {} ),
 			...( hasTextTag ? {

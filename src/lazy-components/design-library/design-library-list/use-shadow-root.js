@@ -1,5 +1,5 @@
 import { wpGlobalStylesInlineCss } from 'stackable'
-import { getAdditionalStylesForPreview } from './util'
+import { getAdditionalStylesForPreview } from '../util'
 
 import {
 	useEffect, useRef, useState,
