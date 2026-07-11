@@ -1,5 +1,8 @@
 import { useQueryLoopInstanceId } from '~stackable/util'
-import { useMemo, useRef } from '@wordpress/element'
+import {
+	useLayoutEffect, useMemo, useRef,
+} from '@wordpress/element'
+import { dispatch } from '@wordpress/data'
 import { useRafEffect } from '~stackable/hooks'
 import CssSaveCompiler from './css-save-compiler'
 
@@ -73,5 +76,16 @@ export const useBlockCssGenerator = props => {
 		attributes.generatedCss = saveCss
 	}, [ attributes, version ] )
 
-	return editCss
+	const styleKey = `${ clientId }-${ instanceId }`
+
+	useLayoutEffect( () => {
+		dispatch( 'stackable/editor-block-css' ).setBlockCss( styleKey, editCss || '' )
+		return () => {
+			dispatch( 'stackable/editor-block-css' ).removeBlockCss( styleKey )
+		}
+	}, [ styleKey, editCss ] )
+
+	// We used to return the CSS here, but for optimization, now
+	// CSS is injected via the unified editor stylesheet plugin.
+	return null
 }
