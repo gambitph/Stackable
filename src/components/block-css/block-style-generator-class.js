@@ -18,6 +18,10 @@ import { getAttrName, getUniqueBlockClass } from '~stackable/util'
 import { getDynamicContentEdit } from '../dynamic-content-control'
 import { applyFilters } from '@wordpress/hooks'
 import { BlockCssFunc } from '.'
+import {
+	formAllPossibleAttributeNames,
+	getDependencyAttrnamesFast,
+} from './util'
 import { pickBy } from 'lodash'
 
 export class BlockStyleGenerator {
@@ -170,6 +174,46 @@ export class BlockStyleGenerator {
 	getAttributesWithValues( attributes ) {
 		const test = value => typeof value !== 'undefined' && value !== ''
 		return Object.keys( pickBy( attributes, test ) )
+	}
+
+	/**
+	 * Returns all attribute names that can affect editor/save CSS for this block.
+	 * Cached per BlockStyleGenerator instance (styles are registered at load time).
+	 *
+	 * @return {Array<string>} Sorted, deduplicated attribute names
+	 */
+	getStyleDependencyAttributeNames() {
+		if ( this._styleDependencyAttributeNames ) {
+			return this._styleDependencyAttributeNames
+		}
+
+		const attrNameSet = new Set()
+
+		const addNames = names => {
+			names.forEach( name => attrNameSet.add( name ) )
+		}
+
+		this._orderedStyles.forEach( blockStyle => {
+			if ( typeof blockStyle === 'function' ) {
+				return
+			}
+
+			addNames( getDependencyAttrnamesFast( {
+				...this.commonProps,
+				...blockStyle,
+			} ) )
+
+			if ( typeof blockStyle.renderCondition === 'string' && blockStyle.renderCondition ) {
+				addNames( formAllPossibleAttributeNames( [ blockStyle.renderCondition ] ) )
+			}
+		} )
+
+		this._blockStyleNamesWithValuePreCallbacks.forEach( attrName => {
+			addNames( formAllPossibleAttributeNames( [ attrName ] ) )
+		} )
+
+		this._styleDependencyAttributeNames = Array.from( attrNameSet ).sort()
+		return this._styleDependencyAttributeNames
 	}
 
 	/**

@@ -5,6 +5,7 @@ import {
 import { dispatch, select } from '@wordpress/data'
 import { useRafEffect } from '~stackable/hooks'
 import CssSaveCompiler from './css-save-compiler'
+import { createStyleDependencyFingerprint } from './util'
 
 export const useBlockCssGenerator = props => {
 	const {
@@ -22,24 +23,26 @@ export const useBlockCssGenerator = props => {
 	// Generate the CSS styles.
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
 
-	// Keep the old text attribute for comparison to prevent block style generation when only the text attribute has changed.
-	const oldText = useRef( attributes.text )
+	const styleDependencyAttrNames = useMemo(
+		() => blockStyles.getStyleDependencyAttributeNames(),
+		[ blockStyles ]
+	)
 
-	// Keep the generated CSS for editor and return it when only the text attribute has changed.
-	const oldCss = useRef( null )
+	// Cheap fingerprint of style-related attributes only. Recomputed when
+	// attributes change, but editCss only regenerates when the fingerprint changes.
+	const styleFingerprint = useMemo(
+		() => createStyleDependencyFingerprint( attributes, styleDependencyAttrNames ),
+		[ attributes, styleDependencyAttrNames ]
+	)
 
 	const editCss = useMemo( () => {
-		if ( oldText.current !== attributes.text ) {
-			oldText.current = attributes.text
-			return oldCss.current
-		}
 		// Gather only the attributes that have values and all their
 		// corresponding block style definitions.
 		const attrNamesWithValues = blockStyles.getAttributesWithValues( attributes )
 		blockStyleDefsRef.current = blockStyles.getBlockStyles( attrNamesWithValues )
 
 		// These are the styles to be displayed in the editor.
-		const css = blockStyles.generateBlockStylesForEditor( attributes, blockStyleDefsRef.current, {
+		return blockStyles.generateBlockStylesForEditor( attributes, blockStyleDefsRef.current, {
 			version,
 			blockState,
 			uniqueId: attributes.uniqueId,
@@ -47,16 +50,9 @@ export const useBlockCssGenerator = props => {
 			clientId,
 			context, // This is used for dynamic content.
 		} )
-		oldCss.current = css
-		return css
-	}, [ attributes, version, blockState, clientId, attributes.uniqueId, instanceId, context ] )
+	}, [ styleFingerprint, version, blockState, clientId, attributes.uniqueId, instanceId, context, blockStyles ] )
 
 	useRafEffect( () => {
-		if ( oldText.current !== attributes.text ) {
-			oldText.current = attributes.text
-			return
-		}
-
 		const cssCompiler = new CssSaveCompiler()
 
 		// Generate the styles that are to be saved with the actual block.
@@ -74,7 +70,7 @@ export const useBlockCssGenerator = props => {
 		// dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 		// setAttributes( { generatedCss: saveCss } )
 		attributes.generatedCss = saveCss
-	}, [ attributes, version ] )
+	}, [ styleFingerprint, version, blockStyles ] )
 
 	const styleKey = `${ clientId }-${ instanceId }`
 

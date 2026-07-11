@@ -180,7 +180,6 @@ const Edit = props => {
 								)
 							  }
 							: undefined }
-						enableDebounce={ false }
 					/>
 				</div>
 			</BlockDiv>

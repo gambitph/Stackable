@@ -157,6 +157,30 @@ export const formAllPossibleAttributeNames = attrNames => {
 }
 
 /**
+ * Serializes only the attribute values that can affect generated block CSS.
+ * Used to avoid regenerating CSS when unrelated attributes change (e.g. text).
+ *
+ * @param {Object} attributes Block attributes
+ * @param {Array<string>} attrNames Style dependency attribute names
+ * @return {string} Fingerprint string
+ */
+export const createStyleDependencyFingerprint = ( attributes, attrNames ) => {
+	if ( ! attrNames?.length ) {
+		return ''
+	}
+
+	const values = {}
+	for ( let i = 0; i < attrNames.length; i++ ) {
+		const attrName = attrNames[ i ]
+		if ( attrName in attributes ) {
+			values[ attrName ] = attributes[ attrName ]
+		}
+	}
+
+	return JSON.stringify( values )
+}
+
+/**
  * Prepends a class
  *
  * @param {string} selector

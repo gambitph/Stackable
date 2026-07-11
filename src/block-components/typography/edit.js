@@ -25,9 +25,7 @@ import { escapeHTMLIfInvalid } from './util'
 /**
  * WordPress dependencies
  */
-import {
-	useEffect, useState, useCallback, memo,
-} from '@wordpress/element'
+import { useCallback, memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
@@ -80,29 +78,13 @@ export const Controls = props => {
 	} = useAttributeEditHandlers( attrNameTemplate )
 	const attributeName = getAttrNameFunction( attrNameTemplate )
 	const text = getAttribute( 'text' )
-	const [ debouncedText, setDebouncedText ] = useState( text )
 	const useTypographyAsPresets = useSelect( select =>
 		 select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
 	)
 
-	useEffect( () => {
-		if ( text !== debouncedText ) {
-			setDebouncedText( text )
-		}
-	}, [ text ] )
-
-	useEffect( () => {
-		let timeout
-		if ( debouncedText !== text ) {
-			timeout = setTimeout( () => {
-				updateAttribute( 'text', debouncedText )
-			}, 300 )
-		}
-
-		return () => clearTimeout( timeout )
-	}, [ updateAttribute, debouncedText, text ] )
-
-	const onChangeContent = useCallback( text => setDebouncedText( escapeHTMLIfInvalid( text ) ), [] )
+	const onChangeContent = useCallback( newText => {
+		updateAttribute( 'text', escapeHTMLIfInvalid( newText ) )
+	}, [ updateAttribute ] )
 
 	const presetMarks = usePresetControls( 'fontSizes' )
 		?.getPresetMarks( { customOnly: useTypographyAsPresets } ) || null
@@ -115,14 +97,14 @@ export const Controls = props => {
 					label={ __( 'Content', i18n ) }
 					hasPanelModifiedIndicator={ false }
 					isMultiline={ isMultiline }
-					value={ unescape( debouncedText ) }
+					value={ unescape( text ) }
 					onChange={ onChangeContent }
 					/**
 					 * Pass the unescaped Dynamic Content `onChange` function.
 					 *
 					 * @param {string} text Text with dynamic content.
 					 */
-					changeDynamicContent={ setDebouncedText }
+					changeDynamicContent={ onChangeContent }
 					isDynamic={ true }
 				/>
 			) }
