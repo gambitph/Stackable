@@ -20,6 +20,7 @@ import { applyFilters } from '@wordpress/hooks'
 import { BlockCssFunc } from '.'
 import {
 	formAllPossibleAttributeNames,
+	getCallbackAttributeDependencies,
 	getDependencyAttrnamesFast,
 } from './util'
 import { pickBy } from 'lodash'
@@ -29,6 +30,7 @@ export class BlockStyleGenerator {
 		this.commonProps = commonProps
 		this._blockStyles = {} // This holds all the blockStyles indices, keys are the attrName
 		this._dynamicBlockStyles = [] // Holds functions that will be called when generating blocks styles.
+		this._dynamicStyleDependencyRootNames = [] // Root attr names for addBlockStyleConditionally styles.
 		this._blockStyleNamesWithValuePreCallbacks = [] // This holds all block style keys that have valuePreCallbacks, becuase these will need to be run even if the attribute is blank.
 		this._orderedStyles = [] // This holds all the blockStyles added in order
 	}
@@ -93,11 +95,14 @@ export class BlockStyleGenerator {
 	 * this is a less performant way to add block styles.
 	 *
 	 * @param {Function} fn function that's called when generating block styles
+	 * @param {Array<string>} dependencyAttrNames Root attribute names that affect
+	 * the conditional styles (e.g. columnArrangement for column order CSS).
 	 */
-	addBlockStyleConditionally( fn ) {
+	addBlockStyleConditionally( fn, dependencyAttrNames = [] ) {
 		this._orderedStyles.push( fn )
 		const blockStyleIndex = this._orderedStyles.length - 1
 		this._dynamicBlockStyles.push( blockStyleIndex )
+		this._dynamicStyleDependencyRootNames.push( ...dependencyAttrNames )
 	}
 
 	/**
@@ -206,6 +211,16 @@ export class BlockStyleGenerator {
 			if ( typeof blockStyle.renderCondition === 'string' && blockStyle.renderCondition ) {
 				addNames( formAllPossibleAttributeNames( [ blockStyle.renderCondition ] ) )
 			}
+
+			if ( typeof blockStyle.enabledCallback === 'function' ) {
+				addNames( formAllPossibleAttributeNames(
+					getCallbackAttributeDependencies( blockStyle.enabledCallback )
+				) )
+			}
+		} )
+
+		this._dynamicStyleDependencyRootNames.forEach( attrName => {
+			addNames( formAllPossibleAttributeNames( [ attrName ] ) )
 		} )
 
 		this._blockStyleNamesWithValuePreCallbacks.forEach( attrName => {
