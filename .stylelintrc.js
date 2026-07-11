@@ -36,6 +36,23 @@ module.exports = {
 		"selector-class-pattern": null,
 		"value-keyword-case": null,
 		"length-zero-no-unit": null,
-		"font-family-no-missing-generic-family-keyword": null
+		"font-family-no-missing-generic-family-keyword": null,
+		"property-no-unknown": [
+			true,
+			{
+				ignoreProperties: [
+					"container-type",
+					"container-name",
+				],
+			},
+		],
+		"scss/at-rule-no-unknown": [
+			true,
+			{
+				ignoreAtRules: [
+					"container",
+				],
+			},
+		],
 	}
 }

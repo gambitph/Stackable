@@ -8,6 +8,7 @@
  * External dependencies
  */
 import { useDeviceType, useBlockHoverState } from '~stackable/hooks'
+import { onClassChange } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -53,12 +54,12 @@ const EditorPreviewClass = () => {
 			}
 
 			// At first load of the editor, the `stk-preview-device-*` and `stk--is-*-theme` are removed, so we have to re-add it.
-			const mo = onClassChange( editorEl, () => {
-				if ( editorEl?.classList.contains( `stk-preview-device-${ deviceType.toLowerCase() }` ) === false ) {
+			const unsubscribe = onClassChange( editorEl, () => {
+				if ( editorEl.classList.contains( `stk-preview-device-${ deviceType.toLowerCase() }` ) === false ) {
 					editorEl.classList.remove( 'stk-preview-device-desktop', 'stk-preview-device-tablet', 'stk-preview-device-mobile' )
 					editorEl.classList.add( `stk-preview-device-${ deviceType.toLowerCase() }` )
 				}
-				if ( editorEl?.classList.contains( `stk-preview-state--${ currentHoverState }` ) === false ) {
+				if ( editorEl.classList.contains( `stk-preview-state--${ currentHoverState }` ) === false ) {
 					editorEl.classList.remove( 'stk-preview-state--normal', 'stk-preview-state--hover', 'stk-preview-state--parent-hover', 'stk-preview-state--collapsed' )
 					editorEl.classList.add( `stk-preview-state--${ currentHoverState }` )
 				}
@@ -72,7 +73,7 @@ const EditorPreviewClass = () => {
 				}
 			} )
 
-			return () => mo.disconnect()
+			return unsubscribe
 		}
 	}, [ editorEl, deviceType, currentHoverState ] )
 
@@ -82,25 +83,3 @@ const EditorPreviewClass = () => {
 registerPlugin( 'stackable-editor-device-preview-class', {
 	render: EditorPreviewClass,
 } )
-
-// Listener when a class is changed on an element.
-const onClassChange = ( node, callback ) => {
-	let lastClassString = node.classList.toString()
-
-	const mutationObserver = new MutationObserver( mutationList => {
-		for ( const item of mutationList ) {
-			if ( item.attributeName === 'class' ) {
-				const classString = node.classList.toString()
-				if ( classString !== lastClassString ) {
-					callback( mutationObserver )
-					lastClassString = classString
-					break
-				}
-			}
-	  }
-	} )
-
-	mutationObserver.observe( node, { attributes: true } )
-
-	return mutationObserver
-}
