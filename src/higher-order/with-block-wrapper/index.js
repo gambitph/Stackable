@@ -12,7 +12,7 @@
  * Internal dependencies
  */
 import { BlockWrapper } from '~stackable/components'
-import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
+import { useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -57,6 +57,15 @@ let firstLoad = true
 // for speed.
 let selectedBlock = null
 
+// Stagger root block mounts after preview remount to spread React/CSS work.
+// Editor block CSS is persisted in the store and re-adopted on preview switch.
+const ROOT_BLOCK_MOUNT_DELAY_BASE_MS = 50
+const ROOT_BLOCK_MOUNT_DELAY_SPREAD_MS = 100
+
+const getRootBlockMountDelay = () => {
+	return ROOT_BLOCK_MOUNT_DELAY_BASE_MS + Math.floor( Math.random() * ROOT_BLOCK_MOUNT_DELAY_SPREAD_MS )
+}
+
 /**
  * This optimizes the preview device switching. Without this, there will be a
  * 4-5 second delay when switching preview devices. With this, it's
@@ -75,7 +84,6 @@ let selectedBlock = null
  */
 export const useDevicePreviewOptimization = blockProps => {
 	const { clientId, isSelected } = blockProps
-	const deviceType = useDeviceType()
 	const { rootBlockClientId } = useSelect(
 		select => {
 			const { getBlockRootClientId } = select( 'core/block-editor' )
@@ -108,28 +116,23 @@ export const useDevicePreviewOptimization = blockProps => {
 	// block error when switching from tablet to desktop.  Also, always display
 	// the block if it's nested (not a root block), since if we delay the
 	// display, it will look like the blocks are slowly loading.
-	// In tablet/mobile iframe preview, skip the mount delay so styles apply immediately.
-	const skipMountDelay = deviceType !== 'Desktop'
-	const displayedByDefault = ! isRootBlock || selectedBlock === clientId || firstLoad || skipMountDelay
+	const displayedByDefault = ! isRootBlock || selectedBlock === clientId || firstLoad
 
 	const [ isDisplayed, setIsDisplayed ] = useState( displayedByDefault )
 
-	// Delay mounting root blocks on desktop only (original preview-switch optimization).
+	// Delay mounting root blocks to spread work across frames after preview remount.
+	// Each root block gets a random delay in [base, base + spread) so they don't
+	// all commit in the same frame.
 	useEffect( () => {
-		if ( skipMountDelay ) {
-			setIsDisplayed( true )
-			return undefined
-		}
-
 		if ( ! isDisplayed ) {
 			const t = setTimeout( () => {
 				setIsDisplayed( true )
-			}, 300 )
+			}, getRootBlockMountDelay() )
 			return () => clearTimeout( t )
 		}
 
 		return undefined
-	}, [ isDisplayed, skipMountDelay ] )
+	}, [ isDisplayed ] )
 
 	return isDisplayed
 }
