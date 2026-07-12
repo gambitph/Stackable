@@ -166,6 +166,11 @@
 		background: #fff;
 		border-top: 1px solid #eee;
 	}
+	.ugb-modal-design-library__footer-selection {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
 	// Make room for the footer buttons.
 	&.ugb-modal-design-library--is-multiselect {
 		.ugb-modal-design-library__sidebar {

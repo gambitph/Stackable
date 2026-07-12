@@ -414,7 +414,17 @@ const ModalDesignLibrary = props => {
 					/>
 
 					{ selectedTab !== 'pages' && <aside className="ugb-modal-design-library__footer">
-						<div>{ sprintf( __( `(%d) Selected`, i18n ), selectedDesignIds.length ) }</div>
+						<div className="ugb-modal-design-library__footer-selection">
+							<span>{ sprintf( __( `(%d) Selected`, i18n ), selectedDesignIds.length ) }</span>
+							{ applyFilters( 'stackable.design-library.footer-selection-actions', null, {
+								selectedTab,
+								selectedDesignIds,
+								clearSelection: () => {
+									setSelectedDesignIds( [] )
+									setSelectedDesignData( [] )
+								},
+							} ) }
+						</div>
 						<Button
 							label={ __( 'Add Designs', i18n ) }
 							className="ugb-modal-design-library__add-multi"

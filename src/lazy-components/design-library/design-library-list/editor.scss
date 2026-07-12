@@ -258,12 +258,7 @@
 // Full page previews
 .ugb-modal-design-library__full-pages {
 	.stk--design-preview-large {
-		cursor: grab;
-		cursor: -webkit-grab;
-		&:active {
-			cursor: grabbing;
-			cursor: -webkit-grabbing;
-		}
+		cursor: default;
 	}
 	.ugb-design-control-pro-note {
 		top: auto;
@@ -301,9 +296,43 @@
 }
 
 .stk-design-library__item-saved .ugb-design-library-item {
+	cursor: pointer;
+}
+
+.stk-design-library__item-pages .ugb-design-library-item,
+.ugb-design-library-item--pages {
 	cursor: default;
-	footer {
+
+	.stk-block-design__design-container,
+	.stk--design-preview-large,
+	.stk-block-design__host-container,
+	.stk-block-design__host {
+		cursor: default;
+	}
+
+	.ugb-modal-design-library__add-multi {
 		cursor: pointer;
+	}
+}
+
+.stk-design-library-item__label-row {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+
+	h4 {
+		margin: 0;
+	}
+}
+
+.stk-design-library-item__edit-button.ugb-button-component {
+	min-width: 32px;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	flex-shrink: 0;
+	.dashicons {
+		color: #000 !important;
 	}
 }
 

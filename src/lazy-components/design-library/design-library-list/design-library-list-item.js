@@ -21,7 +21,6 @@ import {
 import {
 	useState, useRef, memo,
 	useMemo,
-	Fragment,
 } from '@wordpress/element'
 import { Dashicon, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
@@ -84,6 +83,7 @@ const DesignLibraryListItem = memo( props => {
 		[ `ugb--is-${ plan }` ]: ! isPro && plan !== 'free',
 		'ugb--is-toggled': selectedNum,
 		'ugb--is-hidden': ! shouldRender,
+		'ugb-design-library-item--pages': selectedTab === 'pages',
 	} )
 
 	const onClickHost = e => {
@@ -91,11 +91,24 @@ const DesignLibraryListItem = memo( props => {
 		onClickDesign()
 	}
 
+	const isInteractiveTarget = target => {
+		if ( ! target || ! target.tagName ) {
+			return false
+		}
+
+		const tag = target.tagName
+		return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable
+	}
+
 	const buttonAttributes = {
 		tabIndex: 0,
 		role: 'button',
 		onClick: onClickHost,
 		onKeyDown: e => {
+			if ( isInteractiveTarget( e.target ) ) {
+				return
+			}
+
 			if ( e.key === 'Enter' || e.key === ' ' ) {
 				e.preventDefault()
 				onClickHost( e )
@@ -113,7 +126,11 @@ const DesignLibraryListItem = memo( props => {
 			{ ...( selectedTab === 'patterns' ? buttonAttributes : {} ) }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
-			<div style={ { position: 'relative' } } className={ `stk-block-design__design-container ${ designPreviewSize > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
+			<div
+				style={ { position: 'relative' } }
+				className={ `stk-block-design__design-container ${ designPreviewSize > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }
+				{ ...( selectedTab === 'saved' ? buttonAttributes : {} ) }
+			>
 				{ ! isPro && plan !== 'free' && (
 					<ProControl
 						type="design-library"
@@ -121,7 +138,6 @@ const DesignLibraryListItem = memo( props => {
 						showHideNote={ false }
 					/>
 				) }
-				{ isPro && applyFilters( 'stackable.design-library.pattern-actions', Fragment, previewProps ) }
 				<div className={ `stk-spinner-container ${ isLoading || ! shouldRender ? '' : 'stk-hide-spinner' }` }><Spinner /></div>
 				<div
 					className="stk-block-design__host-container"
@@ -151,8 +167,9 @@ const DesignLibraryListItem = memo( props => {
 				data-selected-num={ selectedNum }
 				{ ...( selectedTab === 'saved' ? buttonAttributes : {} ) }
 			>
-				<div>
+				<div className="stk-design-library-item__label-row">
 					<h4> { label } </h4>
+					{ selectedTab === 'saved' && isPro && applyFilters( 'stackable.design-library.pattern-label-actions', null, previewProps ) }
 					{ blocksForSubstitutionRef.current !== false && blocksForSubstitutionRef.current.size !== 0 &&
 						<Tooltip text={ __( 'This design contains disabled blocks. You can still insert this design with blocks substituted with other enabled blocks.', i18n ) }>
 							<Dashicon icon="warning" size={ 16 } />
