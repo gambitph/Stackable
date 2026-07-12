@@ -17,7 +17,7 @@ import { useBlockColorSchemes } from '~stackable/hooks'
 import {
 	GuidedModalTour, Button, ColorSchemePreview, ColorSchemesHelp, Tooltip,
 } from '~stackable/components'
-import { getDesigns, filterDesigns } from '~stackable/design-library'
+import { getDesigns } from '~stackable/design-library'
 
 /**
  * WordPress deprendencies
@@ -65,8 +65,6 @@ const ModalDesignLibrary = props => {
 
 	// The sidebar designs are used to update the list of blocks in the sidebar.
 	const [ sidebarDesigns, setSidebarDesigns ] = useState( [] )
-	// The display designs are used to list the available designs the user can choose.
-	const [ displayDesigns, setDisplayDesigns ] = useState( [] )
 
 	const [ errors, setErrors ] = useState( null )
 
@@ -122,17 +120,19 @@ const ModalDesignLibrary = props => {
 		} )
 	}, [ doReset, selectedTab, savedPatterns ] )
 
-	// This updates the displayed designs the user can pick.
-	useEffect( () => {
-		filterDesigns( {
-			library: sidebarDesigns,
-			category: selectedCategory,
-			plan: selectedPlan.key,
-			type: selectedTab,
-		} ).then( designs => {
-			setDisplayDesigns( designs )
-		} )
-	}, [ sidebarDesigns, selectedPlan, selectedCategory ] )
+	const displayDesigns = useMemo( () => {
+		let library = sidebarDesigns
+
+		if ( selectedPlan.key && selectedTab !== 'saved' ) {
+			library = library.filter( ( { plan } ) => plan === selectedPlan.key )
+		}
+
+		if ( selectedCategory ) {
+			library = library.filter( ( { category } ) => category === selectedCategory )
+		}
+
+		return library
+	}, [ sidebarDesigns, selectedPlan.key, selectedCategory, selectedTab ] )
 
 	const colorSchemeHelpCallback = () => {
 		if ( selectedDesignIds.length ) {
@@ -410,6 +410,7 @@ const ModalDesignLibrary = props => {
 						isBusy={ isBusy }
 						designs={ displayDesigns }
 						selectedTab={ selectedTab }
+						selectedCategory={ selectedCategory }
 						errors={ errors }
 					/>
 

@@ -42,7 +42,7 @@ const DesignLibraryListItem = memo( props => {
 		? presetMarks[ presetMarks.length - 2 ].value
 		: 120
 
-	const [ isLoading, setIsLoading ] = useState( true )
+	const [ isLoading, setIsLoading ] = useState( false )
 	const [ selected, setSelected ] = useState( false )
 
 	const {

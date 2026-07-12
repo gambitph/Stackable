@@ -34,6 +34,12 @@ import { cleanSerializedBlock } from '~stackable/util'
 
 const DEFAULT_CONTENT = { ...DEFAULT }
 
+const previewParseCache = new Map()
+
+const getPreviewCacheKey = ( designId, selectedTab, isDesignLibraryDevMode ) => {
+	return `${ selectedTab }:${ designId }:${ isDesignLibraryDevMode ? 'dev' : 'prod' }`
+}
+
 export const usePreviewRenderer = (
 	props, shouldRender, spacingSize,
 	ref, hostRef, shadowRoot, setIsLoading, stylesLoaded
@@ -216,6 +222,20 @@ export const usePreviewRenderer = (
 			return
 		}
 
+		const cacheKey = getPreviewCacheKey( designId, selectedTab, isDesignLibraryDevMode )
+		const cachedPreview = previewParseCache.get( cacheKey )
+
+		if ( cachedPreview ) {
+			categoriesRef.current = cachedPreview.categories
+			hasBackgroundTargetRef.current = cachedPreview.hasBackgroundTarget
+			blocksForSubstitutionRef.current = cachedPreview.blocksForSubstitution
+			setContent( cachedPreview.content )
+			setContentForInsertion( cachedPreview.contentForInsertion )
+			setIsLoading( false )
+			renderedTemplate.current = template
+			return
+		}
+
 		// Reset per-template state and show spinner
 		setIsLoading( true )
 		categoriesRef.current = []
@@ -298,6 +318,16 @@ export const usePreviewRenderer = (
 		    setContentForInsertion( parsedBlocksForInsertion )
 			setIsLoading( false )
 			renderedTemplate.current = template
+
+			if ( cacheKey ) {
+				previewParseCache.set( cacheKey, {
+					categories: [ ...categoriesRef.current ],
+					hasBackgroundTarget: hasBackgroundTargetRef.current,
+					blocksForSubstitution,
+					content: parsedBlocks,
+					contentForInsertion: parsedBlocksForInsertion,
+				} )
+			}
 		} )
 	}, [ template, shouldRender ] )
 

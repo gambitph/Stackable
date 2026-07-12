@@ -27,6 +27,7 @@ const DesignLibraryList = memo( props => {
 		designs,
 		isBusy,
 		selectedTab,
+		selectedCategory,
 		errors,
 	} = props
 	const containerRef = useRef( null )
@@ -44,7 +45,7 @@ const DesignLibraryList = memo( props => {
 
 	useEffect( () => {
 		containerRef.current.scrollTop = 0
-	}, [ designs ] )
+	}, [ selectedTab, selectedCategory ] )
 
 	return <div
 		className="ugb-modal-design-library__designs"
@@ -99,6 +100,7 @@ export default DesignLibraryList
 const DesignLibraryItem = memo( props => {
 	const { design, designIndex } = props
 	const wrapperRef = useRef( null )
+	const hasRenderedRef = useRef( designIndex < 9 )
 	const [ shouldRender, setShouldRender ] = useState( designIndex < 9 )
 
 	const [ selectedTab,
@@ -149,41 +151,21 @@ const DesignLibraryItem = memo( props => {
 	const presetMarks = useMemo( () => getPresetMarks() || null, [] )
 
 	useEffect( () => {
-		if ( selectedTab !== 'pages' ) {
-			return
-		}
-		let id
-		if ( typeof requestIdleCallback !== 'undefined' ) {
-			id = requestIdleCallback( () => ! shouldRender ? setShouldRender( true ) : {}, { timeout: ( designIndex + 1 ) * 500 } )
-		} else {
-			// fallback, always render immediately the first design
-			id = setTimeout( () => setShouldRender( true ), designIndex * 500 )
-		}
-
-		return () => {
-			if ( typeof cancelIdleCallback !== 'undefined' ) {
-				cancelIdleCallback( id )
-			} else {
-				clearTimeout( id )
-			}
-		}
-	}, [ selectedTab ] )
-
-	useEffect( () => {
-		if ( selectedTab === 'pages' ) {
-			return
-		}
-
 		const rootEl = document.querySelector( '.ugb-modal-design-library__designs' )
 		if ( ! wrapperRef.current || ! rootEl ) {
 			return
 		}
 
 		const observer = new IntersectionObserver( ( [ entry ] ) => {
-			// reduce flicker during rapid scrolls
-			requestAnimationFrame( () => {
-				requestAnimationFrame( () => setShouldRender( entry.isIntersecting || entry.intersectionRatio > 0 ) )
-			} )
+			if ( entry.isIntersecting || entry.intersectionRatio > 0 ) {
+				hasRenderedRef.current = true
+				setShouldRender( true )
+				return
+			}
+
+			if ( ! hasRenderedRef.current ) {
+				setShouldRender( false )
+			}
 		}, {
 			root: rootEl,
 			rootMargin: '500px',
