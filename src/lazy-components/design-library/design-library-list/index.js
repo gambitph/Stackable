@@ -32,12 +32,13 @@ const DesignLibraryList = memo( props => {
 	const containerRef = useRef( null )
 
 	const isEmpty = ! ( designs || [] ).length
+	const isSavedTabEmpty = selectedTab === 'saved' && isEmpty
 
 	const listClasses = classnames( [
 		'ugb-design-library-items',
 		className,
 		{
-			'ugb-design-library-items--empty': isEmpty,
+			'ugb-design-library-items--empty': isSavedTabEmpty,
 		},
 	] )
 
@@ -64,7 +65,7 @@ const DesignLibraryList = memo( props => {
 						)
 					} ) }
 
-					{ ! ( designs || [] ).length &&
+					{ isSavedTabEmpty &&
 						<p className="components-base-control__help stk-no-saved-designs" data-testid="nothing-found-note">
 							{ __( 'No designs saved yet', i18n ) }
 							<br />
