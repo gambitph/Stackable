@@ -31,9 +31,14 @@ const DesignLibraryList = memo( props => {
 	} = props
 	const containerRef = useRef( null )
 
+	const isEmpty = ! ( designs || [] ).length
+
 	const listClasses = classnames( [
 		'ugb-design-library-items',
 		className,
+		{
+			'ugb-design-library-items--empty': isEmpty,
+		},
 	] )
 
 	useEffect( () => {
@@ -60,7 +65,14 @@ const DesignLibraryList = memo( props => {
 					} ) }
 
 					{ ! ( designs || [] ).length &&
-						<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
+						<p className="components-base-control__help stk-no-saved-designs" data-testid="nothing-found-note">
+							{ __( 'No designs saved yet', i18n ) }
+							<br />
+							<span>
+								{ __( 'Tip: You can save your own section layouts to reuse them in your Stackable design library. Just click the "•••" (More) menu on a Stackable Columns block and choose "Save to Design Library".', i18n ) }
+							</span>
+						</p>
+
 					}
 					{ typeof errors === 'object' && errors && Object.keys( errors ).length &&
 						<p className="components-base-control__help">

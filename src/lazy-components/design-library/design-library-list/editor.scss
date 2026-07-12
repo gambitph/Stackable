@@ -25,6 +25,11 @@
 .ugb-modal-design-library__designs {
 	overflow: auto;
 	background: #f4f4f5;
+
+	&:has(.ugb-design-library-items--empty) {
+		display: flex;
+		flex-direction: column;
+	}
 }
 .ugb-design-library-item {
 	width: 100%;
@@ -300,4 +305,21 @@
 	footer {
 		cursor: pointer;
 	}
+}
+
+.stk-no-saved-designs {
+	max-width: 400px;
+
+	span {
+		display: block;
+		margin: 30px auto;
+	}
+}
+
+.ugb-design-library-items--empty {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
