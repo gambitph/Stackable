@@ -63,7 +63,7 @@ Use the [release project board](https://github.com/orgs/gambitph/projects/2/view
 
 ## Progress (as of 2026-07-11)
 
-**~68 issues closed** across 20 batches. **Continue from batch 21.**
+**~71 issues closed** across batches + ad hoc. **Paused.**
 
 ### Closed issues (by batch)
 
@@ -87,6 +87,17 @@ Use the [release project board](https://github.com/orgs/gambitph/projects/2/view
 | 16 | #2063, #2070, #2088, #2092 |
 | 17 | #2139, #2148, #2156, #2166 |
 | 20 | #2279, #2298 |
+| 25 | #2581, #2655, #2883 |
+
+**~71 issues closed.** Presentation-only passes; most relabels not applied. **Paused** — resume from #2929.
+
+### Closed issues (by batch) — ad hoc closes outside batches
+
+| # | Reason |
+|---|--------|
+| #2581 | Dup #2052 |
+| #2655 | Implemented #2877 |
+| #2883 | Obsolete v2 Image Box |
 
 ### Still open — already triaged, keep as backlog
 
@@ -192,8 +203,7 @@ Use the [release project board](https://github.com/orgs/gambitph/projects/2/view
 
 ### Notable open issues (not yet triaged in this pass)
 
-- #2778 — Posts block filter by author (canonical; #653 closed as dup)
-- **Next batch 23:** #2379, #2382, #2394, #2398, #2416, #2417, #2421, #2422, #2423, #2431 (then #2433, …)
+- **Reviewed, not applied:** #2778–#2924 (except #2883 closed). **Resume from:** #2929
 
 ### Fetch command for next batch
 
