@@ -31,6 +31,7 @@ const DesignLibraryList = memo( props => {
 		errors,
 	} = props
 	const containerRef = useRef( null )
+	const canManageUserPatterns = useDesignLibraryContext()[ 8 ]
 
 	const isEmpty = ! ( designs || [] ).length
 	const isSavedTabEmpty = selectedTab === 'saved' && isEmpty
@@ -69,10 +70,12 @@ const DesignLibraryList = memo( props => {
 					{ isSavedTabEmpty &&
 						<p className="components-base-control__help stk-no-saved-designs" data-testid="nothing-found-note">
 							{ __( 'No designs saved yet', i18n ) }
-							<br />
-							<span>
-								{ __( 'Tip: You can save your own section layouts to reuse them in your Stackable design library. Just click the "•••" (More) menu on a Stackable Columns block and choose "Save to Design Library".', i18n ) }
-							</span>
+							{ canManageUserPatterns && <>
+								<br />
+								<span>
+									{ __( 'Tip: You can save your own section layouts to reuse them in your Stackable design library. Just click the "•••" (More) menu on a Stackable Columns block and choose "Save to Design Library".', i18n ) }
+								</span>
+							</> }
 						</p>
 
 					}
@@ -111,6 +114,7 @@ const DesignLibraryItem = memo( props => {
 		containerScheme,
 		backgroundScheme,
 		enableBackground,
+		canManageUserPatterns,
 	] = useDesignLibraryContext()
 
 	const { selectedNum, selectedData } = useMemo( () => {
@@ -133,6 +137,7 @@ const DesignLibraryItem = memo( props => {
 		selectedNum,
 		selectedData,
 		onClick: onSelectDesign,
+		canManageUserPatterns,
 	} ), [
 		// Only track designId for memoization; other design properties will update when designId changes
 		design.id || design.designId,
@@ -143,6 +148,7 @@ const DesignLibraryItem = memo( props => {
 		// selectedNum and selectedData are always in sync; updating selectedNum also updates selectedData
 		selectedNum,
 		onSelectDesign,
+		canManageUserPatterns,
 	] )
 
 	const { getPresetMarks } = usePresetControls( 'spacingSizes' )

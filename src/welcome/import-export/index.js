@@ -55,11 +55,14 @@ const ImportSettings = ( {
 } ) => {
 	const [ importedSettings, setImportedSettings ] = useState( importFile )
 
-	const { settingsToSave, errors } = useMemo( () => {
+	const {
+		settingsToSave, errors, asyncImports = [],
+	} = useMemo( () => {
 		return applyFilters( 'stackable.admin-settings.import-export.handle-import', {
 			settingsToSave: {},
 			errors: {},
-		}, importedSettings, settings )
+			asyncImports: [],
+		}, importedSettings )
 	}, [ importedSettings ] )
 
 	const handleImport = async () => {
@@ -75,14 +78,21 @@ const ImportSettings = ( {
 			return
 		}
 
-		if ( Object.keys( settingsToSave ).length === 0 ) {
-			setNotice( __( 'No settings imported.', i18n ) )
-			return
-		}
-
-		const model = new models.Settings( settingsToSave )
 		try {
-			await model.save()
+			for ( const asyncImport of asyncImports ) {
+				await asyncImport()
+			}
+
+			if ( Object.keys( settingsToSave ).length === 0 && asyncImports.length === 0 ) {
+				setNotice( __( 'No settings imported.', i18n ) )
+				return
+			}
+
+			if ( Object.keys( settingsToSave ).length > 0 ) {
+				const model = new models.Settings( settingsToSave )
+				await model.save()
+			}
+
 			setNotice( __( 'Settings imported successfully.', i18n ) )
 			onClose()
 		} catch ( e ) {

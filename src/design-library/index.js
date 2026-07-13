@@ -61,6 +61,16 @@ export const getDesigns = async ( {
 	reset = false,
 	type = 'patterns',
 } ) => {
+	if ( type === 'saved' ) {
+		const result = applyFilters( 'stackable.design-library.get-saved-designs', [], { reset } )
+
+		if ( result && typeof result.then === 'function' ) {
+			return await result
+		}
+
+		return Array.isArray( result ) ? result : []
+	}
+
 	const designLibrary = await fetchDesignLibrary( reset, LATEST_API_VERSION, type )
 
 	if ( designLibrary.wp_remote_get_error || designLibrary.content_error ) {

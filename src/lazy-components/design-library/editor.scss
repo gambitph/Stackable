@@ -170,6 +170,12 @@
 		display: flex;
 		align-items: center;
 		gap: 12px;
+		.stk-design-library__delete-selected-button {
+			&[disabled] {
+				visibility: hidden;
+				pointer-events: none;
+			}
+		}
 	}
 	// Make room for the footer buttons.
 	&.ugb-modal-design-library--is-multiselect {
