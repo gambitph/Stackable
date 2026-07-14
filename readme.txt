@@ -1,9 +1,9 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.6.4
-Tested up to: 7.0
-Requires PHP: 7.3
+Requires at least: 6.8.1
+Tested up to: 7.0.1
+Requires PHP: 7.4
 Stable tag: 3.19.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html

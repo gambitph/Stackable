@@ -12,24 +12,16 @@ jobs:
       fail-fast: false  # Ensures the matrix doesn't stop if one job fails
       matrix:
         include:
-          - php_version: '7.3'
-            wp_version: 6.5.5
-
+          # stackable-playwright-matrix-start
+          - php_version: '8.5'
+            wp_version: '7.0.1'
           - php_version: '7.4'
-            wp_version: null
-
-          - php_version: '8.2'
-            wp_version: 6.5.5
-
-          - php_version: '8.2'
-            wp_version: 6.6.2
-
-          - php_version: '8.2'
-            wp_version: 6.7.2
-
-          - php_version: '8.2'
-            wp_version: null
-
+            wp_version: '7.0.1'
+          - php_version: '7.4'
+            wp_version: '6.8.5'
+          - php_version: '7.4'
+            wp_version: '6.9.4'
+          # stackable-playwright-matrix-end
     name: PHP ${{ matrix.php_version }} and WP ${{ matrix.wp_version || 'latest' }}
     steps:
     - uses: actions/checkout@v4
