@@ -12,10 +12,10 @@ import {
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
+import { Fragment, useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import {
-	useAttributeEditHandlers, useBlockLayoutDefaults, useBlockSetAttributesContext, usePresetControls,
+	useAttributeEditHandlers, useAttributeValue, useBlockLayoutDefaults, useBlockSetAttributesContext, usePresetControls,
 } from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -59,10 +59,23 @@ const BORDER_CONTROLS_WITH_NONE_VALUE = [
 
 export const BorderControls = props => {
 	const {
-		getAttribute,
 		getAttrName,
 		updateAttributes,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
+
+	const borderType = useAttributeValue( 'borderType', props.attrNameTemplate )
+	const borderRadius = useAttributeValue( 'borderRadius', props.attrNameTemplate )
+	const borderRadiusTablet = useAttributeValue( 'borderRadiusTablet', props.attrNameTemplate )
+	const borderRadiusMobile = useAttributeValue( 'borderRadiusMobile', props.attrNameTemplate )
+
+	const getAttribute = useCallback( attrName => {
+		switch ( attrName ) {
+			case 'borderRadius': return borderRadius
+			case 'borderRadiusTablet': return borderRadiusTablet
+			case 'borderRadiusMobile': return borderRadiusMobile
+			default: return undefined
+		}
+	}, [ borderRadius, borderRadiusTablet, borderRadiusMobile ] )
 
 	const setAttributes = useBlockSetAttributesContext()
 	const { blockLayouts, getPlaceholder } = useBlockLayoutDefaults()
@@ -105,7 +118,7 @@ export const BorderControls = props => {
 						const borderStyleProperty = `${ props.placeholderTemplate }-border-style`
 
 						// Set borderType to 'solid' if no borderType is selected and no global border settings is set
-						if ( hasValue && ! ( getAttribute( 'borderType' ) ) && ! blockLayouts?.[ borderStyleProperty ] ) {
+						if ( hasValue && ! borderType && ! blockLayouts?.[ borderStyleProperty ] ) {
 							setAttributes( { [ getAttrName( 'borderType' ) ]: 'solid' } )
 						}
 

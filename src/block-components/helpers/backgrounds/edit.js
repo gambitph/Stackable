@@ -15,6 +15,7 @@ import {
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers,
+	useAttributeValue,
 	useDeviceType,
 	useBlockSetAttributesContext,
 	useBlockHoverState,
@@ -46,23 +47,41 @@ export const BackgroundControls = props => {
 	const deviceType = useDeviceType()
 
 	const {
-		getAttribute,
-		getAttributes,
 		updateAttributes,
 		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
+	const backgroundMediaUrl = useAttributeValue( 'backgroundMediaUrl', props.attrNameTemplate )
+	const backgroundMediaUrlTablet = useAttributeValue( 'backgroundMediaUrlTablet', props.attrNameTemplate )
+	const backgroundMediaUrlMobile = useAttributeValue( 'backgroundMediaUrlMobile', props.attrNameTemplate )
+	const backgroundMediaExternalUrl = useAttributeValue( 'backgroundMediaExternalUrl', props.attrNameTemplate )
+	const backgroundMediaExternalUrlTablet = useAttributeValue( 'backgroundMediaExternalUrlTablet', props.attrNameTemplate )
+	const backgroundMediaExternalUrlMobile = useAttributeValue( 'backgroundMediaExternalUrlMobile', props.attrNameTemplate )
+	const backgroundColorType = useAttributeValue( 'backgroundColorType', props.attrNameTemplate )
+	const backgroundColor = useAttributeValue( 'backgroundColor', props.attrNameTemplate )
+	const backgroundPosition = useAttributeValue( 'backgroundPosition', props.attrNameTemplate )
+	const backgroundPositionTablet = useAttributeValue( 'BackgroundPositionTablet', props.attrNameTemplate )
+	const backgroundPositionMobile = useAttributeValue( 'BackgroundPositionMobile', props.attrNameTemplate )
+	const backgroundRepeat = useAttributeValue( 'backgroundRepeat', props.attrNameTemplate )
+	const backgroundRepeatTablet = useAttributeValue( 'BackgroundRepeatTablet', props.attrNameTemplate )
+	const backgroundRepeatMobile = useAttributeValue( 'BackgroundRepeatMobile', props.attrNameTemplate )
+	const backgroundSize = useAttributeValue( 'backgroundSize', props.attrNameTemplate )
+	const backgroundSizeTablet = useAttributeValue( 'BackgroundSizeTablet', props.attrNameTemplate )
+	const backgroundSizeMobile = useAttributeValue( 'BackgroundSizeMobile', props.attrNameTemplate )
+	const backgroundSizeForDevice = useAttributeValue( 'backgroundSize', props.attrNameTemplate, deviceType )
+	const backgroundImageBlendMode = useAttributeValue( 'backgroundImageBlendMode', props.attrNameTemplate )
+
 	const setAttributes = useBlockSetAttributesContext()
 	const [ currentHoverState ] = useBlockHoverState()
 
-	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) ||
-	getAttribute( 'backgroundMediaUrlTablet' ) ||
-	getAttribute( 'backgroundMediaUrlMobile' ) ||
-	getAttribute( 'backgroundMediaExternalUrl' ) ||
-	getAttribute( 'backgroundMediaExternalUrlTablet' ) ||
-	getAttribute( 'backgroundMediaExternalUrlMobile' )
+	const hasBackgroundMedia = backgroundMediaUrl ||
+	backgroundMediaUrlTablet ||
+	backgroundMediaUrlMobile ||
+	backgroundMediaExternalUrl ||
+	backgroundMediaExternalUrlTablet ||
+	backgroundMediaExternalUrlMobile
 	const checkIsBackgroundVideo = () => {
-		return [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ]
+		return [ backgroundMediaUrl, backgroundMediaUrlTablet, backgroundMediaUrlMobile ]
 			.filter( value => value )
 			.filter( urlIsVideo )
 			.length > 0
@@ -93,8 +112,8 @@ export const BackgroundControls = props => {
 
 					setAttributes( attributes )
 				} }
-				hover={ getAttribute( 'backgroundColorType' ) !== 'gradient' ? 'all' : false }
-				isGradient={ getAttribute( 'backgroundColorType' ) === 'gradient' }
+				hover={ backgroundColorType !== 'gradient' ? 'all' : false }
+				isGradient={ backgroundColorType === 'gradient' }
 			/>
 
 			{ props.hasBackgroundImage &&
@@ -167,7 +186,7 @@ export const BackgroundControls = props => {
 					max={ 10 }
 					step={ 1 }
 					allowReset={ true }
-					placeholder={ getAttribute( 'backgroundColor' ) ? '5' : '0' }
+					placeholder={ backgroundColor ? '5' : '0' }
 					helpTooltip={ {
 						video: 'background-tint',
 						description: __( 'Adjusts the intensity of the background media tint', i18n ),
@@ -214,7 +233,7 @@ export const BackgroundControls = props => {
 				/>
 			}
 
-			{ getAttribute( 'backgroundColorType' ) === 'gradient' && props.hasBackgroundGradientBlendMode &&
+			{ backgroundColorType === 'gradient' && props.hasBackgroundGradientBlendMode &&
 				<BlendModeControl
 					label={ __( 'Background Gradient Blend Mode', i18n ) }
 					attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
@@ -249,10 +268,10 @@ export const BackgroundControls = props => {
 						} )
 					} }
 					allowReset={
-						getAttribute( 'backgroundPosition' ) || getAttribute( 'BackgroundPositionTablet' ) || getAttribute( 'BackgroundPositionMobile' ) ||
-						getAttribute( 'backgroundRepeat' ) || getAttribute( 'BackgroundRepeatTablet' ) || getAttribute( 'BackgroundRepeatMobile' ) ||
-						getAttribute( 'backgroundSize' ) || getAttribute( 'BackgroundSizeTablet' ) || getAttribute( 'BackgroundSizeMobile' ) ||
-						getAttribute( 'backgroundImageBlendMode' )
+						backgroundPosition || backgroundPositionTablet || backgroundPositionMobile ||
+						backgroundRepeat || backgroundRepeatTablet || backgroundRepeatMobile ||
+						backgroundSize || backgroundSizeTablet || backgroundSizeMobile ||
+						backgroundImageBlendMode
 					}
 				>
 
@@ -312,7 +331,7 @@ export const BackgroundControls = props => {
 						responsive="all"
 					/>
 
-					{ getAttributes()[ getAttributeName( getAttrName( 'backgroundSize' ), deviceType ) ] === 'custom' &&
+					{ backgroundSizeForDevice === 'custom' &&
 						<AdvancedRangeControl
 							label={ __( 'Custom Size', i18n ) }
 							attribute={ getAttrName( 'backgroundCustomSize' ) }

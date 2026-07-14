@@ -1,7 +1,11 @@
 /**
  * External dependencies
  */
-import { useAttributeEditHandlers, useBlockAttributesContext } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers,
+	useAttributeValue,
+	useBlockAttributesContext,
+} from '~stackable/hooks'
 import {
 	getAttrNameFunction, __getValue, getShapeSVG, isElementDescendant,
 } from '~stackable/util'
@@ -177,16 +181,20 @@ export const Icon = props => {
 
 	const uniqueId = useBlockAttributesContext( attributes => attributes.uniqueId )
 
-	const {
-		getAttribute,
-		updateAttributeHandler,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const { updateAttributeHandler } = useAttributeEditHandlers( attrNameTemplate )
 
-	const ShapeComp = useMemo( () => getShapeSVG( getAttribute( 'backgroundShape' ) || 'blob1' ), [ getAttribute( 'backgroundShape' ) ] )
+	const backgroundShape = useAttributeValue( 'backgroundShape', attrNameTemplate )
+	const iconColorType = useAttributeValue( 'iconColorType', attrNameTemplate )
+	const iconAttr = useAttributeValue( 'icon', attrNameTemplate )
+	const icon2 = useAttributeValue( 'icon2', attrNameTemplate )
+	const iconColor1 = useAttributeValue( 'iconColor1', attrNameTemplate )
+	const iconColor2 = useAttributeValue( 'iconColor2', attrNameTemplate )
+	const showBackgroundShape = useAttributeValue( 'showBackgroundShape', attrNameTemplate )
+	const ariaLabel = useAttributeValue( 'ariaLabel', attrNameTemplate )
 
-	const iconColorType = getAttribute( 'iconColorType' )
+	const ShapeComp = useMemo( () => getShapeSVG( backgroundShape || 'blob1' ), [ backgroundShape ] )
 
-	const _icon = value || getAttribute( 'icon' )
+	const _icon = value || iconAttr
 	const currentIconRef = useRef( _icon )
 	const processedIconRef = useRef( null )
 	const lastIconValueRef = useRef( null )
@@ -314,8 +322,8 @@ export const Icon = props => {
 	const linearGradient = hasLinearGradient ? (
 		renderToString( <LinearGradient
 			id={ 'linear-gradient-' + uniqueId }
-			iconColor1={ getAttribute( 'iconColor1' ) }
-			iconColor2={ getAttribute( 'iconColor2' ) }
+			iconColor1={ iconColor1 }
+			iconColor2={ iconColor2 }
 		/> )
 	) : undefined
 
@@ -323,7 +331,7 @@ export const Icon = props => {
 		[ 'stk--svg-wrapper' ],
 		{
 			'stk--show-cursor': debouncedIsSelected,
-			'stk--has-icon2': getAttribute( 'icon2' ),
+			'stk--has-icon2': icon2,
 		}
 	)
 
@@ -345,10 +353,10 @@ export const Icon = props => {
 					className="stk--inner-svg"
 					prependRenderString={ linearGradient }
 					value={ icon }
-					ariaLabel={ getAttribute( 'ariaLabel' ) }
+					ariaLabel={ ariaLabel }
 				/>
 			) }
-			{ getAttribute( 'showBackgroundShape' ) && <ShapeComp className="stk--shape-icon" /> }
+			{ showBackgroundShape && <ShapeComp className="stk--shape-icon" /> }
 			{ isOpen && (
 				<IconSearchPopover
 					__hasPopover={ true }
@@ -366,12 +374,12 @@ export const Icon = props => {
 					defaultValue={ defaultValue }
 				/>
 			) }
-			{ getAttribute( 'icon2' ) && (
+			{ icon2 && (
 				<SvgIcon
 					className="stk--inner-svg stk--icon-2"
 					prependRenderString={ linearGradient }
-					value={ getAttribute( 'icon2' ) }
-					ariaLabel={ getAttribute( 'ariaLabel' ) }
+					value={ icon2 }
+					ariaLabel={ ariaLabel }
 					style={ { display: 'none' } }
 				/>
 			) }

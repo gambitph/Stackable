@@ -8,7 +8,7 @@ import {
 	FourRangeControl,
 } from '~stackable/components'
 import {
-	useAttributeEditHandlers, useDeviceType, usePresetControls,
+	useAttributeEditHandlers, useAttributeValue, useDeviceType, usePresetControls,
 } from '~stackable/hooks'
 
 /**
@@ -21,9 +21,12 @@ const Layout = props => {
 	const deviceType = useDeviceType()
 
 	const {
-		getAttribute,
 		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
+
+	const width = useAttributeValue( 'width', props.attrNameTemplate )
+	const widthTablet = useAttributeValue( 'widthTablet', props.attrNameTemplate )
+	const widthMobile = useAttributeValue( 'widthMobile', props.attrNameTemplate )
 
 	const {
 		labelHeight = __( 'Min. Height', i18n ),
@@ -92,9 +95,9 @@ const Layout = props => {
 			/>
 
 			{ (
-				( getAttribute( 'width' ) !== '' && deviceType === 'Desktop' ) ||
-			    ( ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' ) && deviceType === 'Tablet' ) ||
-			    ( ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' || getAttribute( 'widthMobile' ) !== '' ) && deviceType === 'Mobile' )
+				( width !== '' && deviceType === 'Desktop' ) ||
+			    ( ( width !== '' || widthTablet !== '' ) && deviceType === 'Tablet' ) ||
+			    ( ( width !== '' || widthTablet !== '' || widthMobile !== '' ) && deviceType === 'Mobile' )
 			  ) &&
 				<AdvancedToolbarControl
 					label={ labelHorizontalAlign }
