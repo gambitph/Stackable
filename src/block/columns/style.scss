@@ -1,7 +1,8 @@
 @import "common";
 @import "./deprecated-style";
 
-.stk--flex:not(.stk--column-wrap-desktop) > .stk-block-column {
+// Older Feature Grid saves put the desktop wrap marker on the block wrapper.
+.stk--flex:not(.stk--column-wrap-desktop):not(.stk-block-feature-grid.stk--column-wrap-desktop > .stk-block-content) > .stk-block-column {
 	width: fit-content;
 	flex: 0 1 auto !important;
 	min-width: 24px;
