@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import blockStyles from './style'
-import { getUseSvgDef } from '../icon-list/util'
+import { ListItemIcon } from './list-item-icon'
 import {
 	convertToListItems,
 	useEnter,
@@ -23,7 +23,6 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
-	Icon,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
@@ -40,10 +39,8 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { compose, createHigherOrderComponent } from '@wordpress/compose'
-import { dispatch, useSelect } from '@wordpress/data'
-import {
-	useEffect, useRef, memo,
-} from '@wordpress/element'
+import { dispatch, select } from '@wordpress/data'
+import { useEffect, memo } from '@wordpress/element'
 
 const TABS = [ 'style', 'advanced' ]
 
@@ -61,42 +58,26 @@ const Edit = props => {
 	const { icon, text } = attributes
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { parentBlock } = useSelect( select => {
-		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
-		const parentClientId = getBlockRootClientId( clientId )
-		return {
-			parentBlock: getBlock( parentClientId ),
-		}
-	}, [ clientId ] )
 
 	const {
 		'stackable/ordered': ordered,
 		'stackable/uniqueId': parentUniqueId,
 	} = context
 
-	const updateOrderedTimeout = useRef()
-	const updateUniqueIdTimeout = useRef()
-
 	// Set the attributes so they can be used in Save.
 	useEffect( () => {
-		clearTimeout( updateOrderedTimeout.current )
 		if ( ordered !== props.attributes.ordered ) {
-			updateOrderedTimeout.current = setTimeout( () => {
-				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-				setAttributes( { ordered } )
-			}, 300 )
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			setAttributes( { ordered } )
 		}
-	}, [ ordered ] )
+	}, [ ordered, props.attributes.ordered, setAttributes ] )
 
 	useEffect( () => {
-		clearTimeout( updateUniqueIdTimeout.current )
 		if ( parentUniqueId !== props.attributes.parentUniqueId ) {
-			updateUniqueIdTimeout.current = setTimeout( () => {
-				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-				setAttributes( { parentUniqueId } )
-			}, 300 )
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			setAttributes( { parentUniqueId } )
 		}
-	}, [ parentUniqueId ] )
+	}, [ parentUniqueId, props.attributes.parentUniqueId, setAttributes ] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -115,10 +96,14 @@ const Edit = props => {
 		mergeBlocks( forward )
 
 		// Remove icon list item and icon list on backspace if there is no text and is the only item on the list.
-		if ( ! forward &&
-			 ! attributes.text &&
-			 parentBlock.innerBlocks.length === 1 ) {
-			dispatch( 'core/block-editor' ).removeBlocks( [ clientId, parentBlock.clientId ] )
+		if ( ! forward && ! attributes.text ) {
+			const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+			const parentClientId = getBlockRootClientId( clientId )
+			const parentBlock = getBlock( parentClientId )
+
+			if ( parentBlock?.innerBlocks?.length === 1 ) {
+				dispatch( 'core/block-editor' ).removeBlocks( [ clientId, parentClientId ] )
+			}
 		}
 	}
 
@@ -150,18 +135,12 @@ const Edit = props => {
 
 				<CustomCSS mainBlockClass="stk-block-icon-list-item" />
 				<div className="stk-block-icon-list-item__content">
-					{ ! ordered && icon &&
-						<Icon
-							value={ icon }
-							openEvenIfUnselected={ true }
-							hasLinearGradient={ false }
-						/> }
-					{ ! ordered && ! icon && parentUniqueId &&
-						<Icon
-							value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) }
-							openEvenIfUnselected={ true }
-							hasLinearGradient={ false }
-						/> }
+					<ListItemIcon
+						ordered={ ordered }
+						icon={ icon }
+						parentUniqueId={ parentUniqueId }
+						setAttributes={ setAttributes }
+					/>
 					{ ordered &&
 						// This will contain the numbers in ::before pseudo-element for ordered lists.
 						// Placing the numbers here instead on li allows us to center the text vertically.

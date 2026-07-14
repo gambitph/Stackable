@@ -5,7 +5,7 @@
 import { useRefEffect } from '@wordpress/compose'
 import { useRef } from '@wordpress/element'
 import {
-	useSelect,
+	select,
 	useDispatch,
 } from '@wordpress/data'
 import {
@@ -51,9 +51,6 @@ export const useEnter = ( text, clientId ) => {
 	const {
 		removeBlocks, selectionChange, insertBlocks,
 	} = useDispatch( blockEditorStore )
-	const {
-		getBlock, getBlockRootClientId, getBlockIndex,
-	} = useSelect( blockEditorStore )
 
 	const textRef = useRef( text )
 	textRef.current = text
@@ -68,6 +65,10 @@ export const useEnter = ( text, clientId ) => {
 					return
 				}
 				event.preventDefault()
+
+				const {
+					getBlock, getBlockRootClientId, getBlockIndex,
+				} = select( blockEditorStore )
 
 				// Here we are in top level list so we need to split.
 				const topParentListBlock = getBlock(
