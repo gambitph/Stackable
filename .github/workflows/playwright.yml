@@ -12,24 +12,16 @@ jobs:
       fail-fast: false  # Ensures the matrix doesn't stop if one job fails
       matrix:
         include:
-          - php_version: '7.3'
-            wp_version: 6.6.4
-
+          # stackable-playwright-matrix-start
+          - php_version: '8.5'
+            wp_version: '7.0.1'
           - php_version: '7.4'
-            wp_version: null
-
-          - php_version: '8.2'
-            wp_version: 6.6.4
-
-          - php_version: '8.2'
-            wp_version: 6.7.4
-
-          - php_version: '8.2'
-            wp_version: 6.8.3
-
-          - php_version: '8.2'
-            wp_version: null
-
+            wp_version: '7.0.1'
+          - php_version: '7.4'
+            wp_version: '6.8.5'
+          - php_version: '7.4'
+            wp_version: '6.9.4'
+          # stackable-playwright-matrix-end
     name: PHP ${{ matrix.php_version }} and WP ${{ matrix.wp_version || 'latest' }}
     steps:
     - uses: actions/checkout@v4
@@ -64,8 +56,22 @@ jobs:
       run: |
         npm ci --legacy-peer-deps
         npm run build:no-translate
+    - name: Cache Playwright Browsers
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
     - name: Install Playwright Browsers
-      run: npx playwright install chromium --with-deps
+      timeout-minutes: 15
+      run: |
+        for attempt in 1 2 3; do
+          npx playwright install chromium --with-deps && exit 0
+          echo "Playwright install failed on attempt $attempt"
+          sleep $((attempt * 30))
+        done
+        exit 1
     - name: Install wp-env
       run: |
         npm install -g @wordpress/env

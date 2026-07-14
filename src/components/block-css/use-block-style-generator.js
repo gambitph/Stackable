@@ -1,6 +1,7 @@
 import { useQueryLoopInstanceId } from '~stackable/util'
 import { useMemo, useRef } from '@wordpress/element'
 import { useRafEffect } from '~stackable/hooks'
+import { dispatch } from '@wordpress/data'
 import CssSaveCompiler from './css-save-compiler'
 
 export const useBlockCssGenerator = props => {
@@ -11,6 +12,7 @@ export const useBlockCssGenerator = props => {
 		context,
 		attributes,
 		blockState,
+		setAttributes,
 	} = props
 
 	// Keep the filtered block styles that we will update.
@@ -66,12 +68,17 @@ export const useBlockCssGenerator = props => {
 			}
 		)
 
-		// Quietly save the styles. We cannot use setAttributes here because it
-		// will cause the block and this hook to rerender.
-		// dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-		// setAttributes( { generatedCss: saveCss } )
-		attributes.generatedCss = saveCss
-	}, [ attributes, version ] )
+		// If the generated CSS is the same as the one already saved, we don't need to update it.
+		if ( ! setAttributes || attributes.generatedCss === saveCss ) {
+			return
+		}
+
+		// Use setAttributes to realiably update the generated CSS.
+		// Mutating the attributes directly will not trigger a re-render,
+		// but might not properly save the changes.
+		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+		setAttributes( { generatedCss: saveCss } )
+	}, [ attributes, version, setAttributes ] )
 
 	return editCss
 }

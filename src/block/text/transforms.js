@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { createBlock, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
+import { select } from '@wordpress/data'
 
 /**
  * Internal dependencies
@@ -14,9 +15,10 @@ const transforms = {
 		// When pasting, ensure that the default text block setting is followed
 		{
 			type: 'raw',
-			isMatch: node =>
-				node.nodeName === 'P' &&
-				settings.stackable_enable_text_default_block,
+			isMatch: node => node.nodeName === 'P' &&
+				settings.stackable_enable_text_default_block &&
+				// Only allow transformation if stackable text can be inserted
+				select( 'core/block-editor' ).canInsertBlockType( 'stackable/text' ),
 			transform: node => {
 				return createBlock( 'stackable/text', {
 					text: node.textContent.trim(),

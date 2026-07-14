@@ -1,0 +1,236 @@
+---
+description: GitHub issue triage workflow, progress, and handoff for backlog cleanup
+alwaysApply: true
+---
+
+# Issue Triage — Workflow & Progress
+
+We are cleaning up the GitHub issue backlog for https://github.com/gambitph/Stackable. Many issues are stagnant, outdated, or from the v2 era. Work in **batches of 10** (oldest open issues first).
+
+**User must sign off before any GitHub changes** (close, comment, relabel). Present triage recommendations first; only apply after approval.
+
+### Triage presentation format
+
+For each issue in a batch, include a **short summary title** (≤10 words, plain language) before the verdict — e.g. `#897 — Disable title/category links in Posts`. Use the summary in summary tables; link the full GitHub title.
+
+See also: `project-repos.mdc`, `issue-labels.mdc`
+
+## Triage checklist (every issue)
+
+1. **Codebase** — fixed, implemented, obsolete (v2), or still valid?
+2. **Changelog** — search `readme.txt` for issue number or symptom
+3. **Roadmap** — https://wpstackable.com/roadmap (only covers near-term; absence ≠ reject)
+4. **Duplicates** — search GitHub for same symptom/block
+5. **Verdict** — close / keep / needs-reproduction / not-planned
+6. **Labels** — relabel touched issues per `issue-labels.mdc` (do NOT bulk-migrate all issues)
+
+## Common verdicts
+
+| Signal | Action |
+|--------|--------|
+| v2 block (`ugb/*`, `[block] v2 *`) | Close as obsolete; V3 uses `stackable/*` |
+| Shipped feature (block exists, setting exists) | Close as implemented |
+| Feature not on roadmap | Close as not planned (user often closes these) |
+| AMP | Out of scope — close as not planned |
+| Duplicate | Close, point to canonical issue |
+| Valid bug, old report | `needs-reproduction` on V3; keep open |
+| Feature backlog | `feature-request`; keep open or close not planned |
+
+## Product decisions already made
+
+- **AMP** — not supported; #1615 closed
+- **Saving custom designs** — Global Block Styles (shipped); Saving Patterns & Pages on roadmap (#7); #500/#704 closed with roadmap pointer
+- **Image title/caption** — use Image alt + Custom Attributes (Advanced tab); #758, #811 closed
+- **Design Library layout tab** — #826 closed as no longer relevant in V3
+- **WP Styles interface** — use Stackable's own design system (Global Block Styles, layouts, color schemes); #2063 closed
+- **Stale dynamic content in preview** — accepted WordPress limitation; #2088 closed
+- **DC on pagination/load more** — not supported by design; #2298 closed
+- **Template lock on inner blocks** — removed from blocks like Feature Grid; deleted inner blocks restoring was expected WP behavior; #2092 closed
+
+## Labels
+
+Use the standardized set in `issue-labels.mdc`. Relabel issues **as we triage them** — do not run bulk label migration.
+
+Created labels: `feature-request`, `needs-reproduction`, `accessibility`, `compatibility`, etc.
+
+Legacy labels (`[block] v2 *`, `high priority`, `[block] New`) still exist on untriaged issues — remove when editing an issue.
+
+## Priority & releases
+
+Use the [release project board](https://github.com/orgs/gambitph/projects/2/views/1) for version/priority — not GitHub labels.
+
+---
+
+## Progress (as of 2026-07-11)
+
+**~71 issues closed** across batches + ad hoc. **Paused.**
+
+### Closed issues (by batch)
+
+| Batch | Closed |
+|-------|--------|
+| 1 | #13, #70, #159, #1615 |
+| 2 | #179 |
+| 3 | #280, #329 |
+| 4 | #500, #519, #530 |
+| 5 | #535, #559, #562, #568, #583 |
+| 6 | #597, #599, #613, #614, #628 |
+| 7 | #640, #651, #653, #661, #667 |
+| 8 | #668, #673, #675, #676, #700 |
+| 9 | #701, #702, #704, #713, #721 |
+| 10 | #758, #796, #811, #826, #833 |
+| 11 | #848, #857, #885 |
+| 12 | #1073, #1456, #1460 |
+| 13 | #1603, #1704, #1825, #1859 |
+| 14 | #1896, #1919, #1928, #1930, #1991 |
+| 15 | #2057, #2062 |
+| 16 | #2063, #2070, #2088, #2092 |
+| 17 | #2139, #2148, #2156, #2166 |
+| 20 | #2279, #2298 |
+| 25 | #2581, #2655, #2883 |
+
+**~71 issues closed.** Presentation-only passes; most relabels not applied. **Paused** — resume from #2929.
+
+### Closed issues (by batch) — ad hoc closes outside batches
+
+| # | Reason |
+|---|--------|
+| #2581 | Dup #2052 |
+| #2655 | Implemented #2877 |
+| #2883 | Obsolete v2 Image Box |
+
+### Still open — already triaged, keep as backlog
+
+| Issue | Summary | Labels | Notes |
+|-------|---------|--------|-------|
+| #7 | Download App block | feature-request | App Store / Play Store buttons |
+| #166 | Iframe popup block | feature-request | Like Video Popup |
+| #188 | QR code block | feature-request | |
+| #236 | Curated content block | feature-request | |
+| #242 | Sharable section block | feature-request | RebelMouse-style particles |
+| #316 | Generic popup block | feature-request | Related #166 |
+| #321 | Icon List missing in Safari Reader | bug, needs-reproduction, accessibility | Needs V3 repro |
+| #332 | Contact us block | feature-request | |
+| #496 | Standardize PHP filter names | enhancement | Internal |
+| #875 | Separator padding ignores height | enhancement, frontend | 200px padding vs separatorHeight |
+| #890 | Posts filter by category AND tag | enhancement | Single taxonomy only today |
+| #897 | Disable title/category links in Posts | enhancement, editor | imageHasLink only today |
+| #899 | Inline background images for lazyload | enhancement, performance | |
+| #906 | Uneven 3-column widths | bug, needs-reproduction, frontend | 33/33/34 rounding |
+| #1146 | Delete removes dynamic content | enhancement, editor | |
+| #1175 | Duplicate Post style bleed | bug, needs-reproduction, compatibility | shared uniqueId |
+| #1513 | Custom SVG image mask | enhancement, premium | |
+| #1571 | Range control default placeholders | enhancement, editor | |
+| #1611 | Video Popup icon alignment | bug, needs-reproduction, editor | Icon stuck center when image resized |
+| #1711 | Focus triggers hover styles | enhancement, accessibility | Image Box keyboard a11y |
+| #1755 | Auto Width toggle | enhancement, editor | |
+| #1819 | Card container image hover | enhancement, editor | imageHoverStateInContainer |
+| #1842 | Text block multi-paragraph paste | bug, needs-reproduction, editor | Creates core/paragraph |
+| #1888 | WPML translation strings | enhancement, compatibility | Posts + Icon labels |
+| #1917 | Image→Image Box transform animation | bug, needs-reproduction, editor | Editor UI glitch |
+| #1953 | `is-style-default` on button | enhancement, frontend | Default style class on save |
+| #1986 | Dynamic Content PHP memory | enhancement, performance | Internal optimization |
+| #1990 | Posts squished in Neve/Otter | bug, needs-reproduction, compatibility | Layout in Otter columns |
+| #1995 | Conditional display token reset | bug, needs-reproduction, editor | formTokenField stale values |
+| #1996 | v2-style hover effects in Style tab | enhancement, editor | vs Transform & Transition |
+| #2029 | Scroll animation delayed w/ smooth scroll | bug, needs-reproduction, frontend | Column smooth scroll |
+| #2037 | Disable hover on inner images | enhancement, editor | Image Box / Video Popup UX |
+| #2042 | Floated images break in columns | bug, needs-reproduction, frontend | alignleft/right in column |
+| #2052 | Remove Icon Position/Gap on Icon Button | enhancement, editor | Useless controls |
+| #2054 | Ordered Icon List hover icon bug | bug, needs-reproduction, frontend | Shows bullets on hover |
+| #2055 | Theme link colors vs text color | bug, needs-reproduction, compatibility | Blocksy/Astra |
+| #2061 | Shadow popover wrong state values | bug, needs-reproduction, editor | Normal/hover bleed |
+| #2069 | Design Library skips 3rd column | bug, needs-reproduction, design-library | 4 results, 3-col grid |
+| #2076 | Typography reset when sizing outside popover | bug, needs-reproduction, editor | Heading/Text/Subtitle/Button |
+| #2078 | DC popover reopens after Apply | bug, needs-reproduction, editor | |
+| #2079 | DC filter taxonomy types per post | enhancement, editor | Premium Dynamic Content |
+| #2090 | Video Popup image gradient in editor | bug, needs-reproduction, editor | Gradient covers image |
+| #2091 | Number Box keyboard input highlight | bug, needs-reproduction, editor | Inherits block text color |
+| #2104 | Duplicate page loses block styles | bug, needs-reproduction, compatibility, editor | uniqueId collision likely |
+| #2105 | Widgets console error | bug, needs-reproduction, compatibility, editor | |
+| #2113 | Feature block image missing on mobile | bug, needs-reproduction, frontend | Overlap layouts |
+| #2138 | Shadow outline broken in Safari | bug, needs-reproduction, compatibility, frontend | |
+| #2153 | DC can't see ACF fields in Query Loop | bug, needs-reproduction, editor, premium | |
+| #2164 | ACF Range field empty in DC | bug, needs-reproduction, editor, premium | |
+| #2169 | Vertical card image spacing ignored | bug, needs-reproduction, frontend | imageSpacing hardcoded px |
+| #2172 | em/% padding outputs as px | bug, needs-reproduction, editor | Size & Spacing units |
+| #2191 | Stackable hides core layout inherit toggle | bug, needs-reproduction, compatibility, editor | FSE core/group |
+| #2203 | Chinese excerpt length not trimmed | bug, frontend | Word-split excerpt |
+| #2225 | Widgets responsive toggle broken | bug, needs-reproduction, compatibility, editor | Related #2105 |
+| #2231 | More display condition types | feature-request, editor, premium | Browser/device |
+| #2233 | Beginner-friendly link rel UI | enhancement, editor | v2 rel popup |
+| #2234 | Filter hook for Google Font URLs | enhancement, global-settings | |
+| #2239 | Full-width blocks narrow on Woo shop | bug, needs-reproduction, compatibility, frontend | |
+| #2244 | Scroll animation horizontal scrollbar | bug, needs-reproduction, frontend | Translate X entrance |
+| #2245 | Clearing column count removes last column | bug, needs-reproduction, editor | ColumnsControl edge case |
+| #2250 | Icon color "No color" option | enhancement, editor | Blocksy request |
+| #2251 | Accordion collapsed text color ignored | bug, needs-reproduction, editor, frontend | |
+| #2252 | v2→v3 negative margin overlap | enhancement, migration | Blocksy design recipe |
+| #2255 | Yogi starter site editor misalignment | bug, needs-reproduction, compatibility, editor | Spacer/theme |
+| #2256 | Full-height container option from v2 | enhancement, editor, migration | Use min-height 100vh |
+| #2261 | WP Rocket breaks Posts in columns | bug, needs-reproduction, compatibility, frontend | Minify CSS/JS |
+| #2266 | Typography units not inherited per device | enhancement, editor | |
+| #2269 | Safari responsive preview freezes | bug, needs-reproduction, compatibility, editor | Safari 15.4 |
+| #2270 | Parent Hovered disabled with container bg | bug, needs-reproduction, editor | Related #2271 |
+| #2271 | Parent hover text color in Query Loop | bug, needs-reproduction, editor | |
+| #2273 | Column border radius + overflow image | bug, needs-reproduction, frontend | Blocksy |
+| #2274 | Accordion won't open on mobile | bug, needs-reproduction, frontend, compatibility | |
+| #2286 | Heading centers on frontend with max width | bug, needs-reproduction, editor, frontend | |
+| #2293 | Feature Grid column gap editor drift | bug, needs-reproduction, editor | |
+| #2295 | TOC shows 2 columns instead of 3 | bug, needs-reproduction, frontend, editor | |
+| #2297 | Posts block markup in post excerpt | bug, needs-reproduction, frontend | |
+| #2302 | Premium upsell labels missing in free | bug, needs-reproduction, editor | Intermittent |
+| #2303 | Transform preview for core blocks | enhancement, editor | WP 6.0 |
+| #2308 | Vertical align in Group/Row/Stack | bug, needs-reproduction, compatibility, editor | WP 6.0 layout |
+| #2310 | WPML Image block recovery errors | bug, needs-reproduction, compatibility, editor | |
+| #2311 | WPML Pagination Prev/Next not translatable | enhancement, compatibility | Related #1888 |
+| #2316 | Blocksy color opens as #000000 | bug, needs-reproduction, compatibility, editor | |
+| #2321 | Remove default container box shadow | enhancement, global-settings | `--stk-container-box-shadow` |
+| #2324 | Accordion won't open on iOS | bug, needs-reproduction, frontend, compatibility | opacity/max-height |
+| #2334 | Theme global text color inside container | bug, needs-reproduction, compatibility, frontend | Astra |
+| #2335 | FA Pro v5/v6 icon picker gaps | bug, needs-reproduction, editor | |
+| #2337 | Blocksy Content Blocks in DC | enhancement, compatibility, premium, editor | Related #368 |
+| #2341 | Meta Box missing in Inspector DC | bug, needs-reproduction, editor, premium, compatibility | Blocksy Content Blocks |
+| #2342 | Conditional display lost on export | bug, needs-reproduction, compatibility, premium | Blocksy export |
+| #2349 | Top separator ignores margins in editor | bug, needs-reproduction, editor | Editor-only |
+| #2354 | Inherit Blocksy button theme settings | enhancement, compatibility, global-settings | |
+| #2359 | Column button alignment control | enhancement, editor | |
+| #2362 | WooCommerce blocks/features | feature-request, compatibility, premium | Partial #2907 |
+| #2363 | Image swap on hover | feature-request, editor | |
+| #2364 | Map block enhancements | feature-request, premium | |
+| #2366 | Continuous parallax scroll animation | feature-request, editor, premium | |
+| #2367 | Hide block when ACF field empty | feature-request, editor, premium | |
+
+### Notable open issues (not yet triaged in this pass)
+
+- **Reviewed, not applied:** #2778–#2924 (except #2883 closed). **Resume from:** #2929
+
+### Fetch command for next batch
+
+```bash
+gh issue list --repo gambitph/Stackable --state open --search "sort:created-asc" --limit 30 --json number,title,labels,body,url
+```
+
+Skip issues already listed above as triaged-open. Pick the next 10 untriaged oldest.
+
+---
+
+## Close comment templates
+
+**Obsolete v2:**
+> Closing — this targets the deprecated v2 [block]. Stackable V3 uses `stackable/[block]`. If this still occurs on V3, please open a new issue with repro steps.
+
+**Not on roadmap:**
+> Closing — not on our [current roadmap](https://wpstackable.com/roadmap). Feel free to reopen with a detailed use case.
+
+**Implemented:**
+> Closing as implemented. [Feature/setting] is available in V3. See [link if helpful].
+
+**Duplicate:**
+> Closing as duplicate of #XXXX.
+
+## Files
+
+- `.cursor/rules/issue-labels.mdc` — label taxonomy
+- `.cursor/rules/project-repos.mdc` — repos, premium path, project board
+- `.github/scripts/migrate-issue-labels.py` — bulk migration script (unused; prefer relabel-on-triage)

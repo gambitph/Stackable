@@ -40,19 +40,26 @@ export const Save = props => {
 				'stk-block-columns', // We need to add the columns class to make fit all and column gap to work properly.
 				responsiveClass,
 				separatorClass,
-				{
-					'stk--column-wrap-desktop': attributes.columnWrapDesktop,
-				},
 			],
 		], props )
 	)
 
-	const contentClassNames = classnames( [
-		rowClass,
-		'stk-inner-blocks',
-		blockAlignmentClass,
-		'stk-block-content',
-	], getContentAlignmentClasses( attributes ) )
+	// The wrap marker belongs on the flex wrapper so justified wrapped columns
+	// keep their configured widths, matching the Columns block behavior.
+	const contentClassNames = classnames(
+		applyFilters( 'stackable.feature-grid.save.contentClassNames', [
+			[
+				rowClass,
+				'stk-inner-blocks',
+				blockAlignmentClass,
+				'stk-block-content',
+			],
+			{
+				'stk--column-wrap-desktop': attributes.columnWrapDesktop,
+			},
+			getContentAlignmentClasses( attributes ),
+		], props )
+	)
 
 	return (
 		<BlockDiv.Content

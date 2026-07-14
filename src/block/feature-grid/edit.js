@@ -71,15 +71,17 @@ const Edit = props => {
 		rowClass,
 		separatorClass,
 		columnTooltipClass,
-	], {
-		'stk--column-wrap-desktop': props.attributes.columnWrapDesktop,
-	} )
+	] )
 
+	// The wrap marker belongs on the flex wrapper so justified wrapped columns
+	// keep their configured widths, matching the Columns block behavior.
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	], getContentAlignmentClasses( props.attributes ) )
+	], {
+		'stk--column-wrap-desktop': props.attributes.columnWrapDesktop,
+	}, getContentAlignmentClasses( props.attributes ) )
 
 	// Generate the CSS styles for the block.
 	const blockCss = useBlockCssGenerator( {

@@ -1,0 +1,26 @@
+---
+description: Stackable project GitHub repos, roadmap, and free/premium structure
+alwaysApply: true
+---
+
+# Stackable Project & Repositories
+
+## Release Roadmap
+
+The issues list, organized by targeted release version number, is the **Stackable Release Roadmap**:
+https://github.com/orgs/gambitph/projects/2/views/1
+
+## Repositories
+
+This project has two GitHub repositories, used depending on whether we're building the **free** or **premium** version of Stackable.
+
+### Free version
+
+- Main plugin repo: https://github.com/gambitph/Stackable
+
+### Premium version
+
+- Uses the free version as the main plugin repo, and additionally uses:
+- Premium-only repo: https://github.com/bfintal/Stackable-Premium
+- The premium repo contains **only** the premium plugin code.
+- It is placed in the `pro__premium_only` directory inside the free plugin's root folder.
