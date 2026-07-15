@@ -19,11 +19,11 @@ jobs:
         npm ci --legacy-peer-deps
         npm run build:no-translate
     - name: Archive plugin build
-      run: tar --exclude=./node_modules --exclude=./.git -czf stackable-playwright-build.tar.gz .
+      run: tar --exclude=./node_modules --exclude=./.git -czf /tmp/stackable-playwright-build.tar.gz .
     - uses: actions/upload-artifact@v4
       with:
         name: stackable-playwright-build
-        path: stackable-playwright-build.tar.gz
+        path: /tmp/stackable-playwright-build.tar.gz
         retention-days: 1
 
   test:
