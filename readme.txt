@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.8.1
 Tested up to: 7.0.1
 Requires PHP: 7.4
-Stable tag: 3.19.9
+Stable tag: 3.19.10
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -308,6 +308,15 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.10 =
+
+* Change: Added input masking to Google API Key settings field #3714
+* Fixed: Better Yoast plugin compatibility #3715
+* Fixed: Blocks not reflecting the latest saved value in the frontend #3715
+* Fixed: MailPoet - fixed compatibility with default Stackable text block #3718
+* Fixed: Feature grid block - fixed justified columns #3717
+* Fixed: Hardened deprecated block defaults endpoints #3725
 
 = 3.19.9 =
 

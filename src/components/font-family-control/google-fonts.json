@@ -613,6 +613,16 @@
     ]
   },
   {
+    "family": "Alien Block",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Alike",
     "variants": [
       "regular"
@@ -7860,6 +7870,16 @@
     ]
   },
   {
+    "family": "Geist Pixel",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Gelasio",
     "variants": [
       "regular",
@@ -8011,6 +8031,22 @@
     ],
     "subsets": [
       "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Geomini",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]
@@ -8678,7 +8714,6 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext",
       "telugu"
     ]
   },
@@ -8997,6 +9032,17 @@
     "subsets": [
       "korean",
       "latin"
+    ]
+  },
+  {
+    "family": "Hibur Mono",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "ethiopic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10306,6 +10352,7 @@
       "regular"
     ],
     "subsets": [
+      "arabic",
       "latin",
       "latin-ext"
     ]
@@ -13862,6 +13909,16 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Montenegrin Gothic One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -20249,6 +20306,37 @@
     ]
   },
   {
+    "family": "Pliant",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Plus Jakarta Sans",
     "variants": [
       "200",
@@ -26591,6 +26679,26 @@
     ],
     "subsets": [
       "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Yuyu",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Yuyu Short",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]
