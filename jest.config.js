@@ -49,6 +49,7 @@ module.exports = {
 	testPathIgnorePatterns: [
 		'/node_modules/',
 		'<rootDir>/pro__premium_only/',
+		'<rootDir>/e2e/',
 		'/src/block',
 	],
 }

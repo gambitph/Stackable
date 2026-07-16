@@ -11,6 +11,7 @@ At the minimum, e2e testing should test the following:
 - Blocks are present in the Block Editor and working
 - Blocks are present in the Site Editor
 - Global settings and functionality is working
+- Dynamic Content resolves on the frontend (Premium codebase only)
 - Perform the above tests in all supported lower WordPress versions
 
 Ideally, we should also handle these:
@@ -54,6 +55,27 @@ or without the UI:
 ```bash
 npm run test
 ```
+
+# Dynamic Content (Premium)
+
+Premium Dynamic Content tests live in
+`pro__premium_only/e2e/tests/dynamic-content.spec.ts`.
+
+The post-meta test needs this must-use plugin so `stk_e2e_dc_meta` is available
+over the REST API:
+
+`e2e/config/stackable-e2e-mu-plugin.php`
+
+Premium CI maps it into wp-env automatically. For local wp-env, add:
+
+```json
+"mappings": {
+  "wp-content/mu-plugins/stackable-e2e.php": "./e2e/config/stackable-e2e-mu-plugin.php"
+}
+```
+
+For a non-wp-env site (e.g. local.local), copy or symlink that file into
+`wp-content/mu-plugins/stackable-e2e.php`.
 
 # Dev Notes
 

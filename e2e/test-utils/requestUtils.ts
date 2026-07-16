@@ -39,7 +39,7 @@ class ExtendedRequestUtils extends BaseRequestUtils {
 		}
 	}
 
-	deletePost = async function( pid: string, postType: string = 'posts' ) {
+	deletePost = async function( pid: string | number, postType: string = 'posts' ) {
 		await this.rest( {
 			method: 'DELETE',
 			path: `/wp/v2/${ postType }/${ pid }`,
@@ -47,6 +47,26 @@ class ExtendedRequestUtils extends BaseRequestUtils {
 				force: true,
 			},
 		} )
+	}
+
+	updatePost = async function( pid: string | number, data: Record<string, unknown>, postType: string = 'posts' ) {
+		return await this.rest( {
+			method: 'POST',
+			path: `/wp/v2/${ postType }/${ pid }`,
+			data,
+		} )
+	}
+
+	/**
+	 * Update post meta via REST. Requires the meta key to be registered with show_in_rest
+	 * (see e2e/config/stackable-e2e-mu-plugin.php for stk_e2e_dc_meta).
+	 *
+	 * @param pid
+	 * @param meta
+	 * @param postType
+	 */
+	updatePostMeta = async function( pid: string | number, meta: Record<string, string | number | boolean>, postType: string = 'posts' ) {
+		return await this.updatePost( pid, { meta }, postType )
 	}
 }
 
