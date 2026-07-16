@@ -29,7 +29,7 @@ Github workflow should also test:
 Create an `.env` file in the root directory of the plugin with the contents:
 
 ```
-WP_BASE_URL=http://local.local/
+WP_BASE_URL=https://local.local
 WP_AUTH_STORAGE=wp-auth.json
 WP_USERNAME=admin
 WP_PASSWORD=password
@@ -37,6 +37,10 @@ STACKABLE_SLUG={ STACKABLE SLUG }
 WP_TEST_POSTID={ POST_ID }
 WP_STK_LICENSE={ STACKABLE LICENSE }
 ```
+
+For Local by Flywheel, use the site’s real URL (often `https://yoursite.local/`).
+Playwright is configured with `ignoreHTTPSErrors` for Local’s self-signed cert.
+`STACKABLE_SLUG` is the plugin folder + main file, e.g. `Stackable/plugin`.
 
 In Freemius, make sure the license key is:
 - new
