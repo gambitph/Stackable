@@ -11,6 +11,8 @@ import { ExtendedRequestUtils } from 'e2e/test-utils'
 async function globalSetup() {
 	const requestContext = await request.newContext( {
 		baseURL: process.env.WP_BASE_URL,
+		// Local by Flywheel (and similar) often use a self-signed HTTPS cert.
+		ignoreHTTPSErrors: true,
 	} )
 	const requestUtils = new ExtendedRequestUtils( requestContext, {
 		storageStatePath: process.env.WP_AUTH_STORAGE,

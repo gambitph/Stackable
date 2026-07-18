@@ -45,6 +45,9 @@ export default defineConfig( {
 		// https://playwright.dev/docs/test-webserver#adding-a-baseurl
 		baseURL: process.env.WP_BASE_URL,
 
+		// Local by Flywheel (and similar) often use a self-signed HTTPS cert.
+		ignoreHTTPSErrors: true,
+
 		// We save as much information as possible to make debugging easier.
 		// https://playwright.dev/docs/api/class-testoptions#test-options-screenshot
 		// https://playwright.dev/docs/api/class-testoptions#test-options-trace

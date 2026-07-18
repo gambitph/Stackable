@@ -16,5 +16,19 @@
 	"stylelint.validate": [
 		"css",
 		"scss"
-	]
+	],
+	"search.useIgnoreFiles": false,
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/.sass-cache": true,
+		"**/build": true,
+		"**/dist": true,
+		"**/coverage": true,
+		"**/vendor": true,
+		"**/wordpress": true,
+		"**/test-results": true,
+		"**/playwright-report": true,
+		"**/blob-report": true,
+		"**/playwright/.cache": true
+	}
 }

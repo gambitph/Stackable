@@ -5,37 +5,61 @@ on:
   pull_request:
     branches: [ master, develop ]
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: npm
+        cache-dependency-path: package-lock.json
+    - name: Build Stackable Free Plugin
+      run: |
+        npm ci --legacy-peer-deps
+        npm run build:no-translate
+    - name: Archive plugin build
+      run: tar --exclude=./node_modules --exclude=./.git -czf /tmp/stackable-playwright-build.tar.gz .
+    - uses: actions/upload-artifact@v4
+      with:
+        name: stackable-playwright-build
+        path: /tmp/stackable-playwright-build.tar.gz
+        retention-days: 1
+
   test:
+    needs: build
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false  # Ensures the matrix doesn't stop if one job fails
       matrix:
         include:
-          - php_version: '7.3'
-            wp_version: 6.5.5
-
+          # stackable-playwright-matrix-start
+          - php_version: '8.5'
+            wp_version: '7.0.1'
           - php_version: '7.4'
-            wp_version: null
-
-          - php_version: '8.2'
-            wp_version: 6.5.5
-
-          - php_version: '8.2'
-            wp_version: 6.6.2
-
-          - php_version: '8.2'
-            wp_version: 6.7.2
-
-          - php_version: '8.2'
-            wp_version: null
-
+            wp_version: '7.0.1'
+          - php_version: '7.4'
+            wp_version: '6.8.5'
+          - php_version: '7.4'
+            wp_version: '6.9.4'
+          # stackable-playwright-matrix-end
     name: PHP ${{ matrix.php_version }} and WP ${{ matrix.wp_version || 'latest' }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
+        cache: npm
+        cache-dependency-path: package-lock.json
+    - name: Restore plugin build
+      uses: actions/download-artifact@v4
+      with:
+        name: stackable-playwright-build
+    - name: Extract plugin build
+      run: tar -xzf stackable-playwright-build.tar.gz
+    - name: Install dependencies
+      run: npm ci --legacy-peer-deps
     - name: Set the version suffix for the output
       run: echo VERSION_SUFFIX=${GITHUB_REF_NAME//\//-} >> $GITHUB_ENV
     - name: Set WP Version and create .wp-env.json
@@ -60,28 +84,35 @@ jobs:
           }' > .wp-env.json
 
         cat .wp-env.json
-    - name: Build Stackable Free Plugin
-      run: |
-        npm ci --legacy-peer-deps
-        npm run build:no-translate
+    - name: Cache Playwright Browsers
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
     - name: Install Playwright Browsers
-      run: npx playwright install chromium --with-deps
-    - name: Install wp-env
+      timeout-minutes: 15
       run: |
-        npm install -g @wordpress/env
+        for attempt in 1 2 3; do
+          npx playwright install chromium --with-deps && exit 0
+          echo "Playwright install failed on attempt $attempt"
+          sleep $((attempt * 30))
+        done
+        exit 1
     - name: Start wp-env
-      run: wp-env start
+      run: npx @wordpress/env start
     - name: Print current WP version
-      run: wp-env run tests-cli wp core version
+      run: npx @wordpress/env run tests-cli wp core version
     - name: Create post with existing blocks
       run: |
-        POST_ID=$(wp-env run tests-cli wp post create wp-content/plugins/Stackable/e2e/config/post-content.txt --post_title="Existing Blocks" --post_status=publish --porcelain)
+        POST_ID=$(npx @wordpress/env run tests-cli wp post create wp-content/plugins/Stackable/e2e/config/post-content.txt --post_title="Existing Blocks" --post_status=publish --porcelain)
         echo "WP_TEST_POSTID=$POST_ID" >> $GITHUB_ENV
       continue-on-error: true
     - name: Disable guided tours
       run: |
         TOUR_STATES='["design-system", "editor", "design-library", "blocks"]'
-        wp-env run tests-cli wp option update stackable_guided_tour_states "$TOUR_STATES" --format=json
+        npx @wordpress/env run tests-cli wp option update stackable_guided_tour_states "$TOUR_STATES" --format=json
     - name: Run playwright tests
       id: run-playwright-tests
       env:

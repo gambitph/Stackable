@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: Stackable - Gutenberg Blocks
+ * Plugin Name: Stackable - Page Builder Gutenberg Blocks
  * Plugin URI: https://wpstackable.com
- * Description: An Amazing Block Library That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
+ * Description: The complete website builder for the WordPress block editor. Build professional sites faster with powerful blocks, block styles, and a global design system.
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.19.9
+ * Version: 3.19.10
  *
  * @package Stackable
  * @fs_premium_only /freemius.php, /freemius/
@@ -47,7 +47,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
 defined( 'STACKABLE_BUILD' ) || define( 'STACKABLE_BUILD', 'free' );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.19.9' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.19.10' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://stackable-files.pages.dev' ); // Design Library CDN URL
