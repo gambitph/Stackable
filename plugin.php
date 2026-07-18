@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Stackable - Gutenberg Blocks
+ * Plugin Name: Stackable - Page Builder Gutenberg Blocks
  * Plugin URI: https://wpstackable.com
- * Description: An Amazing Block Library That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
+ * Description: The complete website builder for the WordPress block editor. Build professional sites faster with powerful blocks, block styles, and a global design system.
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
