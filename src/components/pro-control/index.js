@@ -88,12 +88,8 @@ const LABELS = {
 		description: __( 'Sync block styles site-wide so one change updates every instance—no more copy-paste or hunting down inconsistencies.', i18n ),
 	},
 	'design-library-saved-patterns': {
-		title: __( 'Design Library Saved Patterns', i18n ),
-		description: <ul>
-			<li>{ __( 'Save entire block layouts in a click', i18n ) }</li>
-			<li>{ __( 'Apply styling options to each saved pattern', i18n ) }</li>
-			<li>{ __( 'Import and export your custom patterns across sites', i18n ) }</li>
-		</ul>,
+		title: __( 'Reuse Your Best Layouts', i18n ),
+		description: __( 'Save polished block layouts once, then drop them into any page, or export them to reuse across sites.', i18n ),
 	},
 }
 
