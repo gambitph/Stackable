@@ -307,8 +307,16 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 					$block['attrs'] = $this->sanitize_block_style_data_value( $block['attrs'] );
 				}
 
-				if ( ! empty( $block['innerBlocks'] ) ) {
-					$block['innerBlocks'] = $this->sanitize_parsed_blocks( $block['innerBlocks'] );
+				// Keep original indexes so matching innerContent null markers can be removed when a child block is sanitized out.
+				$inner_blocks = array();
+				if ( ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
+					foreach ( $block['innerBlocks'] as $index => $inner_block ) {
+						$sanitized_inner_block = $this->sanitize_parsed_blocks( array( $inner_block ) );
+						if ( ! empty( $sanitized_inner_block ) ) {
+							$inner_blocks[ $index ] = $sanitized_inner_block[0];
+						}
+					}
+					$block['innerBlocks'] = array_values( $inner_blocks );
 				}
 
 				if ( ! empty( $block['innerHTML'] ) ) {
@@ -322,12 +330,48 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 						},
 						$block['innerContent']
 					);
+					$inner_content = $this->remove_orphan_inner_content_markers( $block['innerContent'], $inner_blocks );
+					// innerBlocks and innerContent must stay aligned for WordPress' serialize_block().
+					$block['innerContent'] = $inner_content['innerContent'];
+					$block['innerBlocks'] = $inner_content['innerBlocks'];
 				}
 
 				$sanitized[] = $block;
 			}
 
 			return $sanitized;
+		}
+
+		/**
+		 * Keep innerContent null markers aligned with surviving innerBlocks.
+		 *
+		 * @param array $inner_content Parsed block innerContent.
+		 * @param array $inner_blocks Parsed block innerBlocks keyed by original index.
+		 * @return array
+		 */
+		public function remove_orphan_inner_content_markers( $inner_content, $inner_blocks ) {
+			$inner_block_index = 0;
+			$sanitized_inner_blocks = array();
+			$sanitized_inner_content = array();
+
+			foreach ( $inner_content as $content ) {
+				if ( $content === null ) {
+					// Each null marker points to the next original inner block.
+					if ( array_key_exists( $inner_block_index, $inner_blocks ) ) {
+						$sanitized_inner_content[] = null;
+						$sanitized_inner_blocks[] = $inner_blocks[ $inner_block_index ];
+					}
+					$inner_block_index++;
+					continue;
+				}
+
+				$sanitized_inner_content[] = $content;
+			}
+
+			return array(
+				'innerBlocks' => $sanitized_inner_blocks,
+				'innerContent' => $sanitized_inner_content,
+			);
 		}
 
 		public function register_route() {
