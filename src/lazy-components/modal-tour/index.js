@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import { captureEvent } from '../../posthog'
 import {
 	setActiveTour,
 	clearActiveTour,
@@ -93,8 +94,9 @@ const ModalTour = memo( props => {
 	useEffect( () => {
 		if ( isVisible && ! hasMounted ) {
 			setHasMounted( true )
+			captureEvent( 'guided_tour_started', { tour: tourId } )
 		}
-	}, [ isVisible, hasMounted ] )
+	}, [ isVisible, hasMounted, tourId ] )
 
 	// Set active tour when modal becomes visible
 	useEffect( () => {
@@ -134,6 +136,7 @@ const ModalTour = memo( props => {
 		// If at the last step, just close
 		if ( currentStep === steps.length - 1 ) {
 			steps[ currentStep ]?.postStep?.( currentStep )
+			captureEvent( 'guided_tour_completed', { tour: tourId } )
 			if ( hasConfetti ) {
 				throwConfetti()
 			}

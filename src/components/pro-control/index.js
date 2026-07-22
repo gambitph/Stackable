@@ -4,6 +4,7 @@
 import SVGDiamond from './images/diamond.svg'
 import ImageProIcon from './images/pro-icon.png'
 import Button from '../button'
+import { trackPremiumInterest } from '../../posthog'
 
 /**
  * WordPress dependencies
@@ -92,6 +93,7 @@ const LABELS = {
 const ProControl = props => {
 	const classNames = classnames( [ 'ugb-design-control-pro-note', props.className ] )
 	const description = props.description || LABELS[ props.type ]?.description
+	const feature = props.type || 'unknown'
 
 	return (
 		<div className={ classNames }>
@@ -103,12 +105,22 @@ const ProControl = props => {
 			) }
 			{ props.showButton && (
 				<div>
-					<a href="https://wpstackable.com/premium/?utm_source=editor-learn-more&utm_campaign=learnmore&utm_medium=gutenberg" target="_premium" className="button button-secondary">
+					<a
+						href="https://wpstackable.com/premium/?utm_source=editor-learn-more&utm_campaign=learnmore&utm_medium=gutenberg"
+						target="_premium"
+						className="button button-secondary"
+						onClick={ () => trackPremiumInterest( feature ) }
+					>
 						<SVGDiamond />
 						{ props.button || LABELS[ props.type ]?.button || __( 'Get Premium', i18n ) }
 					</a>
 					{ props.learnMoreUrl && (
-						<a href={ props.learnMoreUrl } target="_premium" className="button button-tertiary">
+						<a
+							href={ props.learnMoreUrl }
+							target="_premium"
+							className="button button-tertiary"
+							onClick={ () => trackPremiumInterest( feature ) }
+						>
 							{ __( 'Learn More', i18n ) }
 						</a>
 					) }

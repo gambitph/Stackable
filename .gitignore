@@ -10,6 +10,7 @@ wp-auth.json
 .env
 
 .env
+src/posthog-config.php
 wp-auth.json
 **/playwright/.auth
 test-results/**/trace.zip

@@ -2,6 +2,7 @@
 /**
  * Internal dependencies
  */
+import { captureEvent } from '../posthog'
 import SVGTutorialsIcon from './images/tutorials.svg'
 import SVGDocsIcon from './images/docs.svg'
 import SVGCommunityIcon from './images/user.svg'
@@ -106,7 +107,12 @@ const essentialsProps = [
 const GeneralCard = ( {
 	title, subtitle, link, icon,
 } ) => {
-	return <a href={ link } className="s-card s-card-link" target="_blank" rel="noreferrer">
+	return <a
+		href={ link }
+		className="s-card s-card-link"
+		target="_blank"
+		rel="noreferrer"
+	>
 		<div className="s-icon-wrapper"> { icon } </div>
 		<h3 className="s-card-title"> { title } </h3>
 		<p className="s-card-subtitle"> { subtitle } </p>
@@ -428,6 +434,11 @@ export const GettingStarted = () => {
 														href={ item.premium && ! isPro ? 'https://wpstackable.com/premium/?utm_source=plugin-getting-started&utm_medium=guided-tutorial&utm_campaign=unlock-premium-tour' : item.link }
 														{ ...( item.premium && ! isPro ? { target: '_blank', rel: 'noopener noreferrer' } : {} ) }
 														// aria-disabled={ item.premium && ! isPro }
+														onClick={ () => {
+															if ( item.premium && ! isPro ) {
+																captureEvent( 'premium_interest', { feature: item.id } )
+															}
+														} }
 														className={ classNames( 's-button s-secondary-button uppercase', {
 															's-button--checked': guidedTourStates?.includes( item.id ),
 															's-button--unlock': item.premium && ! isPro,

@@ -54,7 +54,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 		'stackable/global-spacing-and-borders',
 		'stackable_global_spacing_and_borders',
 		setDisplayHoverNotice,
-		saveTimeout
+		saveTimeout,
+		'spacing-and-borders'
 	)
 
 	const sizePresetMarks = usePresetControls( 'spacingSizes' )

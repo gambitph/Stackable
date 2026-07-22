@@ -4,6 +4,7 @@
 import { hoverState } from '../utils'
 import { schemeHasValue } from './utils'
 import PRESET_COLOR_SCHEMES from './preset-color-schemes.json'
+import { trackGlobalSettingsEdited } from '../../../posthog'
 /**
  * External dependencies
  */
@@ -144,6 +145,7 @@ const ColorSchemePicker = props => {
 	}
 
 	const saveColorSchemeSettings = updatedColorSchemes => {
+		trackGlobalSettingsEdited( 'color-schemes' )
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
 			const settings = new models.Settings( {

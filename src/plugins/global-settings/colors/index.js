@@ -12,6 +12,7 @@ import { GlobalColorStyles } from './editor-loader'
 import { i18n } from 'stackable'
 import { AdvancedToggleControl, PanelAdvancedSettings } from '~stackable/components'
 import rgba from 'color-rgba'
+import { trackGlobalSettingsEdited } from '../../../posthog'
 
 /**
  * WordPress dependencies
@@ -76,6 +77,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 	} = useSelect( select => select( 'stackable/global-colors' ).getSettings() )
 
 	const onChangeHideThemeColors = value => {
+		trackGlobalSettingsEdited( 'colors' )
 		dispatch( 'stackable/global-colors' ).updateSettings( {
 			hideThemeColors: value,
 		} )
@@ -85,6 +87,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 	}
 
 	const onChangeHideDefaultColors = value => {
+		trackGlobalSettingsEdited( 'colors' )
 		dispatch( 'stackable/global-colors' ).updateSettings( {
 			hideDefaultColors: value,
 		} )
@@ -94,6 +97,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 	}
 
 	const onChangeHideSiteEditorColors = value => {
+		trackGlobalSettingsEdited( 'colors' )
 		dispatch( 'stackable/global-colors' ).updateSettings( {
 			hideSiteEditorColors: value,
 		} )

@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { hoverState } from './block-layout-utils'
+import { trackGlobalSettingsEdited } from '../../../posthog'
 
 /**
  * External dependencies
@@ -17,7 +18,7 @@ import { __ } from '@wordpress/i18n'
 import { models } from '@wordpress/api'
 import { useSelect, dispatch } from '@wordpress/data'
 
-export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayHoverNotice, saveTimeout ) => {
+export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayHoverNotice, saveTimeout, panel = '' ) => {
 	const { blockLayouts } = useSelect( select => {
 		const _blockLayouts = select( storeName ).getBlockLayouts()
 		return { blockLayouts: { ..._blockLayouts } }
@@ -50,6 +51,9 @@ export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayH
 	}
 
 	const saveSettings = newSettings => {
+		if ( panel ) {
+			trackGlobalSettingsEdited( panel )
+		}
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
 			const settings = new models.Settings( { [ optionName ]: newSettings } ) // eslint-disable-line camelcase

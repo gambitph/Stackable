@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { fetchSettings } from '~stackable/util'
+import { trackGlobalSettingsEdited } from '../../../posthog'
 
 /**
  * WordPress dependencies
@@ -44,6 +45,8 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 			} else {
 				delete newBlockStyles[ action.blockName ]
 			}
+
+			trackGlobalSettingsEdited( 'block-styles' )
 
 			// eslint-disable-next-line camelcase
 			const settings = new models.Settings( { stackable_global_block_styles: newBlockStyles } )

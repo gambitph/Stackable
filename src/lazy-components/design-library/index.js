@@ -1,6 +1,7 @@
 /**
  * Internal deprendencies
  */
+import { trackDesignLibraryInserted } from '../../posthog'
 import HelpSVG from './images/help.svg'
 import BlockList from './block-list'
 import { HeaderActions, PLAN_OPTIONS } from './header-actions'
@@ -132,6 +133,10 @@ const ModalDesignLibrary = props => {
 	}
 
 	const addDesign = designs => {
+		trackDesignLibraryInserted( {
+			tab: selectedTab,
+			count: designs.length,
+		} )
 		setIsMultiSelectBusy( true )
 		const cb = () => setIsMultiSelectBusy( false )
 		props.onSelect( designs, cb, selectedTab )

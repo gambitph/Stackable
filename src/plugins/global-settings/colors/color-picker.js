@@ -6,6 +6,7 @@ import {
 	createColor,
 	convertGlobalColorBlockAttributesToStatic,
 } from './util'
+import { trackGlobalSettingsEdited } from '../../../posthog'
 
 /**
  * External dependencies
@@ -57,6 +58,8 @@ const ColorPickers = props => {
 		// NOTE: Removed this because it is slow to update all blocks.
 		// Update the blocks in our page.
 		// updateFallbackBlockAttributes( newColors )
+
+		trackGlobalSettingsEdited( 'colors' )
 
 		// Save settings.
 		clearTimeout( saveTimeout )

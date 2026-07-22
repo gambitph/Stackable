@@ -18,6 +18,7 @@ import {
 	SectionSettings,
 } from '~stackable/components'
 import { useBlockColorSchemes } from '~stackable/hooks'
+import { trackGlobalSettingsEdited } from '../../../posthog'
 
 /**
  * WordPress dependencies
@@ -51,6 +52,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 	} = useBlockColorSchemes()
 
 	const onChangeDefaultColorScheme = ( mode, colorSchemeKey ) => {
+		trackGlobalSettingsEdited( 'color-schemes' )
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
 			const settings = new models.Settings( {
@@ -137,6 +139,7 @@ addFilter( 'stackable.global-settings.inspector.global-colors.toggle-controls', 
 	const { hideColorSchemeColors } = useSelect( select => select( 'stackable/global-color-schemes' ).getSettings() )
 
 	const onChange = value => {
+		trackGlobalSettingsEdited( 'color-schemes' )
 		dispatch( 'stackable/global-color-schemes' ).updateSettings( {
 			hideColorSchemeColors: value,
 		} )

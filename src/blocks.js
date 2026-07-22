@@ -4,6 +4,7 @@
 /**
  * Internal dependencies
  */
+import './posthog'
 import './format-types'
 import './plugins'
 import './compatibility'

@@ -7,6 +7,7 @@ import './design-library-button'
 import './layout-picker-reset'
 import './guided-modal-tour'
 import './page-icons'
+import './posthog-first-content'
 // import './v2-migration-popup' // Probably 1.5yrs of checking for backward compatibility is enough.
 import './editor-device-preview-class'
 import './theme-block-style-inheritance'

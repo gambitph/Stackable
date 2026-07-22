@@ -52,7 +52,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-buttons-and-
 		'stackable/global-buttons-and-icons',
 		'stackable_global_buttons_and_icons',
 		setDisplayHoverNotice,
-		saveTimeout
+		saveTimeout,
+		'buttons-and-icons'
 	)
 
 	const sizePresetMarks = usePresetControls( 'spacingSizes' )

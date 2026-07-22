@@ -29,6 +29,7 @@ import { useDeviceType } from '~stackable/hooks'
 import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
+import { trackGlobalSettingsEdited } from '../../../posthog'
 import {
 	head, isEqual, cloneDeep,
 } from 'lodash'
@@ -236,6 +237,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}
 
 	const updateTypography = newSettings => {
+		trackGlobalSettingsEdited( 'typography' )
 		setTypographySettings( newSettings )
 
 		clearTimeout( saveTypographyThrottle )
@@ -250,6 +252,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}
 
 	const updateSelectedFontPair = name => {
+		trackGlobalSettingsEdited( 'typography' )
 		setSelectedFontPairName( name )
 
 		clearTimeout( saveSelectedFontPairThrottle )
@@ -262,6 +265,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}
 
 	const updateCustomFontPairs = fontPairs => {
+		trackGlobalSettingsEdited( 'typography' )
 		setCustomFontPairs( fontPairs )
 
 		clearTimeout( saveCustomFontPairsThrottle )
@@ -274,6 +278,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}
 
 	const changeApplySettingsTo = value => {
+		trackGlobalSettingsEdited( 'typography' )
 		setApplySettingsTo( value )
 		const model = new models.Settings( {
 			stackable_global_typography_apply_to: value, // eslint-disable-line
@@ -282,6 +287,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}
 
 	const changeIsApplyBodyToHTML = value => {
+		trackGlobalSettingsEdited( 'typography' )
 		setIsApplyBodyToHTML( value )
 		const model = new models.Settings( {
 			stackable_is_apply_body_to_html: value, // eslint-disable-line

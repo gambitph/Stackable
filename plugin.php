@@ -260,6 +260,11 @@ if ( STACKABLE_BUILD !== 'free' ) {
 }
 
 /**
+ * PostHog analytics (activation / deactivation events).
+ */
+require_once( plugin_dir_path( __FILE__ ) . 'src/posthog.php' );
+
+/**
  * Block Initializer.
  */
 require_once( plugin_dir_path( __FILE__ ) . 'src/editor-settings.php' );
