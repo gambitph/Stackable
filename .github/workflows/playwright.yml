@@ -36,13 +36,13 @@ jobs:
         include:
           # stackable-playwright-matrix-start
           - php_version: '8.5'
-            wp_version: '7.0.1'
+            wp_version: '7.0.2'
           - php_version: '7.4'
-            wp_version: '7.0.1'
+            wp_version: '7.0.2'
           - php_version: '7.4'
-            wp_version: '6.8.5'
+            wp_version: '6.8.6'
           - php_version: '7.4'
-            wp_version: '6.9.4'
+            wp_version: '6.9.5'
           # stackable-playwright-matrix-end
     name: PHP ${{ matrix.php_version }} and WP ${{ matrix.wp_version || 'latest' }}
     steps:
