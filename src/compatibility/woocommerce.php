@@ -72,6 +72,10 @@ if ( ! function_exists( 'stackable_preserve_woocommerce_duplicate_block_escaping
 	function stackable_preserve_woocommerce_duplicate_block_escaping( $duplicate, $product ) {
 		$description = $duplicate->get_description( 'edit' );
 
+		if ( ! is_string( $description ) || $description === '' ) {
+			return;
+		}
+
 		if ( strpos( $description, '<!-- wp:stackable/' ) !== false ) {
 			$duplicate->set_description( wp_slash( $description ) );
 		}
