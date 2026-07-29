@@ -11,6 +11,7 @@ At the minimum, e2e testing should test the following:
 - Blocks are present in the Block Editor and working
 - Blocks are present in the Site Editor
 - Global settings and functionality is working
+- Design Library opens, loads patterns/pages, filters, and inserts designs
 - Dynamic Content resolves on the frontend (Premium codebase only)
 - Perform the above tests in all supported lower WordPress versions
 
