@@ -257,7 +257,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 6.5.5 or higher for this to work.
+You'll need WordPress version 6.8.1 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -345,9 +345,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 * New: Additional 11 guided tours to help you master Stackable
 * New: Posts block - you can now pick taxonomy terms for CPTs #3678
-* Fixed: Posts block - formatting breaks on horizontal layours #3554
+* Fixed: Posts block - formatting breaks on horizontal layouts #3554
 * Fixed: Posts block - hover effects not working on some layouts #2583
-* Fixed: Posts block - links are now not clickable in porfolio layouts #398
+* Fixed: Posts block - links are now not clickable in portfolio layouts #398
 
 = 3.19.6 =
 
