@@ -102,6 +102,11 @@ const ModalDesignLibrary = props => {
 
 			setSidebarDesigns( _designs )
 			setSelectedCategory( '' )
+		} ).catch( error => {
+			setSidebarDesigns( [] )
+			setErrors( {
+				message: error?.message || String( error ),
+			} )
 		} ).finally( () => {
 			setDoReset( false )
 			setIsBusy( false )
