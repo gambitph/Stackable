@@ -54,7 +54,9 @@ test( 'Stackable settings should be saved', async ( {
 	const newVal = await option.getAttribute( 'aria-checked' )
 
 	expect( newVal ).not.toBe( val )
+	let saveSettings = stackable.waitForSettingsSave()
 	await page.getByRole( 'button', { name: 'Save Changes' } ).click()
+	await saveSettings
 
 	// Check if the value is correct after reloading
 	settings = stackable.waitForSettings()
@@ -67,6 +69,8 @@ test( 'Stackable settings should be saved', async ( {
 
 	// Revert back the settings to the original value
 	await _option.click()
+	saveSettings = stackable.waitForSettingsSave()
 	await page.getByRole( 'button', { name: 'Save Changes' } ).click()
+	await saveSettings
 	await expect( _option ).toHaveAttribute( 'aria-checked', val )
 } )

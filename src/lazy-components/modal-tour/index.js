@@ -39,6 +39,7 @@ const ModalTour = memo( props => {
 
 	const [ currentStep, setCurrentStep ] = useState( 0 )
 	const [ isVisible, setIsVisible ] = useState( false )
+	const [ hasMounted, setHasMounted ] = useState( false )
 	const [ isVisibleDelayed, setIsVisibleDelayed ] = useState( false )
 	const [ forceRefresh, setForceRefresh ] = useState( 0 )
 	const [ isTransitioning, setIsTransitioning ] = useState( false )
@@ -87,6 +88,13 @@ const ModalTour = memo( props => {
 			}
 		}, 50 )
 	}, [ initialize ] )
+
+	// Keep the modal mounted after the first show so step transitions don't unmount it.
+	useEffect( () => {
+		if ( isVisible && ! hasMounted ) {
+			setHasMounted( true )
+		}
+	}, [ isVisible, hasMounted ] )
 
 	// Set active tour when modal becomes visible
 	useEffect( () => {
@@ -407,14 +415,16 @@ const ModalTour = memo( props => {
 		}
 	}, [ modalRef.current, onClose ] )
 
-	if ( ! isVisible ) {
+	if ( ! hasMounted ) {
 		return null
 	}
 
 	return (
 		<Modal
 			title={ title }
-			overlayClassName="ugb-tour-modal--overlay"
+			overlayClassName={ classNames( 'ugb-tour-modal--overlay', {
+				'ugb-tour-modal--overlay--hidden': ! isVisible,
+			} ) }
 			shouldCloseOnClickOutside={ false }
 			size={ size }
 			// onRequestClose={ onClose } // Do not use onRequestClose, it will cause the tour finish

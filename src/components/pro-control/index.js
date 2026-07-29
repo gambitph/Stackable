@@ -20,135 +20,72 @@ const prependBaseUrl = src => `${ srcUrl }/${ src }`
 
 const LABELS = {
 	image: {
-		title: __( 'Get More Image Shapes', i18n ),
-		description: <ul>
-			<li>{ __( 'Mask images with a variety of blob-like shapes', i18n ) }</li>
-			<li>{ __( 'Choose from over 50 different shapes', i18n ) }</li>
-			<li>{ __( 'Enhances the overall aesthetic of images', i18n ) }</li>
-		</ul>,
+		title: __( 'Make Images Stand Out', i18n ),
+		description: __( 'Mask photos with unique blob shapes to create memorable visuals that feel custom-designed.', i18n ),
 	},
 	'dynamic-attributes': {
-		title: __( 'Use Dynamic Content', i18n ),
-		description: <ul>
-			<li>{ __( 'Add dynamic content from posts or post meta', i18n ) }</li>
-			<li>{ __( 'Use third-party plugins as dynamic sources such as ACF, Meta Box, Toolset, and more', i18n ) }</li>
-			<li>{ __( 'Build custom loop design with the Native Query Loop', i18n ) }</li>
-		</ul>,
+		title: __( 'Build Smarter, Faster Sites', i18n ),
+		description: __( 'Pull live content from posts, ACF, Meta Box, and more so pages update automatically without manual edits.', i18n ),
 	},
 	separator: {
-		title: __( 'Separator Layers', i18n ),
-		description: <ul>
-			<li>{ __( 'Add a second and third layer to separators', i18n ) }</li>
-			<li>{ __( 'Change layer color, size and opacity', i18n ) }</li>
-			<li>{ __( 'Greater creativity in designing separators', i18n ) }</li>
-		</ul>,
+		title: __( 'Create Depth Between Sections', i18n ),
+		description: __( 'Layer colors and opacities on separators to craft richer section transitions that feel polished and intentional.', i18n ),
 	},
 	'icon-colors': {
-		title: __( 'Elevate Your Icons', i18n ),
-		description: <ul>
-			<li>{ __( 'Liven up icons with gradient fills, multiple colors and background shapes', i18n ) }</li>
-			<li>{ __( 'More design options and customization for icons', i18n ) }</li>
-			<li>{ __( 'Choose from over 50 background shapes', i18n ) }</li>
-			<li>{ __( 'Greater visual interest and variety for your icons', i18n ) }</li>
-		</ul>,
+		title: __( 'Make Icons Unforgettable', i18n ),
+		description: __( 'Add gradients, multi-color fills, and background shapes so icons look premium and draw attention.', i18n ),
 	},
 	'icon-background-shape': {
-		description: <ul>
-			<li>{ __( 'Liven up icons with background shapes', i18n ) }</li>
-			<li>{ __( 'Choose from over 50 background shapes', i18n ) }</li>
-			<li>{ __( 'Greater visual interest and variety for your icons', i18n ) }</li>
-		</ul>,
+		title: __( 'Give Icons More Presence', i18n ),
+		description: __( 'Frame icons with distinctive background shapes to make features and lists clearer and more visually engaging.', i18n ),
 	},
 	transforms: {
-		description: <ul>
-			<li>{ __( 'Adjust timing of CSS transitions', i18n ) }</li>
-			<li>{ __( 'Change X and Y position of blocks', i18n ) }</li>
-			<li>{ __( 'Scale or rotate blocks', i18n ) }</li>
-			<li>{ __( 'Perfect for hover animations', i18n ) }</li>
-		</ul>,
+		title: __( 'Add Delightful Hover Moments', i18n ),
+		description: __( 'Move, scale, and rotate blocks on hover to create interactive effects that make your site feel alive.', i18n ),
 	},
 	'motion-effects': {
-		description: <ul>
-			<li>{ __( 'Entrance fade-ins and animations when scrolling to blocks', i18n ) }</li>
-			<li>{ __( 'Smooth scroll animations based on scrolling position', i18n ) }</li>
-			<li>{ __( 'Create a more visually engaging and interactive experience', i18n ) }</li>
-		</ul>,
+		title: __( 'Bring Your Pages to Life', i18n ),
+		description: __( 'Create polished websites with elegant animations that naturally guide visitors through your content.', i18n ),
 	},
 	'conditional-display': {
-		description: <ul>
-			<li>{ __( 'Show or hide blocks based on conditions', i18n ) }</li>
-			<li>{ __( 'Display blocks based on time, role, meta, custom PHP, option, taxonomy and more', i18n ) }</li>
-			<li>{ __( 'Use multiple conditions', i18n ) }</li>
-			<li>{ __( 'Show targeted content and personalization', i18n ) }</li>
-			<li>{ __( 'Greater control over the visibility of content', i18n ) }</li>
-		</ul>,
+		title: __( 'Show the Right Content', i18n ),
+		description: __( 'Reveal or hide blocks by role, time, meta, and more to personalize pages for each visitor.', i18n ),
 	},
 	'custom-css': {
-		description: <ul>
-			<li>{ __( 'Add custom CSS rules specific for each block', i18n ) }</li>
-			<li>{ __( 'Support for media queries', i18n ) }</li>
-			<li>{ __( 'Fine-tune styling on a per block basis', i18n ) }</li>
-		</ul>,
+		title: __( 'Fine-Tune Every Detail', i18n ),
+		description: __( 'Add per-block CSS with media queries to perfect layouts and polish designs beyond the inspector controls.', i18n ),
 	},
 	'column-arrangement': {
-		title: __( 'Adjust Column Arrangement', i18n ),
-		description: <ul>
-			<li>{ __( 'Adjust the arrangement of columns when collapsed on tablet and mobile', i18n ) }</li>
-			<li>{ __( 'Ensure that content remains organized and easily readable on mobile', i18n ) }</li>
-		</ul>,
+		title: __( 'Perfect Layouts on Mobile', i18n ),
+		description: __( 'Reorder columns for tablet and mobile so content stays clear, scannable, and easy to read on every device.', i18n ),
 	},
 	'design-library': {
-		title: __( 'This is a Premium Design', i18n ),
-		description: __( 'Unlock access to the entire design library and set your website apart from the rest.', i18n ),
+		title: __( 'Launch Beautiful Pages Faster', i18n ),
+		description: __( 'Unlock premium designs you can drop in and customize, so every page looks professional from the start.', i18n ),
 	},
 	posts: {
-		title: __( 'Get More Post Options', i18n ),
-		description: <ul>
-			<li>{ __( 'New Custom Post Type option', i18n ) }</li>
-			<li>{ __( 'Offset, exclude, include specific posts', i18n ) }</li>
-			<li>{ __( 'Hide the current post - great for synced patterns', i18n ) }</li>
-		</ul>,
+		title: __( 'Display Posts Your Way', i18n ),
+		description: __( 'Filter by custom post types, offset, include, or exclude posts to build flexible listings that fit any layout.', i18n ),
 	},
 	'icon-library': {
-		title: __( 'Unlock Your Icon Library', i18n ),
-		description: <ul>
-			<li>{ __( 'Add your custom SVG icons', i18n ) }</li>
-			<li>{ __( 'Easily access your custom icons in the icon picker', i18n ) }</li>
-			<li>{ __( 'Organize your custom icons in your library', i18n ) }</li>
-		</ul>,
+		title: __( 'Use Your Brand Icons', i18n ),
+		description: __( 'Upload custom SVGs once and reuse them anywhere, so your icons stay consistent across the entire site.', i18n ),
 	},
 	'font-pairs': {
-		title: __( 'Premium Typography', i18n ),
-		description: <ul>
-			<li>{ __( 'Apply beautiful typography combinations instantly', i18n ) }</li>
-			<li>{ __( 'Access to 90+ curated font pairs for professional designs', i18n ) }</li>
-			<li>{ __( 'Create custom font combinations for your brand', i18n ) }</li>
-		</ul>,
+		title: __( 'Look Professionally Designed', i18n ),
+		description: __( 'Apply curated font combinations instantly, or create your own, for typography that feels cohesive and on-brand.', i18n ),
 	},
 	'color-schemes': {
-		title: __( 'Premium Color Schemes', i18n ),
-		description: <ul>
-			<li>{ __( 'Define site-wide colors that apply to all blocks automatically', i18n ) }</li>
-			<li>{ __( 'Access to 50+ curated color scheme presets', i18n ) }</li>
-			<li>{ __( 'Create custom color schemes for backgrounds, containers, and buttons', i18n ) }</li>
-		</ul>,
+		title: __( 'Keep Your Brand Consistent', i18n ),
+		description: __( 'Set site-wide color schemes that apply automatically, so every block stays on-brand without redoing colors by hand.', i18n ),
 	},
 	'preset-controls': {
-		title: __( 'Premium Preset Controls', i18n ),
-		description: <ul>
-			<li>{ __( 'Customize your own presets like small, medium, large & x-large', i18n ) }</li>
-			<li>{ __( 'Maintain structured, well-balanced designs effortlessly', i18n ) }</li>
-			<li>{ __( 'Use Global Typography sizes as presets', i18n ) }</li>
-		</ul>,
+		title: __( 'Design Faster With Consistency', i18n ),
+		description: __( 'Define reusable size presets so spacing and typography stay balanced across blocks without guessing values.', i18n ),
 	},
 	'global-block-styles': {
-		title: __( 'Global Block Styles', i18n ),
-		description: <ul>
-			<li>{ __( 'Design once, apply everywhere - no more copy-paste', i18n ) }</li>
-			<li>{ __( 'Class-based styling for leaner, faster websites', i18n ) }</li>
-			<li>{ __( 'Sync changes across all blocks instantly', i18n ) }</li>
-			<li>{ __( 'Override styles while keeping them synced', i18n ) }</li>
-		</ul>,
+		title: __( 'Design Once, Update Everywhere', i18n ),
+		description: __( 'Sync block styles site-wide so one change updates every instance—no more copy-paste or hunting down inconsistencies.', i18n ),
 	},
 }
 
@@ -168,8 +105,13 @@ const ProControl = props => {
 				<div>
 					<a href="https://wpstackable.com/premium/?utm_source=editor-learn-more&utm_campaign=learnmore&utm_medium=gutenberg" target="_premium" className="button button-secondary">
 						<SVGDiamond />
-						{ props.button || LABELS[ props.type ]?.button || __( 'Learn More', i18n ) }
+						{ props.button || LABELS[ props.type ]?.button || __( 'Get Premium', i18n ) }
 					</a>
+					{ props.learnMoreUrl && (
+						<a href={ props.learnMoreUrl } target="_premium" className="button button-tertiary">
+							{ __( 'Learn More', i18n ) }
+						</a>
+					) }
 				</div>
 			) }
 			{ props.demoUrl && (
@@ -177,7 +119,7 @@ const ProControl = props => {
 					<a href={ props.demoUrl } target="_premium" className="button button-secondary">{ __( 'View Demo', i18n ) }</a>
 				</p>
 			) }
-			{ props.showHideNote && <p className="ugb-design-control-pro-note__notice">{ __( 'You can hide premium hints in the settings', i18n ) }</p> }
+			<p className="ugb-design-control-pro-note__notice">{ __( 'Part of the complete website builder in Stackable Premium.', i18n ) }</p>
 		</div>
 	)
 }

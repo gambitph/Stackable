@@ -2,6 +2,10 @@
 	z-index: 1000002;
 	background-color: transparent !important;
 	pointer-events: none;
+
+	&.ugb-tour-modal--overlay--hidden {
+		visibility: hidden;
+	}
 }
 
 .ugb-tour-modal {

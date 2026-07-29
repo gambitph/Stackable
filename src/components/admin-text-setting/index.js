@@ -1,6 +1,6 @@
 import AdminBaseSetting from '../admin-base-setting'
 import { useRef, useState } from '@wordpress/element'
-import { maskSensitiveValue } from '~stackable/util'
+import { maskSensitiveValue } from '~stackable/util/mask-sensitive-value'
 
 const AdminTextSetting = props => {
 	const ref = useRef()

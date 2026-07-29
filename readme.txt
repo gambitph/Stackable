@@ -1,14 +1,14 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.8.1
-Tested up to: 7.0.1
+Requires at least: 6.8.2
+Tested up to: 7.0.2
 Requires PHP: 7.4
-Stable tag: 3.19.9
+Stable tag: 3.19.10
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Custom Blocks that transform your WordPress Block Editor into a page builder
+The complete website builder for the WordPress block editor. Build professional sites faster with powerful blocks, block styles, and a global design system.
 
 == Description ==
 
@@ -308,6 +308,15 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.19.10 =
+
+* Change: Added input masking to Google API Key settings field #3714
+* Fixed: Better Yoast plugin compatibility #3715
+* Fixed: Blocks not reflecting the latest saved value in the frontend #3715
+* Fixed: MailPoet - fixed compatibility with default Stackable text block #3718
+* Fixed: Feature grid block - fixed justified columns #3717
+* Fixed: Hardened deprecated block defaults endpoints #3725
 
 = 3.19.9 =
 
@@ -693,122 +702,3 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Some blocks may produce errors when editing in multisite when editing as a non-super user #3130
 * Fixed: In multisite, prevent parts of custom icons from being stripped #3130
 * Fixed: Buttons block - full width now occupies the entire full width correctly #2991
-
-= 3.12.13 =
-* Fixed: (Hotfix update) Rolled back some optimizations that caused styling issues in the frontend after saving.
-
-= 3.12.12 =
-* New: WordPress 6.5 compatibility #3115 #3116 #333
-* New: Improved editor and saving performance #3119 #3114
-* New: Added support for Metabox settings #330
-* New: Columns Block - you can now wrap columns in desktop view #3072
-* New: Carousel Block - new infinite scroll option #3060
-* New: Added thumbnail option for video backgrounds #3040
-* New: Border color picker now has the new opacity slider #3074
-* New: Design Library - added error logger in the network tab for easy checking of errors #3112
-* New: WooCommerce - dynamic content product description now has option to not strip HTML tags #331
-* Change: Removed Navigation Panel feature - it was already disabled by default back in 3.10.2 #3119
-* Fixed: Prevent bottom separator from overlapping content #3081
-* Fixed: Card block - fixed possible block error when reseting layouts #3080
-* Fixed: Posts block - better display for horizontal layouts with large featured image #3108
-* Fixed: Tabs block - changing styles now updates the border radius correctly #3106
-* Fixed: Lightbox - prevent possible PHP error #3083
-* Fixed: Security improvements
-
-= 3.12.11 =
-* New: You can now use YouTube shorts and unlisted Vimeo videos in the Video Popup block
-* Fixed: Ordered Icon List block numerals no longer wrap to the next line
-* Fixed: Native list block behaviors no longer create Stackable Icon List Item blocks
-* Fixed: Clicking WooCommerce add to cart button no longer changes the Tabs block to the first tab
-* Fixed: No longer need to have v2 compatibility enabled for the random order option to work in the Posts block
-* Fixed: Carousel block default icon color can now be changed correctly
-* Fixed: Pasting a bullet list no longer converts it to a Stackable Icon List block
-* Fixed: Frontend scripts now will not initialize more than once
-* Fixed: Updated .pot file to allow manual JS strings translations
-
-= 3.12.10 =
-* Fixed: (Hotfix update) Some themes can add bullets or numbers on the Icon List block
-
-= 3.12.9 =
-* New: Revamp of Icon List Block (please expect some slight changes in the block's appearance after the block migrates)
-* New: New Icon List Block options: item borders, vertical icon alignment, and more
-* New: Cleaner output: inlined script for animations is no longer added if there are no animations
-* New: Dynamic Content: you can now search for a post ID in the post search field
-* Fixed: Block error when adding an anchor on a Button block
-* Fixed: Clicking once on links inside the Carousel block now works in iOS
-* Fixed: Anchors are not anymore copied with our copy and paste style feature
-* Fixed: Error when using a category that's shown as a link
-* Fixed: Compatibility with Thrive themes global header
-* Fixed: Compatibility with Core Framework: inspector panels now open properly
-
-= 3.12.8 =
-* New: (Hotfix update) Added new option "Lazy Load Images within Carousels" that fixes carousel spacing issues with some image lazy loading solutions
-* Fixed: (Hotfix update) Turned carousel image lazy loading fix into an option instead of a default
-* Fixed: Dropdown arrows in the block resizers shows up as a square / no icon
-* Fixed: Accessibility warning in lightboxes that aria-* attributes are misspelled
-
-= 3.12.7 =
-* New: Better multisite support
-* New: Multisite network license key activation is now possible
-* New: Font Awesome 6 support, you can now choose between Font Awesome 5 and 6 icon libraries from the settings
-* Fixed: You can now use text formatting on Image block captions
-* Fixed: Dynamic Content show different post data when used with JetEngine loops and other query builders
-* Fixed: Better scrollbar styling support with Firefix
-* Fixed: Column size indicator sometimes shows up as a square / no icon and without a label
-* Fixed: Dynamic breakpoints not producing correct breakpoints when used with specific values
-* Fixed: Conditional Display can produce a PHP error if post meta is an array
-* Fixed: Inner block gap option sometimes resets to 0
-* Fixed: Accordion block now opens correctly when editing in the theme Customizer
-* Fixed: Carousel & Horizontal scroller height issues when images are lazy loaded
-* Fixed: Corrected account and contact us links in the settings when network activated
-* Fixed: Network activating will no longer redirect to a 404 page
-
-= 3.12.6 =
-* Fixed: Block error for blocks with containers and video backgrounds #2967
-
-= 3.12.5 =
-* Fixed: Edge case PHP error with unique id checking #2961
-* Fixed: Resolved PHP warning with Metabox integration #317
-
-= 3.12.4 =
-* New: WordPress 6.4 compatibility
-* New: Tabs block option: Equal tab height - to toggle on/off equal tab heights #2844
-* New: Dynamic Content: Added "show as link" option for author name and taxonomies #2878
-* New: Image block now has a built-in caption #2875
-* New: You can now use a URL for images and background images #2873
-* Change: Tabs block now by default will now have non-equal tab heights
-* Change: Added note in fixed background option that it only works in desktop and Android mobile #2917
-* Fixed: Carousel block is now RTL compatible #2910
-* Fixed: Duplicated blocks that are inserted dynamically will now style correctly #2890
-* Fixed: Margin bottom draggable control now works correctly when using percentage #2904
-* Fixed: Added border radius corner icons #2914
-* Fixed: Timeline block lines now connect properly in Firefox #2872
-* Fixed: Timeline block in Safari mobile workaround: now always filled with accent color #2912
-* Fixed: Progress bar and circle blocks now show correctly dynamic content if edited in widgets #2952
-* Fixed: Dragging margin bottom control is now smoother #2904
-
-= 3.12.3 =
-* Fixed: When updating a container, it has a chance of incorrectly enabling the container
-* Fixed: Resolved PHP warning about global styles variable
-* Fixed: Accordion block produces a PHP error on saving when structure is malformed
-* Fixed: Prevent new border radius control from overflowing the corners
-
-= 3.12.2 =
-* Fixed: (Hotfix update) PHP error if using PHP 7.2 and below
-
-= 3.12.1 =
-* Fixed: (Hotfix update) Possible PHP error with Dynamic Content
-
-= 3.12.0 =
-[WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-
-* New: WooCommerce integration: you can now use WooCommerce product fields in Dynamic Content and inside the native Query Loop block (premium) #2907
-* New: WooCommerce integration: you can now use WooCommerce product fields as Display Conditions (premium) #2907
-* New: Enhanced color picker: now includes opacity #2740
-* New: Enhanced gradient color picker: multiple color stops, type and angle. Also supports theme gradient colors. #2740
-* New: Accordion FAQ Schema option #2874
-* New: You can now adjust border radius corners individually #2877
-* Change: Global colors can no longer be used when picking gradient colors (backward compatible, if you used them before, they will still work unless the gradient is edited)
-* Fixed: Global settings get removed when switching between code view and visual view #2855
-* Fixed: Posts block, added missing note about extra options #2879
-* Fixed: Global typography preview now reflects the theme's default font family #2858

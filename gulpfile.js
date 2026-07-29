@@ -37,6 +37,7 @@ const buildInclude = [
 	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
 	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
 	'!' + path.resolve( __dirname, './src/__*/**/*' ), // Development templates.
+	'!' + path.resolve( __dirname, './src/posthog-config.php' ), // Local PostHog secrets from .env.
 ]
 
 const postCSSOptions = [

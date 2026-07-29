@@ -8,6 +8,7 @@ dist/**
 coverage
 wp-auth.json
 .env
+src/posthog-config.php
 
 .env
 wp-auth.json
