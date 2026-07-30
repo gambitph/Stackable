@@ -97,7 +97,7 @@ const DesignLibraryListItem = memo( props => {
 		}
 
 		const tag = target.tagName
-		return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable
+		return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON' || target.isContentEditable
 	}
 
 	const buttonAttributes = {
