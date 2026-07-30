@@ -1646,6 +1646,9 @@ const ImportExportSettings = props => {
 									try {
 										const fileContent = await file.text()
 										const parsedContent = JSON.parse( fileContent )
+										if ( ! parsedContent?.settings || typeof parsedContent.settings !== 'object' || Array.isArray( parsedContent.settings ) ) {
+											throw new Error( 'Invalid import file shape.' )
+										}
 										setImportFile( parsedContent )
 										setModalState( 'IMPORT' )
 									} catch ( err ) {
