@@ -127,6 +127,7 @@ const DesignLibraryItem = memo( props => {
 	const previewProps = useMemo( () => ( {
 		designId: design.id || design.designId,
 		template: design.template || design.content,
+		modified: design.modified,
 		category: design.category,
 		plan: design.plan,
 		label: design.label,
@@ -139,8 +140,9 @@ const DesignLibraryItem = memo( props => {
 		onClick: onSelectDesign,
 		canManageUserPatterns,
 	} ), [
-		// Only track designId for memoization; other design properties will update when designId changes
+		// Track modified date so same-slug saved patterns rerender after content changes.
 		design.id || design.designId,
+		design.modified,
 		containerScheme,
 		backgroundScheme,
 		enableBackground,

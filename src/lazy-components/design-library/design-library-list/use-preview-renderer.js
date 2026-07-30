@@ -36,8 +36,9 @@ const DEFAULT_CONTENT = { ...DEFAULT }
 
 const previewParseCache = new Map()
 
-const getPreviewCacheKey = ( designId, selectedTab, isDesignLibraryDevMode ) => {
-	return `${ selectedTab }:${ designId }:${ isDesignLibraryDevMode ? 'dev' : 'prod' }`
+const getPreviewCacheKey = ( designId, selectedTab, isDesignLibraryDevMode, modified ) => {
+	// Include date modified so same-slug saved patterns get a fresh preview after updates.
+	return `${ selectedTab }:${ designId }:${ isDesignLibraryDevMode ? 'dev' : 'prod' }:${ modified || '' }`
 }
 
 export const usePreviewRenderer = (
@@ -47,6 +48,7 @@ export const usePreviewRenderer = (
 	const {
 		designId,
 		template,
+		modified,
 		category,
 		plan,
 		containerScheme,
@@ -222,7 +224,7 @@ export const usePreviewRenderer = (
 			return
 		}
 
-		const cacheKey = getPreviewCacheKey( designId, selectedTab, isDesignLibraryDevMode )
+		const cacheKey = getPreviewCacheKey( designId, selectedTab, isDesignLibraryDevMode, modified )
 		const cachedPreview = previewParseCache.get( cacheKey )
 
 		if ( cachedPreview ) {
