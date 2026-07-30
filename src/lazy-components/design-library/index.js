@@ -95,7 +95,17 @@ const ModalDesignLibrary = props => {
 	useEffect( () => {
 		const onSavedPatternsLoaded = patterns => {
 			if ( selectedTab === 'saved' ) {
-				setSidebarDesigns( patterns )
+				const savedPatterns = Array.isArray( patterns ) ? patterns : []
+				const savedPatternIds = new Set( savedPatterns.map( pattern => pattern.id || pattern.designId ) )
+
+				setSidebarDesigns( savedPatterns )
+				// Keep selected saved patterns, but drop any that were removed.
+				setSelectedDesignIds( currentSelectedDesignIds => (
+					currentSelectedDesignIds.filter( designId => savedPatternIds.has( designId ) )
+				) )
+				setSelectedDesignData( currentSelectedDesignData => (
+					currentSelectedDesignData.filter( design => savedPatternIds.has( design.designId ) )
+				) )
 			}
 		}
 
