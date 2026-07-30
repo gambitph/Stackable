@@ -64,6 +64,7 @@ const ImportSettings = ( {
 			asyncImports: [],
 		}, importedSettings )
 	}, [ importedSettings ] )
+	const hasImports = Object.keys( settingsToSave ).length > 0 || asyncImports.length > 0
 
 	const handleImport = async () => {
 		if ( ! ( 'settings' in importedSettings ) ) {
@@ -131,7 +132,7 @@ const ImportSettings = ( {
 			label={ __( 'Import', i18n ) }
 			text={ __( 'Import', i18n ) }
 			variant="primary"
-			disabled={ Object.keys( settingsToSave ).length === 0 }
+			disabled={ ! hasImports }
 			onClick={ () => handleImport() }
 		/>
 	</ImportExportSettingsContext.Provider>
