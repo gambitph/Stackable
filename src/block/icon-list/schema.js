@@ -14,6 +14,7 @@ import {
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
+import { DEFAULT_SVG } from './util'
 
 export const iconListAttributes = {
 	// Columns.
@@ -50,10 +51,9 @@ export const iconListAttributes = {
 	},
 
 	// Icon.
-	// Changed to empty string to detect if the attribute is unset (intially created).
 	icon: {
 		type: 'string',
-		default: '',
+		default: DEFAULT_SVG,
 	},
 	markerColor: {
 		type: 'string',

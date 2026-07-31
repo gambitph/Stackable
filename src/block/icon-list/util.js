@@ -15,7 +15,7 @@ export const DEFAULT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0
 export const IconSvgDef = props => {
 	const { icon, uniqueId } = props
 
-	const rawHtml = `<defs><g id="stk-icon-list__icon-svg-def-${ uniqueId }">${ icon || DEFAULT_SVG }</g></defs>`
+	const rawHtml = `<defs><g id="stk-icon-list__icon-svg-def-${ uniqueId }">${ icon }</g></defs>`
 
 	return createElement( 'svg', { dangerouslySetInnerHTML: { __html: rawHtml }, style: { display: 'none' } } )
 }

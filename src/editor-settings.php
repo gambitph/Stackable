@@ -321,6 +321,11 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_enable_heading_default_theme_margins_non_posts'] = get_option( 'stackable_enable_heading_default_theme_margins_non_posts' );
 			$settings['stackable_icon_list_block_default_icon'] = get_option( 'stackable_icon_list_block_default_icon' );
 
+			// Inserter variations are registered before the block Edit component renders,
+			// so provide the post type here.
+			$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+			$settings['stackable_current_post_type'] = $current_screen && ! empty( $current_screen->post_type ) ? $current_screen->post_type : '';
+
 			return $settings;
 		}
 
