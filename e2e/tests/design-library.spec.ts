@@ -26,8 +26,9 @@ const waitForDesignsToLoad = async ( page: Page ) => {
 	const designsPanel = page.locator( '.ugb-modal-design-library__designs' )
 	await expect( designsPanel ).toBeVisible()
 
-	// Wait until the spinner is gone and at least one design card is present.
-	await expect( designsPanel.locator( '.components-spinner' ) ).toHaveCount( 0, { timeout: 60_000 } )
+	// Only wait for the panel's loading spinner. Each design card keeps its own
+	// preview spinner in the DOM after loading and hides it with CSS.
+	await expect( designsPanel.locator( ':scope > .components-spinner' ) ).toHaveCount( 0, { timeout: 60_000 } )
 	await expect( page.locator( '.ugb-design-library-item' ).first() ).toBeVisible( { timeout: 60_000 } )
 }
 
