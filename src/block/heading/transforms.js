@@ -4,9 +4,15 @@
 import { createBlock, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
 
 /**
+ * External dependencies
+ */
+import { settings } from 'stackable'
+
+/**
  * Internal dependencies
  */
 import { TEMPLATE as ICON_LABEL_TEMPLATE } from '../icon-label/edit'
+import { getHeadingDefaultAttributes } from './util'
 
 const transforms = {
 	from: [
@@ -15,7 +21,10 @@ const transforms = {
 			isMultiBlock: true,
 			blocks: [ 'stackable/text' ],
 			transform: attributes => {
-				return attributes.map( ( { ...attrs } ) => createBlock( 'stackable/heading', { ...attrs } ) )
+				return attributes.map( ( { ...attrs } ) => createBlock( 'stackable/heading', {
+					...getHeadingDefaultAttributes( settings ),
+					...attrs,
+				} ) )
 			},
 		},
 		{
@@ -23,7 +32,10 @@ const transforms = {
 			isMultiBlock: true,
 			blocks: [ 'stackable/subtitle' ],
 			transform: attributes => {
-				return attributes.map( ( { ...attrs } ) => createBlock( 'stackable/heading', { ...attrs } ) )
+				return attributes.map( ( { ...attrs } ) => createBlock( 'stackable/heading', {
+					...getHeadingDefaultAttributes( settings ),
+					...attrs,
+				} ) )
 			},
 		},
 		{
@@ -32,6 +44,7 @@ const transforms = {
 			blocks: [ 'core/paragraph' ],
 			transform: attributes => {
 				return attributes.map( ( { content } ) => createBlock( 'stackable/heading', {
+					...getHeadingDefaultAttributes( settings ),
 					text: content,
 				} ) )
 			},
@@ -42,6 +55,7 @@ const transforms = {
 			blocks: [ 'core/heading' ],
 			transform: attributes => {
 				return attributes.map( ( { content } ) => createBlock( 'stackable/heading', {
+					...getHeadingDefaultAttributes( settings ),
 					text: content,
 				} ) )
 			},

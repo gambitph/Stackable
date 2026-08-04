@@ -7,8 +7,14 @@ import {
 } from '@wordpress/rich-text'
 
 /**
+ * External dependencies
+ */
+import { settings } from 'stackable'
+
+/**
  * Internal dependencies
  */
+import { getIconListDefaultAttributes } from './util'
 
 // import { createListBlockFromDOMElement } from './util'
 
@@ -69,6 +75,7 @@ const transforms = {
 				return createBlock(
 					'stackable/icon-list',
 					{
+						...getIconListDefaultAttributes( settings ),
 						anchor: blockAttributes.anchor,
 					},
 					childBlocks
@@ -85,6 +92,7 @@ const transforms = {
 				return createBlock(
 					'stackable/icon-list',
 					{
+						...getIconListDefaultAttributes( settings ),
 						anchor: blockAttributes.anchor,
 					},
 					childBlocks
