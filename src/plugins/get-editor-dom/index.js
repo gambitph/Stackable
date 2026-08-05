@@ -8,7 +8,9 @@ import { useDeviceType } from '~stackable/hooks'
  * WordPress dependencies
  */
 import { useLayoutEffect, useRef } from '@wordpress/element'
-import { dispatch, useSelect } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 
 const resolveEditorDom = () => {
 	const iframeEl = document.querySelector( 'iframe[name="editor-canvas"]' )
@@ -56,7 +58,11 @@ export const EditorDom = () => {
 				return false
 			}
 
-			dispatch( 'stackable/editor-dom' ).updateEditorDom( dom )
+			// Check if the editorDom has changed before updating the store
+			// to avoid unnecessary re-renders.
+			if ( select( 'stackable/editor-dom' ).getEditorDom() !== dom ) {
+				dispatch( 'stackable/editor-dom' ).updateEditorDom( dom )
+			}
 			return true
 		}
 
