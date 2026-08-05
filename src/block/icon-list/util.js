@@ -12,6 +12,13 @@ import { i18n } from 'stackable'
 // The default icon list SVG.
 export const DEFAULT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190"><polygon points="173.8,28.4 60.4,141.8 15.7,97.2 5.1,107.8 60.4,163 184.4,39 173.8,28.4"/></svg>'
 
+// This helper is called only by the inserter variation and explicit block
+// transforms. Parsed existing blocks and Design Library blocks do not call it.
+export const getIconListDefaultAttributes = ( editorSettings = {} ) => ( {
+	// Preserve the original schema icon when no custom admin default is set.
+	icon: editorSettings.stackable_icon_list_block_default_icon || DEFAULT_SVG,
+} )
+
 export const IconSvgDef = props => {
 	const { icon, uniqueId } = props
 
@@ -122,4 +129,3 @@ export function migrateTypeToInlineStyle( attributes ) {
 
 	return attributes
 }
-

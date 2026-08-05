@@ -18,12 +18,22 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
     class Stackable_Custom_Block_Styles {
 
 		/**
+		 * Capability required to manage site-wide block default styles.
+		 *
+		 * @var string
+		 */
+		const BLOCK_STYLES_CAPABILITY = 'edit_theme_options';
+
+		/**
 		 * Initialize
 		 */
 		function __construct() {
 			// Register our settings.
 			add_action( 'admin_init', array( $this, 'register_block_style_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_block_style_settings' ) );
+
+			// Sanitize stored styles on read (legacy data / defense in depth).
+			add_filter( 'option_stackable_block_styles', array( $this, 'sanitize_stored_block_styles' ) );
 
 			// Register our management rest routes
 			add_action( 'rest_api_init', array( $this, 'register_route' ) );
@@ -49,11 +59,6 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 * @return void
 		 */
 		public function register_block_style_settings() {
-			// Only do this when the current user is an admin.
-			if ( ! current_user_can( 'edit_posts' ) ) {
-				return;
-			}
-
 			// Schema example:
 			/**
 			 * [
@@ -106,25 +111,286 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		}
 
 		public function sanitize_array_setting( $input ) {
-			return ! is_array( $input ) ? array( array() ) : $input;
+			if ( ! is_array( $input ) ) {
+				return array();
+			}
+
+			return $this->sanitize_stored_block_styles( $input );
+		}
+
+		/**
+		 * Whether the current user can manage block default styles.
+		 *
+		 * @return bool
+		 */
+		public static function can_manage_block_styles() {
+			return current_user_can( self::BLOCK_STYLES_CAPABILITY );
+		}
+
+		/**
+		 * Sanitize all stored block styles (used on read and on save).
+		 *
+		 * @param array $block_styles Stored block styles.
+		 * @return array
+		 */
+		public function sanitize_stored_block_styles( $block_styles ) {
+			if ( ! is_array( $block_styles ) ) {
+				return array();
+			}
+
+			$sanitized = array();
+
+			foreach ( $block_styles as $block_style ) {
+				$block_style = is_object( $block_style ) ? $block_style : (object) $block_style;
+
+				$block = $this->sanitize_block_name( $block_style->block ?? '' );
+				if ( empty( $block ) ) {
+					continue;
+				}
+
+				$styles = array();
+				if ( ! empty( $block_style->styles ) && is_array( $block_style->styles ) ) {
+					foreach ( $block_style->styles as $style ) {
+						$style = is_object( $style ) ? $style : (object) $style;
+						$slug = $this->sanitize_style_slug( $style->slug ?? '' );
+						if ( empty( $slug ) ) {
+							continue;
+						}
+
+						$sanitized_style = new stdClass();
+						$sanitized_style->slug = $slug;
+						$sanitized_style->name = sanitize_text_field( $style->name ?? '' );
+						$sanitized_style->data = $this->sanitize_block_style_data( $style->data ?? '' );
+						$sanitized_style->save = $this->sanitize_block_style_save( $style->save ?? '' );
+						$styles[] = $sanitized_style;
+					}
+				}
+
+				if ( ! empty( $styles ) ) {
+					$entry = new stdClass();
+					$entry->block = $block;
+					$entry->styles = $styles;
+					$sanitized[] = $entry;
+				}
+			}
+
+			return $sanitized;
+		}
+
+		/**
+		 * Sanitize a block name (must be a Stackable block).
+		 *
+		 * @param string $block Block name.
+		 * @return string Empty string if invalid.
+		 */
+		public function sanitize_block_name( $block ) {
+			$block = sanitize_text_field( $block );
+			if ( stripos( $block, 'stackable/' ) !== 0 ) {
+				return '';
+			}
+			return $block;
+		}
+
+		/**
+		 * Sanitize a block style slug.
+		 *
+		 * @param string $slug Style slug.
+		 * @return string
+		 */
+		public function sanitize_style_slug( $slug ) {
+			return sanitize_title( $slug );
+		}
+
+		/**
+		 * Sanitize serialized block style data (JSON).
+		 *
+		 * @param string $data JSON-encoded block data.
+		 * @return string
+		 */
+		public function sanitize_block_style_data( $data ) {
+			if ( ! is_string( $data ) ) {
+				return wp_json_encode( array(
+					'attributes' => array(),
+					'innerBlocks' => array(),
+				) );
+			}
+
+			$decoded = json_decode( $data, true );
+			if ( ! is_array( $decoded ) ) {
+				return wp_json_encode( array(
+					'attributes' => array(),
+					'innerBlocks' => array(),
+				) );
+			}
+
+			if ( isset( $decoded['attributes'] ) ) {
+				$decoded['attributes'] = $this->sanitize_block_style_data_value( $decoded['attributes'] );
+			}
+			if ( isset( $decoded['innerBlocks'] ) ) {
+				$decoded['innerBlocks'] = $this->sanitize_block_style_data_value( $decoded['innerBlocks'] );
+			}
+
+			return wp_json_encode( $decoded );
+		}
+
+		/**
+		 * Recursively sanitize block style data values.
+		 *
+		 * @param mixed $value Value to sanitize.
+		 * @return mixed
+		 */
+		public function sanitize_block_style_data_value( $value ) {
+			if ( is_array( $value ) ) {
+				return array_map( array( $this, 'sanitize_block_style_data_value' ), $value );
+			}
+			if ( is_string( $value ) ) {
+				return wp_kses_post( $value );
+			}
+			if ( is_bool( $value ) || is_int( $value ) || is_float( $value ) || is_null( $value ) ) {
+				return $value;
+			}
+			return '';
+		}
+
+		/**
+		 * Sanitize block save markup (serialized blocks).
+		 *
+		 * @param string $save Serialized block markup.
+		 * @return string
+		 */
+		public function sanitize_block_style_save( $save ) {
+			if ( ! is_string( $save ) ) {
+				return '';
+			}
+
+			$save = wp_check_invalid_utf8( $save );
+			if ( '' === trim( $save ) ) {
+				return '';
+			}
+
+			$blocks = parse_blocks( $save );
+			$blocks = $this->sanitize_parsed_blocks( $blocks );
+			$save = serialize_blocks( $blocks );
+
+			if ( function_exists( 'filter_block_content' ) ) {
+				$save = filter_block_content( $save, 'post', array() );
+			} else {
+				$save = wp_kses_post( $save );
+			}
+
+			return $save;
+		}
+
+		/**
+		 * Sanitize parsed blocks, allowing only Stackable blocks.
+		 *
+		 * @param array $blocks Parsed blocks.
+		 * @return array
+		 */
+		public function sanitize_parsed_blocks( $blocks ) {
+			$sanitized = array();
+
+			foreach ( $blocks as $block ) {
+				if ( empty( $block['blockName'] ) ) {
+					if ( ! empty( $block['innerHTML'] ) ) {
+						$block['innerHTML'] = wp_kses_post( $block['innerHTML'] );
+					}
+					$sanitized[] = $block;
+					continue;
+				}
+
+				if ( stripos( $block['blockName'], 'stackable/' ) !== 0 ) {
+					continue;
+				}
+
+				if ( ! empty( $block['attrs'] ) && is_array( $block['attrs'] ) ) {
+					$block['attrs'] = $this->sanitize_block_style_data_value( $block['attrs'] );
+				}
+
+				// Keep original indexes so matching innerContent null markers can be removed when a child block is sanitized out.
+				$inner_blocks = array();
+				if ( ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
+					foreach ( $block['innerBlocks'] as $index => $inner_block ) {
+						$sanitized_inner_block = $this->sanitize_parsed_blocks( array( $inner_block ) );
+						if ( ! empty( $sanitized_inner_block ) ) {
+							$inner_blocks[ $index ] = $sanitized_inner_block[0];
+						}
+					}
+					$block['innerBlocks'] = array_values( $inner_blocks );
+				}
+
+				if ( ! empty( $block['innerHTML'] ) ) {
+					$block['innerHTML'] = wp_kses_post( $block['innerHTML'] );
+				}
+
+				if ( ! empty( $block['innerContent'] ) && is_array( $block['innerContent'] ) ) {
+					$block['innerContent'] = array_map(
+						function( $content ) {
+							return is_string( $content ) ? wp_kses_post( $content ) : $content;
+						},
+						$block['innerContent']
+					);
+					$inner_content = $this->remove_orphan_inner_content_markers( $block['innerContent'], $inner_blocks );
+					// innerBlocks and innerContent must stay aligned for WordPress' serialize_block().
+					$block['innerContent'] = $inner_content['innerContent'];
+					$block['innerBlocks'] = $inner_content['innerBlocks'];
+				}
+
+				$sanitized[] = $block;
+			}
+
+			return $sanitized;
+		}
+
+		/**
+		 * Keep innerContent null markers aligned with surviving innerBlocks.
+		 *
+		 * @param array $inner_content Parsed block innerContent.
+		 * @param array $inner_blocks Parsed block innerBlocks keyed by original index.
+		 * @return array
+		 */
+		public function remove_orphan_inner_content_markers( $inner_content, $inner_blocks ) {
+			$inner_block_index = 0;
+			$sanitized_inner_blocks = array();
+			$sanitized_inner_content = array();
+
+			foreach ( $inner_content as $content ) {
+				if ( $content === null ) {
+					// Each null marker points to the next original inner block.
+					if ( array_key_exists( $inner_block_index, $inner_blocks ) ) {
+						$sanitized_inner_content[] = null;
+						$sanitized_inner_blocks[] = $inner_blocks[ $inner_block_index ];
+					}
+					$inner_block_index++;
+					continue;
+				}
+
+				$sanitized_inner_content[] = $content;
+			}
+
+			return array(
+				'innerBlocks' => $sanitized_inner_blocks,
+				'innerContent' => $sanitized_inner_content,
+			);
 		}
 
 		public function register_route() {
 			register_rest_route( 'stackable/v2', '/update_block_style', array(
 				'methods' => 'POST',
 				'callback' => array( $this, 'update_block_style' ),
-				'permission_callback' => function () {
-					return current_user_can( 'edit_posts' );
-				},
+				'permission_callback' => array( __CLASS__, 'can_manage_block_styles' ),
 				'args' => array(
 					'block' => array(
 						'validate_callback' => __CLASS__ . '::validate_string',
+						'sanitize_callback' => array( __CLASS__, 'sanitize_block_name_param' ),
 					),
 					'slug' => array(
 						'validate_callback' => __CLASS__ . '::validate_string',
+						'sanitize_callback' => array( __CLASS__, 'sanitize_style_slug_param' ),
 					),
 					'name' => array(
 						'validate_callback' => __CLASS__ . '::validate_string',
+						'sanitize_callback' => 'sanitize_text_field',
 					),
 					'data' => array(
 						'validate_callback' => __CLASS__ . '::validate_string',
@@ -138,18 +404,42 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 			register_rest_route( 'stackable/v2', '/delete_block_style', array(
 				'methods' => 'POST',
 				'callback' => array( $this, 'delete_block_style' ),
-				'permission_callback' => function () {
-					return current_user_can( 'edit_posts' );
-				},
+				'permission_callback' => array( __CLASS__, 'can_manage_block_styles' ),
 				'args' => array(
 					'block' => array(
 						'validate_callback' => __CLASS__ . '::validate_string',
+						'sanitize_callback' => array( __CLASS__, 'sanitize_block_name_param' ),
 					),
 					'slug' => array(
 						'validate_callback' => __CLASS__ . '::validate_string',
+						'sanitize_callback' => array( __CLASS__, 'sanitize_style_slug_param' ),
 					),
 				),
 			) );
+		}
+
+		/**
+		 * REST sanitize callback for block name.
+		 *
+		 * @param string $value Block name.
+		 * @return string
+		 */
+		public static function sanitize_block_name_param( $value ) {
+			$value = sanitize_text_field( $value );
+			if ( stripos( $value, 'stackable/' ) !== 0 ) {
+				return '';
+			}
+			return $value;
+		}
+
+		/**
+		 * REST sanitize callback for style slug.
+		 *
+		 * @param string $value Style slug.
+		 * @return string
+		 */
+		public static function sanitize_style_slug_param( $value ) {
+			return sanitize_title( $value );
 		}
 
 		public static function validate_string( $value, $request, $param ) {
@@ -174,11 +464,19 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 * @return void
 		 */
 		public function update_block_style( $request ) {
-			$block = $request->get_param( 'block' );
-			$slug = $request->get_param( 'slug' );
-			$name = $request->get_param( 'name' );
-			$data = $request->get_param( 'data' );
-			$save = $request->get_param( 'save' );
+			$block = $this->sanitize_block_name( $request->get_param( 'block' ) );
+			$slug = $this->sanitize_style_slug( $request->get_param( 'slug' ) );
+			$name = sanitize_text_field( $request->get_param( 'name' ) );
+			$data = $this->sanitize_block_style_data( $request->get_param( 'data' ) );
+			$save = $this->sanitize_block_style_save( $request->get_param( 'save' ) );
+
+			if ( empty( $block ) || empty( $slug ) ) {
+				return new WP_Error(
+					'invalid_block_style',
+					__( 'Invalid block or style slug.', STACKABLE_I18N ),
+					array( 'status' => 400 )
+				);
+			}
 
 			// All our stored styles.
 			$block_styles = get_option( 'stackable_block_styles', array() );
@@ -233,8 +531,16 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 * @return void
 		 */
 		public function delete_block_style( $request ) {
-			$block = $request->get_param( 'block' );
-			$slug = $request->get_param( 'slug' );
+			$block = $this->sanitize_block_name( $request->get_param( 'block' ) );
+			$slug = $this->sanitize_style_slug( $request->get_param( 'slug' ) );
+
+			if ( empty( $block ) || empty( $slug ) ) {
+				return new WP_Error(
+					'invalid_block_style',
+					__( 'Invalid block or style slug.', STACKABLE_I18N ),
+					array( 'status' => 400 )
+				);
+			}
 
 			// All our stored styles.
 			$block_styles = get_option( 'stackable_block_styles', array() );
@@ -353,9 +659,17 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 * @return void
 		 */
 		public function edit_default_block_redirect() {
-			$block_name = sanitize_text_field( $_REQUEST['stk_edit_block'] );
-			$style_slug = sanitize_text_field( $_REQUEST['stk_edit_block_style'] );
-			$block_title = sanitize_text_field( $_REQUEST['stk_edit_block_title'] );
+			if ( ! self::can_manage_block_styles() ) {
+				wp_die( esc_html__( 'You do not have permission to edit block default styles.', STACKABLE_I18N ) );
+			}
+
+			$block_name = $this->sanitize_block_name( sanitize_text_field( wp_unslash( $_REQUEST['stk_edit_block'] ) ) );
+			$style_slug = $this->sanitize_style_slug( sanitize_text_field( wp_unslash( $_REQUEST['stk_edit_block_style'] ) ) );
+			$block_title = sanitize_text_field( wp_unslash( $_REQUEST['stk_edit_block_title'] ) );
+
+			if ( empty( $block_name ) || empty( $style_slug ) ) {
+				wp_die( esc_html__( 'Invalid block default style.', STACKABLE_I18N ) );
+			}
 
 			$this->redirect_to_block_style_editor( $block_name, $style_slug, $block_title );
 		}
@@ -370,7 +684,15 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 * @return boolean False if the block or style doesn't exist, otherwise redirects to the editor.
 		 */
 		public function redirect_to_block_style_editor( $block_name, $style_slug = 'default', $block_title = 'Block' ) {
-			if ( stripos( $block_name, 'stackable/' ) !== 0 ) {
+			if ( ! self::can_manage_block_styles() ) {
+				return false;
+			}
+
+			$block_name = $this->sanitize_block_name( $block_name );
+			$style_slug = $this->sanitize_style_slug( $style_slug );
+			$block_title = sanitize_text_field( $block_title );
+
+			if ( empty( $block_name ) || empty( $style_slug ) ) {
 				return false;
 			}
 
@@ -421,7 +743,8 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 			}
 
 			// Create the block that we will edit.
-			$post_content = str_replace( '\\', '\\\\', $style->save ); // Need to re-add the backslashes or else some data like global colors will not show up correctly.
+			$post_content = $this->sanitize_block_style_save( $style->save );
+			$post_content = str_replace( '\\', '\\\\', $post_content ); // Need to re-add the backslashes or else some data like global colors will not show up correctly.
 			$style_post_id = wp_insert_post( array(
 				'ID' => $style_post_id, // If previously edited this block, use the old post id so we don't create tons of posts.
 				'post_type' => 'stackable_temp_post',

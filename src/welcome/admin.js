@@ -5,13 +5,14 @@ import './news'
 import SVGEssentialIcon from './images/settings-icon-essential.svg'
 import SVGSpecialIcon from './images/settings-icon-special.svg'
 import SVGSectionIcon from './images/settings-icon-section.svg'
+import { ImportExportModal } from './import-export'
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	useEffect, useState, useCallback, useMemo, Suspense, Fragment,
+	useEffect, useState, useCallback, useMemo, useRef, Suspense, Fragment,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import {
@@ -38,6 +39,7 @@ import AdminSelectSetting from '~stackable/components/admin-select-setting'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 import AdminToolbarSetting from '~stackable/components/admin-toolbar-setting'
+import AdminIconSetting from '~stackable/components/admin-icon-setting'
 import { GettingStarted } from './getting-started'
 import { BLOCK_STATE } from '~stackable/util/blocks'
 import { BlockToggler, OptimizationSettings } from '~stackable/deprecated/v2/welcome/admin'
@@ -79,6 +81,14 @@ const SEARCH_TREE = [
 				children: [
 					__( 'Nested Block Width', i18n ),
 					__( 'Nested Wide Block Width', i18n ),
+				],
+			},
+			{
+				id: 'block-defaults',
+				children: [
+					__( 'Default to Theme Margins for Headings (Posts)', i18n ),
+					__( 'Default to Theme Margins for Headings (Non-Posts)', i18n ),
+					__( 'Default Icon for Icon List Block', i18n ),
 				],
 			},
 			{
@@ -218,6 +228,24 @@ const SEARCH_TREE = [
 					__( 'Load version 2 blocks in the editor', i18n ),
 					__( 'Load version 2 blocks in the editor only when the page was using version 2 blocks', i18n ),
 					__( 'Load version 2 frontend block stylesheet and scripts for backward compatibility', i18n ),
+				],
+			},
+		],
+	},
+	{
+		id: 'import-export',
+		label: __( 'Import/Export', i18n ),
+		groups: [
+			{
+				id: 'import',
+				children: [
+					__( 'Import', i18n ),
+				],
+			},
+			{
+				id: 'export',
+				children: [
+					__( 'Export', i18n ),
 				],
 			},
 		],
@@ -616,6 +644,7 @@ const Settings = () => {
 			{ currentTab === 'custom-fields-settings' && <CustomFields { ...props } /> }
 			{ currentTab === 'integrations' && <Integrations { ...props } /> }
 			{ currentTab === 'other-settings' && <AdditionalOptions { ...props } /> }
+			{ currentTab === 'import-export' && <ImportExportSettings { ...props } /> }
 			{ /* Render the V2 settings and show/hide via CSS */ }
 			<V2Settings { ...props } />
 		</article>
@@ -631,6 +660,7 @@ const EditorSettings = props => {
 
 	const groups = filteredSearchTree.find( tab => tab.id === 'editor-settings' ).groups
 	const blocks = groups.find( group => group.id === 'blocks' )
+	const blockDefaults = groups.find( group => group.id === 'block-defaults' )
 	const editor = groups.find( group => group.id === 'editor' )
 	const toolbar = groups.find( group => group.id === 'toolbar' )
 	const inspector = groups.find( group => group.id === 'inspector' )
@@ -665,6 +695,39 @@ const EditorSettings = props => {
 									handleSettingsChange( { stackable_block_wide_width: value } ) // eslint-disable-line camelcase
 								} }
 								help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
+							/>
+						</div>
+					}
+					{ ( blockDefaults.children === null || blockDefaults.children.length > 0 ) &&
+						<div className="s-setting-group">
+							<h2>{ __( 'Block Defaults', i18n ) }</h2>
+							<p className="s-settings-subtitle">{ __( 'Adjust the default behavior of some Stackable blocks.', i18n ) }</p>
+							<AdminToggleSetting
+								label={ __( 'Default to Theme Margins for Headings (Posts)', i18n ) }
+								searchedSettings={ blockDefaults.children }
+								value={ settings.stackable_enable_heading_default_theme_margins_posts }
+								onChange={ value => {
+									handleSettingsChange( { stackable_enable_heading_default_theme_margins_posts: value } ) // eslint-disable-line camelcase
+								} }
+								help={ __( "When enabled, newly added Stackable Heading blocks in Posts will use the theme's default margins automatically. Existing blocks are not affected.", i18n ) }
+							/>
+							<AdminToggleSetting
+								label={ __( 'Default to Theme Margins for Headings (Non-Posts)', i18n ) }
+								searchedSettings={ blockDefaults.children }
+								value={ settings.stackable_enable_heading_default_theme_margins_non_posts }
+								onChange={ value => {
+									handleSettingsChange( { stackable_enable_heading_default_theme_margins_non_posts: value } ) // eslint-disable-line camelcase
+								} }
+								help={ __( "When enabled, newly added Stackable Heading blocks in non-Post content (Pages and custom post types) will use the theme's default margins automatically. Existing blocks are not affected.", i18n ) }
+							/>
+							<AdminIconSetting
+								label={ __( 'Default Icon for Icon List Block', i18n ) }
+								searchedSettings={ blockDefaults.children }
+								value={ settings.stackable_icon_list_block_default_icon }
+								onChange={ value => {
+									handleSettingsChange( { stackable_icon_list_block_default_icon: value } ) // eslint-disable-line camelcase
+								} }
+								help={ __( 'Choose the default icon that will be used when adding a new Icon List block.', i18n ) }
 							/>
 						</div>
 					}
@@ -1357,6 +1420,7 @@ const Integrations = props => {
 								searchedSettings={ propsToPass.integrations.children }
 								value={ settings.stackable_google_maps_api_key }
 								type="text"
+								maskValue={ true }
 								onChange={ value => {
 									handleSettingsChange( { stackable_google_maps_api_key: value } ) // eslint-disable-line camelcase
 								} }
@@ -1566,6 +1630,100 @@ const AdditionalOptions = props => {
 							/>
 						</div>
 					}
+				</>
+			) }
+		</div>
+	)
+}
+
+const ImportExportSettings = props => {
+	const {
+		settings,
+		filteredSearchTree,
+	} = props
+
+	const groups = filteredSearchTree.find( tab => tab.id === 'import-export' ).groups
+	const importSettings = groups.find( group => group.id === 'import' )
+	const exportSettings = groups.find( group => group.id === 'export' )
+	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
+
+	const [ modalState, setModalState ] = useState( 'CLOSED' )
+	const [ importFile, setImportFile ] = useState( {} )
+	const importInputRef = useRef( null )
+
+	const searchClassname = ( label, searchedSettings ) => {
+		return searchedSettings.children === null || searchedSettings.children.includes( label )
+			? ''
+			: 'ugb-admin-setting--not-highlight'
+	}
+	return (
+		<div className="s-other-options-wrapper">
+			{ ! hasGroupMatch ? (
+				<h3>{ __( 'No matching settings', i18n ) }</h3>
+			) : (
+				<>
+					{ ( importSettings.children === null || importSettings.children.length > 0 ) &&
+						<div className="s-setting-group">
+							<h2>{ __( 'Import', i18n ) }</h2>
+							<p className="s-settings-subtitle">{ __( 'Import your Stackable settings.', i18n ) }</p>
+							<Button
+								label={ __( 'Import', i18n ) }
+								text={ __( 'Import', i18n ) }
+								className={ searchClassname( __( 'Import', i18n ), importSettings ) }
+								variant="secondary"
+								onClick={ () => {
+									importInputRef?.current?.click()
+								} }
+							/>
+
+							<input
+								type="file"
+								accept=".json"
+								hidden
+								ref={ importInputRef }
+								onChange={ async event => {
+									const file = event.target.files?.[ 0 ]
+									if ( ! file ) {
+										return
+									}
+									try {
+										const fileContent = await file.text()
+										const parsedContent = JSON.parse( fileContent )
+										if ( ! parsedContent?.settings || typeof parsedContent.settings !== 'object' || Array.isArray( parsedContent.settings ) ) {
+											throw new Error( 'Invalid import file shape.' )
+										}
+										setImportFile( parsedContent )
+										setModalState( 'IMPORT' )
+									} catch ( err ) {
+										// eslint-disable-next-line no-alert
+										alert( 'Invalid JSON file.' )
+										throw new Error( `Invalid JSON file.\n ${ err }` )
+									} finally {
+										event.target.value = ''
+									}
+								} }
+							/>
+						</div>
+					}
+					{ ( exportSettings.children === null || exportSettings.children.length > 0 ) &&
+						<div className="s-setting-group">
+							<h2>{ __( 'Export', i18n ) }</h2>
+							<p>{ __( 'Export your Stackable settings.', i18n ) }</p>
+							<Button
+								label={ __( 'Export', i18n ) }
+								className={ searchClassname( __( 'Export', i18n ), exportSettings ) }
+								text={ __( 'Export', i18n ) }
+								variant="secondary"
+								onClick={ () => setModalState( 'EXPORT' ) }
+							/>
+						</div>
+					}
+					{ <ImportExportModal
+						modalState={ modalState }
+						onClose={ () => setModalState( 'CLOSED' ) }
+						settings={ settings }
+						importFile={ importFile }
+					/> }
 				</>
 			) }
 		</div>

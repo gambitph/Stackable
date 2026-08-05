@@ -17,6 +17,7 @@ import metadata from './block.json'
 import example from './example'
 import deprecated from './deprecated'
 import substitute from './substitute'
+import variations from './variations'
 
 export const settings = {
 	...metadata,
@@ -33,6 +34,7 @@ export const settings = {
 	save,
 	example,
 	transforms,
+	variations,
 	merge( attributes, attributesToMerge ) {
 		// Make sure that the selection is always at the end of the text.
 		// @see https://github.com/WordPress/gutenberg/blob/3da717b8d0ac7d7821fc6d0475695ccf3ae2829f/packages/block-library/src/paragraph/index.js

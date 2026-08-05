@@ -25,6 +25,11 @@
 .ugb-modal-design-library__designs {
 	overflow: auto;
 	background: #f4f4f5;
+
+	&:has(.ugb-design-library-items--empty) {
+		display: flex;
+		flex-direction: column;
+	}
 }
 .ugb-design-library-item {
 	width: 100%;
@@ -54,13 +59,51 @@
 			opacity: 1;
 		}
 	}
+	.stk-block-design__edit-btn-container {
+		opacity: 0;
+		z-index: 2;
+		transition: opacity 0.4s cubic-bezier(0.2, 0.6, 0.4, 1), visibility 0.4s cubic-bezier(0.2, 0.6, 0.4, 1);
+		position: absolute;
+		padding: 60px 30px 30px;
+		background: linear-gradient(180deg, transparent, #fffe 40px, #fff) !important;
+		top: auto;
+		bottom: -1px;
+		left: 0;
+		right: 0;
+		display: flex;
+		gap: 24px;
+		visibility: hidden;
+		@media (hover: none) {
+			opacity: 1;
+		}
+
+		.ugb-button-component {
+			width: 100%;
+			justify-content: center;
+			pointer-events: none;
+			@media (hover: none) {
+				pointer-events: auto;
+			}
+		}
+	}
 	&:hover {
 		// box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 		.ugb-button-component {
 			opacity: 1;
 		}
+
+		.stk-block-design__edit-btn-container {
+			visibility: visible;
+			opacity: 1;
+			transition-delay: 1s;
+
+			.ugb-button-component {
+				pointer-events: initial;
+			}
+		}
 	}
+
 	&.ugb--is-hidden {
 		opacity: 0;
 		pointer-events: none;
@@ -110,6 +153,7 @@
 		a.button {
 			font-size: 11px !important;
 			padding: 8px;
+			min-height: auto;
 
 			svg {
 				height: 12px;
@@ -215,12 +259,7 @@
 // Full page previews
 .ugb-modal-design-library__full-pages {
 	.stk--design-preview-large {
-		cursor: grab;
-		cursor: -webkit-grab;
-		&:active {
-			cursor: grabbing;
-			cursor: -webkit-grabbing;
-		}
+		cursor: default;
 	}
 	.ugb-design-control-pro-note {
 		top: auto;
@@ -235,7 +274,6 @@
 		cursor: default;
 	}
 }
-
 
 .ugb-design-library-items {
 	.stk-spinner-container {
@@ -256,4 +294,62 @@
 			margin: auto;
 		}
 	}
+}
+
+.stk-design-library__item-saved .ugb-design-library-item {
+	cursor: pointer;
+}
+
+.stk-design-library__item-pages .ugb-design-library-item,
+.ugb-design-library-item--pages {
+	cursor: default;
+
+	.stk-block-design__design-container,
+	.stk--design-preview-large,
+	.stk-block-design__host-container,
+	.stk-block-design__host {
+		cursor: default;
+	}
+
+	.ugb-modal-design-library__add-multi {
+		cursor: pointer;
+	}
+}
+
+.stk-design-library-item__label-row {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+
+	h4 {
+		margin: 0;
+	}
+}
+
+.stk-design-library-item__edit-button.ugb-button-component {
+	min-width: 32px;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	flex-shrink: 0;
+	.dashicons {
+		color: #000 !important;
+	}
+}
+
+.stk-no-saved-designs {
+	max-width: 400px;
+
+	span {
+		display: block;
+		margin: 30px auto;
+	}
+}
+
+.ugb-design-library-items--empty {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }

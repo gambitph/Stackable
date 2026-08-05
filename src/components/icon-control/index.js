@@ -29,7 +29,7 @@ const IconControl = props => {
 		<BaseControl
 			className="ugb-icon-control stk-control"
 			{ ...omit( props, [ 'onChange', 'value' ] ) }
-			allowReset={ true }
+			allowReset={ props.allowReset }
 			value={ props.value }
 			defaultValue={ props.defaultValue }
 			onChange={ props.onChange }
@@ -71,6 +71,7 @@ IconControl.defaultProps = {
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	onChange: () => {},
 	defaultValue: '',
+	allowReset: true,
 	hasPanelModifiedIndicator: true,
 }
 

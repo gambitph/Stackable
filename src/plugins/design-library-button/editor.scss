@@ -1,3 +1,10 @@
 .ugb-insert-library-button {
 	white-space: nowrap;
 }
+
+.components-accessible-toolbar .ugb-insert-library-button.components-button {
+	&::before {
+		left: 4px;
+		right: 4px;
+	}
+}

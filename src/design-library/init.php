@@ -240,6 +240,19 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 			$designs = get_transient( $transient_name );
 
+			// Retry when a previous failed fetch was cached without usable library data.
+			if (
+				! empty( $designs ) &&
+				(
+					isset( $designs['wp_remote_get_error'] ) ||
+					isset( $designs['content_error'] )
+				) &&
+				empty( $designs[ self::API_VERSION ] )
+			) {
+				delete_transient( $transient_name );
+				$designs = false;
+			}
+
 			// Fetch designs.
 			if ( empty( $designs ) ) {
 				$designs = array();
@@ -253,6 +266,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 						'code' => $response->get_error_code(),
 						'message' => $response->get_error_message(),
 					);
+					$designs[ self::API_VERSION ] = null;
+					// Do not cache failed fetches so the next request can retry.
 				} else {
 					$content_body = wp_remote_retrieve_body( $response );
 					$content = apply_filters( 'stackable_design_library_retreive_body', $content_body );
@@ -263,14 +278,16 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 						$designs['content_error'] = array(
 							'message' => $content_body,
 						);
+						$designs[ self::API_VERSION ] = null;
+						// Do not cache failed fetches so the next request can retry.
+					} else {
+						// We add the latest designs in the `v4` area.
+						$designs[ self::API_VERSION ] = $content;
+
+						// Cache successful results.
+						set_transient( $transient_name, $designs, 7 * DAY_IN_SECONDS );
 					}
 				}
-
-				// We add the latest designs in the `v4` area.
-				$designs[ self::API_VERSION ] = $content;
-
-				// Cache results.
-				set_transient( $transient_name, $designs, 7 * DAY_IN_SECONDS );
 			}
 
 			if ( $type === 'pages' ) {
@@ -287,6 +304,10 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			$type = $request->get_param( 'type' );
 			if ( $reset ) {
 				$this->delete_cache();
+			}
+
+			if ( $type === 'saved' ) {
+				return rest_ensure_response( apply_filters( 'stackable_design_library_saved_patterns', array() ) );
 			}
 
 			return rest_ensure_response( $this->get_design_library_from_cloud( $type ) );

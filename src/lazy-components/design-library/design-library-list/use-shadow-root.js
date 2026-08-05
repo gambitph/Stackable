@@ -24,8 +24,14 @@ export const useShadowRoot = shouldRender => {
 	] )
 
 	useEffect( () => {
-	  if ( shouldRender && hostRef.current ) {
-			const shadow = hostRef.current.shadowRoot || hostRef.current.attachShadow( { mode: 'open' } )
+		if ( ! shouldRender || ! hostRef.current ) {
+			return
+		}
+
+		const hadShadow = !! hostRef.current.shadowRoot
+		const shadow = hostRef.current.shadowRoot || hostRef.current.attachShadow( { mode: 'open' } )
+
+		if ( ! hadShadow ) {
 			setStylesLoaded( 0 )
 
 			// Track existing style/link nodes in the shadow root to avoid duplicates
@@ -95,9 +101,9 @@ export const useShadowRoot = shouldRender => {
 					existingIds.add( node.id )
 				}
 			} )
+		}
 
-			setShadowRoot( shadow )
-	  }
+		setShadowRoot( shadow )
 	}, [ shouldRender ] )
 
 	return {

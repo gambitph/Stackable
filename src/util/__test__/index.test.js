@@ -4,7 +4,6 @@
 import {
 	hexToRgba, prependCSSClass, compileCSS,
 } from '../'
-
 describe( 'hexToRgba', () => {
 	it( 'should work', () => {
 		expect( hexToRgba( '#000000' ) ).toBe( 'rgba(0, 0, 0, 1)' )

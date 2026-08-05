@@ -290,6 +290,12 @@ export const Icon = props => {
 					lastIconValueRef.current = newIcon
 				}
 				processedIconRef.current = _icon
+			} else if ( iconStr.includes( '<use' ) ) {
+				if ( iconStr !== lastIconValueRef.current ) {
+					setIcon( iconStr )
+					lastIconValueRef.current = iconStr
+				}
+				processedIconRef.current = _icon
 			} else if ( ! _icon ) {
 				// Clear processed ref when icon is removed
 				processedIconRef.current = null
@@ -330,7 +336,7 @@ export const Icon = props => {
 	const classNames = classnames(
 		[ 'stk--svg-wrapper' ],
 		{
-			'stk--show-cursor': debouncedIsSelected,
+			'stk--show-cursor': debouncedIsSelected || openEvenIfUnselected,
 			'stk--has-icon2': icon2,
 		}
 	)

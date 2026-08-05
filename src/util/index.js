@@ -18,6 +18,7 @@ export * from './colors'
 export * from './element'
 export * from './on-class-change'
 export * from './block-styles'
+export { maskSensitiveValue } from './mask-sensitive-value'
 
 /**
  * WordPress dependencies

@@ -63,7 +63,7 @@ Use the [release project board](https://github.com/orgs/gambitph/projects/2/view
 
 ## Progress (as of 2026-07-11)
 
-**~68 issues closed** across 20 batches. **Continue from batch 21.**
+**~71 issues closed** across batches + ad hoc. **Paused.**
 
 ### Closed issues (by batch)
 
@@ -87,6 +87,17 @@ Use the [release project board](https://github.com/orgs/gambitph/projects/2/view
 | 16 | #2063, #2070, #2088, #2092 |
 | 17 | #2139, #2148, #2156, #2166 |
 | 20 | #2279, #2298 |
+| 25 | #2581, #2655, #2883 |
+
+**~71 issues closed.** Presentation-only passes; most relabels not applied. **Paused** — resume from #2929.
+
+### Closed issues (by batch) — ad hoc closes outside batches
+
+| # | Reason |
+|---|--------|
+| #2581 | Dup #2052 |
+| #2655 | Implemented #2877 |
+| #2883 | Obsolete v2 Image Box |
 
 ### Still open — already triaged, keep as backlog
 
@@ -179,11 +190,20 @@ Use the [release project board](https://github.com/orgs/gambitph/projects/2/view
 | #2334 | Theme global text color inside container | bug, needs-reproduction, compatibility, frontend | Astra |
 | #2335 | FA Pro v5/v6 icon picker gaps | bug, needs-reproduction, editor | |
 | #2337 | Blocksy Content Blocks in DC | enhancement, compatibility, premium, editor | Related #368 |
+| #2341 | Meta Box missing in Inspector DC | bug, needs-reproduction, editor, premium, compatibility | Blocksy Content Blocks |
+| #2342 | Conditional display lost on export | bug, needs-reproduction, compatibility, premium | Blocksy export |
+| #2349 | Top separator ignores margins in editor | bug, needs-reproduction, editor | Editor-only |
+| #2354 | Inherit Blocksy button theme settings | enhancement, compatibility, global-settings | |
+| #2359 | Column button alignment control | enhancement, editor | |
+| #2362 | WooCommerce blocks/features | feature-request, compatibility, premium | Partial #2907 |
+| #2363 | Image swap on hover | feature-request, editor | |
+| #2364 | Map block enhancements | feature-request, premium | |
+| #2366 | Continuous parallax scroll animation | feature-request, editor, premium | |
+| #2367 | Hide block when ACF field empty | feature-request, editor, premium | |
 
 ### Notable open issues (not yet triaged in this pass)
 
-- #2778 — Posts block filter by author (canonical; #653 closed as dup)
-- **Next batch 22:** #2341, #2342, #2349, #2354, #2359, #2362, #2363, #2364, #2366, #2367 (then #2379, …)
+- **Reviewed, not applied:** #2778–#2924 (except #2883 closed). **Resume from:** #2929
 
 ### Fetch command for next batch
 

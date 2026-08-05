@@ -48,4 +48,16 @@ export class StackableFixture {
 			this.page.on( 'requestfailed', failedCallback )
 		} )
 	}
+
+	// Wait for Stackable Settings to be saved via the WordPress REST API.
+	// Call this before clicking "Save Changes".
+	waitForSettingsSave(): Promise<void> {
+		return this.page.waitForResponse( response => {
+			const url = decodeURIComponent( response.url() )
+			const method = response.request().method()
+			return url.includes( '/wp/v2/settings' ) &&
+				( method === 'POST' || method === 'PUT' || method === 'PATCH' ) &&
+				response.ok()
+		} ).then( () => undefined )
+	}
 }
