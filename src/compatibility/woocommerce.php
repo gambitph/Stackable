@@ -58,3 +58,33 @@ if ( ! function_exists( 'stackable_get_woocommerce_shop_page_id' ) ) {
 	add_filter( 'stackable/get_post_id_for_cached_css', 'stackable_get_woocommerce_shop_page_id' );
 
 }
+
+/**
+ * Preserve escaped block attributes when WooCommerce duplicates a product.
+ *
+ * WooCommerce passes a product description read from the database directly to
+ * wp_insert_post(), which expects slashed data. Without restoring that slash
+ * layer, escaped characters in block comment JSON (for example, \u003c in an
+ * SVG icon or \u002d in a preset CSS variable) lose their backslashes.
+ */
+if ( ! function_exists( 'stackable_preserve_woocommerce_duplicate_block_escaping' ) ) {
+
+	function stackable_preserve_woocommerce_duplicate_block_escaping( $duplicate, $product ) {
+		$description = $duplicate->get_description( 'edit' );
+
+		if ( ! is_string( $description ) || $description === '' ) {
+			return;
+		}
+
+		if ( strpos( $description, '<!-- wp:stackable/' ) !== false ) {
+			$duplicate->set_description( wp_slash( $description ) );
+		}
+	}
+
+	add_action(
+		'woocommerce_product_duplicate_before_save',
+		'stackable_preserve_woocommerce_duplicate_block_escaping',
+		999999,
+		2
+	);
+}
