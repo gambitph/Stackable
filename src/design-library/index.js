@@ -5,37 +5,46 @@ const LATEST_API_VERSION = 'v4'
 
 let designLibrary = {}
 let designs = {}
-let pages = {}
 
 export const getBlockName = block => block.replace( /^[\w-]+\//, '' )
+
+const hasLibraryError = library =>
+	library && ( library.wp_remote_get_error || library.content_error )
 
 export const fetchDesignLibrary = async ( forceReset = false, version = '', type = 'patterns' ) => {
 	if ( forceReset ) {
 		doAction( 'stackable.design-library.reset-cache' )
 		designLibrary = {}
 		designs = {}
-		pages = {}
 	}
 
-	if ( ( type === 'patterns' && ! Object.keys( designs ).length ) ||
-		( type === 'pages' && ! Object.keys( pages ).length )
-	) {
+	const needsFetch = ( type === 'patterns' || type === 'pages' ) && ! designLibrary[ type ]
+
+	if ( needsFetch ) {
 		const results = await apiFetch( {
 			path: `/stackable/v2/design_library/${ type }${ forceReset ? '/reset' : '' }`,
 			method: 'GET',
-		} )
-		const designsPerType = results
+		} ) || {}
 
-		designLibrary[ type ] = designsPerType
+		designLibrary[ type ] = results
 
-		if ( type === 'patterns' ) {
-			designs = designsPerType[ LATEST_API_VERSION ] ?? {}
-		} else {
-			pages = designsPerType[ LATEST_API_VERSION ] ?? {}
+		if ( hasLibraryError( results ) ) {
+			if ( type === 'patterns' ) {
+				designs = {}
+			}
+		} else if ( type === 'patterns' ) {
+			designs = results[ LATEST_API_VERSION ] ?? {}
 		}
 	}
 
-	return designLibrary[ type ]?.[ version || LATEST_API_VERSION ] ?? designLibrary[ type ]
+	const library = designLibrary[ type ] || {}
+
+	// Return the raw response when it contains fetch/parse errors so callers can handle them.
+	if ( hasLibraryError( library ) ) {
+		return library
+	}
+
+	return library[ version || LATEST_API_VERSION ] ?? library
 }
 
 export const fetchDesign = async designId => {
@@ -61,10 +70,17 @@ export const getDesigns = async ( {
 	reset = false,
 	type = 'patterns',
 } ) => {
-	const designLibrary = await fetchDesignLibrary( reset, LATEST_API_VERSION, type )
+	const library = await fetchDesignLibrary( reset, LATEST_API_VERSION, type )
 
-	if ( designLibrary.wp_remote_get_error || designLibrary.content_error ) {
-		const error = designLibrary.wp_remote_get_error ?? designLibrary.content_error
+	if ( ! library || typeof library !== 'object' ) {
+		const error = { message: 'Failed to load design library.' }
+		// eslint-disable-next-line no-console
+		console.error( 'Stackable: ', error )
+		return { error }
+	}
+
+	if ( hasLibraryError( library ) ) {
+		const error = library.wp_remote_get_error ?? library.content_error
 		// eslint-disable-next-line no-console
 		console.error( 'Stackable: ', error )
 		return { error }
@@ -75,7 +91,7 @@ export const getDesigns = async ( {
 		await fetchDesignLibrary()
 	}
 
-	return Object.values( designLibrary )
+	return Object.values( library )
 }
 
 export const filterDesigns = async ( {
@@ -104,12 +120,16 @@ export const filterDesigns = async ( {
 export const getDesign = async ( designId, version = '' ) => {
 	const library = await fetchDesignLibrary( false, version )
 
+	if ( ! library || hasLibraryError( library ) ) {
+		return null
+	}
+
 	const meta = library[ designId ]
 
 	let design = await applyFilters( 'stackable.design-library.get-design', null, designId, meta, version )
 
 	// Every design has their own template file which contains the entire design, get that.
-	if ( ! design && meta.template ) {
+	if ( ! design && meta?.template ) {
 		design = await fetchDesign( designId, version )
 	}
 
