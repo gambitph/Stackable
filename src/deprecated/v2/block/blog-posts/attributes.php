@@ -1842,11 +1842,11 @@ if ( ! function_exists( 'stackable_blog_posts_attributes_v2' ) ) {
 			),
 			'nextLabel' => array(
 				'type' => 'string',
-				'default' => __( 'Next »', 'stackable' ),
+				'default' => __( 'Next »', STACKABLE_I18N ),
 			),
 			'previousLabel' => array(
 				'type' => 'string',
-				'default' => __( '« Previous', 'stackable' ),
+				'default' => __( '« Previous', STACKABLE_I18N ),
 			),
 			'showNextPrevious' => array(
 				'type' => 'boolean',

@@ -139,8 +139,11 @@ const ModalDesignLibrary = props => {
 
 			setSidebarDesigns( _designs )
 			setSelectedCategory( '' )
-		} ).catch( () => {
-			setErrors( { message: __( 'Failed to load designs.', i18n ) } )
+		} ).catch( error => {
+			setSidebarDesigns( [] )
+			setErrors( {
+				message: error?.message || String( error ),
+			} )
 		} ).finally( () => {
 			setDoReset( false )
 			setIsBusy( false )
