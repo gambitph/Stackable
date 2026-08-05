@@ -326,3 +326,8 @@
 	justify-content: var(--stk-alignment-justify-content);
 }
 
+// Separators inside .stk-inner-blocks become flex items. Explicitly setting width to 100%
+// restores the expected full-width separator behavior.
+.stk-inner-blocks .wp-block-separator {
+	width: 100%;
+}
