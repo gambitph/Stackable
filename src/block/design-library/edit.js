@@ -116,7 +116,7 @@ const Edit = props => {
 	const spacingSize = ! presetMarks || ! Array.isArray( presetMarks ) ? 120 : presetMarks[ presetMarks.length - 2 ].value
 
 	// Replaces the current block with a block made out of attributes.
-	const createBlockWithAttributes = async ( category, blockName, attributes, innerBlocks, substituteBlocks, parentClientId ) => {
+	const createBlockWithAttributes = async ( category, blockName, attributes, innerBlocks, substituteBlocks, parentClientId, type ) => {
 		const disabledBlocks = settings.stackable_block_states || {} // eslint-disable-line camelcase
 
 		// Recursively substitute core blocks to disabled Stackable blocks
@@ -207,7 +207,7 @@ const Edit = props => {
 		innerBlocks = block[ 0 ].innerBlocks
 
 		const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
-		if ( ! isDesignLibraryDevMode ) {
+		if ( ! isDesignLibraryDevMode && type !== 'saved' ) {
 			if ( category !== 'Header' ) {
 				if ( ! parentClientId && attributes.hasBackground ) {
 					attributes.blockMargin = {
@@ -255,14 +255,16 @@ const Edit = props => {
 		const blocks = []
 
 		for ( const blockDesign of designs ) {
-			const { designData, category } = blockDesign
+			const {
+				designData, category, type,
+			} = blockDesign
 
 			for ( const patterns of designData ) {
 				const {
 					name, attributes, innerBlocks,
 				} = patterns
 				if ( name && attributes ) {
-					const block = await createBlockWithAttributes( category, name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [], substituteBlocks, parentClientId )
+					const block = await createBlockWithAttributes( category, name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [], substituteBlocks, parentClientId, type )
 					blocks.push( block )
 				} else {
 					console.error( 'Design library selection failed: No block data found' ) // eslint-disable-line no-console
@@ -336,14 +338,16 @@ const Edit = props => {
 
 		_designs.forEach( design => {
 			const {
-				designData, blocksForSubstitution, category,
+				designData, blocksForSubstitution, category, type: designType,
 			} = design
 
 			if ( blocksForSubstitution.size ) {
 				disabledBlocks = disabledBlocks.union( blocksForSubstitution )
 			}
 
-			designs.push( { designData, category } )
+			designs.push( {
+				designData, category, type: designType,
+			} )
 		} )
 
 		designsRef.current = designs

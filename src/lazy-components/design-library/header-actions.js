@@ -2,7 +2,7 @@
  * External deprendencies
  */
 import {
-	i18n, isPro, devMode,
+	i18n, isPro, devMode, showProNotice,
 } from 'stackable'
 import { AdvancedToolbarControl, Button } from '~stackable/components'
 
@@ -28,21 +28,29 @@ export const HeaderActions = props => {
 		setDoReset,
 		onClose,
 	} = props
+
+	let controls = [
+		{
+			value: 'patterns',
+			title: __( 'Patterns', i18n ),
+		},
+		{
+			value: 'pages',
+			title: __( 'Pages', i18n ),
+		},
+	]
+
+	controls = ! isPro && ! showProNotice ? controls : [ ...controls, {
+		value: 'saved',
+		title: __( 'Saved', i18n ),
+	} ]
+
 	return <>
 		{ /* DEV NOTE: hide for now */ }
 		<AdvancedToolbarControl
 			className="stk-design-library-tabs"
 			fullwidth={ false }
-			controls={ [
-				{
-					value: 'patterns',
-					title: __( 'Patterns', i18n ),
-				},
-				{
-					value: 'pages',
-					title: __( 'Pages', i18n ),
-				},
-			] }
+			controls={ controls }
 			value={ selectedTab }
 			onChange={ setSelectedTab }
 			isToggleOnly={ true }

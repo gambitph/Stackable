@@ -87,6 +87,10 @@ const LABELS = {
 		title: __( 'Design Once, Update Everywhere', i18n ),
 		description: __( 'Sync block styles site-wide so one change updates every instance—no more copy-paste or hunting down inconsistencies.', i18n ),
 	},
+	'design-library-saved-patterns': {
+		title: __( 'Reuse Your Best Layouts', i18n ),
+		description: __( 'Save polished block layouts once, then drop them into any page, or export them to reuse across sites.', i18n ),
+	},
 }
 
 const ProControl = props => {

@@ -13,11 +13,11 @@ import { DesignLibraryContext } from './context'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
 import { useLocalStorage } from '~stackable/util'
-import { useBlockColorSchemes } from '~stackable/hooks'
+import { useBlockColorSchemes, useCanManageUserPatterns } from '~stackable/hooks'
 import {
 	GuidedModalTour, Button, ColorSchemePreview, ColorSchemesHelp, Tooltip,
 } from '~stackable/components'
-import { getDesigns, filterDesigns } from '~stackable/design-library'
+import { getDesigns } from '~stackable/design-library'
 
 /**
  * WordPress deprendencies
@@ -33,6 +33,9 @@ import {
 	useEffect, useState, useCallback,
 	useMemo,
 } from '@wordpress/element'
+import {
+	applyFilters, doAction, addAction, removeAction,
+} from '@wordpress/hooks'
 import { sprintf, __ } from '@wordpress/i18n'
 
 const popoverProps = {
@@ -63,14 +66,13 @@ const ModalDesignLibrary = props => {
 
 	// The sidebar designs are used to update the list of blocks in the sidebar.
 	const [ sidebarDesigns, setSidebarDesigns ] = useState( [] )
-	// The display designs are used to list the available designs the user can choose.
-	const [ displayDesigns, setDisplayDesigns ] = useState( [] )
 
 	const [ errors, setErrors ] = useState( null )
 
 	const [ enableBackground, setEnableBackground ] = useState( false )
 	const [ selectedContainerScheme, setSelectedContainerScheme ] = useState( '' )
 	const [ selectedBackgroundScheme, setSelectedBackgroundScheme ] = useState( '' )
+	const canManageUserPatterns = useCanManageUserPatterns()
 
 	// For version 4, the default tab is now 'patterns' and for category, we use '' instead of 'All'.
 	// So we need to update the local storage values here.
@@ -82,6 +84,37 @@ const ModalDesignLibrary = props => {
 			setSelectedCategory( '' )
 		}
 	}, [] )
+
+	// Selection is scoped to the active tab — clear when switching tabs.
+	useEffect( () => {
+		setSelectedDesignIds( [] )
+		setSelectedDesignData( [] )
+	}, [ selectedTab ] )
+
+	// Keep the saved tab in sync when patterns are created/updated/deleted elsewhere.
+	useEffect( () => {
+		const onSavedPatternsLoaded = patterns => {
+			if ( selectedTab === 'saved' ) {
+				const savedPatterns = Array.isArray( patterns ) ? patterns : []
+				const savedPatternIds = new Set( savedPatterns.map( pattern => pattern.id || pattern.designId ) )
+
+				setSidebarDesigns( savedPatterns )
+				// Keep selected saved patterns, but drop any that were removed.
+				setSelectedDesignIds( currentSelectedDesignIds => (
+					currentSelectedDesignIds.filter( designId => savedPatternIds.has( designId ) )
+				) )
+				setSelectedDesignData( currentSelectedDesignData => (
+					currentSelectedDesignData.filter( design => savedPatternIds.has( design.designId ) )
+				) )
+			}
+		}
+
+		addAction( 'stackable.design-library.saved-patterns-loaded', 'stackable/design-library-modal', onSavedPatternsLoaded )
+
+		return () => {
+			removeAction( 'stackable.design-library.saved-patterns-loaded', 'stackable/design-library-modal' )
+		}
+	}, [ selectedTab ] )
 
 	// Update the designs on the sidebar. (this will trigger the display designs update next)
 	useEffect( () => {
@@ -95,9 +128,13 @@ const ModalDesignLibrary = props => {
 		} ).then( designs => {
 			let _designs = designs
 
-			if ( typeof designs === 'object' && designs.error ) {
+			if ( typeof designs === 'object' && ! Array.isArray( designs ) && designs.error ) {
 				_designs = []
 				setErrors( designs.error )
+			}
+
+			if ( selectedTab === 'saved' ) {
+				doAction( 'stackable.design-library.saved-patterns-loaded', _designs )
 			}
 
 			setSidebarDesigns( _designs )
@@ -113,19 +150,30 @@ const ModalDesignLibrary = props => {
 		} )
 	}, [ doReset, selectedTab ] )
 
-	// This updates the displayed designs the user can pick.
-	useEffect( () => {
-		filterDesigns( {
-			library: sidebarDesigns,
-			category: selectedCategory,
-			plan: selectedPlan.key,
-		} ).then( designs => {
-			setDisplayDesigns( designs )
-		} )
-	}, [ sidebarDesigns, selectedPlan, selectedCategory ] )
+	const displayDesigns = useMemo( () => {
+		let library = sidebarDesigns
+
+		if ( selectedPlan.key && selectedTab !== 'saved' ) {
+			library = library.filter( ( { plan } ) => plan === selectedPlan.key )
+		}
+
+		if ( selectedCategory ) {
+			library = library.filter( ( { category } ) => category === selectedCategory )
+		}
+
+		return library
+	}, [ sidebarDesigns, selectedPlan.key, selectedCategory, selectedTab ] )
+
+	const currentTabSelectedDesigns = useMemo( () => {
+		return selectedDesignData.filter( design => design.type === selectedTab )
+	}, [ selectedDesignData, selectedTab ] )
+
+	const currentTabSelectedDesignIds = useMemo( () => {
+		return currentTabSelectedDesigns.map( design => design.designId )
+	}, [ currentTabSelectedDesigns ] )
 
 	const colorSchemeHelpCallback = () => {
-		if ( selectedDesignIds.length ) {
+		if ( currentTabSelectedDesignIds.length ) {
 			// eslint-disable-next-line no-alert
 			const confirmClose = window.confirm( sprintf( __( 'You have one or more designs selected. Navigating to %s will close the Design Library and your current selection will be lost. Do you want to continue?', i18n ), __( 'Color Schemes', i18n ) ) )
 			if ( ! confirmClose ) {
@@ -145,7 +193,7 @@ const ModalDesignLibrary = props => {
 	const onSelectDesign = useCallback( ( designId, category, parsedBlocks, blocksForSubstitution, selectedPreviewSize ) => {
 		if ( selectedTab === 'pages' ) {
 			const selectedDesign = [ {
-				designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
+				designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize, type: selectedTab,
 			} ]
 			addDesign( selectedDesign )
 
@@ -175,6 +223,7 @@ const ModalDesignLibrary = props => {
 			} else {
 				newSelectedDesignData.push( {
 					designId, category, designData: parsedBlocks, blocksForSubstitution, selectedPreviewSize,
+					type: selectedTab,
 				} )
 			}
 
@@ -204,6 +253,7 @@ const ModalDesignLibrary = props => {
 			selectedContainerScheme,
 			selectedBackgroundScheme,
 			enableBackground,
+			canManageUserPatterns,
 		],
 		[
 			selectedTab,
@@ -214,6 +264,7 @@ const ModalDesignLibrary = props => {
 			selectedContainerScheme,
 			selectedBackgroundScheme,
 			enableBackground,
+			canManageUserPatterns,
 		]
 	)
 
@@ -253,7 +304,7 @@ const ModalDesignLibrary = props => {
 									<HelpSVG height="14px" width="14px" />
 								</Tooltip>
 							</div>
-							{ selectedTab === 'patterns' && <ToggleControl
+							{ selectedTab !== 'pages' && <ToggleControl
 								className="ugb-modal-design-library__enable-background"
 								label={ __( 'Section Background', i18n ) }
 								checked={ enableBackground }
@@ -398,16 +449,30 @@ const ModalDesignLibrary = props => {
 						className={ `stk-design-library__item-${ selectedTab }` }
 						isBusy={ isBusy }
 						designs={ displayDesigns }
+						selectedTab={ selectedTab }
+						selectedCategory={ selectedCategory }
 						errors={ errors }
 					/>
 
-					{ selectedTab === 'patterns' && <aside className="ugb-modal-design-library__footer">
-						<div>{ sprintf( __( `(%d) Selected`, i18n ), selectedDesignIds.length ) }</div>
+					{ selectedTab !== 'pages' && <aside className="ugb-modal-design-library__footer">
+						<div className="ugb-modal-design-library__footer-selection">
+							<span>{ sprintf( __( `(%d) Selected`, i18n ), currentTabSelectedDesignIds.length ) }</span>
+							{ applyFilters( 'stackable.design-library.footer-selection-actions', null, {
+								selectedTab,
+								selectedDesignIds: currentTabSelectedDesignIds,
+								selectedDesignData: currentTabSelectedDesigns,
+								canManageUserPatterns,
+								clearSelection: () => {
+									setSelectedDesignIds( [] )
+									setSelectedDesignData( [] )
+								},
+							} ) }
+						</div>
 						<Button
 							label={ __( 'Add Designs', i18n ) }
 							className="ugb-modal-design-library__add-multi"
-							disabled={ ! selectedDesignIds.length || isMultiSelectBusy }
-							onClick={ () => addDesign( selectedDesignData ) }
+							disabled={ ! currentTabSelectedDesignIds.length || isMultiSelectBusy }
+							onClick={ () => addDesign( currentTabSelectedDesigns ) }
 						>
 							{ __( 'Add Designs', i18n ) }
 							{ isMultiSelectBusy && <Spinner /> }

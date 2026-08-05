@@ -24,6 +24,7 @@ import {
 } from '@wordpress/element'
 import { Dashicon, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
 const DesignLibraryListItem = memo( props => {
 	const {
@@ -41,7 +42,7 @@ const DesignLibraryListItem = memo( props => {
 		? presetMarks[ presetMarks.length - 2 ].value
 		: 120
 
-	const [ isLoading, setIsLoading ] = useState( true )
+	const [ isLoading, setIsLoading ] = useState( false )
 	const [ selected, setSelected ] = useState( false )
 
 	const {
@@ -82,27 +83,54 @@ const DesignLibraryListItem = memo( props => {
 		[ `ugb--is-${ plan }` ]: ! isPro && plan !== 'free',
 		'ugb--is-toggled': selectedNum,
 		'ugb--is-hidden': ! shouldRender,
+		'ugb-design-library-item--pages': selectedTab === 'pages',
 	} )
 
 	const onClickHost = e => {
 		e.stopPropagation()
-		if ( selectedTab === 'pages' ) {
-			return
-		}
 		onClickDesign()
 	}
 
+	const isInteractiveTarget = target => {
+		if ( ! target || ! target.tagName ) {
+			return false
+		}
+
+		const tag = target.tagName
+		return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON' || target.isContentEditable
+	}
+
+	const buttonAttributes = {
+		tabIndex: 0,
+		role: 'button',
+		onClick: onClickHost,
+		onKeyDown: e => {
+			if ( isInteractiveTarget( e.target ) ) {
+				return
+			}
+
+			if ( e.key === 'Enter' || e.key === ' ' ) {
+				e.preventDefault()
+				onClickHost( e )
+			}
+		},
+	}
+
 	return (
-		// eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
-		<button
+		// eslint-disable-next-line jsx-a11y/mouse-events-have-key-events, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+		<div
 			className={ mainClasses }
 			ref={ ref }
-			onClick={ onClickHost }
 			onMouseOut={ onMouseOut }
 			onMouseOver={ onMouseOver }
+			{ ...( selectedTab === 'patterns' ? buttonAttributes : {} ) }
 		>
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
-			<div style={ { position: 'relative' } } className={ `stk-block-design__design-container ${ designPreviewSize > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }>
+			<div
+				style={ { position: 'relative' } }
+				className={ `stk-block-design__design-container ${ designPreviewSize > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }
+				{ ...( selectedTab === 'saved' ? buttonAttributes : {} ) }
+			>
 				{ ! isPro && plan !== 'free' && (
 					<ProControl
 						type="design-library"
@@ -133,12 +161,15 @@ const DesignLibraryListItem = memo( props => {
 				</div>
 			</div>
 
+			{ /* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */ }
 			<footer
 				// Add the number if isToggle is a number, signifying an order instead of just an on/off.
 				data-selected-num={ selectedNum }
+				{ ...( selectedTab === 'saved' ? buttonAttributes : {} ) }
 			>
-				<div>
+				<div className="stk-design-library-item__label-row">
 					<h4> { label } </h4>
+					{ selectedTab === 'saved' && isPro && applyFilters( 'stackable.design-library.pattern-label-actions', null, previewProps ) }
 					{ blocksForSubstitutionRef.current !== false && blocksForSubstitutionRef.current.size !== 0 &&
 						<Tooltip text={ __( 'This design contains disabled blocks. You can still insert this design with blocks substituted with other enabled blocks.', i18n ) }>
 							<Dashicon icon="warning" size={ 16 } />
@@ -151,7 +182,7 @@ const DesignLibraryListItem = memo( props => {
 							<Dashicon icon="editor-help" size={ 16 } />
 						</Tooltip>
 					}
-					{ selectedTab === 'patterns' ? <span className="stk-block-design__selected-num">{ selectedNum === 0 ? '' : selectedNum }</span>
+					{ selectedTab !== 'pages' ? <span className="stk-block-design__selected-num">{ selectedNum === 0 ? '' : selectedNum }</span>
 						: <div>
 							<Button
 								label={ __( 'Insert', i18n ) }
@@ -169,7 +200,7 @@ const DesignLibraryListItem = memo( props => {
 					}
 				</div>
 			</footer>
-		</button>
+		</div>
 	)
 } )
 

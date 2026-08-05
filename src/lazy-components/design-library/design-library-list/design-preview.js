@@ -13,7 +13,6 @@ export const DesignPreview = ( {
 	blocks = '',
 	shadowRoot,
 	selectedTab,
-	designIndex,
 	onMouseDown = NOOP,
 	updateShadowBodySize = NOOP,
 	setIsLoading,
@@ -55,7 +54,7 @@ export const DesignPreview = ( {
 
 	useEffect( () => {
 		const container = ref.current
-		if ( ! container || selectedTab === 'patterns' ) {
+		if ( ! container || selectedTab !== 'pages' ) {
 			return
 		}
 
@@ -88,30 +87,18 @@ export const DesignPreview = ( {
 			return
 		}
 
-		setIsLoading( true )
+		// Prevent interaction and focus within the preview content
+		wrapper.setAttribute( 'inert', '' )
 
-		const ric = window.requestIdleCallback ? ( cb => window.requestIdleCallback( cb, { timeout: 5000 } ) )
-			: ( cb => setTimeout( cb, designIndex * 20 ) )
 		const sanitizedHTML = safeHTML( blocks )
 
-		if ( selectedTab !== 'pages' || designIndex < 9 ) {
-			// insert HTML for patterns and for the first 9 pages
-			wrapper.innerHTML = sanitizedHTML
-			requestAnimationFrame( () => {
-				ric( () => setIsLoading( false ) )
-			} )
-			return
+		wrapper.innerHTML = sanitizedHTML
+
+		if ( selectedTab === 'pages' ) {
+			updateShadowBodySize()
 		}
 
-		requestAnimationFrame( () => {
-			ric( () => {
-				wrapper.innerHTML = sanitizedHTML
-				updateShadowBodySize()
-				requestAnimationFrame( () => {
-					ric( () => setIsLoading( false ) )
-				} )
-			} )
-		} )
+		setIsLoading( false )
 	}, [ blocks, shadowRoot ] ) // Only depend on blocks and shadowRoot; selectedTab and designIndex changes will cause blocks to update
 
 	return createPortal( <>
@@ -121,6 +108,7 @@ export const DesignPreview = ( {
 		>
 			<div
 				ref={ wrapperRef }
+				className="is-layout-constrained"
 				style={ { pointerEvents: 'none' } }	// prevent blocks from being clicked
 			/>
 		</body>

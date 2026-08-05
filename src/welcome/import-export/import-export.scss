@@ -1,0 +1,93 @@
+#import-export {
+	padding-bottom: 20px;
+
+	.s-other-options-wrapper {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.stk-snackbar__wrapper {
+		display: flex;
+		flex: 1 0 auto;
+		align-items: flex-end;
+
+		.components-snackbar {
+			margin-left: auto;
+			margin-right: 0;
+			position: sticky;
+			bottom: 20px;
+		}
+	}
+}
+
+.stk-modal-import-export-settings {
+	width: 100%;
+	max-width: 80%;
+
+	.stk-import-export__tabs {
+		display: grid;
+		grid-template-columns: 200px auto;
+
+		.s-active {
+			font-weight: 600;
+			color: var(--stk-welcome-primary) !important;
+			transition: color 0.3s ease;
+			background: #f1f1f1;
+			&::after {
+				content: "";
+				position: absolute;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				left: auto;
+				width: 4px;
+				height: 100%;
+				background-color: var(--stk-welcome-primary);
+				transition: width 0.3s ease;
+			}
+		}
+
+		.components-tab-panel__tab-content {
+			margin: 0 32px;
+		}
+	}
+
+	.stk-import__options {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+
+		.components-radio-control {
+			display: flex;
+			flex-direction: column;
+			.components-radio-control__group-wrapper {
+				order: 2;
+				margin-block-end: 0;
+				margin-block-start: 12px;
+			}
+			.components-base-control__help {
+				margin-top: 0;
+			}
+		}
+	}
+
+	.stk-import-export__saved-patterns {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+
+		h4 {
+			margin-top: 0;
+		}
+	}
+
+	.stk-export-button,
+	.stk-import-button {
+		display: block;
+		margin: auto;
+		margin-right: 0;
+	}
+
+	.s-settings-pro {
+		margin-top: 0;
+	}
+}

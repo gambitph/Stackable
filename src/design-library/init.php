@@ -306,6 +306,10 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				$this->delete_cache();
 			}
 
+			if ( $type === 'saved' ) {
+				return rest_ensure_response( apply_filters( 'stackable_design_library_saved_patterns', array() ) );
+			}
+
 			return rest_ensure_response( $this->get_design_library_from_cloud( $type ) );
 		}
 

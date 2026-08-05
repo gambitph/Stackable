@@ -34,6 +34,13 @@ import { cleanSerializedBlock } from '~stackable/util'
 
 const DEFAULT_CONTENT = { ...DEFAULT }
 
+const previewParseCache = new Map()
+
+const getPreviewCacheKey = ( designId, selectedTab, isDesignLibraryDevMode, modified ) => {
+	// Include date modified so same-slug saved patterns get a fresh preview after updates.
+	return `${ selectedTab }:${ designId }:${ isDesignLibraryDevMode ? 'dev' : 'prod' }:${ modified || '' }`
+}
+
 export const usePreviewRenderer = (
 	props, shouldRender, spacingSize,
 	ref, hostRef, shadowRoot, setIsLoading, stylesLoaded
@@ -41,6 +48,7 @@ export const usePreviewRenderer = (
 	const {
 		designId,
 		template,
+		modified,
 		category,
 		plan,
 		containerScheme,
@@ -71,7 +79,7 @@ export const usePreviewRenderer = (
 	const siteTitle = useSelect( select => select( 'core' ).getEntityRecord( 'root', 'site' )?.title || 'InnovateCo', [] )
 	const isDesignLibraryDevMode = devMode && localStorage.getItem( 'stk__design_library__dev_mode' ) === '1'
 
-	const addHasBackground = selectedTab === 'patterns'
+	const addHasBackground = selectedTab !== 'pages'
 
 	const updateShadowBodySize = _shadowBody => {
 		const shadowBody = _shadowBody || shadowRoot?.querySelector( 'body' )
@@ -118,7 +126,7 @@ export const usePreviewRenderer = (
 			const scaleFactor = cardWidth > 0 ? cardWidth / 1300 : 1 // Divide by 1300, which is the width of preview in the shadow DOM
 
 			let _bodyHeight = 1200
-			if ( selectedTab === 'patterns' ) {
+			if ( selectedTab !== 'pages' ) {
 				_bodyHeight = shadowBody.offsetHeight
 			}
 
@@ -216,6 +224,20 @@ export const usePreviewRenderer = (
 			return
 		}
 
+		const cacheKey = getPreviewCacheKey( designId, selectedTab, isDesignLibraryDevMode, modified )
+		const cachedPreview = previewParseCache.get( cacheKey )
+
+		if ( cachedPreview ) {
+			categoriesRef.current = cachedPreview.categories
+			hasBackgroundTargetRef.current = cachedPreview.hasBackgroundTarget
+			blocksForSubstitutionRef.current = cachedPreview.blocksForSubstitution
+			setContent( cachedPreview.content )
+			setContentForInsertion( cachedPreview.contentForInsertion )
+			setIsLoading( false )
+			renderedTemplate.current = template
+			return
+		}
+
 		// Reset per-template state and show spinner
 		setIsLoading( true )
 		categoriesRef.current = []
@@ -225,13 +247,13 @@ export const usePreviewRenderer = (
 		let _parsedBlocksForInsertion = null
 		const initialize = async () => {
 			const _content = template
-			if ( selectedTab === 'patterns' ) {
+			if ( selectedTab !== 'pages' ) {
 				const categorySlug = getCategorySlug( designId )
 
 				// For preview: always replace placeholders (ignore dev mode)
-				const _contentForPreview = replacePlaceholders( _content, categorySlug, false )
+				const _contentForPreview = replacePlaceholders( _content, categorySlug, false, selectedTab )
 				// For insertion: only create separate content if dev mode is enabled
-				const _contentForInsertion = isDesignLibraryDevMode ? replacePlaceholders( _content, categorySlug, true ) : _contentForPreview
+				const _contentForInsertion = isDesignLibraryDevMode ? replacePlaceholders( _content, categorySlug, true, selectedTab ) : _contentForPreview
 
 				categoriesRef.current.push( categorySlug )
 
@@ -249,12 +271,12 @@ export const usePreviewRenderer = (
 
 				// For preview: always replace placeholders (ignore dev mode)
 				const designsContentForPreview = designs.map( ( design, i ) =>
-					replacePlaceholders( design.template || design.content, categorySlugs[ i ], false )
+					replacePlaceholders( design.template || design.content, categorySlugs[ i ], false, selectedTab )
 				).join( '\n' )
 				// For insertion: only create separate content if dev mode is enabled
 				const designsContentForInsertion = isDesignLibraryDevMode
 					? designs.map( ( design, i ) =>
-						replacePlaceholders( design.template || design.content, categorySlugs[ i ], true )
+						replacePlaceholders( design.template || design.content, categorySlugs[ i ], true, selectedTab )
 					).join( '\n' )
 					: designsContentForPreview
 
@@ -298,6 +320,16 @@ export const usePreviewRenderer = (
 		    setContentForInsertion( parsedBlocksForInsertion )
 			setIsLoading( false )
 			renderedTemplate.current = template
+
+			if ( cacheKey ) {
+				previewParseCache.set( cacheKey, {
+					categories: [ ...categoriesRef.current ],
+					hasBackgroundTarget: hasBackgroundTargetRef.current,
+					blocksForSubstitution,
+					content: parsedBlocks,
+					contentForInsertion: parsedBlocksForInsertion,
+				} )
+			}
 		} )
 	}, [ template, shouldRender ] )
 

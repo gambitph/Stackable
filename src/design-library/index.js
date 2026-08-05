@@ -70,6 +70,16 @@ export const getDesigns = async ( {
 	reset = false,
 	type = 'patterns',
 } ) => {
+	if ( type === 'saved' ) {
+		const result = applyFilters( 'stackable.design-library.get-saved-designs', [], { reset } )
+
+		if ( result && typeof result.then === 'function' ) {
+			return await result
+		}
+
+		return Array.isArray( result ) ? result : []
+	}
+
 	const library = await fetchDesignLibrary( reset, LATEST_API_VERSION, type )
 
 	if ( ! library || typeof library !== 'object' ) {
@@ -98,8 +108,9 @@ export const filterDesigns = async ( {
 	library = [],
 	plan: isPlan = '',
 	category: isCategory = '',
+	type = 'patterns',
 } ) => {
-	if ( isPlan ) {
+	if ( isPlan && type !== 'saved' ) {
 		library = library.filter( ( { plan } ) => plan === isPlan )
 	}
 
