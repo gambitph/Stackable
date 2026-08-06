@@ -1,0 +1,5 @@
+interface:
+  display_name: "Write News Article"
+  short_description: "Draft Stackable release blog + readme link"
+policy:
+  allow_implicit_invocation: false
