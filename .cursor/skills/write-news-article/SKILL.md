@@ -45,7 +45,7 @@ Write News Article:
 - [ ] 3. Confirm this release deserves an article
 - [ ] 4. Gather sources (changelog + roadmap)
 - [ ] 5. Pick 1–3 headlines; park the rest
-- [ ] 6. Draft article (Ben first-person, skim-length)
+- [ ] 6. Draft article as WP block markup (paste-ready)
 - [ ] 7. Draft readme.txt News Article Updates bullet
 - [ ] 8. Hand off for Ben edit (do not publish)
 ```
@@ -79,6 +79,7 @@ Pull:
 - Candidate headline features (`New:` / major `Change:`)
 - User-visible removals, renames, sunsets, BC-relevant items
 - Premium-only bits tied to headlines
+- Adjacent product payoffs that make a headline better (e.g. an existing UI that now works on the new feature)
 
 Skip internal chores and fix spam unless users would notice or worry.
 
@@ -92,14 +93,16 @@ Cap at **1–3** headline features that share one workflow story.
 
 ### 6. Draft the article
 
-Voice: **Benjamin’s first-person walkthrough** (“I”, casual, founder tone). Skimmable — aim for a **3–5 minute** read. Users will not study it; keep each headline to a few short paragraphs + one visual placeholder.
+Voice: warm founder walkthrough — clear and helpful, lightly first-person where it earns it (“I wanted…”, “tell me…”). Skimmable — aim for a **3–5 minute** read. Prefer concrete UI steps over slangy asides.
 
 #### Required skeleton
 
-1. **Title** — `Introducing …` naming user-facing capabilities (commas / “and” for multiples)
-2. **Opening** — excitement + why it matters + version callout (`Update to vMAJOR.MINOR.0`) + short rundown of headlines
-3. **H2 per headline** — what it is → (optional old-vs-new) → where to click / happy path → why it matters
-4. **Conclusion** — personal sign-off + update CTA + soft feedback/community invite
+1. **Title** (hand-off only — not in body markup) — `Introducing …` naming user-facing capabilities (commas / “and” for multiples). WP post title is the H1; **do not** put an H1 in the body.
+2. **Opening teaser** — one short paragraph: version (`vMAJOR.MINOR.0`) + gap closed / why it matters + optional one-sentence product-arc link to prior posts
+3. **More block** — immediately after the teaser (excerpt cut)
+4. **Rundown** — “Here’s what’s new:” + bullet list of the 1–3 headlines
+5. **H2 per headline** — what it is → where to click / happy path → why it matters → teaching visual. Include adjacent payoffs when true (how it plays with an existing control), not feature-vs-feature digressions
+6. **Conclusion** — update CTA + soft feedback invite (no “— Ben” sign-off)
 
 #### Optional sections (include only when earned)
 
@@ -108,22 +111,60 @@ Voice: **Benjamin’s first-person walkthrough** (“I”, casual, founder tone)
 | Old way vs new way | Real workflow shift only — skip for net-new UI |
 | Backward compatibility / enable paths | Upgrader defaults differ, or something is removed/sunset — be specific (settings paths) |
 | Other Improvements | User-visible trust items only (removals, renames, sunsets, notable fixes) — not a changelog dump |
-| Changelog link | When “Other” exists or the release is large |
+| Changelog link | When “Other” exists or the release is large — always `href="/changelog/"` (site-relative on wpstackable.com) |
 | Premium callout | Inline at the moment it appears; separate H2 only if Premium *is* the headline |
-| Product-arc link | One sentence when this release continues a prior chapter |
+| Product-arc link | One sentence in the teaser when this release continues a prior chapter |
 
 #### Media
 
-At least **one teaching visual per headline** (screenshot or short video). Use markdown image/video placeholders with captions that say what to notice. Text-only only as a last resort.
+At least **one teaching visual per headline**. In the paste markup, use empty `wp:image` figures with a useful `alt` and a figcaption that starts with **What to notice:** … Ben drops screenshots in after paste.
 
 #### CTA rules
 
 - Always: update to the version + soft feedback / community invite
 - Premium upsell only if Premium was a real part of the story
 
-#### Draft output
+#### Draft output (required form)
 
-Present the full draft in markdown for Ben to edit. Mark visual placeholders clearly, e.g. `[SCREENSHOT: Design Library Pages tab with 40 templates]`.
+**Always** deliver the article body as **Gutenberg block markup** ready to paste into the WordPress block editor **Code editor**. Not markdown. Not a “preview then convert” step.
+
+Use a fenced `html` code block so Ben can copy once. Match this shape:
+
+```html
+<!-- wp:paragraph -->
+<p>…teaser with <strong>vMAJOR.MINOR.0</strong>…</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:more -->
+<!--more-->
+<!-- /wp:more -->
+
+<!-- wp:paragraph -->
+<p>Here’s what’s new:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>Headline</strong> — short benefit</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Headline</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>…</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image -->
+<figure class="wp-block-image"><img alt="…"/><figcaption class="wp-element-caption">What to notice: …</figcaption></figure>
+<!-- /wp:image -->
+```
+
+Compact list markup (list-item comments inside the `ul`/`ol`) is fine — matches what the block editor emits.
+
+Above or beside the paste block, still state **title + slug** for the hand-off (those are not inside the body).
 
 Do **not** publish to the blog or commit unless the user asks.
 
@@ -150,6 +191,7 @@ If editing `readme.txt` in this session, insert the bullet at the **top** of the
 Summarize for Ben:
 
 - Proposed title + slug
+- Paste-ready body already in Gutenberg markup (with More block)
 - The 1–3 headlines chosen (and what was demoted/omitted)
 - Whether BC / Other / Premium sections were included and why
 - Reminder: he edits voice/accuracy; publish same day as release; then ensure the readme bullet is live
@@ -158,8 +200,13 @@ Summarize for Ben:
 
 | Do | Avoid |
 |----|--------|
+| Paste-ready `wp:*` block markup | Markdown drafts Ben must re-paste |
+| Tight teaser → More → rundown | Long excited preamble before the cut |
 | Short paragraphs, concrete UI steps | Deep tutorials / exhaustive option lists |
-| Workflow and efficiency framing | Changelog tone (`Fixed: … #1234`) |
+| Workflow + adjacent product payoffs | Feature-vs-feature digressions |
+| Warm, clear founder tone | Slangy asides (“yeah. Same.”) |
+| Changelog link `/changelog/` | wordpress.org plugin changelog URL |
+| Body without H1 / without “— Ben” | Duplicating the post title or signed sign-off |
 | Honest removals and BC | Hiding sunsets |
 | Concrete counts when real (e.g. 375 designs) | Invented metrics |
 | Free-first, Premium inline | Bolted-on Premium sections |
@@ -167,9 +214,11 @@ Summarize for Ben:
 ## Quality checklist
 
 - [ ] Version confirmed; release deserves an article
-- [ ] 1–3 headlines; skim-length; Ben first-person
-- [ ] Opening names the version; each headline has a visual placeholder
+- [ ] 1–3 headlines; skim-length; warm founder voice
+- [ ] Body is Gutenberg markup; teaser → More → rundown; no H1 in body
+- [ ] Opening names the version; each headline has an image placeholder with “What to notice:”
+- [ ] Changelog (if linked) uses `/changelog/`
 - [ ] BC/Other/Premium only when earned
-- [ ] Conclusion: update + soft community/feedback CTA
+- [ ] Conclusion: update + soft community/feedback CTA (no “— Ben”)
 - [ ] readme bullet drafted with UTMs, newest-first format
 - [ ] Handed off for Ben edit — not treated as final publish copy
