@@ -22,6 +22,10 @@
 }
 
 .stk-modal-import-export-settings {
+	--wp-components-color-accent: #f00069;
+	--wp-components-color-accent-inverted: #fff;
+	--wp-components-color-accent-darker-10: #c40056;
+
 	width: 100%;
 	max-width: 80%;
 
@@ -92,24 +96,5 @@
 
 	.s-settings-pro {
 		margin-top: 0;
-	}
-
-	.components-button.is-primary {
-		background: #f00069;
-		color: #fff;
-
-		&:hover,
-		&:focus {
-			background: #c40056;
-			color: #fff;
-		}
-
-		&:disabled,
-		&[aria-disabled="true"] {
-			background: #f0006980; // faded primary when disabled (50% opacity)
-			color: #fff;
-			cursor: not-allowed;
-			opacity: 0.7;
-		}
 	}
 }
