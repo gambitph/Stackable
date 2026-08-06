@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.8.2
 Tested up to: 7.0.2
 Requires PHP: 7.4
-Stable tag: 3.19.10
+Stable tag: 3.20.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -308,6 +308,21 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.20.0 =
+
+* New: Design Library - save and manage your own patterns (Premium) #3629
+* New: Settings - default to theme margins for Heading blocks #3673
+* New: Settings - default icon for Icon List block #3674
+* Change: Dynamic Content - optimized PHP memory usage #1986
+* Fixed: Design Library - faster previews and smoother browsing #3629
+* Fixed: Editor - Safari responsive preview no longer freezes #3726
+* Fixed: Yoast SEO - analysis highlighting works with Stackable blocks #3727
+* Fixed: Icon List - improved Widgets screen performance #3728
+* Fixed: Tabs block - Separator blocks now display correctly #3713
+* Fixed: WooCommerce - product duplicates keep block attributes intact #3731
+* Fixed: Design Library - no longer shows blank on fetch errors #3732
+* Fixed: Custom CSS - no validation error after switching to Free #3734
 
 = 3.19.10 =
 
