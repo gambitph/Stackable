@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { fetchSettings } from '~stackable/util'
+import { fetchSettings, onClassChange } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -45,7 +45,7 @@ const ThemeBlockStyleInheritanceClass = () => {
 			}
 
 			// At first load of the editor, the block style inheritance class is removed, so we have to re-add it.
-			const mo = onClassChange( editorEl, () => {
+			const unsubscribe = onClassChange( editorEl, () => {
 				if ( ! disableBlockStyleInheritance && editorEl.classList.contains( `stk-has-block-style-inheritance` ) === false ) {
 					editorEl.classList.add( `stk-has-block-style-inheritance` )
 				}
@@ -55,7 +55,7 @@ const ThemeBlockStyleInheritanceClass = () => {
 				}
 			} )
 
-			return () => mo.disconnect()
+			return unsubscribe
 		}
 	}, [ editorEl, disableBlockStyleInheritance ] )
 
@@ -65,25 +65,3 @@ const ThemeBlockStyleInheritanceClass = () => {
 registerPlugin( 'stackable-theme-block-style-inheritance-class', {
 	render: ThemeBlockStyleInheritanceClass,
 } )
-
-// Listener when a class is changed on an element.
-const onClassChange = ( node, callback ) => {
-	let lastClassString = node.classList.toString()
-
-	const mutationObserver = new MutationObserver( mutationList => {
-		for ( const item of mutationList ) {
-			if ( item.attributeName === 'class' ) {
-				const classString = node.classList.toString()
-				if ( classString !== lastClassString ) {
-					callback( mutationObserver )
-					lastClassString = classString
-					break
-				}
-			}
-	  }
-	} )
-
-	mutationObserver.observe( node, { attributes: true } )
-
-	return mutationObserver
-}

@@ -181,5 +181,5 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 				},
 			} )
 		} )
-	} )
+	}, [ 'columnArrangement' ] )
 }

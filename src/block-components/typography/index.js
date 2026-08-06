@@ -46,7 +46,7 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 		defaultValue,
 		withoutInteractiveFormatting = false,
 		allowedFormats = null,
-		enableDebounce = true, // If false, onChange will be called immediately.
+		enableDebounce = false, // Set true to batch setAttributes (e.g. very large pages).
 		...propsToPass
 	} = props
 
@@ -105,13 +105,12 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 			className={ className }
 			tagName={ TagName }
 			value={ dynamicContentText }
-			onChange={ value => {
-				if ( enableDebounce ) {
-					setDebouncedText( value )
-				} else {
-					onChange( value )
+			onChange={ newValue => {
+				setDebouncedText( newValue )
+				if ( ! enableDebounce ) {
+					onChange( newValue )
 				}
-			 } }
+			} }
 			ref={ ref }
 			withoutInteractiveFormatting={ withoutInteractiveFormatting }
 			allowedFormats={ allowedFormats }

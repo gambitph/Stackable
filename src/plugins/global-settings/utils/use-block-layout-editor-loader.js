@@ -1,7 +1,8 @@
 /**
  * Internal dependencies
  */
-import { getDefault, onClassChange } from './block-layout-utils'
+import { getDefault } from './block-layout-utils'
+import { onClassChange } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -182,7 +183,7 @@ export const useBlockLayoutEditorLoader = ( storeName, classSuffix ) => {
 				editorEl.classList.remove( className )
 			}
 
-			const mo = onClassChange( editorEl, () => {
+			const unsubscribe = onClassChange( editorEl, () => {
 				if ( styles !== '' && editorEl?.classList.contains( className ) === false ) {
 					editorEl?.classList.add( className )
 					addFilter( 'stackable.global-styles.classnames', `stackable/global-settings.${ classSuffix }`, classnames => {
@@ -195,7 +196,7 @@ export const useBlockLayoutEditorLoader = ( storeName, classSuffix ) => {
 				}
 			} )
 
-			return () => mo.disconnect()
+			return unsubscribe
 		}
 	}, [ editorEl, styles ] )
 

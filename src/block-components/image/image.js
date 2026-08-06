@@ -80,7 +80,6 @@ const Image = memo( props => {
 
 	const [ currentHeight, setCurrentHeight ] = useState()
 	const [ currentWidth, setCurrentWidth ] = useState()
-	const [ imageWidthIsTooSmall, setImageWidthIsTooSmall ] = useState( false )
 	const imageRef = useRef()
 	const wrapperRef = useRef()
 
@@ -109,23 +108,7 @@ const Image = memo( props => {
 		'stk--never-resized': ( ! src || hasImageError ) && neverResized,
 		'stk--is-resizing': isResizing,
 		'stk--no-click-to-edit': ! props.enableClickToEdit,
-		// If the image is too small, hide the size tooltip.
-		'stk--too-small': imageWidthIsTooSmall,
 	} )
-
-	// Observe the size of the image, if it's too small, we shouldn't show the
-	// size tooltip.
-	useEffect( () => {
-		if ( imageRef.current ) {
-			const resizeObserver = new ResizeObserver( entries => { // eslint-disable-line compat/compat
-				for ( const entry of entries ) {
-					setImageWidthIsTooSmall( entry.contentRect.width < 140 )
-				}
-			} )
-			resizeObserver.observe( imageRef.current )
-			return () => resizeObserver.disconnect()
-		}
-	}, [ imageRef.current ] )
 
 	const imageClasses = getImageClasses( props )
 

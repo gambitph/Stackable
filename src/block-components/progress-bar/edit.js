@@ -14,7 +14,7 @@ import {
 	BlendModeControl,
 } from '~stackable/components'
 
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useAttributeEditHandlers, useAttributeValue } from '~stackable/hooks'
 import {
 	DEFAULT_PROGRESS, DEFAULT_THICKNESS, DEFAULT_SIZE, DEFAULT_HEIGHT,
 } from './attributes'
@@ -38,13 +38,18 @@ const GRADIENT_OPTIONS = [
 ]
 
 export const Edit = ( { attrNameTemplate, isCircle } ) => {
-	const {
-		getAttribute,
-		updateAttributes,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const { updateAttributes } = useAttributeEditHandlers( attrNameTemplate )
 
-	const isColorGradient = getAttribute( 'progressColorType' ) === 'gradient'
-	const progressSliderMax = getAttribute( 'progressMax' ) || 100
+	const progressColorType = useAttributeValue( 'progressColorType', attrNameTemplate )
+	const progressMax = useAttributeValue( 'progressMax', attrNameTemplate ) || 100
+	const progressBorderRadius = useAttributeValue( 'progressBorderRadius', attrNameTemplate )
+	const progressColorGradientDirection = useAttributeValue( 'progressColorGradientDirection', attrNameTemplate )
+	const progressColorGradientLocation1 = useAttributeValue( 'progressColorGradientLocation1', attrNameTemplate )
+	const progressColorGradientLocation2 = useAttributeValue( 'progressColorGradientLocation2', attrNameTemplate )
+	const progressColorGradientBlendMode = useAttributeValue( 'progressColorGradientBlendMode', attrNameTemplate )
+
+	const isColorGradient = progressColorType === 'gradient'
+	const progressSliderMax = progressMax
 
 	return (
 		<>
@@ -110,7 +115,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									return v
 								} }
 							/>
-							{ getAttribute( 'progressBorderRadius' ) ? (
+							{ progressBorderRadius ? (
 								<AdvancedToggleControl
 									label={ __( 'Apply border radius to bar', i18n ) }
 									attribute="progressApplyBarRadius"
@@ -170,10 +175,10 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									} )
 								} }
 								allowReset={
-									( getAttribute( 'progressColorGradientDirection' ) !== '' && getAttribute( 'progressColorGradientDirection' ) !== 90 ) ||
-									( getAttribute( 'progressColorGradientLocation1' ) !== '' && getAttribute( 'progressColorGradientLocation1' ) !== 0 ) ||
-									( getAttribute( 'progressColorGradientLocation2' ) !== '' && getAttribute( 'progressColorGradientLocation2' ) !== 100 ) ||
-									getAttribute( 'progressColorGradientBlendMode' )
+									( progressColorGradientDirection !== '' && progressColorGradientDirection !== 90 ) ||
+									( progressColorGradientLocation1 !== '' && progressColorGradientLocation1 !== 0 ) ||
+									( progressColorGradientLocation2 !== '' && progressColorGradientLocation2 !== 100 ) ||
+									progressColorGradientBlendMode
 								}
 							>
 								<AdvancedRangeControl

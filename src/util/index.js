@@ -16,6 +16,7 @@ export * from './fontawesome'
 export * from './user'
 export * from './colors'
 export * from './element'
+export * from './on-class-change'
 export * from './block-styles'
 export { maskSensitiveValue } from './mask-sensitive-value'
 

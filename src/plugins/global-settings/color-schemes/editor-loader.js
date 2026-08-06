@@ -7,7 +7,7 @@ import {
 	unsetDefaultColors,
 } from './utils'
 
-import { onClassChange } from '../utils'
+import { onClassChange } from '~stackable/util'
 
 /**
  * External dependencies
@@ -227,11 +227,11 @@ export const GlobalColorSchemeStyles = () => {
 			addClassNames( editorEl )
 
 			// At first load of the editor, the color scheme classnames removed, so we have to re-add it.
-			const mo = onClassChange( editorEl, () => {
+			const unsubscribe = onClassChange( editorEl, () => {
 				addClassNames( editorEl )
 			} )
 
-			return () => mo.disconnect()
+			return unsubscribe
 		}
 	}, [ editorEl, styles ] )
 

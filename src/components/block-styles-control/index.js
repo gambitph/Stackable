@@ -5,6 +5,7 @@ import ProControl from '../pro-control'
 import { ResetButton } from '../base-control2/reset-button'
 import Button from '../button'
 import {
+	useAttributeValue,
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
@@ -56,16 +57,23 @@ export const BlockStylesControl = props => {
 
 	const id = useSelect( select => select( 'core' ).getCurrentUser()?.id, [] )
 
-	const attributes = useBlockAttributesContext()
 	const setAttributes = useBlockSetAttributesContext()
 
-	const {
-		blockStyle,
-		modifiedBlockStyle: isModified,
-		uniqueId: _uniqueId,
-		generatedCss: _generatedCss,
-		...otherAttributes
-	} = attributes
+	const blockStyle = useAttributeValue( 'blockStyle' )
+	const isModified = useAttributeValue( 'modifiedBlockStyle' )
+
+	// Attributes used to detect divergence from the active saved block style.
+	// Excludes keys that should not trigger modified detection or UI updates.
+	const styleCheckAttributes = useBlockAttributesContext( attributes => {
+		const {
+			blockStyle: _blockStyle,
+			modifiedBlockStyle: _modifiedBlockStyle,
+			uniqueId: _uniqueId,
+			generatedCss: _generatedCss,
+			...rest
+		} = attributes
+		return rest
+	} )
 
 	const mainClasses = classnames( [
 		'components-panel__body',
@@ -163,11 +171,11 @@ export const BlockStylesControl = props => {
 			return
 		}
 
-		const modified = isBlockStyleAttributesModified( blockName, blockStyle, otherAttributes )
+		const modified = isBlockStyleAttributesModified( blockName, blockStyle, styleCheckAttributes )
 		if ( modified ) {
 			setAttributes( { modifiedBlockStyle: true } )
 		}
-	}, [ attributes ] )
+	}, [ blockStyle, isModified, styleCheckAttributes, blockName, setAttributes ] )
 
 	const globalBlockStyles = useSelect( select => {
 		const globalBlockStyles = select( 'stackable/global-block-styles' ).getBlockStyles( blockName )

@@ -10,7 +10,7 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useAttributeEditHandlers, useAttributeValue } from '~stackable/hooks'
 
 export const LinkControls = props => {
 	const {
@@ -21,29 +21,32 @@ export const LinkControls = props => {
 		hasAnchorId = false,
 	} = props
 
-	const {
-		getAttribute,
-		updateAttributeHandler,
-	} = useAttributeEditHandlers( props.attrNameTemplate )
+	const { updateAttributeHandler } = useAttributeEditHandlers( props.attrNameTemplate )
 
-	const url = getAttribute( 'url' ) || ''
+	const url = useAttributeValue( 'url', props.attrNameTemplate ) || ''
+	const hasLinkAttr = useAttributeValue( 'hasLink', props.attrNameTemplate )
+	const newTab = useAttributeValue( 'newTab', props.attrNameTemplate )
+	const hasLightboxAttr = useAttributeValue( 'hasLightbox', props.attrNameTemplate )
+	const rel = useAttributeValue( 'rel', props.attrNameTemplate )
+	const title = useAttributeValue( 'title', props.attrNameTemplate )
+	const hasTitleAttr = useAttributeValue( 'hasTitle', props.attrNameTemplate )
 
-	const showGoogleMapHint = getAttribute( 'hasLightbox' ) &&
+	const showGoogleMapHint = hasLightboxAttr &&
 		url.startsWith( 'https://www.google.com/maps/' ) &&
 		! url.startsWith( 'https://www.google.com/maps/embed' )
 
 	return (
 		<>
-			{ ( hasLink || getAttribute( 'hasLink' ) ) && (
+			{ ( hasLink || hasLinkAttr ) && (
 				<LinkControl
 					label={ __( 'Link / URL', i18n ) }
-					value={ getAttribute( 'url' ) }
+					value={ url }
 					onChange={ updateAttributeHandler( 'url' ) }
 				/>
 			) }
 			<AdvancedToggleControl
 				label={ __( 'Open in new tab', i18n ) }
-				checked={ getAttribute( 'newTab' ) }
+				checked={ newTab }
 				onChange={ updateAttributeHandler( 'newTab' ) }
 			/>
 			{ hasLightbox && (
@@ -51,7 +54,7 @@ export const LinkControls = props => {
 					<AdvancedToggleControl
 						label={ __( 'Open Link in Lightbox', i18n ) }
 						help={ lightboxHelp }
-						checked={ getAttribute( 'hasLightbox' ) }
+						checked={ hasLightboxAttr }
 						onChange={ updateAttributeHandler( 'hasLightbox' ) }
 					/>
 					{ showGoogleMapHint && (
@@ -70,13 +73,13 @@ export const LinkControls = props => {
 			<AdvancedTextControl
 				label={ __( 'Link rel', i18n ) }
 				help={ __( 'Link relationship keywords, e.g. nofollow noreferrer prefetch', i18n ) }
-				value={ getAttribute( 'rel' ) }
+				value={ rel }
 				onChange={ updateAttributeHandler( 'rel' ) }
 			/>
-			{ ( hasTitle || getAttribute( 'hasTitle' ) ) && (
+			{ ( hasTitle || hasTitleAttr ) && (
 				<AdvancedTextControl
 					label={ __( 'Link Title', i18n ) }
-					value={ getAttribute( 'title' ) }
+					value={ title }
 					onChange={ updateAttributeHandler( 'title' ) }
 					isDynamic={ true }
 					isFormatType={ false }

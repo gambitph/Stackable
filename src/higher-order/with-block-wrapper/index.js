@@ -57,6 +57,15 @@ let firstLoad = true
 // for speed.
 let selectedBlock = null
 
+// Stagger root block mounts after preview remount to spread React/CSS work.
+// Editor block CSS is persisted in the store and re-adopted on preview switch.
+const ROOT_BLOCK_MOUNT_DELAY_BASE_MS = 50
+const ROOT_BLOCK_MOUNT_DELAY_SPREAD_MS = 100
+
+const getRootBlockMountDelay = () => {
+	return ROOT_BLOCK_MOUNT_DELAY_BASE_MS + Math.floor( Math.random() * ROOT_BLOCK_MOUNT_DELAY_SPREAD_MS )
+}
+
 /**
  * This optimizes the preview device switching. Without this, there will be a
  * 4-5 second delay when switching preview devices. With this, it's
@@ -111,15 +120,18 @@ export const useDevicePreviewOptimization = blockProps => {
 
 	const [ isDisplayed, setIsDisplayed ] = useState( displayedByDefault )
 
-	// If the block isn't displayed, display it after a delay, this trick
-	// apparently makes Desktop -> Tablet/Mobile previews fast.
+	// Delay mounting root blocks to spread work across frames after preview remount.
+	// Each root block gets a random delay in [base, base + spread) so they don't
+	// all commit in the same frame.
 	useEffect( () => {
 		if ( ! isDisplayed ) {
 			const t = setTimeout( () => {
 				setIsDisplayed( true )
-			}, 300 )
+			}, getRootBlockMountDelay() )
 			return () => clearTimeout( t )
 		}
+
+		return undefined
 	}, [ isDisplayed ] )
 
 	return isDisplayed

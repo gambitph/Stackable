@@ -157,6 +157,62 @@ export const formAllPossibleAttributeNames = attrNames => {
 }
 
 /**
+ * Extract attribute names referenced via getAttribute() or attributes[...] in a
+ * callback. Used for style fingerprinting when dependencies are incomplete.
+ *
+ * @param {Function} callback
+ * @return {Array<string>} Root attribute names (without device/state suffixes)
+ */
+export const getCallbackAttributeDependencies = callback => {
+	if ( typeof callback !== 'function' ) {
+		return []
+	}
+
+	const names = new Set()
+	const source = callback.toString()
+
+	const getAttributeRegex = /getAttribute\s*\(\s*['"]([^'"]+)['"]/g
+	let match = getAttributeRegex.exec( source )
+	while ( match ) {
+		names.add( match[ 1 ] )
+		match = getAttributeRegex.exec( source )
+	}
+
+	const attributesAccessRegex = /attributes\s*\[\s*['"]([^'"]+)['"]\s*\]/g
+	match = attributesAccessRegex.exec( source )
+	while ( match ) {
+		names.add( match[ 1 ] )
+		match = attributesAccessRegex.exec( source )
+	}
+
+	return Array.from( names )
+}
+
+/**
+ * Serializes only the attribute values that can affect generated block CSS.
+ * Used to avoid regenerating CSS when unrelated attributes change (e.g. text).
+ *
+ * @param {Object} attributes Block attributes
+ * @param {Array<string>} attrNames Style dependency attribute names
+ * @return {string} Fingerprint string
+ */
+export const createStyleDependencyFingerprint = ( attributes, attrNames ) => {
+	if ( ! attrNames?.length ) {
+		return ''
+	}
+
+	const values = {}
+	for ( let i = 0; i < attrNames.length; i++ ) {
+		const attrName = attrNames[ i ]
+		if ( attrName in attributes ) {
+			values[ attrName ] = attributes[ attrName ]
+		}
+	}
+
+	return JSON.stringify( values )
+}
+
+/**
  * Prepends a class
  *
  * @param {string} selector

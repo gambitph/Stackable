@@ -3,7 +3,11 @@
  */
 import { unescape } from 'lodash'
 import { i18n } from 'stackable'
-import { useAttributeEditHandlers, usePresetControls } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers,
+	useAttributeValue,
+	usePresetControls,
+} from '~stackable/hooks'
 import {
 	AlignButtonsControl,
 	AdvancedRangeControl,
@@ -25,9 +29,7 @@ import { escapeHTMLIfInvalid } from './util'
 /**
  * WordPress dependencies
  */
-import {
-	useEffect, useState, useCallback, memo,
-} from '@wordpress/element'
+import { useCallback, memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
@@ -73,36 +75,32 @@ export const Controls = props => {
 	} = props
 
 	const {
-		getAttribute,
 		updateAttributeHandler,
 		updateAttributes,
 		updateAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
+
+	const text = useAttributeValue( 'text', attrNameTemplate )
+	const hasP = useAttributeValue( 'hasP', attrNameTemplate )
+	const fontFamily = useAttributeValue( 'fontFamily', attrNameTemplate )
+	const textColorType = useAttributeValue( 'textColorType', attrNameTemplate )
+	const fontWeight = useAttributeValue( 'fontWeight', attrNameTemplate, 'desktop', blockState )
+	const textTransform = useAttributeValue( 'textTransform', attrNameTemplate, 'desktop', blockState )
+	const letterSpacing = useAttributeValue( 'letterSpacing', attrNameTemplate, 'desktop', blockState )
+	const letterSpacingTablet = useAttributeValue( 'letterSpacing', attrNameTemplate, 'tablet', blockState )
+	const letterSpacingMobile = useAttributeValue( 'letterSpacing', attrNameTemplate, 'mobile', blockState )
+	const lineHeight = useAttributeValue( 'lineHeight', attrNameTemplate, 'desktop', blockState )
+	const lineHeightTablet = useAttributeValue( 'lineHeight', attrNameTemplate, 'tablet', blockState )
+	const lineHeightMobile = useAttributeValue( 'lineHeight', attrNameTemplate, 'mobile', blockState )
+
 	const attributeName = getAttrNameFunction( attrNameTemplate )
-	const text = getAttribute( 'text' )
-	const [ debouncedText, setDebouncedText ] = useState( text )
 	const useTypographyAsPresets = useSelect( select =>
 		 select( 'stackable/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
 	)
 
-	useEffect( () => {
-		if ( text !== debouncedText ) {
-			setDebouncedText( text )
-		}
-	}, [ text ] )
-
-	useEffect( () => {
-		let timeout
-		if ( debouncedText !== text ) {
-			timeout = setTimeout( () => {
-				updateAttribute( 'text', debouncedText )
-			}, 300 )
-		}
-
-		return () => clearTimeout( timeout )
-	}, [ updateAttribute, debouncedText, text ] )
-
-	const onChangeContent = useCallback( text => setDebouncedText( escapeHTMLIfInvalid( text ) ), [] )
+	const onChangeContent = useCallback( newText => {
+		updateAttribute( 'text', escapeHTMLIfInvalid( newText ) )
+	}, [ updateAttribute ] )
 
 	const presetMarks = usePresetControls( 'fontSizes' )
 		?.getPresetMarks( { customOnly: useTypographyAsPresets } ) || null
@@ -115,14 +113,14 @@ export const Controls = props => {
 					label={ __( 'Content', i18n ) }
 					hasPanelModifiedIndicator={ false }
 					isMultiline={ isMultiline }
-					value={ unescape( debouncedText ) }
+					value={ unescape( text ) }
 					onChange={ onChangeContent }
 					/**
 					 * Pass the unescaped Dynamic Content `onChange` function.
 					 *
 					 * @param {string} text Text with dynamic content.
 					 */
-					changeDynamicContent={ setDebouncedText }
+					changeDynamicContent={ onChangeContent }
 					isDynamic={ true }
 				/>
 			) }
@@ -136,7 +134,7 @@ export const Controls = props => {
 			{ hasTextTag && (
 				<HeadingButtonsControl
 					attribute={ attributeName( 'textTag' ) }
-					hasP={ getAttribute( 'hasP' ) }
+					hasP={ hasP }
 				/>
 			) }
 
@@ -157,21 +155,21 @@ export const Controls = props => {
 					} )
 				} }
 				allowReset={
-					( getAttribute( 'fontFamily' ) ||
-						getAttribute( 'fontWeight', 'desktop', blockState ) ||
-						getAttribute( 'textTransform', 'desktop', blockState ) ||
-						getAttribute( 'letterSpacing', 'desktop', blockState ) ||
-						getAttribute( 'letterSpacing', 'tablet', blockState ) ||
-						getAttribute( 'letterSpacing', 'mobile', blockState ) ||
-						getAttribute( 'lineHeight', 'desktop', blockState ) ||
-						getAttribute( 'lineHeight', 'tablet', blockState ) ||
-						getAttribute( 'lineHeight', 'mobile', blockState ) )
+					( fontFamily ||
+						fontWeight ||
+						textTransform ||
+						letterSpacing ||
+						letterSpacingTablet ||
+						letterSpacingMobile ||
+						lineHeight ||
+						lineHeightTablet ||
+						lineHeightMobile )
 				}
 			>
 				<FontFamilyControl
 					label={ __( 'Font Family', i18n ) }
 					onChange={ updateAttributeHandler( 'fontFamily' ) }
-					value={ getAttribute( 'fontFamily' ) }
+					value={ fontFamily }
 					placeholder={ __( 'Theme Default', i18n ) }
 					helpTooltip={ {
 						video: 'typography-family',
@@ -291,8 +289,8 @@ export const Controls = props => {
 					<ColorPaletteControl
 						label={ __( 'Text Color', i18n ) }
 						attribute={ attributeName( 'textColor1' ) }
-						hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
-						isGradient={ getAttribute( 'textColorType' ) === 'gradient' }
+						hover={ hasGradient && textColorType === 'gradient' ? false : 'all' }
+						isGradient={ textColorType === 'gradient' }
 					/>
 					{ applyFilters( 'stackable.block-component.typography.color.after', null, props ) }
 				</>
@@ -351,10 +349,9 @@ export const Edit = memo( props => {
 		blockState,
 	} = props
 
-	const {
-		getAttribute,
-		updateAttributeHandler,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const { updateAttributeHandler } = useAttributeEditHandlers( attrNameTemplate )
+	const showAttributeName = attrNameTemplate !== '%s' ? 'show' : 'showText'
+	const showValue = useAttributeValue( showAttributeName, attrNameTemplate )
 
 	return (
 		<InspectorStyleControls>
@@ -363,8 +360,8 @@ export const Edit = memo( props => {
 				initialOpen={ initialOpen }
 				hasToggle={ hasToggle }
 				{ ...( hasToggle ? {
-					checked: getAttribute( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
-					onChange: updateAttributeHandler( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
+					checked: showValue,
+					onChange: updateAttributeHandler( showAttributeName ),
 				} : {} ) }
 				id="text"
 			>
