@@ -71,6 +71,20 @@ test.describe( 'Design Library', () => {
 		await expect( page.locator( '.ugb-modal-design-library__designs' ).getByText( 'An error has occurred:' ) ).toHaveCount( 0 )
 	} )
 
+	test( 'opens while the page template is shown', async ( { page } ) => {
+		await page.evaluate( () => {
+			window.wp.data.dispatch( 'core/editor' ).setRenderingMode( 'template-locked' )
+		} )
+
+		await expect.poll( async () => {
+			return page.evaluate( () => window.wp.data.select( 'core/editor' ).getRenderingMode() )
+		} ).toBe( 'template-locked' )
+
+		await openDesignLibrary( page )
+
+		await expect( page.locator( '.ugb-modal-design-library' ) ).toBeVisible()
+	} )
+
 	test( 'lazy-renders design previews for visible items', async ( {
 		page,
 	} ) => {
