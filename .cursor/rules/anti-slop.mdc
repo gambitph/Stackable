@@ -1,0 +1,35 @@
+---
+description: Maintainability and anti-slop standards when changing Stackable code
+alwaysApply: true
+---
+
+# Maintainability & anti-slop
+
+Prefer deepening existing seams over inventing parallel structure. Goal: one place to change a behaviour; freemium gates and shared heuristics stay single-sourced.
+
+## Before you paste
+
+When adding or extending behaviour, check the nearest sibling first. If the change would clone a block (block registration wiring, block-component prop patterns, inspector panel pairs, style generators, upsell/pricing URL builders, `STACKABLE_BUILD` gates), extract or reuse a shared helper **before** adding the nth copy.
+
+## Deepen, don't layer
+
+Keep the runtime spine:
+
+- **Blocks:** `src/block/<name>/` → shared `src/block-components/` / `src/components/` / `src/higher-order/` → style generation
+- **Editor plugins / global settings:** `src/plugins/` and related PHP options / localize
+- **Frontend behaviour:** block `frontend.js` / shared frontend modules, not a second ad-hoc script beside an existing enqueue
+- **Freemium:** free tree + `STACKABLE_BUILD` gates; premium only under `pro__premium_only/`
+
+New behaviour goes into an existing module cluster (block, block-component, plugin, util, premium module) when one fits. Do not add a second block-registration path, parallel style generator, or ad-hoc AJAX twin beside an existing REST route without an explicit extract.
+
+God-file rule of thumb: prefer extracting a coherent cluster over growing a fat edit.js, a catch-all util, or a PHP admin class with another pasted case.
+
+## Single source for shared heuristics
+
+Heuristics that exist on both PHP and JS (settings defaults, "is premium" flags, pricing/upsell URLs, block attribute defaults) share one definition of truth - localized data, shared module, or a documented sync. Do not hand-sync a second map "for convenience."
+
+Ship or silence: do not advertise a premium feature or setting in free UI/copy unless the free build truly exposes it (or clearly marks it as premium upsell).
+
+## Completion check
+
+Before finishing a change that adds a block, attribute, inspector control, style rule, or freemium gate: every list/map/UI/REST surface that must know about it is updated, no phantom options remain, and no new duplicate helper was introduced beside an existing one. Keep premium logic out of the free tree.

@@ -17,6 +17,8 @@ This project has two GitHub repositories, used depending on whether we're buildi
 ### Free version
 
 - Main plugin repo: https://github.com/gambitph/Stackable
+- Contains **only** free plugin code and must remain free of premium logic (WordPress.org guidelines).
+- Must pass [WordPress Plugin Check](https://github.com/wordpress/plugin-check) for Plugin Directory inclusion (see `wordpress-plugin-check` rule).
 
 ### Premium version
 
@@ -24,3 +26,10 @@ This project has two GitHub repositories, used depending on whether we're buildi
 - Premium-only repo: https://github.com/bfintal/Stackable-Premium
 - The premium repo contains **only** the premium plugin code.
 - It is placed in the `pro__premium_only` directory inside the free plugin's root folder.
+
+## Free / Premium boundaries
+
+- Do not put premium feature logic in the free repo.
+- Premium code lives exclusively under `pro__premium_only/`.
+- The free plugin may gate-load premium via `STACKABLE_BUILD === 'premium'` and `pro__premium_only/index.php` (with Freemius `sugb_fs()->is__premium_only()`).
+- When packaging the free build, `pro__premium_only` must not be included.

@@ -1,0 +1,28 @@
+---
+description: Free plugin must pass WordPress Plugin Check for directory submission
+alwaysApply: true
+---
+
+# WordPress Plugin Directory & Plugin Check
+
+The **free** Stackable plugin is intended for the [WordPress Plugin Directory](https://wordpress.org/plugins/stackable-ultimate-gutenberg-blocks/). Directory inclusion requires meeting WordPress.org plugin guidelines.
+
+## Official checker
+
+Use **[WordPress/plugin-check](https://github.com/wordpress/plugin-check)** (Plugin Check / PCP) as the compliance bar:
+
+- Static + runtime checks for directory requirements and best practices
+- WP Admin: **Tools → Plugin Check**
+- WP-CLI: `wp plugin check <plugin>` (add `--require=…/plugin-check/cli.php` for runtime checks)
+- Also: [wordpress.org/plugins/plugin-check](https://wordpress.org/plugins/plugin-check/)
+
+## What this means for Stackable
+
+- Free-repo code and the free build zip should be written to **pass Plugin Check**.
+- Prefer WordPress coding / security / i18n / enqueue practices that PCP enforces (escaping, nonces, capability checks, no forbidden APIs, proper headers, etc.).
+- Do not ship premium-only code, `pro__premium_only/`, or directory-disallowed patterns in the free package.
+- When changing free-plugin PHP, assets, or packaging, keep Plugin Check green in mind - fix regressions rather than silencing them without cause.
+
+Premium code under `pro__premium_only/` is out of scope for Directory submission, but anything that lands in the **free** tree or free zip is in scope.
+
+Skill for deeper guideline review: `.cursor/skills/wp-plugin-directory-guidelines/`.
