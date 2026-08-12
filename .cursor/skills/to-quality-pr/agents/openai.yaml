@@ -1,0 +1,3 @@
+interface:
+  display_name: "To Quality PR"
+  short_description: "Gate with ensure-quality, then commit and open a triage PR"
