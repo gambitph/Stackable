@@ -1,10 +1,11 @@
 import { request as playwrightRequest } from '@playwright/test'
 import { RequestUtils as BaseRequestUtils } from '@wordpress/e2e-test-utils-playwright'
 
+const REST_NONCE_PATTERN = /^[a-zA-Z0-9_-]{2,64}$/
+
 class ExtendedRequestUtils extends BaseRequestUtils {
 	/**
-	 * Same as the upstream helper, but allows Local by Flywheel self-signed HTTPS certs.
-	 * (Matches Interactions e2e/test-utils/requestUtils.ts.)
+	 * Same as the upstream helper, with ignoreHTTPSErrors for local HTTPS overrides.
 	 *
 	 * @param options
 	 */
@@ -33,6 +34,16 @@ class ExtendedRequestUtils extends BaseRequestUtils {
 			}
 		}
 
+		// Drop a poisoned nonce (e.g. HTML from a Freemius activation redirect)
+		// so setupRest refreshes it instead of sending it as X-WP-Nonce.
+		if ( storageState?.nonce && ! REST_NONCE_PATTERN.test( String( storageState.nonce ).trim() ) ) {
+			storageState = {
+				...storageState,
+				nonce: undefined,
+				rootURL: undefined,
+			}
+		}
+
 		const requestContext = await playwrightRequest.newContext( {
 			baseURL,
 			ignoreHTTPSErrors: true,
@@ -48,6 +59,52 @@ class ExtendedRequestUtils extends BaseRequestUtils {
 			storageStatePath,
 			baseURL,
 		} )
+	}
+
+	/**
+	 * Upstream login() accepts any response body as the nonce. On Playground +
+	 * Freemius, the first admin request after activation can 302 to Getting
+	 * Started; following that redirect stores HTML as X-WP-Nonce and breaks REST.
+	 *
+	 * @param user
+	 */
+	login = async function( user = this.user ) {
+		let response = await this.request.post( 'wp-login.php', {
+			failOnStatusCode: true,
+			form: {
+				log: user.username,
+				pwd: user.password,
+			},
+		} )
+		await response.dispose()
+
+		response = await this.request.get( 'wp-admin/admin-ajax.php?action=rest-nonce', {
+			failOnStatusCode: false,
+			maxRedirects: 0,
+		} )
+
+		if ( response.status() >= 300 && response.status() < 400 ) {
+			await response.dispose()
+			// Consume the one-shot activation redirect, then fetch the real nonce.
+			const bounced = await this.request.get( 'wp-admin/' )
+			await bounced.dispose()
+			response = await this.request.get( 'wp-admin/admin-ajax.php?action=rest-nonce', {
+				failOnStatusCode: true,
+			} )
+		} else if ( ! response.ok() ) {
+			const body = await response.text()
+			throw new Error( `rest-nonce failed (${ response.status() }): ${ body.slice( 0, 120 ) }` )
+		}
+
+		const nonce = ( await response.text() ).trim()
+		if ( ! REST_NONCE_PATTERN.test( nonce ) ) {
+			throw new Error(
+				`Invalid REST nonce (got ${ JSON.stringify( nonce.slice( 0, 80 ) ) }). ` +
+				'Likely followed an admin redirect instead of admin-ajax rest-nonce.'
+			)
+		}
+
+		return nonce
 	}
 
 	getActivePlugins = async function() {

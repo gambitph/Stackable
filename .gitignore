@@ -21,5 +21,7 @@ composer.lock
 /wordpress
 /test-results/
 /playwright-report/
+/playwright-report-premium/
 /blob-report/
 /playwright/.cache/
+e2e/.auth/
