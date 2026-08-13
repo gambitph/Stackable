@@ -134,7 +134,7 @@ Do not listen for console `Block validation` messages.
 | Admin | Activate redirects to Getting Started; settings save; inner tabs render |
 | Block editor | Insert Text block; inspector tabs; attribute updates |
 | Block catalog | `createBlock` every inserter-facing `stackable/*`, save, reload, no recovery UI, frontend `.stk-block` |
-| Global settings | Color / typography; spacing & buttons tokens; Preview Design System |
+| Global settings | Color / typography; spacing & buttons tokens; Preview Design System style guide (live values + website preview) |
 | Design Library | Open, load patterns, insert a free page/pattern |
 | Existing blocks | Seeded nested layout post has no recovery UI |
 | Interactive frontend | Accordion, Tabs, Carousel, Expand, Video Popup, Notification, scroller, countdown/progress, Map, Posts, TOC |
