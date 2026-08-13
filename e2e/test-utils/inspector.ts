@@ -38,3 +38,60 @@ export const closeBlockStylesPopover = async ( page: Page ) => {
 	}
 	await expect( page.locator( '.ugb-block-styles-controls__popover' ) ).toHaveCount( 0 )
 }
+
+export const waitForWpSettingsSave = ( page: Page, timeout = 15_000 ) =>
+	page.waitForResponse( response => {
+		const url = decodeURIComponent( response.url() )
+		return url.includes( '/wp/v2/settings' ) &&
+			[ 'POST', 'PUT', 'PATCH' ].includes( response.request().method() )
+	}, { timeout } )
+
+export const saveNewBlockStyle = async ( page: Page, styleName: string, styleSlug: string ) => {
+	const popover = await openBlockStylesPopover( page )
+	await expect( popover.getByRole( 'button', { name: 'Save New Block Style' } ) )
+		.toBeVisible( { timeout: 15_000 } )
+	await popover.getByRole( 'button', { name: 'Save New Block Style' } ).click()
+
+	const modal = page.locator( '.ugb-block-styles__new-style-modal' )
+	await expect( modal ).toBeVisible()
+	await expect( modal.getByRole( 'heading', { name: 'Create New Block Style' } ) ).toBeVisible()
+	await modal.locator( 'input[name="name"]' ).click()
+	await modal.locator( 'input[name="name"]' ).fill( styleName )
+	await modal.locator( 'input[name="slug"]' ).click()
+	await modal.locator( 'input[name="slug"]' ).fill( styleSlug )
+	await modal.locator( 'input[name="slug"]' ).blur()
+
+	const saved = waitForWpSettingsSave( page )
+	await modal.getByRole( 'button', { name: 'Create Block Style' } ).click()
+	await saved.catch( () => undefined )
+	await expect( modal ).toHaveCount( 0, { timeout: 15_000 } )
+	await expect( page.locator( '.ugb-block-styles-controls__block-style-button' ) )
+		.toContainText( styleName, { timeout: 15_000 } )
+}
+
+export const applyBlockStyleByName = async ( page: Page, styleName: string ) => {
+	const popover = await openBlockStylesPopover( page )
+	await expect( popover.locator( '.ugb-block-styles-controls__list' ) )
+		.toContainText( styleName )
+	await popover.locator( '.ugb-block-styles-controls__list' )
+		.getByRole( 'button', { name: styleName } )
+		.click()
+	await closeBlockStylesPopover( page )
+}
+
+export const confirmUpdateBlockStyle = async ( page: Page ) => {
+	const popover = await openBlockStylesPopover( page )
+	const update = popover.getByRole( 'button', { name: 'Update Style' } )
+	await expect( update ).toBeVisible( { timeout: 15_000 } )
+	await update.click()
+
+	const modal = page.locator( '.ugb-block-styles__new-style-modal' )
+	await expect( modal ).toBeVisible()
+	await expect( modal.getByRole( 'heading', { name: /Update Block Style/ } ) ).toBeVisible()
+
+	const saved = waitForWpSettingsSave( page )
+	await modal.getByRole( 'button', { name: 'Update Block Style' } ).click()
+	await saved.catch( () => undefined )
+	await expect( modal ).toHaveCount( 0, { timeout: 15_000 } )
+	await closeBlockStylesPopover( page )
+}

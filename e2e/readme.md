@@ -156,7 +156,7 @@ Fail if a panel still shows `ProControl` / "Get Premium" while premium is mocked
 | Surface | Flow |
 |---------|------|
 | Design System | Sidebar opens; Preview; Color Schemes / Font pairs / Size presets / Icon Library are live controls |
-| Global Block Styles | Save a named style from one Text block, apply it to a second; canvas uses the style, inspector stays at defaults and can override |
+| Global Block Styles | Save a named style from one Text block, apply it to a second; canvas uses the style, inspector stays at defaults and can override; rename and delete from Design System; updating a style applies the change to other blocks that use it |
 | Dynamic Content | Post title / meta / featured image resolve on the frontend |
 | Conditional display | Hide-when-logged-in: absent on frontend, present in editor |
 | Motion / Transform / Custom CSS | Entrance class, hover transform CSS, unique rule on frontend |

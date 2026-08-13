@@ -6,4 +6,13 @@ export * from './format'
 export { assertNoBlockRecovery } from './block-recovery'
 export { insertStackableCatalog, waitForBlockEditor, TOP_LEVEL_BLOCKS } from './catalog'
 export { publishAndVisitFrontend, getEditorPostId } from './frontend'
-export { assertNoUpsell, openInspectorPanel, openBlockStylesPopover, closeBlockStylesPopover } from './inspector'
+export {
+	assertNoUpsell,
+	openInspectorPanel,
+	openBlockStylesPopover,
+	closeBlockStylesPopover,
+	waitForWpSettingsSave,
+	saveNewBlockStyle,
+	applyBlockStyleByName,
+	confirmUpdateBlockStyle,
+} from './inspector'
