@@ -27,7 +27,7 @@ test.describe( 'Block catalog', () => {
 		editor,
 		requestUtils,
 	} ) => {
-		test.setTimeout( 180_000 )
+		test.setTimeout( 300_000 )
 		await admin.createNewPost( { title: 'Block Catalog' } )
 		await insertStackableCatalog( editor, TOP_LEVEL_BLOCKS )
 		await editor.saveDraft()

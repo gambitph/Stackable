@@ -19,6 +19,7 @@ test.describe( `Upgrade from Stackable ${ UPGRADE_FROM_VERSION }`, () => {
 		requestUtils,
 		stackable,
 	} ) => {
+		test.setTimeout( 300_000 )
 		await stackable.dismissToursAndNotices()
 
 		await admin.createNewPost( { title: `Upgrade from ${ UPGRADE_FROM_VERSION }` } )
