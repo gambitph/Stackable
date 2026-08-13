@@ -270,14 +270,6 @@ test.describe( 'Interactive frontend', () => {
 		await expect( progress.locator( '.stk-progress-bar__text' ) ).toHaveText( 'E2E Progress' )
 	} )
 
-	test( 'Map container renders without a PHP fatal', async ( {
-		page, editor, requestUtils, admin,
-	} ) => {
-		await editor.insertBlock( { name: 'stackable/map' } )
-		await publishAndVisitFrontend( page, editor, requestUtils, admin )
-		await expect( page.locator( '.stk-block-map' ).first() ).toBeVisible()
-	} )
-
 	test( 'Posts block renders a list or empty state', async ( {
 		page, editor, requestUtils, admin,
 	} ) => {

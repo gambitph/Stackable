@@ -137,7 +137,7 @@ Do not listen for console `Block validation` messages.
 | Global settings | Color / typography; spacing & buttons tokens; Preview Design System style guide (live values + website preview) |
 | Design Library | Open, load patterns, insert a free page/pattern |
 | Existing blocks | REST-save `post-content.txt`, open in editor, no recovery UI |
-| Interactive frontend | Accordion, Tabs, Carousel, Expand, Video Popup, Notification, scroller, countdown/progress, Map, Posts, TOC |
+| Interactive frontend | Accordion, Tabs, Carousel, Expand, Video Popup, Notification, scroller, countdown/progress, Posts, TOC |
 
 ### Upgrade (`e2e/tests-upgrade/`)
 
