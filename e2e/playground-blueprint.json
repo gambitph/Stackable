@@ -16,7 +16,7 @@
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php\nrequire_once '/wordpress/wp-load.php';\nglobal $wpdb;\nupdate_option( 'stackable_guided_tour_states', array( 'design-system', 'editor', 'design-library', 'blocks' ), false );\n$content_file = '/wordpress/wp-content/plugins/stackable/e2e/config/post-content.txt';\nif ( file_exists( $content_file ) ) {\n\t$id = $wpdb->get_var( $wpdb->prepare(\n\t\t\"SELECT ID FROM {$wpdb->posts} WHERE post_title = %s AND post_type = 'post' AND post_status = 'publish' LIMIT 1\",\n\t\t'Existing Blocks'\n\t) );\n\tif ( ! $id ) {\n\t\t$id = wp_insert_post( array(\n\t\t\t'post_title' => 'Existing Blocks',\n\t\t\t'post_status' => 'publish',\n\t\t\t'post_content' => file_get_contents( $content_file ),\n\t\t), true );\n\t}\n\tif ( $id && ! is_wp_error( $id ) ) {\n\t\tupdate_option( 'stackable_e2e_existing_blocks_post_id', (int) $id, false );\n\t\t$seed_dir = '/wordpress/wp-content/plugins/stackable/e2e/.auth';\n\t\tif ( ! is_dir( $seed_dir ) ) {\n\t\t\tmkdir( $seed_dir, 0777, true );\n\t\t}\n\t\tfile_put_contents(\n\t\t\t$seed_dir . '/seed-post.json',\n\t\t\twp_json_encode( array( 'WP_TEST_POSTID' => (string) (int) $id ) )\n\t\t);\n\t}\n}\n"
+			"code": "<?php\nrequire_once '/wordpress/wp-load.php';\nupdate_option( 'stackable_guided_tour_states', array( 'design-system', 'editor', 'design-library', 'blocks' ), false );\n"
 		}
 	]
 }

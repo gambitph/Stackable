@@ -1,6 +1,5 @@
 /**
  * Auth-only global setup for the upgrade suite.
- * Does not require the Existing Blocks fixture post.
  */
 const fs = require( 'fs/promises' )
 const path = require( 'path' )

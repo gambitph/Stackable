@@ -136,7 +136,7 @@ Do not listen for console `Block validation` messages.
 | Block catalog | `createBlock` every inserter-facing `stackable/*`, save, reload, no recovery UI, frontend `.stk-block` |
 | Global settings | Color / typography; spacing & buttons tokens; Preview Design System style guide (live values + website preview) |
 | Design Library | Open, load patterns, insert a free page/pattern |
-| Existing blocks | Seeded nested layout post has no recovery UI |
+| Existing blocks | REST-save `post-content.txt`, open in editor, no recovery UI |
 | Interactive frontend | Accordion, Tabs, Carousel, Expand, Video Popup, Notification, scroller, countdown/progress, Map, Posts, TOC |
 
 ### Upgrade (`e2e/tests-upgrade/`)
@@ -174,12 +174,12 @@ Premium upgrade from an old premium zip is skipped (not on WordPress.org).
 | `../playwright.config.js` | Free suite; Playground on 9420 |
 | `../playwright.premium.config.js` | Premium suite; Playground on 9421 |
 | `../playwright.upgrade.config.js` | Upgrade suite; Playground on 9422; writes blueprint from `upgrade-from.js` |
-| `playground-blueprint.json` | Shared login + activate Stackable + seed tours / existing-blocks post |
+| `playground-blueprint.json` | Shared login + activate Stackable + dismiss guided tours |
 | `config/upgrade-from.js` | Pinned old version, plugin slugs, zip URL |
 | `config/upgrade-blueprint.js` | Builds the upgrade Playground blueprint from `upgrade-from.js` |
 | `config/blocks-catalog.js` | Top-level `stackable/*` names for catalog / upgrade |
 | `config/global-setup.js` | Cookie auth + write `e2e/.auth/test-env.json` |
-| `config/global-setup-upgrade.js` | Cookie auth only (no Existing Blocks post) |
+| `config/global-setup-upgrade.js` | Cookie auth only for the upgrade suite |
 | `config/stackable-e2e-mu-plugin.php` | DC post meta + Design Library CDN mock |
 | `config/fixtures/design-library-*.json` | Mock patterns/pages served via `pre_http_request` |
 | `test-utils/` | Shared fixtures, catalog insert, recovery-UI assertions |
