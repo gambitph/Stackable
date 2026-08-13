@@ -2,6 +2,7 @@
 import fs from 'fs'
 import path from 'path'
 import { test, expect } from 'e2e/test-utils'
+import { assertNoBlockRecovery } from 'e2e/test-utils'
 
 const readSeededPostId = () => {
 	if ( process.env.WP_TEST_POSTID ) {
@@ -24,10 +25,9 @@ test( 'Existing Stackable blocks should have no errors', async ( {
 	admin,
 	editor,
 } ) => {
-	// Start listening on console errors for block validation
-	const blockErrors = editor.getBlockErrors()
-
 	await admin.editPost( postId )
-
-	expect( blockErrors ).toHaveLength( 0 )
+	await expect(
+		editor.canvas.locator( '[data-type^="stackable/"]' ).first()
+	).toBeVisible( { timeout: 60_000 } )
+	await assertNoBlockRecovery( editor )
 } )

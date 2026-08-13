@@ -3,6 +3,15 @@ import { RequestUtils as BaseRequestUtils } from '@wordpress/e2e-test-utils-play
 
 const REST_NONCE_PATTERN = /^[a-zA-Z0-9_-]{2,64}$/
 
+/**
+ * WP plugin routes identify a plugin as `dir/file`. The slash must be encoded
+ * so it is one path segment (`dir%2Ffile`), not two.
+ *
+ * @param pluginFile Plugin file relative to wp-content/plugins, e.g. `stackable/plugin`.
+ */
+const pluginFileRestPath = ( pluginFile: string ) =>
+	`/wp/v2/plugins/${ encodeURIComponent( pluginFile ) }`
+
 class ExtendedRequestUtils extends BaseRequestUtils {
 	/**
 	 * Same as the upstream helper, with ignoreHTTPSErrors for local HTTPS overrides.
@@ -125,7 +134,7 @@ class ExtendedRequestUtils extends BaseRequestUtils {
 		try {
 			await this.rest( {
 				method: 'PUT',
-				path: `/wp/v2/plugins/${ slug }`,
+				path: pluginFileRestPath( slug ),
 				data: { status: 'inactive' },
 			} )
 		} catch ( error ) {
@@ -137,7 +146,7 @@ class ExtendedRequestUtils extends BaseRequestUtils {
 		try {
 			await this.rest( {
 				method: 'PUT',
-				path: `/wp/v2/plugins/${ slug }`,
+				path: pluginFileRestPath( slug ),
 				data: { status: 'active' },
 			} )
 		} catch ( error ) {

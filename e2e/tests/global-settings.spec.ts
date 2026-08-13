@@ -116,4 +116,57 @@ test.describe( 'Global Settings', () => {
 		await deleteRequest
 		await expect( resetButton ).not.toBeVisible()
 	} )
+
+	test( 'Global Spacing & Borders and Buttons & Icons panels apply on the canvas', async ( {
+		page,
+		editor,
+	} ) => {
+		await editor.insertBlock( {
+			name: 'stackable/text',
+			attributes: { text: 'spacing token' },
+		} )
+		await editor.insertBlock( {
+			name: 'stackable/button-group',
+		} )
+
+		await page.getByLabel( 'Stackable Design System' ).click()
+		await page.getByRole( 'button', { name: 'Global Spacing & Borders' } ).click()
+		await expect( page.getByText( 'Block Margin Bottom' ) ).toBeVisible()
+
+		const marginInput = page.locator( '.stk-control, .components-base-control' )
+			.filter( { hasText: 'Block Margin Bottom' } )
+			.getByRole( 'spinbutton' )
+			.first()
+		await expect( marginInput ).toBeVisible()
+		await marginInput.fill( '40' )
+
+		await page.getByRole( 'button', { name: 'Global Buttons & Icons' } ).click()
+		await expect( page.getByText( 'Min. Button Height' ) ).toBeVisible()
+
+		const heightInput = page.locator( '.stk-control, .components-base-control' )
+			.filter( { hasText: 'Min. Button Height' } )
+			.getByRole( 'spinbutton' )
+			.first()
+		await expect( heightInput ).toBeVisible()
+		await heightInput.fill( '48' )
+
+		const textBlock = editor.canvas.locator( '[data-type="stackable/text"] .stk-block' ).first()
+		await expect.poll( async () => {
+			return textBlock.evaluate( el => getComputedStyle( el ).marginBottom )
+		} ).toBe( '40px' )
+
+		const button = editor.canvas.locator( '[data-type="stackable/button"] .stk-button' ).first()
+		await expect.poll( async () => {
+			return button.evaluate( el => getComputedStyle( el ).minHeight )
+		} ).toBe( '48px' )
+	} )
+
+	test( 'Preview Design System opens', async ( {
+		page,
+	} ) => {
+		await page.getByLabel( 'Stackable Design System' ).click()
+		await page.getByRole( 'button', { name: 'Preview Design System' } ).click()
+		await expect( page.getByRole( 'button', { name: 'Close Preview' } ) ).toBeVisible()
+		await page.getByRole( 'button', { name: 'Close Preview' } ).click()
+	} )
 } )

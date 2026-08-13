@@ -60,4 +60,33 @@ export class StackableFixture {
 				response.ok()
 		} ).then( () => undefined )
 	}
+
+	async openBlockSettings() {
+		const settings = this.page.getByLabel( 'Settings', { exact: true } )
+		if ( await settings.isVisible() && await settings.getAttribute( 'aria-pressed' ) === 'false' ) {
+			await settings.click()
+		}
+	}
+
+	async openInspectorTab( tab: 'Layout' | 'Style' | 'Advanced' ) {
+		await this.openBlockSettings()
+		await this.page.getByLabel( `${ tab } Tab` ).click()
+	}
+
+	async openDesignSystem() {
+		const button = this.page.getByLabel( 'Stackable Design System' )
+		await button.click()
+	}
+
+	async dismissToursAndNotices() {
+		const tourClose = this.page.locator( '.ugb-tour-modal .components-modal__header button' ).first()
+		if ( await tourClose.isVisible().catch( () => false ) ) {
+			await tourClose.click()
+		}
+
+		const skip = this.page.getByRole( 'link', { name: 'Skip', exact: true } )
+		if ( await skip.isVisible().catch( () => false ) ) {
+			await skip.click()
+		}
+	}
 }

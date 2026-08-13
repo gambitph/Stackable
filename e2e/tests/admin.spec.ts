@@ -74,3 +74,29 @@ test( 'Stackable settings should be saved', async ( {
 	await saveSettings
 	await expect( _option ).toHaveAttribute( 'aria-checked', val )
 } )
+
+test( 'Settings inner tabs render', async ( {
+	page,
+	admin,
+	stackable,
+} ) => {
+	const settings = stackable.waitForSettings()
+	await admin.visitAdminPage( 'admin.php?page=stackable-settings' )
+	await settings
+
+	const pageError = await admin.getPageError()
+	expect( pageError ).toBeNull()
+
+	await page.getByRole( 'tab', { name: 'Editor Settings' } ).click()
+	await expect( page.getByRole( 'heading', { name: 'Block Widths' } ) ).toBeVisible()
+
+	await page.getByRole( 'tab', { name: 'Global Settings' } ).click()
+	await expect( page.getByRole( 'heading', { name: 'Global Settings' } ) ).toBeVisible()
+	await expect( page.getByText( 'Force Typography Styles' ) ).toBeVisible()
+
+	await page.getByRole( 'tab', { name: /Miscellaneous/ } ).click()
+	await expect( page.getByRole( 'heading', { name: 'Miscellaneous' } ) ).toBeVisible()
+
+	await page.getByRole( 'tab', { name: 'Import/Export' } ).click()
+	await expect( page.getByRole( 'heading', { name: 'Import' } ) ).toBeVisible()
+} )

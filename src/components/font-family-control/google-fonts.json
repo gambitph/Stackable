@@ -23394,7 +23394,8 @@
       "regular"
     ],
     "subsets": [
-      "korean"
+      "korean",
+      "latin"
     ]
   },
   {
@@ -23776,7 +23777,8 @@
       "regular"
     ],
     "subsets": [
-      "korean"
+      "korean",
+      "latin"
     ]
   },
   {
@@ -24401,7 +24403,8 @@
       "regular"
     ],
     "subsets": [
-      "korean"
+      "korean",
+      "latin"
     ]
   },
   {
@@ -24456,7 +24459,8 @@
       "700"
     ],
     "subsets": [
-      "korean"
+      "korean",
+      "latin"
     ]
   },
   {
