@@ -1,4 +1,25 @@
+import { Page } from '@playwright/test'
 import { test, expect } from 'e2e/test-utils'
+
+/**
+ * Size-preset (mark) mode is the default for Global Spacing / Buttons range
+ * controls. That mode hides the number field until Custom is toggled, and the
+ * custom field is a text input, not a spinbutton.
+ */
+const fillRangeControl = async ( page: Page, label: string, value: string ) => {
+	const control = page.locator( '.stk-control' ).filter( {
+		has: page.locator( '.stk-control-label', { hasText: label } ),
+	} ).first()
+	await expect( control ).toBeVisible()
+
+	const numberInput = control.locator( 'input[type="text"], input[type="number"]' )
+	if ( await numberInput.count() === 0 ) {
+		await control.locator( '.stk-range-control__custom-button' ).click()
+	}
+
+	await expect( numberInput.first() ).toBeVisible()
+	await numberInput.first().fill( value )
+}
 
 test.describe( 'Global Settings', () => {
 	let pid = null
@@ -132,23 +153,11 @@ test.describe( 'Global Settings', () => {
 		await page.getByLabel( 'Stackable Design System' ).click()
 		await page.getByRole( 'button', { name: 'Global Spacing & Borders' } ).click()
 		await expect( page.getByText( 'Block Margin Bottom' ) ).toBeVisible()
-
-		const marginInput = page.locator( '.stk-control, .components-base-control' )
-			.filter( { hasText: 'Block Margin Bottom' } )
-			.getByRole( 'spinbutton' )
-			.first()
-		await expect( marginInput ).toBeVisible()
-		await marginInput.fill( '40' )
+		await fillRangeControl( page, 'Block Margin Bottom', '40' )
 
 		await page.getByRole( 'button', { name: 'Global Buttons & Icons' } ).click()
 		await expect( page.getByText( 'Min. Button Height' ) ).toBeVisible()
-
-		const heightInput = page.locator( '.stk-control, .components-base-control' )
-			.filter( { hasText: 'Min. Button Height' } )
-			.getByRole( 'spinbutton' )
-			.first()
-		await expect( heightInput ).toBeVisible()
-		await heightInput.fill( '48' )
+		await fillRangeControl( page, 'Min. Button Height', '48' )
 
 		const textBlock = editor.canvas.locator( '[data-type="stackable/text"] .stk-block' ).first()
 		await expect.poll( async () => {
