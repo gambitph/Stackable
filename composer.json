@@ -6,7 +6,10 @@
 	"require-dev": {
 		"wp-cli/i18n-command": "^2.2",
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
-		"phpcompatibility/phpcompatibility-wp": "^2.1"
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"phpunit/phpunit": "^9.6",
+		"yoast/phpunit-polyfills": "^2.0",
+		"brain/monkey": "^2.6"
 	},
 	"config": {
 		"allow-plugins": {
@@ -15,6 +18,9 @@
 	},
 	"scripts": {
 		"phpcompat": "phpcs",
-		"phpcompat:premium": "phpcs --standard=pro__premium_only/phpcs.xml.dist pro__premium_only"
+		"phpcompat:premium": "phpcs --standard=pro__premium_only/phpcs.xml.dist pro__premium_only",
+		"test": "@test:php",
+		"test:php": "phpunit",
+		"test:php:premium": "php tests/phpunit/run-premium.php"
 	}
 }
