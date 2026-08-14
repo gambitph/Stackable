@@ -96,7 +96,9 @@ STACKABLE_SLUG=stackable/plugin
 | Premium (`bfintal/Stackable-Premium`) | `pro__premium_only/.github/workflows/e2e-tests.yml` | Free then premium (checks out free as root + premium as `pro__premium_only/`) |
 
 PHP/WP matrix cells are Playground `--php` / `--wp` values (major.minor).
+CI runs two corners: latest WP + max PHP, and oldest supported WP + min PHP.
 `tools/playwright-test-matrix.js` syncs both workflow files.
+A new push to the same PR or branch cancels the previous E2E run.
 
 ## What is covered
 

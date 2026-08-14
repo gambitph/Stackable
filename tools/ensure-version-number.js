@@ -10,8 +10,8 @@
  * Also syncs readme.txt "Requires PHP" with the latest WordPress release minimum
  * PHP requirement from the API (without downgrading).
  *
- * Also updates the Playwright matrix in GitHub workflow files so CI tests only
- * supported WordPress and PHP version combinations.
+ * Also updates the Playwright matrix in GitHub workflow files so CI tests the
+ * two supported corners: latest WP + max PHP, and oldest supported WP + min PHP.
  */
 
 const fs = require( 'fs' )

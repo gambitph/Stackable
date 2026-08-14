@@ -1,7 +1,9 @@
 /* eslint-disable camelcase */
 /**
- * Builds the Playwright CI matrix from Stackable's supported WordPress versions
- * (Tested up to + two minors below) and matching PHP versions.
+ * Builds the Playwright CI matrix from Stackable's supported WordPress versions.
+ *
+ * Two corners only: latest WP + max PHP, and oldest supported WP
+ * (two minors below Tested up to) + min PHP.
  *
  * WP versions and min PHP are resolved from api.wordpress.org.
  * Max PHP for latest WP is hardcoded until WordPress exposes it via API.
@@ -134,39 +136,25 @@ const toPlaygroundWpVersion = versionString => getMinorKey( versionString )
 const buildPlaywrightMatrix = ( {
 	testedUpTo, minPhp, releases,
 } ) => {
-	const supportedVersions = [
-		subtractMinorVersions( testedUpTo, 2 ),
-		subtractMinorVersions( testedUpTo, 1 ),
-		testedUpTo,
-	].map( version => toPlaygroundWpVersion( resolveLatestWordPressPatch( version, releases ) ) )
+	const latestWp = toPlaygroundWpVersion(
+		resolveLatestWordPressPatch( testedUpTo, releases )
+	)
+	const oldestWp = toPlaygroundWpVersion(
+		resolveLatestWordPressPatch( subtractMinorVersions( testedUpTo, 2 ), releases )
+	)
 
-	// Dedupe after collapsing patches to major.minor.
-	const uniqueVersions = [ ...new Set( supportedVersions ) ]
-	while ( uniqueVersions.length < 3 ) {
-		uniqueVersions.unshift( uniqueVersions[ 0 ] )
+	return {
+		include: [
+			{
+				php_version: LATEST_WP_MAX_PHP,
+				wp_version: latestWp,
+			},
+			{
+				php_version: minPhp,
+				wp_version: oldestWp,
+			},
+		],
 	}
-
-	const latestWp = uniqueVersions[ uniqueVersions.length - 1 ]
-
-	const include = [
-		{
-			php_version: LATEST_WP_MAX_PHP,
-			wp_version: latestWp,
-		},
-		{
-			php_version: minPhp,
-			wp_version: latestWp,
-		},
-	]
-
-	for ( let i = 0; i < Math.min( 2, uniqueVersions.length - 1 ); i++ ) {
-		include.push( {
-			php_version: minPhp,
-			wp_version: uniqueVersions[ i ],
-		} )
-	}
-
-	return { include }
 }
 
 const formatMatrixIncludeYaml = include => {
