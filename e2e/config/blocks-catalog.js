@@ -1,5 +1,5 @@
 /**
- * Inserter-facing Stackable blocks for catalog / upgrade smokes.
+ * Inserter-facing Stackable blocks for catalog smokes.
  * Child-only types are omitted; parent templates already include them.
  * stackable/design-library is a picker, not saved content.
  *

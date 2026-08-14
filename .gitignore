@@ -22,10 +22,8 @@ composer.lock
 /test-results/
 /playwright-report/
 /playwright-report-premium/
-/playwright-report-upgrade/
 /playwright-stk/
 /playwright-stk-premium/
-/playwright-stk-upgrade/
 /blob-report/
 /playwright/.cache/
 e2e/.auth/

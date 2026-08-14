@@ -1,8 +1,8 @@
 # E2E Testing
 
 Stackable's end-to-end tests verify admin pages, block editor flows, global
-settings, Design Library, frontend view scripts, an old-version upgrade smoke,
-and (premium suite) Design System, Global Block Styles, and gated features.
+settings, Design Library, frontend view scripts, and (premium suite)
+Design System, Global Block Styles, and gated features.
 
 WordPress is provided by [`@wp-playground/cli`](https://www.npmjs.com/package/@wp-playground/cli)
 (WASM PHP + SQLite, **no Docker**). Playwright's `webServer` boots it
@@ -38,28 +38,6 @@ or with the Playwright UI:
 ```bash
 npm run test:debug
 ```
-
-### Upgrade suite
-
-Isolated project on port `9422`.
-It installs WordPress.org Stackable **3.19.0**, inserts every top-level block, swaps to the mounted current plugin, and asserts Gutenberg does **not** show Attempt Block Recovery.
-
-```bash
-npm run build:e2e
-npm run test:e2e:upgrade
-```
-
-or with the Playwright UI:
-
-```bash
-npm run test:debug:upgrade
-```
-
-The old version is pinned in `e2e/config/upgrade-from.js`.
-Bump that constant after the in-tree version ships to WordPress.org.
-`playwright.upgrade.config.js` writes the Playground blueprint from that pin into `e2e/.auth/upgrade-blueprint.json` (gitignored).
-This suite needs network (or a cached zip) to download the old plugin.
-Keep it last / isolated so a WP.org outage does not fail the free matrix.
 
 ### Premium suite
 
@@ -114,12 +92,11 @@ STACKABLE_SLUG=stackable/plugin
 
 | Repo | Workflow | Suites |
 |------|----------|--------|
-| Free (`gambitph/Stackable`) | `.github/workflows/e2e-tests.yml` | Free matrix (`build:e2e` → `test:e2e`) plus an isolated upgrade job (`test:e2e:upgrade`) |
+| Free (`gambitph/Stackable`) | `.github/workflows/e2e-tests.yml` | Free matrix (`build:e2e` → `test:e2e`) |
 | Premium (`bfintal/Stackable-Premium`) | `pro__premium_only/.github/workflows/e2e-tests.yml` | Free then premium (checks out free as root + premium as `pro__premium_only/`) |
 
 PHP/WP matrix cells are Playground `--php` / `--wp` values (major.minor).
 `tools/playwright-test-matrix.js` syncs both workflow files.
-The upgrade job is not part of that PHP/WP matrix.
 
 ## What is covered
 
@@ -139,15 +116,6 @@ Do not listen for console `Block validation` messages.
 | Existing blocks | REST-save `post-content.txt`, open in editor, no recovery UI |
 | Interactive frontend | Accordion, Tabs, Carousel, Expand, Video Popup, Notification, scroller, countdown/progress, Posts, TOC |
 
-### Upgrade (`e2e/tests-upgrade/`)
-
-| Surface | Flow |
-|---------|------|
-| 3.19.0 → current | Insert catalog under the old plugin, deactivate it, activate mounted `stackable/plugin`, reopen the post, no recovery UI, frontend `.stk-block` |
-
-Migrations via `deprecated.js` are allowed.
-Recovery is not.
-
 ### Premium (`pro__premium_only/e2e/tests/`)
 
 These specs must prove the **feature works**, not that an upsell panel exists.
@@ -165,26 +133,19 @@ Fail if a panel still shows `ProControl` / "Get Premium" while premium is mocked
 | Settings | Role Manager tab + toggle save; Custom Fields tab can create a field |
 | Toolbar | Copy & paste styles (block attributes, nested + smart paste) |
 
-Premium upgrade from an old premium zip is skipped (not on WordPress.org).
-
 ## Files
 
 | Path | Role |
 | --- | --- |
 | `../playwright.config.js` | Free suite; Playground on 9420 |
 | `../playwright.premium.config.js` | Premium suite; Playground on 9421 |
-| `../playwright.upgrade.config.js` | Upgrade suite; Playground on 9422; writes blueprint from `upgrade-from.js` |
 | `playground-blueprint.json` | Shared login + activate Stackable + dismiss guided tours |
-| `config/upgrade-from.js` | Pinned old version, plugin slugs, zip URL |
-| `config/upgrade-blueprint.js` | Builds the upgrade Playground blueprint from `upgrade-from.js` |
-| `config/blocks-catalog.js` | Top-level `stackable/*` names for catalog / upgrade |
+| `config/blocks-catalog.js` | Top-level `stackable/*` names for catalog |
 | `config/global-setup.js` | Cookie auth + write `e2e/.auth/test-env.json` |
-| `config/global-setup-upgrade.js` | Cookie auth only for the upgrade suite |
 | `config/stackable-e2e-mu-plugin.php` | DC post meta + Design Library CDN mock |
 | `config/fixtures/design-library-*.json` | Mock patterns/pages served via `pre_http_request` |
 | `test-utils/` | Shared fixtures, catalog insert, recovery-UI assertions |
 | `tests/*.spec.ts` | Free browser specs |
-| `tests-upgrade/*.spec.ts` | Upgrade browser specs |
 | `../pro__premium_only/e2e/tests/*.spec.ts` | Premium browser specs |
 | `../pro__premium_only/e2e/mu-plugins/stackable-e2e-mock-premium.php` | E2E-only Freemius license injection |
 | `.auth/` | Gitignored; written by global setup |
@@ -202,8 +163,6 @@ Premium upgrade from an old premium zip is skipped (not on WordPress.org).
   Design Library REST responses in the browser as a fallback.
 - **Settings / editor assets missing** - run `npm run build:e2e` (or
   `build:e2e:premium`) so `dist/` exists for enqueue.
-- **Upgrade suite cannot download 3.19.0** - Playground needs network.
-  Confirm `e2e/config/upgrade-from.js` still points at a published WP.org zip.
 - **Premium Role Manager / DC missing** - ensure `pro__premium_only/` is present,
   `STACKABLE_BUILD` is `premium`, and the mock MU-plugin is mounted. Kill any
   stale Playground on port `9421` so the blueprint re-runs.
