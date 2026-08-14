@@ -79,6 +79,44 @@ export const applyBlockStyleByName = async ( page: Page, styleName: string ) => 
 	await closeBlockStylesPopover( page )
 }
 
+export const blockStyleRow = ( page: Page, blockStyleAttr: string ) =>
+	page.locator( '.ugb-global-block-styles__panel .stk-global-settings-color-picker__color-indicator-wrapper' )
+		.filter( { has: page.locator( `[data-item-key="${ blockStyleAttr }"]` ) } )
+
+export const fillInspectorRange = async ( page: Page, label: string | RegExp, value: string ) => {
+	const control = page.locator( '.stk-control' ).filter( {
+		has: page.locator( '.stk-control-label', { hasText: label } ),
+	} ).first()
+	await expect( control ).toBeVisible()
+
+	const numberInput = control.locator( 'input[type="text"], input[type="number"]' )
+	if ( await numberInput.count() === 0 ) {
+		await control.locator( '.stk-range-control__custom-button' ).click()
+	}
+
+	await expect( numberInput.first() ).toBeVisible()
+	await numberInput.first().fill( value )
+}
+
+export const copyOrPasteStyles = async (
+	editor: { page: Page, showBlockToolbar?: () => Promise<void> },
+	action: 'copy' | 'paste'
+) => {
+	if ( editor.showBlockToolbar ) {
+		await editor.showBlockToolbar()
+	}
+
+	const toolbarButton = editor.page.getByLabel( 'Copy & paste styles' )
+	await expect( toolbarButton ).toBeVisible()
+	await toolbarButton.click()
+
+	const menuItem = action === 'copy' ? 'Adv Copy Styles' : 'Adv Paste Styles'
+	await editor.page.locator( '.stk-copy-paste-styles__menu' )
+		.getByRole( 'button', { name: menuItem } )
+		.click()
+	await editor.page.keyboard.press( 'Escape' )
+}
+
 export const confirmUpdateBlockStyle = async ( page: Page ) => {
 	const popover = await openBlockStylesPopover( page )
 	const update = popover.getByRole( 'button', { name: 'Update Style' } )

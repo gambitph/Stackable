@@ -15,4 +15,7 @@ export {
 	saveNewBlockStyle,
 	applyBlockStyleByName,
 	confirmUpdateBlockStyle,
+	blockStyleRow,
+	fillInspectorRange,
+	copyOrPasteStyles,
 } from './inspector'
