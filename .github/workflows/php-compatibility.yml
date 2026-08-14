@@ -1,0 +1,38 @@
+name: PHP Compatibility
+
+on:
+  push:
+    branches: [ master, develop ]
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpcs.xml.dist'
+      - '.github/workflows/php-compatibility.yml'
+  pull_request:
+    branches: [ master, develop ]
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpcs.xml.dist'
+      - '.github/workflows/php-compatibility.yml'
+
+# One run per PR or branch. A new push cancels the previous run.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phpcompat:
+    name: PHPCompatibilityWP
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+      - name: Install Composer dependencies
+        run: composer update --no-interaction --prefer-dist --no-progress
+      - name: Run PHPCompatibilityWP
+        run: vendor/bin/phpcs

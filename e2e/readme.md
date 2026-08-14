@@ -97,8 +97,13 @@ STACKABLE_SLUG=stackable/plugin
 
 PHP/WP matrix cells are Playground `--php` / `--wp` values (major.minor).
 CI runs two corners: latest WP + max PHP, and oldest supported WP + min PHP.
-`tools/playwright-test-matrix.js` syncs both workflow files.
+The min PHP cell follows `readme.txt` `Requires PHP` (build may raise it to match latest WordPress).
+`tools/playwright-test-matrix.js` and `tools/ensure-version-number.js` sync the e2e matrix, `plugin.php` version checks, and `phpcs.xml.dist` `testVersion` in both repos.
 A new push to the same PR or branch cancels the previous E2E run.
+
+PHPCompatibilityWP runs against that same PHP floor:
+- Free: `.github/workflows/php-compatibility.yml` (`composer phpcompat` locally)
+- Premium: `pro__premium_only/.github/workflows/php-compatibility.yml` (`composer phpcompat:premium` when `pro__premium_only/` is present)
 
 ## What is covered
 

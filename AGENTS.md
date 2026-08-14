@@ -60,6 +60,8 @@ Do not apply GitHub changes (close, comment, relabel) during issue triage withou
 ### Testing
 
 - Unit / Jest: `npm run test:scripts` / `npm run test-old` (and related coverage scripts).
+- PHP compatibility: `composer phpcompat` (PHPCompatibilityWP; floor from `readme.txt` `Requires PHP`).
+  Premium PHP: `composer phpcompat:premium` when `pro__premium_only/` is present.
 - Playwright e2e (WordPress Playground, no Docker): see [`e2e/readme.md`](./e2e/readme.md)
   (`npm run build:e2e` then `npm run test:e2e` / `npm run test:debug`).
   Premium: `npm run build:e2e:premium` then `npm run test:e2e:premium` with

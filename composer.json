@@ -4,6 +4,17 @@
 	"license": "GPL-3.0-or-later",
 	"type": "wordpress-plugin",
 	"require-dev": {
-		"wp-cli/i18n-command": "^2.2"
+		"wp-cli/i18n-command": "^2.2",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+		"phpcompatibility/phpcompatibility-wp": "^2.1"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"phpcompat": "phpcs",
+		"phpcompat:premium": "phpcs --standard=pro__premium_only/phpcs.xml.dist pro__premium_only"
 	}
 }
