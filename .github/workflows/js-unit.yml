@@ -1,0 +1,40 @@
+name: JS Unit
+
+on:
+  push:
+    branches: [ master, develop ]
+    paths:
+      - 'src/**/*.js'
+      - 'jest.config.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/js-unit.yml'
+  pull_request:
+    branches: [ master, develop ]
+    paths:
+      - 'src/**/*.js'
+      - 'jest.config.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/js-unit.yml'
+
+# One run per PR or branch. A new push cancels the previous run.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    name: Jest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install npm dependencies
+        run: npm ci --legacy-peer-deps
+      - name: Run unit tests
+        run: npm run test:unit

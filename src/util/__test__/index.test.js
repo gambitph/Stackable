@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import {
-	hexToRgba, prependCSSClass, compileCSS,
+	hexToRgba, prependCSSClass, compileCSS, minifyCSS, getUniqueBlockClass,
 } from '../'
 describe( 'hexToRgba', () => {
 	it( 'should work', () => {
@@ -111,5 +111,31 @@ multiline */
 			expect( compileCSS( '.test { background: red, blue; }', mainClass, uniqueID ) ).toContain( 'background: red, blue' )
 			expect( compileCSS( `.test { content: '${ mainClass }'; }`, mainClass, uniqueID ) ).toContain( `content: '${ mainClass }'` )
 		} )
+	} )
+} )
+
+describe( 'minifyCSS', () => {
+	it( 'returns empty input unchanged', () => {
+		expect( minifyCSS( '' ) ).toBe( '' )
+		expect( minifyCSS( null ) ).toBe( null )
+	} )
+
+	it( 'strips comments and whitespace', () => {
+		expect( minifyCSS( '/* comment */\n.a {\n  color: red;\n}' ) ).toBe( '.a{color:red}' )
+	} )
+
+	it( 'adds !important when requested', () => {
+		expect( minifyCSS( '.a { color: red; }', true ) ).toBe( '.a{color:red !important}' )
+	} )
+} )
+
+describe( 'getUniqueBlockClass', () => {
+	it( 'prefixes the unique id', () => {
+		expect( getUniqueBlockClass( 'abc123' ) ).toBe( 'stk-abc123' )
+	} )
+
+	it( 'returns an empty string when there is no id', () => {
+		expect( getUniqueBlockClass( '' ) ).toBe( '' )
+		expect( getUniqueBlockClass() ).toBe( '' )
 	} )
 } )
