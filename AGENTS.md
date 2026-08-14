@@ -61,6 +61,7 @@ Do not apply GitHub changes (close, comment, relabel) during issue triage withou
 
 - Unit / Jest: `npm run test:unit` (wp-scripts / `@wordpress/jest-preset-default`). Watch: `npm run test:unit:watch`.
   Premium: `cd pro__premium_only && npm run test:unit` when `pro__premium_only/` is present.
+- PHP unit: `composer test` (PHPUnit 9 + Brain Monkey, no Docker / wp-env). Premium: `composer test:php:premium` when `pro__premium_only/` is present.
 - PHP compatibility: `composer phpcompat` (PHPCompatibilityWP; floor from `readme.txt` `Requires PHP`).
   Premium PHP: `composer phpcompat:premium` when `pro__premium_only/` is present.
 - Playwright e2e (WordPress Playground, no Docker): see [`e2e/readme.md`](./e2e/readme.md)

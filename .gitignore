@@ -17,6 +17,7 @@ test-results/**/trace.zip
 
 composer.phar
 composer.lock
+.phpunit.result.cache
 /vendor
 /wordpress
 /test-results/

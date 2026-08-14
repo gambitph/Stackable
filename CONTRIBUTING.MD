@@ -198,6 +198,27 @@ This is to prevent errors when upgrading Stackable.
 📝 Writing Tests
 =============
 
+### PHP unit tests
+
+PHP runtime tests live in `tests/phpunit/` (PHPUnit 9 + Brain Monkey). They do
+not boot WordPress, MySQL, or Freemius. Each test `require_once`s the PHP file
+under test after stubbing WordPress helpers.
+
+```bash
+composer test
+```
+
+Premium PHP tests live in `pro__premium_only/tests/phpunit/` and reuse the free
+Composer `vendor/` tree:
+
+```bash
+composer test:php:premium
+```
+
+Keep PHPUnit files under `tests/` so they are not packaged in the plugin zip.
+
+CI runs PHP 7.4 and 8.5 (same corners as Playwright).
+
 ### Block Testing
 
 Block testing is done in 5 steps, and covers the entirety of a block's codebase.

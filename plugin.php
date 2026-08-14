@@ -251,6 +251,11 @@ if ( ! function_exists( 'is_frontend' ) ) {
 	}
 }
 
+// PHPUnit loads this file only for deactivation cleanup + is_frontend().
+if ( defined( 'STACKABLE_PHPUNIT' ) && STACKABLE_PHPUNIT ) {
+	return;
+}
+
 /**
  * Freemius.
  * This needs to be first.
