@@ -1,0 +1,23 @@
+{
+	"home-page-1": {
+		"id": "home-page-1",
+		"label": "Home Page 1",
+		"description": "E2E free home page",
+		"plan": "free",
+		"category": "Home Page",
+		"template": [
+			{ "id": "section-call-to-action-1", "bg": true },
+			{ "id": "section-card-1" }
+		]
+	},
+	"about-page-1": {
+		"id": "about-page-1",
+		"label": "About Page 1",
+		"description": "E2E free about page",
+		"plan": "free",
+		"category": "About Page",
+		"template": [
+			{ "id": "section-card-1" }
+		]
+	}
+}

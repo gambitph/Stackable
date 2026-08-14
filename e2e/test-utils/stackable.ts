@@ -1,4 +1,5 @@
 import { Page, Request } from '@playwright/test'
+import { expect } from '@wordpress/e2e-test-utils-playwright'
 import { test } from './test'
 
 export class StackableFixture {
@@ -59,5 +60,71 @@ export class StackableFixture {
 				( method === 'POST' || method === 'PUT' || method === 'PATCH' ) &&
 				response.ok()
 		} ).then( () => undefined )
+	}
+
+	async openBlockSettings() {
+		// Scope to the editor chrome. Column Arrangement (and similar inspector
+		// controls) also expose a "Settings" button that would otherwise match.
+		const settings = this.page
+			.getByRole( 'region', { name: 'Editor top bar' } )
+			.getByRole( 'button', { name: 'Settings', exact: true } )
+		if ( await settings.isVisible() && await settings.getAttribute( 'aria-pressed' ) === 'false' ) {
+			await settings.click()
+		}
+	}
+
+	async openInspectorTab( tab: 'Layout' | 'Style' | 'Advanced' ) {
+		await this.openBlockSettings()
+		await this.page.getByLabel( `${ tab } Tab` ).click()
+	}
+
+	async openDesignSystem() {
+		const button = this.page.getByLabel( 'Stackable Design System' )
+		await button.click()
+	}
+
+	async dismissToursAndNotices() {
+		const tourClose = this.page.locator( '.ugb-tour-modal .components-modal__header button' ).first()
+		if ( await tourClose.isVisible().catch( () => false ) ) {
+			await tourClose.click()
+		}
+
+		const skip = this.page.getByRole( 'link', { name: 'Skip', exact: true } )
+		if ( await skip.isVisible().catch( () => false ) ) {
+			await skip.click()
+		}
+	}
+
+	async pickLayout( editor, index = 0 ) {
+		const variations = editor.canvas
+			.locator( '.stk-variation-picker .block-editor-block-variation-picker__variation' )
+		try {
+			await variations.first().waitFor( { state: 'visible', timeout: 10_000 } )
+		} catch {
+			return
+		}
+		await variations.nth( index ).click()
+		await expect( editor.canvas.locator( '.stk-variation-picker' ) ).toBeHidden()
+	}
+
+	async pickDefaultLayout( editor ) {
+		return this.pickLayout( editor, 0 )
+	}
+
+	async selectBlockByName( editor, name: string ) {
+		const block = editor.canvas.locator( `[data-type="${ name }"]` ).first()
+		await expect( block ).toBeVisible()
+		await this.selectBlockByClientId( await block.getAttribute( 'data-block' ) )
+	}
+
+	async selectBlockByClientId( clientId: string ) {
+		await this.page.evaluate( id => {
+			window.wp.data.dispatch( 'core/block-editor' ).selectBlock( id )
+		}, clientId )
+		await expect.poll( async () => {
+			return this.page.evaluate( () =>
+				window.wp.data.select( 'core/block-editor' ).getSelectedBlockClientId()
+			)
+		} ).toBe( clientId )
 	}
 }

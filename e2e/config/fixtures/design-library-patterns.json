@@ -1,0 +1,26 @@
+{
+	"section-call-to-action-1": {
+		"id": "section-call-to-action-1",
+		"label": "Call to Action 1",
+		"description": "E2E free CTA pattern",
+		"plan": "free",
+		"category": "Call to Action",
+		"template": "<!-- wp:stackable/heading {\"uniqueId\":\"e2ecta1\"} --><div class=\"wp-block-stackable-heading stk-block stk-block-heading stk-e2ecta1\" data-block-id=\"e2ecta1\"><h2 class=\"stk-block-heading__text\">E2E Free CTA</h2></div><!-- /wp:stackable/heading -->"
+	},
+	"section-call-to-action-3": {
+		"id": "section-call-to-action-3",
+		"label": "Call to Action 3",
+		"description": "E2E premium CTA pattern",
+		"plan": "premium",
+		"category": "Call to Action",
+		"template": "<!-- wp:stackable/heading {\"uniqueId\":\"e2ecta3\"} --><div class=\"wp-block-stackable-heading stk-block stk-block-heading stk-e2ecta3\" data-block-id=\"e2ecta3\"><h2 class=\"stk-block-heading__text\">E2E Premium CTA</h2></div><!-- /wp:stackable/heading -->"
+	},
+	"section-card-1": {
+		"id": "section-card-1",
+		"label": "Card 1",
+		"description": "E2E free card pattern",
+		"plan": "free",
+		"category": "Card",
+		"template": "<!-- wp:stackable/heading {\"uniqueId\":\"e2ecard1\"} --><div class=\"wp-block-stackable-heading stk-block stk-block-heading stk-e2ecard1\" data-block-id=\"e2ecard1\"><h2 class=\"stk-block-heading__text\">E2E Free Card</h2></div><!-- /wp:stackable/heading -->"
+	}
+}

@@ -1,7 +1,9 @@
 /* eslint-disable camelcase */
 /**
- * Builds the Playwright CI matrix from Stackable's supported WordPress versions
- * (Tested up to + two minors below) and matching PHP versions.
+ * Builds the Playwright CI matrix from Stackable's supported WordPress versions.
+ *
+ * Two corners only: latest WP + max PHP, and oldest supported WP
+ * (two minors below Tested up to) + min PHP.
  *
  * WP versions and min PHP are resolved from api.wordpress.org.
  * Max PHP for latest WP is hardcoded until WordPress exposes it via API.
@@ -18,8 +20,8 @@ const PLAYWRIGHT_MATRIX_START = '# stackable-playwright-matrix-start'
 const PLAYWRIGHT_MATRIX_END = '# stackable-playwright-matrix-end'
 
 const PLAYWRIGHT_WORKFLOW_PATHS = [
-	'.github/workflows/playwright.yml',
-	'pro__premium_only/.github/workflows/playwright.yml',
+	'.github/workflows/e2e-tests.yml',
+	'pro__premium_only/.github/workflows/e2e-tests.yml',
 ]
 
 /**
@@ -29,7 +31,7 @@ const PLAYWRIGHT_WORKFLOW_PATHS = [
 const LATEST_WP_MAX_PHP = '8.5'
 
 /**
- * Normalize API values like "7.2.24" to wp-env/readme form "7.2".
+ * Normalize API values like "7.2.24" to Playground/readme form "7.2".
  *
  * @param {string} phpVersion
  * @return {string} Normalized PHP version
@@ -117,6 +119,14 @@ const resolveLatestWordPressPatch = ( versionString, releases ) => {
 }
 
 /**
+ * Playground CLI accepts major.minor (or latest/nightly), not patch builds.
+ *
+ * @param {string} versionString
+ * @return {string} Playground --wp value
+ */
+const toPlaygroundWpVersion = versionString => getMinorKey( versionString )
+
+/**
  * @param {Object} options
  * @param {string} options.testedUpTo Readme "Tested up to" value (synced from WP API during build).
  * @param {string} options.minPhp Minimum PHP from latest WordPress API release.
@@ -126,33 +136,25 @@ const resolveLatestWordPressPatch = ( versionString, releases ) => {
 const buildPlaywrightMatrix = ( {
 	testedUpTo, minPhp, releases,
 } ) => {
-	const supportedVersions = [
-		subtractMinorVersions( testedUpTo, 2 ),
-		subtractMinorVersions( testedUpTo, 1 ),
-		testedUpTo,
-	].map( version => resolveLatestWordPressPatch( version, releases ) )
+	const latestWp = toPlaygroundWpVersion(
+		resolveLatestWordPressPatch( testedUpTo, releases )
+	)
+	const oldestWp = toPlaygroundWpVersion(
+		resolveLatestWordPressPatch( subtractMinorVersions( testedUpTo, 2 ), releases )
+	)
 
-	const latestWp = supportedVersions[ 2 ]
-
-	const include = [
-		{
-			php_version: LATEST_WP_MAX_PHP,
-			wp_version: latestWp,
-		},
-		{
-			php_version: minPhp,
-			wp_version: latestWp,
-		},
-	]
-
-	for ( let i = 0; i < 2; i++ ) {
-		include.push( {
-			php_version: minPhp,
-			wp_version: supportedVersions[ i ],
-		} )
+	return {
+		include: [
+			{
+				php_version: LATEST_WP_MAX_PHP,
+				wp_version: latestWp,
+			},
+			{
+				php_version: minPhp,
+				wp_version: oldestWp,
+			},
+		],
 	}
-
-	return { include }
 }
 
 const formatMatrixIncludeYaml = include => {
@@ -228,4 +230,5 @@ module.exports = {
 	subtractMinorVersions,
 	syncPlaywrightTestMatrix,
 	syncPlaywrightWorkflowFile,
+	toPlaygroundWpVersion,
 }

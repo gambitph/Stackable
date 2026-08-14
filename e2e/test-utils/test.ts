@@ -28,9 +28,10 @@ const test = base.extend<{
 		// We want to make all REST API calls as authenticated users.
 		requestUtils = await ExtendedRequestUtils.setup( {
 			baseURL: process.env.WP_BASE_URL,
+			storageStatePath: process.env.STORAGE_STATE_PATH,
 			user: {
-				username: process.env.WP_USERNAME,
-				password: process.env.WP_PASSWORD,
+				username: process.env.WP_USERNAME || 'admin',
+				password: process.env.WP_PASSWORD || 'password',
 			},
 		} )
 

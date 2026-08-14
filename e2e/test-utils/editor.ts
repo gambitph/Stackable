@@ -1,8 +1,6 @@
 import { Editor as BaseEditor } from '@wordpress/e2e-test-utils-playwright'
 
 class ExtendedEditor extends BaseEditor {
-	blockErrors: Array<String> = []
-
 	getBlockAttributes = async function( clientId : String ) {
 		await this.page.waitForFunction(
 			() => window?.wp?.blocks && window?.wp?.data
@@ -15,15 +13,47 @@ class ExtendedEditor extends BaseEditor {
 		return attributes
 	}
 
-	getBlockErrors() :Array<String> {
-		this.blockErrors = []
-		this.page.on( 'console', msg => {
-			if ( msg.type() === 'error' && msg.text().startsWith( 'Block validation' ) ) {
-				this.blockErrors.push( msg.text() )
-			}
+	/**
+	 * Persist the current editor document as a draft.
+	 *
+	 * Gutenberg's helper clicks the "Save draft" top-bar button. After autosave
+	 * or a reload of an already-saved draft that button is named "Saved" and
+	 * the click waits until the test timeout closes the page.
+	 */
+	saveDraft = async function() {
+		await this.page.waitForFunction(
+			() => window?.wp?.data?.select?.( 'core/editor' ) && window?.wp?.data?.dispatch?.( 'core/editor' )
+		)
+
+		await this.page.waitForFunction( () => {
+			return ! window.wp.data.select( 'core/editor' ).isSavingPost()
+		}, null, { timeout: 60_000 } )
+
+		const needsSave = await this.page.evaluate( () => {
+			const editor = window.wp.data.select( 'core/editor' )
+			return editor.isEditedPostNew() || editor.isEditedPostDirty()
 		} )
 
-		return this.blockErrors
+		if ( needsSave ) {
+			await this.page.evaluate( async () => {
+				await window.wp.data.dispatch( 'core/editor' ).savePost()
+			} )
+
+			await this.page.waitForFunction( () => {
+				return ! window.wp.data.select( 'core/editor' ).isSavingPost()
+			}, null, { timeout: 60_000 } )
+
+			const saveFailed = await this.page.evaluate( () => {
+				return window.wp.data.select( 'core/editor' ).didPostSaveRequestFail()
+			} )
+			if ( saveFailed ) {
+				throw new Error( 'Editor saveDraft failed to persist the post' )
+			}
+		}
+
+		await this.page.waitForFunction( () => {
+			return !! new URLSearchParams( window.location.search ).get( 'post' )
+		} )
 	}
 }
 
