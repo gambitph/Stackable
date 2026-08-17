@@ -109,7 +109,7 @@ const ResizerTooltip = props => {
 				setPrevSwitchedWidth( props.width )
 				// At first switch, remember the width
 				// Calculate new width based on the current one
-				const imgEl = tooltipRef.current?.parentElement.querySelector( '.stk-img' )
+				const imgEl = tooltipRef.current?.closest( '.stk-img-resizer' )?.querySelector( '.stk-img' )
 				const newSize = convertSizeByUnit( props.width, unit, 'width', imgEl )
 				setCurrentWidth( newSize )
 				width = clampSize( newSize, unit )
