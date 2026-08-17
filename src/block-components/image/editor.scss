@@ -89,6 +89,8 @@
 	position: absolute;
 	inset: 0;
 	pointer-events: none;
+	// Keep the tooltip above the click-to-edit overlay at z-index 2.
+	z-index: 3;
 	container-name: stk-img-resizer-tooltip;
 	container-type: inline-size;
 

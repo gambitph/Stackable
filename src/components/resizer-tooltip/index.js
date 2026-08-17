@@ -162,7 +162,7 @@ const ResizerTooltip = props => {
 				setPrevSwitchedHeight( props.height )
 				// At first switch, remember the height
 				// Calculate new height based on the current one
-				const imgEl = tooltipRef.current?.parentElement.querySelector( '.stk-img' )
+				const imgEl = tooltipRef.current?.closest( '.stk-img-resizer' )?.querySelector( '.stk-img' )
 				const newSize = convertSizeByUnit( props.height, unit, 'height', imgEl )
 				setCurrentHeight( newSize )
 				height = clampSize( newSize, unit )
