@@ -123,7 +123,9 @@ const ProControl = props => {
 					<a href={ props.demoUrl } target="_premium" className="button button-secondary">{ __( 'View Demo', i18n ) }</a>
 				</p>
 			) }
-			<p className="ugb-design-control-pro-note__notice">{ __( 'Part of the complete website builder in Stackable Premium.', i18n ) }</p>
+			{ props.showPartOfPremium && (
+				<p className="ugb-design-control-pro-note__notice">{ __( 'Part of the complete website builder in Stackable Premium.', i18n ) }</p>
+			) }
 		</div>
 	)
 }
@@ -137,6 +139,7 @@ ProControl.defaultProps = {
 	showImage: true,
 	showButton: true,
 	showHideNote: true,
+	showPartOfPremium: true,
 	demoUrl: '',
 	buttonUtmSource: undefined,
 
