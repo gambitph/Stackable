@@ -3,7 +3,8 @@
 		margin-bottom: 0;
 	}
 	.ugb-design-control {
-		padding: 0;
+		// Keep the outlines inside the control.
+		padding-inline: 2px;
 		.components-radio-control__option {
 			width: 25%;
 		}
