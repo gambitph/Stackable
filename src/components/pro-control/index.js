@@ -85,7 +85,7 @@ const LABELS = {
 	},
 	'global-block-styles': {
 		title: __( 'Design Once, Update Everywhere', i18n ),
-		description: __( 'Sync block styles site-wide so one change updates every instance—no more copy-paste or hunting down inconsistencies.', i18n ),
+		description: __( 'Sync block styles site-wide so one change updates every instance, no more copy-paste or hunting down inconsistencies.', i18n ),
 	},
 	'design-library-saved-patterns': {
 		title: __( 'Reuse Your Best Layouts', i18n ),
