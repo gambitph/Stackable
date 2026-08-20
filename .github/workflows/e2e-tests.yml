@@ -43,9 +43,9 @@ jobs:
         include:
           # stackable-playwright-matrix-start
           - php_version: '8.5'
-            wp_version: '7.0'
+            wp_version: '7.1'
           - php_version: '7.4'
-            wp_version: '6.8'
+            wp_version: '6.9'
           # stackable-playwright-matrix-end
     name: Free e2e PHP ${{ matrix.php_version }} WP ${{ matrix.wp_version }}
     steps:
