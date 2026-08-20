@@ -200,6 +200,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.20 Saved Patterns and a Faster Design Library](https://wpstackable.com/blog/introducing-saved-patterns-and-a-faster-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.19 Full Page Templates, Style Guide and Onboarding Tour](https://wpstackable.com/blog/introducing-full-page-templates-style-guide-and-onboarding-tour/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.18 Global Block Styles](https://wpstackable.com/blog/introducing-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.17 New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -310,6 +311,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.20.0 =
+[v3.20 Saved Patterns and a Faster Design Library](https://wpstackable.com/blog/introducing-saved-patterns-and-a-faster-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Design Library - save and manage your own patterns (Premium) #3629
 * New: Settings - default to theme margins for Heading blocks #3673
