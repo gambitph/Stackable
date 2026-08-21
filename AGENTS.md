@@ -7,13 +7,17 @@
 | Glossary | [`CONTEXT.md`](./CONTEXT.md) |
 | Architecture map | [`docs/architecture.md`](./docs/architecture.md) |
 | ADRs | [`docs/adr/`](./docs/adr/) |
+| Site Kits (agents) | [`docs/prd/site-kits.agents.md`](./docs/prd/site-kits.agents.md) |
+| Site Kits (devs) | [`docs/prd/site-kits.md`](./docs/prd/site-kits.md) |
+| Site Kit import contract | [`docs/prd/site-kits.CONTRACT.md`](./docs/prd/site-kits.CONTRACT.md) |
+| Start Stackable theme (sibling) | `../Start-Stackable/docs/prd/start-stackable.agents.md` (plan / check in that repo) |
 | E2E harness | [`e2e/readme.md`](./e2e/readme.md) |
 | Release roadmap | [GitHub Project #2](https://github.com/orgs/gambitph/projects/2/views/1) |
 | Free / premium repos | [`.cursor/rules/project-repos.mdc`](./.cursor/rules/project-repos.mdc) |
 | Issue labels / triage | [`.cursor/rules/issue-labels.mdc`](./.cursor/rules/issue-labels.mdc), [`.cursor/rules/issue-triage.mdc`](./.cursor/rules/issue-triage.mdc) |
 
-Product PRDs and colocated `CONTRACT.md` files may be added under `docs/prd/` (and premium under `pro__premium_only/docs/prd/`) as behaviour is documented.
-Until then, treat shipped code plus ADRs / architecture as the source of truth, and do not invent product law in how-it-works notes.
+Product PRDs and colocated `CONTRACT.md` files live under `docs/prd/` (and premium under `pro__premium_only/docs/prd/`).
+Load [`docs/prd/site-kits.agents.md`](./docs/prd/site-kits.agents.md) before changing Site Kit catalog, import, or kit e2e.
 
 When code and docs disagree: **ADR / contract / PRD win** when they exist (WordPress.org / Plugin Check constraints still apply to free packaging).
 How-it-works maps (colocated `*.md`, notes like `src/dynamic-breakpoints.md`) describe current machinery only - they must not invent product law.

@@ -21,12 +21,28 @@ Reusable editor building block under `src/block-components/` (alignment, image, 
 _Avoid_: component alone when you mean a WordPress `@wordpress/components` control
 
 **Design Library**:
-In-editor library for inserting designs, patterns, pages, and related layouts.
-_Avoid_: pattern library alone (too vague), template kit (unless marketing copy)
+In-editor library for inserting designs, patterns, pages, and related layouts into the current document.
+_Avoid_: pattern library alone (too vague), template kit (unless marketing copy), Site Kit (full-site import)
+
+**Site Kit**:
+A plugin-owned import package that seeds a site: pages, optional patterns, menu, front page, canvas templates, theme styles overlay and/or variation, optional Global Design System, and Start Stackable snap-in flags.
+_Avoid_: Design Library page (insert-into-editor), theme demo import, starter site (competitor name), Default (the theme on activate)
+
+**Default**:
+The Start Stackable first-activation site (designed blog, no import). Not a kit slug.
+_Avoid_: default kit package, reset, import-on-activate
+
+**Start Stackable**:
+The companion block theme (sibling repo). Complete block theme on its own and the site shell. Not this plugin.
+_Avoid_: putting theme chrome or sticky-header CSS in this plugin
+
+**Shell contract**:
+Theme primitives a Site Kit may depend on (header parts, sticky/transparent flags, full-width canvas, header-height token, theme styles overlay reception). Defined in Start Stackable PRDs and `docs/prd/site-kits.CONTRACT.md`.
+_Avoid_: kit-only CSS hacks that fake chrome in the plugin
 
 **Global settings**:
 Site-wide Stackable design tokens and controls (colors, typography, spacing, block styles, color schemes, presets) under `src/plugins/global-settings/` and related PHP.
-_Avoid_: theme.json (WP core), customizer (unless literally that UI)
+_Avoid_: theme.json (WP core / Start Stackable), customizer (unless literally that UI), Site Kit (the package that may *write* these options)
 
 **Global Block Styles**:
 Reusable named styles applied across matching blocks (premium-capable surface in the design system).
