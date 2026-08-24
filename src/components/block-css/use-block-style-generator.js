@@ -2,7 +2,9 @@ import { useQueryLoopInstanceId } from '~stackable/util'
 import {
 	useLayoutEffect, useMemo, useRef,
 } from '@wordpress/element'
-import { dispatch, select } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 import { useRafEffect } from '~stackable/hooks'
 import CssSaveCompiler from './css-save-compiler'
 import { createStyleDependencyFingerprint } from './util'
@@ -79,6 +81,18 @@ export const useBlockCssGenerator = props => {
 	}, [ styleFingerprint, version, blockStyles, setAttributes ] )
 
 	const styleKey = `${ clientId }-${ instanceId }`
+	const editorDom = useSelect( select => {
+		return select( 'stackable/editor-dom' )?.getEditorDom()
+	} )
+
+	// Returning null for every block left template-preview iframes without CSS.
+	// Use the unified stylesheet only for a current editor document, otherwise
+	// return CSS so each preview is styled inside its own document.
+	const editorCanvasDocument = document.querySelector( 'iframe[name="editor-canvas"]' )?.contentDocument
+	const isCurrentEditorDom = editorDom?.isConnected && (
+		editorDom.ownerDocument === document ||
+		editorDom.ownerDocument === editorCanvasDocument
+	)
 
 	useLayoutEffect( () => {
 		dispatch( 'stackable/editor-block-css' ).setBlockCss( styleKey, editCss || '' )
@@ -92,7 +106,5 @@ export const useBlockCssGenerator = props => {
 		}
 	}, [ styleKey, editCss, clientId ] )
 
-	// We used to return the CSS here, but for optimization, now
-	// CSS is injected via the unified editor stylesheet plugin.
-	return null
+	return isCurrentEditorDom ? null : editCss
 }
