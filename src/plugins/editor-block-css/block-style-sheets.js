@@ -59,9 +59,8 @@ export const shouldUseConstructableStyleSheets = editorDom => {
 	}
 
 	const targetDoc = getTargetEditorDocument( editorDom )
-	const canvasDoc = getEditorCanvasDocument()
 
-	return ! canvasDoc || targetDoc === document
+	return targetDoc === document
 }
 
 const getFallbackStyleId = key => {
