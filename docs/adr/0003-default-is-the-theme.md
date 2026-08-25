@@ -7,5 +7,5 @@ The catalog may show Default as a label ("you are on the theme").
 Clicking it does not import and does not reset an imported kit.
 Never import on theme or plugin activation.
 
-`theme.styles` in the contract lets a kit restyle chrome without shipping a new file in the theme zip.
+`theme.styles` in the contract lets a kit restyle the header and footer without shipping a new file in the theme zip.
 Slugs must match the theme token contract.

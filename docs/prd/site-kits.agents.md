@@ -12,7 +12,7 @@ ADR: [`../adr/0003-default-is-the-theme.md`](../adr/0003-default-is-the-theme.md
 A **Site Kit** is a plugin-owned import package: pages + optional patterns + menu + front page + template map + theme styles (variation slug and/or overlay) + optional design-system payload + theme snap-in.
 **Design Library Pages** insert one page of markup into the current editor. That is not a Site Kit.
 **Default** is Start Stackable on activate. It is not a kit package. Catalog may label it; that label does not import or reset.
-Start Stackable is the **intended shell**. Import still runs without it; header flags no-op and a notice says chrome is limited.
+Start Stackable is the **intended shell**. Import still runs without it; header flags no-op and a notice says the header and footer are limited.
 
 v1 ships **three** kits (not counting Default).
 Wizard: catalog → preview → optional design-system tweaks (side panel) → import.
@@ -85,7 +85,7 @@ Re-import updates the same posts. It does not create `Home (2)`.
 
 Import pages + GDS + menu + front page.
 Skip header flags and missing style variations.
-Show an admin notice: install Start Stackable for sticky/transparent chrome.
+Show an admin notice: install Start Stackable for sticky/transparent header behavior.
 Do not refuse import.
 
 ## Implementation sequence

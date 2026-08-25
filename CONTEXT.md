@@ -34,11 +34,11 @@ _Avoid_: default kit package, reset, import-on-activate
 
 **Start Stackable**:
 The companion block theme (sibling repo). Complete block theme on its own and the site shell. Not this plugin.
-_Avoid_: putting theme chrome or sticky-header CSS in this plugin
+_Avoid_: putting theme header, footer, or sticky-header CSS in this plugin, chrome
 
 **Shell contract**:
 Theme primitives a Site Kit may depend on (header parts, sticky/transparent flags, full-width canvas, header-height token, theme styles overlay reception). Defined in Start Stackable PRDs and `docs/prd/site-kits.CONTRACT.md`.
-_Avoid_: kit-only CSS hacks that fake chrome in the plugin
+_Avoid_: kit-only CSS hacks that fake the header or footer in the plugin, chrome
 
 **Global settings**:
 Site-wide Stackable design tokens and controls (colors, typography, spacing, block styles, color schemes, presets) under `src/plugins/global-settings/` and related PHP.

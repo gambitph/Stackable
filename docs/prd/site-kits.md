@@ -25,7 +25,7 @@ Never import on theme or plugin activation.
 
 ```
 Start Stackable (theme)
-  Default on activate: designed blog, chrome, theme.json
+  Default on activate: designed blog, header, footer, theme.json
   shell: header/footer, canvases, sticky/transparent flags
         ▲
         │  kit declares parts + flags + variation and/or styles overlay (CONTRACT)
@@ -41,7 +41,7 @@ Start Stackable (theme)
 
 The theme does not know kit slugs.
 The plugin does not implement sticky CSS.
-If a kit needs new chrome (for example hide-footer on checkout), add a shell primitive in the theme PRD and a field in the CONTRACT, in one change.
+If a kit needs a new header or footer behavior (for example hide-footer on checkout), add a shell primitive in the theme PRD and a field in the CONTRACT, in one change.
 
 A kit writes **two** visual layers that share token slugs:
 

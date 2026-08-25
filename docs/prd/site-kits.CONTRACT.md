@@ -65,9 +65,9 @@ That label does not import and does not reset.
 | --- | --- |
 | `version` | Integer. Importer rejects unknown major versions. |
 | `slug` | Unique kit id. Theme-safe (`a-z0-9-`). Never `default`. |
-| `requires.theme` | `"start-stackable"` is the intended shell. Import **still runs** on other themes; chrome flags no-op with a notice. |
+| `requires.theme` | `"start-stackable"` is the intended shell. Import **still runs** on other themes; header flags no-op with a notice. |
 | `theme.styleVariation` | Optional. Start Stackable `styles/` file slug. Ignored if missing. Applied before `theme.styles`. |
-| `theme.styles` | Optional. `theme.json` **styles** object (and palette values that use the theme's slugs). Plugin writes user Global Styles. Empty or omitted means do not overlay. Lets a kit restyle chrome without a theme release. |
+| `theme.styles` | Optional. `theme.json` **styles** object (and palette values that use the theme's slugs). Plugin writes user Global Styles. Empty or omitted means do not overlay. Lets a kit restyle the header and footer without a theme release. |
 | `theme.headerPart` / `footerPart` | Template part slugs from the shell contract. |
 | `theme.headerFlags` | `sticky`, `transparent` booleans. Plugin writes the classes/meta the theme documents. |
 | `designSystem` | Maps onto existing Stackable Global Settings options. Empty object means "do not write GDS". |

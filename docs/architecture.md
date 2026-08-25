@@ -50,7 +50,7 @@ Premium = same spine + Dynamic Content, conditional display, extra features/bloc
  Site Kits       ──► import pages + menu + GDS + theme styles overlay + shell flags
  Premium filters (applyFilters 'stackable.…') ──► pro__premium_only/
 
- Start Stackable theme (sibling repo) ──► Default site + shell: chrome, theme.json, sticky/transparent
+ Start Stackable theme (sibling repo) ──► Default site + shell: header, footer, theme.json, sticky/transparent
  Site Kit package ──► snaps into that shell (plugin executes import; never on activate)
 ```
 
