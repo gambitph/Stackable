@@ -350,6 +350,7 @@
       "900"
     ],
     "subsets": [
+      "arabic",
       "latin",
       "latin-ext"
     ]
@@ -1785,6 +1786,34 @@
       "800",
       "800italic",
       "900",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Asap Sharp",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -3924,6 +3953,16 @@
   },
   {
     "family": "Bytesized",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Caacupe One",
     "variants": [
       "regular"
     ],
@@ -18127,7 +18166,10 @@
       "cyrillic",
       "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
     ]
   },
   {
@@ -22983,6 +23025,30 @@
     ]
   },
   {
+    "family": "Scoutie Sans",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Seaweed Script",
     "variants": [
       "regular"
@@ -25693,6 +25759,33 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Valley Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
