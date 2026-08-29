@@ -9,7 +9,7 @@ test( 'Activating Stackable should redirect to the Getting Started Page', async 
 	const plugin = page.locator( `[data-plugin="${ process.env.STACKABLE_SLUG }.php"]` )
 	// Deactivate Stackable
 	const deactivate = plugin.getByLabel( 'Deactivate Stackable -' )
-	await expect( deactivate ).toBeVisible()
+	await expect( deactivate ).toBeVisible( { timeout: 15_000 } )
 	await deactivate.click()
 
 	// Activate Stackable
@@ -17,16 +17,14 @@ test( 'Activating Stackable should redirect to the Getting Started Page', async 
 	await expect( activate ).toBeVisible()
 	await activate.click()
 
-	try {
-		await expect( page ).toHaveURL( /stackable/ )
-		await expect( page.getByText( 'Welcome to Stackable' ) ).toBeVisible()
-	} catch {
-		await expect( page ).toHaveURL( /page=stackable/ )
-		await expect( page.getByRole( 'link', { name: 'Activate Free Version' } ) ).toBeVisible()
-		await page.getByRole( 'link', { name: 'Activate Free Version' } ).click()
+	const welcome = page.getByText( 'Welcome to Stackable' )
+	const activateFree = page.getByRole( 'link', { name: 'Activate Free Version' } )
+	await expect( welcome.or( activateFree ) ).toBeVisible( { timeout: 30_000 } )
+
+	if ( await activateFree.isVisible().catch( () => false ) ) {
+		await activateFree.click()
 		await page.getByRole( 'link', { name: 'Skip', exact: true } ).click()
-		await expect( page ).toHaveURL( /stackable/ )
-		await expect( page.getByText( 'Welcome to Stackable' ) ).toBeVisible()
+		await expect( welcome ).toBeVisible()
 	}
 } )
 

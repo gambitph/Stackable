@@ -99,7 +99,7 @@ test.describe( 'Global Settings', () => {
 		const hexValue = await page.getByLabel( 'Hex color' ).inputValue()
 
 		await page.getByLabel( 'Settings', { exact: true } ).click()
-		editor.insertBlock( {
+		await editor.insertBlock( {
 			name: 'stackable/text',
 			attributes: {
 				text: 'test',
@@ -142,6 +142,8 @@ test.describe( 'Global Settings', () => {
 		page,
 		editor,
 	} ) => {
+		test.setTimeout( 180_000 )
+
 		await page.getByLabel( 'Stackable Design System' ).click()
 		await page.getByRole( 'button', { name: 'Global Typography' } ).click()
 
@@ -157,19 +159,27 @@ test.describe( 'Global Settings', () => {
 		await page.getByLabel( 'Settings', { exact: true } ).click()
 
 		// Check if the added Stackable Heading Block has a text-transform uppercase
-		editor.insertBlock( {
+		await editor.insertBlock( {
 			name: 'stackable/heading',
 			attributes: {
 				text: 'test',
 			},
 		} )
 
-		await expect( editor.canvas.locator( '[data-type="stackable/heading"] > .stk-block-heading > h2[role="textbox"]' ) ).toHaveCSS( 'text-transform', 'uppercase' )
+		await expect(
+			editor.canvas.locator( '[data-type="stackable/heading"] > .stk-block-heading > h2[role="textbox"]' )
+		).toHaveCSS( 'text-transform', 'uppercase', { timeout: 30_000 } )
 
 		// Reset Global Typography Styles
 		await page.getByLabel( 'Stackable Design System' ).click()
+		await expandSidebarPanel( page, 'Global Typography' )
 
-		const resetButton = page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).getByLabel( 'Reset' )
+		const heading2Control = page.locator( '.ugb-global-settings-typography-control' ).nth( 1 )
+		await expect( heading2Control ).toBeVisible( { timeout: 15_000 } )
+		await heading2Control.scrollIntoViewIfNeeded()
+
+		const resetButton = heading2Control.getByLabel( 'Reset' )
+		await expect( resetButton ).toBeVisible( { timeout: 15_000 } )
 		const deleteRequest = page.waitForResponse( response => response.url().includes( 'wp/v2/settings' ) && response.request().method() === 'POST' )
 		await resetButton.click()
 

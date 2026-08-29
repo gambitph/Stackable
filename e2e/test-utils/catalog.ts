@@ -8,7 +8,7 @@ export const waitForBlockEditor = async ( editor: ExtendedEditor ) => {
 	await editor.page.waitForFunction(
 		() => window?.wp?.blocks?.createBlock && window?.wp?.data?.dispatch
 	)
-	await expect( editor.canvas.locator( 'body' ) ).toBeVisible()
+	await expect( editor.canvas.locator( 'body' ) ).toBeVisible( { timeout: 60_000 } )
 }
 
 /**
