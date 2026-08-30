@@ -39,7 +39,10 @@ module.exports = defineConfig( {
 	forbidOnly: !! process.env.CI,
 	retries: process.env.CI ? 1 : 0,
 	workers: 1,
-	timeout: 90_000,
+	// Playground PHP 7.4 WASM often needs more than Playwright's 5s expect
+	// default. Per-test budget must stay above a couple of slow asserts.
+	timeout: 180_000,
+	expect: { timeout: 30_000 },
 	reporter: process.env.CI
 		? [ [ './e2e/config/reporter.ts', { outputFolder: './playwright-stk' } ], [ 'github' ], [ 'html', { open: 'never' } ] ]
 		: [ [ 'list' ], [ 'html', { outputFolder: 'playwright-report', open: 'never' } ] ],
@@ -65,6 +68,7 @@ module.exports = defineConfig( {
 	use: {
 		baseURL,
 		storageState: STORAGE_STATE_PATH,
+		navigationTimeout: 60_000,
 		ignoreHTTPSErrors: true,
 		screenshot: 'only-on-failure',
 		trace: 'retain-on-failure',

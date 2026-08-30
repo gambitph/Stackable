@@ -101,6 +101,10 @@ The min PHP cell follows `readme.txt` `Requires PHP` (build may raise it to matc
 `tools/playwright-test-matrix.js` and `tools/ensure-version-number.js` sync the e2e matrix, `plugin.php` version checks, and `phpcs.xml.dist` `testVersion` in both repos.
 A new push to the same PR or branch cancels the previous E2E run.
 
+Playwright `expect` defaults to 30s (not 5s) so WASM PHP 7.4 navigations can finish.
+Per-test timeout is 180s.
+Heavy editor canvas and frontend preview waits stay at 60s.
+
 PHPCompatibilityWP runs against that same PHP floor:
 - Free: `.github/workflows/php-compatibility.yml` (`composer phpcompat` locally)
 - Premium: `pro__premium_only/.github/workflows/php-compatibility.yml` (`composer phpcompat:premium` when `pro__premium_only/` is present)

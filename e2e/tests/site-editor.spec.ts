@@ -129,7 +129,7 @@ test.describe( 'Site Editor', () => {
 
 		const editorBack = page.locator( '.editor-header__back-button button, .editor-header__back-button a, .editor-header__back-button [role="button"]' )
 			.or( page.getByRole( 'button', { name: 'Back', exact: true } ) )
-		await expect( editorBack.first() ).toBeVisible( { timeout: 15_000 } )
+		await expect( editorBack.first() ).toBeVisible()
 		await editorBack.first().click()
 
 		await expect( page.getByRole( 'button', { name: 'Add Template' } ) ).toBeVisible( { timeout: 30_000 } )

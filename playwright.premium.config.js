@@ -40,7 +40,8 @@ module.exports = defineConfig( {
 	forbidOnly: !! process.env.CI,
 	retries: process.env.CI ? 1 : 0,
 	workers: 1,
-	timeout: 120_000,
+	timeout: 180_000,
+	expect: { timeout: 30_000 },
 	reporter: process.env.CI
 		? [ [ './e2e/config/reporter.ts', { outputFolder: './playwright-stk-premium' } ], [ 'github' ], [ 'html', { outputFolder: 'playwright-report-premium', open: 'never' } ] ]
 		: [ [ 'list' ], [ 'html', { outputFolder: 'playwright-report-premium', open: 'never' } ] ],
@@ -66,6 +67,7 @@ module.exports = defineConfig( {
 	use: {
 		baseURL,
 		storageState: STORAGE_STATE_PATH,
+		navigationTimeout: 60_000,
 		ignoreHTTPSErrors: true,
 		screenshot: 'only-on-failure',
 		trace: 'retain-on-failure',

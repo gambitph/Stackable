@@ -138,9 +138,10 @@ test.describe( 'Block Editor', () => {
 			preview = await previewPromise
 		}
 
-		await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toBeVisible()
-		await expect( preview.locator( `[data-block-id="${ uniqueId }"]` ) ).toContainText( 'test' )
-		await expect( preview.locator( `[data-block-id="${ uniqueId }"] p` ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
+		const previewBlock = preview.locator( `[data-block-id="${ uniqueId }"]` )
+		await expect( previewBlock ).toBeVisible( { timeout: 60_000 } )
+		await expect( previewBlock ).toContainText( 'test' )
+		await expect( previewBlock.locator( 'p' ) ).toHaveCSS( 'color', 'rgb(255, 0, 0)' )
 
 		// There should be no PHP errors on frontend
 		const pageError = await admin.getPageError()

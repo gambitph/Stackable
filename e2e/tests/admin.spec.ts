@@ -9,7 +9,7 @@ test( 'Activating Stackable should redirect to the Getting Started Page', async 
 	const plugin = page.locator( `[data-plugin="${ process.env.STACKABLE_SLUG }.php"]` )
 	// Deactivate Stackable
 	const deactivate = plugin.getByLabel( 'Deactivate Stackable -' )
-	await expect( deactivate ).toBeVisible( { timeout: 15_000 } )
+	await expect( deactivate ).toBeVisible()
 	await deactivate.click()
 
 	// Activate Stackable
@@ -19,7 +19,7 @@ test( 'Activating Stackable should redirect to the Getting Started Page', async 
 
 	const welcome = page.getByText( 'Welcome to Stackable' )
 	const activateFree = page.getByRole( 'link', { name: 'Activate Free Version' } )
-	await expect( welcome.or( activateFree ) ).toBeVisible( { timeout: 30_000 } )
+	await expect( welcome.or( activateFree ) ).toBeVisible()
 
 	if ( await activateFree.isVisible().catch( () => false ) ) {
 		await activateFree.click()
