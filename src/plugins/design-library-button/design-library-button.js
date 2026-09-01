@@ -8,7 +8,9 @@ import { SVGStackableIcon } from '~stackable/icons'
  * WordPress dependencies
  */
 import { createBlock } from '@wordpress/blocks'
-import { dispatch, useSelect } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { useCallback } from '@wordpress/element'
 import { ToolbarButton } from '@wordpress/components'
@@ -31,7 +33,14 @@ const DesignLibraryButton = () => {
 		// Insert a design library block.
 		const block = createBlock( 'stackable/design-library' )
 
-		dispatch( 'core/block-editor' ).insertBlocks( block )
+		// "Show Template" locks the template root, so insert into its editable
+		// post content area instead.
+		const isTemplateShown = select( 'core/editor' )?.getRenderingMode?.() === 'template-locked'
+		const rootClientId = isTemplateShown
+			? select( 'core/block-editor' ).getBlocksByName( 'core/post-content' )?.[ 0 ]
+			: undefined
+
+		dispatch( 'core/block-editor' ).insertBlocks( block, undefined, rootClientId )
 			.then( () => {
 				const button = getEditorDom()?.querySelector( `[data-block="${ block.clientId }"] button` )
 				// Open the design library.
