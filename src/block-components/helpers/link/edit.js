@@ -29,6 +29,7 @@ export const LinkControls = props => {
 	const hasLightboxAttr = useAttributeValue( 'hasLightbox', props.attrNameTemplate )
 	const rel = useAttributeValue( 'rel', props.attrNameTemplate )
 	const title = useAttributeValue( 'title', props.attrNameTemplate )
+	const ariaLabel = useAttributeValue( 'ariaLabel', props.attrNameTemplate )
 	const hasTitleAttr = useAttributeValue( 'hasTitle', props.attrNameTemplate )
 
 	const showGoogleMapHint = hasLightboxAttr &&
@@ -75,6 +76,14 @@ export const LinkControls = props => {
 				help={ __( 'Link relationship keywords, e.g. nofollow noreferrer prefetch', i18n ) }
 				value={ rel }
 				onChange={ updateAttributeHandler( 'rel' ) }
+			/>
+			<AdvancedTextControl
+				label={ __( 'Link accessibility label', i18n ) }
+				help={ __( 'Describe the purpose of the link for screen reader users.', i18n ) }
+				value={ ariaLabel }
+				onChange={ updateAttributeHandler( 'ariaLabel' ) }
+				isDynamic={ true }
+				isFormatType={ false }
 			/>
 			{ ( hasTitle || hasTitleAttr ) && (
 				<AdvancedTextControl

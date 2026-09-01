@@ -55,6 +55,7 @@ Link.Content = props => {
 			target={ attributes.linkNewTab ? '_blank' : undefined }
 			rel={ attributes.linkRel || undefined }
 			title={ attributes.linkTitle || undefined }
+			aria-label={ attributes.linkAriaLabel || undefined }
 		>
 			{ props.children }
 		</LinkComponent.Content>
@@ -64,4 +65,3 @@ Link.Content = props => {
 Link.InspectorControls = Edit
 
 Link.addAttributes = addAttributes
-
