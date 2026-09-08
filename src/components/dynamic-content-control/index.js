@@ -15,6 +15,7 @@ import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-contex
  */
 import { __ } from '@wordpress/i18n'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { escapeAttribute } from '@wordpress/escape-html'
 import {
 	Button,
 	TextControl,
@@ -122,8 +123,10 @@ export const useDynamicContentControlProps = props => {
 
 	const onChange = ( newValue, editorQueryString, frontendQueryString ) => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
+		// Custom date formats add query parameters with "&"" character. Escape it so
+		// HTML validation in Typography preserves this as markup, not text.
 		const willChangeValue = props.isFormatType
-			? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
+			? `<span data-stk-dynamic="${ escapeAttribute( frontendQueryString ) }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
 			: `!#stk_dynamic/${ frontendQueryString }!#`
 
 		props.onChange( willChangeValue )
