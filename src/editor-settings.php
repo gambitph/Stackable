@@ -321,6 +321,22 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_enable_heading_default_theme_margins_non_posts'] = get_option( 'stackable_enable_heading_default_theme_margins_non_posts' );
 			$settings['stackable_icon_list_block_default_icon'] = get_option( 'stackable_icon_list_block_default_icon' );
 
+			// WordPress 7.1 allows themes define the Tablet and Mobile editor preview
+			// breakpoints in theme.json. Keep Stackable's generated editor CSS in sync
+			// with those previews when the active theme provides valid values.
+			$viewport_breakpoints = function_exists( 'wp_get_global_settings' ) ? wp_get_global_settings( array( 'viewport' ) ) : array();
+			if (
+				is_array( $viewport_breakpoints ) &&
+				isset( $viewport_breakpoints['tablet'], $viewport_breakpoints['mobile'] ) &&
+				is_string( $viewport_breakpoints['tablet'] ) &&
+				is_string( $viewport_breakpoints['mobile'] )
+			) {
+				$settings['stackable_editor_viewport_breakpoints'] = array(
+					'tablet' => $viewport_breakpoints['tablet'],
+					'mobile' => $viewport_breakpoints['mobile'],
+				);
+			}
+
 			// Inserter variations are registered before the block Edit component renders,
 			// so provide the post type here.
 			$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;

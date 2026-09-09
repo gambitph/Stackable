@@ -75,20 +75,36 @@ $_cssvars: ();
 		}
 
 		@if length( $tablet ) > 0 {
-			@include tablet {
-				:root {
+			@if $use-editor-preview-classes {
+				body.stk-preview-device-tablet {
 					@each $name, $value in $tablet {
 						--stk-#{ $name }: #{ $value };
+					}
+				}
+			} @else {
+				@include tablet {
+					:root {
+						@each $name, $value in $tablet {
+							--stk-#{ $name }: #{ $value };
+						}
 					}
 				}
 			}
 		}
 
 		@if length( $mobile ) > 0 {
-			@include mobile {
-				:root {
+			@if $use-editor-preview-classes {
+				body.stk-preview-device-mobile {
 					@each $name, $value in $mobile {
 						--stk-#{ $name }: #{ $value };
+					}
+				}
+			} @else {
+				@include mobile {
+					:root {
+						@each $name, $value in $mobile {
+							--stk-#{ $name }: #{ $value };
+						}
 					}
 				}
 			}
