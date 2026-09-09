@@ -76,7 +76,7 @@ $_cssvars: ();
 
 		@if length( $tablet ) > 0 {
 			@if $use-editor-preview-classes {
-				body.stk-preview-device-tablet {
+				.stk-preview-device-tablet {
 					@each $name, $value in $tablet {
 						--stk-#{ $name }: #{ $value };
 					}
@@ -94,7 +94,7 @@ $_cssvars: ();
 
 		@if length( $mobile ) > 0 {
 			@if $use-editor-preview-classes {
-				body.stk-preview-device-mobile {
+				.stk-preview-device-mobile {
 					@each $name, $value in $mobile {
 						--stk-#{ $name }: #{ $value };
 					}
