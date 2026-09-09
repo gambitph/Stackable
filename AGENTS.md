@@ -53,7 +53,7 @@ WordPress.org / Plugin Check for free builds: [`.cursor/rules/wordpress-plugin-c
 Project skills live under [`.cursor/skills/`](./.cursor/skills/). Prefer the WordPress plugin, block-development, directory-guidelines, REST, and performance skills for Stackable work.
 React composition / best-practice skills apply mainly to block editor and admin UI under `src/`.
 
-Stackable-specific skills: `add-changelog`, `write-news-article`.
+Stackable-specific skills: `add-changelog`, `write-news-article`, `review-release`.
 
 ### Issue tracker
 
