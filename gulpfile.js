@@ -575,8 +575,11 @@ gulp.task( 'style-editor', function() {
 		// src/styles/breakpoints.scss, we do it here because there are various
 		// files that use the breakpoints and it's easier to override it here.
 		.pipe( sassVariables( {
-			'$desktop-width': 781,
-			'$tablet-width': 361,
+			// Match the Block Editor's fixed preview widths. getMediaQuery subtracts 1,
+			// so these default values target 781px tablet and 479px mobile in WordPress 7.0.
+			// https://github.com/WordPress/gutenberg/pull/74339
+			'$desktop-width': 782,
+			'$tablet-width': 480,
 		} ) )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'editor_blocks.css' ) )
