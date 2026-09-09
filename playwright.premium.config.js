@@ -34,7 +34,11 @@ const E2E_META_MU = path.join(
 )
 
 module.exports = defineConfig( {
-	testDir: './pro__premium_only/e2e/tests',
+	testDir: '.',
+	testMatch: [
+		'pro__premium_only/e2e/tests/**/*.spec.ts',
+		'e2e/tests/dynamic-content-custom-date.spec.ts',
+	],
 	globalSetup: require.resolve( './e2e/config/global-setup.js' ),
 	fullyParallel: false,
 	forbidOnly: !! process.env.CI,

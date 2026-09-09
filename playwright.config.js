@@ -34,6 +34,8 @@ const E2E_META_MU = path.join(
 
 module.exports = defineConfig( {
 	testDir: './e2e/tests',
+	// Premium Dynamic Content apply path. Free CI has no DC popover.
+	testIgnore: [ '**/dynamic-content-custom-date.spec.ts' ],
 	globalSetup: require.resolve( './e2e/config/global-setup.js' ),
 	fullyParallel: false,
 	forbidOnly: !! process.env.CI,
