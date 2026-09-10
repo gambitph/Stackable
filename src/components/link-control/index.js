@@ -1,12 +1,14 @@
 /**
  * External dependencies
  */
+import { settings } from 'stackable'
 import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
 import {
+	URLInput,
 	__experimentalLinkControl as _LinkControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/block-editor'
 import { BaseControl as _BaseControl } from '@wordpress/components'
@@ -25,6 +27,7 @@ const LinkControl = props => {
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
 		isDynamic,
+		showSuggestions,
 		...inputProps
 	} = propsToPass
 
@@ -32,6 +35,8 @@ const LinkControl = props => {
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
 	const dynamicContentProps = useDynamicContentControlProps( { value, onChange } )
+
+	const useUnrestrictedURLInput = !! settings.stackable_enable_unrestricted_url_input
 
 	const classNames = classnames( [
 		'stk-link-control',
@@ -48,13 +53,22 @@ const LinkControl = props => {
 				{ ...dynamicContentProps }
 			>
 				<div className="stk-link-control__input">
-					<_LinkControl
-						{ ...inputProps }
-						value={ { url: value } }
-						onChange={ ( { url } ) => onChange( url ) }
-						settings={ [] } // The Url only.
-						forceIsEditingLink={ ! value }
-					/>
+					{ useUnrestrictedURLInput ? (
+						<URLInput
+							{ ...inputProps }
+							value={ value }
+							onChange={ onChange }
+							disableSuggestions={ ! showSuggestions }
+						/>
+					) : (
+						<_LinkControl
+							{ ...inputProps }
+							value={ { url: value } }
+							onChange={ ( { url } ) => onChange( url ) }
+							settings={ [] } // The Url only.
+							forceIsEditingLink={ ! value }
+						/>
+					) }
 				</div>
 			</DynamicContentControl>
 			<ResetButton

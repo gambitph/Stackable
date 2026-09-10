@@ -161,6 +161,18 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 
 			register_setting(
 				'stackable_editor_settings',
+				'stackable_enable_unrestricted_url_input',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Uses the legacy URL input in Stackable link controls, allowing shortcodes and other dynamic URL values.', STACKABLE_I18N ),
+					'sanitize_callback' => 'rest_sanitize_boolean',
+					'show_in_rest' => true,
+					'default' => false,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
 				'stackable_help_tooltip_disabled',
 				array(
 					'type' => 'string',
@@ -311,6 +323,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
 			$settings['stackable_enable_global_settings'] = get_option( 'stackable_enable_global_settings' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
+			$settings['stackable_enable_unrestricted_url_input'] = get_option( 'stackable_enable_unrestricted_url_input' );
 			$settings['stackable_enable_text_highlight'] = get_option( 'stackable_enable_text_highlight' );
 			$settings['stackable_enable_dynamic_content'] = get_option( 'stackable_enable_dynamic_content' );
 			$settings['stackable_enable_copy_paste_styles'] = get_option( 'stackable_enable_copy_paste_styles' );
