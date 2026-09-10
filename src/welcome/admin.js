@@ -99,6 +99,7 @@ const SEARCH_TREE = [
 					__( 'Stackable Settings', i18n ),
 					__( 'Use Size Presets by Default', i18n ),
 					__( 'Block Linking (Beta)', i18n ),
+					__( 'Use Unrestricted URL Input', i18n ),
 				],
 			},
 			{
@@ -787,6 +788,17 @@ const EditorSettings = props => {
 										<a target="_docs" href="https://docs.wpstackable.com/article/452-how-to-use-block-linking">{ __( 'Learn more', i18n ) }</a>
 									</>
 								}
+							/>
+							<AdminToggleSetting
+								label={ __( 'Use Unrestricted URL Input', i18n ) }
+								searchedSettings={ editor.children }
+								value={ settings.stackable_enable_unrestricted_url_input }
+								onChange={ value => {
+									handleSettingsChange( { stackable_enable_unrestricted_url_input: value } ) // eslint-disable-line camelcase
+								} }
+								help={ __( 'Uses the legacy URL field in all Stackable link controls. Enable this for shortcodes, template tokens, or other dynamic URL values. This disables Gutenberg URL validation.', i18n ) }
+								disabled={ __( 'Use Gutenberg URL input', i18n ) }
+								enabled={ __( 'Use unrestricted URL input', i18n ) }
 							/>
 						</div>
 					}
