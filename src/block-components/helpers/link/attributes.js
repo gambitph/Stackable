@@ -50,4 +50,19 @@ export const addLinkAttributes = ( attrObject, attrNameTemplate = '%s', selector
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
+
+	attrObject.add( {
+		attributes: {
+			ariaLabel: {
+				type: 'string',
+				source: 'attribute',
+				selector,
+				attribute: 'aria-label',
+				default: '',
+			},
+		},
+		attrNameTemplate,
+		versionAdded: '3.20.1',
+		versionDeprecated: '',
+	} )
 }

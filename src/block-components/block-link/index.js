@@ -29,6 +29,7 @@ BlockLink.Content = props => {
 			target={ attributes.blockLinkNewTab ? '_blank' : '' }
 			rel={ attributes.blockLinkRel || undefined }
 			title={ attributes.blockLinkTitle || undefined }
+			aria-label={ attributes.blockLinkAriaLabel || undefined }
 			aria-hidden={ isHidden ? 'true' : undefined }
 			tabindex={ isHidden ? '-1' : undefined }
 		/>
