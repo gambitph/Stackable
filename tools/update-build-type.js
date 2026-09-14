@@ -6,16 +6,18 @@
 const path = require( 'path' )
 const replace = require( 'replace-in-file' )
 
-const replaceConstant = build => {
-	replace( {
+const replaceConstant = async build => {
+	const changes = await replace( {
 		files: path.resolve( __dirname, '../plugin.php' ),
 		from: /define\((.*)?STACKABLE_BUILD(.*)?,(.*)?['"]?([a-zA-Z\d\-.])*['"]?(.*)?\)/,
 		to: `define( 'STACKABLE_BUILD', '${ build }' )`,
-	} ).then( changes => {
-		if ( changes.length ) {
-			console.log( `Updated STACKABLE_BUILD const to ${ build }...` ) // eslint-disable-line
-		}
 	} )
+	if ( changes.length ) {
+		console.log( `Updated STACKABLE_BUILD const to ${ build }...` ) // eslint-disable-line
+	}
 }
 
-replaceConstant( process.argv[ 2 ] || 'free' )
+replaceConstant( process.argv[ 2 ] || 'free' ).catch( error => {
+	console.error( error ) // eslint-disable-line
+	process.exit( 1 )
+} )

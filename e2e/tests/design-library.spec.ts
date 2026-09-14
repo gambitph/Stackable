@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test'
 import { test, expect } from 'e2e/test-utils'
+import { mockDesignLibraryRest } from 'e2e/test-utils/mock-design-library'
 
 const dismissTourIfPresent = async ( page: Page ) => {
 	const tourClose = page.locator( '.ugb-tour-modal .components-modal__header button' ).first()
@@ -35,7 +36,8 @@ const waitForDesignsToLoad = async ( page: Page ) => {
 test.describe( 'Design Library', () => {
 	let pid = null
 
-	test.beforeEach( async ( { editor, admin } ) => {
+	test.beforeEach( async ( { editor, admin, page } ) => {
+		await mockDesignLibraryRest( page )
 		await admin.createNewPost( { title: 'Design Library Test' } )
 		await editor.saveDraft()
 		const postQuery = new URL( editor.page.url() ).search
@@ -43,7 +45,15 @@ test.describe( 'Design Library', () => {
 	} )
 
 	test.afterEach( async ( { requestUtils } ) => {
-		await requestUtils.deletePost( pid )
+		if ( ! pid ) {
+			return
+		}
+		try {
+			await requestUtils.deletePost( pid )
+		} catch {
+			// Best-effort cleanup. Playground REST nonces can be unusable after
+			// long editor sessions; leftover drafts should not fail the suite.
+		}
 	} )
 
 	test( 'opens and loads pattern designs without showing a blank library', async ( {

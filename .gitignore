@@ -17,9 +17,15 @@ test-results/**/trace.zip
 
 composer.phar
 composer.lock
+.phpunit.result.cache
 /vendor
 /wordpress
 /test-results/
 /playwright-report/
+/playwright-report-premium/
+/playwright-stk/
+/playwright-stk-premium/
 /blob-report/
 /playwright/.cache/
+e2e/.auth/
+/releases

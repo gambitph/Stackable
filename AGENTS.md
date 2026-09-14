@@ -7,13 +7,17 @@
 | Glossary | [`CONTEXT.md`](./CONTEXT.md) |
 | Architecture map | [`docs/architecture.md`](./docs/architecture.md) |
 | ADRs | [`docs/adr/`](./docs/adr/) |
+| Site Kits (agents) | [`docs/prd/site-kits.agents.md`](./docs/prd/site-kits.agents.md) |
+| Site Kits (devs) | [`docs/prd/site-kits.md`](./docs/prd/site-kits.md) |
+| Site Kit import contract | [`docs/prd/site-kits.CONTRACT.md`](./docs/prd/site-kits.CONTRACT.md) |
+| Start Stackable theme (sibling) | `../Start-Stackable/docs/prd/start-stackable.agents.md` (plan / check in that repo) |
 | E2E harness | [`e2e/readme.md`](./e2e/readme.md) |
 | Release roadmap | [GitHub Project #2](https://github.com/orgs/gambitph/projects/2/views/1) |
 | Free / premium repos | [`.cursor/rules/project-repos.mdc`](./.cursor/rules/project-repos.mdc) |
 | Issue labels / triage | [`.cursor/rules/issue-labels.mdc`](./.cursor/rules/issue-labels.mdc), [`.cursor/rules/issue-triage.mdc`](./.cursor/rules/issue-triage.mdc) |
 
-Product PRDs and colocated `CONTRACT.md` files may be added under `docs/prd/` (and premium under `pro__premium_only/docs/prd/`) as behaviour is documented.
-Until then, treat shipped code plus ADRs / architecture as the source of truth, and do not invent product law in how-it-works notes.
+Product PRDs and colocated `CONTRACT.md` files live under `docs/prd/` (and premium under `pro__premium_only/docs/prd/`).
+Load [`docs/prd/site-kits.agents.md`](./docs/prd/site-kits.agents.md) before changing Site Kit catalog, import, or kit e2e.
 
 When code and docs disagree: **ADR / contract / PRD win** when they exist (WordPress.org / Plugin Check constraints still apply to free packaging).
 How-it-works maps (colocated `*.md`, notes like `src/dynamic-breakpoints.md`) describe current machinery only - they must not invent product law.
@@ -49,7 +53,7 @@ WordPress.org / Plugin Check for free builds: [`.cursor/rules/wordpress-plugin-c
 Project skills live under [`.cursor/skills/`](./.cursor/skills/). Prefer the WordPress plugin, block-development, directory-guidelines, REST, and performance skills for Stackable work.
 React composition / best-practice skills apply mainly to block editor and admin UI under `src/`.
 
-Stackable-specific skills: `add-changelog`, `write-news-article`.
+Stackable-specific skills: `add-changelog`, `write-news-article`, `review-release`.
 
 ### Issue tracker
 
@@ -59,8 +63,15 @@ Do not apply GitHub changes (close, comment, relabel) during issue triage withou
 
 ### Testing
 
-- Unit / Jest: `npm test` (and related `test:*` scripts in `package.json`).
-- Playwright e2e: see [`e2e/readme.md`](./e2e/readme.md) (`npm test` / `npm run test:debug` with `.env` configured).
+- Unit / Jest: `npm run test:unit` (wp-scripts / `@wordpress/jest-preset-default`). Watch: `npm run test:unit:watch`.
+  Premium: `cd pro__premium_only && npm run test:unit` when `pro__premium_only/` is present.
+- PHP unit: `composer test` (PHPUnit 9 + Brain Monkey, no Docker / wp-env). Premium: `composer test:php:premium` when `pro__premium_only/` is present.
+- PHP compatibility: `composer phpcompat` (PHPCompatibilityWP; floor from `readme.txt` `Requires PHP`).
+  Premium PHP: `composer phpcompat:premium` when `pro__premium_only/` is present.
+- Playwright e2e (WordPress Playground, no Docker): see [`e2e/readme.md`](./e2e/readme.md)
+  (`npm run build:e2e` then `npm run test:e2e` / `npm run test:debug`).
+  Premium: `npm run build:e2e:premium` then `npm run test:e2e:premium` with
+  `pro__premium_only/` present.
 - Lint: `npm run lint` / `lint-js` / `lint-css` as appropriate for touched files.
 
 ### Quality gate

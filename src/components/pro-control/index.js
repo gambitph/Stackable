@@ -85,7 +85,7 @@ const LABELS = {
 	},
 	'global-block-styles': {
 		title: __( 'Design Once, Update Everywhere', i18n ),
-		description: __( 'Sync block styles site-wide so one change updates every instance—no more copy-paste or hunting down inconsistencies.', i18n ),
+		description: __( 'Sync block styles site-wide so one change updates every instance, no more copy-paste or hunting down inconsistencies.', i18n ),
 	},
 	'design-library-saved-patterns': {
 		title: __( 'Reuse Your Best Layouts', i18n ),
@@ -123,7 +123,9 @@ const ProControl = props => {
 					<a href={ props.demoUrl } target="_premium" className="button button-secondary">{ __( 'View Demo', i18n ) }</a>
 				</p>
 			) }
-			<p className="ugb-design-control-pro-note__notice">{ __( 'Part of the complete website builder in Stackable Premium.', i18n ) }</p>
+			{ props.showPartOfPremium && (
+				<p className="ugb-design-control-pro-note__notice">{ __( 'Part of the complete website builder in Stackable Premium.', i18n ) }</p>
+			) }
 		</div>
 	)
 }
@@ -137,6 +139,7 @@ ProControl.defaultProps = {
 	showImage: true,
 	showButton: true,
 	showHideNote: true,
+	showPartOfPremium: true,
 	demoUrl: '',
 	buttonUtmSource: undefined,
 

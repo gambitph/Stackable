@@ -1,0 +1,22 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		},
+		{
+			"step": "activatePlugin",
+			"pluginName": "Stackable - Gutenberg Blocks",
+			"pluginPath": "/wordpress/wp-content/plugins/stackable/plugin.php"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php\nrequire_once '/wordpress/wp-load.php';\nupdate_option( 'stackable_guided_tour_states', array( 'design-system', 'editor', 'design-library', 'blocks' ), false );\n"
+		}
+	]
+}
