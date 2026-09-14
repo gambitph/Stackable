@@ -391,7 +391,10 @@
 }
 
 // Ensure that our alignments are applied to text.
-.stk-block {
+// WordPress introduces `:root .has-text-align-*` in version 7.0,
+// so we increase the specificity of our selectors to ensure that
+// our styles are applied correctly.
+.stk-block.stk-block {
 	&[class*="has-text-align-"],
 	[class*="has-text-align-"] {
 		text-align: var(--stk-alignment-text-align, start);
