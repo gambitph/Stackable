@@ -226,11 +226,10 @@ export const BlockStylesControl = props => {
 	const onAddBlockStyle = () => {
 		if ( isPro ) {
 			doAction( 'stackable.global-settings.global-block-styles.add-block-style', setOpenSaveModal )
+			setOpenPopover( false )
 		} else {
 			setOpenProNotice( value => ! value )
 		}
-
-		setOpenPopover( false )
 	}
 
 	const SaveUpdateModal = applyFilters( 'stackable.global-settings.global-block-styles.save-update-modal', Fragment )

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Explain Codebase Concept"
+  short_description: "Onboard to how one Ahentic concept is wired"
+policy:
+  allow_implicit_invocation: false

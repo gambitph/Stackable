@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.8.2
-Tested up to: 7.0.2
+Requires at least: 6.9
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.20.0
+Stable tag: 3.20.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -200,6 +200,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.20 Saved Patterns and a Faster Design Library](https://wpstackable.com/blog/introducing-saved-patterns-and-a-faster-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.19 Full Page Templates, Style Guide and Onboarding Tour](https://wpstackable.com/blog/introducing-full-page-templates-style-guide-and-onboarding-tour/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.18 Global Block Styles](https://wpstackable.com/blog/introducing-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.17 New Design Library](https://wpstackable.com/blog/introducing-the-new-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -309,7 +310,18 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.20.2 =
+
+* Fixed: Dynamic Content - custom date formats display correctly instead of HTML #3754
+* Fixed: Dynamic Content - auto-detected custom fields now load on the frontend #3750
+* Fixed: Columns block - mobile content alignment now applies in the editor #3752
+
+= 3.20.1 =
+
+* Fixed: Block editor error when editing templates with styled Stackable blocks #3747
+
 = 3.20.0 =
+[v3.20 Saved Patterns and a Faster Design Library](https://wpstackable.com/blog/introducing-saved-patterns-and-a-faster-design-library/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Design Library - save and manage your own patterns (Premium) #3629
 * New: Settings - default to theme margins for Heading blocks #3673

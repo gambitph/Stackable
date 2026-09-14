@@ -1,0 +1,33 @@
+---
+description: Stackable uses plain JavaScript; React for editor/admin, view scripts for frontend
+alwaysApply: true
+---
+
+# JavaScript & React
+
+Stackable uses **regular JavaScript** (`.js`), not TypeScript, for plugin UI and runtime code. Do not add `.ts` / `.tsx` source files outside e2e tests (`e2e/**/*.ts` is fine).
+
+## Main JS surfaces
+
+1. **Block editor & plugins** (primary product UI) - **React** via `@wordpress/element` under `src/block/`, `src/block-components/`, `src/components/`, `src/plugins/`, and related editor modules.
+2. **Admin / welcome** - React or WordPress admin UI under `src/welcome/` and settings surfaces.
+3. **Frontend / view scripts** - lighter JS for saved markup behaviour (accordions, carousels, lightbox, etc.). Prefer deepening existing frontend modules over new global scripts.
+
+Prefer putting interactive editor logic in shared modules (`block-components`, `components`, `hooks`, `util`). PHP should register blocks, enqueue assets, REST/AJAX, and capability gates - not reimplement editor UI in PHP.
+
+## React (editor / admin UI)
+
+- Build UI with **React** via `@wordpress/element` (WordPress's React wrapper).
+- Use JSX inside `.js` files (wp-scripts / webpack handles transpilation).
+- Prefer WordPress packages (`@wordpress/element`, `@wordpress/components`, `@wordpress/i18n`, `@wordpress/block-editor`, `@wordpress/data`, `@wordpress/hooks`, etc.) over adding a separate `react` / `react-dom` dependency when WordPress already provides them.
+- Text domain: `stackable-ultimate-gutenberg-blocks` (`STACKABLE_I18N`).
+- Freemium UI extensions use `applyFilters( 'stackable.…' )` so premium can swap/inject components without putting premium logic in the free tree.
+
+## Import alias
+
+- Use the `~stackable` alias (maps to `src/`) for cross-folder imports, e.g. `~stackable/components`, `~stackable/block-components`.
+
+## Blocks & shared UI
+
+- New blocks deepen `src/block/<name>/` and reuse `src/block-components/` rather than forking one-off inspector/style paths.
+- Keep reusable editor controls in `src/components/` or `src/block-components/`; keep block-specific markup/edit/save in the block folder.

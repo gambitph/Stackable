@@ -19,13 +19,14 @@ jobs:
     - name: Install Composer Dependencies
       run: |
         composer install --prefer-dist --no-progress --ignore-platform-reqs
-    - name: Setup Node # Fix because we can't do npm ci --legacy-peer-deps
-      uses: actions/setup-node@v1
+    - name: Setup Node
+      uses: actions/setup-node@v4
       with:
-        node-version: 14.x
+        node-version: lts/*
     - uses: preactjs/compressed-size-action@v2
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        install-script: "npm ci --legacy-peer-deps"
         build-script: "build:no-translate"
         clean-script: "clean"
         pattern: "./build/stackable/**"

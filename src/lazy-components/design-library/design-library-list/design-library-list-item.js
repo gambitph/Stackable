@@ -128,7 +128,7 @@ const DesignLibraryListItem = memo( props => {
 			{ ! isPro && plan !== 'free' && <span className="stk-pulsating-circle" role="presentation" /> }
 			<div
 				style={ { position: 'relative' } }
-				className={ `stk-block-design__design-container ${ designPreviewSize > 100 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }
+				className={ `stk-block-design__design-container ${ designPreviewSize > 150 ? 'stk--design-preview-large' : 'stk--design-preview-small' }` }
 				{ ...( selectedTab === 'saved' ? buttonAttributes : {} ) }
 			>
 				{ ! isPro && plan !== 'free' && (
@@ -136,6 +136,7 @@ const DesignLibraryListItem = memo( props => {
 						type="design-library"
 						showImage={ false }
 						showHideNote={ false }
+						showPartOfPremium={ false }
 					/>
 				) }
 				<div className={ `stk-spinner-container ${ isLoading || ! shouldRender ? '' : 'stk-hide-spinner' }` }><Spinner /></div>

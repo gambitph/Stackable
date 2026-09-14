@@ -41,12 +41,15 @@ describe( 'CustomAttributesControl', () => {
 			`key='value'`,
 		]
 
-		invalidInputs.forEach( async value => {
+		for ( const value of invalidInputs ) {
+			dummyProps.onChange.mockClear()
 			await act( async () => {
 				fireEvent.change( getByTestId( 'custom-attributes' ), { target: { value } } )
-				await new Promise( r => setTimeout( r, 500 ) )
 			} )
-			expect( dummyProps.value ).toEqual( [] )
-		} )
+			expect( dummyProps.onChange ).toHaveBeenCalledWith( [] )
+		}
+
+		// Inspector chrome warns in jsdom (ref on memo, extra TextControl props).
+		expect( console ).toHaveErrored()
 	} )
 } )
