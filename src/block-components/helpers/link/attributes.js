@@ -1,3 +1,5 @@
+import { addAttributes as addCustomAttributes } from '../../custom-attributes/attributes'
+
 export const linkAttributes = ( selector = 'a' ) => {
 	return {
 		hasLink: {
@@ -51,18 +53,8 @@ export const addLinkAttributes = ( attrObject, attrNameTemplate = '%s', selector
 		versionDeprecated: '',
 	} )
 
-	attrObject.add( {
-		attributes: {
-			ariaLabel: {
-				type: 'string',
-				source: 'attribute',
-				selector,
-				attribute: 'aria-label',
-				default: '',
-			},
-		},
+	addCustomAttributes( attrObject, {
 		attrNameTemplate,
 		versionAdded: '3.20.1',
-		versionDeprecated: '',
 	} )
 }

@@ -13,13 +13,11 @@ import { createRoot } from '~stackable/util'
  * WordPress dependencies
  */
 import {
-	Fragment,
 	useState,
 	unmountComponentAtNode,
 	useRef,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { ExternalLink } from '@wordpress/components'
 import AdvancedTextControl from '../advanced-text-control'
 
 const sanitizeString = str => {
@@ -87,36 +85,18 @@ const CustomAttributesControl = props => {
 			setCustomAttributes( createAttributeString( props.value ) )
 		}
 	}
+	const help = hasError && <span className="ugb-custom-attributes-control__error">{ __( 'There is an error in your custom attribute', i18n ) }</span>
 
 	return (
 		<AdvancedTextControl
 			ref={ inputRef }
 			data-testid="custom-attributes"
 			className="ugb-custom-attributes-control"
-			label={ __( 'Custom Attributes', i18n ) }
+			label={ props.label }
 			value={ customAttributes }
 			onBlur={ onBlur }
 			onChange={ onChange }
-			help={ (
-				<Fragment>
-					{ __( 'You can type in custom HTML attributes for this block in the field above.', i18n ) }
-					&nbsp;
-					{ __( 'Example:', i18n ) }
-					<br />
-					<code>{
-						// eslint-disable-next-line react/jsx-curly-brace-presence
-						`data-id="my-title"`
-					}</code>
-					<br />
-					<ExternalLink
-						href="https://docs.wpstackable.com/article/461-how-to-use-custom-attributes?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg"
-						target="_docs"
-					>
-						{ __( 'Learn more about Custom Attributes', i18n ) }
-					</ExternalLink>
-					{ hasError && <span className="ugb-custom-attributes-control__error">{ __( 'There is an error in your custom attribute', i18n ) }</span> }
-				</Fragment>
-			) }
+			help={ help }
 		/>
 	)
 }
