@@ -1,3 +1,5 @@
+import { addAttributes as addCustomAttributes } from '../../custom-attributes/attributes'
+
 export const linkAttributes = ( selector = 'a' ) => {
 	return {
 		hasLink: {
@@ -49,5 +51,10 @@ export const addLinkAttributes = ( attrObject, attrNameTemplate = '%s', selector
 		attrNameTemplate,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
+	} )
+
+	addCustomAttributes( attrObject, {
+		attrNameTemplate,
+		versionAdded: '3.20.1',
 	} )
 }
