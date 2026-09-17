@@ -3,33 +3,6 @@
 	width: calc(100% - 32px);
 	min-width: 0;
 
-	> .block-editor-link-control {
-		min-width: auto;
-		width: 100%;
-
-		.components-base-control {
-			min-width: auto;
-		}
-
-		.components-input-base {
-			height: 30px;
-		}
-
-		.block-editor-link-control__search-input-wrapper {
-			margin: 0;
-		}
-
-		.block-editor-link-control__field {
-			margin: 0;
-		}
-
-		.block-editor-link-control__search-item-header {
-			overflow: hidden;
-			white-space: nowrap;
-		}
-
-	}
-
 	> .block-editor-url-input {
 		min-width: 0;
 		width: 100%;
@@ -50,47 +23,9 @@
 		height: 30px !important;
 		padding: 6px 8px !important;
 	}
-	.block-editor-link-control__search-actions {
-		display: none;
-	}
-	.block-editor-link-control__search-results-wrapper {
-		margin-bottom: 24px !important;
-		margin-top: 0 !important;
-		.block-editor-link-control__search-results {
-			margin: 0;
-		}
-	}
-	.block-editor-link-control__search-item {
-		flex-wrap: wrap;
-	}
-	.block-editor-link-control__search-item.is-current {
-		margin-top: -2px;
-		padding: 0 !important;
-	}
-	.block-editor-link-control__search-item-details {
-		max-width: 140px !important;
-		overflow: hidden;
-	}
-
-	.block-editor-link-control__search-item-icon {
-		display: none;
-	}
-
-	.block-editor-link-control__search-enter {
-		position: absolute;
-		top: 0;
-		right: 3px;
-		button:hover {
-			box-shadow: none !important;
-		}
-	}
 }
 
-// Adjust the location of the dynamic and reset buttons since our control is taller.
 .stk-link-control {
-	.block-editor-link-control__field {
-		margin: auto;
-	}
 	.stk-dynamic-content-control {
 		display: flex;
 		align-items: center;
