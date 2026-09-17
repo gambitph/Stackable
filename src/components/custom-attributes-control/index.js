@@ -85,7 +85,10 @@ const CustomAttributesControl = props => {
 			setCustomAttributes( createAttributeString( props.value ) )
 		}
 	}
-	const help = hasError && <span className="ugb-custom-attributes-control__error">{ __( 'There is an error in your custom attribute', i18n ) }</span>
+	const help = ( props.help || hasError ) && <>
+		{ props.help }
+		{ hasError && <span className="ugb-custom-attributes-control__error">{ __( 'There is an error in your custom attribute', i18n ) }</span> }
+	</>
 
 	return (
 		<AdvancedTextControl
@@ -103,6 +106,7 @@ const CustomAttributesControl = props => {
 
 CustomAttributesControl.defaultProps = {
 	label: '',
+	help: null,
 	value: [],
 	invalidHtmlAttributes: [],
 	onChange: () => {},

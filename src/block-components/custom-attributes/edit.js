@@ -21,7 +21,7 @@ import { ExternalLink } from '@wordpress/components'
 import { INVALID_HTML_ATTRIBUTES } from '.'
 
 const CustomAttributesHelp = ( { hasLink } ) => {
-	return <p className="components-base-control__help">
+	return <>
 		{ hasLink
 			? __( 'You can type in custom HTML attributes for this block or its link in the fields above. Examples:', i18n )
 			: __( 'You can type in custom HTML attributes for this block in the field above. Example:', i18n ) }
@@ -29,9 +29,16 @@ const CustomAttributesHelp = ( { hasLink } ) => {
 		<code>data-id=&quot;my-title&quot;</code>
 		{ hasLink && <>
 			<br />
-			<code>aria-label=&quot;Open product details&quot;</code>
+			<code>aria-label=&quot;Learn more&quot;</code>
 		</> }
-	</p>
+		<br />
+		<ExternalLink
+			href="https://docs.wpstackable.com/article/461-how-to-use-custom-attributes?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg"
+			target="_docs"
+		>
+			{ __( 'Learn more about Custom Attributes', i18n ) }
+		</ExternalLink>
+	</>
 }
 
 export const Edit = props => {
@@ -55,21 +62,16 @@ export const Edit = props => {
 					value={ customAttributes }
 					invalidHtmlAttributes={ INVALID_HTML_ATTRIBUTES }
 					onChange={ customAttributes => setAttributes( { customAttributes } ) }
+					help={ ! props.linkAttributeName && <CustomAttributesHelp hasLink={ false } /> }
 				/>
 				{ props.linkAttributeName && <CustomAttributesControl
 					label={ __( 'Link Custom Attributes', i18n ) }
 					value={ linkCustomAttributes }
 					invalidHtmlAttributes={ INVALID_HTML_ATTRIBUTES }
 					onChange={ linkCustomAttributes => setAttributes( { [ props.linkAttributeName ]: linkCustomAttributes } ) }
+					help={ <CustomAttributesHelp hasLink /> }
 				/>
 				}
-				<CustomAttributesHelp hasLink={ !! props.linkAttributeName } />
-				<ExternalLink
-					href="https://docs.wpstackable.com/article/461-how-to-use-custom-attributes?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg"
-					target="_docs"
-				>
-					{ __( 'Learn more about Custom Attributes', i18n ) }
-				</ExternalLink>
 			</PanelAdvancedSettings>
 		</InspectorAdvancedControls>
 	)
