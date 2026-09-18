@@ -17,11 +17,18 @@
 		}
 	}
 
-	.block-editor-url-input__input {
+	.block-editor-url-input__input,
+	.components-input-control__input {
 		margin: 0 !important;
 		width: 100% !important;
 		height: 30px !important;
 		padding: 6px 8px !important;
+	}
+}
+
+.stk-link-control--invalid {
+	.components-base-control__help {
+		color: #cc1818;
 	}
 }
 
