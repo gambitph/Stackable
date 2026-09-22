@@ -304,11 +304,11 @@ const BlockCss = props => {
 	// TODO: why do we have this condition for the collapsedSelector, but they just do the same prepending??
 	if ( hasCollapsed ) {
 		if ( generateForAllBlockStates ) {
-			collapsedSelector = prependClass( selector, '%h :where(.stk-block-accordion.stk--is-open) .%s' )
+			collapsedSelector = prependClass( selector, '%h :where(.stk-block-accordion:not(.stk--is-open)) .%s' )
 		} else if ( blockState === 'collapsed' ) {
-			collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s' )
+			collapsedSelector = prependClass( selector, ':where(.stk-block-accordion:not(.stk--is-open)) .%s' )
 		} else {
-			collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s' )
+			collapsedSelector = prependClass( selector, ':where(.stk-block-accordion:not(.stk--is-open)) .%s' )
 		}
 	}
 
