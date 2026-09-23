@@ -20,7 +20,9 @@ import {
 	memo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-import { Button, Dashicon } from '@wordpress/components'
+import {
+	Button, Dashicon, PanelBody, Tooltip,
+} from '@wordpress/components'
 
 export const getShadows = () => {
 	return applyFilters( 'stackable.shadows', [
@@ -254,8 +256,9 @@ const ShadowControl = memo( props => {
 	} = props
 
 	const shadows = options || getShadows()
-	const buttonRef = useRef( null )
-	const [ isPopoverOpen, setIsPopoverOpen ] = useState( false )
+	const presetButtonRef = useRef( null )
+	const settingsButtonRef = useRef( null )
+	const [ openPopover, setOpenPopover ] = useState( '' )
 
 	const valueCallback = value => {
 		return value ? shadows.indexOf( value ) === -1 ? 'custom' : shadows.indexOf( value ) : ''
@@ -267,63 +270,117 @@ const ShadowControl = memo( props => {
 
 	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
 	const value = typeof props.value === 'undefined' ? _value : props.value
+	const effectiveOnChange = typeof props.onChange === 'undefined' ? onChange : props.onChange
+	const selectedValue = value === '' ? valueCallback( props.placeholder ) : value
 
 	const [ propsToPass, controlProps ] = extractControlProps( _props )
 
 	useEffect( () => {
 		const clickOutsideListener = event => {
-			if ( isPopoverOpen ) {
+			if ( openPopover ) {
 				if ( ! event.target.closest( '.shadow-control__popover' ) &&
+					 ! event.target.closest( '.stk-shadow-control__presets-button' ) &&
 					 ! event.target.closest( '.stk-shadow-control__more-button' ) &&
 					 ! event.target.closest( '.components-color-picker' ) &&
 					 ! event.target.closest( '.react-autosuggest__suggestions-container' ) &&
 					 ! event.target.closest( '.components-dropdown__content' ) ) {
-					setIsPopoverOpen( false )
+					setOpenPopover( '' )
 				}
 			}
 		}
 
 		document.body.addEventListener( 'mousedown', clickOutsideListener )
 		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
-	}, [ isPopoverOpen ] )
-
-	useEffect( () => {
-		if ( isPopoverOpen ) {
-		}
-	}, [ value, isPopoverOpen ] )
+	}, [ openPopover ] )
 
 	return (
 		<>
-			<AdvancedRangeControl
+			<AdvancedControl
 				{ ...propsToPass }
 				{ ...controlProps }
 				attribute={ props.attribute }
 				label={ label }
-				value={ value }
-				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
-				min={ 0 }
-				max={ shadows.length - 1 }
-				allowReset={ true }
 				helpTooltip={ props.helpTooltip }
 				hover={ props.hover }
-				placeholder={ value === 'custom' ? __( 'Custom', i18n ) : valueCallback( props.placeholder ) }
 				after={ (
 					<Button
 						className="stk-shadow-control__more-button"
-						ref={ buttonRef }
+						ref={ settingsButtonRef }
 						isSmall
 						isTertiary
-						isPressed={ isPopoverOpen || value === 'custom' }
+						isPressed={ openPopover === 'settings' || value === 'custom' }
 						label={ __( 'Shadow Settings', i18n ) }
-						onClick={ () => setIsPopoverOpen( ! isPopoverOpen ) }
+						onClick={ () => setOpenPopover( openPopover === 'settings' ? '' : 'settings' ) }
 						icon={ <Dashicon icon="admin-generic" /> }
 					/>
 				) }
-			/>
-			{ isPopoverOpen && (
+			>
+				<Button
+					className="stk-shadow-control__presets-button"
+					ref={ presetButtonRef }
+					isSecondary
+					isPressed={ openPopover === 'presets' }
+					onClick={ () => setOpenPopover( openPopover === 'presets' ? '' : 'presets' ) }
+				>
+					<Dashicon icon="lightbulb" />
+					{ value === 'custom' ? __( 'Custom shadow', i18n ) : __( 'Drop shadow', i18n ) }
+				</Button>
+			</AdvancedControl>
+			{ openPopover === 'presets' && (
+				<Popover
+					placement="bottom-start"
+					className="shadow-control__popover ugb-button-icon-control__popover stk-shadow-control__presets-popover"
+					anchorRect={ presetButtonRef.current?.getBoundingClientRect() }
+					onEscape={ () => setOpenPopover( '' ) }
+				>
+					<PanelBody>
+						<h2 className="components-panel__body-title">{ __( 'Drop shadow', i18n ) }</h2>
+						<div className="stk-shadow-control__preset-grid">
+							{ shadows.map( ( shadow, index ) => {
+								const isSelected = selectedValue === index
+								const presetLabel = index === 0
+									? __( 'No shadow', i18n )
+									: sprintf( __( 'Shadow %d', i18n ), index )
+
+								return (
+									<Tooltip
+										key={ `${ shadow }-${ index }` }
+										text={ presetLabel }
+										placement="top"
+									>
+										<button
+											type="button"
+											className={ `stk-shadow-control__preset${ isSelected ? ' is-selected' : '' }${ index === 0 ? ' is-none' : '' }` }
+											style={ index === 0 ? undefined : { boxShadow: shadow } }
+											aria-label={ presetLabel }
+											aria-pressed={ isSelected }
+											onClick={ () => {
+												effectiveOnChange( index )
+											} }
+										>
+											{ isSelected && <Dashicon icon="saved" /> }
+										</button>
+									</Tooltip>
+								)
+							} ) }
+						</div>
+						<Button
+							className="stk-shadow-control__clear"
+							isTertiary
+							onClick={ () => {
+								effectiveOnChange( '' )
+								setOpenPopover( '' )
+							} }
+						>
+							{ __( 'Clear', i18n ) }
+						</Button>
+					</PanelBody>
+				</Popover>
+			) }
+			{ openPopover === 'settings' && (
 				<ShadowFilterControl
 					{ ...controlProps }
-					anchorRect={ buttonRef.current?.getBoundingClientRect() }
+					anchorRect={ settingsButtonRef.current?.getBoundingClientRect() }
 					attribute={ props.attribute }
 					responsive={ props.responsive }
 					placeholder={ props.placeholder }
@@ -331,7 +388,7 @@ const ShadowControl = memo( props => {
 					parentProps={ props }
 					hasInset={ props.hasInset }
 					isFilter={ props.isFilter }
-					onEscape={ () => setIsPopoverOpen( false ) }
+					onEscape={ () => setOpenPopover( '' ) }
 					value={ props.shadowFilterValue }
 					onChange={ props.shadowFilterOnChange }
 				/>
