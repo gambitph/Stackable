@@ -32,6 +32,7 @@ export const Edit = props => {
 					title={ __( 'Custom CSS', i18n ) }
 					id="custom-css"
 					isPremiumPanel={ ! isPro }
+					responsive={ false }
 					showModifiedIndicator={ !! customCSSMinified }
 				>
 					{ ! isPro && <ProControl type="custom-css" /> }

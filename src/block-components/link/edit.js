@@ -35,6 +35,7 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ __( 'Link', i18n ) }
 				id="link"
+				responsive={ false }
 				hasToggle={ props.hasToggle }
 				checked={ props.hasToggle ? hasLink : undefined }
 				onChange={ props.hasToggle ? onChange : undefined }
