@@ -58,11 +58,19 @@ const useCoreResponsiveStylesCompatibility = clientId => {
 		if ( isSelected && isResponsiveEditing ) {
 			if ( deviceType === 'Desktop' ) {
 				previousViewport.current = DEFAULT_STYLE_STATE_VIEWPORT
-			} else if ( styleStateViewport !== DEFAULT_STYLE_STATE_VIEWPORT ) {
-				previousViewport.current = styleStateViewport
-				// Change only Core's inspector state. The visual Tablet or Mobile
-				// preview still drives Stackable's responsive attributes.
-				setStyleStateViewport( DEFAULT_STYLE_STATE_VIEWPORT )
+			} else {
+				// Core may already be at its default viewport when the visual device
+				// changes. Remember the active device so native blocks can still have
+				// their responsive inspector restored when Stackable is deselected.
+				previousViewport.current = styleStateViewport !== DEFAULT_STYLE_STATE_VIEWPORT
+					? styleStateViewport
+					: getStyleStateViewportForDeviceType( deviceType )
+
+				if ( styleStateViewport !== DEFAULT_STYLE_STATE_VIEWPORT ) {
+					// Change only Core's inspector state. The visual Tablet or Mobile
+					// preview still drives Stackable's responsive attributes.
+					setStyleStateViewport( DEFAULT_STYLE_STATE_VIEWPORT )
+				}
 			}
 
 			return
