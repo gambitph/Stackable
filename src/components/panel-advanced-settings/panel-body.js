@@ -7,6 +7,11 @@ import classnames from 'classnames'
  * Internal dependencies
  */
 import { useGlobalState } from '~stackable/util/global-state'
+import {
+	ResponsivePanelControlProvider,
+	useResponsivePanelControls,
+} from '../responsive-control-visibility'
+import useResponsiveControlVisibility from '~stackable/hooks/use-responsive-control-visibility'
 
 /**
  * WordPress dependencies
@@ -56,11 +61,19 @@ const PanelBody = (
 		onChange = noop,
 		isPremiumPanel = false,
 		showModifiedIndicator = false,
+		responsive,
 	},
 	ref
 ) => {
 	const { name } = useBlockEditContext()
 	const [ _isOpened, setIsOpened ] = useGlobalState( `panelCache-${ name }-${ id }-${ title }`, initialOpen === undefined ? false : initialOpen )
+	const { registerControl, shouldHide } = useResponsivePanelControls()
+	// Explicit panel metadata takes priority. Otherwise infer visibility from
+	// registered BaseControl children and keep unknown custom panels visible.
+	const hasExplicitResponsiveCapability = typeof responsive !== 'undefined'
+	const isExplicitlyVisible = useResponsiveControlVisibility( hasExplicitResponsiveCapability ? responsive : 'all' )
+	const isPanelToggleVisible = useResponsiveControlVisibility( false )
+	const isHidden = hasExplicitResponsiveCapability ? ! isExplicitlyVisible : shouldHide
 
 	const isOpened = isForcedOpen === null ? _isOpened : isForcedOpen
 
@@ -93,24 +106,31 @@ const PanelBody = (
 	} )
 
 	return (
-		<div className={ classes } ref={ useMergeRefs( [ nodeRef, ref ] ) }>
-			<PanelBodyTitle
-				icon={ icon }
-				isOpened={ isOpened }
-				onClick={ handleOnToggle }
-				title={ title }
-				checked={ checked }
-				hasToggle={ typeof hasToggle === 'undefined' ? !! onChange : hasToggle }
-				onChange={ onChange }
-				setIsOpened={ setIsOpened }
-				isPremiumPanel={ isPremiumPanel }
-				showModifiedIndicator={ showModifiedIndicator }
-				{ ...buttonProps }
-			/>
-			{ typeof children === 'function'
-				? children( { opened: true } )
-				: children }
-		</div>
+		<ResponsivePanelControlProvider value={ registerControl }>
+			{ /* Keep the panel mounted so child visibility registrations remain stable. */ }
+			<div
+				className={ classes }
+				hidden={ isHidden }
+				ref={ useMergeRefs( [ nodeRef, ref ] ) }
+			>
+				<PanelBodyTitle
+					icon={ icon }
+					isOpened={ isOpened }
+					onClick={ handleOnToggle }
+					title={ title }
+					checked={ checked }
+					hasToggle={ isPanelToggleVisible && ( typeof hasToggle === 'undefined' ? !! onChange : hasToggle ) }
+					onChange={ onChange }
+					setIsOpened={ setIsOpened }
+					isPremiumPanel={ isPremiumPanel }
+					showModifiedIndicator={ showModifiedIndicator }
+					{ ...buttonProps }
+				/>
+				{ typeof children === 'function'
+					? children( { opened: true } )
+					: children }
+			</div>
+		</ResponsivePanelControlProvider>
 	)
 }
 

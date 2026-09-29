@@ -28,6 +28,7 @@ export const Edit = () => {
 			<PanelAdvancedSettings
 				title={ __( 'Custom Attributes', i18n ) }
 				id="custom-attributes"
+				responsive={ false }
 			>
 				<CustomAttributesControl
 					label={ __( 'Custom Attributes', i18n ) }

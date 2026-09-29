@@ -56,6 +56,7 @@ const ButtonIconPopoverControl = memo( props => {
 			className={ classnames( 'ugb-button-icon-control', props.className ) }
 			allowReset={ true }
 			showReset={ props.allowReset || ( props.onToggle ? props.checked : false ) }
+			screens={ props.screens }
 			onReset={ () => {
 				props.onReset()
 				if ( props.onToggle ) {
@@ -109,6 +110,7 @@ ButtonIconPopoverControl.defaultProps = {
 	onReset: () => {},
 	checked: false,
 	onToggle: undefined,
+	screens: [ 'desktop' ],
 }
 
 export default ButtonIconPopoverControl

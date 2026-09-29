@@ -16,13 +16,18 @@ import { useGlobalState } from '~stackable/util/global-state'
 import { __ } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
 import { BlockStylesControl } from '../block-styles-control'
+import ResponsiveControlVisibility, { ResponsiveControlFilterProvider } from '../responsive-control-visibility'
+import useResponsiveControlVisibility from '~stackable/hooks/use-responsive-control-visibility'
+import useCoreResponsiveStylesCompatibility from './use-core-responsive-styles-compatibility'
 
 const { Slot: LayoutPanelSlot, Fill: LayoutPanelFill } = createSlotFill( 'StackableLayoutPanel' )
 
 const InspectorLayoutControls = ( { children } ) => {
-	return <InspectorControls>
-		<LayoutPanelFill>{ children }</LayoutPanelFill>
-	</InspectorControls>
+	return <ResponsiveControlFilterProvider>
+		<InspectorControls>
+			<LayoutPanelFill>{ children }</LayoutPanelFill>
+		</InspectorControls>
+	</ResponsiveControlFilterProvider>
 }
 
 const InspectorBlockControls = ( { children } ) => {
@@ -33,7 +38,9 @@ const InspectorBlockControls = ( { children } ) => {
 		return null
 	}
 
-	return <InspectorControls>{ children }</InspectorControls>
+	return <ResponsiveControlFilterProvider>
+		<InspectorControls>{ children }</InspectorControls>
+	</ResponsiveControlFilterProvider>
 }
 
 const InspectorStyleControls = ( { children } ) => {
@@ -44,7 +51,9 @@ const InspectorStyleControls = ( { children } ) => {
 		return null
 	}
 
-	return <InspectorControls>{ children }</InspectorControls>
+	return <ResponsiveControlFilterProvider>
+		<InspectorControls>{ children }</InspectorControls>
+	</ResponsiveControlFilterProvider>
 }
 
 const InspectorAdvancedControls = ( { children } ) => {
@@ -55,7 +64,9 @@ const InspectorAdvancedControls = ( { children } ) => {
 		return null
 	}
 
-	return <InspectorControls>{ children }</InspectorControls>
+	return <ResponsiveControlFilterProvider>
+		<InspectorControls>{ children }</InspectorControls>
+	</ResponsiveControlFilterProvider>
 }
 
 export {
@@ -65,16 +76,31 @@ export {
 	InspectorAdvancedControls,
 }
 
+const ResponsivePanelTabs = props => {
+	// Core owns its Advanced panel, so expose a scoped marker that lets the
+	// stylesheet mirror Core's responsive inspector without hiding our tab.
+	const isResponsiveFiltering = ! useResponsiveControlVisibility( false )
+
+	return <PanelTabs
+		{ ...props }
+		className={ isResponsiveFiltering ? 'ugb-panel-tabs--is-responsive-filtering' : '' }
+	/>
+}
+
 const InspectorTabs = props => {
 	const { name, clientId } = useBlockEditContext()
 	const defaultTab = getBlockSupport( name, 'stkDefaultTab' ) || 'style'
 	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, props.tabs.includes( defaultTab ) ? defaultTab : 'style' )
 
+	useCoreResponsiveStylesCompatibility( clientId )
+
 	return (
-		<>
+		<ResponsiveControlFilterProvider>
 			<InspectorControls>
-				{ ( isPro || showProNotice ) && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
-				<PanelTabs
+				<ResponsiveControlVisibility responsive={ false }>
+					{ ( isPro || showProNotice ) && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
+				</ResponsiveControlVisibility>
+				<ResponsivePanelTabs
 					tabs={ props.tabs }
 					initialTab={ activeTab }
 					onClick={ setActiveTab }
@@ -94,7 +120,7 @@ const InspectorTabs = props => {
 				) }
 			</InspectorBlockControls>
 
-		</>
+		</ResponsiveControlFilterProvider>
 	)
 }
 

@@ -29,6 +29,7 @@ export const Edit = () => {
 					title={ __( 'Transform & Transition', i18n ) }
 					id="transform-transition"
 					isPremiumPanel={ ! isPro }
+					responsive={ false }
 				>
 					{ ! isPro && <ProControl type="transforms" /> }
 					{ isPro &&

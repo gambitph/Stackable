@@ -54,6 +54,7 @@ const AdvancedToggleControl = memo( props => {
 			value={ checked }
 			showReset={ props.defaultValue ? checked !== props.defaultValue : checked }
 			onChange={ onChange }
+			screens={ props.responsive }
 			hasLabel={ false }
 			defaultValue={ props.defaultValue }
 		>
