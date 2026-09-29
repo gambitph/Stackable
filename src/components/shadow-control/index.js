@@ -8,6 +8,9 @@ import {
 } from '~stackable/components'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
+import { ResetButton } from '~stackable/components/base-control2/reset-button'
+import { usePresetControls } from '~stackable/hooks'
+import DEFAULT_PRESETS from '~stackable/plugins/global-settings/preset-controls/presets.json'
 
 /**
  * WordPress dependencies
@@ -20,23 +23,57 @@ import {
 	memo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
+import { Icon, shadow } from '@wordpress/icons'
 import {
 	Button, Dashicon, PanelBody, Tooltip,
 } from '@wordpress/components'
 
-export const getShadows = () => {
-	return applyFilters( 'stackable.shadows', [
-		'none',
-		'0 0 0 1px #7878781a',
-		'0 0 0 2px #7878781a',
-		'0 5px 5px 0 #123f5209',
-		'0px 2px 20px #99999933',
-		'0 5px 30px -10px #123f524d',
-		'0px 10px 30px #0000000d',
-		'7px 5px 30px #48497927',
-		'0px 10px 60px #0000001a',
-		'0px 70px 90px -20px #4849794d',
-	] )
+/**
+ * Return the raw CSS shadow values used by the preset picker.
+ *
+ * `none` is a Stackable control option rather than a theme.json preset.
+ * The filter remains available for extensions that append or replace shadows.
+ *
+ * @param {string[]} shadows Raw CSS shadow values.
+ * @return {string[]} Filtered shadow values, including the `none` option.
+ */
+export const getShadows = ( shadows = DEFAULT_PRESETS.settings.shadow.presets.map( preset => preset.shadow ) ) => {
+	return applyFilters( 'stackable.shadows', [ 'none', ...shadows ] )
+}
+
+/**
+ * Convert preset marks into values that Stackable can persist in attributes.
+ *
+ * A preset mark contains both its raw `shadow`, used for previews, and its
+ * `value`, normally a `--stk--preset` variable with the raw shadow as fallback.
+ * Values added through the legacy `stackable.shadows` filter remain raw CSS.
+ *
+ * @param {Array} shadowPresetMarks Presets returned by `usePresetControls`.
+ * @return {string[]} Attribute-ready shadow values.
+ */
+export const getGlobalShadowOptions = shadowPresetMarks => {
+	return getShadows( shadowPresetMarks.map( preset => preset.shadow ) )
+		.map( shadowValue => {
+			return shadowPresetMarks.find( preset => preset.shadow === shadowValue )?.value || shadowValue
+		} )
+}
+
+/**
+ * Resolve the value consumed by the advanced shadow fields.
+ *
+ * The advanced fields split a raw CSS shadow into offsets, blur, spread, and
+ * color, so they cannot parse a preset's CSS variable expression directly.
+ * Custom shadows are already raw CSS and pass through unchanged.
+ *
+ * @param {number|string} selectedValue     Selected preset index or `custom`.
+ * @param {Array}         shadowPresets     Normalized picker presets.
+ * @param {string}        shadowFilterValue Stored raw or variable value.
+ * @return {string|undefined} Raw shadow when available, otherwise the stored value.
+ */
+export const getShadowFilterValue = ( selectedValue, shadowPresets, shadowFilterValue ) => {
+	return typeof selectedValue === 'number'
+		? shadowPresets[ selectedValue ]?.shadow ?? shadowFilterValue
+		: shadowFilterValue
 }
 
 const FILTERS = [
@@ -255,23 +292,50 @@ const ShadowControl = memo( props => {
 		..._props
 	} = props
 
-	const shadows = options || getShadows()
+	const shadowPresetMarks = usePresetControls( 'shadows' )?.getPresetMarks() || []
+	// Normalize theme, user, built-in, and caller-supplied values so the picker
+	// can always render a label, raw preview, and persisted attribute value.
+	const defaultShadowPresets = [ {
+		name: __( 'No shadow', i18n ),
+		shadow: 'none',
+		value: 'none',
+	}, ...shadowPresetMarks ]
+	const shadowValues = options || getGlobalShadowOptions( shadowPresetMarks )
+	const shadowPresets = shadowValues.map( ( shadowValue, index ) => {
+		const preset = defaultShadowPresets.find( item => item.value === shadowValue )
+		return preset || {
+			name: index === 0
+				? __( 'No shadow', i18n )
+				: sprintf( __( 'Shadow %d', i18n ), index ),
+			shadow: shadowValue,
+			value: shadowValue,
+		}
+	} )
 	const presetButtonRef = useRef( null )
 	const settingsButtonRef = useRef( null )
 	const [ openPopover, setOpenPopover ] = useState( '' )
 
+	// Control handlers use a compact UI value: an index for presets, `custom`
+	// for unmatched CSS, and an empty string when no shadow is selected.
+	// Accepting both the variable value and raw CSS keeps existing attributes
+	// compatible when a site begins using global shadow presets.
 	const valueCallback = value => {
-		return value ? shadows.indexOf( value ) === -1 ? 'custom' : shadows.indexOf( value ) : ''
+		if ( ! value ) {
+			return ''
+		}
+		const index = shadowPresets.findIndex( preset => preset.value === value || preset.shadow === value )
+		return index === -1 ? 'custom' : index
 	}
 
 	const changeCallback = index => {
-		return index !== '' ? shadows[ index ] : index
+		return index !== '' ? shadowPresets[ index ]?.value : index
 	}
 
 	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const effectiveOnChange = typeof props.onChange === 'undefined' ? onChange : props.onChange
 	const selectedValue = value === '' ? valueCallback( props.placeholder ) : value
+	const hasTextPreview = props.previewType === 'text'
 
 	const [ propsToPass, controlProps ] = extractControlProps( _props )
 
@@ -303,16 +367,25 @@ const ShadowControl = memo( props => {
 				helpTooltip={ props.helpTooltip }
 				hover={ props.hover }
 				after={ (
-					<Button
-						className="stk-shadow-control__more-button"
-						ref={ settingsButtonRef }
-						isSmall
-						isTertiary
-						isPressed={ openPopover === 'settings' || value === 'custom' }
-						label={ __( 'Shadow Settings', i18n ) }
-						onClick={ () => setOpenPopover( openPopover === 'settings' ? '' : 'settings' ) }
-						icon={ <Dashicon icon="admin-generic" /> }
-					/>
+					<>
+						<ResetButton
+							allowReset={ props.allowReset }
+							showReset={ props.showReset }
+							value={ props.shadowFilterValue }
+							default={ props.default }
+							onChange={ props.onReset }
+						/>
+						<Button
+							className="stk-shadow-control__more-button"
+							ref={ settingsButtonRef }
+							isSmall
+							isTertiary
+							isPressed={ openPopover === 'settings' || selectedValue === 'custom' }
+							label={ __( 'Shadow Settings', i18n ) }
+							onClick={ () => setOpenPopover( openPopover === 'settings' ? '' : 'settings' ) }
+							icon={ <Dashicon icon="admin-generic" /> }
+						/>
+					</>
 				) }
 			>
 				<Button
@@ -322,8 +395,8 @@ const ShadowControl = memo( props => {
 					isPressed={ openPopover === 'presets' }
 					onClick={ () => setOpenPopover( openPopover === 'presets' ? '' : 'presets' ) }
 				>
-					<Dashicon icon="lightbulb" />
-					{ value === 'custom' ? __( 'Custom shadow', i18n ) : __( 'Drop shadow', i18n ) }
+					<Icon className="stk-shadow-control__presets-icon" icon={ shadow } />
+					{ selectedValue === 'custom' ? __( 'Custom shadow', i18n ) : __( 'Drop shadow', i18n ) }
 				</Button>
 			</AdvancedControl>
 			{ openPopover === 'presets' && (
@@ -336,44 +409,56 @@ const ShadowControl = memo( props => {
 					<PanelBody>
 						<h2 className="components-panel__body-title">{ __( 'Drop shadow', i18n ) }</h2>
 						<div className="stk-shadow-control__preset-grid">
-							{ shadows.map( ( shadow, index ) => {
+							{ shadowPresets.map( ( preset, index ) => {
 								const isSelected = selectedValue === index
-								const presetLabel = index === 0
-									? __( 'No shadow', i18n )
-									: sprintf( __( 'Shadow %d', i18n ), index )
+								const presetLabel = preset.name || sprintf( __( 'Shadow %d', i18n ), index )
 
 								return (
 									<Tooltip
-										key={ `${ shadow }-${ index }` }
+										key={ `${ preset.value }-${ index }` }
 										text={ presetLabel }
 										placement="top"
 									>
 										<button
 											type="button"
 											className={ `stk-shadow-control__preset${ isSelected ? ' is-selected' : '' }${ index === 0 ? ' is-none' : '' }` }
-											style={ index === 0 ? undefined : { boxShadow: shadow } }
+											style={ index === 0 || hasTextPreview ? undefined : { boxShadow: preset.shadow } }
 											aria-label={ presetLabel }
 											aria-pressed={ isSelected }
 											onClick={ () => {
 												effectiveOnChange( index )
 											} }
 										>
-											{ isSelected && <Dashicon icon="saved" /> }
+											{ isSelected ? (
+												<Dashicon icon="saved" />
+											) : hasTextPreview && index !== 0 ? (
+												<span
+													className="stk-shadow-control__preset-text"
+													style={ {
+														fontFamily: props.previewFontFamily,
+														textShadow: preset.shadow,
+													} }
+												>
+													Aa
+												</span>
+											) : null }
 										</button>
 									</Tooltip>
 								)
 							} ) }
 						</div>
-						<Button
-							className="stk-shadow-control__clear"
-							isTertiary
-							onClick={ () => {
-								effectiveOnChange( '' )
-								setOpenPopover( '' )
-							} }
-						>
-							{ __( 'Clear', i18n ) }
-						</Button>
+						{ props.showClear && (
+							<Button
+								className="stk-shadow-control__clear"
+								isTertiary
+								onClick={ () => {
+									effectiveOnChange( '' )
+									setOpenPopover( '' )
+								} }
+							>
+								{ __( 'Clear', i18n ) }
+							</Button>
+						) }
 					</PanelBody>
 				</Popover>
 			) }
@@ -389,7 +474,7 @@ const ShadowControl = memo( props => {
 					hasInset={ props.hasInset }
 					isFilter={ props.isFilter }
 					onEscape={ () => setOpenPopover( '' ) }
-					value={ props.shadowFilterValue }
+					value={ getShadowFilterValue( selectedValue, shadowPresets, props.shadowFilterValue ) }
 					onChange={ props.shadowFilterOnChange }
 				/>
 			) }
@@ -406,6 +491,13 @@ ShadowControl.defaultProps = {
 	changeCallback: null,
 	isFilter: false, // If the style rule is `filter`, disable spread.
 	hasInset: true,
+	previewType: 'box',
+	previewFontFamily: '',
+	allowReset: false,
+	showReset: null,
+	default: '',
+	onReset: undefined,
+	showClear: true,
 	helpTooltip: {
 		video: 'general-shadow',
 		title: __( 'Shadow/Outline', i18n ),

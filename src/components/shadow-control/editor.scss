@@ -16,15 +16,16 @@
 	justify-content: flex-start;
 	width: 100%;
 
-	.dashicon {
+	.stk-shadow-control__presets-icon {
 		margin-right: 8px;
 	}
 }
 
 .stk-shadow-control__preset-grid {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 12px;
+	display: grid;
+	grid-template-columns: repeat(4, 44px);
+	justify-content: space-between;
+	row-gap: 16px;
 	padding-bottom: 8px;
 }
 
@@ -38,12 +39,12 @@
 	color: #2f2f2f;
 	cursor: pointer;
 	display: inline-flex;
-	height: 26px;
+	height: 44px;
 	justify-content: center;
 	padding: 0;
 	position: relative;
 	transform: scale(1);
-	width: 26px;
+	width: 44px;
 
 	&:hover {
 		transform: scale(1.2);
@@ -66,6 +67,13 @@
 	}
 }
 
+.stk-shadow-control__preset-text {
+	color: #2f2f2f;
+	font-size: 18px;
+	line-height: 1;
+	white-space: nowrap;
+}
+
 @media (prefers-reduced-motion: no-preference) {
 	.stk-shadow-control__preset {
 		transition: transform 0.1s ease;
@@ -75,4 +83,9 @@
 .stk-shadow-control__clear.components-button {
 	display: block;
 	margin: 18px 0 0 auto;
+}
+
+.block-editor-global-styles__shadow-popover-container .block-editor-global-styles__shadow-indicator {
+	height: 44px;
+	width: 44px;
 }
