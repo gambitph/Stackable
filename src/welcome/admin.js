@@ -1555,6 +1555,16 @@ const AdditionalOptions = props => {
 								__nextHasNoMarginBottom
 							/>
 							<CheckboxControl
+								label={ __( 'Use Border Radius Presets from theme.json', i18n ) }
+								className={ searchClassname( __( 'Use Border Radius Presets from theme.json', i18n ), miscellaneous ) }
+								help={ __( 'When enabled, Stackable uses border-radius presets from the active theme, then WordPress defaults. If neither provides presets, or this is disabled, Stackable uses its built-in presets.', i18n ) }
+								checked={ !! settings.stackable_use_theme_border_radius_presets }
+								onChange={ checked => {
+									handleSettingsChange( { stackable_use_theme_border_radius_presets: checked } ) // eslint-disable-line camelcase
+								} }
+								__nextHasNoMarginBottom
+							/>
+							<CheckboxControl
 								label={ __( 'Use v3.16.0 Color Scheme Inheritance', i18n ) }
 								className={ searchClassname( __( 'Use v3.16.0 Color Scheme Inheritance', i18n ), miscellaneous ) }
 								help={ __( `A bug in the color scheme inheritance was present in v3.16.0-v3.16.2. This has been fixed, but in order to preserve the state of affected sites, you may find this option turned on.`, i18n ) }
