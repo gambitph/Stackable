@@ -34,8 +34,9 @@ export const addAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
 				default: '',
 			},
 			innerBlockOrientation: {
+				stkResponsive: true,
 				type: 'string',
-				default: '',
+				default: 'vertical',
 			},
 			// Flex.
 			innerBlockJustify: {

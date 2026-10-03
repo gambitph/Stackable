@@ -56,8 +56,12 @@ const ALIGN_OPTIONS_NO_JUSTIFY = ALIGN_OPTIONS.filter( option => option.align !=
 export const Edit = memo( props => {
 	const {
 		contentAlign,
+		contentAlignTablet,
+		contentAlignMobile,
 		columnJustify,
 		innerBlockOrientation,
+		innerBlockOrientationTablet,
+		innerBlockOrientationMobile,
 		innerBlockWrap,
 		containerWidth,
 		containerWidthTablet,
@@ -68,8 +72,12 @@ export const Edit = memo( props => {
 	} = useBlockAttributesContext( attributes => {
 		return {
 			contentAlign: attributes.contentAlign,
+			contentAlignTablet: attributes.contentAlignTablet,
+			contentAlignMobile: attributes.contentAlignMobile,
 			columnJustify: attributes.columnJustify,
 			innerBlockOrientation: attributes.innerBlockOrientation,
+			innerBlockOrientationTablet: attributes.innerBlockOrientationTablet,
+			innerBlockOrientationMobile: attributes.innerBlockOrientationMobile,
 			innerBlockWrap: attributes.innerBlockWrap,
 			containerWidth: attributes.containerWidth,
 			containerWidthTablet: attributes.containerWidthTablet,
@@ -81,6 +89,14 @@ export const Edit = memo( props => {
 	} )
 	const setAttributes = useBlockSetAttributesContext()
 	const deviceType = useDeviceType()
+
+	const _contentAlignTablet = contentAlignTablet || contentAlign
+	const _contentAlignMobile = contentAlignMobile || _contentAlignTablet
+
+	const _innerBlockOrientationTablet = innerBlockOrientationTablet || innerBlockOrientation
+	const _innerBlockOrientationMobile = innerBlockOrientationMobile || _innerBlockOrientationTablet
+
+	const _innerBlockOrientation = deviceType === 'Desktop' ? innerBlockOrientation : ( deviceType === 'Tablet' ? _innerBlockOrientationTablet : _innerBlockOrientationMobile )
 
 	const {
 		labelContentAlign = sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ),
@@ -147,8 +163,16 @@ export const Edit = memo( props => {
 		<>
 			<BlockControls>
 				<AlignmentToolbar
-					value={ contentAlign }
-					onChange={ contentAlign => setAttributes( { contentAlign } ) }
+					value={ deviceType === 'Desktop' ? contentAlign : ( deviceType === 'Tablet' ? _contentAlignTablet : _contentAlignMobile ) }
+					onChange={ contentAlign => {
+						if ( deviceType === 'Desktop' ) {
+							setAttributes( { contentAlign } )
+						} else if ( deviceType === 'Tablet' ) {
+							setAttributes( { contentAlignTablet: contentAlign } )
+						} else {
+							setAttributes( { contentAlignMobile: contentAlign } )
+						}
+					} }
 					alignmentControls={ props.hasContentJustify ? ALIGN_OPTIONS : ALIGN_OPTIONS_NO_JUSTIFY }
 				/>
 
@@ -228,20 +252,46 @@ export const Edit = memo( props => {
 								title: __( 'Horizontal', i18n ),
 							},
 							{
-								value: '',
+								value: 'vertical',
 								title: __( 'Vertical', i18n ),
 							},
 						] }
 						attribute="innerBlockOrientation"
+						responsive="all"
+						value={ _innerBlockOrientation }
+						default="vertical"
 						onChange={ value => {
-							const newAttributes = {
-								innerBlockOrientation: value,
-							}
-							if ( value === '' ) { // Vertical.
+							const newAttributes = {}
+
+							if ( deviceType === 'Desktop' ) {
+								// If the new desktop value is the same as the tablet value, set the tablet value to ''
+								// since tablet value will just inherit the desktop value
+								// otherwise, set the tablet value to the old desktop value because tablet was inheriting the old value
+								if ( innerBlockOrientationTablet === value ) {
+									newAttributes.innerBlockOrientationTablet = ''
+								} else {
+									newAttributes.innerBlockOrientationTablet = innerBlockOrientation
+								}
+								newAttributes.innerBlockOrientation = value
 								newAttributes.innerBlockJustify = ''
-							} else { // Horizontal
 								newAttributes.innerBlockAlign = ''
+							} else if ( deviceType === 'Tablet' ) {
+								if ( innerBlockOrientationMobile === value ) {
+									newAttributes.innerBlockOrientationMobile = ''
+								} else {
+									newAttributes.innerBlockOrientationMobile = _innerBlockOrientationTablet
+								}
+
+								// if the new tablet value is the same as the desktop value, set the tablet value to ''
+								newAttributes.innerBlockOrientationTablet = innerBlockOrientation === value ? '' : value
+								newAttributes.innerBlockJustifyTablet = ''
+								newAttributes.innerBlockAlignTablet = ''
+							} else {
+								newAttributes.innerBlockOrientationMobile = _innerBlockOrientationTablet === value ? '' : value
+								newAttributes.innerBlockJustifyMobile = ''
+								newAttributes.innerBlockAlignMobile = ''
 							}
+
 							setAttributes( newAttributes )
 						} }
 					/>
@@ -251,7 +301,7 @@ export const Edit = memo( props => {
 						label={ sprintf( __( '%s Justify', i18n ), __( 'Inner Block', i18n ) ) }
 						attribute="innerBlockJustify"
 						responsive="all"
-						controls={ innerBlockOrientation ? 'flex-horizontal' : 'horizontal' }
+						controls={ _innerBlockOrientation === 'horizontal' ? 'flex-horizontal' : 'horizontal' }
 						visualGuide={ {
 							selector: '.stk-%s-container, .stk-%s-container > * > .block-editor-block-list__layout > [data-type]',
 							highlight: 'outline-first-offset',
@@ -267,7 +317,7 @@ export const Edit = memo( props => {
 						label={ sprintf( __( '%s Alignment', i18n ), __( 'Inner Block', i18n ) ) }
 						attribute="innerBlockAlign"
 						responsive="all"
-						controls={ innerBlockOrientation ? 'vertical' : 'flex-justify-vertical' }
+						controls={ _innerBlockOrientation === 'horizontal' ? 'vertical' : 'flex-justify-vertical' }
 						disabled={ alignLastBlockToBottom ? 'all' : undefined }
 						visualGuide={ {
 							selector: '.stk-%s-container, .stk-%s-container > * > .block-editor-block-list__layout > [data-type]',
@@ -280,7 +330,7 @@ export const Edit = memo( props => {
 						help={ __( 'Set Content Min. Height for alignment to display properly', i18n ) }
 					/>
 				}
-				{ innerBlockOrientation &&
+				{ _innerBlockOrientation &&
 					<AdvancedToolbarControl
 						label={ __( 'Inner Block Wrapping', i18n ) }
 						controls={ [
@@ -296,7 +346,7 @@ export const Edit = memo( props => {
 						attribute="innerBlockWrap"
 					/>
 				}
-				{ innerBlockOrientation && // This is "column gap" when the blocks are horizontal.
+				{ _innerBlockOrientation && // This is "column gap" when the blocks are horizontal.
 					<AdvancedRangeControl
 						label={ innerBlockWrap === 'wrap'
 							? sprintf( __( '%s %s', i18n ), __( 'Inner Block', i18n ), __( 'Column Gap', i18n ) )
@@ -322,7 +372,7 @@ export const Edit = memo( props => {
 						}
 					/>
 				}
-				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) && ! innerBlockOrientation && // This is "row gap" when the blocks are vertical.
+				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) && _innerBlockOrientation !== 'horizontal' && // This is "row gap" when the blocks are vertical.
 					<AdvancedRangeControl
 						label={ sprintf( __( '%s %s', i18n ), __( 'Inner Block', i18n ), __( 'Gap', i18n ) ) }
 						responsive="all"
@@ -342,7 +392,7 @@ export const Edit = memo( props => {
 						marks={ spacingSizeMarks }
 					/>
 				}
-				{ ( innerBlockOrientation && innerBlockWrap === 'wrap' ) &&
+				{ ( _innerBlockOrientation === 'horizontal' && innerBlockWrap === 'wrap' ) &&
 					<AdvancedRangeControl
 						label={ sprintf( __( '%s %s', i18n ), __( 'Inner Block', i18n ), __( 'Row Gap', i18n ) ) }
 						responsive="all"
