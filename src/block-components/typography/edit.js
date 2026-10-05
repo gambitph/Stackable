@@ -142,6 +142,7 @@ export const Controls = props => {
 			<ButtonIconPopoverControl
 				label={ __( 'Typography', i18n ) }
 				popoverLabel={ __( 'Typography', i18n ) }
+				screens="all"
 				onReset={ () => {
 					updateAttributes( {
 						[ getAttributeName( 'fontFamily' ) ]: '',
