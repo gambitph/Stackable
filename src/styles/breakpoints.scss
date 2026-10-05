@@ -1,32 +1,75 @@
-// These breakpoints are also overridden by gulpfile.js when building styles for
-// the editor. We need to define these as integers here because in our
-// definition in gulpfile.js, we cannot use px.
+// The editor build uses its selected device class instead of viewport media
+// queries. The active theme controls the preview width at runtime, so Sass
+// cannot safely provide a fixed editor breakpoint.
 $desktop-width: 1024 !default;
 $tablet-width: 768 !default;
+$use-editor-preview-classes: false !default;
+
+@mixin editor-preview-device( $device ) {
+	@at-root .stk-preview-device-#{ $device } #{ & } {
+		@content;
+	}
+}
 
 @mixin desktop {
-	@media only screen and (min-width: #{$desktop-width + 0px}) {
-		@content;
+	@if $use-editor-preview-classes {
+		@include editor-preview-device( desktop ) {
+			@content;
+		}
+	} @else {
+		@media only screen and (min-width: #{$desktop-width + 0px}) {
+			@content;
+		}
 	}
 }
 @mixin desktop-tablet {
-	@media only screen and (min-width: #{$tablet-width + 0px}) {
-		@content;
+	@if $use-editor-preview-classes {
+		@include editor-preview-device( desktop ) {
+			@content;
+		}
+		@include editor-preview-device( tablet ) {
+			@content;
+		}
+	} @else {
+		@media only screen and (min-width: #{$tablet-width + 0px}) {
+			@content;
+		}
 	}
 }
 @mixin tablet {
-	@media only screen and (min-width: #{$tablet-width + 0px}) and (max-width: #{$desktop-width - 1px}) {
-		@content;
+	@if $use-editor-preview-classes {
+		@include editor-preview-device( tablet ) {
+			@content;
+		}
+	} @else {
+		@media only screen and (min-width: #{$tablet-width + 0px}) and (max-width: #{$desktop-width - 1px}) {
+			@content;
+		}
 	}
 }
 @mixin tablet-mobile {
-	@media only screen and (max-width: #{$desktop-width - 1px}) {
-		@content;
+	@if $use-editor-preview-classes {
+		@include editor-preview-device( tablet ) {
+			@content;
+		}
+		@include editor-preview-device( mobile ) {
+			@content;
+		}
+	} @else {
+		@media only screen and (max-width: #{$desktop-width - 1px}) {
+			@content;
+		}
 	}
 }
 @mixin mobile {
-	@media only screen and (max-width: #{$tablet-width - 1px}) {
-		@content;
+	@if $use-editor-preview-classes {
+		@include editor-preview-device( mobile ) {
+			@content;
+		}
+	} @else {
+		@media only screen and (max-width: #{$tablet-width - 1px}) {
+			@content;
+		}
 	}
 }
 
@@ -41,28 +84,31 @@ $tablet-width: 768 !default;
  * These dummy styles are removed by gulpfile.js in the `style-editor` and
  * `style` tasks.
  */
-@include desktop {
-	.z {
-		opacity: 1;
+
+@if not $use-editor-preview-classes {
+	@include desktop {
+		.z {
+			opacity: 1;
+		}
 	}
-}
-@include desktop-tablet {
-	.z {
-		opacity: 1;
+	@include desktop-tablet {
+		.z {
+			opacity: 1;
+		}
 	}
-}
-@include tablet {
-	.z {
-		opacity: 1;
+	@include tablet {
+		.z {
+			opacity: 1;
+		}
 	}
-}
-@include tablet-mobile {
-	.z {
-		opacity: 1;
+	@include tablet-mobile {
+		.z {
+			opacity: 1;
+		}
 	}
-}
-@include mobile {
-	.z {
-		opacity: 1;
+	@include mobile {
+		.z {
+			opacity: 1;
+		}
 	}
 }
