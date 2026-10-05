@@ -25,6 +25,7 @@ export const Edit = memo( props => {
 				title={ __( 'Styles', i18n ) }
 				id="styles"
 				initialOpen={ props.initialOpen }
+				responsive={ false }
 			>
 				<BlockStyles styles={ props.styles } />
 				{ props.children }

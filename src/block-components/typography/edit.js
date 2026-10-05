@@ -116,11 +116,12 @@ export const Controls = props => {
 					value={ unescape( text ) }
 					onChange={ onChangeContent }
 					/**
-					 * Pass the unescaped Dynamic Content `onChange` function.
+					 * Dynamic Content generates this markup itself. Preserve it because
+					 * HTML validation normalizes string ampersands in its attribute.
 					 *
 					 * @param {string} text Text with dynamic content.
 					 */
-					changeDynamicContent={ onChangeContent }
+					changeDynamicContent={ text => updateAttribute( 'text', text ) }
 					isDynamic={ true }
 				/>
 			) }
@@ -141,6 +142,7 @@ export const Controls = props => {
 			<ButtonIconPopoverControl
 				label={ __( 'Typography', i18n ) }
 				popoverLabel={ __( 'Typography', i18n ) }
+				screens="all"
 				onReset={ () => {
 					updateAttributes( {
 						[ getAttributeName( 'fontFamily' ) ]: '',

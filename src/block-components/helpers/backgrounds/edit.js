@@ -247,6 +247,7 @@ export const BackgroundControls = props => {
 			{ hasBackgroundMedia &&
 				<ButtonIconPopoverControl
 					label={ __( 'Adv. Background Image Settings', i18n ) }
+					screens="all"
 					onReset={ () => {
 						updateAttributes( {
 							BackgroundPosition: '',

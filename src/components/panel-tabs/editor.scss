@@ -101,3 +101,12 @@ $tabs: "block", "layout", "style", "advanced";
 		}
 	}
 }
+
+// Core omits its Advanced panel while editing responsive style states. The
+// compatibility bridge keeps Stackable on Core's default inspector state, so
+// mirror that behavior while Stackable's responsive filtering is active.
+.block-editor-block-inspector:has(.ugb-panel-tabs--is-responsive-filtering) {
+	.block-editor-block-inspector__advanced {
+		display: none;
+	}
+}

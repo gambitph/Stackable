@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.9
-Tested up to: 7.1
+Requires at least: 6.9.2
+Tested up to: 7.1.2
 Requires PHP: 7.4
-Stable tag: 3.20.1
+Stable tag: 3.20.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -309,6 +309,20 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.20.3 =
+
+* New: Stackable controls now support the block editor's Responsive Styles option #3760
+* Fixed: Editor - responsive preview follows the block theme's custom tablet and mobile breakpoints #3755
+* Fixed: Hero block - content alignment now applies to the whole block #3739
+* Fixed: Design Library - opens when Show Template is enabled #3737
+* Fixed: Timeline block - text alignment works on tablet and mobile #3738
+
+= 3.20.2 =
+
+* Fixed: Dynamic Content - custom date formats display correctly instead of HTML #3754
+* Fixed: Dynamic Content - auto-detected custom fields now load on the frontend #3750
+* Fixed: Columns block - mobile content alignment now applies in the editor #3752
 
 = 3.20.1 =
 

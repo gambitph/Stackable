@@ -28,3 +28,4 @@ composer.lock
 /blob-report/
 /playwright/.cache/
 e2e/.auth/
+/releases
