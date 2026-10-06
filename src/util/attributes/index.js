@@ -120,6 +120,39 @@ export const pickAttributes = ( attributes = {}, namesToPick = [], attrNameTempl
 
 export const createResponsiveAttributeNames = attrNameTemplate => Object.keys( createResponsiveAttributes( attrNameTemplate ) )
 
+/**
+ * Preserve numeric comment attributes that were changed to strings in a
+ * registered deprecation. This runs after WordPress applies the current
+ * schema, so invalid blocks can still recover the original value.
+ *
+ * @param {Object} attributes Parsed block attributes.
+ * @param {Object} blockType Registered block type.
+ * @param {string} _innerHTML Saved block HTML.
+ * @param {Object} commentAttributes Raw block comment attributes.
+ *
+ * @return {Object} Parsed block attributes.
+ */
+export const coerceLegacyNumericStringAttributes = ( attributes, blockType, _innerHTML, commentAttributes = {} ) => {
+	if ( ! blockType?.name?.startsWith( 'stackable/' ) ) {
+		return attributes
+	}
+
+	const attributeNames = Object.keys( commentAttributes ).filter( attributeName => {
+		return typeof commentAttributes[ attributeName ] === 'number' &&
+			blockType.attributes?.[ attributeName ]?.type === 'string' &&
+			blockType.deprecated?.some( deprecated => deprecated.attributes?.[ attributeName ]?.type === 'number' )
+	} )
+
+	if ( ! attributeNames.length ) {
+		return attributes
+	}
+
+	return attributeNames.reduce( ( newAttributes, attributeName ) => ( {
+		...newAttributes,
+		[ attributeName ]: String( commentAttributes[ attributeName ] ),
+	} ), attributes )
+}
+
 const REMOVE_ATTRS = [ 'stkResponsive', 'stkHover', 'stkUnits' ]
 
 /**

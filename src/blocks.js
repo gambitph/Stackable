@@ -20,6 +20,7 @@ import {
 	addStackableBlockCategory,
 	registerBlockType,
 	BLOCK_STATE,
+	coerceLegacyNumericStringAttributes,
 } from '~stackable/util'
 import { withVisualGuideContext } from '~stackable/higher-order'
 import { omit } from 'lodash'
@@ -33,6 +34,12 @@ import { addFilter } from '@wordpress/hooks'
 
 // Register our block category.
 addStackableBlockCategory()
+
+addFilter(
+	'blocks.getBlockAttributes',
+	'stackable/coerce-legacy-numeric-string-attributes',
+	coerceLegacyNumericStringAttributes
+)
 
 // Fetch all substitution rules before registering
 const fetchSubstitutionRules = r => {
