@@ -18,6 +18,10 @@ import {
 const SHORTCODE_VALUE = /^\s*\[[^\]]+\]/
 
 const prependHTTPS = url => {
+	if ( getProtocol( url ) ) {
+		return url
+	}
+
 	const withProtocol = prependHTTP( url )
 	return withProtocol.startsWith( 'http://' )
 		? `https://${ withProtocol.slice( 'http://'.length ) }`
@@ -45,7 +49,7 @@ const isRelativePath = value =>
  */
 const hasPossibleTLD = ( url, maxLength = 6 ) => {
 	const cleanedURL = url.split( /[?#]/ )[ 0 ]
-	return new RegExp( `\\S\\.[a-zA-Z_]{2,${ maxLength }}(?:\\/|$)` ).test( cleanedURL )
+	return new RegExp( `^[^/\\s]+\\.[a-zA-Z_]{2,${ maxLength }}(?:\\/|$)` ).test( cleanedURL )
 }
 
 /**

@@ -63,9 +63,16 @@ describe( 'link-control validation', () => {
 
 	it( 'prepends https to bare domains on normalize', () => {
 		expect( normalizeLinkValue( 'example.com' ) ).toBe( 'https://example.com' )
+		expect( normalizeLinkValue( 'example.com/about' ) ).toBe( 'https://example.com/about' )
 		expect( normalizeLinkValue( '  example.com  ' ) ).toBe( 'https://example.com' )
+		expect( normalizeLinkValue( 'http://192.168.0.10' ) ).toBe( 'http://192.168.0.10' )
 		expect( normalizeLinkValue( 'https://example.com' ) ).toBe( 'https://example.com' )
 		expect( normalizeLinkValue( '#section' ) ).toBe( '#section' )
 		expect( normalizeLinkValue( '/about' ) ).toBe( '/about' )
+	} )
+
+	it( 'leaves non-domain paths as entered', () => {
+		expect( normalizeLinkValue( 'images/photo.jpg' ) ).toBe( 'images/photo.jpg' )
+		expect( normalizeLinkValue( 'docs/readme.md' ) ).toBe( 'docs/readme.md' )
 	} )
 } )

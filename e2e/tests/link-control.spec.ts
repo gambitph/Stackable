@@ -67,6 +67,24 @@ test.describe( 'Link control URL input', () => {
 		} ).toBe( 'https://example.com' )
 		await expect( linkControl ).not.toContainText( 'Please enter a valid URL.' )
 
+		await setLinkValue( 'http://192.168.0.10' )
+		await expect.poll( async () => {
+			const attributes = await editor.getBlockAttributes( clientId )
+			return attributes.linkUrl
+		} ).toBe( 'http://192.168.0.10' )
+
+		await setLinkValue( 'images/photo.jpg' )
+		await expect.poll( async () => {
+			const attributes = await editor.getBlockAttributes( clientId )
+			return attributes.linkUrl
+		} ).toBe( 'images/photo.jpg' )
+
+		await setLinkValue( 'docs/readme.md' )
+		await expect.poll( async () => {
+			const attributes = await editor.getBlockAttributes( clientId )
+			return attributes.linkUrl
+		} ).toBe( 'docs/readme.md' )
+
 		await setLinkValue( 'example.com' )
 		await expect.poll( async () => {
 			const attributes = await editor.getBlockAttributes( clientId )
