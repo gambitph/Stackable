@@ -26,12 +26,13 @@ CustomAttributes.addAttributes = addAttributes
 
 // CustomAttributes.Style = Style
 
-CustomAttributes.getCustomAttributes = attributes => {
-	if ( ! Array.isArray( attributes.customAttributes ) || attributes.customAttributes.length === 0 ) {
+CustomAttributes.getCustomAttributes = ( attributes, attributeName = 'customAttributes' ) => {
+	if ( ! Array.isArray( attributes[ attributeName ] ) || attributes[ attributeName ].length === 0 ) {
 		return {}
 	}
 
-	const customAttributes = Object.fromEntries( attributes.customAttributes )
+	const customAttributes = Object.fromEntries( attributes[ attributeName ] )
+	const invalidBlockAttributes = [ ...INVALID_BLOCK_ATTRIBUTES, attributeName ]
 	Object.keys( customAttributes ).forEach( key => {
 		// Unescape the value, since we're storing them as escaped strings.
 		let value = unescape( customAttributes[ key ] )
@@ -44,7 +45,7 @@ CustomAttributes.getCustomAttributes = attributes => {
 				dynamicAttributeMatch.forEach( _match => {
 					const match = _match.substr( 1, _match.length - 2 )
 					if (
-						! INVALID_BLOCK_ATTRIBUTES.includes( match ) &&
+						! invalidBlockAttributes.includes( match ) &&
 						attributes.hasOwnProperty( match ) &&
 						! isUndefined( attributes[ match ] )
 					) {

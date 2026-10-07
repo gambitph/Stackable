@@ -3,6 +3,7 @@
  */
 import { addAttributes } from './attributes'
 import { Edit } from './edit'
+import { CustomAttributes } from '../custom-attributes'
 
 /*+
  * External dependencies
@@ -42,6 +43,7 @@ Link.Content = props => {
 		linkProps = {},
 		attributes,
 	} = props
+	const customAttributes = CustomAttributes.getCustomAttributes( attributes, 'linkCustomAttributes' )
 
 	if ( ! attributes.linkHasLink ) {
 		return props.children
@@ -49,6 +51,7 @@ Link.Content = props => {
 
 	return (
 		<LinkComponent.Content
+			{ ...customAttributes }
 			{ ...linkProps }
 			className={ props.className }
 			href={ attributes.linkUrl || undefined }
@@ -64,4 +67,3 @@ Link.Content = props => {
 Link.InspectorControls = Edit
 
 Link.addAttributes = addAttributes
-

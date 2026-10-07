@@ -1,4 +1,9 @@
-export const addAttributes = attrObject => {
+export const addAttributes = ( attrObject, options = {} ) => {
+	const {
+		attrNameTemplate = '%s',
+		versionAdded = '3.0.0',
+	} = options
+
 	attrObject.add( {
 		attributes: {
 			customAttributes: {
@@ -6,7 +11,8 @@ export const addAttributes = attrObject => {
 				default: [],
 			},
 		},
-		versionAdded: '3.0.0',
+		attrNameTemplate,
+		versionAdded,
 		versionDeprecated: '',
 	} )
 }

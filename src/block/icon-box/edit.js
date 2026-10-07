@@ -138,7 +138,7 @@ const InspectorControls = memo( () => {
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
+			<CustomAttributes.InspectorControls linkAttributeName="blockLinkCustomAttributes" />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
