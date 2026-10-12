@@ -218,6 +218,7 @@ const SEARCH_TREE = [
 					__( 'Show Go premium notices', i18n ),
 					__( 'Generate Global Colors for native blocks', i18n ),
 					__( 'Inherit Block Styles from theme.json', i18n ),
+					__( 'Enable Extended Block Style Inheritance', i18n ),
 					__( 'Use v3.16.0 Color Scheme Inheritance', i18n ),
 					__( 'Block Defaults (Sunsetted)', i18n ),
 				],
@@ -1521,8 +1522,8 @@ const AdditionalOptions = props => {
 				<>
 					{ ( miscellaneous.children === null || miscellaneous.children.length > 0 ) &&
 						<div className="s-setting-group">
-							<h2>{ __( 'Miscellaneous', i18n ) }</h2>
-							<p className="s-settings-subtitle">{ __( 'Below are other minor settings. Some may be useful when upgrading from older versions of Stackable.', i18n ) }</p>
+							<h2>{ __( 'Feature Flags', i18n ) }</h2>
+							<p className="s-settings-subtitle">{ __( "As Stackable gets fixes and updates, functionality and behavior change in the plugin. The options here are in order to retain the old behavior across updates. You usually won't have to adjust these options.", i18n ) }</p>
 							{ showProNoticesOption &&
 								<CheckboxControl
 									label={ __( 'Show "Go premium" notices', i18n ) }
@@ -1551,6 +1552,16 @@ const AdditionalOptions = props => {
 								checked={ ! settings.stackable_disable_block_style_inheritance }
 								onChange={ checked => {
 									handleSettingsChange( { stackable_disable_block_style_inheritance: ! checked } ) // eslint-disable-line camelcase
+								} }
+								__nextHasNoMarginBottom
+							/>
+							<CheckboxControl
+								label={ __( 'Enable Extended Block Style Inheritance', i18n ) }
+								className={ searchClassname( __( 'Enable Extended Block Style Inheritance', i18n ), miscellaneous ) }
+								help={ __( 'Uses updated Stackable Columns spacing defaults, inherits Image border radius and Columns block spacing from equivalent WordPress blocks, and maps Buttons row and column spacing separately.', i18n ) }
+								checked={ !! settings.stackable_enable_extended_block_style_inheritance }
+								onChange={ checked => {
+									handleSettingsChange( { stackable_enable_extended_block_style_inheritance: checked } ) // eslint-disable-line camelcase
 								} }
 								__nextHasNoMarginBottom
 							/>

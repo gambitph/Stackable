@@ -259,7 +259,7 @@ export const Controls = props => {
 						defaultLocked={ true }
 						min={ [ 0, 0 ] }
 						sliderMax={ [ 200, 30 ] }
-						placeholder={ numInnerBlocks === 1 ? '0' : getPlaceholder( 'column-margin' ) }
+						placeholder={ numInnerBlocks === 1 ? '0' : getPlaceholder( 'column-margin', { device: deviceType.toLowerCase() } ) }
 						visualGuide={ {
 							selector: '.stk-%s-column > * > * > [data-type="stackable/column"] > * > .stk-column > .stk-inner-blocks',
 							highlight: 'column-spacing',
@@ -278,7 +278,7 @@ export const Controls = props => {
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 100 }
-						placeholder={ getPlaceholder( 'columns-column-gap' ) }
+						placeholder={ getPlaceholder( 'columns-column-gap', { device: deviceType.toLowerCase() } ) }
 						visualGuide={ {
 							selector: '.stk-%s-column > * > *',
 							highlight: 'columns:column-gap',

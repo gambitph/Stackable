@@ -1,5 +1,6 @@
 import { useSelect } from '@wordpress/data'
 import rawBlockDesignSystem from '~stackable/styles/block-design-system.json'
+import { settings as stackableSettings } from 'stackable'
 /**
  * Provides a function to get the placeholder for block componets from block layout settings.
  *
@@ -22,6 +23,7 @@ export const useBlockLayoutDefaults = () => {
 		} )
 		return blockDesignSystem
 	}, {} )
+	Object.assign( defaults, stackableSettings.stackable_column_spacing_defaults || {} )
 
 	const getInheritedValue = ( obj, property, device ) => {
 		let value = obj[ property ]?.[ device ]
