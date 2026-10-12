@@ -93,7 +93,8 @@ test( 'Settings inner tabs render', async ( {
 	await expect( page.getByText( 'Force Typography Styles' ) ).toBeVisible()
 
 	await page.getByRole( 'tab', { name: /Miscellaneous/ } ).click()
-	await expect( page.getByRole( 'heading', { name: 'Miscellaneous' } ) ).toBeVisible()
+	await expect( page.getByRole( 'heading', { name: 'Feature Flags' } ) ).toBeVisible()
+	await expect( page.getByRole( 'checkbox', { name: 'Enable Extended Block Style Inheritance' } ) ).toBeVisible()
 	await expect( page.getByRole( 'checkbox', { name: 'Use Border Radius Presets from theme.json' } ) ).toBeVisible()
 
 	await page.getByRole( 'tab', { name: 'Import/Export' } ).click()
