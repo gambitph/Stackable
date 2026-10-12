@@ -41,7 +41,7 @@ export const Controls = props => {
 	// TODO: Get global default value for placeholder
 	const [ , setColumnsUpdate ] = useState( 0 )
 	const deviceType = useDeviceType()
-	const { getPlaceholder } = useBlockLayoutDefaults()
+	const { getPlaceholder } = useBlockLayoutDefaults( props.defaultOverrides )
 	const { clientId } = useBlockEditContext()
 	const {
 		numInnerBlocks, innerBlocks,

@@ -1,12 +1,12 @@
 import { useSelect } from '@wordpress/data'
 import rawBlockDesignSystem from '~stackable/styles/block-design-system.json'
-import { settings as stackableSettings } from 'stackable'
 /**
  * Provides a function to get the placeholder for block componets from block layout settings.
  *
+ * @param {Object} defaultOverrides Block-specific default values.
  * @return {Object} Functions
  */
-export const useBlockLayoutDefaults = () => {
+export const useBlockLayoutDefaults = ( defaultOverrides = {} ) => {
 	const { blockLayouts } = useSelect( select => {
 		const spacingAndBorders = select( 'stackable/global-spacing-and-borders' ).getBlockLayouts()
 		const buttonsAndIcons = select( 'stackable/global-buttons-and-icons' ).getBlockLayouts()
@@ -23,7 +23,7 @@ export const useBlockLayoutDefaults = () => {
 		} )
 		return blockDesignSystem
 	}, {} )
-	Object.assign( defaults, stackableSettings.stackable_column_spacing_defaults || {} )
+	Object.assign( defaults, defaultOverrides )
 
 	const getInheritedValue = ( obj, property, device ) => {
 		let value = obj[ property ]?.[ device ]
