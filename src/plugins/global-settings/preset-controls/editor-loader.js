@@ -22,16 +22,36 @@ const PRESET_MAPPING = {
 	borderRadius: {
 		prefix: 'border-radius',
 	},
+	shadows: {
+		prefix: 'shadow',
+		valueKey: 'shadow',
+	},
 }
 
+/**
+ * Render editor-only variables for custom presets.
+ *
+ * PHP emits the base preset variables for the frontend and editor.
+ * This style element reflects unsaved Global Design System changes immediately.
+ *
+ * @param {Object}   customPresets Custom presets grouped by preset family.
+ * @param {Function} setStyles     Updates the editor style element.
+ */
 const renderGlobalStyles = ( customPresets, setStyles ) => {
 	let css = ''
 
 	Object.entries( customPresets ).forEach( ( [ key, presets ] ) => {
+		const mapping = PRESET_MAPPING[ key ]
+		if ( ! mapping || ! Array.isArray( presets ) ) {
+			return
+		}
+		const valueKey = mapping.valueKey || 'size'
 		const styleRules = presets?.map( preset => {
-			return preset && ( ! preset?.isDiscarded )
-				? `--stk--preset--${ PRESET_MAPPING[ key ]?.prefix }--${ preset?.slug || '' }: ${ preset?.size || '' };`
-				: ''
+			if ( ! preset || preset.isDiscarded ) {
+				return ''
+			}
+			const presetValue = preset[ valueKey ] || ''
+			return '--stk--preset--' + mapping.prefix + '--' + ( preset.slug || '' ) + ': ' + presetValue + ';'
 		} )
 		css += compact( styleRules ).join( '' )
 	} )
