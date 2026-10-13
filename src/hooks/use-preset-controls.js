@@ -34,6 +34,7 @@ const PRESET_MAPPING = {
 		settings: [ 'shadow', 'presets' ],
 		defaultSizes: 'shadow.presets.default',
 		defaultEnabled: 'shadow.defaultPresets',
+		useDefaultPresetsAsFallback: true,
 		prefix: 'shadow',
 		valueKey: 'shadow',
 	},
@@ -79,6 +80,9 @@ export const usePresetControls = property => {
 
 	let themePresets = useWordPressPresets ? _themePresets : []
 	const hasThemePresets = Array.isArray( themePresets ) && themePresets.length > 0
+	const hasDefaultPresets = mapping.useDefaultPresetsAsFallback &&
+		Array.isArray( wpDefaultPresets ) && wpDefaultPresets.length > 0 &&
+		defaultSizesEnabled !== false
 
 	// Merge theme presets with default presets when default sizes are enabled.
 	// This happens when settings like `typography.defaultFontSizes` or `spacing.defaultSpacingSizes`
@@ -101,7 +105,9 @@ export const usePresetControls = property => {
 	// Get the theme/default presets if the user have one, else return the stackable presets
 	const basePresets = hasThemePresets
 		? themePresets
-		: mapping.settings.reduce( ( acc, key ) => acc?.[ key ], DEFAULT_PRESETS.settings )
+		: hasDefaultPresets
+			? wpDefaultPresets
+			: mapping.settings.reduce( ( acc, key ) => acc?.[ key ], DEFAULT_PRESETS.settings )
 
 	// Returns the base presets overriden by the custom presets
 	const getMergedPresets = () => {
