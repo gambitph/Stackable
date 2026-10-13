@@ -499,10 +499,13 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				),
 				// The editor adds wrappers between the block and the element that owns the gap.
 				'extended-columns-gap-editor' => array(
-					'selector' => ':where(.wp-block-stackable-columns.stk-block-columns) > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout',
+					'selector' => ':where(.wp-block-stackable-columns) > .stk-block-columns > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout',
 					'keys' => array( 'blocks', 'core/columns' ),
-					'get_properties' => array( '--stk-columns-column-gap', 'row-gap' ),
-					'block_gap_properties' => $columns_block_gap_properties,
+					'get_properties' => array( '--stk-column-gap', 'row-gap' ),
+					'block_gap_properties' => array(
+						'column' => '--stk-column-gap',
+						'row' => 'row-gap',
+					),
 				),
 			);
 		}
@@ -519,7 +522,7 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 		private function get_extended_column_default_rules() {
 			return array(
 				'extended-column-defaults' => array(
-					'selector' => '.wp-block-stackable-columns.stk-block-columns',
+					'selector' => '.wp-block-stackable-columns.stk-block-columns, .wp-block-stackable-columns > .stk-block-columns',
 					'declarations' => array(
 						'--stk-columns-spacing' => self::UPDATED_COLUMN_DEFAULTS[ 'column-margin' ][ 'desktop' ] . 'px',
 						'--stk-columns-column-gap' => self::UPDATED_COLUMN_DEFAULTS[ 'columns-column-gap' ][ 'desktop' ] . 'px',
@@ -527,7 +530,7 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				),
 				'extended-column-defaults-mobile' => array(
 					'rules_group' => '@media (max-width:767px)',
-					'selector' => '.wp-block-stackable-columns.stk-block-columns',
+					'selector' => '.wp-block-stackable-columns.stk-block-columns, .wp-block-stackable-columns > .stk-block-columns',
 					'declarations' => array(
 						'--stk-columns-spacing' => self::UPDATED_COLUMN_DEFAULTS[ 'column-margin' ][ 'mobile' ] . 'px',
 						'--stk-columns-column-gap' => self::UPDATED_COLUMN_DEFAULTS[ 'columns-column-gap' ][ 'mobile' ] . 'px',
