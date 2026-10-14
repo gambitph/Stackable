@@ -55,6 +55,6 @@ export const addLinkAttributes = ( attrObject, attrNameTemplate = '%s', selector
 
 	addCustomAttributes( attrObject, {
 		attrNameTemplate,
-		versionAdded: '3.20.1',
+		versionAdded: '3.20.4',
 	} )
 }
