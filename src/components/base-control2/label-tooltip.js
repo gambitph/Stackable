@@ -8,6 +8,7 @@
  */
 import HelpTooltip from '../help-tooltip'
 import { fetchSettings } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * WordPress dependencies
@@ -18,7 +19,8 @@ import {
 import { models } from '@wordpress/api'
 import domReady from '@wordpress/dom-ready'
 
-const LabelTooltip = props => {
+const LabelTooltip = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, LABEL_TOOLTIP_DEFAULT_PROPS )
 	const {
 		title,
 		label: controlLabel,
@@ -98,7 +100,7 @@ const LabelTooltip = props => {
 	)
 }
 
-LabelTooltip.defaultProps = {
+const LABEL_TOOLTIP_DEFAULT_PROPS = {
 	label: '',
 	description: '',
 	video: '',

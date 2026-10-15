@@ -19,6 +19,7 @@ import { __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 import { isEmptyAttributes } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { upperFirst, camelCase } from 'lodash'
 
 const DEVICE_TYPES = {
@@ -48,7 +49,8 @@ const DEVICE_OPTIONS = [
 const ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
 const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.filter( s => s !== 'normal' ).map( s => upperFirst( camelCase( s ) ) )
 
-const ResponsiveToggle = props => {
+const ResponsiveToggle = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, RESPONSIVE_TOGGLE_DEFAULT_PROPS )
 	const deviceType = useDeviceType()
 
 	const changeScreen = screen => {
@@ -128,7 +130,7 @@ const ResponsiveToggle = props => {
 	)
 }
 
-ResponsiveToggle.defaultProps = {
+const RESPONSIVE_TOGGLE_DEFAULT_PROPS = {
 	screens: [ 'desktop' ],
 	attribute: '',
 	suffix: '',

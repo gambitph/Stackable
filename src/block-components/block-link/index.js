@@ -8,12 +8,14 @@ import { Edit } from './edit'
  * External dependencies
  */
 import { Link } from '~stackable/components'
+import { getPropsWithDefaults } from '../../util/props'
 
 export const BlockLink = () => {
 	return null
 }
 
-BlockLink.Content = props => {
+BlockLink.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_LINK_CONTENT_DEFAULT_PROPS )
 	const {
 		href, attributes, isHidden,
 	} = props
@@ -35,7 +37,7 @@ BlockLink.Content = props => {
 	)
 }
 
-BlockLink.Content.defaultProps = {
+const BLOCK_LINK_CONTENT_DEFAULT_PROPS = {
 	className: '',
 	attributes: {},
 	href: '',

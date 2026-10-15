@@ -30,6 +30,7 @@ import {
 } from '@wordpress/i18n'
 import { BaseControl } from '@wordpress/components'
 import { applyFilters, addFilter } from '@wordpress/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
 const designs = [
 	{
@@ -81,7 +82,8 @@ addFilter( 'stackable.separator.edit.layouts', 'default', layouts => {
 	], 'value' )
 } )
 
-const DesignSeparatorControl = props => {
+const DesignSeparatorControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DESIGN_SEPARATOR_CONTROL_DEFAULT_PROPS )
 	const {
 		label,
 		help,
@@ -110,7 +112,7 @@ const DesignSeparatorControl = props => {
 	)
 }
 
-DesignSeparatorControl.defaultProps = {
+const DESIGN_SEPARATOR_CONTROL_DEFAULT_PROPS = {
 	label: '',
 	help: '',
 	excludeDesigns: [],

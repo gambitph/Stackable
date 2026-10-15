@@ -22,6 +22,7 @@ import {
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { ResetButton } from '../base-control2/reset-button'
+import { getPropsWithDefaults } from '../../util/props'
 
 const addItemPopoverProps = {
 	placement: 'left-start',
@@ -45,7 +46,8 @@ const DRAG_KEYCODES = {
 	down: [ 40, 39 ],
 }
 
-const SortablePicker = forwardRef( ( props, ref ) => {
+const SortablePicker = forwardRef( ( incomingProps, ref ) => {
+	const props = getPropsWithDefaults( incomingProps, SORTABLE_PICKER_DEFAULT_PROPS )
 	const {
 		nonSortableItems = [],
 		editableName = true,
@@ -137,7 +139,7 @@ const SortablePicker = forwardRef( ( props, ref ) => {
 	)
 } )
 
-SortablePicker.defaultProps = {
+const SORTABLE_PICKER_DEFAULT_PROPS = {
 	className: '',
 	label: '',
 	onReset: () => {},

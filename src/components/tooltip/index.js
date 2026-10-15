@@ -1,7 +1,9 @@
 import classnames from 'classnames'
 import { Tooltip as _Tooltip } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../util/props'
 
-const Tooltip = props => {
+const Tooltip = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, TOOLTIP_DEFAULT_PROPS )
 	return (
 		<_Tooltip
 			{ ...props }
@@ -15,7 +17,7 @@ const Tooltip = props => {
 	)
 }
 
-Tooltip.defaultProps = {
+const TOOLTIP_DEFAULT_PROPS = {
 	className: '',
 }
 

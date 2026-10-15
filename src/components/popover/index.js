@@ -1,9 +1,11 @@
 import { Popover as Popover_ } from '@wordpress/components'
 import classNames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
 const NOOP = () => {}
 
-const Popover = props => {
+const Popover = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, POPOVER_DEFAULT_PROPS )
 	return <Popover_
 		{ ...props }
 		className={ classNames( 'stk-popover', props.className ) }
@@ -23,7 +25,7 @@ const Popover = props => {
 	/>
 }
 
-Popover.defaultProps = {
+const POPOVER_DEFAULT_PROPS = {
 	className: '',
 	onEscape: NOOP,
 }

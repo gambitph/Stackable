@@ -1,9 +1,11 @@
 import { useState } from '@wordpress/element'
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
 let i = 1
 
-const AdminBaseSetting = props => {
+const AdminBaseSetting = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADMIN_BASE_SETTING_DEFAULT_PROPS )
 	const { showLabel = true } = props
 	const [ uid ] = useState( `ugb-admin-setting-${ i++ }` )
 	const isSearched = props.searchedSettings ? props.searchedSettings.includes( props.label ) : true
@@ -32,7 +34,7 @@ const AdminBaseSetting = props => {
 	)
 }
 
-AdminBaseSetting.defaultProps = {
+const ADMIN_BASE_SETTING_DEFAULT_PROPS = {
 	label: '',
 	onClick: () => {},
 }

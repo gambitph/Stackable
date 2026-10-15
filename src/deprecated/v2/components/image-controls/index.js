@@ -14,6 +14,7 @@ import {
 import { 	ImageShapeControls } from '..'
 import { i18n } from 'stackable'
 import { getImageSize, cacheImageData } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 /**
  * WordPress dependencies
@@ -23,7 +24,8 @@ import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
 
-const ImageControls = props => {
+const ImageControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_CONTROLS_DEFAULT_PROPS )
 	// Find the maximum width for the width setting.
 	const imageSizeData = getImageSize( props.imageData, props.size || 'full' )
 	let widthMax = props.widthMax || 1000
@@ -265,7 +267,7 @@ const ImageControls = props => {
 	)
 }
 
-ImageControls.defaultProps = {
+const IMAGE_CONTROLS_DEFAULT_PROPS = {
 	id: '',
 	url: '',
 	onChangeImage: ( { url, id, width, height } ) => {}, // eslint-disable-line

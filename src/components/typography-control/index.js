@@ -10,6 +10,7 @@ import {
 	WhenResponsiveScreen,
 } from '~stackable/components'
 import { getDefaultFontSize } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * WordPress dependencies
@@ -18,7 +19,8 @@ import { __ } from '@wordpress/i18n'
 import { Fragment, useMemo } from '@wordpress/element'
 import { i18n } from 'stackable'
 
-const TypographyControl = props => {
+const TypographyControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, TYPOGRAPHY_CONTROL_DEFAULT_PROPS )
 	const {
 		isAllowReset = undefined, // Optional prop
 	} = props
@@ -348,7 +350,7 @@ const TypographyControl = props => {
 	)
 }
 
-TypographyControl.defaultProps = {
+const TYPOGRAPHY_CONTROL_DEFAULT_PROPS = {
 	label: __( 'Typography', i18n ),
 	popoverLabel: undefined,
 	showSecondFontSize: true,

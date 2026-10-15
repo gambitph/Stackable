@@ -19,6 +19,7 @@ import {
 	applyFilters, addFilter, hasFilter,
 } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * Add the default free layouts.
@@ -29,7 +30,8 @@ if ( ! hasFilter( 'stackable.block-component.separator.layouts', 'default' ) ) {
 	} )
 }
 
-const SeparatorControl = props => {
+const SeparatorControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SEPARATOR_CONTROL_DEFAULT_PROPS )
 	const {
 		attribute,
 		responsive,
@@ -69,7 +71,7 @@ const SeparatorControl = props => {
 	)
 }
 
-SeparatorControl.defaultProps = {
+const SEPARATOR_CONTROL_DEFAULT_PROPS = {
 	excludeDesigns: [],
 	attribute: '',
 }

@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import { AdvancedToolbarControl } from '~stackable/components'
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
 const ALIGN_OPTIONS = [
 	{
@@ -35,7 +36,8 @@ const ALIGN_OPTIONS = [
 
 const ALIGN_OPTIONS_NO_JUSTIFY = ALIGN_OPTIONS.filter( option => option.value !== 'justify' )
 
-const AlignButtonsControl = props => {
+const AlignButtonsControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ALIGN_BUTTONS_CONTROL_DEFAULT_PROPS )
 	const {
 		justified,
 		className,
@@ -57,7 +59,7 @@ const AlignButtonsControl = props => {
 	)
 }
 
-AlignButtonsControl.defaultProps = {
+const ALIGN_BUTTONS_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	label: __( 'Align', i18n ),
 	justified: false,

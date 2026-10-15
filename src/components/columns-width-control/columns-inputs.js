@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import { fixColumnWidths, columnWidthSum } from './util'
+import { getPropsWithDefaults } from '../../util/props'
 
 const gridTemplateColumns = columns => {
 	return columns.map( column => {
@@ -9,7 +10,8 @@ const gridTemplateColumns = columns => {
 
 const isBlank = columns => columns.every( column => ! column )
 
-const ColumnsInputs = props => {
+const ColumnsInputs = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMNS_INPUTS_DEFAULT_PROPS )
 	const style = {
 		gridTemplateColumns: gridTemplateColumns( props.value ),
 		gridAutoFlow: isBlank( props.value ) ? 'column' : undefined,
@@ -63,7 +65,7 @@ const ColumnsInputs = props => {
 	)
 }
 
-ColumnsInputs.defaultProps = {
+const COLUMNS_INPUTS_DEFAULT_PROPS = {
 	onChange: () => {},
 	value: [],
 }

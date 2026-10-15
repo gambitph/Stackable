@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { getAttributeName } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import {
 	useBlockSetAttributesContext,
 	useDeviceType,
@@ -49,7 +50,8 @@ const ENABLE = {
 	left: false,
 }
 
-const ResizableBottomMarginSingle = props => {
+const ResizableBottomMarginSingle = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, RESIZABLE_BOTTOM_MARGIN_SINGLE_DEFAULT_PROPS )
 	const { deviceType } = props
 	const { name } = useBlockEditContext()
 	const [ currentHeight, setCurrentHeight ] = useState( null )
@@ -152,13 +154,14 @@ const ResizableBottomMarginSingle = props => {
 	)
 }
 
-ResizableBottomMarginSingle.defaultProps = {
+const RESIZABLE_BOTTOM_MARGIN_SINGLE_DEFAULT_PROPS = {
 	previewSelector: '',
 	value: '',
 	onChange: () => {},
 }
 
-const ResizableBottomMargin = props => {
+const ResizableBottomMargin = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, RESIZABLE_BOTTOM_MARGIN_DEFAULT_PROPS )
 	const setAttributes = useBlockSetAttributesContext()
 	const deviceType = useDeviceType()
 	const attrName = getAttributeName( props.attribute, deviceType )
@@ -205,7 +208,7 @@ const ResizableBottomMargin = props => {
 	)
 }
 
-ResizableBottomMargin.defaultProps = {
+const RESIZABLE_BOTTOM_MARGIN_DEFAULT_PROPS = {
 	previewSelector: '', // Selector of the element where the margin is applied e.g. .stk-card-group
 	attribute: '',
 	responsive: false,

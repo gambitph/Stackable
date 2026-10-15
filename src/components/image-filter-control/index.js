@@ -17,6 +17,7 @@ import { __, sprintf } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { compact, omit } from 'lodash'
+import { getPropsWithDefaults } from '../../util/props'
 
 const FILTERS = {
 	blur: {
@@ -105,7 +106,8 @@ const filterToValue = filters => {
 	return compact( newFilters ).join( ' ' )
 }
 
-export const ImageFilterControl = props => {
+export const ImageFilterControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_FILTER_CONTROL_DEFAULT_PROPS )
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
@@ -151,7 +153,7 @@ export const ImageFilterControl = props => {
 	)
 }
 
-ImageFilterControl.defaultProps = {
+const IMAGE_FILTER_CONTROL_DEFAULT_PROPS = {
 	// onChange: () => {},
 	// help: '',
 	// className: '',

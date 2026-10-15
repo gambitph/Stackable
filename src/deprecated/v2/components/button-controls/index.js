@@ -34,8 +34,10 @@ import {
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const ButtonControls = props => {
+const ButtonControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BUTTON_CONTROLS_DEFAULT_PROPS )
 	const design = props.design ? props.design : 'basic'
 	const size = props.size ? props.size : 'normal'
 
@@ -476,7 +478,7 @@ const ButtonControls = props => {
 	)
 }
 
-ButtonControls.defaultProps = {
+const BUTTON_CONTROLS_DEFAULT_PROPS = {
 	// Used for typography.
 	hasTypography: true,
 	attrNameTemplate: '%s',
