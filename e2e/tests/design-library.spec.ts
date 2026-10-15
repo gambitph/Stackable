@@ -226,3 +226,101 @@ test.describe( 'Design Library', () => {
 		await expect( backgroundToggle ).toHaveJSProperty( 'checked', ! wasChecked )
 	} )
 } )
+
+const activateBlockTheme = async requestUtils => {
+	const themes = await requestUtils.rest( { path: '/wp/v2/themes' } )
+	const active = themes.find( theme => theme.status === 'active' )
+	if ( active?.is_block_theme ) {
+		return active.stylesheet
+	}
+
+	for ( const slug of [ 'twentytwentyfive', 'twentytwentyfour' ] ) {
+		try {
+			await requestUtils.activateTheme( slug )
+			return slug
+		} catch {
+			// Try the next bundled block theme.
+		}
+	}
+
+	throw new Error( 'Show Template e2e needs a block theme (Twenty Twenty-Five or Twenty Twenty-Four).' )
+}
+
+/**
+ * Show Template puts the editor in `template-locked` mode. The canvas root is
+ * then the locked page template, so `insertBlocks()` without a
+ * `core/post-content` root cannot place the Design Library block and the
+ * toolbar button never finds a button to open the modal.
+ */
+const enableShowTemplate = async ( page: Page ) => {
+	await page.waitForFunction(
+		() => window?.wp?.data?.select?.( 'core/editor' )?.getRenderingMode
+	)
+
+	const alreadyLocked = await page.evaluate( () =>
+		window.wp.data.select( 'core/editor' ).getRenderingMode() === 'template-locked'
+	)
+
+	if ( ! alreadyLocked ) {
+		await page.evaluate( () => {
+			window.wp.data.dispatch( 'core/editor' ).setRenderingMode( 'template-locked' )
+		} )
+	}
+
+	await expect.poll( async () => {
+		return page.evaluate( () => window.wp.data.select( 'core/editor' ).getRenderingMode() )
+	} ).toBe( 'template-locked' )
+
+	// The lock is only real once the template's post content area is in the tree.
+	await expect.poll( async () => {
+		return page.evaluate( () =>
+			window.wp.data.select( 'core/block-editor' ).getBlocksByName( 'core/post-content' )?.length || 0
+		)
+	} ).toBeGreaterThan( 0 )
+}
+
+test.describe( 'Design Library with Show Template', () => {
+	let pid = null
+	let originalTheme = null
+
+	test.beforeEach( async ( {
+		admin, editor, page, requestUtils,
+	} ) => {
+		const themes = await requestUtils.rest( { path: '/wp/v2/themes' } )
+		originalTheme = themes.find( theme => theme.status === 'active' )?.stylesheet
+		await activateBlockTheme( requestUtils )
+
+		await admin.createNewPost( {
+			postType: 'page',
+			title: 'Design Library Show Template',
+		} )
+		await editor.saveDraft()
+		const postQuery = new URL( editor.page.url() ).search
+		pid = new URLSearchParams( postQuery ).get( 'post' )
+
+		await enableShowTemplate( page )
+	} )
+
+	test.afterEach( async ( { requestUtils } ) => {
+		if ( pid ) {
+			try {
+				await requestUtils.deletePost( pid, 'pages' )
+			} catch {
+				// Best-effort cleanup.
+			}
+		}
+		if ( originalTheme ) {
+			try {
+				await requestUtils.activateTheme( originalTheme )
+			} catch {
+				// Best-effort restore so later specs keep the original theme.
+			}
+		}
+	} )
+
+	test( 'opens when Show Template is enabled on a page', async ( {
+		page,
+	} ) => {
+		await openDesignLibrary( page )
+	} )
+} )

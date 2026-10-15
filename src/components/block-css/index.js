@@ -17,6 +17,7 @@ import {
 	getBlockUniqueClassname,
 	getDependencyAttrnamesFast,
 	getMediaQuery,
+	getViewportMediaQuery,
 	isVersionSupported,
 	prependClass,
 } from './util'
@@ -31,6 +32,7 @@ import {
  * External dependencies
  */
 import { pick, kebabCase } from 'lodash'
+import { settings } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -546,7 +548,12 @@ function createCssEdit( selector, rule, value, device = 'desktop', vendorPrefixe
 		}
 	)
 
-	const mediaQuery = getMediaQuery( device, tabletBreakpoint, mobileBreakpoint )
+	const editorBreakpoints = settings.stackable_editor_breakpoints || {}
+	const mediaQuery = getViewportMediaQuery( device, settings.stackable_editor_viewport_breakpoints ) || getMediaQuery(
+		device,
+		editorBreakpoints.tablet || tabletBreakpoint,
+		editorBreakpoints.mobile || mobileBreakpoint
+	)
 	if ( mediaQuery ) {
 		css = `\n${ mediaQuery } {${ css }\n}`
 	}

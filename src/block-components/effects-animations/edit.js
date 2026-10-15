@@ -29,6 +29,7 @@ export const Edit = props => {
 					title={ __( 'Motion Effects', i18n ) }
 					id="effects-animations"
 					isPremiumPanel={ ! isPro }
+					responsive={ false }
 				>
 					{ ! isPro && <ProControl type="motion-effects" /> }
 					{ isPro &&

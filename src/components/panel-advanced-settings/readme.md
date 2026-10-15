@@ -20,3 +20,18 @@ With those 3 props above, the panel will watch for changes in the current block'
 If any of those gets assigned a value other than blank (empty string), the `showAttr` atttribute will be set to `true`.
 
 *This preserves the undo/redo functionality to just 1 step.*
+
+# Responsive Visibility
+
+Inside a `ResponsiveControlFilterProvider`, the panel can hide itself when Core Responsive Styles is filtering controls for Tablet or Mobile.
+
+Panels made from `BaseControl` or `BaseControl2` children normally do not need a `responsive` prop.
+The children register their visibility, and the panel hides when every registered control is filtered.
+
+Use `responsive={ false }` when the whole panel is desktop-only and its custom children cannot register their own responsive capability.
+Use `responsive="all"` when a custom panel explicitly supports every viewport.
+
+An omitted capability on a panel with no registered controls is treated as unknown, so the panel remains visible.
+This avoids hiding custom or third-party panel content by accident.
+
+See the [Responsive Styles compatibility note](../inspector-tabs/readme.md) for the complete inspector flow.

@@ -85,11 +85,22 @@
 }
 
 // Hide the size tooltip when the image resizer is too narrow.
-.stk-img-resizer {
+.stk-img-resizer-tooltip-container {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+
+	// Keep the tooltip above the click-to-edit overlay at z-index 2.
+	z-index: 3;
+	container-name: stk-img-resizer-tooltip;
 	container-type: inline-size;
+
+	.stk-resizer-tooltip {
+		pointer-events: auto;
+	}
 }
 
-@container (max-width: 139px) {
+@container stk-img-resizer-tooltip (max-width: 139px) {
 	.stk-resizer-tooltip {
 		display: none !important;
 	}

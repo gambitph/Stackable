@@ -101,6 +101,10 @@ The min PHP cell follows `readme.txt` `Requires PHP` (build may raise it to matc
 `tools/playwright-test-matrix.js` and `tools/ensure-version-number.js` sync the e2e matrix, `plugin.php` version checks, and `phpcs.xml.dist` `testVersion` in both repos.
 A new push to the same PR or branch cancels the previous E2E run.
 
+Playwright `expect` defaults to 30s (not 5s) so WASM PHP 7.4 navigations can finish.
+Per-test timeout is 180s.
+Heavy editor canvas and frontend preview waits stay at 60s.
+
 PHPCompatibilityWP runs against that same PHP floor:
 - Free: `.github/workflows/php-compatibility.yml` (`composer phpcompat` locally)
 - Premium: `pro__premium_only/.github/workflows/php-compatibility.yml` (`composer phpcompat:premium` when `pro__premium_only/` is present)
@@ -120,6 +124,7 @@ Do not listen for console `Block validation` messages.
 | Block catalog | `createBlock` every inserter-facing `stackable/*`, save, reload, no recovery UI, frontend `.stk-block` |
 | Global settings | Color / typography; spacing & buttons tokens; Preview Design System style guide (live values + website preview) |
 | Design Library | Open, load patterns, insert a free page/pattern |
+| Site Kits (planned) | Catalog/preview; import fixture; re-import; without Start Stackable; snap-in with theme; see `docs/prd/site-kits.agents.md` |
 | Existing blocks | REST-save `post-content.txt`, open in editor, no recovery UI |
 | Interactive frontend | Accordion, Tabs, Carousel, Expand, Video Popup, Notification, scroller, countdown/progress, Posts, TOC |
 
@@ -132,11 +137,12 @@ Fail if a panel still shows `ProControl` / "Get Premium" while premium is mocked
 |---------|------|
 | Design System | Sidebar opens; Preview; Color Schemes / Font pairs / Size presets / Icon Library are live controls |
 | Global Block Styles | Save a named style from one Text block, apply it to a second; canvas uses the style, inspector stays at defaults and can override; rename and delete from Design System; updating a style applies the change to other blocks that use it |
-| Dynamic Content | Post title / meta / featured image resolve on the frontend |
+| Dynamic Content | Post title / meta / featured image resolve on the frontend; custom date format apply path (`e2e/tests/dynamic-content-custom-date.spec.ts`) |
 | Conditional display | Logged-in condition visible on frontend; logged-out condition hidden while logged in |
 | Motion / Transform / Custom CSS | Entrance class, hover transform CSS, applied custom CSS on frontend |
 | Columns / Posts / Image / Icon / Separator | Arrangement (2+ columns), Offset after layout pick, circle shape, gradient, extra separator layer |
 | Design Library | Premium pattern inserts; Saved tab save, style options, and insert |
+| Site Kits (planned) | GDS side panel apply on import; no `ProControl` while premium mocked |
 | Settings | Role Manager tab + toggle save; Custom Fields tab can create a field |
 | Toolbar | Copy & paste styles (block attributes, nested + smart paste) |
 

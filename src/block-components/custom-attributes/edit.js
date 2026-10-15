@@ -56,6 +56,7 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ __( 'Custom Attributes', i18n ) }
 				id="custom-attributes"
+				responsive={ false }
 			>
 				<CustomAttributesControl
 					label={ props.linkAttributeName ? __( 'Block Custom Attributes', i18n ) : __( 'Custom Attributes', i18n ) }

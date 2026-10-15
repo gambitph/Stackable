@@ -27,7 +27,7 @@ const waitForTocHeadings = async ( editor, expectedTexts ) => {
 	await expect( tocBlock ).toBeVisible()
 
 	for ( const text of expectedTexts ) {
-		await expect( tocBlock.getByText( text ) ).toBeVisible( { timeout: 15_000 } )
+		await expect( tocBlock.getByText( text ) ).toBeVisible()
 	}
 
 	const generateAnchors = tocBlock.getByRole( 'button', {
@@ -52,7 +52,7 @@ const waitForTocHeadings = async ( editor, expectedTexts ) => {
 				expect( heading.anchor ).toBeTruthy()
 			}
 		}
-	} ).toPass( { timeout: 15_000 } )
+	} ).toPass( { timeout: 30_000 } )
 }
 
 test.describe( 'Interactive frontend', () => {
@@ -84,7 +84,7 @@ test.describe( 'Interactive frontend', () => {
 		const accordionBlock = editor.canvas.locator( '[data-type="stackable/accordion"]' ).first()
 		const heading = accordionBlock.locator( '[data-type="stackable/heading"] [role="textbox"]' ).first()
 		const panelText = accordionBlock.locator( '[data-type="stackable/text"] [role="textbox"]' ).first()
-		await expect( heading ).toBeVisible( { timeout: 15_000 } )
+		await expect( heading ).toBeVisible()
 		await heading.fill( 'E2E Accordion Title' )
 
 		// The panel is collapsed in the editor until the heading is clicked.
@@ -141,7 +141,7 @@ test.describe( 'Interactive frontend', () => {
 
 		await expect(
 			editor.canvas.getByText( 'E2E Carousel Slide 1' )
-		).toBeVisible( { timeout: 15_000 } )
+		).toBeVisible()
 		await expect( editor.canvas.getByText( 'E2E Carousel Slide 2' ) ).toBeVisible()
 		await expect( editor.canvas.getByText( 'E2E Carousel Slide 3' ) ).toBeVisible()
 

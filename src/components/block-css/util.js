@@ -33,7 +33,41 @@ export const getMediaQuery = ( devices = 'desktop', breakDesktop = 1024, breakTa
 	 } else if ( devices === 'mobile' ) {
 		 return '@media screen and (max-width: ' + ( breakTablet - 1 ) + 'px)'
 	 }
-	 return null
+	return null
+}
+
+/**
+ * Forms a media query string from WordPress theme.json viewport settings.
+ *
+ * WordPress 7.1 allows themes to configure these values and uses the same
+ * ranges for responsive editor previews. Unlike getMediaQuery, these are
+ * maximum viewport widths rather than the start of the next device range.
+ *
+ * @param {string} devices A list of devices: desktop, tablet or mobile.
+ * @param {Object} viewports WordPress viewport settings.
+ * @param {string} viewports.tablet Maximum Tablet viewport width.
+ * @param {string} viewports.mobile Maximum Mobile viewport width.
+ * @return {string|null} A media query, or null for missing settings.
+ */
+export const getViewportMediaQuery = ( devices = 'desktop', viewports = {} ) => {
+	const { tablet, mobile } = viewports
+	if ( ! tablet || ! mobile ) {
+		return null
+	}
+
+	if ( devices === 'desktopTablet' ) {
+		return `@media screen and (width > ${ mobile })`
+	} else if ( devices === 'desktopOnly' ) {
+		return `@media screen and (width > ${ tablet })`
+	} else if ( devices === 'tablet' ) {
+		return `@media screen and (width <= ${ tablet })`
+	} else if ( devices === 'tabletOnly' ) {
+		return `@media screen and (width > ${ mobile }) and (width <= ${ tablet })`
+	} else if ( devices === 'mobile' ) {
+		return `@media screen and (width <= ${ mobile })`
+	}
+
+	return null
 }
 
 /**

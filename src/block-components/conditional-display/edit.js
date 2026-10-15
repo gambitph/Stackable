@@ -29,6 +29,7 @@ export const Edit = () => {
 					title={ __( 'Conditional Display', i18n ) }
 					id="conditional-display"
 					isPremiumPanel={ ! isPro }
+					responsive={ false }
 				>
 					{ ! isPro && <ProControl type="conditional-display" /> }
 					{ isPro &&

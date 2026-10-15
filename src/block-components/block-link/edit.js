@@ -26,6 +26,7 @@ export const Edit = props => {
 				<PanelAdvancedSettings
 					title={ __( 'Link', i18n ) }
 					id="link"
+					responsive={ false }
 				>
 					<LinkControls
 						attrNameTemplate="blockLink%s"

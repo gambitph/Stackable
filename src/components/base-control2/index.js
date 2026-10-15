@@ -10,9 +10,11 @@ import ResponsiveToggle from '../responsive-toggle'
 import HoverStateToggle from './hover-state-toggle'
 import { VisualGuideer } from './use-visual-guide'
 import LabelTooltip from './label-tooltip'
+import { useRegisterResponsivePanelControl } from '../responsive-control-visibility'
 import {
 	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext, useDeviceType,
 } from '~stackable/hooks'
+import useResponsiveControlVisibility from '~stackable/hooks/use-responsive-control-visibility'
 
 /**
  * External dependencies
@@ -36,6 +38,10 @@ const EMPTY_OBJ = {}
 
 export const BaseControl = props => {
 	const deviceType = useDeviceType()
+	const isVisible = useResponsiveControlVisibility( props.responsive )
+	// Register even when this control returns null so its parent panel can tell
+	// when responsive filtering has removed every control inside it.
+	useRegisterResponsivePanelControl( isVisible )
 
 	const className = classnames( [
 		'stk-control',
@@ -63,6 +69,10 @@ export const BaseControl = props => {
 	const label = props.boldLabel ? <h3>{ props.label }</h3> : props.label
 
 	const VisualGuide = props.visualGuide !== EMPTY_OBJ ? VisualGuideer : Fragment
+
+	if ( ! isVisible ) {
+		return null
+	}
 
 	return (
 		<GutBaseControl

@@ -571,12 +571,10 @@ exit;
 
 gulp.task( 'style-editor', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/**/editor.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/editor.scss' ) ] )
-		// Override the breakpoints in the editor in
-		// src/styles/breakpoints.scss, we do it here because there are various
-		// files that use the breakpoints and it's easier to override it here.
+		// The active theme can change the editor preview widths at runtime.
+		// Use the editor's current device class rather than fixed Sass breakpoints.
 		.pipe( sassVariables( {
-			'$desktop-width': 781,
-			'$tablet-width': 361,
+			'$use-editor-preview-classes': true,
 		} ) )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'editor_blocks.css' ) )
