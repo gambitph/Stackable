@@ -62,3 +62,24 @@ Print a verbose review to the terminal, in this order:
 4. PAID findings
 5. Compiled size flags
 6. Final line: `GREEN LIGHT` or `BLOCKED` plus a one-line reason
+
+Prefix **every** checklist line and finding bullet with a status emoji so pass/fail is scannable:
+
+- `✅` — OK, expected, changelog-aligned, or no issue for that point
+- `❌` — problem, unexplained change, policy violation, or size flag
+
+Use one bullet per point. Do not omit the emoji on narrative bullets.
+
+Examples:
+
+```text
+✅ Version / Stable tag: 3.19.0 (free + paid zips)
+✅ FREE: no pro__premium_only/
+✅ FREE: STACKABLE_BUILD is free
+❌ FREE: readme.txt hunk not mentioned in changelog
+✅ PAID: premium tree matches previous + changelog additions
+❌ Compiled (paid): dist/editor.js +312KB (flagged)
+✅ GREEN LIGHT — changelog covers source diffs; no Directory blockers
+```
+
+For the final line, use `✅ GREEN LIGHT` or `❌ BLOCKED` (keep the words `GREEN LIGHT` / `BLOCKED`).

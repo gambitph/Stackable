@@ -47,8 +47,16 @@ const LOCAL_ZIP = join( ROOT, 'build', 'stackable.zip' )
 const PREMIUM_DIR = join( ROOT, 'pro__premium_only' )
 const WPORG_URL = 'https://downloads.wordpress.org/plugin/stackable-ultimate-gutenberg-blocks.zip'
 
+const OK = '✅'
+const BAD = '❌'
+
 const log = message => {
 	console.log( `[release:ready] ${ message }` ) // eslint-disable-line no-console
+}
+
+const checklistLine = ( pass, message ) => {
+	const icon = pass ? OK : BAD
+	console.log( `[release:ready] ${ icon } ${ message }` ) // eslint-disable-line no-console
 }
 
 const fail = message => {
@@ -383,15 +391,120 @@ const findPreviousPremiumZip = currentVersion => {
 	return join( RELEASES_DIR, files.sort().reverse()[ 0 ] )
 }
 
-const readZipPluginVersion = pluginRoot => {
-	const headerFile = [ 'plugin.php', 'stackable.php' ]
+const pluginHeaderPath = pluginRoot =>
+	[ 'plugin.php', 'stackable.php' ]
 		.map( name => join( pluginRoot, name ) )
 		.find( existsSync )
+
+const readZipPluginVersion = pluginRoot => {
+	const headerFile = pluginHeaderPath( pluginRoot )
 	if ( ! headerFile ) {
 		return null
 	}
 	const match = readFileSync( headerFile, 'utf8' ).match( /Version:\s*([\d.]+)/ )
 	return match ? match[ 1 ] : null
+}
+
+const readZipStableTag = pluginRoot => {
+	const readme = join( pluginRoot, 'readme.txt' )
+	if ( ! existsSync( readme ) ) {
+		return null
+	}
+	const match = readFileSync( readme, 'utf8' ).match( /^Stable tag:\s*([\d.]+)/im )
+	return match ? match[ 1 ] : null
+}
+
+const readZipStackableBuild = pluginRoot => {
+	const headerFile = pluginHeaderPath( pluginRoot )
+	if ( ! headerFile ) {
+		return null
+	}
+	const match = readFileSync( headerFile, 'utf8' )
+		.match( /define\(\s*['"]STACKABLE_BUILD['"],\s*['"](\w+)['"]\s*\)/ )
+	return match ? match[ 1 ] : null
+}
+
+const formatBytes = bytes => {
+	if ( bytes === 0 ) {
+		return '0 B'
+	}
+	const units = [ 'B', 'KB', 'MB' ]
+	const abs = Math.abs( bytes )
+	const unit = abs >= 1024 * 1024 ? 2 : abs >= 1024 ? 1 : 0
+	const value = bytes / ( 1024 ** unit )
+	return `${ value >= 0 ? '+' : '' }${ value.toFixed( unit ? 1 : 0 ) } ${ units[ unit ] }`
+}
+
+const printAutomatedChecklist = version => {
+	const freeRoot = join( REPORT_DIR, 'unpacked', 'free' )
+	const paidRoot = join( REPORT_DIR, 'unpacked', 'paid-new' )
+	let failed = 0
+	const record = ( pass, message ) => {
+		if ( ! pass ) {
+			failed += 1
+		}
+		checklistLine( pass, message )
+	}
+
+	log( 'Automated checklist:' )
+
+	const freeVersion = readZipPluginVersion( freeRoot )
+	record(
+		freeVersion === version,
+		`FREE zip Version header: ${ freeVersion ?? '(missing)' } (expected ${ version })`
+	)
+
+	const paidVersion = readZipPluginVersion( paidRoot )
+	record(
+		paidVersion === version,
+		`PAID zip Version header: ${ paidVersion ?? '(missing)' } (expected ${ version })`
+	)
+
+	const freeStable = readZipStableTag( freeRoot )
+	record(
+		freeStable === version,
+		`FREE readme Stable tag: ${ freeStable ?? '(missing)' } (expected ${ version })`
+	)
+
+	const paidStable = readZipStableTag( paidRoot )
+	if ( paidStable !== null ) {
+		record(
+			paidStable === version,
+			`PAID readme Stable tag: ${ paidStable } (expected ${ version })`
+		)
+	}
+
+	const premiumDirInFree = existsSync( join( freeRoot, 'pro__premium_only' ) )
+	record( ! premiumDirInFree, 'FREE zip: no pro__premium_only/' )
+
+	const freeBuild = readZipStackableBuild( freeRoot )
+	record( freeBuild === 'free', `FREE zip STACKABLE_BUILD: ${ freeBuild ?? '(missing)' } (expected free)` )
+
+	for ( const prefix of [ 'free', 'paid' ] ) {
+		const sizesPath = join( REPORT_DIR, `${ prefix }.sizes.json` )
+		if ( ! existsSync( sizesPath ) ) {
+			record( false, `${ prefix.toUpperCase() } sizes.json missing` )
+			continue
+		}
+		const sizes = JSON.parse( readFileSync( sizesPath, 'utf8' ) )
+		const flagged = sizes.filter( row => row.flag )
+		if ( ! flagged.length ) {
+			record( true, `${ prefix.toUpperCase() } compiled assets: no size flags` )
+			continue
+		}
+		for ( const row of flagged ) {
+			record(
+				false,
+				`${ prefix.toUpperCase() } compiled flag: ${ row.path } (${ formatBytes( row.deltaBytes ) }, ${ row.status })`
+			)
+		}
+	}
+
+	record( failed === 0, failed === 0
+		? 'Automated checks passed'
+		: `Automated checks: ${ failed } issue(s) — see ❌ lines above` )
+
+	return failed === 0
 }
 
 const runReview = version => {
@@ -406,7 +519,9 @@ const runReview = version => {
 			'Read build/release-ready/free.source.diff, free.sizes.json, free.tree.txt, ' +
 			'paid.source.diff, paid.sizes.json, and paid.tree.txt. ' +
 			`Confirm unzipped zip headers / Stable tag match ${ version }. ` +
-			'Do not edit plugin files. Do not write a verdict file. Print the full review to the terminal.',
+			'Do not edit plugin files. Do not write a verdict file. Print the full review to the terminal. ' +
+			'Prefix every finding bullet with ✅ (OK) or ❌ (problem). ' +
+			'Final line must be ✅ GREEN LIGHT or ❌ BLOCKED.',
 		],
 		{ cwd: ROOT, stdio: 'inherit' }
 	)
@@ -573,6 +688,7 @@ const main = async () => {
 
 	const zips = resolveZips( version, built )
 	await checkPhase( version, zips )
+	printAutomatedChecklist( version )
 
 	if ( args.noReview ) {
 		log( 'Skipped review (--no-review).' )
