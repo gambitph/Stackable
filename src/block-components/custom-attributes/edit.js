@@ -7,6 +7,7 @@
  */
 import { i18n } from 'stackable'
 import {
+	ControlSeparator,
 	CustomAttributesControl,
 	InspectorAdvancedControls,
 	PanelAdvancedSettings,
@@ -22,15 +23,13 @@ import { INVALID_HTML_ATTRIBUTES } from '.'
 
 const CustomAttributesHelp = ( { hasLink } ) => {
 	return <>
-		{ hasLink
-			? __( 'You can type in custom HTML attributes for this block or its link in the fields above. Examples:', i18n )
-			: __( 'You can type in custom HTML attributes for this block in the field above. Example:', i18n ) }
-		<br />
+		<p>{ __( 'Add custom HTML attributes to enhance the functionality of your block or link. For example:', i18n ) }</p>
 		<code>data-id=&quot;my-title&quot;</code>
 		{ hasLink && <>
 			<br />
 			<code>aria-label=&quot;Learn more&quot;</code>
 		</> }
+		<br />
 		<br />
 		<ExternalLink
 			href="https://docs.wpstackable.com/article/461-how-to-use-custom-attributes?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg"
@@ -61,18 +60,22 @@ export const Edit = props => {
 				<CustomAttributesControl
 					label={ props.linkAttributeName ? __( 'Block Custom Attributes', i18n ) : __( 'Custom Attributes', i18n ) }
 					value={ customAttributes }
+					placeholder={ __( 'data-id="my-title"', i18n ) }
 					invalidHtmlAttributes={ INVALID_HTML_ATTRIBUTES }
 					onChange={ customAttributes => setAttributes( { customAttributes } ) }
-					help={ ! props.linkAttributeName && <CustomAttributesHelp hasLink={ false } /> }
+					help={ __( 'Attributes placed here will be added to the block element. Separate multiple attributes with a space.', i18n ) }
 				/>
 				{ props.linkAttributeName && <CustomAttributesControl
 					label={ __( 'Link Custom Attributes', i18n ) }
 					value={ linkCustomAttributes }
+					placeholder={ __( 'aria-label="Learn more"', i18n ) }
 					invalidHtmlAttributes={ INVALID_HTML_ATTRIBUTES }
 					onChange={ linkCustomAttributes => setAttributes( { [ props.linkAttributeName ]: linkCustomAttributes } ) }
-					help={ <CustomAttributesHelp hasLink /> }
+					help={ __( 'Attributes placed here will be added to the anchor tag if this block has a link. Separate multiple attributes with a space.', i18n ) }
 				/>
 				}
+				<ControlSeparator />
+				<CustomAttributesHelp hasLink />
 			</PanelAdvancedSettings>
 		</InspectorAdvancedControls>
 	)

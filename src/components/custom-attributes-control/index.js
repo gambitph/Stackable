@@ -100,6 +100,7 @@ const CustomAttributesControl = props => {
 			onBlur={ onBlur }
 			onChange={ onChange }
 			help={ help }
+			placeholder={ props.placeholder }
 		/>
 	)
 }
@@ -110,6 +111,7 @@ CustomAttributesControl.defaultProps = {
 	value: [],
 	invalidHtmlAttributes: [],
 	onChange: () => {},
+	placeholder: null,
 }
 
 export default CustomAttributesControl
