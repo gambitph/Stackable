@@ -22,9 +22,12 @@ describe( 'CustomAttributesControl', () => {
 		}
 
 		const {
-			getByTestId, getByText,
+			getByTestId, getByText, rerender,
 		} = render( <CustomAttributesControl { ...dummyProps } /> )
 		expect( getByText( 'Custom Attributes' ) ).toBeTruthy()
+
+		rerender( <CustomAttributesControl { ...dummyProps } label="Link Custom Attributes" /> )
+		expect( getByText( 'Link Custom Attributes' ) ).toBeTruthy()
 
 		const invalidInputs = [
 			`test`,
