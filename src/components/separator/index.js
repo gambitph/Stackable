@@ -7,8 +7,10 @@ import { separators } from './separators'
  * External dependencies
  */
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
-const Separator = props => {
+const Separator = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SEPARATOR_DEFAULT_PROPS )
 	const { shape: SeparatorComp, shadow: ShadowComp } = separators[ props.design || 'wave-1' ][ ! props.inverted ? 'default' : 'inverted' ]
 
 	const mainClasses = classnames( [
@@ -35,7 +37,7 @@ const Separator = props => {
 	)
 }
 
-Separator.defaultProps = {
+const SEPARATOR_DEFAULT_PROPS = {
 	className: '',
 	design: 'wave-1',
 	shadow: false,

@@ -16,8 +16,10 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { getAttributeNameFunc } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../util/props'
 
-const Layout = props => {
+const Layout = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, LAYOUT_DEFAULT_PROPS )
 	const deviceType = useDeviceType()
 
 	const {
@@ -115,7 +117,7 @@ const Layout = props => {
 	)
 }
 
-Layout.defaultProps = {
+const LAYOUT_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	hasMinHeight: true,
 	hasContentVerticalAlign: true,
@@ -123,7 +125,8 @@ Layout.defaultProps = {
 	labels: {},
 }
 
-const Spacing = props => {
+const Spacing = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SPACING_DEFAULT_PROPS )
 	// Don't use the hook form so we don't rerender
 	const getAttrName = getAttributeNameFunc( props.attrNameTemplate )
 
@@ -188,7 +191,7 @@ const Spacing = props => {
 	)
 }
 
-Spacing.defaultProps = {
+const SPACING_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	paddingPlaceholder: '',
 	enableMargin: true,

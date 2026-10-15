@@ -26,6 +26,7 @@ import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { DesignControl } from '~stackable/components'
 import { BaseControl } from '../base-control2'
+import { getPropsWithDefaults } from '../../util/props'
 
 const COLUMN_PRESETS = {
 	'2-1': [ 50, 50 ],
@@ -63,7 +64,8 @@ const COLUMN_PRESET_OPTIONS = {
 
 const isBlank = columns => columns.every( column => ! column )
 
-const ColumnsWidthControl = props => {
+const ColumnsWidthControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMNS_WIDTH_CONTROL_DEFAULT_PROPS )
 	const sliderValues = isBlank( props.values ) && COLUMN_PRESETS[ `${ props.columns }-1` ]
 		? COLUMN_PRESETS[ `${ props.columns }-1` ]
 		: ( props.values || [] ).every( value => value !== '' )
@@ -105,7 +107,7 @@ const ColumnsWidthControl = props => {
 	)
 }
 
-ColumnsWidthControl.defaultProps = {
+const COLUMNS_WIDTH_CONTROL_DEFAULT_PROPS = {
 	columns: 2,
 	values: [ '', '' ],
 	onChange: () => {},

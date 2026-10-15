@@ -16,8 +16,10 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { range } from 'lodash'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ColumnsWidthMultiControl = props => {
+const ColumnsWidthMultiControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMNS_WIDTH_MULTI_CONTROL_DEFAULT_PROPS )
 	return (
 		<BaseControl
 			label={ props.label }
@@ -67,7 +69,7 @@ const ColumnsWidthMultiControl = props => {
 	)
 }
 
-ColumnsWidthMultiControl.defaultProps = {
+const COLUMNS_WIDTH_MULTI_CONTROL_DEFAULT_PROPS = {
 	columns: 2,
 	values: [ '', '' ],
 	onChange: () => {},

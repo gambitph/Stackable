@@ -11,6 +11,7 @@ import classNames from 'classnames'
 import {
 	loadGoogleFont, getFontFamilyLabel, getFontFamily,
 } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { omit } from 'lodash'
 
 /**
@@ -18,7 +19,8 @@ import { omit } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 
-const FontPairPicker = props => {
+const FontPairPicker = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, FONT_PAIR_PICKER_DEFAULT_PROPS )
 	const headingStyles = props.fontPair?.typography?.h1 || {}
 	const paragraphStyles = props.fontPair?.typography?.p || {}
 	if ( headingStyles.fontFamily ) {
@@ -86,7 +88,7 @@ const FontPairPicker = props => {
 	)
 }
 
-FontPairPicker.defaultProps = {
+const FONT_PAIR_PICKER_DEFAULT_PROPS = {
 	key: '',
 	fontPair: {},
 	isSelected: false,

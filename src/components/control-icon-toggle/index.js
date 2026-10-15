@@ -14,8 +14,10 @@ import classnames from 'classnames'
 import {
 	useState, memo, useMemo, useRef, useEffect,
 } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ControlIconToggle = props => {
+const ControlIconToggle = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CONTROL_ICON_TOGGLE_DEFAULT_PROPS )
 	const {
 		value,
 		options,
@@ -138,7 +140,7 @@ const ControlIconToggle = props => {
 	)
 }
 
-ControlIconToggle.defaultProps = {
+const CONTROL_ICON_TOGGLE_DEFAULT_PROPS = {
 	className: '',
 	value: '',
 	options: [],

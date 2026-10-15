@@ -8,8 +8,10 @@ import { AdvancedRangeControl } from '~stackable/components'
  */
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
+import { getPropsWithDefaults } from '../../util/props'
 
-const FontSizeControl = props => {
+const FontSizeControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, FONT_SIZE_CONTROL_DEFAULT_PROPS )
 	const passedPlaceholder = props.placeholder
 
 	const pxToEm = ( value = '', baseValue = 21 ) => {
@@ -48,7 +50,7 @@ const FontSizeControl = props => {
 	)
 }
 
-FontSizeControl.defaultProps = {
+const FONT_SIZE_CONTROL_DEFAULT_PROPS = {
 	label: __( 'Font Size', i18n ),
 	value: '',
 	onChange: () => {},

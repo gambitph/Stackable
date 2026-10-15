@@ -3,6 +3,7 @@
  */
 import classnames from 'classnames'
 import { urlIsVideo } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { useDeviceType } from '~stackable/hooks'
 
 /**
@@ -10,7 +11,8 @@ import { useDeviceType } from '~stackable/hooks'
  */
 import { Fragment } from '@wordpress/element'
 
-const VideoBackground = props => {
+const VideoBackground = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, VIDEO_BACKGROUND_DEFAULT_PROPS )
 	let backgroundSrc = props.videoUrl
 	let backgroundThumbnailSrc = props.videoThumbnailUrl
 	const deviceType = useDeviceType()
@@ -45,7 +47,7 @@ const VideoBackground = props => {
 	)
 }
 
-VideoBackground.defaultProps = {
+const VIDEO_BACKGROUND_DEFAULT_PROPS = {
 	videoUrl: '',
 	videoUrlTablet: '',
 	videoUrlMobile: '',
@@ -54,7 +56,8 @@ VideoBackground.defaultProps = {
 	videoThumbnailUrlMobile: '',
 }
 
-VideoBackground.Content = props => {
+VideoBackground.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, VIDEO_BACKGROUND_CONTENT_DEFAULT_PROPS )
 	const desktopClassNames = classnames( [
 		'stk-video-background',
 	], {
@@ -113,7 +116,7 @@ VideoBackground.Content = props => {
 	)
 }
 
-VideoBackground.Content.defaultProps = {
+const VIDEO_BACKGROUND_CONTENT_DEFAULT_PROPS = {
 	videoUrl: '',
 	videoUrlTablet: '',
 	videoUrlMobile: '',

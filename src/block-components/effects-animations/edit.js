@@ -16,8 +16,10 @@ import {
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
-export const Edit = props => {
+export const Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	if ( ! showProNotice && ! isPro ) {
 		return null
 	}
@@ -43,6 +45,6 @@ export const Edit = props => {
 	)
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	mainBlockClass: '',
 }

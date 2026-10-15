@@ -12,6 +12,7 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { getPropsWithDefaults } from '../../util/props'
 
 const OPTIONS = [
 	{ value: '', label: __( 'None', i18n ) },
@@ -36,7 +37,8 @@ const OPTIONS = [
 	{ value: 'unset', label: __( 'Unset', i18n ) },
 ]
 
-const BlendModeControl = props => {
+const BlendModeControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLEND_MODE_CONTROL_DEFAULT_PROPS )
 	return (
 		<AdvancedSelectControl
 			{ ...props }
@@ -46,7 +48,7 @@ const BlendModeControl = props => {
 	)
 }
 
-BlendModeControl.defaultProps = {
+const BLEND_MODE_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	label: __( 'Mix Blend Mode', i18n ),
 	help: '',

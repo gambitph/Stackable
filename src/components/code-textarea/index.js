@@ -12,8 +12,10 @@ import {
 } from '@wordpress/element'
 import deepmerge from 'deepmerge'
 import { useOnScreenOnce } from '~stackable/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
-const CodeTextarea = props => {
+const CodeTextarea = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CODE_TEXTAREA_DEFAULT_PROPS )
 	const [ value, setValue ] = useState( props.value )
 	const [ codeMirror, setCodeMirror ] = useState( null )
 	const textAeraRef = useRef()
@@ -54,7 +56,7 @@ const CodeTextarea = props => {
 	/>
 }
 
-CodeTextarea.defaultProps = {
+const CODE_TEXTAREA_DEFAULT_PROPS = {
 	value: '',
 	onChange: () => {},
 	editorSettings: {},

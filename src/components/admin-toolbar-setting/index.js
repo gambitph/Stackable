@@ -3,8 +3,10 @@ import Button from '../button'
 import { ButtonGroup } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
+import { getPropsWithDefaults } from '../../util/props'
 
-const AdminToolbarSetting = props => {
+const AdminToolbarSetting = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADMIN_TOOLBAR_SETTING_DEFAULT_PROPS )
 	return (
 		<AdminBaseSetting
 			{ ...props }
@@ -76,7 +78,7 @@ const AdminToolbarSetting = props => {
 	)
 }
 
-AdminToolbarSetting.defaultProps = {
+const ADMIN_TOOLBAR_SETTING_DEFAULT_PROPS = {
 	controls: [],
 	label: '',
 	value: '',

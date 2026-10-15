@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { faGetIcon, faFetchIcon } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { pick } from 'lodash'
 
 /**
@@ -116,7 +117,8 @@ const addSVGAttributes = ( svgHTML, attributesToAdd = {}, attributesToRemove = [
 	return svgHTML.substring( 0, svgTagStart ) + newSvgTag + restOfSvg
 }
 
-const FontAwesomeIcon = memo( props => {
+const FontAwesomeIcon = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, FONT_AWESOME_ICON_DEFAULT_PROPS )
 	const {
 		svgAttrsToAdd = { width: '32', height: '32' },
 		svgAttrsToRemove = [ 'id', 'data-name' ],
@@ -196,7 +198,7 @@ FontAwesomeIcon.Content = props => {
 	return <RawHTML { ...propsToPass }>{ prependRenderString + svg }</RawHTML>
 }
 
-FontAwesomeIcon.defaultProps = {
+const FONT_AWESOME_ICON_DEFAULT_PROPS = {
 	ariaLabel: '',
 	prefix: '',
 	iconName: '',

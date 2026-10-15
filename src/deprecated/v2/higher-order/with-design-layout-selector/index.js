@@ -12,6 +12,7 @@ import { useMemo } from '@wordpress/element'
  * Internal dependencies
  */
 import DesignLayoutSelector from './design-layout-selector'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 // When block is listed, it should not open the selector initially.
 const blocksShouldNotOpenSelectorInitially = [
@@ -21,7 +22,8 @@ const blocksShouldNotOpenSelectorInitially = [
 
 const withDesignLayoutSelector = createHigherOrderComponent(
 	WrappedComponent => {
-		const NewComponent = props => {
+		const NewComponent = incomingProps => {
+			const props = getPropsWithDefaults( incomingProps, NEW_COMPONENT_DEFAULT_PROPS )
 			const hasEmptyDesign = typeof props.attributes.design !== 'undefined' && props.attributes.design === ''
 			const hasLayoutPicker = useMemo( () => {
 				return ! blocksShouldNotOpenSelectorInitially.includes( props.name )
@@ -34,10 +36,11 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 			return <WrappedComponent { ...props } />
 		}
 
-		NewComponent.defaultProps = {
-			...( WrappedComponent.defaultProps || {} ),
+		const NEW_COMPONENT_DEFAULT_PROPS = {
+			...( WrappedComponent.stackableDefaultProps || WrappedComponent.defaultProps || {} ),
 			attributes: {},
 		}
+		NewComponent.stackableDefaultProps = NEW_COMPONENT_DEFAULT_PROPS
 
 		return NewComponent
 	},

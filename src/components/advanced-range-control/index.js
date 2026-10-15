@@ -20,6 +20,7 @@ import {
 import {
 	extractNumbersAndUnits, getCSSVarName, convertToPxIfUnsupported,
 } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { settings as stackableSettings } from 'stackable'
 
 /**
@@ -32,7 +33,8 @@ import { Button } from '@wordpress/components'
 import { settings } from '@wordpress/icons'
 import { dispatch } from '@wordpress/data'
 
-const AdvancedRangeControl = props => {
+const AdvancedRangeControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADVANCED_RANGE_CONTROL_DEFAULT_PROPS )
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
@@ -325,7 +327,7 @@ const AdvancedRangeControl = props => {
 	)
 }
 
-AdvancedRangeControl.defaultProps = {
+const ADVANCED_RANGE_CONTROL_DEFAULT_PROPS = {
 	allowReset: true,
 	onReset: undefined,
 	showReset: undefined,

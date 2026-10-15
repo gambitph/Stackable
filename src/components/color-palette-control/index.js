@@ -32,6 +32,7 @@ import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
 import { useBlockColorSchemes } from '~stackable/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
 const popoverProps = {
 	placement: 'left-start',
@@ -102,7 +103,8 @@ addFilter( 'stackable.color-palette-control.color-value', 'stackable/color-palet
 	return value
 } )
 
-const ColorPaletteControl = memo( props => {
+const ColorPaletteControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLOR_PALETTE_CONTROL_DEFAULT_PROPS )
 	const {
 		label,
 		className = '',
@@ -238,7 +240,7 @@ const ColorPaletteControl = memo( props => {
 	)
 } )
 
-ColorPaletteControl.defaultProps = {
+const COLOR_PALETTE_CONTROL_DEFAULT_PROPS = {
 	allowReset: true,
 	default: '',
 

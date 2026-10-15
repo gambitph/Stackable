@@ -9,8 +9,10 @@ import { i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const ColumnPaddingControl = props => {
+const ColumnPaddingControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMN_PADDING_CONTROL_DEFAULT_PROPS )
 	const {
 		label,
 		setAttributes,
@@ -108,7 +110,7 @@ const ColumnPaddingControl = props => {
 	</Fragment>
 }
 
-ColumnPaddingControl.defaultProps = {
+const COLUMN_PADDING_CONTROL_DEFAULT_PROPS = {
 	setAttributes: () => {},
 	label: __( 'Column Paddings', i18n ),
 	attributes: {},

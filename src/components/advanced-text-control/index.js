@@ -18,8 +18,10 @@ import { memo } from '@wordpress/element'
  */
 import classnames from 'classnames'
 import { isEqual } from 'lodash'
+import { getPropsWithDefaults } from '../../util/props'
 
-const AdvancedTextControl = memo( props => {
+const AdvancedTextControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADVANCED_TEXT_CONTROL_DEFAULT_PROPS )
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
@@ -81,7 +83,7 @@ const AdvancedTextControl = memo( props => {
 	)
 }, isEqual )
 
-AdvancedTextControl.defaultProps = {
+const ADVANCED_TEXT_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	isMultiline: false,
 	allowReset: true,

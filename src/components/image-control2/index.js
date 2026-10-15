@@ -27,8 +27,10 @@ import {
 } from '@wordpress/element'
 import { MediaUpload } from '@wordpress/block-editor'
 import { currentUserHasCapability } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ImageControl = memo( props => {
+const ImageControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_CONTROL_DEFAULT_PROPS )
 	const attrNameId = useAttributeName( `${ props.attribute }Id`, props.responsive, props.hover )
 	const attrNameUrl = useAttributeName( `${ props.attribute }Url`, props.responsive, props.hover )
 	const attrWidthAttribute = useAttributeName( `${ props.attribute }HeightAttribute`, props.responsive, props.hover )
@@ -212,7 +214,7 @@ const ImageControl = memo( props => {
 	)
 } )
 
-ImageControl.defaultProps = {
+const IMAGE_CONTROL_DEFAULT_PROPS = {
 	label: '',
 
 	attribute: '',

@@ -16,8 +16,10 @@ import { memo } from '@wordpress/element'
  */
 import classnames from 'classnames'
 import { isEqual } from 'lodash'
+import { getPropsWithDefaults } from '../../util/props'
 
-const AdvancedSelectControl = memo( props => {
+const AdvancedSelectControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADVANCED_SELECT_CONTROL_DEFAULT_PROPS )
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
@@ -48,7 +50,7 @@ const AdvancedSelectControl = memo( props => {
 	)
 }, isEqual )
 
-AdvancedSelectControl.defaultProps = {
+const ADVANCED_SELECT_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	url: '',
 
