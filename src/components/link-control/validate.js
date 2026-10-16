@@ -16,9 +16,36 @@ import {
 } from '@wordpress/url'
 
 const SHORTCODE_VALUE = /^\s*\[[^\]]+\]/
+const EXECUTABLE_PROTOCOLS = [ 'javascript', 'data', 'vbscript' ]
+
+/**
+ * True when the value starts with a browser-executable protocol.
+ * ASCII control characters and whitespace are ignored because browsers remove
+ * them while parsing schemes such as `java\nscript:`.
+ *
+ * @param {*} value
+ * @return {boolean} Whether the value uses an executable protocol.
+ */
+export const hasExecutableProtocol = value => {
+	if ( typeof value !== 'string' ) {
+		return false
+	}
+
+	const separatorIndex = value.indexOf( ':' )
+	if ( separatorIndex === -1 ) {
+		return false
+	}
+
+	const protocol = value
+		.slice( 0, separatorIndex )
+		.replace( /[\u0000-\u0020\u007f]/g, '' )
+		.toLowerCase()
+
+	return EXECUTABLE_PROTOCOLS.includes( protocol )
+}
 
 const prependHTTPS = url => {
-	if ( getProtocol( url ) ) {
+	if ( getProtocol( url ) && ! hasPossibleTLD( url ) ) {
 		return url
 	}
 
@@ -39,17 +66,16 @@ const isRelativePath = value =>
 	value.startsWith( '../' )
 
 /**
- * True when the string looks like a domain with a TLD, e.g. `example.com`.
- *
- * Mirrors Gutenberg's LinkControl heuristic.
+ * True when the string looks like a bare domain, with an optional port.
+ * Domain labels are limited to 63 characters by DNS.
  *
  * @param {string} url
- * @param {number} maxLength
- * @return {boolean} Whether the value has a possible TLD.
+ * @return {boolean} Whether the value looks like a bare domain.
  */
-const hasPossibleTLD = ( url, maxLength = 6 ) => {
+const hasPossibleTLD = url => {
 	const cleanedURL = url.split( /[?#]/ )[ 0 ]
-	return new RegExp( `^[^/\\s]+\\.[a-zA-Z_]{2,${ maxLength }}(?:\\/|$)` ).test( cleanedURL )
+	const possibleTLD = '[a-zA-Z](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])'
+	return new RegExp( `^[^/\\s:]+\\.${ possibleTLD }(?::\\d{1,5})?(?:\\/|$)` ).test( cleanedURL )
 }
 
 /**
@@ -88,6 +114,9 @@ export const isPassThroughLinkValue = value => {
 	const trimmed = value.trim()
 	if ( ! trimmed ) {
 		return true
+	}
+	if ( hasExecutableProtocol( trimmed ) ) {
+		return false
 	}
 
 	if ( hasDynamicContentToken( trimmed ) ) {
@@ -128,6 +157,10 @@ export const isValidUrlLikeValue = value => {
  * @return {boolean} Whether the value is allowed.
  */
 export const isValidLinkValue = value => {
+	if ( hasExecutableProtocol( value ) ) {
+		return false
+	}
+
 	if ( isPassThroughLinkValue( value ) ) {
 		return true
 	}
@@ -148,6 +181,10 @@ export const normalizeLinkValue = value => {
 	}
 
 	const trimmed = value.trim()
+	if ( hasExecutableProtocol( trimmed ) ) {
+		return ''
+	}
+
 	if ( isPassThroughLinkValue( trimmed ) ) {
 		return trimmed
 	}

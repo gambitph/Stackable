@@ -13,7 +13,7 @@ test.describe( 'Link control URL input', () => {
 		}
 	} )
 
-	test( 'accepts URLs, shortcodes, and other non-URL values', async ( {
+	test( 'accepts safe link values and rejects executable protocols', async ( {
 		page,
 		admin,
 		editor,
@@ -85,11 +85,23 @@ test.describe( 'Link control URL input', () => {
 			return attributes.linkUrl
 		} ).toBe( 'docs/readme.md' )
 
-		await setLinkValue( 'example.com' )
+		await setLinkValue( 'example.org' )
 		await expect.poll( async () => {
 			const attributes = await editor.getBlockAttributes( clientId )
 			return attributes.linkUrl
-		} ).toBe( 'https://example.com' )
+		} ).toBe( 'https://example.org' )
+
+		await setLinkValue( 'example.photography' )
+		await expect.poll( async () => {
+			const attributes = await editor.getBlockAttributes( clientId )
+			return attributes.linkUrl
+		} ).toBe( 'https://example.photography' )
+
+		await setLinkValue( 'example.com:8443' )
+		await expect.poll( async () => {
+			const attributes = await editor.getBlockAttributes( clientId )
+			return attributes.linkUrl
+		} ).toBe( 'https://example.com:8443' )
 
 		await setLinkValue( '[my_shortcode]' )
 		await expect.poll( async () => {
@@ -118,5 +130,24 @@ test.describe( 'Link control URL input', () => {
 			return attributes.linkUrl
 		} ).toBe( 'https://' )
 		await expect( linkControl ).toContainText( 'Please enter a valid URL.' )
+
+		await input.click()
+		await input.fill( 'javascript:alert(document.domain)' )
+		await expect( linkControl ).toContainText( 'Please enter a valid URL.' )
+		await input.blur()
+		await expect.poll( async () => {
+			const attributes = await editor.getBlockAttributes( clientId )
+			return attributes.linkUrl
+		} ).toBe( '' )
+
+		await page.evaluate( id => {
+			window.wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( id, {
+				linkUrl: 'javascript:alert(document.domain)',
+			} )
+		}, clientId )
+		await editor.saveDraft()
+
+		const savedContent = await editor.getEditedPostContent()
+		expect( savedContent ).not.toContain( 'href="javascript:' )
 	} )
 } )

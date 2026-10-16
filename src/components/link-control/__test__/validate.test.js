@@ -61,9 +61,24 @@ describe( 'link-control validation', () => {
 		expect( isValidLinkValue( 'http://' ) ).toBe( false )
 	} )
 
+	it.each( [
+		'javascript:alert(1)',
+		'JAVASCRIPT:alert(1)',
+		'java\nscript:alert(1)',
+		'java\tscript:alert(1)',
+		'data:text/html,<script>alert(1)</script>',
+		'vbscript:msgbox(1)',
+	] )( 'rejects executable protocol value %s', value => {
+		expect( isPassThroughLinkValue( value ) ).toBe( false )
+		expect( isValidLinkValue( value ) ).toBe( false )
+		expect( normalizeLinkValue( value ) ).toBe( '' )
+	} )
+
 	it( 'prepends https to bare domains on normalize', () => {
 		expect( normalizeLinkValue( 'example.com' ) ).toBe( 'https://example.com' )
 		expect( normalizeLinkValue( 'example.com/about' ) ).toBe( 'https://example.com/about' )
+		expect( normalizeLinkValue( 'example.photography' ) ).toBe( 'https://example.photography' )
+		expect( normalizeLinkValue( 'example.com:8443' ) ).toBe( 'https://example.com:8443' )
 		expect( normalizeLinkValue( '  example.com  ' ) ).toBe( 'https://example.com' )
 		expect( normalizeLinkValue( 'http://192.168.0.10' ) ).toBe( 'http://192.168.0.10' )
 		expect( normalizeLinkValue( 'https://example.com' ) ).toBe( 'https://example.com' )
