@@ -9,7 +9,7 @@ import domReady from '@wordpress/dom-ready'
 import {
 	useState, useRef, useEffect,
 } from '@wordpress/element'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 
 let isPolling = false
 let cimoData = { status: cimo?.status, action: cimo?.action }
@@ -20,8 +20,11 @@ const CimoDownloadNotice = props => {
 	const pollCountRef = useRef( 0 )
 
 	const onDismiss = () => {
-		const settings = new models.Settings( { stackable_hide_cimo_notice: true } ) // eslint-disable-line camelcase
-		settings.save()
+		apiFetch( {
+			path: '/wp/v2/settings',
+			method: 'POST',
+			data: { stackable_hide_cimo_notice: true }, // eslint-disable-line camelcase
+		} )
 
 		if ( cimo ) {
 			cimo.hideNotice = true

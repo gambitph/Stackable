@@ -7,7 +7,7 @@ import {
 } from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
 import { Spinner } from '@wordpress/components'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 
 /**
  * External dependencies
@@ -123,8 +123,11 @@ export const OptimizationSettings = ( { searchSettings } ) => {
 	}, [] )
 
 	const updateOptimizeScriptLoad = value => {
-		const model = new models.Settings( { stackable_optimize_script_load: value } ) // eslint-disable-line camelcase
-		model.save()
+		apiFetch( {
+			path: '/wp/v2/settings',
+			method: 'POST',
+			data: { stackable_optimize_script_load: value }, // eslint-disable-line camelcase
+		} )
 		setOptimizeScriptLoad( value )
 	}
 

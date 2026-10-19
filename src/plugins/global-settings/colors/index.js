@@ -20,7 +20,7 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, useSelect } from '@wordpress/data'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 
 export { GlobalColorStyles }
 
@@ -80,8 +80,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideThemeColors: value,
 		} )
 
-		const settings = new models.Settings( { stackable_global_hide_theme_colors: value } ) // eslint-disable-line camelcase
-		settings.save()
+		apiFetch( {
+			path: '/wp/v2/settings',
+			method: 'POST',
+			data: { stackable_global_hide_theme_colors: value }, // eslint-disable-line camelcase
+		} )
 	}
 
 	const onChangeHideDefaultColors = value => {
@@ -89,8 +92,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideDefaultColors: value,
 		} )
 
-		const settings = new models.Settings( { stackable_global_hide_default_colors: value } ) // eslint-disable-line camelcase
-		settings.save()
+		apiFetch( {
+			path: '/wp/v2/settings',
+			method: 'POST',
+			data: { stackable_global_hide_default_colors: value }, // eslint-disable-line camelcase
+		} )
 	}
 
 	const onChangeHideSiteEditorColors = value => {
@@ -98,8 +104,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideSiteEditorColors: value,
 		} )
 
-		const settings = new models.Settings( { stackable_global_hide_site_editor_colors: value } ) // eslint-disable-line camelcase
-		settings.save()
+		apiFetch( {
+			path: '/wp/v2/settings',
+			method: 'POST',
+			data: { stackable_global_hide_site_editor_colors: value }, // eslint-disable-line camelcase
+		} )
 	}
 
 	const ColorToggleControls = applyFilters( 'stackable.global-settings.inspector.global-colors.toggle-controls', Fragment )

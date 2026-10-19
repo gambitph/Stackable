@@ -39,7 +39,7 @@ import {
 import {
 	Fragment, useEffect, useRef, useState,
 } from '@wordpress/element'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
@@ -240,10 +240,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		clearTimeout( saveTypographyThrottle )
 		saveTypographyThrottle = setTimeout( () => {
-			const model = new models.Settings( {
-				stackable_global_typography: [ newSettings ], // eslint-disable-line
+			apiFetch( {
+				path: '/wp/v2/settings',
+				method: 'POST',
+				data: {
+					stackable_global_typography: [ newSettings ], // eslint-disable-line
+				},
 			} )
-			model.save()
 		}, 500 )
 
 		dispatch( 'stackable/global-typography' ).updateSettings( newSettings )
@@ -254,10 +257,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		clearTimeout( saveSelectedFontPairThrottle )
 		saveSelectedFontPairThrottle = setTimeout( () => {
-			const model = new models.Settings( {
-				stackable_selected_font_pair: name, // eslint-disable-line
+			apiFetch( {
+				path: '/wp/v2/settings',
+				method: 'POST',
+				data: {
+					stackable_selected_font_pair: name, // eslint-disable-line
+				},
 			} )
-			model.save()
 		}, 500 )
 	}
 
@@ -266,27 +272,36 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		clearTimeout( saveCustomFontPairsThrottle )
 		saveCustomFontPairsThrottle = setTimeout( () => {
-			const model = new models.Settings( {
-				stackable_custom_font_pairs: [ ...fontPairs ] , // eslint-disable-line
+			apiFetch( {
+				path: '/wp/v2/settings',
+				method: 'POST',
+				data: {
+					stackable_custom_font_pairs: [ ...fontPairs ] , // eslint-disable-line
+				},
 			} )
-			model.save()
 		}, 500 )
 	}
 
 	const changeApplySettingsTo = value => {
 		setApplySettingsTo( value )
-		const model = new models.Settings( {
-			stackable_global_typography_apply_to: value, // eslint-disable-line
+		apiFetch( {
+			path: '/wp/v2/settings',
+			method: 'POST',
+			data: {
+				stackable_global_typography_apply_to: value, // eslint-disable-line
+			},
 		} )
-		model.save()
 	}
 
 	const changeIsApplyBodyToHTML = value => {
 		setIsApplyBodyToHTML( value )
-		const model = new models.Settings( {
-			stackable_is_apply_body_to_html: value, // eslint-disable-line
+		apiFetch( {
+			path: '/wp/v2/settings',
+			method: 'POST',
+			data: {
+				stackable_is_apply_body_to_html: value, // eslint-disable-line
+			},
 		} )
-		model.save()
 	}
 
 	const updateTypeScale = value => {

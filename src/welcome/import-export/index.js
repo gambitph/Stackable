@@ -11,7 +11,7 @@ import {
 import {
 	useState, useMemo, Fragment,
 } from '@wordpress/element'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 
 /**
  * External dependencies
@@ -90,8 +90,11 @@ const ImportSettings = ( {
 			}
 
 			if ( Object.keys( settingsToSave ).length > 0 ) {
-				const model = new models.Settings( settingsToSave )
-				await model.save()
+				await apiFetch( {
+					path: '/wp/v2/settings',
+					method: 'POST',
+					data: settingsToSave,
+				} )
 			}
 
 			setNotice( __( 'Settings imported successfully.', i18n ) )

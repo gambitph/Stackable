@@ -11,7 +11,7 @@ import {
 } from '@wordpress/components'
 import { useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 
 const MigrationModal = () => {
 	const [ isOpen, setIsOpen ] = useState( true )
@@ -23,8 +23,11 @@ const MigrationModal = () => {
 
 	const save = ( settings, refresh = false ) => {
 		setIsBusy( true )
-		const model = new models.Settings( settings )
-		model.save().then( () => {
+		apiFetch( {
+			path: '/wp/v2/settings',
+			method: 'POST',
+			data: settings,
+		} ).then( () => {
 			setIsBusy( false )
 			setIsOpen( false )
 			// Reload the page.

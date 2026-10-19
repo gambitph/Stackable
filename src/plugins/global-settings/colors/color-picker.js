@@ -18,7 +18,7 @@ import { useRef } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 import { __, sprintf } from '@wordpress/i18n'
 import { ColorIndicator, ColorPicker } from '@wordpress/components'
 
@@ -61,8 +61,11 @@ const ColorPickers = props => {
 		// Save settings.
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			const settings = new models.Settings( { stackable_global_colors: [ newColors ] } ) // eslint-disable-line camelcase
-			settings.save()
+			apiFetch( {
+				path: '/wp/v2/settings',
+				method: 'POST',
+				data: { stackable_global_colors: [ newColors ] }, // eslint-disable-line camelcase
+			} )
 		}, 300 )
 
 		// Update our store.

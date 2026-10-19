@@ -6,7 +6,6 @@ import { sortBy } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { loadPromise } from '@wordpress/api'
 import apiFetch from '@wordpress/api-fetch'
 
 // Collect all the blocks and their variations for enabling/disabling and sort
@@ -59,11 +58,12 @@ let fetchingPromise = null
  */
 export const fetchSettings = () => {
 	if ( ! fetchingPromise ) {
-		fetchingPromise = loadPromise.then( async () => {
-			const response = await apiFetch( {
-				path: '/stackable/v3/settings/',
-				method: 'GET',
-			} )
+		// apiFetch can call a known REST path directly, so it does not need
+		// @wordpress/api's loadPromise.
+		fetchingPromise = apiFetch( {
+			path: '/stackable/v3/settings/',
+			method: 'GET',
+		} ).then( response => {
 			fetchingPromise = null
 			return response
 		} )

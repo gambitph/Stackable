@@ -18,7 +18,7 @@ import domReady from '@wordpress/dom-ready'
 import {
 	Button, Flex, FlexItem, Spinner, CheckboxControl, Modal,
 } from '@wordpress/components'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
@@ -546,8 +546,11 @@ const Settings = () => {
 		}
 		setIsSaving( true )
 		setIsRecentlySaved( true )
-		const model = new models.Settings( unsavedChanges )
-		model.save().then( () => {
+		apiFetch( {
+			path: '/wp/v2/settings',
+			method: 'POST',
+			data: unsavedChanges,
+		} ).then( () => {
 			// Add a little more time for the spinner for better feedback
 			setTimeout( () => {
 				setIsSaving( false )

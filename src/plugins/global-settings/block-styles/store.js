@@ -11,7 +11,7 @@ import {
 } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
 import { __ } from '@wordpress/i18n'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 import { cloneDeep } from 'lodash'
 
 // Include all the stored state.
@@ -45,9 +45,12 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 				delete newBlockStyles[ action.blockName ]
 			}
 
-			// eslint-disable-next-line camelcase
-			const settings = new models.Settings( { stackable_global_block_styles: newBlockStyles } )
-			settings.save()
+			apiFetch( {
+				path: '/wp/v2/settings',
+				method: 'POST',
+				// eslint-disable-next-line camelcase
+				data: { stackable_global_block_styles: newBlockStyles },
+			} )
 
 			return newBlockStyles
 		}

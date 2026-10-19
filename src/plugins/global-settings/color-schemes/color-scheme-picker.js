@@ -31,7 +31,7 @@ import {
 	useRef, useState, useEffect,
 } from '@wordpress/element'
 import { useSelect, dispatch } from '@wordpress/data'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 import { __, sprintf } from '@wordpress/i18n'
 import { applyFilters, doAction } from '@wordpress/hooks'
 
@@ -146,15 +146,18 @@ const ColorSchemePicker = props => {
 	const saveColorSchemeSettings = updatedColorSchemes => {
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			const settings = new models.Settings( {
-				// Store an empty array if all color schemes have no values,
-				// which optimizes the frontend by skipping unnecessary color scheme calculations.
-				// Otherwise, save the provided updatedColorSchemes array.
-				stackable_global_color_schemes: hasNoColorSchemes( updatedColorSchemes ) ? [] : updatedColorSchemes, // eslint-disable-line camelcase
-				// Clear the cached CSS when the color scheme is updated
-				stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
+			apiFetch( {
+				path: '/wp/v2/settings',
+				method: 'POST',
+				data: {
+					// Store an empty array if all color schemes have no values,
+					// which optimizes the frontend by skipping unnecessary color scheme calculations.
+					// Otherwise, save the provided updatedColorSchemes array.
+					stackable_global_color_schemes: hasNoColorSchemes( updatedColorSchemes ) ? [] : updatedColorSchemes, // eslint-disable-line camelcase
+					// Clear the cached CSS when the color scheme is updated
+					stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
+				},
 			} )
-			settings.save()
 		}, 300 )
 
 		// Update our store.

@@ -14,7 +14,7 @@ import { useDeviceType, useBlockHoverState } from '~stackable/hooks'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { models } from '@wordpress/api'
+import apiFetch from '@wordpress/api-fetch'
 import { useSelect, dispatch } from '@wordpress/data'
 
 export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayHoverNotice, saveTimeout ) => {
@@ -52,8 +52,11 @@ export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayH
 	const saveSettings = newSettings => {
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			const settings = new models.Settings( { [ optionName ]: newSettings } ) // eslint-disable-line camelcase
-			settings.save()
+			apiFetch( {
+				path: '/wp/v2/settings',
+				method: 'POST',
+				data: { [ optionName ]: newSettings },
+			} )
 		}, 300 )
 
 		// Update our store.
