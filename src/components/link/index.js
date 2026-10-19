@@ -9,6 +9,11 @@ import { omit } from 'lodash'
  */
 import { forwardRef } from '@wordpress/element'
 
+/**
+ * Internal dependencies
+ */
+import { hasExecutableProtocol } from '../link-control/validate'
+
 const Link = forwardRef( ( props, ref ) => {
 	const {
 		children,
@@ -48,6 +53,10 @@ Link.Content = props => {
 
 	const propsToPass = omit( props, [ 'target', 'rel', 'tagName' ] )
 	const TagName = props.tagName || 'a'
+
+	if ( hasExecutableProtocol( propsToPass.href ) ) {
+		propsToPass.href = undefined
+	}
 
 	if ( props.target ) {
 		propsToPass.target = props.target
