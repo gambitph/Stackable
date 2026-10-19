@@ -521,6 +521,12 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 		 */
 		private function get_extended_column_default_rules() {
 			return array(
+				'extended-column-gap' => array(
+					'selector' => '.wp-block-stackable-columns.stk-block-columns > .stk-block-content, .wp-block-stackable-columns > .stk-block-columns > .stk-block-content',
+					'declarations' => array(
+						'--stk-column-gap' => 'var(--stk-columns-column-gap, 0px)',
+					),
+				),
 				'extended-column-defaults' => array(
 					'selector' => '.wp-block-stackable-columns.stk-block-columns, .wp-block-stackable-columns > .stk-block-columns',
 					'declarations' => array(
