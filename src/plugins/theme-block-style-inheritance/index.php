@@ -63,7 +63,7 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 					'description' => __( 'Use updated Columns spacing and inherit structural styles from equivalent WordPress blocks', STACKABLE_I18N ),
 					'sanitize_callback' => 'rest_sanitize_boolean',
 					'show_in_rest' => true,
-					'default' => true,
+					'default' => false,
 				)
 			);
 		}
@@ -107,7 +107,7 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 		 */
 		function add_block_style_inheritance( $current_css ) {
 			$disable_block_style_inheritance = get_option( 'stackable_disable_block_style_inheritance' );
-			$enable_extended_block_style_inheritance = (bool) get_option( 'stackable_enable_extended_block_style_inheritance', true );
+			$enable_extended_block_style_inheritance = (bool) get_option( 'stackable_enable_extended_block_style_inheritance', false );
 			$extended_column_default_rules = $enable_extended_block_style_inheritance
 				? $this->get_extended_column_default_rules()
 				: array();
@@ -771,7 +771,7 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 
 		public function add_setting( $settings ) {
             $settings['stackable_disable_block_style_inheritance'] = get_option( 'stackable_disable_block_style_inheritance', false );
-			$enable_extended_block_style_inheritance = (bool) get_option( 'stackable_enable_extended_block_style_inheritance', true );
+			$enable_extended_block_style_inheritance = (bool) get_option( 'stackable_enable_extended_block_style_inheritance', false );
 			$settings['stackable_enable_extended_block_style_inheritance'] = $enable_extended_block_style_inheritance;
 			// Override editor placeholders only when the updated Columns defaults are active.
 			$settings['stackable_column_spacing_defaults'] = $enable_extended_block_style_inheritance
