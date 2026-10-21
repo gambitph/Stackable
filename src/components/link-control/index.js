@@ -6,9 +6,8 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import {
-	__experimentalLinkControl as _LinkControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
-} from '@wordpress/block-editor'
+// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+import { __experimentalLinkControl as _LinkControl } from '@wordpress/block-editor'
 import { BaseControl as _BaseControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
@@ -19,8 +18,10 @@ import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import { useControlHandlers } from '../base-control2/hooks'
 import { ResetButton } from '../base-control2/reset-button'
+import { getPropsWithDefaults } from '../../util/props'
 
-const LinkControl = props => {
+const LinkControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, LINK_CONTROL_DEFAULT_PROPS )
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
@@ -66,7 +67,7 @@ const LinkControl = props => {
 	)
 }
 
-LinkControl.defaultProps = {
+const LINK_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	label: '',
 	screens: [ 'desktop' ],

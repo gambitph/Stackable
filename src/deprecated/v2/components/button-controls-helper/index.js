@@ -3,6 +3,7 @@
  */
 import { ButtonControls } from '..'
 import { __getValue } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import { camelCase } from 'lodash'
 import { i18n } from 'stackable'
 
@@ -11,7 +12,8 @@ import { i18n } from 'stackable'
  */
 import { sprintf, __ } from '@wordpress/i18n'
 
-const ButtonControlsHelper = props => {
+const ButtonControlsHelper = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BUTTON_CONTROLS_HELPER_DEFAULT_PROPS )
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getValue = __getValue( props.blockAttributes, getAttrName, '' )
@@ -122,7 +124,7 @@ const ButtonControlsHelper = props => {
 	)
 }
 
-ButtonControlsHelper.defaultProps = {
+const BUTTON_CONTROLS_HELPER_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},

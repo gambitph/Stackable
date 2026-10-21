@@ -25,6 +25,7 @@ import {
 	Fragment, useState, useEffect, useRef, memo, useContext,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { getPropsWithDefaults } from '../../util/props'
 
 const MIN_COLUMN_WIDTH = 30
 
@@ -39,7 +40,8 @@ const formatLabel = value => {
 	return ( Math.trunc( value * 10 ) / 10 ).toFixed( 1 )
 }
 
-const ResizableColumn = props => {
+const ResizableColumn = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, RESIZABLE_COLUMN_DEFAULT_PROPS )
 	const { clientId } = useBlockEditContext()
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
@@ -536,7 +538,8 @@ const ResizableColumn = props => {
 	)
 }
 
-const ResizableTooltip = memo( props => {
+const ResizableTooltip = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, RESIZABLE_TOOLTIP_DEFAULT_PROPS )
 	const {
 		adjacentBlocks, isOnlyBlock, blockIndex, isLastBlock, isFirstBlock,
 	} = props
@@ -687,7 +690,7 @@ const ResizableTooltip = memo( props => {
 const noobj = {}
 const noop = () => {}
 
-ResizableTooltip.defaultProps = {
+const RESIZABLE_TOOLTIP_DEFAULT_PROPS = {
 	isVisible: true,
 	value: '',
 	onChange: noop,
@@ -695,7 +698,7 @@ ResizableTooltip.defaultProps = {
 	onTogglePopup: null,
 }
 
-ResizableColumn.defaultProps = {
+const RESIZABLE_COLUMN_DEFAULT_PROPS = {
 	className: '',
 	context: null,
 	showHandle: true,

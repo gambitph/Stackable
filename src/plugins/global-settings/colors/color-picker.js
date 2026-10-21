@@ -21,6 +21,7 @@ import {
 import { models } from '@wordpress/api'
 import { __, sprintf } from '@wordpress/i18n'
 import { ColorIndicator, ColorPicker } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../../util/props'
 
 let saveTimeout = null
 
@@ -37,7 +38,8 @@ const ItemPickerColor = ( { item, onChange } ) => {
 	</div>
 }
 
-const ColorPickers = props => {
+const ColorPickers = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLOR_PICKERS_DEFAULT_PROPS )
 	const ref = useRef()
 	const {
 		colors,
@@ -163,7 +165,7 @@ const ColorPickers = props => {
 	)
 }
 
-ColorPickers.defaultProps = {
+const COLOR_PICKERS_DEFAULT_PROPS = {
 	className: '',
 	label: '',
 	onReset: () => {},

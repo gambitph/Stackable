@@ -11,10 +11,12 @@ import { __ } from '@wordpress/i18n'
 import { Dashicon } from '@wordpress/components'
 import { memo } from '@wordpress/element'
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
 const icon = <Dashicon icon="image-rotate" />
 
-export const ResetButton = memo( props => {
+export const ResetButton = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, RESET_BUTTON_DEFAULT_PROPS )
 	const showReset = props.showReset !== null
 		? props.showReset
 		: ( typeof props.value !== 'undefined' && props.value !== props.default && props.value !== props.placeholder )
@@ -40,7 +42,7 @@ export const ResetButton = memo( props => {
 	)
 } )
 
-ResetButton.defaultProps = {
+const RESET_BUTTON_DEFAULT_PROPS = {
 	allowReset: true,
 	showReset: null,
 	value: '',

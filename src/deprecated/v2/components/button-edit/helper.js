@@ -12,8 +12,10 @@ import { sprintf } from '@wordpress/i18n'
  * External dependencies
  */
 import { camelCase } from 'lodash'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const ButtonEditHelper = props => {
+const ButtonEditHelper = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BUTTON_EDIT_HELPER_DEFAULT_PROPS )
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getAttrValue = ( attrName, defaultValue = '' ) => {
@@ -52,14 +54,15 @@ const ButtonEditHelper = props => {
 	)
 }
 
-ButtonEditHelper.defaultProps = {
+const BUTTON_EDIT_HELPER_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},
 	designDefault: 'basic',
 }
 
-ButtonEditHelper.Content = props => {
+ButtonEditHelper.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BUTTON_EDIT_HELPER_CONTENT_DEFAULT_PROPS )
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getAttrValue = ( attrName, defaultValue = '' ) => {
 		const value = props.blockAttributes[ getAttrName( attrName ) ]
@@ -86,7 +89,7 @@ ButtonEditHelper.Content = props => {
 	)
 }
 
-ButtonEditHelper.Content.defaultProps = {
+const BUTTON_EDIT_HELPER_CONTENT_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	blockAttributes: {},
 	designDefault: 'basic',

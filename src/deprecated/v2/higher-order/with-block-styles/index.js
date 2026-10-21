@@ -8,9 +8,11 @@ import { BlockStyles } from '../../components'
  */
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 const withBlockStyles = ( styleFunction, options = {} ) => WrappedComponent => {
-	const NewComp = props => {
+	const NewComp = incomingProps => {
+		const props = getPropsWithDefaults( incomingProps, NEW_COMP_DEFAULT_PROPS )
 		const newClassName = classnames( [
 			props.className,
 			props.attributes.uniqueClass,
@@ -34,13 +36,14 @@ const withBlockStyles = ( styleFunction, options = {} ) => WrappedComponent => {
 		return <WrappedComponent { ...props } className={ newClassName } styles={ BlockStyle } />
 	}
 
-	NewComp.defaultProps = {
-		...( WrappedComponent.defaultProps || {} ),
+	const NEW_COMP_DEFAULT_PROPS = {
+		...( WrappedComponent.stackableDefaultProps || WrappedComponent.defaultProps || {} ),
 		attributes: {},
 		blockName: '',
 		className: '',
 		mainClassName: '',
 	}
+	NewComp.stackableDefaultProps = NEW_COMP_DEFAULT_PROPS
 
 	return NewComp
 }

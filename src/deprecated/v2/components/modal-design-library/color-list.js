@@ -1,5 +1,6 @@
 import { useState } from '@wordpress/element'
 import { BaseControl, ColorPalette } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 const COLORS = {
 	red: {
@@ -48,7 +49,8 @@ const COLORS = {
 	},
 }
 
-const ColorList = props => {
+const ColorList = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLOR_LIST_DEFAULT_PROPS )
 	const [ selectedColors, setSelectedColors ] = useState( [] )
 
 	return (
@@ -79,7 +81,7 @@ const ColorList = props => {
 	)
 }
 
-ColorList.defaultProps = {
+const COLOR_LIST_DEFAULT_PROPS = {
 	onSelect: () => {},
 	colors: COLORS,
 }

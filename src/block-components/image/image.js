@@ -27,6 +27,7 @@ import {
 } from '@wordpress/element'
 import { select } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
 const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
 	if ( size === 'auto' ) {
@@ -67,7 +68,8 @@ const getImageClasses = props => {
 	} )
 }
 
-const Image = memo( props => {
+const Image = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_DEFAULT_PROPS )
 	const { isSelected } = useBlockEditContext()
 	const [ neverResized, setNeverResized ] = useState( true )
 	const [ isResizing, setIsResizing ] = useState( false )
@@ -333,7 +335,7 @@ const Image = memo( props => {
 	)
 } )
 
-Image.defaultProps = {
+const IMAGE_DEFAULT_PROPS = {
 	imageId: '',
 	enableClickToEdit: true,
 	showHandles: true,
@@ -374,7 +376,8 @@ Image.defaultProps = {
 }
 
 // Support responsive options.
-const ImageResponsive = props => {
+const ImageResponsive = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_RESPONSIVE_DEFAULT_PROPS )
 	const deviceType = useDeviceType()
 	const isDesktop = deviceType === 'Desktop'
 	const isMobile = deviceType === 'Mobile'
@@ -419,8 +422,8 @@ const ImageResponsive = props => {
 	)
 }
 
-ImageResponsive.defaultProps = {
-	...Image.defaultProps,
+const IMAGE_RESPONSIVE_DEFAULT_PROPS = {
+	...IMAGE_DEFAULT_PROPS,
 
 	widthTablet: '',
 	heightTablet: '',
@@ -440,7 +443,8 @@ ImageResponsive.defaultProps = {
 	defaultHeight: '',
 }
 
-const ImageContent = props => {
+const ImageContent = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_CONTENT_DEFAULT_PROPS )
 	const imageWrapperClasses = getImageWrapperClasses( props )
 	const imageClasses = getImageClasses( props )
 
@@ -508,7 +512,7 @@ const ImageContent = props => {
 	)
 }
 
-ImageContent.defaultProps = {
+const IMAGE_CONTENT_DEFAULT_PROPS = {
 	imageId: '',
 
 	hasWrapper: false,

@@ -17,6 +17,7 @@ import {
 	i18n, isPro, devMode,
 } from 'stackable'
 import { useLocalStorage } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import { last } from 'lodash'
 
 /**
@@ -30,7 +31,8 @@ import {
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-const ModalDesignLibrary = props => {
+const ModalDesignLibrary = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, MODAL_DESIGN_LIBRARY_DEFAULT_PROPS )
 	const [ search, setSearch ] = useState( props.search )
 	const [ block, setBlock ] = useState()
 	const [ plan, setPlan ] = useState( '' )
@@ -230,7 +232,7 @@ const ModalDesignLibrary = props => {
 	)
 }
 
-ModalDesignLibrary.defaultProps = {
+const MODAL_DESIGN_LIBRARY_DEFAULT_PROPS = {
 	search: '',
 	selectedBlock: '',
 	onClose: () => {},

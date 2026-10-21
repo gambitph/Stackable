@@ -17,8 +17,10 @@ import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useBlockAttributesContext } from '~stackable/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
-export const Edit = props => {
+export const Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const customCSSMinified = useBlockAttributesContext( attributes => attributes.customCSSMinified )
 
 	if ( ! showProNotice && ! isPro ) {
@@ -47,6 +49,6 @@ export const Edit = props => {
 	)
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	mainBlockClass: '',
 }

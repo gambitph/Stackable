@@ -2,8 +2,10 @@
  * Internal dependencies
  */
 import { separators } from './designs'
+import { getPropsWithDefaults } from '../../util/props'
 
-const Separator = props => {
+const Separator = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SEPARATOR_DEFAULT_PROPS )
 	const {
 		design,
 		inverted,
@@ -21,7 +23,7 @@ const Separator = props => {
 	)
 }
 
-Separator.defaultProps = {
+const SEPARATOR_DEFAULT_PROPS = {
 	className: '',
 	design: 'wave-1',
 	inverted: false,

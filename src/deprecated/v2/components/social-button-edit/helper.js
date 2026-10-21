@@ -8,9 +8,11 @@ import { sprintf } from '@wordpress/i18n'
  */
 import { camelCase, upperFirst } from 'lodash'
 import { SOCIAL_SITES } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import SocialButtonEdit from './'
 
-const SocialButtonEditHelper = props => {
+const SocialButtonEditHelper = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SOCIAL_BUTTON_EDIT_HELPER_DEFAULT_PROPS )
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getAttrValue = ( attrName, defaultValue = '' ) => {
@@ -44,14 +46,15 @@ const SocialButtonEditHelper = props => {
 	)
 }
 
-SocialButtonEditHelper.defaultProps = {
+const SOCIAL_BUTTON_EDIT_HELPER_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},
 	designDefault: 'basic',
 }
 
-SocialButtonEditHelper.Content = props => {
+SocialButtonEditHelper.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SOCIAL_BUTTON_EDIT_HELPER_CONTENT_DEFAULT_PROPS )
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getAttrValue = ( attrName, defaultValue = '' ) => {
 		const value = props.blockAttributes[ getAttrName( attrName ) ]
@@ -81,7 +84,7 @@ SocialButtonEditHelper.Content = props => {
 	)
 }
 
-SocialButtonEditHelper.Content.defaultProps = {
+const SOCIAL_BUTTON_EDIT_HELPER_CONTENT_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	blockAttributes: {},
 	designDefault: 'basic',

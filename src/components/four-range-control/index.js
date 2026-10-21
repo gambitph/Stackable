@@ -47,6 +47,7 @@ import {
 import {
 	extractNumbersAndUnits, getCSSVarName, convertToPxIfUnsupported,
 } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 const isEqualInitial = ( props, value, firstValue ) => {
 	let isEqual = true
@@ -57,7 +58,8 @@ const isEqualInitial = ( props, value, firstValue ) => {
 	return isEqual
 }
 
-const FourRangeControl = memo( props => {
+const FourRangeControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, FOUR_RANGE_CONTROL_DEFAULT_PROPS )
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const [ currentHoverState ] = useBlockHoverState()
@@ -991,7 +993,7 @@ const FourRangeControl = memo( props => {
 	)
 }, isEqual )
 
-FourRangeControl.defaultProps = {
+const FOUR_RANGE_CONTROL_DEFAULT_PROPS = {
 	defaultLocked: true,
 	hasLock: true,
 	enableTop: true,

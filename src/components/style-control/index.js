@@ -8,8 +8,10 @@ import classnames from 'classnames'
  */
 import { memo } from '@wordpress/element'
 import { ENTER, SPACE } from '@wordpress/keycodes'
+import { getPropsWithDefaults } from '../../util/props'
 
-const StyleControl = props => {
+const StyleControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, STYLE_CONTROL_DEFAULT_PROPS )
 	const { options, value } = props
 
 	return (
@@ -28,7 +30,7 @@ const StyleControl = props => {
 	)
 }
 
-StyleControl.defaultProps = {
+const STYLE_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	onSelect: () => {}, // The selected option object is returned
 	options: [], // An option has a value, icon or image, and a label
@@ -36,7 +38,8 @@ StyleControl.defaultProps = {
 	activeProperty: 'value', // The property to compare the value with
 }
 
-export const StyleControlOption = memo( props => {
+export const StyleControlOption = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, STYLE_CONTROL_OPTION_DEFAULT_PROPS )
 	const {
 		option,
 		isActive,
@@ -80,7 +83,7 @@ export const StyleControlOption = memo( props => {
 	)
 } )
 
-StyleControlOption.defaultProps = {
+const STYLE_CONTROL_OPTION_DEFAULT_PROPS = {
 	option: {},
 	isActive: false,
 	onSelect: () => {},

@@ -14,8 +14,10 @@ import { FormTokenField } from '@wordpress/components'
  * External dependencies
  */
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
-const AdvancedTokenField = props => {
+const AdvancedTokenField = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADVANCED_TOKEN_FIELD_DEFAULT_PROPS )
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
@@ -45,7 +47,7 @@ const AdvancedTokenField = props => {
 	)
 }
 
-AdvancedTokenField.defaultProps = {
+const ADVANCED_TOKEN_FIELD_DEFAULT_PROPS = {
 	className: '',
 	allowReset: true,
 	default: '',

@@ -19,12 +19,14 @@ import { BlockCssCompiler } from '~stackable/components'
  */
 import { memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
+import { getPropsWithDefaults } from '../util/props'
 
 const alignmentOptions = {
 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 }
 
-const BlockStyles = memo( props => {
+const BlockStyles = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_STYLES_DEFAULT_PROPS )
 	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
 	const numColumns = ( columnArrangement || '' ).split( ',' ).length
 
@@ -45,11 +47,12 @@ const BlockStyles = memo( props => {
 	)
 } )
 
-BlockStyles.defaultProps = {
+const BLOCK_STYLES_DEFAULT_PROPS = {
 	version: '',
 }
 
-BlockStyles.Content = props => {
+BlockStyles.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_STYLES_CONTENT_DEFAULT_PROPS )
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
@@ -72,7 +75,7 @@ BlockStyles.Content = props => {
 	)
 }
 
-BlockStyles.Content.defaultProps = {
+const BLOCK_STYLES_CONTENT_DEFAULT_PROPS = {
 	version: '',
 	attributes: {},
 }

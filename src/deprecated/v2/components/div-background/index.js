@@ -12,8 +12,10 @@ import { omit } from 'lodash'
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const DivBackground = props => {
+const DivBackground = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DIV_BACKGROUND_DEFAULT_PROPS )
 	const {
 		blockTag: BlockTag,
 		className,
@@ -38,7 +40,7 @@ const DivBackground = props => {
 	)
 }
 
-DivBackground.defaultProps = {
+const DIV_BACKGROUND_DEFAULT_PROPS = {
 	className: '',
 	backgroundAttrName: '%s',
 	blockProps: {},

@@ -13,11 +13,13 @@ import { Edit } from './edit'
 import { Link } from '../link'
 import { Icon } from '../icon'
 import { getButtonClasses } from './get-button-classes'
+import { getPropsWithDefaults } from '../../util/props'
 
 export { getButtonClasses }
 export { deprecateButtonGradientColor } from './deprecated'
 
-export const Button = props => {
+export const Button = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BUTTON_DEFAULT_PROPS )
 	const {
 		className,
 		buttonProps,
@@ -44,12 +46,13 @@ export const Button = props => {
 	)
 }
 
-Button.defaultProps = {
+const BUTTON_DEFAULT_PROPS = {
 	className: '',
 	buttonProps: {},
 }
 
-Button.Content = props => {
+Button.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BUTTON_CONTENT_DEFAULT_PROPS )
 	const {
 		className,
 		attributes,
@@ -72,7 +75,7 @@ Button.Content = props => {
 	)
 }
 
-Button.Content.defaultProps = {
+const BUTTON_CONTENT_DEFAULT_PROPS = {
 	className: '',
 	buttonProps: {},
 }

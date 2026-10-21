@@ -8,8 +8,10 @@ import { camelCase } from 'lodash'
  * WordPress dependenciess
  */
 import { sprintf } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const BackgroundControlsHelper = props => {
+const BackgroundControlsHelper = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BACKGROUND_CONTROLS_HELPER_DEFAULT_PROPS )
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getAttrValue = ( attrName, defaultValue = '' ) => {
@@ -138,7 +140,7 @@ const BackgroundControlsHelper = props => {
 	)
 }
 
-BackgroundControlsHelper.defaultProps = {
+const BACKGROUND_CONTROLS_HELPER_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},

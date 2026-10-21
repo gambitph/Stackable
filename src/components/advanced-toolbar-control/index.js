@@ -16,6 +16,7 @@ import Button from '../button'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import { useControlHandlers } from '../base-control2/hooks'
 import { ResetButton } from '../base-control2/reset-button'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * External dependencies
@@ -194,7 +195,28 @@ export const CONTROLS = {
 	vertical: VERTICAL_ALIGN_OPTIONS,
 }
 
-const AdvancedToolbarControl = props => {
+const EMPTY_ARR = []
+
+const ADVANCED_TOOLBAR_CONTROL_DEFAULT_PROPS = {
+	controls: EMPTY_ARR,
+	multiline: false,
+	fullwidth: true,
+	isSmall: false,
+	isToggleOnly: false,
+	allowReset: true,
+	default: '',
+	attribute: '',
+	responsive: false,
+	hover: false,
+	value: undefined,
+	onChange: undefined,
+	placeholder: '',
+	disabled: EMPTY_ARR,
+	omit: EMPTY_ARR,
+}
+
+const AdvancedToolbarControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADVANCED_TOOLBAR_CONTROL_DEFAULT_PROPS )
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
@@ -288,29 +310,6 @@ const AdvancedToolbarControl = props => {
 			/>
 		</AdvancedControl>
 	)
-}
-
-const EMPTY_ARR = []
-
-AdvancedToolbarControl.defaultProps = {
-	controls: EMPTY_ARR,
-	multiline: false,
-	fullwidth: true,
-	isSmall: false,
-	isToggleOnly: false,
-
-	allowReset: true,
-	default: '',
-
-	attribute: '',
-	responsive: false,
-	hover: false,
-
-	value: undefined,
-	onChange: undefined,
-	placeholder: '',
-	disabled: EMPTY_ARR,
-	omit: EMPTY_ARR,
 }
 
 export default memo( AdvancedToolbarControl, isEqual )

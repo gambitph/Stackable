@@ -18,6 +18,7 @@ import { range, isEqual } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
 const SortableContainer = sortableContainer( ( { children } ) => {
 	return <div className="ugb-sort-control__container">{ children }</div>
@@ -39,7 +40,8 @@ const applySort = ( values, oldIndex, newIndex ) => {
 // when using states.
 let isSorting = false
 
-const SortControl = memo( props => {
+const SortControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SORT_CONTROL_DEFAULT_PROPS )
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
@@ -110,7 +112,7 @@ const SortControl = memo( props => {
 	)
 } )
 
-SortControl.defaultProps = {
+const SORT_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	help: '',
 	label: __( 'Column Arrangement', i18n ),
