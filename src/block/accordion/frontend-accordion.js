@@ -87,7 +87,7 @@ class StackableAccordion {
 				}
 
 				el.classList[
-					! Array.from( el.classList ).includes( 'stk--is-open' ) ? 'add' : 'remove'
+					el.open ? 'add' : 'remove'
 				]( 'stk--is-open' )
 
 				// When the accordion is triggered to open/close, we animate
