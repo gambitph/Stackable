@@ -7,7 +7,9 @@ import blockStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { i18n, version as VERSION } from 'stackable'
+import {
+	i18n, settings, version as VERSION,
+} from 'stackable'
 import { useBlockLayoutDefaults, usePresetControls } from '~stackable/hooks'
 import {
 	AdvancedToggleControl,
@@ -123,6 +125,7 @@ const Edit = props => {
 			<InspectorControls
 				isOnlyBlock={ isOnlyBlock }
 				useZeroColumnSpacing={ useZeroColumnSpacing }
+				defaultOverrides={ parentBlock.name === 'stackable/columns' ? settings.stackable_column_spacing_defaults : undefined }
 				alignLastBlockToBottom={ props.attributes.alignLastBlockToBottom }
 				setAttributes={ props.setAttributes }
 			/>
@@ -164,7 +167,7 @@ const Edit = props => {
 // Inspector controls for the block, it's important that we only pass only the
 // props used by controls to prevent rerenders of all the inspector controls.
 const InspectorControls = memo( props => {
-	const { getPlaceholder } = useBlockLayoutDefaults()
+	const { getPlaceholder } = useBlockLayoutDefaults( props.defaultOverrides )
 	const presets = usePresetControls( 'spacingSizes' )
 		?.getPresetMarks( { addNonePreset: true } ) || null
 

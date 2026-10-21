@@ -63,6 +63,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 		?.getPresetMarks( { addNonePreset: true } ) || null
 	const borderRadiusPresetMarks = usePresetControls( 'borderRadius' )
 		?.getPresetMarks( { addNonePreset: true } ) || null
+	const deviceType = useDeviceType().toLowerCase()
+	const { getPlaceholder } = useBlockLayoutDefaults()
 
 	return (
 		<>
@@ -142,7 +144,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						responsive="all"
 						min={ [ 0, 0 ] }
 						sliderMax={ [ 200, 30 ] }
-						placeholder="12"
+						placeholder={ getPlaceholder( 'column-margin', { device: deviceType } ) }
 						units={ [ 'px', 'em', 'vw' ] }
 						unit={ getValue( 'column-margin', STATES.RESPONSIVE_UNIT ) || 'px' }
 						onChangeUnit={ value => onChange( 'column-margin', value, STATES.RESPONSIVE_UNIT ) }
@@ -160,7 +162,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 100 }
-						placeholder="0"
+						placeholder={ getPlaceholder( 'columns-column-gap', { device: deviceType } ) }
 						value={ getValue( 'columns-column-gap', STATES.RESPONSIVE ) }
 						onChange={ value => onChange( 'columns-column-gap', value, STATES.RESPONSIVE ) }
 						hasTabletValue={ getHasDeviceValue( 'columns-column-gap', 'tablet' ) }
