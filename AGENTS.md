@@ -26,6 +26,8 @@ Changing a deep-module **interface** requires updating the matching docs and tes
 
 ## General guidelines
 
+- Write user-facing replies for a beginner to intermediate developer.
+  Use plain words, explain a term the first time it appears, and keep the real file names, functions, and steps so the explanation stays accurate.
 - Never use the em dash "—". Use plain dash "-" instead, but if applicable, just use a comma.
 - When writing commit messages, NEVER auto-add your agent name as co-author.
 - Never manually modify CHANGELOG.md files or any files that are marked as auto-generated.
