@@ -10,6 +10,7 @@
  */
 import {
 	getProtocol,
+	isEmail,
 	isValidFragment,
 	isValidProtocol,
 	prependHTTP,
@@ -17,6 +18,7 @@ import {
 
 const SHORTCODE_VALUE = /^\s*\[[^\]]+\]/
 const EXECUTABLE_PROTOCOLS = [ 'javascript', 'data', 'vbscript' ]
+const FILE_NAME_EXTENSION = /\.(?:html?|jpe?g|js|md)$/i
 
 /**
  * True when the value starts with a browser-executable protocol.
@@ -45,6 +47,10 @@ export const hasExecutableProtocol = value => {
 }
 
 const prependHTTPS = url => {
+	if ( hasLocalhostPort( url ) ) {
+		return `https://${ url }`
+	}
+
 	if ( getProtocol( url ) && ! hasPossibleTLD( url ) ) {
 		return url
 	}
@@ -64,6 +70,13 @@ const isRelativePath = value =>
 	value.startsWith( '/' ) ||
 	value.startsWith( './' ) ||
 	value.startsWith( '../' )
+
+const isFileName = value =>
+	! /[/?#@:]/.test( value ) && FILE_NAME_EXTENSION.test( value )
+
+const isBareEmail = value => ! getProtocol( value ) && isEmail( value )
+
+const hasLocalhostPort = value => /^localhost:\d{1,5}(?:[/?#]|$)/i.test( value )
 
 /**
  * True when the string looks like a bare domain, with an optional port.
@@ -88,6 +101,9 @@ export const isUrlLike = value => {
 	if ( ! value || value.includes( ' ' ) ) {
 		return false
 	}
+	if ( isFileName( value ) || isBareEmail( value ) ) {
+		return false
+	}
 
 	const protocol = getProtocol( value )
 
@@ -96,6 +112,7 @@ export const isUrlLike = value => {
 		value.startsWith( 'www.' ) ||
 		isHashLink( value ) ||
 		hasPossibleTLD( value ) ||
+		hasLocalhostPort( value ) ||
 		isRelativePath( value )
 	)
 }

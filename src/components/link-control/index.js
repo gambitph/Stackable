@@ -21,8 +21,10 @@ import {
 	isValidLinkValue,
 	normalizeLinkValue,
 } from './validate'
+import { getPropsWithDefaults } from '../../util/props'
 
-const LinkControl = props => {
+const LinkControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, LINK_CONTROL_DEFAULT_PROPS )
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
@@ -87,7 +89,7 @@ const LinkControl = props => {
 	)
 }
 
-LinkControl.defaultProps = {
+const LINK_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	label: '',
 	screens: [ 'desktop' ],
