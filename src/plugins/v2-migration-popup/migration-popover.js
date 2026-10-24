@@ -35,6 +35,8 @@ const MigrationModal = () => {
 				window.alert( __( 'The page will now reload for the old blocks to load. Please reload it if it does not refresh automatically.', i18n ) ) // eslint-disable-line no-alert
 				window.location.href = window.location.href
 			}
+		} ).catch( () => {
+			setIsBusy( false )
 		} )
 	}
 

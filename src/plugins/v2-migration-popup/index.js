@@ -5,16 +5,14 @@ import detectV2Blocks from './detect-v2-blocks'
 import MigrationModal from './migration-popover'
 
 /**
- * External dependencies
- */
-import { fetchSettings } from '~stackable/util'
-
-/**
  * WordPress dependencies
  */
+import apiFetch from '@wordpress/api-fetch'
 import { registerPlugin } from '@wordpress/plugins'
 
-fetchSettings().then( response => {
+apiFetch( {
+	path: '/wp/v2/settings',
+} ).then( response => {
 	// If the detector is already dismissed, don't show it any more.
 	if ( response.stackable_v2_block_detector_disabled ) {
 		return
@@ -28,4 +26,4 @@ fetchSettings().then( response => {
 			}
 		} )
 	}
-} )
+} ).catch( () => {} )
