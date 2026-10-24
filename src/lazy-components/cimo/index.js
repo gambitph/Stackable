@@ -1,7 +1,7 @@
 import {
 	cimo, i18n, ajaxUrl,
 } from 'stackable'
-import { createRoot } from '~stackable/util'
+import { createRoot, saveSettings } from '~stackable/util'
 
 import { __ } from '@wordpress/i18n'
 import { Dashicon } from '@wordpress/components'
@@ -9,7 +9,6 @@ import domReady from '@wordpress/dom-ready'
 import {
 	useState, useRef, useEffect,
 } from '@wordpress/element'
-import { models } from '@wordpress/api'
 
 let isPolling = false
 let cimoData = { status: cimo?.status, action: cimo?.action }
@@ -20,8 +19,7 @@ const CimoDownloadNotice = props => {
 	const pollCountRef = useRef( 0 )
 
 	const onDismiss = () => {
-		const settings = new models.Settings( { stackable_hide_cimo_notice: true } ) // eslint-disable-line camelcase
-		settings.save()
+		saveSettings( { stackable_hide_cimo_notice: true } ) // eslint-disable-line camelcase
 
 		if ( cimo ) {
 			cimo.hideNotice = true

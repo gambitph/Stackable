@@ -18,7 +18,6 @@ import domReady from '@wordpress/dom-ready'
 import {
 	Button, Flex, FlexItem, Spinner, CheckboxControl, Modal,
 } from '@wordpress/components'
-import { models } from '@wordpress/api'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
@@ -33,7 +32,9 @@ import {
 	editorRoles,
 } from 'stackable'
 import classnames from 'classnames'
-import { fetchSettings, importBlocks } from '~stackable/util/admin'
+import {
+	fetchSettings, importBlocks, saveSettings,
+} from '~stackable/util/admin'
 import { createRoot } from '~stackable/util/element'
 import AdminSelectSetting from '~stackable/components/admin-select-setting'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
@@ -546,8 +547,7 @@ const Settings = () => {
 		}
 		setIsSaving( true )
 		setIsRecentlySaved( true )
-		const model = new models.Settings( unsavedChanges )
-		model.save().then( () => {
+		saveSettings( unsavedChanges ).then( () => {
 			// Add a little more time for the spinner for better feedback
 			setTimeout( () => {
 				setIsSaving( false )
