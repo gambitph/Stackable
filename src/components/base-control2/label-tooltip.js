@@ -7,7 +7,7 @@
  * Internal dependencies
  */
 import HelpTooltip from '../help-tooltip'
-import { fetchSettings } from '~stackable/util'
+import { fetchSettings, saveSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -15,7 +15,6 @@ import { fetchSettings } from '~stackable/util'
 import {
 	useRef, useState, useEffect,
 } from '@wordpress/element'
-import apiFetch from '@wordpress/api-fetch'
 import domReady from '@wordpress/dom-ready'
 
 const LabelTooltip = props => {
@@ -138,12 +137,8 @@ function useHelpTooltipEnabled() {
 	const updateHelpTooltipEnabled = newValue => {
 		helpTooltipEnabled = newValue
 
-		apiFetch( {
-			path: '/wp/v2/settings',
-			method: 'POST',
-			data: {
-				stackable_help_tooltip_disabled: newValue ? '' : '1', // eslint-disable-line
-			},
+		saveSettings( {
+			stackable_help_tooltip_disabled: newValue ? '' : '1', // eslint-disable-line
 		} )
 
 		// Let the other components know that the value has changed.

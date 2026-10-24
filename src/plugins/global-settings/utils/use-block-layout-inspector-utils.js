@@ -9,12 +9,12 @@ import { hoverState } from './block-layout-utils'
 import { getShadows } from '~stackable/components'
 import { IMAGE_SHADOWS } from '~stackable/block-components'
 import { useDeviceType, useBlockHoverState } from '~stackable/hooks'
+import { saveSettings as saveWPSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import apiFetch from '@wordpress/api-fetch'
 import { useSelect, dispatch } from '@wordpress/data'
 
 export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayHoverNotice, saveTimeout ) => {
@@ -52,11 +52,7 @@ export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayH
 	const saveSettings = newSettings => {
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			apiFetch( {
-				path: '/wp/v2/settings',
-				method: 'POST',
-				data: { [ optionName ]: newSettings },
-			} )
+			saveWPSettings( { [ optionName ]: newSettings } )
 		}, 300 )
 
 		// Update our store.

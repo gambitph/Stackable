@@ -11,6 +11,7 @@ import { GlobalColorStyles } from './editor-loader'
  */
 import { i18n } from 'stackable'
 import { AdvancedToggleControl, PanelAdvancedSettings } from '~stackable/components'
+import { saveSettings } from '~stackable/util'
 import rgba from 'color-rgba'
 
 /**
@@ -20,7 +21,6 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, useSelect } from '@wordpress/data'
-import apiFetch from '@wordpress/api-fetch'
 
 export { GlobalColorStyles }
 
@@ -80,11 +80,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideThemeColors: value,
 		} )
 
-		apiFetch( {
-			path: '/wp/v2/settings',
-			method: 'POST',
-			data: { stackable_global_hide_theme_colors: value }, // eslint-disable-line camelcase
-		} )
+		saveSettings( { stackable_global_hide_theme_colors: value } ) // eslint-disable-line camelcase
 	}
 
 	const onChangeHideDefaultColors = value => {
@@ -92,11 +88,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideDefaultColors: value,
 		} )
 
-		apiFetch( {
-			path: '/wp/v2/settings',
-			method: 'POST',
-			data: { stackable_global_hide_default_colors: value }, // eslint-disable-line camelcase
-		} )
+		saveSettings( { stackable_global_hide_default_colors: value } ) // eslint-disable-line camelcase
 	}
 
 	const onChangeHideSiteEditorColors = value => {
@@ -104,11 +96,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideSiteEditorColors: value,
 		} )
 
-		apiFetch( {
-			path: '/wp/v2/settings',
-			method: 'POST',
-			data: { stackable_global_hide_site_editor_colors: value }, // eslint-disable-line camelcase
-		} )
+		saveSettings( { stackable_global_hide_site_editor_colors: value } ) // eslint-disable-line camelcase
 	}
 
 	const ColorToggleControls = applyFilters( 'stackable.global-settings.inspector.global-colors.toggle-controls', Fragment )

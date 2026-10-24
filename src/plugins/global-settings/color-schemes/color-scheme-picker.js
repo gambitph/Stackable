@@ -24,14 +24,13 @@ import {
 	ControlSeparator,
 } from '~stackable/components'
 import { useBlockHoverState } from '~stackable/hooks'
-import { extractColor } from '~stackable/util'
+import { extractColor, saveSettings } from '~stackable/util'
 import { cloneDeep, isEqual } from 'lodash'
 
 import {
 	useRef, useState, useEffect,
 } from '@wordpress/element'
 import { useSelect, dispatch } from '@wordpress/data'
-import apiFetch from '@wordpress/api-fetch'
 import { __, sprintf } from '@wordpress/i18n'
 import { applyFilters, doAction } from '@wordpress/hooks'
 
@@ -146,17 +145,13 @@ const ColorSchemePicker = props => {
 	const saveColorSchemeSettings = updatedColorSchemes => {
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			apiFetch( {
-				path: '/wp/v2/settings',
-				method: 'POST',
-				data: {
-					// Store an empty array if all color schemes have no values,
-					// which optimizes the frontend by skipping unnecessary color scheme calculations.
-					// Otherwise, save the provided updatedColorSchemes array.
-					stackable_global_color_schemes: hasNoColorSchemes( updatedColorSchemes ) ? [] : updatedColorSchemes, // eslint-disable-line camelcase
-					// Clear the cached CSS when the color scheme is updated
-					stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
-				},
+			saveSettings( {
+				// Store an empty array if all color schemes have no values,
+				// which optimizes the frontend by skipping unnecessary color scheme calculations.
+				// Otherwise, save the provided updatedColorSchemes array.
+				stackable_global_color_schemes: hasNoColorSchemes( updatedColorSchemes ) ? [] : updatedColorSchemes, // eslint-disable-line camelcase
+				// Clear the cached CSS when the color scheme is updated
+				stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
 			} )
 		}, 300 )
 

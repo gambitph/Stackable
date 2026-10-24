@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { saveSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -11,7 +12,6 @@ import {
 } from '@wordpress/components'
 import { useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import apiFetch from '@wordpress/api-fetch'
 
 const MigrationModal = () => {
 	const [ isOpen, setIsOpen ] = useState( true )
@@ -23,11 +23,7 @@ const MigrationModal = () => {
 
 	const save = ( settings, refresh = false ) => {
 		setIsBusy( true )
-		apiFetch( {
-			path: '/wp/v2/settings',
-			method: 'POST',
-			data: settings,
-		} ).then( () => {
+		saveSettings( settings ).then( () => {
 			setIsBusy( false )
 			setIsOpen( false )
 			// Reload the page.

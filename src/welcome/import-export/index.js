@@ -11,12 +11,12 @@ import {
 import {
 	useState, useMemo, Fragment,
 } from '@wordpress/element'
-import apiFetch from '@wordpress/api-fetch'
 
 /**
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { saveSettings } from '~stackable/util/admin'
 import { applyFilters } from '@wordpress/hooks'
 
 export const ImportExportModal = props => {
@@ -90,11 +90,7 @@ const ImportSettings = ( {
 			}
 
 			if ( Object.keys( settingsToSave ).length > 0 ) {
-				await apiFetch( {
-					path: '/wp/v2/settings',
-					method: 'POST',
-					data: settingsToSave,
-				} )
+				await saveSettings( settingsToSave )
 			}
 
 			setNotice( __( 'Settings imported successfully.', i18n ) )

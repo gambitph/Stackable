@@ -14,11 +14,11 @@ import {
  * External dependencies
  */
 import { guidedTourStates } from 'stackable'
+import { saveSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import apiFetch from '@wordpress/api-fetch'
 import {
 	useEffect, useState, lazy, Suspense, memo,
 } from '@wordpress/element'
@@ -92,11 +92,9 @@ const GuidedModalTour = memo( props => {
 
 					// Update the stackable_guided_tour_states setting
 					if ( ! guidedTourStates.includes( tourId ) ) {
-						apiFetch( {
-							path: '/wp/v2/settings',
-							method: 'POST',
+						saveSettings( {
 							// eslint-disable-next-line camelcase
-							data: { stackable_guided_tour_states: [ ...guidedTourStates, tourId ] },
+							stackable_guided_tour_states: [ ...guidedTourStates, tourId ],
 						} )
 					}
 

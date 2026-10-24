@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { fetchSettings } from '~stackable/util'
+import { fetchSettings, saveSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -11,7 +11,6 @@ import {
 } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
 import { __ } from '@wordpress/i18n'
-import apiFetch from '@wordpress/api-fetch'
 import { cloneDeep } from 'lodash'
 
 // Include all the stored state.
@@ -45,11 +44,9 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 				delete newBlockStyles[ action.blockName ]
 			}
 
-			apiFetch( {
-				path: '/wp/v2/settings',
-				method: 'POST',
+			saveSettings( {
 				// eslint-disable-next-line camelcase
-				data: { stackable_global_block_styles: newBlockStyles },
+				stackable_global_block_styles: newBlockStyles,
 			} )
 
 			return newBlockStyles

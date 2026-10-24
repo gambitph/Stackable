@@ -13,12 +13,12 @@ import {
 import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
 import { SortablePicker } from '~stackable/components'
+import { saveSettings } from '~stackable/util'
 
 import { useRef } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
-import apiFetch from '@wordpress/api-fetch'
 import { __, sprintf } from '@wordpress/i18n'
 import { ColorIndicator, ColorPicker } from '@wordpress/components'
 
@@ -61,11 +61,7 @@ const ColorPickers = props => {
 		// Save settings.
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			apiFetch( {
-				path: '/wp/v2/settings',
-				method: 'POST',
-				data: { stackable_global_colors: [ newColors ] }, // eslint-disable-line camelcase
-			} )
+			saveSettings( { stackable_global_colors: [ newColors ] } ) // eslint-disable-line camelcase
 		}, 300 )
 
 		// Update our store.

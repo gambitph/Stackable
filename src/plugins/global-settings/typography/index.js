@@ -24,7 +24,7 @@ import {
 	ProControlButton,
 	AdvancedToggleControl,
 } from '~stackable/components'
-import { fetchSettings } from '~stackable/util'
+import { fetchSettings, saveSettings } from '~stackable/util'
 import { useDeviceType } from '~stackable/hooks'
 import {
 	i18n, isPro, showProNotice,
@@ -39,7 +39,6 @@ import {
 import {
 	Fragment, useEffect, useRef, useState,
 } from '@wordpress/element'
-import apiFetch from '@wordpress/api-fetch'
 import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
@@ -240,12 +239,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		clearTimeout( saveTypographyThrottle )
 		saveTypographyThrottle = setTimeout( () => {
-			apiFetch( {
-				path: '/wp/v2/settings',
-				method: 'POST',
-				data: {
-					stackable_global_typography: [ newSettings ], // eslint-disable-line
-				},
+			saveSettings( {
+				stackable_global_typography: [ newSettings ], // eslint-disable-line
 			} )
 		}, 500 )
 
@@ -257,12 +252,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		clearTimeout( saveSelectedFontPairThrottle )
 		saveSelectedFontPairThrottle = setTimeout( () => {
-			apiFetch( {
-				path: '/wp/v2/settings',
-				method: 'POST',
-				data: {
-					stackable_selected_font_pair: name, // eslint-disable-line
-				},
+			saveSettings( {
+				stackable_selected_font_pair: name, // eslint-disable-line
 			} )
 		}, 500 )
 	}
@@ -272,35 +263,23 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 
 		clearTimeout( saveCustomFontPairsThrottle )
 		saveCustomFontPairsThrottle = setTimeout( () => {
-			apiFetch( {
-				path: '/wp/v2/settings',
-				method: 'POST',
-				data: {
-					stackable_custom_font_pairs: [ ...fontPairs ] , // eslint-disable-line
-				},
+			saveSettings( {
+				stackable_custom_font_pairs: [ ...fontPairs ] , // eslint-disable-line
 			} )
 		}, 500 )
 	}
 
 	const changeApplySettingsTo = value => {
 		setApplySettingsTo( value )
-		apiFetch( {
-			path: '/wp/v2/settings',
-			method: 'POST',
-			data: {
-				stackable_global_typography_apply_to: value, // eslint-disable-line
-			},
+		saveSettings( {
+			stackable_global_typography_apply_to: value, // eslint-disable-line
 		} )
 	}
 
 	const changeIsApplyBodyToHTML = value => {
 		setIsApplyBodyToHTML( value )
-		apiFetch( {
-			path: '/wp/v2/settings',
-			method: 'POST',
-			data: {
-				stackable_is_apply_body_to_html: value, // eslint-disable-line
-			},
+		saveSettings( {
+			stackable_is_apply_body_to_html: value, // eslint-disable-line
 		} )
 	}
 

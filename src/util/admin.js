@@ -71,3 +71,16 @@ export const fetchSettings = () => {
 
 	return fetchingPromise
 }
+
+/**
+ * Saves settings.
+ *
+ * @param {Object} data Settings to save.
+ *
+ * @return {Promise} Save settings promise.
+ */
+export const saveSettings = data => apiFetch( {
+	path: '/wp/v2/settings',
+	method: 'POST',
+	data,
+} )
