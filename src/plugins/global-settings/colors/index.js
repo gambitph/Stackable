@@ -80,7 +80,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideThemeColors: value,
 		} )
 
-		saveSettings( { stackable_global_hide_theme_colors: value } ) // eslint-disable-line camelcase
+		saveSettings( { stackable_global_hide_theme_colors: value } ).catch( () => {} ) // eslint-disable-line camelcase
 	}
 
 	const onChangeHideDefaultColors = value => {
@@ -88,7 +88,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideDefaultColors: value,
 		} )
 
-		saveSettings( { stackable_global_hide_default_colors: value } ) // eslint-disable-line camelcase
+		saveSettings( { stackable_global_hide_default_colors: value } ).catch( () => {} ) // eslint-disable-line camelcase
 	}
 
 	const onChangeHideSiteEditorColors = value => {
@@ -96,7 +96,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			hideSiteEditorColors: value,
 		} )
 
-		saveSettings( { stackable_global_hide_site_editor_colors: value } ) // eslint-disable-line camelcase
+		saveSettings( { stackable_global_hide_site_editor_colors: value } ).catch( () => {} ) // eslint-disable-line camelcase
 	}
 
 	const ColorToggleControls = applyFilters( 'stackable.global-settings.inspector.global-colors.toggle-controls', Fragment )

@@ -152,7 +152,7 @@ const ColorSchemePicker = props => {
 				stackable_global_color_schemes: hasNoColorSchemes( updatedColorSchemes ) ? [] : updatedColorSchemes, // eslint-disable-line camelcase
 				// Clear the cached CSS when the color scheme is updated
 				stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
-			} )
+			} ).catch( () => {} )
 		}, 300 )
 
 		// Update our store.

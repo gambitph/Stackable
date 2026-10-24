@@ -241,7 +241,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		saveTypographyThrottle = setTimeout( () => {
 			saveSettings( {
 				stackable_global_typography: [ newSettings ], // eslint-disable-line
-			} )
+			} ).catch( () => {} )
 		}, 500 )
 
 		dispatch( 'stackable/global-typography' ).updateSettings( newSettings )
@@ -254,7 +254,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		saveSelectedFontPairThrottle = setTimeout( () => {
 			saveSettings( {
 				stackable_selected_font_pair: name, // eslint-disable-line
-			} )
+			} ).catch( () => {} )
 		}, 500 )
 	}
 
@@ -265,7 +265,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		saveCustomFontPairsThrottle = setTimeout( () => {
 			saveSettings( {
 				stackable_custom_font_pairs: [ ...fontPairs ] , // eslint-disable-line
-			} )
+			} ).catch( () => {} )
 		}, 500 )
 	}
 
@@ -273,14 +273,14 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		setApplySettingsTo( value )
 		saveSettings( {
 			stackable_global_typography_apply_to: value, // eslint-disable-line
-		} )
+		} ).catch( () => {} )
 	}
 
 	const changeIsApplyBodyToHTML = value => {
 		setIsApplyBodyToHTML( value )
 		saveSettings( {
 			stackable_is_apply_body_to_html: value, // eslint-disable-line
-		} )
+		} ).catch( () => {} )
 	}
 
 	const updateTypeScale = value => {

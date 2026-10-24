@@ -101,7 +101,7 @@ export const GlobalTypographyStyles = () => {
 
 			clearTimeout( saveTypographyAsPresetsThrottle )
 			saveTypographyAsPresetsThrottle = setTimeout( () => {
-				saveSettings( { stackable_global_custom_preset_controls: newSettings } ) // eslint-disable-line camelcase
+				saveSettings( { stackable_global_custom_preset_controls: newSettings } ).catch( () => {} ) // eslint-disable-line camelcase
 			}, 300 )
 
 			dispatch( 'stackable/global-preset-controls.custom' ).updateCustomPresetControls( newSettings )

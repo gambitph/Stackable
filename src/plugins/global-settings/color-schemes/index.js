@@ -56,7 +56,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 			saveSettings( {
 				[ COLOR_SCHEME_OPTION_NAMES[ mode ] ]: colorSchemeKey, // eslint-disable-line camelcase
 				stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
-			} )
+			} ).catch( () => {} )
 		}, 300 )
 
 		// Update our store.
@@ -140,7 +140,7 @@ addFilter( 'stackable.global-settings.inspector.global-colors.toggle-controls', 
 			hideColorSchemeColors: value,
 		} )
 
-		saveSettings( { stackable_global_hide_color_scheme_colors: value } ) // eslint-disable-line camelcase
+		saveSettings( { stackable_global_hide_color_scheme_colors: value } ).catch( () => {} ) // eslint-disable-line camelcase
 	}
 
 	return <>

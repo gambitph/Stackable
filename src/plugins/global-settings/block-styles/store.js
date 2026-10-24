@@ -47,7 +47,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 			saveSettings( {
 				// eslint-disable-next-line camelcase
 				stackable_global_block_styles: newBlockStyles,
-			} )
+			} ).catch( () => {} )
 
 			return newBlockStyles
 		}

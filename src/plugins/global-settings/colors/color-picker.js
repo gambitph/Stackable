@@ -61,7 +61,7 @@ const ColorPickers = props => {
 		// Save settings.
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			saveSettings( { stackable_global_colors: [ newColors ] } ) // eslint-disable-line camelcase
+			saveSettings( { stackable_global_colors: [ newColors ] } ).catch( () => {} ) // eslint-disable-line camelcase
 		}, 300 )
 
 		// Update our store.
