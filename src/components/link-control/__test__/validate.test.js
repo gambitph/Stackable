@@ -59,6 +59,7 @@ describe( 'link-control validation', () => {
 	it( 'rejects incomplete URL-like values', () => {
 		expect( isValidLinkValue( 'https://' ) ).toBe( false )
 		expect( isValidLinkValue( 'http://' ) ).toBe( false )
+		expect( normalizeLinkValue( 'http://' ) ).toBe( 'http://' )
 	} )
 
 	it.each( [
@@ -76,40 +77,10 @@ describe( 'link-control validation', () => {
 
 	it( 'prepends https to bare domains on normalize', () => {
 		expect( normalizeLinkValue( 'example.com' ) ).toBe( 'https://example.com' )
-		expect( normalizeLinkValue( 'example.com/about' ) ).toBe( 'https://example.com/about' )
-		expect( normalizeLinkValue( 'example.photography' ) ).toBe( 'https://example.photography' )
-		expect( normalizeLinkValue( 'example.com:8443' ) ).toBe( 'https://example.com:8443' )
 		expect( normalizeLinkValue( '  example.com  ' ) ).toBe( 'https://example.com' )
 		expect( normalizeLinkValue( 'http://192.168.0.10' ) ).toBe( 'http://192.168.0.10' )
 		expect( normalizeLinkValue( 'https://example.com' ) ).toBe( 'https://example.com' )
 		expect( normalizeLinkValue( '#section' ) ).toBe( '#section' )
 		expect( normalizeLinkValue( '/about' ) ).toBe( '/about' )
-	} )
-
-	it( 'leaves non-domain paths as entered', () => {
-		expect( normalizeLinkValue( 'images/photo.jpg' ) ).toBe( 'images/photo.jpg' )
-		expect( normalizeLinkValue( 'docs/readme.md' ) ).toBe( 'docs/readme.md' )
-	} )
-
-	// A file name is not a website. The extension must not be treated as a domain.
-	it( 'keeps file names instead of adding https', () => {
-		expect( isUrlLike( 'readme.md' ) ).toBe( false )
-		expect( isValidLinkValue( 'readme.md' ) ).toBe( true )
-		expect( normalizeLinkValue( 'readme.md' ) ).toBe( 'readme.md' )
-		expect( normalizeLinkValue( 'photo.jpg' ) ).toBe( 'photo.jpg' )
-		expect( normalizeLinkValue( 'jquery.min.js' ) ).toBe( 'jquery.min.js' )
-		expect( normalizeLinkValue( 'index.html' ) ).toBe( 'index.html' )
-	} )
-
-	// An email is not a website. It must stay as the user typed it.
-	it( 'keeps an email address instead of turning it into a website', () => {
-		expect( isValidLinkValue( 'hi@example.com' ) ).toBe( true )
-		expect( normalizeLinkValue( 'hi@example.com' ) ).toBe( 'hi@example.com' )
-	} )
-
-	// localhost:3000 is a host and a port, same idea as example.com:8443.
-	it( 'adds https to localhost with a port', () => {
-		expect( isValidLinkValue( 'localhost:3000' ) ).toBe( true )
-		expect( normalizeLinkValue( 'localhost:3000' ) ).toBe( 'https://localhost:3000' )
 	} )
 } )

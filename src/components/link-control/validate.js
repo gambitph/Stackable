@@ -10,7 +10,6 @@
  */
 import {
 	getProtocol,
-	isEmail,
 	isValidFragment,
 	isValidProtocol,
 	prependHTTP,
@@ -18,7 +17,6 @@ import {
 
 const SHORTCODE_VALUE = /^\s*\[[^\]]+\]/
 const EXECUTABLE_PROTOCOLS = [ 'javascript', 'data', 'vbscript' ]
-const FILE_NAME_EXTENSION = /\.(?:html?|jpe?g|js|md)$/i
 
 /**
  * True when the value starts with a browser-executable protocol.
@@ -47,11 +45,7 @@ export const hasExecutableProtocol = value => {
 }
 
 const prependHTTPS = url => {
-	if ( hasLocalhostPort( url ) ) {
-		return `https://${ url }`
-	}
-
-	if ( getProtocol( url ) && ! hasPossibleTLD( url ) ) {
+	if ( getProtocol( url ) ) {
 		return url
 	}
 
@@ -71,24 +65,18 @@ const isRelativePath = value =>
 	value.startsWith( './' ) ||
 	value.startsWith( '../' )
 
-const isFileName = value =>
-	! /[/?#@:]/.test( value ) && FILE_NAME_EXTENSION.test( value )
-
-const isBareEmail = value => ! getProtocol( value ) && isEmail( value )
-
-const hasLocalhostPort = value => /^localhost:\d{1,5}(?:[/?#]|$)/i.test( value )
-
 /**
- * True when the string looks like a bare domain, with an optional port.
- * Domain labels are limited to 63 characters by DNS.
+ * True when the string looks like a domain with a TLD, e.g. `example.com`.
+ *
+ * Mirrors Gutenberg's LinkControl heuristic.
  *
  * @param {string} url
- * @return {boolean} Whether the value looks like a bare domain.
+ * @param {number} maxLength
+ * @return {boolean} Whether the value has a possible TLD.
  */
-const hasPossibleTLD = url => {
+const hasPossibleTLD = ( url, maxLength = 6 ) => {
 	const cleanedURL = url.split( /[?#]/ )[ 0 ]
-	const possibleTLD = '[a-zA-Z](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])'
-	return new RegExp( `^[^/\\s:]+\\.${ possibleTLD }(?::\\d{1,5})?(?:\\/|$)` ).test( cleanedURL )
+	return new RegExp( `\\S\\.[a-zA-Z_]{2,${ maxLength }}(?:\\/|$)` ).test( cleanedURL )
 }
 
 /**
@@ -101,9 +89,6 @@ export const isUrlLike = value => {
 	if ( ! value || value.includes( ' ' ) ) {
 		return false
 	}
-	if ( isFileName( value ) || isBareEmail( value ) ) {
-		return false
-	}
 
 	const protocol = getProtocol( value )
 
@@ -112,7 +97,6 @@ export const isUrlLike = value => {
 		value.startsWith( 'www.' ) ||
 		isHashLink( value ) ||
 		hasPossibleTLD( value ) ||
-		hasLocalhostPort( value ) ||
 		isRelativePath( value )
 	)
 }

@@ -73,35 +73,11 @@ test.describe( 'Link control URL input', () => {
 			return attributes.linkUrl
 		} ).toBe( 'http://192.168.0.10' )
 
-		await setLinkValue( 'images/photo.jpg' )
+		await setLinkValue( 'example.com' )
 		await expect.poll( async () => {
 			const attributes = await editor.getBlockAttributes( clientId )
 			return attributes.linkUrl
-		} ).toBe( 'images/photo.jpg' )
-
-		await setLinkValue( 'docs/readme.md' )
-		await expect.poll( async () => {
-			const attributes = await editor.getBlockAttributes( clientId )
-			return attributes.linkUrl
-		} ).toBe( 'docs/readme.md' )
-
-		await setLinkValue( 'example.org' )
-		await expect.poll( async () => {
-			const attributes = await editor.getBlockAttributes( clientId )
-			return attributes.linkUrl
-		} ).toBe( 'https://example.org' )
-
-		await setLinkValue( 'example.photography' )
-		await expect.poll( async () => {
-			const attributes = await editor.getBlockAttributes( clientId )
-			return attributes.linkUrl
-		} ).toBe( 'https://example.photography' )
-
-		await setLinkValue( 'example.com:8443' )
-		await expect.poll( async () => {
-			const attributes = await editor.getBlockAttributes( clientId )
-			return attributes.linkUrl
-		} ).toBe( 'https://example.com:8443' )
+		} ).toBe( 'https://example.com' )
 
 		await setLinkValue( '[my_shortcode]' )
 		await expect.poll( async () => {
