@@ -22,7 +22,7 @@ import {
 	STATES,
 } from '../utils'
 import { BORDER_CONTROLS, IMAGE_SHADOWS } from '~stackable/block-components'
-import { i18n } from 'stackable'
+import { i18n, settings } from 'stackable'
 import {
 	useDeviceType, useBlockLayoutDefaults, usePresetControls,
 } from '~stackable/hooks'
@@ -64,7 +64,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-spacing-and-
 	const borderRadiusPresetMarks = usePresetControls( 'borderRadius' )
 		?.getPresetMarks( { addNonePreset: true } ) || null
 	const deviceType = useDeviceType().toLowerCase()
-	const { getPlaceholder } = useBlockLayoutDefaults()
+	const { getPlaceholder } = useBlockLayoutDefaults( settings.stackable_column_spacing_defaults )
 
 	return (
 		<>
