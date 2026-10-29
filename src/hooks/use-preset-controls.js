@@ -25,13 +25,16 @@ const PRESET_MAPPING = {
 	},
 	borderRadius: {
 		settings: [ 'border', 'radiusSizes' ],
-		defaultSizes: '',
+		themeSizes: 'border.radiusSizes.theme',
+		defaultSizes: 'border.radiusSizes.default',
 		defaultEnabled: '',
+		useDefaultPresetsAsFallback: true,
 		useWordPressPresetsSetting: 'stackable_use_theme_border_radius_presets',
 		prefix: 'border-radius',
 	},
 	shadows: {
 		settings: [ 'shadow', 'presets' ],
+		themeSizes: 'shadow.presets.theme',
 		defaultSizes: 'shadow.presets.default',
 		defaultEnabled: 'shadow.defaultPresets',
 		useDefaultPresetsAsFallback: true,
@@ -67,7 +70,7 @@ export const usePresetControls = property => {
 		wpDefaultPresets,
 		defaultSizesEnabled,
 	] = useSettings(
-		mapping.settings.join( '.' ),
+		mapping.themeSizes || mapping.settings.join( '.' ),
 		mapping.defaultSizes,
 		mapping.defaultEnabled
 	)
