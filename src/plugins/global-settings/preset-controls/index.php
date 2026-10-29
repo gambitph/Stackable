@@ -34,6 +34,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			),
 			'shadows' => array(
 				'settings' => array( 'shadow', 'presets' ),
+				'default_enabled_setting' => array( 'shadow', 'defaultPresets' ),
 				'prefix' => 'shadow',
 				'value_key' => 'shadow',
 			),
@@ -276,10 +277,12 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 				$value_key = $value[ 'value_key' ] ?? 'size';
 				$use_wordpress_presets = ! isset( $value[ 'use_wordpress_presets_setting' ] ) ||
 					(bool) get_option( $value[ 'use_wordpress_presets_setting' ], true );
+				$use_default_presets = ! isset( $value[ 'default_enabled_setting' ] ) ||
+					false !== $this->deepGet( $this->theme_presets, $value[ 'default_enabled_setting' ] );
 				$theme_presets = $use_wordpress_presets
 					? ( $this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ] ?? array() )
 					: array();
-				$default_presets = $use_wordpress_presets
+				$default_presets = $use_wordpress_presets && $use_default_presets
 					? ( $this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ] ?? array() )
 					: array();
 
