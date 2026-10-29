@@ -135,42 +135,93 @@
 				"slug": "full"
 			}
     	],
-		"borderRadius": [
-			{
-				"name": "XS",
-				"size": "2px",
-				"slug": "x-small"
-			},
-			{
-				"name": "S",
-				"size": "4px",
-				"slug": "small"
-			},
-			{
-				"name": "M",
-				"size": "8px",
-				"slug": "medium"
-			},
-			{
-				"name": "L",
-				"size": "16px",
-				"slug": "large"
-			},
-			{
-				"name": "XL",
-				"size": "24px",
-				"slug": "x-large"
-			},
-			{
-				"name": "2XL",
-				"size": "32px",
-				"slug": "xx-large"
-			},
-			{
-				"name": "Full",
-				"size": "9999px",
-				"slug": "full"
-			}
-		]
+		"border": {
+			"radiusSizes": [
+				{
+					"name": "XS",
+					"size": "2px",
+					"slug": "x-small"
+				},
+				{
+					"name": "S",
+					"size": "4px",
+					"slug": "small"
+				},
+				{
+					"name": "M",
+					"size": "8px",
+					"slug": "medium"
+				},
+				{
+					"name": "L",
+					"size": "16px",
+					"slug": "large"
+				},
+				{
+					"name": "XL",
+					"size": "24px",
+					"slug": "x-large"
+				},
+				{
+					"name": "2XL",
+					"size": "32px",
+					"slug": "xx-large"
+				},
+				{
+					"name": "Full",
+					"size": "9999px",
+					"slug": "full"
+				}
+			]
+		},
+		"shadow": {
+			"presets": [
+				{
+					"name": "Shadow 1",
+					"slug": "shadow-1",
+					"shadow": "0 0 0 1px #7878781a"
+				},
+				{
+					"name": "Shadow 2",
+					"slug": "shadow-2",
+					"shadow": "0 0 0 2px #7878781a"
+				},
+				{
+					"name": "Shadow 3",
+					"slug": "shadow-3",
+					"shadow": "0 5px 5px 0 #123f5209"
+				},
+				{
+					"name": "Shadow 4",
+					"slug": "shadow-4",
+					"shadow": "0px 2px 20px #99999933"
+				},
+				{
+					"name": "Shadow 5",
+					"slug": "shadow-5",
+					"shadow": "0 5px 30px -10px #123f524d"
+				},
+				{
+					"name": "Shadow 6",
+					"slug": "shadow-6",
+					"shadow": "0px 10px 30px #0000000d"
+				},
+				{
+					"name": "Shadow 7",
+					"slug": "shadow-7",
+					"shadow": "7px 5px 30px #48497927"
+				},
+				{
+					"name": "Shadow 8",
+					"slug": "shadow-8",
+					"shadow": "0px 10px 60px #0000001a"
+				},
+				{
+					"name": "Shadow 9",
+					"slug": "shadow-9",
+					"shadow": "0px 70px 90px -20px #4849794d"
+				}
+			]
+		}
 	}
 }

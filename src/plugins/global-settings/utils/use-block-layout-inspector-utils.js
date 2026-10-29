@@ -6,9 +6,11 @@ import { hoverState } from './block-layout-utils'
 /**
  * External dependencies
  */
-import { getShadows } from '~stackable/components'
+import { getGlobalShadowOptions } from '~stackable/components'
 import { IMAGE_SHADOWS } from '~stackable/block-components'
-import { useDeviceType, useBlockHoverState } from '~stackable/hooks'
+import {
+	useDeviceType, useBlockHoverState, usePresetControls,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -26,7 +28,8 @@ export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayH
 	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
 	const deviceType = useDeviceType()
 
-	const shadows = getShadows()
+	const shadowPresetMarks = usePresetControls( 'shadows' )?.getPresetMarks() || []
+	const shadows = getGlobalShadowOptions( shadowPresetMarks )
 
 	const getValue = ( property, {
 		responsive = false, hover = false, unit = false,
@@ -41,7 +44,23 @@ export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayH
 
 	const valueCallback = ( value, isImage = false ) => {
 		const options = isImage ? IMAGE_SHADOWS : shadows
-		return value ? ( options.indexOf( value ) === -1 ? 'custom' : options.indexOf( value ) ) : ''
+		if ( ! value ) {
+			return ''
+		}
+		const index = options.indexOf( value )
+		if ( index !== -1 ) {
+			return index
+		}
+		if ( ! isImage ) {
+			// Older attributes may store raw CSS while current global presets use
+			// a Stackable variable. Match the raw shadow before marking it custom.
+			const rawPreset = shadowPresetMarks.find( preset => preset.shadow === value )
+			const presetIndex = rawPreset ? options.indexOf( rawPreset.value ) : -1
+			if ( presetIndex !== -1 ) {
+				return presetIndex
+			}
+		}
+		return 'custom'
 	}
 
 	const changeCallback = ( index, isImage = false ) => {
