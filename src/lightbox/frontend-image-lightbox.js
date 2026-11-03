@@ -1,5 +1,6 @@
 import domReady from '@wordpress/dom-ready'
 import GLightbox from 'glightbox'
+import { detectIfVideo, isValidVideoUrl } from './video-url'
 
 // Gets the highest resolution image from the srcset.
 const getImageFromSrcset = el => {
@@ -35,18 +36,6 @@ const getImageFromSrcset = el => {
 		return largestImgData
 	}, { url: '', size: 0 } )
 	return src.url
-}
-
-// Detects the type of the URL if it's a video URL.
-const detectIfVideo = url => {
-	if ( url.match( /(youtube\.com|youtu\.be)/ ) ) {
-		return true
-	} else if ( url.match( /vimeo\.com/ ) ) {
-		return true
-	} else if ( url.match( /\.(mp4|webm|mov)/i ) ) {
-		return true
-	}
-	return false
 }
 
 // Detects the type of the URL if it's a image URL.
@@ -100,9 +89,8 @@ function sanitize( string ) {
 		'>': '&gt;',
 		'"': '&quot;',
 		"'": '&#x27;',
-		'/': '&#x2F;',
 	}
-	const reg = /[&<>"'/]/ig
+	const reg = /[&<>"']/g
 	return string.replace( reg, match => map[ match ] )
 }
 
@@ -138,6 +126,10 @@ class StackableImageLightbox {
 			if ( ! linkToOpen ) {
 				return
 			}
+			// Reject malformed video candidates before wiring the click handler.
+			if ( detectIfVideo( linkToOpen ) && ! isValidVideoUrl( linkToOpen ) ) {
+				return
+			}
 
 			if ( ! link ) {
 				link = el
@@ -157,7 +149,9 @@ class StackableImageLightbox {
 			this.elements.push( {
 				block: link.classList.contains( 'stk-block' ) ? link : link.closest( '.stk-block' ),
 				element: link,
-				href: linkToOpen,
+				// GLightbox builds video markup with innerHTML. Escape its URL for
+				// that second HTML parse, while leaving image and iframe URLs intact.
+				href: detectIfVideo( linkToOpen ) ? sanitize( linkToOpen ) : linkToOpen,
 				// If we're using an image block as the source, the link to open
 				// isn't sometimes detected as an image.
 				type: isUsingImageBlock ? 'image' : undefined,

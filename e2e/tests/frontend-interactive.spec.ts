@@ -1,5 +1,6 @@
-import { test, expect } from 'e2e/test-utils'
-import { publishAndVisitFrontend, getEditorPostId } from 'e2e/test-utils'
+import {
+	test, expect, publishAndVisitFrontend, getEditorPostId,
+} from 'e2e/test-utils'
 
 const pickDefaultLayoutIfPresent = async editor => {
 	const picker = editor.canvas.locator( '.stk-variation-picker' )
@@ -189,6 +190,76 @@ test.describe( 'Interactive frontend', () => {
 		await expect( page.locator( '.bp-container, .glightbox-container, .stk-video-popup, iframe' ).first() ).toBeVisible( { timeout: 10_000 } )
 	} )
 
+	test( 'Lightbox rejects markup in an entity-decoded video URL', async ( {
+		page, editor, requestUtils, admin,
+	} ) => {
+		await editor.insertBlock( {
+			name: 'stackable/columns',
+			attributes: { uniqueId: 'lightbox-columns' },
+			innerBlocks: [ {
+				name: 'stackable/column',
+				attributes: {
+					uniqueId: 'lightbox-column',
+					blockLinkHasLightbox: true,
+				},
+				innerBlocks: [ {
+					name: 'core/html',
+					attributes: {
+						content: '<a href="https://YOUTUBE.COM/watch?v=x&quot;&gt;&lt;img data-stackable-lightbox-injection src=x&gt;"><img alt="Lightbox trigger" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="></a>',
+					},
+				} ],
+			} ],
+		} )
+
+		await publishAndVisitFrontend( page, editor, requestUtils, admin )
+
+		await page.route( 'https://cdn.plyr.io/**/*.css', route => route.fulfill( {
+			contentType: 'text/css',
+			body: '',
+		} ) )
+		await page.route( 'https://cdn.plyr.io/**/*.js', route => route.fulfill( {
+			contentType: 'text/javascript',
+			body: 'window.Plyr = class { on() {} };',
+		} ) )
+
+		const trigger = page.getByRole( 'img', { name: 'Lightbox trigger' } )
+		await expect( trigger ).toBeVisible()
+		await expect( trigger.locator( '..' ) ).not.toHaveAttribute( 'role', 'button' )
+		await expect( page.locator( '[data-stackable-lightbox-injection]' ) ).toHaveCount( 0 )
+	} )
+
+	test( 'Lightbox preserves image URL query parameters', async ( {
+		page, editor, requestUtils, admin,
+	} ) => {
+		const imageUrl = 'https://example.invalid/lightbox.png?one=1&two=2'
+		await editor.insertBlock( {
+			name: 'stackable/columns',
+			attributes: { uniqueId: 'lightbox-image-columns' },
+			innerBlocks: [ {
+				name: 'stackable/column',
+				attributes: {
+					uniqueId: 'lightbox-image-column',
+					blockLinkHasLightbox: true,
+				},
+				innerBlocks: [ {
+					name: 'core/html',
+					attributes: {
+						content: `<a href="${ imageUrl.replace( '&', '&amp;' ) }"><img alt="Linked lightbox image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="></a>`,
+					},
+				} ],
+			} ],
+		} )
+
+		await publishAndVisitFrontend( page, editor, requestUtils, admin )
+		await page.route( imageUrl, route => route.fulfill( {
+			contentType: 'image/gif',
+			body: Buffer.from( 'R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==', 'base64' ),
+		} ) )
+
+		await page.getByRole( 'img', { name: 'Linked lightbox image' } ).click()
+		await expect( page.locator( '.gslide-image img' ).first() ).toHaveAttribute( 'src', imageUrl )
+	} )
+
 	test( 'Notification can be dismissed', async ( {
 		page, editor, requestUtils, admin,
 	} ) => {
@@ -315,6 +386,8 @@ test.describe( 'Interactive frontend', () => {
 					const text = block.attributes.text || block.attributes.content || ''
 					const match = anchors.find( heading => heading.text === text )
 					if ( match && ( block.name === 'core/heading' || block.name === 'stackable/heading' ) ) {
+						// This test setup updates the editor store from outside the block's Edit component.
+						// eslint-disable-next-line stackable/no-update-block-attributes
 						updateBlockAttributes( block.clientId, { anchor: match.anchor } )
 					}
 					if ( block.innerBlocks?.length ) {
