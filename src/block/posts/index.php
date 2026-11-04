@@ -78,7 +78,9 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 					$new_img = preg_replace( '/style=\"[^\"]*\"\s?/', "", $match[ 0 ] );
 					$post_title = isset( $post['post_title'] ) ? $post['post_title'] : '';
 					$new_img = stackable_posts_ensure_featured_image_alt( $new_img, $post_title );
-					$featured_image = preg_replace( "/<img[^\>]*>/", $new_img, $thumbnail );
+					// Treat the replacement as plain text. preg_replace would
+					// read $n / ${n} / \n in the post title as backreferences.
+					$featured_image = str_replace( $match[ 0 ], $new_img, $thumbnail );
 				}
 			}
 
@@ -86,7 +88,13 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			if ( empty( $featured_image ) ) {
 				$new_template = preg_replace( '/<figure[^>]*>(.*)<\/figure>/', '', $new_template );
 			} else {
-				$new_template = preg_replace( '/<img[^>]*>/', $featured_image, $new_template );
+				$new_template = preg_replace_callback(
+					'/<img[^>]*>/',
+					function() use ( $featured_image ) {
+						return $featured_image;
+					},
+					$new_template
+				);
 			}
 		}
 

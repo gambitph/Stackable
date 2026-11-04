@@ -139,4 +139,28 @@ class PostsRenderTest extends Stackable_TestCase {
 		);
 		$this->assertStringContainsString( 'alt="A &quot;quoted&quot; title"', $html );
 	}
+
+	public function test_empty_alt_fallback_keeps_dollar_amount_in_title() {
+		$html = $this->render_featured_image(
+			'<img src="photo.jpg" alt="" />',
+			'Save $50 today'
+		);
+		$this->assertStringContainsString( 'alt="Save $50 today"', $html );
+	}
+
+	public function test_empty_alt_fallback_keeps_backslash_one_in_title() {
+		$html = $this->render_featured_image(
+			'<img src="photo.jpg" alt="" />',
+			'C:\\1drive tips'
+		);
+		$this->assertStringContainsString( 'alt="C:\\1drive tips"', $html );
+	}
+
+	public function test_empty_alt_fallback_keeps_dollar_brace_group_in_title() {
+		$html = $this->render_featured_image(
+			'<img src="photo.jpg" alt="" />',
+			'Use ${1} here'
+		);
+		$this->assertStringContainsString( 'alt="Use ${1} here"', $html );
+	}
 }
