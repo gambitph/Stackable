@@ -1,5 +1,9 @@
-import { test, expect } from 'e2e/test-utils'
-import { publishAndVisitFrontend, getEditorPostId } from 'e2e/test-utils'
+import {
+	test,
+	expect,
+	publishAndVisitFrontend,
+	getEditorPostId,
+} from 'e2e/test-utils'
 
 const pickDefaultLayoutIfPresent = async editor => {
 	const picker = editor.canvas.locator( '.stk-variation-picker' )
@@ -115,6 +119,106 @@ test.describe( 'Interactive frontend', () => {
 		await expect( tabButtons ).toHaveCount( 3 )
 		await tabButtons.nth( 1 ).click()
 		await expect( tabButtons.nth( 1 ) ).toHaveAttribute( 'aria-selected', 'true' )
+	} )
+
+	test( 'Nested tabs with labels below switch their own panels', async ( {
+		page, editor, requestUtils, admin,
+	} ) => {
+		const tabPanel = { customAttributes: [ [ 'role', 'tabpanel' ] ] }
+
+		await editor.insertBlock( {
+			name: 'stackable/tabs',
+			innerBlocks: [
+				{
+					name: 'stackable/tab-content',
+					innerBlocks: [
+						{
+							name: 'stackable/column',
+							attributes: tabPanel,
+							innerBlocks: [
+								{
+									name: 'stackable/tabs',
+									innerBlocks: [
+										{
+											name: 'stackable/tab-labels',
+											attributes: {
+												tabLabels: [
+													{ label: 'Inner 1', icon: '' },
+													{ label: 'Inner 2', icon: '' },
+												],
+											},
+										},
+										{
+											name: 'stackable/tab-content',
+											innerBlocks: [
+												{
+													name: 'stackable/column',
+													attributes: tabPanel,
+													innerBlocks: [ {
+														name: 'stackable/heading',
+														attributes: { text: 'Inner panel 1' },
+													} ],
+												},
+												{
+													name: 'stackable/column',
+													attributes: tabPanel,
+													innerBlocks: [ {
+														name: 'stackable/heading',
+														attributes: { text: 'Inner panel 2' },
+													} ],
+												},
+											],
+										},
+									],
+								},
+							],
+						},
+						{
+							name: 'stackable/column',
+							attributes: tabPanel,
+							innerBlocks: [ {
+								name: 'stackable/heading',
+								attributes: { text: 'Outer panel 2' },
+							} ],
+						},
+					],
+				},
+				{
+					name: 'stackable/tab-labels',
+					attributes: {
+						tabLabels: [
+							{ label: 'Outer 1', icon: '' },
+							{ label: 'Outer 2', icon: '' },
+						],
+					},
+				},
+			],
+		} )
+
+		await expect( editor.canvas.getByText( 'Inner panel 1' ) ).toBeVisible()
+		await expect( editor.canvas.getByText( 'Outer 2' ) ).toBeVisible()
+
+		await publishAndVisitFrontend( page, editor, requestUtils, admin )
+
+		const innerPanel1 = page.getByText( 'Inner panel 1' )
+		const innerPanel2 = page.getByText( 'Inner panel 2' )
+		const outerPanel2 = page.getByText( 'Outer panel 2' )
+
+		await expect( page.getByRole( 'tab', { name: 'Inner 1' } ) ).toBeVisible()
+		await expect( innerPanel1 ).toBeVisible()
+		await expect( innerPanel2 ).toBeHidden()
+		await expect( outerPanel2 ).toBeHidden()
+
+		await page.getByRole( 'tab', { name: 'Inner 2' } ).click()
+		await expect( page.getByRole( 'tab', { name: 'Inner 2' } ) ).toHaveAttribute( 'aria-selected', 'true' )
+		await expect( page.getByRole( 'tab', { name: 'Outer 1' } ) ).toHaveAttribute( 'aria-selected', 'true' )
+		await expect( innerPanel2 ).toBeVisible()
+		await expect( innerPanel1 ).toBeHidden()
+		await expect( outerPanel2 ).toBeHidden()
+
+		await page.getByRole( 'tab', { name: 'Outer 2' } ).click()
+		await expect( page.getByRole( 'tab', { name: 'Outer 2' } ) ).toHaveAttribute( 'aria-selected', 'true' )
+		await expect( outerPanel2 ).toBeVisible()
 	} )
 
 	test( 'Carousel next control changes the slide', async ( {
