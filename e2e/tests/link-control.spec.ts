@@ -1,6 +1,7 @@
 import {
 	test,
 	expect,
+	assertNoBlockRecovery,
 	waitForBlockEditor,
 } from 'e2e/test-utils'
 
@@ -17,6 +18,7 @@ test.describe( 'Link control URL input', () => {
 		page,
 		admin,
 		editor,
+		requestUtils,
 		stackable,
 	} ) => {
 		await admin.createNewPost( { title: 'Link Control URL Input' } )
@@ -66,6 +68,9 @@ test.describe( 'Link control URL input', () => {
 			return attributes.linkUrl
 		} ).toBe( 'https://example.com' )
 		await expect( linkControl ).not.toContainText( 'Please enter a valid URL.' )
+		await editor.saveDraft()
+		const safeContent = await editor.getEditedPostContent()
+		expect( safeContent ).toContain( 'href="https://example.com"' )
 
 		await setLinkValue( 'http://192.168.0.10' )
 		await expect.poll( async () => {
@@ -107,6 +112,20 @@ test.describe( 'Link control URL input', () => {
 		} ).toBe( 'https://' )
 		await expect( linkControl ).toContainText( 'Please enter a valid URL.' )
 
+		await setLinkValue( 'javascript:void(0)' )
+		await expect.poll( async () => {
+			const attributes = await editor.getBlockAttributes( clientId )
+			return attributes.linkUrl
+		} ).toBe( 'javascript:void(0)' )
+		await expect( linkControl ).not.toContainText( 'Please enter a valid URL.' )
+
+		await setLinkValue( 'javascript:;' )
+		await expect.poll( async () => {
+			const attributes = await editor.getBlockAttributes( clientId )
+			return attributes.linkUrl
+		} ).toBe( 'javascript:;' )
+		await expect( linkControl ).not.toContainText( 'Please enter a valid URL.' )
+
 		await input.click()
 		await input.fill( 'javascript:alert(document.domain)' )
 		await expect( linkControl ).toContainText( 'Please enter a valid URL.' )
@@ -116,14 +135,20 @@ test.describe( 'Link control URL input', () => {
 			return attributes.linkUrl
 		} ).toBe( '' )
 
-		await page.evaluate( id => {
-			window.wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( id, {
-				linkUrl: 'javascript:alert(document.domain)',
-			} )
-		}, clientId )
-		await editor.saveDraft()
+		const legacyContent = safeContent.replace(
+			'href="https://example.com"',
+			'href="javascript:void(0)"'
+		)
+		const legacyPost = await requestUtils.createPost( {
+			title: 'Legacy Button Link',
+			status: 'publish',
+			content: legacyContent,
+		} )
+		createdPostIds.push( legacyPost.id )
 
-		const savedContent = await editor.getEditedPostContent()
-		expect( savedContent ).not.toContain( 'href="javascript:' )
+		await admin.editPost( String( legacyPost.id ) )
+		await stackable.dismissToursAndNotices()
+		await waitForBlockEditor( editor )
+		await assertNoBlockRecovery( editor )
 	} )
 } )

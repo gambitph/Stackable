@@ -17,6 +17,7 @@ import {
 
 const SHORTCODE_VALUE = /^\s*\[[^\]]+\]/
 const EXECUTABLE_PROTOCOLS = [ 'javascript', 'data', 'vbscript' ]
+const INERT_JAVASCRIPT_VALUES = [ 'void(0)', ';' ]
 
 /**
  * True when the value starts with a browser-executable protocol.
@@ -31,15 +32,20 @@ export const hasExecutableProtocol = value => {
 		return false
 	}
 
-	const separatorIndex = value.indexOf( ':' )
+	const compactValue = value.replace( /[\u0000-\u0020\u007f]/g, '' )
+	const separatorIndex = compactValue.indexOf( ':' )
 	if ( separatorIndex === -1 ) {
 		return false
 	}
 
-	const protocol = value
+	const protocol = compactValue
 		.slice( 0, separatorIndex )
-		.replace( /[\u0000-\u0020\u007f]/g, '' )
 		.toLowerCase()
+	const protocolValue = compactValue.slice( separatorIndex + 1 )
+
+	if ( protocol === 'javascript' && INERT_JAVASCRIPT_VALUES.includes( protocolValue ) ) {
+		return false
+	}
 
 	return EXECUTABLE_PROTOCOLS.includes( protocol )
 }

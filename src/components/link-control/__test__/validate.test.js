@@ -64,6 +64,8 @@ describe( 'link-control validation', () => {
 
 	it.each( [
 		'javascript:alert(1)',
+		'javascript:void(0);alert(1)',
+		'javascript:;alert(1)',
 		'JAVASCRIPT:alert(1)',
 		'java\nscript:alert(1)',
 		'java\tscript:alert(1)',
@@ -73,6 +75,14 @@ describe( 'link-control validation', () => {
 		expect( isPassThroughLinkValue( value ) ).toBe( false )
 		expect( isValidLinkValue( value ) ).toBe( false )
 		expect( normalizeLinkValue( value ) ).toBe( '' )
+	} )
+
+	it.each( [
+		'javascript:void(0)',
+		'javascript:;',
+	] )( 'allows inert script link value %s', value => {
+		expect( isValidLinkValue( value ) ).toBe( true )
+		expect( normalizeLinkValue( value ) ).toBe( value )
 	} )
 
 	it( 'prepends https to bare domains on normalize', () => {
