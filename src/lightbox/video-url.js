@@ -1,49 +1,36 @@
 // Keep video detection broad enough to catch URLs GLightbox may classify as video.
-const VIDEO_EXTENSION = /\.(mp4|ogg|webm|mov)$/i
-const VIDEO_ID = /^[a-zA-Z0-9_-]+$/
-const UNSAFE_URL_CHARACTER = /[<>"'\s\x00-\x1f\x7f]/
+const VIDEO_EXTENSION = /\.(mp4|ogg|webm|mov)(?=$|[^a-z0-9])/i
+
+const parseUrl = value => {
+	try {
+		return new URL( value, window.location.href )
+	} catch ( error ) {
+		return null
+	}
+}
 
 export const detectIfVideo = url => {
-	return /(youtube(?:-nocookie)?\.com|youtu\.be|vimeo\.com|\.(mp4|ogg|webm|mov))/i.test( url )
+	const parsedUrl = parseUrl( url )
+	if ( ! parsedUrl ) {
+		return false
+	}
+
+	const hostname = parsedUrl.hostname.toLowerCase()
+	const isVideoProvider = hostname === 'youtu.be' ||
+		hostname === 'youtube.com' || hostname.endsWith( '.youtube.com' ) ||
+		hostname === 'youtube-nocookie.com' || hostname.endsWith( '.youtube-nocookie.com' ) ||
+		hostname === 'vimeo.com' || hostname.endsWith( '.vimeo.com' )
+
+	return isVideoProvider || VIDEO_EXTENSION.test( parsedUrl.pathname )
 }
 
 export const isValidVideoUrl = value => {
-	// These characters can break out of GLightbox's HTML-string video builder.
-	if ( UNSAFE_URL_CHARACTER.test( value ) ) {
+	const url = parseUrl( value )
+	if ( ! url ) {
 		return false
 	}
 
-	let url
-	try {
-		url = new URL( value, window.location.href )
-	} catch ( error ) {
-		return false
-	}
-
-	if ( ! [ 'http:', 'https:' ].includes( url.protocol ) || url.username || url.password ) {
-		return false
-	}
-
-	// Validate provider URLs by exact host and expected path/ID shape.
-	const hostname = url.hostname.toLowerCase()
-	if ( [ 'youtube.com', 'www.youtube.com', 'youtube-nocookie.com', 'www.youtube-nocookie.com' ].includes( hostname ) ) {
-		if ( url.port ) {
-			return false
-		}
-		if ( url.pathname === '/watch' ) {
-			const ids = url.searchParams.getAll( 'v' )
-			return ids.length === 1 && VIDEO_ID.test( ids[ 0 ] )
-		}
-		const embed = url.pathname.match( /^\/embed\/([a-zA-Z0-9_-]+)\/?$/ )
-		return Boolean( embed )
-	}
-	if ( hostname === 'youtu.be' ) {
-		return ! url.port && /^\/[a-zA-Z0-9_-]+\/?$/.test( url.pathname )
-	}
-	if ( hostname === 'vimeo.com' || hostname === 'www.vimeo.com' ) {
-		return ! url.port && /^\/[0-9]+\/?$/.test( url.pathname )
-	}
-
-	// Other supported video hosts are allowed for direct video files only.
-	return VIDEO_EXTENSION.test( url.pathname )
+	// Keep URL checks permissive so GLightbox-supported video formats keep working.
+	// The caller HTML-escapes video URLs before GLightbox inserts them with innerHTML.
+	return [ 'http:', 'https:' ].includes( url.protocol ) && ! url.username && ! url.password
 }

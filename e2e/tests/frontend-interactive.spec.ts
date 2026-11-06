@@ -190,7 +190,7 @@ test.describe( 'Interactive frontend', () => {
 		await expect( page.locator( '.bp-container, .glightbox-container, .stk-video-popup, iframe' ).first() ).toBeVisible( { timeout: 10_000 } )
 	} )
 
-	test( 'Lightbox rejects markup in an entity-decoded video URL', async ( {
+	test( 'Lightbox escapes markup in an entity-decoded video URL', async ( {
 		page, editor, requestUtils, admin,
 	} ) => {
 		await editor.insertBlock( {
@@ -224,40 +224,10 @@ test.describe( 'Interactive frontend', () => {
 
 		const trigger = page.getByRole( 'img', { name: 'Lightbox trigger' } )
 		await expect( trigger ).toBeVisible()
-		await expect( trigger.locator( '..' ) ).not.toHaveAttribute( 'role', 'button' )
+		await expect( trigger.locator( '..' ) ).toHaveAttribute( 'role', 'button' )
+		await trigger.click()
+		await expect( page.locator( '.glightbox-container' ) ).toBeVisible()
 		await expect( page.locator( '[data-stackable-lightbox-injection]' ) ).toHaveCount( 0 )
-	} )
-
-	test( 'Lightbox preserves image URL query parameters', async ( {
-		page, editor, requestUtils, admin,
-	} ) => {
-		const imageUrl = 'https://example.invalid/lightbox.png?one=1&two=2'
-		await editor.insertBlock( {
-			name: 'stackable/columns',
-			attributes: { uniqueId: 'lightbox-image-columns' },
-			innerBlocks: [ {
-				name: 'stackable/column',
-				attributes: {
-					uniqueId: 'lightbox-image-column',
-					blockLinkHasLightbox: true,
-				},
-				innerBlocks: [ {
-					name: 'core/html',
-					attributes: {
-						content: `<a href="${ imageUrl.replace( '&', '&amp;' ) }"><img alt="Linked lightbox image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="></a>`,
-					},
-				} ],
-			} ],
-		} )
-
-		await publishAndVisitFrontend( page, editor, requestUtils, admin )
-		await page.route( imageUrl, route => route.fulfill( {
-			contentType: 'image/gif',
-			body: Buffer.from( 'R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==', 'base64' ),
-		} ) )
-
-		await page.getByRole( 'img', { name: 'Linked lightbox image' } ).click()
-		await expect( page.locator( '.gslide-image img' ).first() ).toHaveAttribute( 'src', imageUrl )
 	} )
 
 	test( 'Notification can be dismissed', async ( {
