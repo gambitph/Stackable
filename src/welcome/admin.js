@@ -219,6 +219,7 @@ const SEARCH_TREE = [
 					__( 'Generate Global Colors for native blocks', i18n ),
 					__( 'Inherit Block Styles from theme.json', i18n ),
 					__( 'Enable Extended Block Style Inheritance', i18n ),
+					__( 'Use Border Radius and Shadow Presets from theme.json', i18n ),
 					__( 'Use v3.16.0 Color Scheme Inheritance', i18n ),
 					__( 'Block Defaults (Sunsetted)', i18n ),
 				],
@@ -1507,6 +1508,7 @@ const AdditionalOptions = props => {
 	const miscellaneous = groups.find( group => group.id === 'miscellaneous' )
 	const migrationSettings = groups.find( group => group.id === 'migration-settings' )
 	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
+	const hasLoadedSettings = Object.keys( settings ).length > 0
 
 	const searchClassname = ( label, searchedSettings ) => {
 		return searchedSettings.children === null || searchedSettings.children.includes( label )
@@ -1555,26 +1557,30 @@ const AdditionalOptions = props => {
 								} }
 								__nextHasNoMarginBottom
 							/>
-							<CheckboxControl
-								label={ __( 'Enable Extended Block Style Inheritance', i18n ) }
-								className={ searchClassname( __( 'Enable Extended Block Style Inheritance', i18n ), miscellaneous ) }
-								help={ __( 'Uses updated Stackable Columns spacing defaults, inherits Image border radius and Columns block spacing from equivalent WordPress blocks, and maps Buttons row and column spacing separately.', i18n ) }
-								checked={ !! settings.stackable_enable_extended_block_style_inheritance }
-								onChange={ checked => {
-									handleSettingsChange( { stackable_enable_extended_block_style_inheritance: checked } ) // eslint-disable-line camelcase
-								} }
-								__nextHasNoMarginBottom
-							/>
-							<CheckboxControl
-								label={ __( 'Use Border Radius Presets from theme.json', i18n ) }
-								className={ searchClassname( __( 'Use Border Radius Presets from theme.json', i18n ), miscellaneous ) }
-								help={ __( 'When enabled, Stackable uses border-radius presets from the active theme, then WordPress defaults. If neither provides presets, or this is disabled, Stackable uses its built-in presets.', i18n ) }
-								checked={ !! settings.stackable_use_theme_border_radius_presets }
-								onChange={ checked => {
-									handleSettingsChange( { stackable_use_theme_border_radius_presets: checked } ) // eslint-disable-line camelcase
-								} }
-								__nextHasNoMarginBottom
-							/>
+							{ hasLoadedSettings && (
+								<>
+									<CheckboxControl
+										label={ __( 'Enable Extended Block Style Inheritance', i18n ) }
+										className={ searchClassname( __( 'Enable Extended Block Style Inheritance', i18n ), miscellaneous ) }
+										help={ __( 'Uses updated Stackable Columns spacing defaults, inherits Image border radius and Columns block spacing from equivalent WordPress blocks, and maps Buttons row and column spacing separately.', i18n ) }
+										checked={ !! settings.stackable_enable_extended_block_style_inheritance }
+										onChange={ checked => {
+											handleSettingsChange( { stackable_enable_extended_block_style_inheritance: checked } ) // eslint-disable-line camelcase
+										} }
+										__nextHasNoMarginBottom
+									/>
+									<CheckboxControl
+										label={ __( 'Use Border Radius and Shadow Presets from theme.json', i18n ) }
+										className={ searchClassname( __( 'Use Border Radius and Shadow Presets from theme.json', i18n ), miscellaneous ) }
+										help={ __( 'When enabled, Stackable uses border-radius and shadow presets from the active theme, then WordPress defaults. If neither provides presets, or this is disabled, Stackable uses its built-in presets.', i18n ) }
+										checked={ !! settings.stackable_use_theme_border_radius_and_shadow_presets }
+										onChange={ checked => {
+											handleSettingsChange( { stackable_use_theme_border_radius_and_shadow_presets: checked } ) // eslint-disable-line camelcase
+										} }
+										__nextHasNoMarginBottom
+									/>
+								</>
+							) }
 							<CheckboxControl
 								label={ __( 'Use v3.16.0 Color Scheme Inheritance', i18n ) }
 								className={ searchClassname( __( 'Use v3.16.0 Color Scheme Inheritance', i18n ), miscellaneous ) }

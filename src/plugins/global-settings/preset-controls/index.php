@@ -29,12 +29,13 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			),
 			'borderRadius' => array(
 				'settings' => array( 'border', 'radiusSizes' ),
-				'use_wordpress_presets_setting' => 'stackable_use_theme_border_radius_presets',
+				'use_wordpress_presets_setting' => 'stackable_use_theme_border_radius_and_shadow_presets',
 				'prefix' => 'border-radius',
 			),
 			'shadows' => array(
 				'settings' => array( 'shadow', 'presets' ),
 				'default_enabled_setting' => array( 'shadow', 'defaultPresets' ),
+				'use_wordpress_presets_setting' => 'stackable_use_theme_border_radius_and_shadow_presets',
 				'prefix' => 'shadow',
 				'value_key' => 'shadow',
 			),
@@ -50,10 +51,10 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		 */
 		function __construct() {
 			add_action( 'register_stackable_global_settings', array( $this, 'register_use_size_presets_by_default' ) );
-			add_action( 'register_stackable_global_settings', array( $this, 'register_use_theme_border_radius_presets' ) );
+			add_action( 'register_stackable_global_settings', array( $this, 'register_use_theme_presets' ) );
 			add_action( 'stackable_early_version_upgraded',  array( $this, 'use_size_presets_by_default_set_default' ), 10, 2 );
-			add_action( 'stackable_early_version_upgraded', array( $this, 'initialize_use_theme_border_radius_presets' ), 10, 2 );
-			add_action( 'stackable_early_version_upgraded_frontend', array( $this, 'initialize_use_theme_border_radius_presets' ), 10, 2 );
+			add_action( 'stackable_early_version_upgraded', array( $this, 'initialize_use_theme_presets' ), 10, 2 );
+			add_action( 'stackable_early_version_upgraded_frontend', array( $this, 'initialize_use_theme_presets' ), 10, 2 );
 			add_action( 'stackable_early_version_upgraded',  array( $this, 'migrate_global_typography_font_size' ), 10, 2 );
 			add_filter( 'stackable_js_settings', array( $this, 'add_setting' ) );
 
@@ -76,35 +77,45 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			);
 		}
 
-		// Register the setting for using border-radius presets from WordPress.
-		function register_use_theme_border_radius_presets() {
-			register_setting(
-				'stackable_global_settings',
-				'stackable_use_theme_border_radius_presets',
-				array(
-					'type' => 'boolean',
-					'description' => __( 'Use border-radius presets from the active theme and WordPress', STACKABLE_I18N ),
-					'sanitize_callback' => 'rest_sanitize_boolean',
-					'show_in_rest' => true,
-					'default' => true,
-				)
+		private function get_theme_preset_settings() {
+			return array(
+				'stackable_use_theme_border_radius_and_shadow_presets' => __( 'Use border-radius and shadow presets from the active theme and WordPress', STACKABLE_I18N ),
 			);
 		}
 
+		// Register settings for using theme and WordPress presets.
+		function register_use_theme_presets() {
+			foreach ( $this->get_theme_preset_settings() as $setting => $description ) {
+				register_setting(
+					'stackable_global_settings',
+					$setting,
+					array(
+						'type' => 'boolean',
+						'description' => $description,
+						'sanitize_callback' => 'rest_sanitize_boolean',
+						'show_in_rest' => true,
+						'default' => false,
+					)
+				);
+			}
+		}
+
 		/**
-		 * Keep bundled border-radius presets for upgrades while enabling theme
-		 * presets on fresh installations. add_option() preserves later choices.
+		 * Keep bundled presets for upgrades while enabling theme presets on fresh
+		 * installations. add_option() preserves later choices.
 		 *
 		 * @param string $old_version Previously installed Stackable version.
 		 * @param string $new_version Newly installed Stackable version.
 		 */
-		public function initialize_use_theme_border_radius_presets( $old_version, $new_version ) {
-			add_option(
-				'stackable_use_theme_border_radius_presets',
-				empty( $old_version ),
-				'',
-				false
-			);
+		public function initialize_use_theme_presets( $old_version, $new_version ) {
+			foreach ( array_keys( $this->get_theme_preset_settings() ) as $setting ) {
+				add_option(
+					$setting,
+					empty( $old_version ),
+					'',
+					false
+				);
+			}
 		}
 
 		/**
@@ -158,7 +169,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		// Make the setting available in the editor
 		public function add_setting( $settings ) {
 			$settings['stackable_use_size_presets_by_default'] = get_option( 'stackable_use_size_presets_by_default' );
-			$settings['stackable_use_theme_border_radius_presets'] = (bool) get_option( 'stackable_use_theme_border_radius_presets', true );
+			$settings['stackable_use_theme_border_radius_and_shadow_presets'] = (bool) get_option( 'stackable_use_theme_border_radius_and_shadow_presets', false );
 			return $settings;
 		}
 		
@@ -276,7 +287,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			foreach ( self::PRESET_MAPPING as $key => $value ) {
 				$value_key = $value[ 'value_key' ] ?? 'size';
 				$use_wordpress_presets = ! isset( $value[ 'use_wordpress_presets_setting' ] ) ||
-					(bool) get_option( $value[ 'use_wordpress_presets_setting' ], true );
+					(bool) get_option( $value[ 'use_wordpress_presets_setting' ], false );
 				$use_default_presets = ! isset( $value[ 'default_enabled_setting' ] ) ||
 					false !== $this->deepGet( $this->theme_presets, $value[ 'default_enabled_setting' ] );
 				$theme_presets = $use_wordpress_presets

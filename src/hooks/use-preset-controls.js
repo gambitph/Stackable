@@ -29,7 +29,7 @@ const PRESET_MAPPING = {
 		defaultSizes: 'border.radiusSizes.default',
 		defaultEnabled: '',
 		useDefaultPresetsAsFallback: true,
-		useWordPressPresetsSetting: 'stackable_use_theme_border_radius_presets',
+		useWordPressPresetsSetting: 'stackable_use_theme_border_radius_and_shadow_presets',
 		prefix: 'border-radius',
 	},
 	shadows: {
@@ -38,6 +38,7 @@ const PRESET_MAPPING = {
 		defaultSizes: 'shadow.presets.default',
 		defaultEnabled: 'shadow.defaultPresets',
 		useDefaultPresetsAsFallback: true,
+		useWordPressPresetsSetting: 'stackable_use_theme_border_radius_and_shadow_presets',
 		prefix: 'shadow',
 		valueKey: 'shadow',
 	},
@@ -52,7 +53,7 @@ const nonePreset = {
 export const usePresetControls = property => {
 	const mapping = PRESET_MAPPING[ property ]
 	const useWordPressPresets = ! mapping.useWordPressPresetsSetting ||
-		!! ( stackableSettings?.[ mapping.useWordPressPresetsSetting ] ?? true )
+		!! ( stackableSettings?.[ mapping.useWordPressPresetsSetting ] ?? false )
 
 	// Get the theme presets for the property
 	const [
@@ -83,7 +84,7 @@ export const usePresetControls = property => {
 
 	let themePresets = useWordPressPresets ? _themePresets : []
 	const hasThemePresets = Array.isArray( themePresets ) && themePresets.length > 0
-	const hasDefaultPresets = mapping.useDefaultPresetsAsFallback &&
+	const hasDefaultPresets = useWordPressPresets && mapping.useDefaultPresetsAsFallback &&
 		Array.isArray( wpDefaultPresets ) && wpDefaultPresets.length > 0 &&
 		defaultSizesEnabled !== false
 

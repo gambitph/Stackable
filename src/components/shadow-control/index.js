@@ -201,11 +201,12 @@ const ShadowFilterControl = props => {
 			}
 
 			const [ horizontalOffset, verticalOffset, blur, spread, color ] = splitStringIntoParts( _value, isFilter ? 4 : 5 )
+			const hasNumericSpread = ! isNaN( parseFloat( spread ) )
 			_filters.horizontalOffset = isNaN( parseInt( horizontalOffset ) ) ? 0 : parseInt( horizontalOffset )
 			_filters.verticalOffset = isNaN( parseInt( verticalOffset ) ) ? 0 : parseInt( verticalOffset )
 			_filters.blur = isNaN( parseInt( blur ) ) ? 0 : parseInt( blur )
-			_filters.shadowSpread = isNaN( parseInt( spread ) ) ? 0 : parseInt( spread )
-			_filters.shadowColor = color || ''
+			_filters.shadowSpread = hasNumericSpread ? parseInt( spread ) : ''
+			_filters.shadowColor = hasNumericSpread ? color || '' : spread || ''
 
 			if ( isFilter ) {
 				_filters.shadowSpread = ''
