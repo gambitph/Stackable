@@ -2,13 +2,12 @@
  * External dependencies
  */
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
-import { __experimentalLinkControl as _LinkControl } from '@wordpress/block-editor'
-import { BaseControl as _BaseControl } from '@wordpress/components'
+import { URLInput } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -18,6 +17,10 @@ import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import { useControlHandlers } from '../base-control2/hooks'
 import { ResetButton } from '../base-control2/reset-button'
+import {
+	isValidLinkValue,
+	normalizeLinkValue,
+} from './validate'
 import { getPropsWithDefaults } from '../../util/props'
 
 const LinkControl = incomingProps => {
@@ -26,11 +29,15 @@ const LinkControl = incomingProps => {
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
 		isDynamic,
+		showSuggestions,
 		...inputProps
 	} = propsToPass
 
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
+	const urlError = value && ! isValidLinkValue( value )
+		? __( 'Please enter a valid URL.', i18n )
+		: ''
 
 	const dynamicContentProps = useDynamicContentControlProps( { value, onChange } )
 
@@ -39,22 +46,37 @@ const LinkControl = incomingProps => {
 		props.className,
 	], {
 		'stk--has-value': value,
+		'stk-link-control--invalid': urlError,
 	} )
 
+	const handleBlur = () => {
+		const normalized = normalizeLinkValue( value )
+		if ( normalized !== value ) {
+			onChange( normalized )
+		}
+	}
+
 	return (
-		<AdvancedControl { ...controlProps } className={ classNames }>
+		<AdvancedControl
+			{ ...controlProps }
+			className={ classNames }
+			help={ urlError || controlProps.help }
+		>
 			<DynamicContentControl
 				type={ [ 'link', 'image-url' ] }
 				enable={ isDynamic }
 				{ ...dynamicContentProps }
 			>
-				<div className="stk-link-control__input">
-					<_LinkControl
+				<div
+					className="stk-link-control__input"
+					onBlur={ handleBlur }
+				>
+					<URLInput
 						{ ...inputProps }
-						value={ { url: value } }
-						onChange={ ( { url } ) => onChange( url ) }
-						settings={ [] } // The Url only.
-						forceIsEditingLink={ ! value }
+						value={ value }
+						onChange={ onChange }
+						disableSuggestions={ ! showSuggestions }
+						autoFocus={ false } // eslint-disable-line
 					/>
 				</div>
 			</DynamicContentControl>

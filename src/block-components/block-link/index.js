@@ -9,6 +9,7 @@ import { Edit } from './edit'
  */
 import { Link } from '~stackable/components'
 import { getPropsWithDefaults } from '../../util/props'
+import { CustomAttributes } from '../custom-attributes'
 
 export const BlockLink = () => {
 	return null
@@ -23,9 +24,11 @@ BlockLink.Content = incomingProps => {
 	if ( ! attributes.blockLinkUrl ) {
 		return null
 	}
+	const customAttributes = CustomAttributes.getCustomAttributes( attributes, 'blockLinkCustomAttributes' )
 
 	return (
 		<Link.Content
+			{ ...customAttributes }
 			className="stk-block-link stk--transparent-overlay"
 			href={ href || attributes.blockLinkUrl }
 			target={ attributes.blockLinkNewTab ? '_blank' : '' }

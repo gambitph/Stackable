@@ -7,7 +7,7 @@
  * Internal dependencies
  */
 import HelpTooltip from '../help-tooltip'
-import { fetchSettings } from '~stackable/util'
+import { fetchSettings, saveSettings } from '~stackable/util'
 import { getPropsWithDefaults } from '../../util/props'
 
 /**
@@ -16,7 +16,6 @@ import { getPropsWithDefaults } from '../../util/props'
 import {
 	useRef, useState, useEffect,
 } from '@wordpress/element'
-import { models } from '@wordpress/api'
 import domReady from '@wordpress/dom-ready'
 
 const LabelTooltip = incomingProps => {
@@ -140,10 +139,9 @@ function useHelpTooltipEnabled() {
 	const updateHelpTooltipEnabled = newValue => {
 		helpTooltipEnabled = newValue
 
-		const model = new models.Settings( {
+		saveSettings( {
 			stackable_help_tooltip_disabled: newValue ? '' : '1', // eslint-disable-line
 		} )
-		model.save()
 
 		// Let the other components know that the value has changed.
 		window.dispatchEvent( new CustomEvent( '_stkHelpTooltipEnabledChanged', { detail: newValue } ) )

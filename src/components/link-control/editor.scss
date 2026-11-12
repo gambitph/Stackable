@@ -1,81 +1,38 @@
 .stk-link-control__input {
 	// Adjust width to ensure reset button is visible.
 	width: calc(100% - 32px);
+	min-width: 0;
 
-	> .block-editor-link-control {
-		min-width: auto;
+	> .block-editor-url-input {
+		min-width: 0;
 		width: 100%;
 
 		.components-base-control {
-			min-width: auto;
+			min-width: 0;
+			width: 100%;
 		}
 
-		.components-input-base {
-			height: 30px;
-		}
-
-		.block-editor-link-control__search-input-wrapper {
+		.components-base-control__field {
 			margin: 0;
 		}
-
-		.block-editor-link-control__field {
-			margin: 0;
-		}
-
-		.block-editor-link-control__search-item-header {
-			overflow: hidden;
-			white-space: nowrap;
-		}
-
 	}
 
-	.block-editor-url-input__input {
+	.block-editor-url-input__input,
+	.components-input-control__input {
 		margin: 0 !important;
 		width: 100% !important;
 		height: 30px !important;
 		padding: 6px 8px !important;
 	}
-	.block-editor-link-control__search-actions {
-		display: none;
-	}
-	.block-editor-link-control__search-results-wrapper {
-		margin-bottom: 24px !important;
-		margin-top: 0 !important;
-		.block-editor-link-control__search-results {
-			margin: 0;
-		}
-	}
-	.block-editor-link-control__search-item {
-		flex-wrap: wrap;
-	}
-	.block-editor-link-control__search-item.is-current {
-		margin-top: -2px;
-		padding: 0 !important;
-	}
-	.block-editor-link-control__search-item-details {
-		max-width: 140px !important;
-		overflow: hidden;
-	}
+}
 
-	.block-editor-link-control__search-item-icon {
-		display: none;
-	}
-
-	.block-editor-link-control__search-enter {
-		position: absolute;
-		top: 0;
-		right: 3px;
-		button:hover {
-			box-shadow: none !important;
-		}
+.stk-link-control--invalid {
+	.components-base-control__help {
+		color: #cc1818;
 	}
 }
 
-// Adjust the location of the dynamic and reset buttons since our control is taller.
 .stk-link-control {
-	.block-editor-link-control__field {
-		margin: auto;
-	}
 	.stk-dynamic-content-control {
 		display: flex;
 		align-items: center;

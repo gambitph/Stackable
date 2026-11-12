@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { fetchSettings } from '~stackable/util'
+import { fetchSettings, saveSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -11,7 +11,6 @@ import {
 } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
 import { __ } from '@wordpress/i18n'
-import { models } from '@wordpress/api'
 import { cloneDeep } from 'lodash'
 
 // Include all the stored state.
@@ -45,9 +44,10 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 				delete newBlockStyles[ action.blockName ]
 			}
 
-			// eslint-disable-next-line camelcase
-			const settings = new models.Settings( { stackable_global_block_styles: newBlockStyles } )
-			settings.save()
+			saveSettings( {
+				// eslint-disable-next-line camelcase
+				stackable_global_block_styles: newBlockStyles,
+			} ).catch( () => {} )
 
 			return newBlockStyles
 		}
