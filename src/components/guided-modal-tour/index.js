@@ -14,11 +14,11 @@ import {
  * External dependencies
  */
 import { guidedTourStates } from 'stackable'
+import { saveSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import { models } from '@wordpress/api'
 import {
 	useEffect, useState, lazy, Suspense, memo,
 } from '@wordpress/element'
@@ -92,9 +92,10 @@ const GuidedModalTour = memo( props => {
 
 					// Update the stackable_guided_tour_states setting
 					if ( ! guidedTourStates.includes( tourId ) ) {
-						// eslint-disable-next-line camelcase
-						const settings = new models.Settings( { stackable_guided_tour_states: [ ...guidedTourStates, tourId ] } )
-						settings.save()
+						saveSettings( {
+							// eslint-disable-next-line camelcase
+							stackable_guided_tour_states: [ ...guidedTourStates, tourId ],
+						} )
 					}
 
 					// Soft update the global variable to prevent the tour from being shown again.

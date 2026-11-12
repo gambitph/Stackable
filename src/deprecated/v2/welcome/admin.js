@@ -7,7 +7,6 @@ import {
 } from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
 import { Spinner } from '@wordpress/components'
-import { models } from '@wordpress/api'
 
 /**
  * External dependencies
@@ -16,7 +15,7 @@ import {
 	i18n,
 	v2nonce as nonce,
 } from 'stackable'
-import { fetchSettings } from '~stackable/util/admin'
+import { fetchSettings, saveSettings } from '~stackable/util/admin'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 
 export class BlockToggler extends Component {
@@ -123,8 +122,7 @@ export const OptimizationSettings = ( { searchSettings } ) => {
 	}, [] )
 
 	const updateOptimizeScriptLoad = value => {
-		const model = new models.Settings( { stackable_optimize_script_load: value } ) // eslint-disable-line camelcase
-		model.save()
+		saveSettings( { stackable_optimize_script_load: value } ) // eslint-disable-line camelcase
 		setOptimizeScriptLoad( value )
 	}
 
