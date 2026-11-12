@@ -317,7 +317,6 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Hero block - content alignment now applies to the whole block #3739
 * Fixed: Design Library - opens when Show Template is enabled #3737
 * Fixed: Timeline block - text alignment works on tablet and mobile #3738
-* Fixed: Tabs block - nested tabs with labels below now switch the correct tab #3372
 
 = 3.20.2 =
 
