@@ -9,7 +9,7 @@ import {
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 import { ResetButton } from '~stackable/components/base-control2/reset-button'
-import { usePresetControls } from '~stackable/hooks'
+import { PRESET_SOURCES, usePresetControls } from '~stackable/hooks'
 import DEFAULT_PRESETS from '~stackable/plugins/global-settings/preset-controls/presets.json'
 
 /**
@@ -74,6 +74,23 @@ export const getShadowFilterValue = ( selectedValue, shadowPresets, shadowFilter
 	return typeof selectedValue === 'number'
 		? shadowPresets[ selectedValue ]?.shadow ?? shadowFilterValue
 		: shadowFilterValue
+}
+
+export const getShadowPresetSections = ( shadowPresets, hasCustomOptions ) => {
+	const indexedPresets = shadowPresets.map( ( preset, index ) => ( { preset, index } ) )
+	if ( hasCustomOptions ) {
+		return [ { source: '', presets: indexedPresets } ]
+	}
+
+	const commonPresets = indexedPresets.filter( ( { preset } ) => ! preset.source )
+	const wordpressPresets = indexedPresets.filter( ( { preset } ) => preset.source === PRESET_SOURCES.WORDPRESS )
+	const stackablePresets = indexedPresets.filter( ( { preset } ) => preset.source === PRESET_SOURCES.STACKABLE )
+
+	return [
+		{ source: '', presets: commonPresets },
+		{ source: PRESET_SOURCES.WORDPRESS, presets: wordpressPresets },
+		{ source: PRESET_SOURCES.STACKABLE, presets: stackablePresets },
+	].filter( section => section.presets.length )
 }
 
 const FILTERS = [
@@ -310,8 +327,10 @@ const ShadowControl = memo( props => {
 				: sprintf( __( 'Shadow %d', i18n ), index ),
 			shadow: shadowValue,
 			value: shadowValue,
+			source: options ? '' : PRESET_SOURCES.STACKABLE,
 		}
 	} )
+	const shadowPresetSections = getShadowPresetSections( shadowPresets, !! options )
 	const presetButtonRef = useRef( null )
 	const settingsButtonRef = useRef( null )
 	const [ openPopover, setOpenPopover ] = useState( '' )
@@ -409,45 +428,59 @@ const ShadowControl = memo( props => {
 				>
 					<PanelBody>
 						<h2 className="components-panel__body-title">{ __( 'Drop shadow', i18n ) }</h2>
-						<div className="stk-shadow-control__preset-grid">
-							{ shadowPresets.map( ( preset, index ) => {
-								const isSelected = selectedValue === index
-								const presetLabel = preset.name || sprintf( __( 'Shadow %d', i18n ), index )
+						{ shadowPresetSections.map( section => (
+							<div
+								key={ section.source || 'common' }
+								className="stk-shadow-control__preset-section"
+							>
+								{ section.source && (
+									<h3 className="stk-shadow-control__preset-section-title">
+										{ section.source === PRESET_SOURCES.WORDPRESS
+											? __( 'Theme and WordPress', i18n )
+											: __( 'Stackable', i18n ) }
+									</h3>
+								) }
+								<div className="stk-shadow-control__preset-grid">
+									{ section.presets.map( ( { preset, index } ) => {
+										const isSelected = selectedValue === index
+										const presetLabel = preset.name || sprintf( __( 'Shadow %d', i18n ), index )
 
-								return (
-									<Tooltip
-										key={ `${ preset.value }-${ index }` }
-										text={ presetLabel }
-										placement="top"
-									>
-										<button
-											type="button"
-											className={ `stk-shadow-control__preset${ isSelected ? ' is-selected' : '' }${ index === 0 ? ' is-none' : '' }` }
-											style={ index === 0 || hasTextPreview ? undefined : { boxShadow: preset.shadow } }
-											aria-label={ presetLabel }
-											aria-pressed={ isSelected }
-											onClick={ () => {
-												effectiveOnChange( index )
-											} }
-										>
-											{ isSelected ? (
-												<Dashicon icon="saved" />
-											) : hasTextPreview && index !== 0 ? (
-												<span
-													className="stk-shadow-control__preset-text"
-													style={ {
-														fontFamily: props.previewFontFamily,
-														textShadow: preset.shadow,
+										return (
+											<Tooltip
+												key={ `${ preset.value }-${ index }` }
+												text={ presetLabel }
+												placement="top"
+											>
+												<button
+													type="button"
+													className={ `stk-shadow-control__preset${ isSelected ? ' is-selected' : '' }${ preset.shadow === 'none' ? ' is-none' : '' }` }
+													style={ preset.shadow === 'none' || hasTextPreview ? undefined : { boxShadow: preset.shadow } }
+													aria-label={ presetLabel }
+													aria-pressed={ isSelected }
+													onClick={ () => {
+														effectiveOnChange( index )
 													} }
 												>
-													Aa
-												</span>
-											) : null }
-										</button>
-									</Tooltip>
-								)
-							} ) }
-						</div>
+													{ isSelected ? (
+														<Dashicon icon="saved" />
+													) : hasTextPreview && preset.shadow !== 'none' ? (
+														<span
+															className="stk-shadow-control__preset-text"
+															style={ {
+																fontFamily: props.previewFontFamily,
+																textShadow: preset.shadow,
+															} }
+														>
+															Aa
+														</span>
+													) : null }
+												</button>
+											</Tooltip>
+										)
+									} ) }
+								</div>
+							</div>
+						) ) }
 						{ props.showClear && (
 							<Button
 								className="stk-shadow-control__clear"

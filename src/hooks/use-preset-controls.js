@@ -29,7 +29,7 @@ const PRESET_MAPPING = {
 		defaultSizes: 'border.radiusSizes.default',
 		defaultEnabled: '',
 		useDefaultPresetsAsFallback: true,
-		useWordPressPresetsSetting: 'stackable_use_theme_border_radius_and_shadow_presets',
+		useWordPressPresetsSetting: 'stackable_use_theme_border_radius_presets',
 		prefix: 'border-radius',
 	},
 	shadows: {
@@ -38,7 +38,7 @@ const PRESET_MAPPING = {
 		defaultSizes: 'shadow.presets.default',
 		defaultEnabled: 'shadow.defaultPresets',
 		useDefaultPresetsAsFallback: true,
-		useWordPressPresetsSetting: 'stackable_use_theme_border_radius_and_shadow_presets',
+		includeStackablePresets: true,
 		prefix: 'shadow',
 		valueKey: 'shadow',
 	},
@@ -48,6 +48,29 @@ const nonePreset = {
 	name: __( 'None', i18n ),
 	size: '0px',
 	slug: 'none',
+}
+
+export const PRESET_SOURCES = {
+	STACKABLE: 'stackable',
+	WORDPRESS: 'wordpress',
+}
+
+const normalizePresetValue = value => typeof value === 'string'
+	? value.trim().replace( /\s+/g, ' ' )
+	: value
+
+export const dedupeShadowPresets = presets => {
+	const seenPresets = new Set()
+
+	return presets.filter( preset => {
+		const key = `${ preset.slug }\u0000${ normalizePresetValue( preset.shadow ) }`
+		if ( seenPresets.has( key ) ) {
+			return false
+		}
+
+		seenPresets.add( key )
+		return true
+	} )
 }
 
 export const usePresetControls = property => {
@@ -106,12 +129,21 @@ export const usePresetControls = property => {
 		]
 	}
 
-	// Get the theme/default presets if the user have one, else return the stackable presets
-	const basePresets = hasThemePresets
+	// Get the theme/default presets if the user has one, else return the Stackable presets.
+	const wordpressPresets = hasThemePresets
 		? themePresets
 		: hasDefaultPresets
 			? wpDefaultPresets
-			: mapping.settings.reduce( ( acc, key ) => acc?.[ key ], DEFAULT_PRESETS.settings )
+			: []
+	const stackablePresets = mapping.settings.reduce( ( acc, key ) => acc?.[ key ], DEFAULT_PRESETS.settings )
+	const basePresets = mapping.includeStackablePresets
+		? [
+			...wordpressPresets.map( preset => ( { ...preset, source: PRESET_SOURCES.WORDPRESS } ) ),
+			...stackablePresets.map( preset => ( { ...preset, source: PRESET_SOURCES.STACKABLE } ) ),
+		]
+		: wordpressPresets.length
+			? wordpressPresets
+			: stackablePresets
 
 	// Returns the base presets overriden by the custom presets
 	const getMergedPresets = () => {
@@ -123,11 +155,15 @@ export const usePresetControls = property => {
 		}, {} )
 
 		// Merge base presets with custom presets (priority)
-		return basePresets.map( baseItem =>
+		const mergedPresets = basePresets.map( baseItem =>
 			customMap[ baseItem.slug ]
 				? { ...baseItem, ...customMap[ baseItem.slug ] }
 				: baseItem
 		)
+
+		return property === 'shadows'
+			? dedupeShadowPresets( mergedPresets )
+			: mergedPresets
 	}
 
 	// Get the merge preset marks with the CSS Variable value

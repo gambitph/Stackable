@@ -219,7 +219,7 @@ const SEARCH_TREE = [
 					__( 'Generate Global Colors for native blocks', i18n ),
 					__( 'Inherit Block Styles from theme.json', i18n ),
 					__( 'Enable Extended Block Style Inheritance', i18n ),
-					__( 'Use Border Radius and Shadow Presets from theme.json', i18n ),
+					__( 'Use Border Radius Presets from theme.json', i18n ),
 					__( 'Use v3.16.0 Color Scheme Inheritance', i18n ),
 					__( 'Block Defaults (Sunsetted)', i18n ),
 				],
@@ -1570,12 +1570,12 @@ const AdditionalOptions = props => {
 										__nextHasNoMarginBottom
 									/>
 									<CheckboxControl
-										label={ __( 'Use Border Radius and Shadow Presets from theme.json', i18n ) }
-										className={ searchClassname( __( 'Use Border Radius and Shadow Presets from theme.json', i18n ), miscellaneous ) }
-										help={ __( 'When enabled, Stackable uses border-radius and shadow presets from the active theme, then WordPress defaults. If neither provides presets, or this is disabled, Stackable uses its built-in presets.', i18n ) }
-										checked={ !! settings.stackable_use_theme_border_radius_and_shadow_presets }
+										label={ __( 'Use Border Radius Presets from theme.json', i18n ) }
+										className={ searchClassname( __( 'Use Border Radius Presets from theme.json', i18n ), miscellaneous ) }
+										help={ __( 'When enabled, Stackable uses border-radius presets from the active theme, then WordPress defaults. If neither provides presets, or this is disabled, Stackable uses its built-in presets.', i18n ) }
+										checked={ !! settings.stackable_use_theme_border_radius_presets }
 										onChange={ checked => {
-											handleSettingsChange( { stackable_use_theme_border_radius_and_shadow_presets: checked } ) // eslint-disable-line camelcase
+											handleSettingsChange( { stackable_use_theme_border_radius_presets: checked } ) // eslint-disable-line camelcase
 										} }
 										__nextHasNoMarginBottom
 									/>
