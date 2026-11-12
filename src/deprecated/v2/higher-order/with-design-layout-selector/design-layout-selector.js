@@ -5,6 +5,7 @@ import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
 import { applyBlockDesign } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import { getDesigns, getDesign } from '~stackable/design-library'
 import { Button } from '~stackable/components'
 import classnames from 'classnames'
@@ -34,7 +35,8 @@ const basicDesign = {
 	id: 'basic',
 }
 
-const DesignLayoutSelector = props => {
+const DesignLayoutSelector = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DESIGN_LAYOUT_SELECTOR_DEFAULT_PROPS )
 	const {
 		name,
 	} = props
@@ -181,7 +183,7 @@ const DesignLayoutSelector = props => {
 	)
 }
 
-DesignLayoutSelector.defaultProps = {
+const DESIGN_LAYOUT_SELECTOR_DEFAULT_PROPS = {
 	name: '',
 }
 

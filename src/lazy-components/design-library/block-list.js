@@ -19,8 +19,10 @@ import classnames from 'classnames'
 import { useEffect, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { Spinner } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../util/props'
 
-const BlockList = props => {
+const BlockList = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_LIST_DEFAULT_PROPS )
 	const [ categoryList, setCategoryList ] = useState( [] )
 	const {
 		viewBy, designs, plan, selected, onSelect,
@@ -111,7 +113,7 @@ const BlockList = props => {
 	)
 }
 
-BlockList.defaultProps = {
+const BLOCK_LIST_DEFAULT_PROPS = {
 	select: '',
 	onSelect: () => {},
 	apiVersion: '',

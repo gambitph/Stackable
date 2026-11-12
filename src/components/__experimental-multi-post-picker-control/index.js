@@ -9,8 +9,10 @@ import {
 } from '@wordpress/element'
 import apiFetch from '@wordpress/api-fetch'
 import { addQueryArgs } from '@wordpress/url'
+import { getPropsWithDefaults } from '../../util/props'
 
-const PostPickerItem = props => {
+const PostPickerItem = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, POST_PICKER_ITEM_DEFAULT_PROPS )
 	return (
 		<div className="ugb-post-picker-item">
 			<span className="ugb-post-picker-item__label">{ props.value }</span>
@@ -27,7 +29,7 @@ const PostPickerItem = props => {
 	)
 }
 
-PostPickerItem.defaultProps = {
+const POST_PICKER_ITEM_DEFAULT_PROPS = {
 	value: '',
 	url: '',
 	onRemove: () => {},
@@ -43,7 +45,8 @@ const getName = ( {
 	return `${ title || noTitlePost( postId ) } - ${ postType }`
 }
 
-const PostPickerControl = props => {
+const PostPickerControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, POST_PICKER_CONTROL_DEFAULT_PROPS )
 	const [ inputValue, setInputValue ] = useState( '' )
 	const [ searchResults, setSearchResults ] = useState( [] )
 	const [ focused, setFocused ] = useState( false )
@@ -162,7 +165,7 @@ const PostPickerControl = props => {
 	)
 }
 
-PostPickerControl.defaultProps = {
+const POST_PICKER_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	label: __( 'Pick a post', i18n ),
 	value: [],

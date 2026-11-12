@@ -9,6 +9,7 @@ import classnames from 'classnames/dedupe'
 import { Div } from '~stackable/components'
 import { useVariationPicker } from '~stackable/hooks'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { memo } from '@wordpress/element'
 
 import { useBlockProps } from '@wordpress/block-editor'
@@ -22,7 +23,8 @@ export {
 	deprecateBlockBackgroundColorOpacity, deprecateBlockShadowColor, deprecateBlockHeight,
 } from './deprecated'
 
-export const BlockDiv = memo( props => {
+export const BlockDiv = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_DIV_DEFAULT_PROPS )
 	const {
 		className,
 		applyCustomAttributes,
@@ -103,7 +105,7 @@ export const BlockDiv = memo( props => {
 	</Div>
 } )
 
-BlockDiv.defaultProps = {
+const BLOCK_DIV_DEFAULT_PROPS = {
 	className: '',
 	applyCustomAttributes: true,
 	renderHtmlTag: true, // If true, this renders the HTML Tag based from the block attributes.
@@ -113,7 +115,8 @@ BlockDiv.defaultProps = {
 	blockTag: 'div',
 }
 
-BlockDiv.Content = props => {
+BlockDiv.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_DIV_CONTENT_DEFAULT_PROPS )
 	const {
 		className,
 		attributes,
@@ -169,7 +172,7 @@ BlockDiv.Content = props => {
 	/>
 }
 
-BlockDiv.Content.defaultProps = {
+const BLOCK_DIV_CONTENT_DEFAULT_PROPS = {
 	version: VERSION,
 	className: '',
 	attributes: {},

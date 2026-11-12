@@ -19,6 +19,7 @@ import {
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+import { getPropsWithDefaults } from '../util/props'
 
 const typographyOptions = {
 	selector: '.stk-block-text__text',
@@ -48,7 +49,8 @@ const Styles = () => {
 	)
 }
 
-export const BlockStyles = memo( props => {
+export const BlockStyles = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_STYLES_DEFAULT_PROPS )
 	return (
 		<>
 			<Alignment.Style { ...props } />
@@ -62,11 +64,12 @@ export const BlockStyles = memo( props => {
 	)
 } )
 
-BlockStyles.defaultProps = {
+const BLOCK_STYLES_DEFAULT_PROPS = {
 	version: '',
 }
 
-BlockStyles.Content = props => {
+BlockStyles.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_STYLES_CONTENT_DEFAULT_PROPS )
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
@@ -85,7 +88,7 @@ BlockStyles.Content = props => {
 	)
 }
 
-BlockStyles.Content.defaultProps = {
+const BLOCK_STYLES_CONTENT_DEFAULT_PROPS = {
 	version: '',
 	attributes: {},
 }

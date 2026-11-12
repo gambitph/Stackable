@@ -1,10 +1,12 @@
 import AdminBaseSetting from '../admin-base-setting'
 import IconControl from '../icon-control'
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
 const defaultIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190"><polygon points="173.8,28.4 60.4,141.8 15.7,97.2 5.1,107.8 60.4,163 184.4,39 173.8,28.4"/></svg>'
 
-const AdminIconSetting = props => {
+const AdminIconSetting = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADMIN_ICON_SETTING_DEFAULT_PROPS )
 	return (
 		<AdminBaseSetting
 			{ ...props }
@@ -24,7 +26,7 @@ const AdminIconSetting = props => {
 	)
 }
 
-AdminIconSetting.defaultProps = {
+const ADMIN_ICON_SETTING_DEFAULT_PROPS = {
 	value: '',
 	onChange: () => {},
 }

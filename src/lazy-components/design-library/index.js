@@ -13,6 +13,7 @@ import { DesignLibraryContext } from './context'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
 import { useLocalStorage } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { useBlockColorSchemes, useCanManageUserPatterns } from '~stackable/hooks'
 import {
 	GuidedModalTour, Button, ColorSchemePreview, ColorSchemesHelp, Tooltip,
@@ -48,7 +49,8 @@ const popoverProps = {
 // This is to make sure that the design library shows "all" at the start.
 localStorage?.setItem( 'stk__design_library__block-list__selected', '' )
 
-const ModalDesignLibrary = props => {
+const ModalDesignLibrary = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, MODAL_DESIGN_LIBRARY_DEFAULT_PROPS )
 	const {
 		backgroundModeColorScheme, containerModeColorScheme, colorSchemesCollection,
 	} = useBlockColorSchemes()
@@ -484,7 +486,7 @@ const ModalDesignLibrary = props => {
 	)
 }
 
-ModalDesignLibrary.defaultProps = {
+const MODAL_DESIGN_LIBRARY_DEFAULT_PROPS = {
 	search: '',
 	onClose: () => {},
 	onSelect: () => {},

@@ -13,7 +13,6 @@ module.exports = {
 		'.*\\.svg$': '<rootDir>/src/test/svgr-mock.js',
 		'\\.(mp4|webm|png|jpg|jpeg|gif)$': '<rootDir>/src/test/file-stub.js',
 		'^stackable$': '<rootDir>/src/test/stackable-mock.js',
-		'@wordpress/api$': '<rootDir>/src/test/wp-api-stub.js',
 		'@wordpress/ajax$': '<rootDir>/src/test/wp-admin-stub.js',
 		'@wordpress/codeEditor$': '<rootDir>/src/test/wp-admin-stub.js',
 		'@wordpress/plugins$': '<rootDir>/src/test/wp-admin-stub.js',

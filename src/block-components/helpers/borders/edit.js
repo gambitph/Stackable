@@ -18,6 +18,7 @@ import {
 	useAttributeEditHandlers, useAttributeValue, useBlockLayoutDefaults, useBlockSetAttributesContext, usePresetControls,
 } from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
+import { getPropsWithDefaults } from '../../../util/props'
 
 export const BORDER_CONTROLS = [
 	{
@@ -57,7 +58,8 @@ const BORDER_CONTROLS_WITH_NONE_VALUE = [
 	},
 ]
 
-export const BorderControls = props => {
+export const BorderControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BORDER_CONTROLS_DEFAULT_PROPS )
 	const {
 		getAttrName,
 		updateAttributes,
@@ -161,7 +163,7 @@ export const BorderControls = props => {
 	)
 }
 
-BorderControls.defaultProps = {
+const BORDER_CONTROLS_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	borderTypeValue: '', // If not supplied, the value from the attribute will be used, otherwise: '' for none, 'solid', 'dashed', 'dotted'
 	hasBorderType: true,

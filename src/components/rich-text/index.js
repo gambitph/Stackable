@@ -7,6 +7,7 @@
  */
 import { useBlockAttributesContext, useFontLoader } from '~stackable/hooks'
 import { getAttrNameFunction } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 /**
  * WordPress dependencies
  */
@@ -16,7 +17,8 @@ import {
 	 memo,
 } from '@wordpress/element'
 
-const RichText = memo( forwardRef( ( props, ref ) => {
+const RichText = memo( forwardRef( ( incomingProps, ref ) => {
+	const props = getPropsWithDefaults( incomingProps, RICH_TEXT_DEFAULT_PROPS )
 	const {
 		attrNameTemplate,
 		...propsToPass
@@ -41,7 +43,7 @@ const RichText = memo( forwardRef( ( props, ref ) => {
 	)
 } ) )
 
-RichText.defaultProps = {
+const RICH_TEXT_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 }
 

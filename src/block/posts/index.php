@@ -4,6 +4,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'stackable_posts_ensure_featured_image_alt' ) ) {
+	/**
+	 * Keep a non-empty featured image alt as-is.
+	 * When alt is empty or missing, use the escaped post title.
+	 * Untitled posts keep an empty alt so the attribute is still present.
+	 *
+	 * @param string $img_html
+	 * @param string $post_title
+	 * @return string
+	 */
+	function stackable_posts_ensure_featured_image_alt( $img_html, $post_title ) {
+		$has_alt = preg_match( '/(?:^|\s)alt=(["\'])(.*?)\1/', $img_html, $alt_match );
+
+		if ( $has_alt && $alt_match[2] !== '' ) {
+			return $img_html;
+		}
+
+		$alt_value = $post_title === '' ? '' : esc_attr( $post_title );
+
+		if ( $has_alt ) {
+			if ( $alt_value === '' ) {
+				return $img_html;
+			}
+			return str_replace( $alt_match[0], ' alt="' . $alt_value . '"', $img_html );
+		}
+
+		$img_tag_pos = strpos( $img_html, '<img' );
+		if ( false === $img_tag_pos ) {
+			return $img_html;
+		}
+
+		$insert_at = $img_tag_pos + 4;
+		return substr( $img_html, 0, $insert_at ) . ' alt="' . $alt_value . '"' . substr( $img_html, $insert_at );
+	}
+}
+
 if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 	/**
 	 * Given a post array, attributes,
@@ -40,7 +76,11 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 				if ( is_array( $match ) && count( $match ) > 0 ) {
 					// Only remove the style tag inside the image tag.
 					$new_img = preg_replace( '/style=\"[^\"]*\"\s?/', "", $match[ 0 ] );
-					$featured_image = preg_replace( "/<img[^\>]*>/", $new_img, $thumbnail );
+					$post_title = isset( $post['post_title'] ) ? $post['post_title'] : '';
+					$new_img = stackable_posts_ensure_featured_image_alt( $new_img, $post_title );
+					// Treat the replacement as plain text. preg_replace would
+					// read $n / ${n} / \n in the post title as backreferences.
+					$featured_image = str_replace( $match[ 0 ], $new_img, $thumbnail );
 				}
 			}
 
@@ -48,7 +88,13 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			if ( empty( $featured_image ) ) {
 				$new_template = preg_replace( '/<figure[^>]*>(.*)<\/figure>/', '', $new_template );
 			} else {
-				$new_template = preg_replace( '/<img[^>]*>/', $featured_image, $new_template );
+				$new_template = preg_replace_callback(
+					'/<img[^>]*>/',
+					function() use ( $featured_image ) {
+						return $featured_image;
+					},
+					$new_template
+				);
 			}
 		}
 

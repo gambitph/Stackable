@@ -21,6 +21,7 @@ import {
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { Button, Dashicon } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../util/props'
 
 export const getShadows = () => {
 	return applyFilters( 'stackable.shadows', [
@@ -127,7 +128,8 @@ const filterToValue = ( props, filters ) => {
 	return newValue.join( ' ' )
 }
 
-const ShadowFilterControl = props => {
+const ShadowFilterControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SHADOW_FILTER_CONTROL_DEFAULT_PROPS )
 	const [ filters, setFilters ] = useState( {} )
 	const [ filtersPlaceholder, setFiltersPlaceholder ] = useState( {} )
 
@@ -241,12 +243,13 @@ const ShadowFilterControl = props => {
 	)
 }
 
-ShadowFilterControl.defaultProps = {
+const SHADOW_FILTER_CONTROL_DEFAULT_PROPS = {
 	hasInset: true,
 	isFilter: false,
 }
 
-const ShadowControl = memo( props => {
+const ShadowControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SHADOW_CONTROL_DEFAULT_PROPS )
 	const {
 		options,
 		label,
@@ -340,7 +343,7 @@ const ShadowControl = memo( props => {
 	)
 }, isEqual )
 
-ShadowControl.defaultProps = {
+const SHADOW_CONTROL_DEFAULT_PROPS = {
 	attribute: '',
 	label: __( 'Shadow / Outline', i18n ),
 	placeholder: '',

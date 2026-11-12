@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { clamp } from 'lodash'
 import { i18n } from 'stackable'
+import { getPropsWithDefaults } from '../../util/props'
 
 // NumberControl is only supported in WP 5.5
 const isNumberControlSupported = !! NumberControl
@@ -36,7 +37,8 @@ export const getPercentageValue = ( value, min, max ) => {
 	return `${ clamp( percentageValue, 0, 100 ) }%`
 }
 
-const StackableRangeControl = memo( props => {
+const StackableRangeControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, STACKABLE_RANGE_CONTROL_DEFAULT_PROPS )
 	const {
 		allowReset,
 		withInputField,
@@ -198,7 +200,7 @@ const StackableRangeControl = memo( props => {
 	</div>
 } )
 
-StackableRangeControl.defaultProps = {
+const STACKABLE_RANGE_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	allowReset: false,
 	withInputField: true,

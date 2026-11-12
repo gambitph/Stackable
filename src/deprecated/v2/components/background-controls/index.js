@@ -14,6 +14,7 @@ import {
 	ControlSeparator,
 } from '~stackable/components'
 import { urlIsVideo } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 /**
  * WordPress dependencies
@@ -25,7 +26,8 @@ import {
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 
-const BackgroundControls = props => {
+const BackgroundControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BACKGROUND_CONTROLS_DEFAULT_PROPS )
 	const isBackgroundVideo = () => {
 		return [ props.backgroundMediaURL, props.tabletBackgroundMediaURL, props.mobileBackgroundMediaURL ]
 			.filter( value => value )
@@ -71,19 +73,19 @@ const BackgroundControls = props => {
 				/>
 			) }
 			{ props.onChangeBackgroundColorOpacity && props.backgroundColorType !== 'gradient' &&
-				( ! props.backgroundMediaURL && ! props.tabletBackgroundMediaURL && ! props.mobileBackgroundMediaURL ) && (
+				( ! props.backgroundMediaURL && ! props.tabletBackgroundMediaURL && ! props.mobileBackgroundMediaURL ) &&
 					<AdvancedRangeControl
-					label={ __( 'Background Color Opacity', i18n ) }
-					value={ props.backgroundColorOpacity }
-					onChange={ props.onChangeBackgroundColorOpacity }
-					min={ 0 }
-					max={ 1 }
-					step={ 0.1 }
-					allowReset={ true }
-					placeholder="1.0"
-					className="ugb--help-tip-background-color-opacity"
-				/>
-			) }
+						label={ __( 'Background Color Opacity', i18n ) }
+						value={ props.backgroundColorOpacity }
+						onChange={ props.onChangeBackgroundColorOpacity }
+						min={ 0 }
+						max={ 1 }
+						step={ 0.1 }
+						allowReset={ true }
+						placeholder="1.0"
+						className="ugb--help-tip-background-color-opacity"
+					/>
+			}
 
 			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && (
 				<ColorPaletteControl
@@ -200,41 +202,41 @@ const BackgroundControls = props => {
 			) }
 
 			{ props.onChangeBackgroundTintStrength && props.onChangeBackgroundMedia &&
-				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) && (
-				<AdvancedRangeControl
+				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
+					<AdvancedRangeControl
 						label={ __( 'Background Media Tint Strength', i18n ) }
 						value={ props.backgroundTintStrength }
 						onChange={ value => {
-						const noValue = typeof value === 'undefined' || value === ''
-						// If the tint is changed, but on background color yet, make it black. Fixes #136.
-						if ( props.backgroundColor === '' && ! noValue ) {
-							props.onChangeBackgroundTintStrength( value, '#000000' )
-						// If the tint is reset, and the background is black (was set earlier), remove it.
-						} else if ( props.backgroundColor === '#000000' && noValue ) {
-							props.onChangeBackgroundTintStrength( value, '' )
-						} else {
-							props.onChangeBackgroundTintStrength( value, props.backgroundColor )
-						}
-					} }
+							const noValue = typeof value === 'undefined' || value === ''
+							// If the tint is changed, but on background color yet, make it black. Fixes #136.
+							if ( props.backgroundColor === '' && ! noValue ) {
+								props.onChangeBackgroundTintStrength( value, '#000000' )
+								// If the tint is reset, and the background is black (was set earlier), remove it.
+							} else if ( props.backgroundColor === '#000000' && noValue ) {
+								props.onChangeBackgroundTintStrength( value, '' )
+							} else {
+								props.onChangeBackgroundTintStrength( value, props.backgroundColor )
+							}
+						} }
 						min={ 0 }
 						max={ 10 }
 						step={ 1 }
 						allowReset={ true }
 						placeholder={ props.backgroundColor ? '5' : '0' }
 						className="ugb--help-tip-background-tint"
-				/>
-			) }
+					/>
+			}
 
 			{ props.onChangeFixedBackground && props.onChangeBackgroundMedia &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
-				! isBackgroundVideo() && (
-				<AdvancedToggleControl
+				! isBackgroundVideo() &&
+					<AdvancedToggleControl
 						label={ __( 'Fixed Background', i18n ) }
 						checked={ props.fixedBackground }
 						onChange={ props.onChangeFixedBackground }
 						className="ugb--help-tip-background-fixed"
-				/>
-			) }
+					/>
+			}
 
 			{ props.hasAdvancedBackground && props.onChangeBackgroundMedia &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
@@ -461,7 +463,7 @@ const BackgroundControls = props => {
 	)
 }
 
-BackgroundControls.defaultProps = {
+const BACKGROUND_CONTROLS_DEFAULT_PROPS = {
 	backgroundColorType: '',
 	backgroundColor: '',
 	backgroundColorOpacity: '',

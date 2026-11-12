@@ -19,6 +19,7 @@ import classnames from 'classnames'
 import {
 	omit, omitBy, keys,
 } from 'lodash'
+import { getPropsWithDefaults } from '../../util/props'
 
 const urlLabels = [
 	{
@@ -39,7 +40,8 @@ const urlLabels = [
 	},
 ]
 
-const UrlInputPopover = props => {
+const UrlInputPopover = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, URL_INPUT_POPOVER_DEFAULT_PROPS )
 	const {
 		value,
 		newTab,
@@ -119,7 +121,7 @@ const UrlInputPopover = props => {
 	)
 }
 
-UrlInputPopover.defaultProps = {
+const URL_INPUT_POPOVER_DEFAULT_PROPS = {
 	value: '',
 	disableSuggestions: false,
 	onChange: null,

@@ -11,13 +11,15 @@ import { __ } from '@wordpress/i18n'
 import {
 	useState, useEffect, useRef,
 } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * Location Control
  *
- * @param {Object} props Component props
+ * @param {Object} incomingProps Component props
  */
-const LocationControl = props => {
+const LocationControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, LOCATION_CONTROL_DEFAULT_PROPS )
 	const [ waitForGoogle, setWaitForGoogle ] = useState( 0 )
 
 	useEffect( () => {
@@ -67,7 +69,7 @@ const LocationControl = props => {
 	)
 }
 
-LocationControl.defaultProps = {
+const LOCATION_CONTROL_DEFAULT_PROPS = {
 	onChange: null,
 	value: '',
 }

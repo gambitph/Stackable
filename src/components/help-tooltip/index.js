@@ -16,10 +16,12 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import Popover from '../popover'
+import { getPropsWithDefaults } from '../../util/props'
 
 const NOOP = () => {}
 
-const HelpTooltip = props => {
+const HelpTooltip = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, HELP_TOOLTIP_DEFAULT_PROPS )
 	return <Popover
 		className="stk-control-help-tooltip"
 		title={ props.title }
@@ -61,7 +63,7 @@ const HelpTooltip = props => {
 	</Popover>
 }
 
-HelpTooltip.defaultProps = {
+const HELP_TOOLTIP_DEFAULT_PROPS = {
 	title: '',
 	video: '',
 	description: '',

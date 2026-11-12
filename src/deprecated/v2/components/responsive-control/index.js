@@ -3,6 +3,7 @@
  */
 import { WhenResponsiveScreen } from '~stackable/components'
 import { __getValue } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 /**
  * WordPress dependencies
@@ -13,7 +14,8 @@ import {
 import { camelCase } from 'lodash'
 import { sprintf } from '@wordpress/i18n'
 
-const ResponsiveControl = props => {
+const ResponsiveControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, RESPONSIVE_CONTROL_DEFAULT_PROPS )
 	const getAttrName = ( attrName = '' ) => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getValue = __getValue( props.blockAttributes, getAttrName, '' )
 
@@ -75,7 +77,7 @@ const ResponsiveControl = props => {
 	)
 }
 
-ResponsiveControl.defaultProps = {
+const RESPONSIVE_CONTROL_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},

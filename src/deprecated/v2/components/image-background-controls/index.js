@@ -8,6 +8,7 @@ import {
 	ImageSizeControl,
 } from '~stackable/components'
 import { cacheImageData, getImageUrlFromCache } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import { i18n } from 'stackable'
 
 /**
@@ -18,7 +19,8 @@ import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
 
-const ImageBackgroundControls = props => {
+const ImageBackgroundControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_BACKGROUND_CONTROLS_DEFAULT_PROPS )
 	return (
 		<Fragment>
 			{ props.onChangeImage &&
@@ -131,7 +133,7 @@ const ImageBackgroundControls = props => {
 	)
 }
 
-ImageBackgroundControls.defaultProps = {
+const IMAGE_BACKGROUND_CONTROLS_DEFAULT_PROPS = {
 	id: '',
 	url: '',
 	onChangeImage: ( { url, id } ) => {}, // eslint-disable-line

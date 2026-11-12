@@ -20,8 +20,10 @@ import classnames from 'classnames'
 import { applyFilters } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ImageShapeControl = props => {
+const ImageShapeControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_SHAPE_CONTROL_DEFAULT_PROPS )
 	const {
 		className,
 		hasDefault,
@@ -54,7 +56,7 @@ const ImageShapeControl = props => {
 	)
 }
 
-ImageShapeControl.defaultProps = {
+const IMAGE_SHAPE_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	label: __( 'Shape', i18n ),
 	selected: '',

@@ -18,8 +18,10 @@ import { useInstanceId } from '@wordpress/compose'
 import { FormToggle } from '@wordpress/components'
 import { memo } from '@wordpress/element'
 import { useControlHandlers } from '../base-control2/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
-const AdvancedToggleControl = memo( props => {
+const AdvancedToggleControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADVANCED_TOGGLE_CONTROL_DEFAULT_PROPS )
 	const {
 		help,
 	} = props
@@ -71,7 +73,7 @@ const AdvancedToggleControl = memo( props => {
 	)
 } )
 
-AdvancedToggleControl.defaultProps = {
+const ADVANCED_TOGGLE_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	allowReset: true,
 	showReset: null,

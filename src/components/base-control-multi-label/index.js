@@ -10,8 +10,10 @@ import LabelTooltip from '../base-control2/label-tooltip'
  * External dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../util/props'
 
-const BaseControlMultiLabel = props => {
+const BaseControlMultiLabel = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BASE_CONTROL_MULTI_LABEL_DEFAULT_PROPS )
 	const screens = props.screens === 'all' ? [ 'desktop', 'tablet', 'mobile' ] : props.screens
 
 	const units = props.units?.map( unit => {
@@ -42,7 +44,7 @@ const BaseControlMultiLabel = props => {
 	)
 }
 
-BaseControlMultiLabel.defaultProps = {
+const BASE_CONTROL_MULTI_LABEL_DEFAULT_PROPS = {
 	label: '',
 	units: [ 'px' ],
 	unit: 'px',
