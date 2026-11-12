@@ -8,6 +8,7 @@ module.exports = {
 		'no-get-block-parents': require( './rules/no-get-block-parents' ),
 		'no-use-dispatch': require( './rules/no-use-dispatch' ),
 		'no-import-create-root': require( './rules/no-import-create-root' ),
+		'no-function-default-props': require( './rules/no-function-default-props' ),
 	},
 	configs: {
 		recommended: {
@@ -23,6 +24,7 @@ module.exports = {
 				'stackable/no-get-block-parents': 'error',
 				'stackable/no-use-dispatch': 'error',
 				'stackable/no-import-create-root': 'error',
+				'stackable/no-function-default-props': 'error',
 			},
 		},
 	},

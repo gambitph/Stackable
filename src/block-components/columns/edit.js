@@ -18,6 +18,7 @@ import {
 	SortControl,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
@@ -309,7 +310,8 @@ export const Controls = props => {
 	)
 }
 
-export const Edit = props => {
+export const Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	return (
 		<InspectorLayoutControls>
 			<Controls { ...props } />
@@ -317,7 +319,7 @@ export const Edit = props => {
 	)
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	hasColumnsControl: true,
 	hasGap: true,
 }

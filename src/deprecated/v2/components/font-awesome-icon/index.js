@@ -3,6 +3,7 @@ import {
 	faFetchIcon,
 	faGetIcon,
 } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 import { RawHTML, useState } from '@wordpress/element'
 import { pick } from 'lodash'
@@ -11,7 +12,8 @@ const Spinner = () => {
 	return <SVGSpinner className="ugb-icon-is-loading" />
 }
 
-const FontAwesomeIcon = props => {
+const FontAwesomeIcon = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, FONT_AWESOME_ICON_DEFAULT_PROPS )
 	const [ forceUpdateCount, setForceUpdateCount ] = useState( 0 )
 	const forceUpdate = () => {
 		setForceUpdateCount( forceUpdateCount + 1 )
@@ -69,7 +71,7 @@ FontAwesomeIcon.Content = props => {
 	return <RawHTML { ...propsToPass }>{ iconHTML }</RawHTML>
 }
 
-FontAwesomeIcon.defaultProps = {
+const FONT_AWESOME_ICON_DEFAULT_PROPS = {
 	prefix: '',
 	iconName: '',
 	value: '', // This is the old-style of prefix + iconName e.g. 'fab-apple'

@@ -40,6 +40,3 @@ export const Edit = () => {
 		</Fragment>
 	)
 }
-
-Edit.defaultProps = {
-}

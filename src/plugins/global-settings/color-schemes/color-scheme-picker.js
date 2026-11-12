@@ -25,6 +25,7 @@ import {
 } from '~stackable/components'
 import { useBlockHoverState } from '~stackable/hooks'
 import { extractColor, saveSettings } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../util/props'
 import { cloneDeep, isEqual } from 'lodash'
 
 import {
@@ -83,7 +84,8 @@ const COLOR_SETTINGS = [ {
 	property: 'buttonOutlineColor',
 } ]
 
-const ColorSchemePicker = props => {
+const ColorSchemePicker = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLOR_SCHEME_PICKER_DEFAULT_PROPS )
 	const ref = useRef()
 	const {
 		itemInEdit,
@@ -555,7 +557,7 @@ const ColorSchemePicker = props => {
 	)
 }
 
-ColorSchemePicker.defaultProps = {
+const COLOR_SCHEME_PICKER_DEFAULT_PROPS = {
 	className: '',
 	label: '',
 	onReset: () => {},

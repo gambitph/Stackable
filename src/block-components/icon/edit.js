@@ -21,6 +21,7 @@ import {
 	ProControl,
 } from '~stackable/components'
 import { getAttrNameFunction } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import {
 	useBlockAttributesContext, useBlockSetAttributesContext, useBlockLayoutDefaults,
 } from '~stackable/hooks'
@@ -33,7 +34,8 @@ import { Fragment, useMemo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { dispatch } from '@wordpress/data'
 
-export const Edit = props => {
+export const Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const {
 		hasShape,
 		hasIconGap,
@@ -282,7 +284,7 @@ export const Edit = props => {
 	)
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	label: __( 'Icon', i18n ),
 	hasColor: true,
 	hasGradient: true,

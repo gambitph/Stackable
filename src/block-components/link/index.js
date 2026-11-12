@@ -15,8 +15,10 @@ import { useBlockAttributesContext } from '~stackable/hooks'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../util/props'
 
-export const Link = props => {
+export const Link = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, LINK_DEFAULT_PROPS )
 	const linkHasLink = useBlockAttributesContext( attributes => attributes.linkHasLink )
 
 	if ( ! linkHasLink ) {
@@ -33,7 +35,7 @@ export const Link = props => {
 	)
 }
 
-Link.defaultProps = {
+const LINK_DEFAULT_PROPS = {
 	className: '',
 	linkProps: {},
 }

@@ -8,6 +8,7 @@ import { escape as _escape } from 'lodash'
  * Internal dependencies
  */
 import { createRoot } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * WordPress dependencies
@@ -36,7 +37,8 @@ const createAttributeString = attrArray => {
 		: ''
 }
 
-const CustomAttributesControl = props => {
+const CustomAttributesControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CUSTOM_ATTRIBUTES_CONTROL_DEFAULT_PROPS )
 	const inputRef = useRef()
 	const [ hasError, setHasError ] = useState( false )
 
@@ -105,7 +107,7 @@ const CustomAttributesControl = props => {
 	)
 }
 
-CustomAttributesControl.defaultProps = {
+const CUSTOM_ATTRIBUTES_CONTROL_DEFAULT_PROPS = {
 	label: '',
 	help: null,
 	value: [],

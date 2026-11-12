@@ -13,8 +13,10 @@ import { pick } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
-const SpacingControl = props => {
+const SpacingControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SPACING_CONTROL_DEFAULT_PROPS )
 	const propsToPass = pick( props, [ 'label', 'units', 'screens', 'defaultLocked', 'enableTop', 'enableRight', 'enableBottom', 'enableLeft', 'className', 'sliderMax', 'sliderMin' ] )
 
 	// Allow different sets of min/max/step values per screen size.
@@ -114,7 +116,7 @@ const SpacingControl = props => {
 	</Fragment>
 }
 
-SpacingControl.defaultProps = {
+const SPACING_CONTROL_DEFAULT_PROPS = {
 	label: __( 'Spacing', i18n ),
 	defaultLocked: true,
 	units: [ 'px', 'em', '%', 'vw' ],

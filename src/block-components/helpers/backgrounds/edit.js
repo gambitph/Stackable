@@ -21,6 +21,7 @@ import {
 	useBlockHoverState,
 } from '~stackable/hooks'
 import { getAttributeName, urlIsVideo } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../util/props'
 
 /**
  * WordPress dependencies
@@ -43,7 +44,8 @@ const IMAGE_AND_VIDEO_TYPES = [ 'image', 'video' ]
 const IMAGE_TYPES = [ 'image' ]
 
 // TODO: Post v3, add option to select the image size for the background (full, large, medium)
-export const BackgroundControls = props => {
+export const BackgroundControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BACKGROUND_CONTROLS_DEFAULT_PROPS )
 	const deviceType = useDeviceType()
 
 	const {
@@ -357,7 +359,7 @@ export const BackgroundControls = props => {
 	)
 }
 
-BackgroundControls.defaultProps = {
+const BACKGROUND_CONTROLS_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	backgroundMediaAllowVideo: true,
 	hasGradient: true,

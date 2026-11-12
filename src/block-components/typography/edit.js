@@ -24,6 +24,7 @@ import {
 	ShadowControl,
 } from '~stackable/components'
 import { getAttributeName, getAttrNameFunction } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { escapeHTMLIfInvalid } from './util'
 
 /**
@@ -60,7 +61,8 @@ const GRADIENT_OPTIONS = [
 	},
 ]
 
-export const Controls = props => {
+export const Controls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CONTROLS_DEFAULT_PROPS )
 	const {
 		hasAlign,
 		hasColor,
@@ -321,7 +323,7 @@ export const Controls = props => {
 	)
 }
 
-Controls.defaultProps = {
+const CONTROLS_DEFAULT_PROPS = {
 	hasAlign: false,
 	hasColor: true,
 	hasTextTag: true,
@@ -334,7 +336,8 @@ Controls.defaultProps = {
 	blockState: 'normal',
 }
 
-export const Edit = memo( props => {
+export const Edit = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const {
 		hasAlign,
 		hasColor,
@@ -384,7 +387,7 @@ export const Edit = memo( props => {
 	)
 } )
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	hasAlign: false,
 	hasColor: true,
 	hasTextTag: true,

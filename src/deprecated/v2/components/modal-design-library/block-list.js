@@ -18,8 +18,10 @@ import {
 } from '@wordpress/element'
 import { select } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const BlockList = props => {
+const BlockList = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_LIST_DEFAULT_PROPS )
 	const [ blockDesignList, setBlockDesignList ] = useState( [] )
 	const [ uiKitList, setUiKitList ] = useState( {} )
 	const [ blockList, setBlockList ] = useState( {} )
@@ -337,7 +339,7 @@ const BlockList = props => {
 	)
 }
 
-BlockList.defaultProps = {
+const BLOCK_LIST_DEFAULT_PROPS = {
 	search: '',
 	mood: '',
 	colors: [],

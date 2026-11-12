@@ -21,8 +21,10 @@ import classnames from 'classnames'
 import { BaseControl as _BaseControl, Dashicon } from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../util/props'
 
-const BaseControl = props => {
+const BaseControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BASE_CONTROL_DEFAULT_PROPS )
 	const isVisible = useResponsiveControlVisibility( props.screens )
 	// Register even when this control returns null so its parent panel can tell
 	// when responsive filtering has removed every control inside it.
@@ -90,7 +92,7 @@ const BaseControl = props => {
 	)
 }
 
-BaseControl.defaultProps = {
+const BASE_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	help: '',
 	id: '',

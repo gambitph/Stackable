@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { __getValue } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import { camelCase } from 'lodash'
 
 /**
@@ -14,7 +15,8 @@ import { sprintf } from '@wordpress/i18n'
  */
 import SvgIcon from '../svg-icon'
 
-const SvgIconHelper = props => {
+const SvgIconHelper = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SVG_ICON_HELPER_DEFAULT_PROPS )
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getValue = __getValue( props.blockAttributes, getAttrName, '' )
 
@@ -33,11 +35,6 @@ const SvgIconHelper = props => {
 			{ ...props }
 		/>
 	)
-}
-
-SvgIconHelper.defaultProps = {
-	attrNameTemplate: '%s',
-	blockAttributes: {},
 }
 
 SvgIconHelper.Content = props => {
@@ -61,7 +58,7 @@ SvgIconHelper.Content = props => {
 	)
 }
 
-SvgIconHelper.defaultProps = {
+const SVG_ICON_HELPER_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	blockAttributes: {},
 }

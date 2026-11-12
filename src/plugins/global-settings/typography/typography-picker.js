@@ -5,6 +5,7 @@ import { Tooltip, TypographyControl } from '~stackable/components'
 import {
 	createTypographyStyles, loadGoogleFont, createTypographyDescription,
 } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../util/props'
 import { i18n } from 'stackable'
 import { omit } from 'lodash'
 import classnames from 'classnames'
@@ -18,7 +19,8 @@ import { __, sprintf } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
 import { Dashicon } from '@wordpress/components'
 
-const TypographyPicker = props => {
+const TypographyPicker = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, TYPOGRAPHY_PICKER_DEFAULT_PROPS )
 	const { value, help } = props
 
 	// On style change, only get the new style then trigger the onChange.
@@ -115,7 +117,7 @@ const TypographyPicker = props => {
 	)
 }
 
-TypographyPicker.defaultProps = {
+const TYPOGRAPHY_PICKER_DEFAULT_PROPS = {
 	selector: 'h1',
 	label: sprintf( __( 'Heading %d', i18n ), 1 ),
 	onChange: () => {},
