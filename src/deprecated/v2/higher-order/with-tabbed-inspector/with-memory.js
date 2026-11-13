@@ -14,11 +14,13 @@ import { first } from 'lodash'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { doAction } from '@wordpress/hooks'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 const tabCache = {}
 
 const withMemory = WrappedComponent => {
-	const NewComp = props => {
+	const NewComp = incomingProps => {
+		const props = getPropsWithDefaults( incomingProps, NEW_COMP_DEFAULT_PROPS )
 		const { clientId } = useBlockEditContext()
 
 		const onClick = tab => {
@@ -49,9 +51,10 @@ const withMemory = WrappedComponent => {
 		)
 	}
 
-	NewComp.defaultProps = {
-		...( WrappedComponent.defaultProps || {} ),
+	const NEW_COMP_DEFAULT_PROPS = {
+		...( WrappedComponent.stackableDefaultProps || WrappedComponent.defaultProps || {} ),
 	}
+	NewComp.stackableDefaultProps = NEW_COMP_DEFAULT_PROPS
 
 	return NewComp
 }

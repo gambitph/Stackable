@@ -12,12 +12,11 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import {
-	Fragment, useState,
-} from '@wordpress/element'
+import { Fragment, useState } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { InspectorControls } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 const PanelTabs = withMemory( _PanelTabs )
 
@@ -38,7 +37,8 @@ addFilter( 'stackable.inspector.tabs', 'stackable/v2', tabs => {
 } )
 
 const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
-	const NewComp = props => {
+	const NewComp = incomingProps => {
+		const props = getPropsWithDefaults( incomingProps, NEW_COMP_DEFAULT_PROPS )
 		const { blockName } = props
 		const [ activeTab, setActiveTab ] = useState( null )
 		const blockStyleControls = applyFilters( `stackable.${ blockName }.edit.inspector.style.block`, null, props )
@@ -84,11 +84,12 @@ const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
 		)
 	}
 
-	NewComp.defaultProps = {
-		...( WrappedComponent.defaultProps || {} ),
+	const NEW_COMP_DEFAULT_PROPS = {
+		...( WrappedComponent.stackableDefaultProps || WrappedComponent.defaultProps || {} ),
 		attributes: {},
 		blockName: '',
 	}
+	NewComp.stackableDefaultProps = NEW_COMP_DEFAULT_PROPS
 
 	return NewComp
 }

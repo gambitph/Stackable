@@ -5,6 +5,7 @@
 import { AdvancedToolbarControl } from '..'
 import { i18n } from 'stackable'
 import { extractColor } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * WordPress dependencies
@@ -30,7 +31,8 @@ const COLOR_TYPE_CONTROLS = [
 	},
 ]
 
-export const ColorPalettePopup = memo( props => {
+export const ColorPalettePopup = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLOR_PALETTE_POPUP_DEFAULT_PROPS )
 	const {
 		onChange,
 		preOnChange,
@@ -115,7 +117,7 @@ export const ColorPalettePopup = memo( props => {
 const NOOP = () => {}
 const PASSTHRU = v => v
 
-ColorPalettePopup.defaultProps = {
+const COLOR_PALETTE_POPUP_DEFAULT_PROPS = {
 	value: '',
 	onChange: NOOP,
 	preOnChange: PASSTHRU,

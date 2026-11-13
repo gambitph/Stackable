@@ -11,12 +11,12 @@ import { IMAGE_SHADOWS } from '~stackable/block-components'
 import {
 	useDeviceType, useBlockHoverState, usePresetControls,
 } from '~stackable/hooks'
+import { saveSettings as saveWPSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { models } from '@wordpress/api'
 import { useSelect, dispatch } from '@wordpress/data'
 
 export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayHoverNotice, saveTimeout ) => {
@@ -71,8 +71,7 @@ export const useBlockLayoutInspectorUtils = ( storeName, optionName, setDisplayH
 	const saveSettings = newSettings => {
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			const settings = new models.Settings( { [ optionName ]: newSettings } ) // eslint-disable-line camelcase
-			settings.save()
+			saveWPSettings( { [ optionName ]: newSettings } )
 		}, 300 )
 
 		// Update our store.

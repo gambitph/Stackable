@@ -19,8 +19,10 @@ import { __ } from '@wordpress/i18n'
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ButtonIconPopoverControl = memo( props => {
+const ButtonIconPopoverControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BUTTON_ICON_POPOVER_CONTROL_DEFAULT_PROPS )
 	const [ isOpen, setIsOpen ] = useState( false )
 	const buttonRef = useRef( null )
 
@@ -56,6 +58,7 @@ const ButtonIconPopoverControl = memo( props => {
 			className={ classnames( 'ugb-button-icon-control', props.className ) }
 			allowReset={ true }
 			showReset={ props.allowReset || ( props.onToggle ? props.checked : false ) }
+			screens={ props.screens }
 			onReset={ () => {
 				props.onReset()
 				if ( props.onToggle ) {
@@ -100,7 +103,7 @@ const ButtonIconPopoverControl = memo( props => {
 	)
 } )
 
-ButtonIconPopoverControl.defaultProps = {
+const BUTTON_ICON_POPOVER_CONTROL_DEFAULT_PROPS = {
 	help: '',
 	label: '',
 	popoverLabel: undefined,
@@ -109,6 +112,7 @@ ButtonIconPopoverControl.defaultProps = {
 	onReset: () => {},
 	checked: false,
 	onToggle: undefined,
+	screens: [ 'desktop' ],
 }
 
 export default ButtonIconPopoverControl

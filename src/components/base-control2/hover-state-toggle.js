@@ -22,6 +22,7 @@ import { __, sprintf } from '@wordpress/i18n'
 import { dispatch } from '@wordpress/data'
 import { upperFirst, camelCase } from 'lodash'
 import { isEmptyAttribute } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 const HOVER_OPTIONS = [
 	{
@@ -50,7 +51,8 @@ const ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
 const _ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
 const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.map( s => upperFirst( camelCase( s ) ) )
 
-const HoverStateToggle = props => {
+const HoverStateToggle = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, HOVER_STATE_TOGGLE_DEFAULT_PROPS )
 	const [ currentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState( { forceUpdateHoverState: props.forceUpdateHoverState } )
 	const deviceType = useDeviceType()
 
@@ -120,7 +122,7 @@ const HoverStateToggle = props => {
 	)
 }
 
-HoverStateToggle.defaultProps = {
+const HOVER_STATE_TOGGLE_DEFAULT_PROPS = {
 	hover: false,
 	attribute: '',
 	hasResponsive: false, // Wether the attribute has responsive attributes (where we have hover states per device type)

@@ -20,8 +20,10 @@ import { isPro, i18n } from 'stackable'
 import { TextControl } from '@wordpress/components'
 import { useEffect, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const DesignLibraryControl = props => {
+const DesignLibraryControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DESIGN_LIBRARY_CONTROL_DEFAULT_PROPS )
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false )
 	const [ search, setSearch ] = useState( '' )
 	const [ designs, setDesigns ] = useState( [] )
@@ -108,7 +110,7 @@ const DesignLibraryControl = props => {
 	)
 }
 
-DesignLibraryControl.defaultProps = {
+const DESIGN_LIBRARY_CONTROL_DEFAULT_PROPS = {
 	block: '',
 	onSelect: () => {},
 }

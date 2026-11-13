@@ -36,6 +36,7 @@ import ProControl from '../pro-control'
 import Popover from '../popover'
 import SVGDatabaseIcon from './icons/database-light.svg'
 import { ResetButton } from '../base-control2/reset-button'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * Custom hook for generating component props
@@ -543,9 +544,11 @@ export const DynamicContentButton = memo( props => {
 	)
 } )
 
-const DynamicContentControl = ( {
-	children, enable, ...otherProps
-} ) => {
+const DynamicContentControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DYNAMIC_CONTENT_CONTROL_DEFAULT_PROPS )
+	const {
+		children, enable, ...otherProps
+	} = props
 	if ( ! enable ) {
 		return children
 	}
@@ -583,7 +586,7 @@ const DynamicContentControl = ( {
 	)
 }
 
-DynamicContentControl.defaultProps = {
+const DYNAMIC_CONTENT_CONTROL_DEFAULT_PROPS = {
 	enable: false,
 	controlHasTooltip: false,
 	children: null,

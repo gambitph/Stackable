@@ -16,8 +16,10 @@ import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { MediaUpload } from '@wordpress/block-editor'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ImageControl = props => {
+const ImageControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_CONTROL_DEFAULT_PROPS )
 	const type = props.imageURL && props.imageURL.match( /(mp4|webm|ogg)$/i ) ? 'video' : 'image'
 	const onRemove = () => {
 		if ( props.onRemove ) {
@@ -107,7 +109,7 @@ const ImageControl = props => {
 	)
 }
 
-ImageControl.defaultProps = {
+const IMAGE_CONTROL_DEFAULT_PROPS = {
 	label: '',
 	imageID: '',
 	imageURL: '',

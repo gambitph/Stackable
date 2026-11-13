@@ -19,11 +19,13 @@ import { pickBy } from 'lodash'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
+import { getPropsWithDefaults } from '../../util/props'
 
 export { deprecationImageOverlayOpacity, deprecateImageBorderRadius } from './deprecated'
 export { IMAGE_SHADOWS } from './edit'
 
-export const Image = props => {
+export const Image = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_DEFAULT_PROPS )
 	const {
 		defaultWidth,
 		defaultHeight: _defaultHeight,
@@ -125,14 +127,15 @@ export const Image = props => {
 	/>
 }
 
-Image.defaultProps = {
+const IMAGE_DEFAULT_PROPS = {
 	defaultWidth: 150,
 	defaultHeight: 300,
 	enableHandles: true,
 	showTooltips: false,
 }
 
-Image.Content = props => {
+Image.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_CONTENT_DEFAULT_PROPS )
 	const {
 		defaultWidth,
 		defaultHeight: _defaultHeight,
@@ -175,7 +178,7 @@ Image.Content = props => {
 	/>
 }
 
-Image.Content.defaultProps = {
+const IMAGE_CONTENT_DEFAULT_PROPS = {
 	attributes: {},
 	defaultWidth: 150,
 	defaultHeight: 300,

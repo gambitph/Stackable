@@ -5,8 +5,10 @@ export { getColumnClasses } from './use-column'
 
 import { ResizableColumn } from '~stackable/components'
 import { memo } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
-export const Column = memo( props => {
+export const Column = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMN_DEFAULT_PROPS )
 	const {
 		isHovered,
 		clientId,
@@ -27,7 +29,7 @@ export const Column = memo( props => {
 	/>
 } )
 
-Column.defaultProps = {
+const COLUMN_DEFAULT_PROPS = {
 	isHovered: true,
 }
 

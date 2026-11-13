@@ -5,12 +5,14 @@ import { Edit } from './edit'
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { useBlockAttributesContext } from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
 
 export { deprecateContainerBackgroundColorOpacity, deprecateContainerShadowColor } from './deprecated'
 
-export const ContainerDiv = props => {
+export const ContainerDiv = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CONTAINER_DIV_DEFAULT_PROPS )
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
 			uniqueId: attributes.uniqueId,
@@ -53,11 +55,12 @@ export const ContainerDiv = props => {
 	/>
 }
 
-ContainerDiv.defaultProps = {
+const CONTAINER_DIV_DEFAULT_PROPS = {
 	className: '',
 }
 
-ContainerDiv.Content = props => {
+ContainerDiv.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CONTAINER_DIV_CONTENT_DEFAULT_PROPS )
 	const {
 		attributes,
 		...propsToPass
@@ -87,7 +90,7 @@ ContainerDiv.Content = props => {
 	/>
 }
 
-ContainerDiv.Content.defaultProps = {
+const CONTAINER_DIV_CONTENT_DEFAULT_PROPS = {
 	className: '',
 	attributes: {},
 }

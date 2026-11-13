@@ -7,10 +7,12 @@ import { applyFilters } from '@wordpress/hooks'
  * External dependencies
  */
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
 const BlockContainer = {}
 
-BlockContainer.Edit = props => {
+BlockContainer.Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_CONTAINER_EDIT_DEFAULT_PROPS )
 	const {
 		blockProps,
 		render,
@@ -59,12 +61,13 @@ BlockContainer.Edit = props => {
 	)
 }
 
-BlockContainer.Edit.defaultProps = {
+const BLOCK_CONTAINER_EDIT_DEFAULT_PROPS = {
 	styles: null, // provided by `withBlockStyles`
 	mainClass: true,
 }
 
-BlockContainer.Save = props => {
+BlockContainer.Save = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_CONTAINER_SAVE_DEFAULT_PROPS )
 	const {
 		blockProps,
 		render,
@@ -113,7 +116,7 @@ BlockContainer.Save = props => {
 	)
 }
 
-BlockContainer.Save.defaultProps = {
+const BLOCK_CONTAINER_SAVE_DEFAULT_PROPS = {
 	styles: null, // provided by `withBlockStyles`
 	mainClass: true,
 }

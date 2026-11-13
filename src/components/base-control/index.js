@@ -7,6 +7,8 @@
  */
 import BaseControlMultiLabel from '../base-control-multi-label'
 import Button from '../button'
+import { useRegisterResponsivePanelControl } from '../responsive-control-visibility'
+import useResponsiveControlVisibility from '~stackable/hooks/use-responsive-control-visibility'
 
 /**
  * External dependencies
@@ -19,8 +21,15 @@ import classnames from 'classnames'
 import { BaseControl as _BaseControl, Dashicon } from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../util/props'
 
-const BaseControl = props => {
+const BaseControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BASE_CONTROL_DEFAULT_PROPS )
+	const isVisible = useResponsiveControlVisibility( props.screens )
+	// Register even when this control returns null so its parent panel can tell
+	// when responsive filtering has removed every control inside it.
+	useRegisterResponsivePanelControl( isVisible )
+
 	const className = classnames( [
 		'stk-inspector-control',
 		props.className,
@@ -32,6 +41,10 @@ const BaseControl = props => {
 	const showReset = props.showReset !== null
 		? props.showReset
 		: ( typeof props.value !== 'undefined' && props.value !== props.defaultValue && props.value !== props.placeholder )
+
+	if ( ! isVisible ) {
+		return null
+	}
 
 	return (
 		<_BaseControl
@@ -79,7 +92,7 @@ const BaseControl = props => {
 	)
 }
 
-BaseControl.defaultProps = {
+const BASE_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	help: '',
 	id: '',

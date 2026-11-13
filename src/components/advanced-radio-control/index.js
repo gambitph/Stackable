@@ -9,9 +9,11 @@ import { RadioControl } from '@wordpress/components'
 import classnames from 'classnames'
 import { omit } from 'lodash'
 import { BaseControl } from '..'
+import { getPropsWithDefaults } from '../../util/props'
 
 // TODO: reset not showing up
-const AdvancedRadioControl = props => {
+const AdvancedRadioControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADVANCED_RADIO_CONTROL_DEFAULT_PROPS )
 	return (
 		<BaseControl
 			help={ props.help }
@@ -33,7 +35,7 @@ const AdvancedRadioControl = props => {
 	)
 }
 
-AdvancedRadioControl.defaultProps = {
+const ADVANCED_RADIO_CONTROL_DEFAULT_PROPS = {
 	onChange: () => {},
 	onChangeUnit: () => {},
 	help: '',

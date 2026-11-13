@@ -8,6 +8,7 @@ import {
 	useQueryLoopInstanceId,
 	createUniqueClass,
 } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import {
 	Fragment, memo, useMemo,
 } from '@wordpress/element'
@@ -16,7 +17,8 @@ import {
 	useBlockAttributesContext, useDeviceType, useRafMemo,
 } from '~stackable/hooks'
 
-const Style = memo( props => {
+const Style = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, STYLE_DEFAULT_PROPS )
 	const {
 		version, versionAdded, versionDeprecated,
 		styles, breakTablet, breakMobile,
@@ -72,7 +74,7 @@ const Style = memo( props => {
 	return output ? <style>{ output }</style> : null
 } )
 
-Style.defaultProps = {
+const STYLE_DEFAULT_PROPS = {
 	styles: null,
 	blockUniqueClassName: '',
 	breakTablet: 1024,
@@ -86,7 +88,8 @@ Style.defaultProps = {
 	versionDeprecated: false, // The version of Stackable when this style wasn't used anymore.
 }
 
-Style.Content = props => {
+Style.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, STYLE_CONTENT_DEFAULT_PROPS )
 	const {
 		version, versionAdded, versionDeprecated, styles, blockUniqueClassName, breakTablet, breakMobile,
 	} = props
@@ -120,7 +123,7 @@ Style.Content = props => {
 	return <Fragment>{ minifyCSS( css.join( '' ) ) }</Fragment>
 }
 
-Style.Content.defaultProps = {
+const STYLE_CONTENT_DEFAULT_PROPS = {
 	styles: null,
 	blockUniqueClassName: '',
 	breakTablet: 1024,

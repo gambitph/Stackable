@@ -63,7 +63,14 @@ const LinearGradient = ( {
 const NOOP = () => {}
 
 const getSvgDef = ( href, viewBox = '0 0 24 24' ) => {
-	return `<svg viewBox="${ viewBox }"><use href="${ href }" xlink:href="${ href }"></use></svg>`
+	const viewBoxValues = viewBox.trim().split( /[\s,]+/ )
+	// The symbol keeps its original origin to map its paths, while the wrapper
+	// starts at zero so the <use> instance remains inside the visible viewport.
+	const normalizedViewBox = viewBoxValues.length === 4 && viewBoxValues.every( value => Number.isFinite( Number( value ) ) )
+		? `0 0 ${ viewBoxValues[ 2 ] } ${ viewBoxValues[ 3 ] }`
+		: viewBox
+
+	return `<svg viewBox="${ normalizedViewBox }"><use href="${ href }" xlink:href="${ href }"></use></svg>`
 }
 
 const generateIconId = () => {
@@ -457,4 +464,3 @@ Icon.InspectorControls = Edit
 Icon.addAttributes = addAttributes
 
 Icon.addStyles = addStyles
-

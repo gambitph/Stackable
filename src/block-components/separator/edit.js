@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
 import { getAttributeNameFunc } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 const SEPARATOR_SHADOWS = [
 	'none',
@@ -43,7 +44,8 @@ const SEPARATOR_SHADOWS = [
 	'70px 130px -60px #48497961',
 ]
 
-const SeparatorControls = props => {
+const SeparatorControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SEPARATOR_CONTROLS_DEFAULT_PROPS )
 	const {
 		attrNameTemplate,
 		hasFlipVertically,
@@ -127,7 +129,7 @@ const SeparatorControls = props => {
 	)
 }
 
-SeparatorControls.defaultProps = {
+const SEPARATOR_CONTROLS_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	hasFlipVertically: false,
 }

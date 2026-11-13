@@ -73,9 +73,9 @@ If the spec is missing, skip the Spec sub-agent and note this in the final repor
 
 ### 5. Aggregate
 
-Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).
+Present the two reports under `## Standards` and `## Spec` headings. Keep the findings, and rewrite them in beginner/intermediate language as required by `.cursor/rules/plain-developer-language.mdc`: what the person will see, which file, then the short reason. Do **not** merge or rerank findings. The two axes stay separate (see _Why two axes_).
 
-End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
+End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes. That would be the reranking the separation exists to prevent.
 
 ## Why two axes
 

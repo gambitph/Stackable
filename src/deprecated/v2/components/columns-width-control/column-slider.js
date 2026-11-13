@@ -4,6 +4,7 @@ import {
 import { SliderRail, Handle } from './slider-components'
 import { isEqual } from 'lodash'
 import { fixColumnWidths } from './util'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 const sliderStyle = {
 	position: 'relative',
@@ -71,7 +72,8 @@ const fixValues = ( values, changedIndex, direction ) => {
 	return convertColumnsToValues( fixedColumns )
 }
 
-const ColumnSlider = props => {
+const ColumnSlider = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMN_SLIDER_DEFAULT_PROPS )
 	return (
 		<Slider
 			className="ugb-column-widths-control__columns-slider"
@@ -119,7 +121,7 @@ const ColumnSlider = props => {
 	)
 }
 
-ColumnSlider.defaultProps = {
+const COLUMN_SLIDER_DEFAULT_PROPS = {
 	onChange: () => {},
 	value: [],
 }

@@ -8,12 +8,15 @@ import { Edit } from './edit'
  * External dependencies
  */
 import { Link } from '~stackable/components'
+import { getPropsWithDefaults } from '../../util/props'
+import { CustomAttributes } from '../custom-attributes'
 
 export const BlockLink = () => {
 	return null
 }
 
-BlockLink.Content = props => {
+BlockLink.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BLOCK_LINK_CONTENT_DEFAULT_PROPS )
 	const {
 		href, attributes, isHidden,
 	} = props
@@ -21,9 +24,11 @@ BlockLink.Content = props => {
 	if ( ! attributes.blockLinkUrl ) {
 		return null
 	}
+	const customAttributes = CustomAttributes.getCustomAttributes( attributes, 'blockLinkCustomAttributes' )
 
 	return (
 		<Link.Content
+			{ ...customAttributes }
 			className="stk-block-link stk--transparent-overlay"
 			href={ href || attributes.blockLinkUrl }
 			target={ attributes.blockLinkNewTab ? '_blank' : '' }
@@ -35,7 +40,7 @@ BlockLink.Content = props => {
 	)
 }
 
-BlockLink.Content.defaultProps = {
+const BLOCK_LINK_CONTENT_DEFAULT_PROPS = {
 	className: '',
 	attributes: {},
 	href: '',

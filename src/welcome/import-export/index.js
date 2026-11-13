@@ -11,12 +11,12 @@ import {
 import {
 	useState, useMemo, Fragment,
 } from '@wordpress/element'
-import { models } from '@wordpress/api'
 
 /**
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { saveSettings } from '~stackable/util/admin'
 import { applyFilters } from '@wordpress/hooks'
 
 export const ImportExportModal = props => {
@@ -90,8 +90,7 @@ const ImportSettings = ( {
 			}
 
 			if ( Object.keys( settingsToSave ).length > 0 ) {
-				const model = new models.Settings( settingsToSave )
-				await model.save()
+				await saveSettings( settingsToSave )
 			}
 
 			setNotice( __( 'Settings imported successfully.', i18n ) )

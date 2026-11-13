@@ -16,11 +16,18 @@ class _StackableTabs {
 	getDefaultState = () => {
 		this.activeTab = parseInt( this.parentEl.getAttribute( 'data-initial-tab' ) || '1', 10 )
 
-		this.tabList = this.parentEl.querySelector( '[role="tablist"]' )
-		this.tabs = this.parentEl.querySelector( '.stk-block-tab-labels__wrapper' ).children
-		this.contents = this.parentEl.querySelector( '.stk-block-tab-content > .stk-inner-blocks' ).children
+		this.tabList = this.getOwnElement( '[role="tablist"]' )
+		this.tabs = this.getOwnElement( '.stk-block-tab-labels__wrapper' ).children
+		this.contents = this.getOwnElement( '.stk-block-tab-content > .stk-inner-blocks' ).children
 
 		this.customTabAnchors = {}
+	}
+
+	// Nested Tabs blocks also match descendant selectors. Keep the first
+	// element whose closest Tabs block is this instance.
+	getOwnElement = selector => {
+		return Array.from( this.parentEl.querySelectorAll( selector ) )
+			.find( el => el.closest( '.stk-block-tabs' ) === this.parentEl )
 	}
 
 	initTabs = () => {

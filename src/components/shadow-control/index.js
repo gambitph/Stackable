@@ -11,6 +11,7 @@ import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 import { ResetButton } from '~stackable/components/base-control2/reset-button'
 import { PRESET_SOURCES, usePresetControls } from '~stackable/hooks'
 import DEFAULT_PRESETS from '~stackable/plugins/global-settings/preset-controls/presets.json'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * WordPress dependencies
@@ -23,6 +24,7 @@ import {
 	memo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
+
 import { Icon, shadow } from '@wordpress/icons'
 import {
 	Button, Dashicon, PanelBody, Tooltip,
@@ -183,7 +185,8 @@ const filterToValue = ( props, filters ) => {
 	return newValue.join( ' ' )
 }
 
-const ShadowFilterControl = props => {
+const ShadowFilterControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SHADOW_FILTER_CONTROL_DEFAULT_PROPS )
 	const [ filters, setFilters ] = useState( {} )
 	const [ filtersPlaceholder, setFiltersPlaceholder ] = useState( {} )
 
@@ -298,12 +301,13 @@ const ShadowFilterControl = props => {
 	)
 }
 
-ShadowFilterControl.defaultProps = {
+const SHADOW_FILTER_CONTROL_DEFAULT_PROPS = {
 	hasInset: true,
 	isFilter: false,
 }
 
-const ShadowControl = memo( props => {
+const ShadowControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SHADOW_CONTROL_DEFAULT_PROPS )
 	const {
 		options,
 		label,
@@ -516,7 +520,7 @@ const ShadowControl = memo( props => {
 	)
 }, isEqual )
 
-ShadowControl.defaultProps = {
+const SHADOW_CONTROL_DEFAULT_PROPS = {
 	attribute: '',
 	label: __( 'Shadow / Outline', i18n ),
 	placeholder: '',

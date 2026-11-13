@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { loadGoogleFontInAttributes } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 /**
  * WordPress dependencies
@@ -12,7 +13,8 @@ import { useSelect } from '@wordpress/data'
 
 const withGoogleFont = createHigherOrderComponent(
 	WrappedComponent => {
-		const NewComponent = props => {
+		const NewComponent = incomingProps => {
+			const props = getPropsWithDefaults( incomingProps, NEW_COMPONENT_DEFAULT_PROPS )
 			const isEditingTemplate = useSelect( select =>
 				select( 'core/editor' )?.getCurrentPostType?.() === 'wp_template' || false
 			)
@@ -25,7 +27,7 @@ const withGoogleFont = createHigherOrderComponent(
 			return <WrappedComponent { ...props } />
 		}
 
-		NewComponent.defaultProps = {
+		const NEW_COMPONENT_DEFAULT_PROPS = {
 			attributes: {},
 		}
 

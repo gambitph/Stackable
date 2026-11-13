@@ -16,13 +16,19 @@ import { useGlobalState } from '~stackable/util/global-state'
 import { __ } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
 import { BlockStylesControl } from '../block-styles-control'
+import ResponsiveControlVisibility, { ResponsiveControlFilterProvider } from '../responsive-control-visibility'
+import useResponsiveControlVisibility from '~stackable/hooks/use-responsive-control-visibility'
+import useCoreResponsiveStylesCompatibility from './use-core-responsive-styles-compatibility'
 
 const { Slot: LayoutPanelSlot, Fill: LayoutPanelFill } = createSlotFill( 'StackableLayoutPanel' )
+const DEFAULT_TABS = [ 'layout', 'style', 'advanced' ]
 
 const InspectorLayoutControls = ( { children } ) => {
-	return <InspectorControls>
-		<LayoutPanelFill>{ children }</LayoutPanelFill>
-	</InspectorControls>
+	return <ResponsiveControlFilterProvider>
+		<InspectorControls>
+			<LayoutPanelFill>{ children }</LayoutPanelFill>
+		</InspectorControls>
+	</ResponsiveControlFilterProvider>
 }
 
 const InspectorBlockControls = ( { children } ) => {
@@ -33,7 +39,9 @@ const InspectorBlockControls = ( { children } ) => {
 		return null
 	}
 
-	return <InspectorControls>{ children }</InspectorControls>
+	return <ResponsiveControlFilterProvider>
+		<InspectorControls>{ children }</InspectorControls>
+	</ResponsiveControlFilterProvider>
 }
 
 const InspectorStyleControls = ( { children } ) => {
@@ -44,7 +52,9 @@ const InspectorStyleControls = ( { children } ) => {
 		return null
 	}
 
-	return <InspectorControls>{ children }</InspectorControls>
+	return <ResponsiveControlFilterProvider>
+		<InspectorControls>{ children }</InspectorControls>
+	</ResponsiveControlFilterProvider>
 }
 
 const InspectorAdvancedControls = ( { children } ) => {
@@ -55,7 +65,9 @@ const InspectorAdvancedControls = ( { children } ) => {
 		return null
 	}
 
-	return <InspectorControls>{ children }</InspectorControls>
+	return <ResponsiveControlFilterProvider>
+		<InspectorControls>{ children }</InspectorControls>
+	</ResponsiveControlFilterProvider>
 }
 
 export {
@@ -65,17 +77,35 @@ export {
 	InspectorAdvancedControls,
 }
 
-const InspectorTabs = props => {
+const ResponsivePanelTabs = props => {
+	// Core owns its Advanced panel, so expose a scoped marker that lets the
+	// stylesheet mirror Core's responsive inspector without hiding our tab.
+	const isResponsiveFiltering = ! useResponsiveControlVisibility( false )
+
+	return <PanelTabs
+		{ ...props }
+		className={ isResponsiveFiltering ? 'ugb-panel-tabs--is-responsive-filtering' : '' }
+	/>
+}
+
+const InspectorTabs = ( {
+	tabs = DEFAULT_TABS,
+	hasLayoutPanel = true,
+} ) => {
 	const { name, clientId } = useBlockEditContext()
 	const defaultTab = getBlockSupport( name, 'stkDefaultTab' ) || 'style'
-	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, props.tabs.includes( defaultTab ) ? defaultTab : 'style' )
+	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, tabs.includes( defaultTab ) ? defaultTab : 'style' )
+
+	useCoreResponsiveStylesCompatibility( clientId )
 
 	return (
-		<>
+		<ResponsiveControlFilterProvider>
 			<InspectorControls>
-				{ ( isPro || showProNotice ) && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
-				<PanelTabs
-					tabs={ props.tabs }
+				<ResponsiveControlVisibility responsive={ false }>
+					{ ( isPro || showProNotice ) && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
+				</ResponsiveControlVisibility>
+				<ResponsivePanelTabs
+					tabs={ tabs }
 					initialTab={ activeTab }
 					onClick={ setActiveTab }
 				/>
@@ -83,7 +113,7 @@ const InspectorTabs = props => {
 
 			{ /* Make sure the layout panel is the very first one */ }
 			<InspectorBlockControls>
-				{ props.hasLayoutPanel && (
+				{ hasLayoutPanel && (
 					<PanelAdvancedSettings
 						title={ __( 'Layout', i18n ) }
 						id="layout"
@@ -94,13 +124,8 @@ const InspectorTabs = props => {
 				) }
 			</InspectorBlockControls>
 
-		</>
+		</ResponsiveControlFilterProvider>
 	)
-}
-
-InspectorTabs.defaultProps = {
-	tabs: [ 'layout', 'style', 'advanced' ],
-	hasLayoutPanel: true,
 }
 
 export default memo( InspectorTabs )

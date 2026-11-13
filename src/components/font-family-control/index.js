@@ -11,6 +11,7 @@ import {
 	MODERN_FONT_STACKS,
 	SYSTEM_FONT_STACKS,
 } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * WordPress dependencies
@@ -30,7 +31,8 @@ const loadGoogleFonts = async () => {
 	return fonts.map( font => ( { label: font.family, value: font.family } ) )
 }
 
-const FontFamilyControl = props => {
+const FontFamilyControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, FONT_FAMILY_CONTROL_DEFAULT_PROPS )
 	const {
 		loadingThemeFont, themeFonts, themeFontOptions,
 	} = select( 'stackable/theme-fonts' ).getThemeFonts()
@@ -100,7 +102,7 @@ const FontFamilyControl = props => {
 	)
 }
 
-FontFamilyControl.defaultProps = {
+const FONT_FAMILY_CONTROL_DEFAULT_PROPS = {
 	onChange: () => {},
 	label: __( 'Font Family', i18n ),
 	value: '',
