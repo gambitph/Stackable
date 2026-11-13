@@ -23,7 +23,9 @@ import {
 	PanelAdvancedSettings,
 	ShadowControl,
 } from '~stackable/components'
-import { getAttributeName, getAttrNameFunction } from '~stackable/util'
+import {
+	getAttributeName, getAttrNameFunction, getFontFamily,
+} from '~stackable/util'
 import { getPropsWithDefaults } from '../../util/props'
 import { escapeHTMLIfInvalid } from './util'
 
@@ -306,6 +308,8 @@ export const Controls = incomingProps => {
 					label={ __( 'Shadow / Outline', i18n ) }
 					attribute={ attributeName( 'textShadow' ) }
 					options={ TYPOGRAPHY_SHADOWS }
+					previewType="text"
+					previewFontFamily={ fontFamily ? getFontFamily( fontFamily ) : undefined }
 					placeholder=""
 					hover="all"
 					hasInset={ false }

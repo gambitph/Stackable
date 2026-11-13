@@ -28,8 +28,16 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 				'prefix' => 'block-height',
 			),
 			'borderRadius' => array(
-				'settings' => array( 'borderRadius' ),
+				'settings' => array( 'border', 'radiusSizes' ),
+				'use_wordpress_presets_setting' => 'stackable_use_theme_border_radius_presets',
 				'prefix' => 'border-radius',
+			),
+			'shadows' => array(
+				'settings' => array( 'shadow', 'presets' ),
+				'default_enabled_setting' => array( 'shadow', 'defaultPresets' ),
+				'include_stackable_presets' => true,
+				'prefix' => 'shadow',
+				'value_key' => 'shadow',
 			),
 		);
 
@@ -41,9 +49,12 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		/**
 		 * Initialize
 		 */
-  		function __construct() {
+		function __construct() {
 			add_action( 'register_stackable_global_settings', array( $this, 'register_use_size_presets_by_default' ) );
+			add_action( 'register_stackable_global_settings', array( $this, 'register_use_theme_border_radius_presets' ) );
 			add_action( 'stackable_early_version_upgraded',  array( $this, 'use_size_presets_by_default_set_default' ), 10, 2 );
+			add_action( 'stackable_early_version_upgraded', array( $this, 'initialize_use_theme_border_radius_presets' ), 10, 2 );
+			add_action( 'stackable_early_version_upgraded_frontend', array( $this, 'initialize_use_theme_border_radius_presets' ), 10, 2 );
 			add_action( 'stackable_early_version_upgraded',  array( $this, 'migrate_global_typography_font_size' ), 10, 2 );
 			add_filter( 'stackable_js_settings', array( $this, 'add_setting' ) );
 
@@ -63,6 +74,37 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 					'show_in_rest' => true,
 					'default' => true,
 				)
+			);
+		}
+
+		// Register the setting for using border-radius presets from WordPress.
+		function register_use_theme_border_radius_presets() {
+			register_setting(
+				'stackable_global_settings',
+				'stackable_use_theme_border_radius_presets',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Use border-radius presets from the active theme and WordPress', STACKABLE_I18N ),
+					'sanitize_callback' => 'rest_sanitize_boolean',
+					'show_in_rest' => true,
+					'default' => false,
+				)
+			);
+		}
+
+		/**
+		 * Keep bundled presets for upgrades while enabling theme presets on fresh
+		 * installations. add_option() preserves later choices.
+		 *
+		 * @param string $old_version Previously installed Stackable version.
+		 * @param string $new_version Newly installed Stackable version.
+		 */
+		public function initialize_use_theme_border_radius_presets( $old_version, $new_version ) {
+			add_option(
+				'stackable_use_theme_border_radius_presets',
+				empty( $old_version ),
+				'',
+				false
 			);
 		}
 
@@ -117,6 +159,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		// Make the setting available in the editor
 		public function add_setting( $settings ) {
 			$settings['stackable_use_size_presets_by_default'] = get_option( 'stackable_use_size_presets_by_default' );
+			$settings['stackable_use_theme_border_radius_presets'] = (bool) get_option( 'stackable_use_theme_border_radius_presets', false );
 			return $settings;
 		}
 		
@@ -153,16 +196,20 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 		}
 
 		/**
-		 * Generate CSS variable style definitions based on the property (e.g., fontSizes, spacing).
-		 * The given presets will be overriden it match with a preset from custom.
-		 * 
-		 * @param array $property 
-		 * @param array $presets 
-		 * @param array $prefix 
-		 * @param bool $isTheme
-		 * @return mixed
+		 * Generate Stackable CSS variables for one preset family.
+		 *
+		 * Custom presets override base presets with the same slug.
+		 * WordPress presets point to their generated `--wp--preset` variables so
+		 * theme.json behavior remains intact, while Stackable presets use raw values.
+		 *
+		 * @param string $property  Stackable preset family key.
+		 * @param array  $presets   Base presets for the selected origin.
+		 * @param string $prefix    CSS variable preset prefix.
+		 * @param bool   $isTheme   Whether the presets came from WordPress.
+		 * @param string $value_key Preset field containing the raw CSS value.
+		 * @return array Style Engine rule containing the generated declarations.
 		 */
-		public function generate_css_variables_styles( $property, $presets, $prefix, $isTheme = false ) {
+		public function generate_css_variables_styles( $property, $presets, $prefix, $isTheme = false, $value_key = 'size' ) {
 			$filter_name =  current_filter();
 			$custom_presets = $this->custom_presets[ $property ] ?? [];
 
@@ -193,7 +240,7 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 				$is_custom = $preset['__is_custom'] ?? false;
 		
 				$value = $is_custom || ! $isTheme
-					? $preset['size']
+					? ( $preset[ $value_key ] ?? '' )
 					: "var(--wp--preset--$prefix--$slug)";
 		
 				$css_vars[ "--stk--preset--$prefix--$slug" ] = $value;
@@ -217,6 +264,29 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 				return $value[ $key ] ?? null;
 			}, $array );
 		}
+
+		/**
+		 * Merge theme and WordPress default presets, with theme presets first.
+		 *
+		 * @param array $theme_presets   Presets supplied by the active theme.
+		 * @param array $default_presets Presets supplied by WordPress.
+		 * @return array Presets with duplicate slugs removed.
+		 */
+		private function merge_wordpress_presets( $theme_presets, $default_presets ) {
+			$presets_by_slug = array();
+
+			foreach ( array_merge( $theme_presets, $default_presets ) as $preset ) {
+				$slug = $preset['slug'] ?? '';
+				if ( ! $slug || isset( $presets_by_slug[ $slug ] ) ) {
+					continue;
+				}
+
+				$presets_by_slug[ $slug ] = $preset;
+			}
+
+			return array_values( $presets_by_slug );
+		}
+
 		/**
 		 * Add our global preset control styles.
 		 *
@@ -228,31 +298,51 @@ if ( ! class_exists( 'Stackable_Size_And_Spacing_Preset_Controls' ) ) {
 			$generated_styles = array();
 
 			foreach ( self::PRESET_MAPPING as $key => $value ) {
-				if ( ! empty( $this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ] ) ) {
-					$styles = $this->generate_css_variables_styles( 
-						$key,
-						$this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ], 
-						$value[ 'prefix' ],
-						true
-					);
-					$generated_styles[] = $styles;
+				$value_key = $value[ 'value_key' ] ?? 'size';
+				$use_wordpress_presets = ! isset( $value[ 'use_wordpress_presets_setting' ] ) ||
+					(bool) get_option( $value[ 'use_wordpress_presets_setting' ], false );
+				$use_default_presets = ! isset( $value[ 'default_enabled_setting' ] ) ||
+					false !== $this->deepGet( $this->theme_presets, $value[ 'default_enabled_setting' ] );
+				$theme_presets = $use_wordpress_presets
+					? ( $this->deepGet( $this->theme_presets, $value[ 'settings' ] )[ 'theme' ] ?? array() )
+					: array();
+				$default_presets = $use_wordpress_presets && $use_default_presets
+					? ( $this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ] ?? array() )
+					: array();
+				$stackable_presets = $this->deepGet( $this->stackable_presets, $value[ 'settings' ] );
 
-				} elseif ( ! empty( $this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ] ) ) {
-					$styles = $this->generate_css_variables_styles( 
+				if ( ! empty( $value[ 'include_stackable_presets' ] ) ) {
+					$wordpress_presets = $this->merge_wordpress_presets( $theme_presets, $default_presets );
+					$generated_styles[] = $this->generate_css_variables_styles(
 						$key,
-						$this->deepGet( $this->default_presets, $value[ 'settings' ] )[ 'default' ], 
+						$stackable_presets,
 						$value[ 'prefix' ],
-						true
+						false,
+						$value_key
 					);
-					$generated_styles[] = $styles;
-				} else {
-					$styles = $this->generate_css_variables_styles( 
-						$key,
-						$this->deepGet( $this->stackable_presets, $value[ 'settings' ] ), 
-						$value[ 'prefix' ],
-					);
-					$generated_styles[] = $styles;
+
+					if ( ! empty( $wordpress_presets ) ) {
+						$generated_styles[] = $this->generate_css_variables_styles(
+							$key,
+							$wordpress_presets,
+							$value[ 'prefix' ],
+							true,
+							$value_key
+						);
+					}
+					continue;
 				}
+
+				$base_presets = ! empty( $theme_presets )
+					? $theme_presets
+					: ( ! empty( $default_presets ) ? $default_presets : $stackable_presets );
+				$generated_styles[] = $this->generate_css_variables_styles(
+					$key,
+					$base_presets,
+					$value[ 'prefix' ],
+					! empty( $theme_presets ) || ! empty( $default_presets ),
+					$value_key
+				);
 			}
 
 			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( $generated_styles );

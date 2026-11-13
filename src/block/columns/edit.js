@@ -6,7 +6,7 @@ import blockStyles from './style'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { settings, version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInnerBlocks,
@@ -173,7 +173,7 @@ const InspectorControls = memo( () => {
 		<>
 			<InspectorTabs />
 
-			<Columns.InspectorControls />
+			<Columns.InspectorControls defaultOverrides={ settings.stackable_column_spacing_defaults } />
 			<InspectorLayoutControls>
 				<ControlSeparator />
 			</InspectorLayoutControls>

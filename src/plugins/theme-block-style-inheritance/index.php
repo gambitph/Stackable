@@ -11,6 +11,17 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 	 * Stackable Block Style Inheritance
 	 */
     class Stackable_Block_Style_Inheritance {
+		/** Gap-based Columns defaults enabled by extended inheritance. */
+		const UPDATED_COLUMN_DEFAULTS = array(
+			'column-margin' => array(
+				'desktop' => 0,
+				'mobile' => 0,
+			),
+			'columns-column-gap' => array(
+				'desktop' => 24,
+				'mobile' => 16,
+			),
+		);
 
 		/**
 		 * Initialize
@@ -18,6 +29,8 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
   		function __construct() {
 			add_action( 'register_stackable_global_settings', array( $this, 'register_block_style_inheritance' ) );
 			add_action( 'stackable_early_version_upgraded', array( $this, 'block_style_inheritance_set_default' ), 10, 2 );
+			add_action( 'stackable_early_version_upgraded', array( $this, 'initialize_extended_block_style_inheritance' ), 10, 2 );
+			add_action( 'stackable_early_version_upgraded_frontend', array( $this, 'initialize_extended_block_style_inheritance' ), 10, 2 );
 
 			add_action( 'body_class', array( $this, 'add_body_class_block_style_inheritance' ) );
 			add_filter( 'stackable_block_style_inheritance_inline_styles_nodep', array( $this, 'add_block_style_inheritance' ) );
@@ -39,6 +52,36 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 					'show_in_rest' => true,
 					'default' => '',
 				)
+			);
+
+			// Keep new structural mappings separate from legacy inheritance for compatibility.
+			register_setting(
+				'stackable_global_settings',
+				'stackable_enable_extended_block_style_inheritance',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Use updated Columns spacing and inherit structural styles from equivalent WordPress blocks', STACKABLE_I18N ),
+					'sanitize_callback' => 'rest_sanitize_boolean',
+					'show_in_rest' => true,
+					'default' => false,
+				)
+			);
+		}
+
+		/**
+		 * Preserve existing sites while enabling expanded mappings on fresh installs.
+		 *
+		 * add_option() does not overwrite a choice already made by the user.
+		 *
+		 * @param string $old_version Previously installed Stackable version.
+		 * @param string $new_version Newly installed Stackable version.
+		 */
+		function initialize_extended_block_style_inheritance( $old_version, $new_version ) {
+			add_option(
+				'stackable_enable_extended_block_style_inheritance',
+				empty( $old_version ),
+				'',
+				false
 			);
 		}
 
@@ -64,10 +107,14 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 		 */
 		function add_block_style_inheritance( $current_css ) {
 			$disable_block_style_inheritance = get_option( 'stackable_disable_block_style_inheritance' );
+			$enable_extended_block_style_inheritance = (bool) get_option( 'stackable_enable_extended_block_style_inheritance', false );
+			$extended_column_default_rules = $enable_extended_block_style_inheritance
+				? $this->get_extended_column_default_rules()
+				: array();
 
-			// Do not generate styles if it is disabled in the settings.
+			// Updated Columns defaults are controlled independently from theme.json inheritance.
 			if ( $disable_block_style_inheritance ) {
-				return $current_css;
+				return $this->add_rules_to_stylesheet( $current_css, $extended_column_default_rules );
 			}
 
 			// Grab all the styles defined in the current theme.json
@@ -78,9 +125,9 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				$styles_data->merge( WP_Theme_JSON_Resolver::get_user_data() );
 				$raw_data = $styles_data->get_raw_data();
 
-				// Don't generate styles if it's not a block theme/there's no theme.json
+				// Without theme.json styles, only the independently controlled Columns defaults apply.
 				if ( ! isset( $raw_data[ 'styles' ] ) ) {
-					return;
+					return $this->add_rules_to_stylesheet( $current_css, $extended_column_default_rules );
 				}
 
 				$styles = $raw_data['styles'];
@@ -89,8 +136,8 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				$styles = wp_get_global_styles();
 			}
 
-			// Caching since this can be expensive.
-			$hash = md5( serialize( $styles ) );
+			// Include the feature flag so toggling it invalidates the cached stylesheet.
+			$hash = md5( serialize( array( $styles, $enable_extended_block_style_inheritance ) ) );
 			if ( $hash === get_transient( 'stackable_block_style_inheritance_hash' ) ) {
 				$generated_css = get_transient( 'stackable_block_style_inheritance_css' );
 				if ( $generated_css ) {
@@ -101,7 +148,7 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 
 			// This consists of the selectors and declarations
 			// to be used in wp_style_engine_get_stylesheet_from_css_rules
-			$style_declarations = array(
+			$style_declarations = array_merge( $extended_column_default_rules, array(
 				'root' => array(
 					'selector' => ':root',
 					'declarations' => array(),
@@ -170,7 +217,7 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 					'selector' => ':where(.stk-block-heading__text, .stk-block-text__text, .stk-block-table-of-contents__link-wrapper, .stk-block-subtitle__text, .is-style-link) a',
 					'declarations' => array(),
 				),
-			);
+			) );
 
 			/** These properties will be added to the `:root` selector
 			 * 	Dev note:
@@ -190,6 +237,24 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 			if ( $root_properties[ 'button-group-gap' ] || $root_properties[ 'default-gap' ] ) {
 				$style_declarations['root']['declarations'][ '--stk-button-column-gap' ] = $root_properties[ 'button-group-gap' ] ?? $root_properties[ 'default-gap' ];
 				$style_declarations['root']['declarations'][ '--stk-button-row-gap' ] = $root_properties[ 'button-group-gap' ] ?? $root_properties[ 'default-gap' ];
+			}
+
+			// Extended mode replaces the legacy declarations with axis-aware values.
+			if ( $enable_extended_block_style_inheritance ) {
+				$button_group_gap = $root_properties[ 'button-group-gap' ];
+				if ( null === $button_group_gap || '' === $button_group_gap ) {
+					$button_group_gap = $root_properties[ 'default-gap' ];
+				}
+
+				// Remove both legacy declarations so a missing axis cannot retain the raw value.
+				unset(
+					$style_declarations['root']['declarations'][ '--stk-button-column-gap' ],
+					$style_declarations['root']['declarations'][ '--stk-button-row-gap' ]
+				);
+
+				foreach ( $this->normalize_block_gap_axes( $button_group_gap ) as $axis => $value ) {
+					$style_declarations['root']['declarations'][ "--stk-button-{$axis}-gap" ] = $value;
+				}
 			}
 
 			// DEV NOTE: Remove column gap from inheritance since it breaks our design library.
@@ -290,6 +355,20 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 				'h6' => array( 'keys' => array( 'elements', 'h6' ) ),
 			);
 
+			// Register extended declarations only when the compatibility setting is enabled.
+			if ( $enable_extended_block_style_inheritance ) {
+				$extended_element_settings = $this->get_extended_element_settings();
+
+				foreach ( $extended_element_settings as $element => $settings ) {
+					$style_declarations[ $element ] = array(
+						'selector' => $settings[ 'selector' ],
+						'declarations' => array(),
+					);
+				}
+
+				$element_settings = array_merge( $element_settings, $extended_element_settings );
+			}
+
 			foreach ($element_settings as $element => $settings ) {
 				$keys = array( 'normal' => $settings[ 'keys' ] );
 				if ( isset( $settings[ 'hover-keys' ] ) ) {
@@ -301,6 +380,16 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 
 					// add style declarations
 					$style_declarations = $this->get_declarations( $styles, $style_declarations, $selector, $key );
+
+					// wp_style_engine_get_styles() does not parse spacing.blockGap, so map it
+					// manually to the Stackable properties declared by this element setting.
+					if ( isset( $settings[ 'block_gap_properties' ] ) ) {
+						$block_gap = $this->get_value( $styles, array_merge( $key, array( 'spacing', 'blockGap' ) ) );
+						foreach ( $this->normalize_block_gap_axes( $block_gap ) as $axis => $value ) {
+							$property = $settings[ 'block_gap_properties' ][ $axis ];
+							$style_declarations[ $selector ][ 'declarations' ][ $property ] = $value;
+						}
+					}
 
 					// remove properties from style declarations
 					if ( isset( $settings[ 'remove_properties' ] ) ) {
@@ -374,6 +463,151 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 			 */
 			$allow_css = ! preg_match( '%[\\\(&=}]|/\*%', $css_test_string );
 			return $allow_css;
+		}
+
+		/**
+		 * Return the compatibility-gated mappings between Core and Stackable blocks.
+		 *
+		 * Structural properties intentionally target the Stackable layer that most
+		 * closely matches the corresponding Core block selector.
+		 *
+		 * @return array Extended block style mappings.
+		 */
+		private function get_extended_element_settings() {
+			$columns_block_gap_properties = array(
+				'column' => '--stk-columns-column-gap',
+				'row' => 'row-gap',
+			);
+
+			return array(
+				'extended-image' => array(
+					'selector' => ':where(.stk-block-image) .stk-img-wrapper img',
+					'keys' => array( 'blocks', 'core/image' ),
+					'get_properties' => array(
+						'border-radius',
+						'border-top-left-radius',
+						'border-top-right-radius',
+						'border-bottom-left-radius',
+						'border-bottom-right-radius',
+					),
+				),
+				'extended-columns-gap' => array(
+					'selector' => ':where(.wp-block-stackable-columns.stk-block-columns) > .stk-block-content',
+					'keys' => array( 'blocks', 'core/columns' ),
+					'get_properties' => array( '--stk-columns-column-gap', 'row-gap' ),
+					'block_gap_properties' => $columns_block_gap_properties,
+				),
+				// The editor adds wrappers between the block and the element that owns the gap.
+				'extended-columns-gap-editor' => array(
+					'selector' => ':where(.wp-block-stackable-columns) > .stk-block-columns > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout',
+					'keys' => array( 'blocks', 'core/columns' ),
+					'get_properties' => array( '--stk-column-gap', 'row-gap' ),
+					'block_gap_properties' => array(
+						'column' => '--stk-column-gap',
+						'row' => 'row-gap',
+					),
+				),
+			);
+		}
+
+		/**
+		 * Return the updated Columns defaults as ordinary Style Engine rules.
+		 *
+		 * The compiled design system retains the legacy defaults. These rules opt
+		 * fresh installations, and existing installations that enable the feature,
+		 * into the gap-based Columns model.
+		 *
+		 * @return array Updated Columns default rules.
+		 */
+		private function get_extended_column_default_rules() {
+			return array(
+				'extended-column-gap' => array(
+					'selector' => '.wp-block-stackable-columns.stk-block-columns > .stk-block-content, .wp-block-stackable-columns > .stk-block-columns > .stk-block-content',
+					'declarations' => array(
+						'--stk-column-gap' => 'var(--stk-columns-column-gap, 0px)',
+					),
+				),
+				'extended-column-defaults' => array(
+					'selector' => '.wp-block-stackable-columns.stk-block-columns, .wp-block-stackable-columns > .stk-block-columns',
+					'declarations' => array(
+						'--stk-columns-spacing' => self::UPDATED_COLUMN_DEFAULTS[ 'column-margin' ][ 'desktop' ] . 'px',
+						'--stk-columns-column-gap' => self::UPDATED_COLUMN_DEFAULTS[ 'columns-column-gap' ][ 'desktop' ] . 'px',
+					),
+				),
+				'extended-column-defaults-mobile' => array(
+					'rules_group' => '@media (max-width:767px)',
+					'selector' => '.wp-block-stackable-columns.stk-block-columns, .wp-block-stackable-columns > .stk-block-columns',
+					'declarations' => array(
+						'--stk-columns-spacing' => self::UPDATED_COLUMN_DEFAULTS[ 'column-margin' ][ 'mobile' ] . 'px',
+						'--stk-columns-column-gap' => self::UPDATED_COLUMN_DEFAULTS[ 'columns-column-gap' ][ 'mobile' ] . 'px',
+					),
+				),
+			);
+		}
+
+		/**
+		 * Append Style Engine rules to an existing stylesheet.
+		 *
+		 * @param string $current_css Existing CSS.
+		 * @param array  $rules       Style Engine rules keyed by internal name.
+		 * @return string CSS with the generated rules appended.
+		 */
+		private function add_rules_to_stylesheet( $current_css, $rules ) {
+			if ( empty( $rules ) ) {
+				return $current_css;
+			}
+
+			$generated_css = wp_style_engine_get_stylesheet_from_css_rules( array_values( $rules ) );
+			return $generated_css ? $current_css . $generated_css : $current_css;
+		}
+
+		/**
+		 * Convert theme.json block spacing into Stackable's row and column gap values.
+		 *
+		 * WordPress stores linked block spacing as a scalar and independently set
+		 * vertical and horizontal spacing as top and left values.
+		 *
+		 * @param mixed $block_gap theme.json blockGap value.
+		 * @return array Valid row and column gap values.
+		 */
+		private function normalize_block_gap_axes( $block_gap ) {
+			$values = is_array( $block_gap )
+				? array(
+					'column' => $block_gap[ 'left' ] ?? null,
+					'row' => $block_gap[ 'top' ] ?? null,
+				)
+				: array(
+					'column' => $block_gap,
+					'row' => $block_gap,
+				);
+
+			return array_map(
+				array( $this, 'normalize_style_value' ),
+				array_filter(
+					$values,
+					function( $value ) {
+						return is_string( $value ) || is_numeric( $value );
+					}
+				)
+			);
+		}
+
+		/**
+		 * Resolve internal theme.json variables through the WordPress Style Engine.
+		 *
+		 * @param string|int|float $value Raw style value.
+		 * @return string|int|float Resolved CSS value.
+		 */
+		private function normalize_style_value( $value ) {
+			$resolved = wp_style_engine_get_styles(
+				array(
+					'spacing' => array(
+						'padding' => array( 'top' => $value ),
+					),
+				)
+			);
+
+			return $resolved[ 'declarations' ][ 'padding-top' ] ?? $value;
 		}
 
 		/**
@@ -543,6 +777,12 @@ if ( ! class_exists( 'Stackable_Block_Style_Inheritance' ) ) {
 
 		public function add_setting( $settings ) {
             $settings['stackable_disable_block_style_inheritance'] = get_option( 'stackable_disable_block_style_inheritance', false );
+			$enable_extended_block_style_inheritance = (bool) get_option( 'stackable_enable_extended_block_style_inheritance', false );
+			$settings['stackable_enable_extended_block_style_inheritance'] = $enable_extended_block_style_inheritance;
+			// Override editor placeholders only when the updated Columns defaults are active.
+			$settings['stackable_column_spacing_defaults'] = $enable_extended_block_style_inheritance
+				? self::UPDATED_COLUMN_DEFAULTS
+				: array();
             return $settings;
         }
 	}
