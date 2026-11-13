@@ -1,6 +1,6 @@
 .stk-link-control__input {
 	// Adjust width to ensure reset button is visible.
-	width: calc(100% - 32px);
+	width: calc(100% - 42px);
 	min-width: 0;
 
 	> .block-editor-url-input {
@@ -21,7 +21,6 @@
 	.components-input-control__input {
 		margin: 0 !important;
 		width: 100% !important;
-		height: 30px !important;
 		padding: 6px 8px !important;
 	}
 }
@@ -46,10 +45,6 @@
 		position: relative;
 		.stk-dynamic-content-control__button:not(.is-pressed) {
 			background: #fff;
-		}
-
-		.stk-link-control__input {
-			margin-top: -1px;
 		}
 
 		.components-button.is-compact.has-icon:not(.has-text) {
