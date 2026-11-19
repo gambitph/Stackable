@@ -232,6 +232,7 @@ export const CONTENT_ATTRIBUTES = [
 	'linkRel',
 	'linkHasTitle',
 	'linkTitle',
+	'linkCustomAttributes',
 	// Block-level link
 	'blockLinkHasLink',
 	'blockLinkUrl',
@@ -239,4 +240,5 @@ export const CONTENT_ATTRIBUTES = [
 	'blockLinkRel',
 	'blockLinkHasTitle',
 	'blockLinkTitle',
+	'blockLinkCustomAttributes',
 ]

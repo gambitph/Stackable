@@ -14,8 +14,10 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import { omit } from 'lodash'
 import { URLInput } from '@wordpress/block-editor'
+import { getPropsWithDefaults } from '../../util/props'
 
-const URLInputControl = props => {
+const URLInputControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, URLINPUT_CONTROL_DEFAULT_PROPS )
 	return (
 		<BaseControl
 			label={ props.label }
@@ -36,7 +38,7 @@ const URLInputControl = props => {
 	)
 }
 
-URLInputControl.defaultProps = {
+const URLINPUT_CONTROL_DEFAULT_PROPS = {
 	label: __( 'URL', i18n ),
 	help: null,
 	value: '',

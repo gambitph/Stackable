@@ -27,8 +27,10 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { BaseControl } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const IconControls = props => {
+const IconControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ICON_CONTROLS_DEFAULT_PROPS )
 	const design = props.design ? props.design : 'basic'
 	const showBackground = design === 'shaped' || design === 'outlined'
 
@@ -282,7 +284,7 @@ const IconControls = props => {
 	)
 }
 
-IconControls.defaultProps = {
+const ICON_CONTROLS_DEFAULT_PROPS = {
 	icon: '',
 	onChangeIcon: () => {},
 	design: '',

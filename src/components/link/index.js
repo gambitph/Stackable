@@ -8,8 +8,10 @@ import { omit } from 'lodash'
  * WordPress dependencies
  */
 import { forwardRef } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
-const Link = forwardRef( ( props, ref ) => {
+const Link = forwardRef( ( incomingProps, ref ) => {
+	const props = getPropsWithDefaults( incomingProps, LINK_DEFAULT_PROPS )
 	const {
 		children,
 		className,
@@ -35,12 +37,13 @@ const Link = forwardRef( ( props, ref ) => {
 	)
 } )
 
-Link.defaultProps = {
+const LINK_DEFAULT_PROPS = {
 	className: '',
 	tagName: 'a',
 }
 
-Link.Content = props => {
+Link.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, LINK_CONTENT_DEFAULT_PROPS )
 	const className = classnames( [
 		'stk-link',
 		props.className,
@@ -74,7 +77,7 @@ Link.Content = props => {
 	)
 }
 
-Link.Content.defaultProps = {
+const LINK_CONTENT_DEFAULT_PROPS = {
 	className: '',
 	target: '',
 	rel: '',

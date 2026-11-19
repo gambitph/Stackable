@@ -13,8 +13,10 @@ import classnames from 'classnames'
  */
 import { Dashicon } from '@wordpress/components'
 import { MediaUpload } from '@wordpress/block-editor'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ImageUploadPlaceholder = props => {
+const ImageUploadPlaceholder = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_UPLOAD_PLACEHOLDER_DEFAULT_PROPS )
 	const {
 		imageID,
 		imageURL,
@@ -114,7 +116,7 @@ const ImageUploadPlaceholder = props => {
 	)
 }
 
-ImageUploadPlaceholder.defaultProps = {
+const IMAGE_UPLOAD_PLACEHOLDER_DEFAULT_PROPS = {
 	imageID: '',
 	imageURL: '',
 	imageSize: 'full', // If supplied, the imageURL that will be returned will be of this size.

@@ -13,6 +13,7 @@ import { select, dispatch } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { plus } from '@wordpress/icons'
 import { __ } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../util/props'
 
 export const insertColumnBlock = ( rootClientId, blockName = '', attributes = {} ) => {
 	const {
@@ -39,7 +40,9 @@ export const insertColumnBlock = ( rootClientId, blockName = '', attributes = {}
 	dispatch( 'core/block-editor' ).insertBlock( block, innerBlocks.length, rootClientId )
 }
 
-const ColumnInserter = ( { label } ) => {
+const ColumnInserter = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMN_INSERTER_DEFAULT_PROPS )
+	const { label } = props
 	const { clientId } = useBlockEditContext()
 
 	return (
@@ -55,7 +58,7 @@ const ColumnInserter = ( { label } ) => {
 	)
 }
 
-ColumnInserter.defaultProps = {
+const COLUMN_INSERTER_DEFAULT_PROPS = {
 	label: __( 'Add Column', i18n ),
 }
 

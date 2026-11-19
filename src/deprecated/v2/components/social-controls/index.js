@@ -7,6 +7,7 @@ import {
 } from '~stackable/components'
 import { ButtonControlsHelper } from '..'
 import { SOCIAL_SITES } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import { upperFirst } from 'lodash'
 import { i18n } from 'stackable'
 
@@ -19,7 +20,8 @@ import {
 } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
-const SocialControls = props => {
+const SocialControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SOCIAL_CONTROLS_DEFAULT_PROPS )
 	return (
 		<Fragment>
 			{ props.socialUrlFields &&
@@ -63,7 +65,7 @@ const SocialControls = props => {
 	)
 }
 
-SocialControls.defaultProps = {
+const SOCIAL_CONTROLS_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},

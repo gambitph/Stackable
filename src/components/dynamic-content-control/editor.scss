@@ -24,19 +24,18 @@
 	}
 
 	.stk-dynamic-content-control__button {
-		height: 100%;
 		min-width: unset;
 		padding-left: 4px;
 		padding-right: 4px;
-		width: 30px;
-		max-width: 30px;
+		width: 40px;
+		max-width: 40px;
 		flex: 0 0 auto;
-		height: 30px;
+		height: 40px;
 		margin-left: 4px;
 
 		[data-icon="database"] {
-			width: 14px;
-			height: 16px;
+			width: 18px;
+			height: 20px;
 		}
 	}
 
@@ -81,9 +80,6 @@
 		&:not(.is-pressed) {
 			background: #fff;
 		}
-
-		height: 30px;
-		width: 30px !important;
 
 		.dashicon {
 			margin: 0;

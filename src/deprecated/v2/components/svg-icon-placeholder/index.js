@@ -13,8 +13,10 @@ import { Button, IconSearchPopover } from '~stackable/components'
  * Internal dependencies
  */
 import SvgIconHelper from '../svg-icon-helper'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const SvgIconPlaceholder = withInstanceId( ( props => {
+const SvgIconPlaceholder = withInstanceId( ( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SVG_ICON_PLACEHOLDER_DEFAULT_PROPS )
 	const [ openPopover, setOpenPopover ] = useState( false )
 	const [ clickedOnButton, setClickedOnButton ] = useState( false )
 
@@ -70,7 +72,7 @@ const SvgIconPlaceholder = withInstanceId( ( props => {
 	)
 } ) )
 
-SvgIconPlaceholder.defaultProps = {
+const SVG_ICON_PLACEHOLDER_DEFAULT_PROPS = {
 	isOpen: null,
 	className: '',
 	value: '',

@@ -31,9 +31,11 @@ import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { getAttributeNameFunc } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
-export const Icon = props => (
-	<_Icon.InspectorControls
+export const Icon = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ICON_DEFAULT_PROPS )
+	return <_Icon.InspectorControls
 		hasColor={ props.hasColor }
 		hasGradient={ false }
 		hasShape={ false }
@@ -44,9 +46,9 @@ export const Icon = props => (
 		iconSizePlaceholderName="button-icon-size"
 		iconGapPlaceholderName={ props.iconGapPlaceholderName }
 	/>
-)
+}
 
-Icon.defaultProps = {
+const ICON_DEFAULT_PROPS = {
 	hasIconGap: true,
 	hasIconPosition: true,
 	hasColor: true,
@@ -159,7 +161,8 @@ export const ColorsControls = props => {
 	</> )
 }
 
-export const Colors = props => {
+export const Colors = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLORS_DEFAULT_PROPS )
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
@@ -172,7 +175,7 @@ export const Colors = props => {
 	)
 }
 
-Colors.defaultProps = {
+const COLORS_DEFAULT_PROPS = {
 	hasTextColor: true,
 	hasIconColor: false,
 }
@@ -239,7 +242,8 @@ const SizeControls = props => {
 	</> )
 }
 
-export const Size = props => {
+export const Size = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SIZE_DEFAULT_PROPS )
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
@@ -252,7 +256,7 @@ export const Size = props => {
 	)
 }
 
-Size.defaultProps = {
+const SIZE_DEFAULT_PROPS = {
 	hasWidth: false,
 }
 
@@ -277,7 +281,8 @@ const BorderControls = props => {
 	)
 }
 
-export const Borders = props => {
+export const Borders = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BORDERS_DEFAULT_PROPS )
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
@@ -294,11 +299,12 @@ export const Borders = props => {
 	)
 }
 
-Borders.defaultProps = {
+const BORDERS_DEFAULT_PROPS = {
 	borderSelector: '',
 }
 
-export const Edit = props => {
+export const Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const {
 		borderSelector,
 		hasTextColor,
@@ -347,7 +353,7 @@ export const Edit = props => {
 	)
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	hasIcon: true,
 	hasLink: true,
 	borderSelector: '',

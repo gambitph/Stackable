@@ -5,6 +5,7 @@ import { SliderRail, Handle } from './slider-components'
 import { isEqual } from 'lodash'
 import { fixColumnWidths } from './util'
 import { useRef, memo } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
 const sliderStyle = {
 	position: 'relative',
@@ -93,7 +94,8 @@ const fixValues = ( values, changedIndex, direction ) => {
 	return convertColumnsToValues( fixedColumns )
 }
 
-const ColumnSlider = memo( props => {
+const ColumnSlider = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMN_SLIDER_DEFAULT_PROPS )
 	const currentValues = useRef( null )
 	const slidingHandleIndex = useRef( 0 )
 	const currentSlideValue = useRef( null )
@@ -198,7 +200,7 @@ const ColumnSlider = memo( props => {
 	)
 }, isEqual )
 
-ColumnSlider.defaultProps = {
+const COLUMN_SLIDER_DEFAULT_PROPS = {
 	onChange: () => {},
 	value: [],
 }

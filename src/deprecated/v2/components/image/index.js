@@ -3,8 +3,10 @@
  */
 import classnames from 'classnames'
 import striptags from 'striptags'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const Image = props => {
+const Image = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_DEFAULT_PROPS )
 	const imageClasses = classnames( [
 		props.className,
 		'ugb-img',
@@ -34,7 +36,7 @@ const Image = props => {
 	)
 }
 
-Image.defaultProps = {
+const IMAGE_DEFAULT_PROPS = {
 	imageId: '',
 
 	alt: '',

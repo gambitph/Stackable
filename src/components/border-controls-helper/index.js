@@ -3,6 +3,7 @@
  */
 import { BorderControls } from '~stackable/components'
 import { __getValue } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { camelCase } from 'lodash'
 
 /**
@@ -10,7 +11,8 @@ import { camelCase } from 'lodash'
  */
 import { sprintf } from '@wordpress/i18n'
 
-const BorderControlsHelper = props => {
+const BorderControlsHelper = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BORDER_CONTROLS_HELPER_DEFAULT_PROPS )
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getValue = __getValue( props.blockAttributes, getAttrName, '' )
@@ -90,7 +92,7 @@ const BorderControlsHelper = props => {
 	)
 }
 
-BorderControlsHelper.defaultProps = {
+const BORDER_CONTROLS_HELPER_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},

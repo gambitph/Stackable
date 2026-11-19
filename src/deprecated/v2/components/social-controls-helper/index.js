@@ -8,8 +8,10 @@ import { camelCase } from 'lodash'
  * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const SocialControlsHelper = props => {
+const SocialControlsHelper = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SOCIAL_CONTROLS_HELPER_DEFAULT_PROPS )
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 
@@ -25,7 +27,7 @@ const SocialControlsHelper = props => {
 	)
 }
 
-SocialControlsHelper.defaultProps = {
+const SOCIAL_CONTROLS_HELPER_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},

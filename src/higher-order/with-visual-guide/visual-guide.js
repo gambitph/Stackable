@@ -2,8 +2,10 @@ import { useMemo, useState } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { useDeviceType } from '~stackable/hooks'
 import { first, last } from 'lodash'
+import { getPropsWithDefaults } from '../../util/props'
 
-const VisualGuideer = props => {
+const VisualGuideer = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, VISUAL_GUIDEER_DEFAULT_PROPS )
 	const {
 		uniqueId,
 		selector = '',
@@ -45,7 +47,7 @@ const VisualGuideer = props => {
 	return <style>{ styles }</style>
 }
 
-VisualGuideer.defaultProps = {
+const VISUAL_GUIDEER_DEFAULT_PROPS = {
 	uniqueId: '',
 	highlightStyles: {},
 }

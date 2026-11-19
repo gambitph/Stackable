@@ -29,6 +29,7 @@ import { pick, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { BaseControl as GutBaseControl } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../util/props'
 
 // Expose useControlHandlers to our API.
 export { useControlHandlers } from './hooks'
@@ -36,7 +37,8 @@ export { useControlHandlers } from './hooks'
 const ALL_SCREENS = [ 'desktop', 'tablet', 'mobile' ]
 const EMPTY_OBJ = {}
 
-export const BaseControl = props => {
+export const BaseControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BASE_CONTROL_DEFAULT_PROPS )
 	const deviceType = useDeviceType()
 	const isVisible = useResponsiveControlVisibility( props.responsive )
 	// Register even when this control returns null so its parent panel can tell
@@ -127,7 +129,7 @@ export const BaseControl = props => {
 	)
 }
 
-BaseControl.defaultProps = {
+const BASE_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	label: '',
 	help: '',
@@ -160,7 +162,8 @@ BaseControl.defaultProps = {
 	hasHoverStateValue: undefined,
 }
 
-const AdvancedControl = props => {
+const AdvancedControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADVANCED_CONTROL_DEFAULT_PROPS )
 	// Unit handles
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 	const unitAttribute = useBlockAttributesContext( attributes => attributes[ unitAttrName ] ) || ''
@@ -183,7 +186,7 @@ const AdvancedControl = props => {
 	)
 }
 
-AdvancedControl.defaultProps = {
+const ADVANCED_CONTROL_DEFAULT_PROPS = {
 	// Control props
 	className: '',
 	label: '',
@@ -222,7 +225,7 @@ AdvancedControl.defaultProps = {
 export default AdvancedControl
 
 export const extractControlProps = props => {
-	const advancedControlProps = [ ...Object.keys( AdvancedControl.defaultProps ), 'allowReset', 'screens' ]
+	const advancedControlProps = [ ...Object.keys( ADVANCED_CONTROL_DEFAULT_PROPS ), 'allowReset', 'screens' ]
 	const controlProps = pick( props, advancedControlProps )
 	if ( props.screens ) {
 		controlProps.responsive = props.screens

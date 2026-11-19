@@ -18,6 +18,7 @@ import {
 	SectionSettings,
 } from '~stackable/components'
 import { useBlockColorSchemes } from '~stackable/hooks'
+import { saveSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -26,7 +27,6 @@ import { addFilter } from '@wordpress/hooks'
 import { Fragment, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useSelect, dispatch } from '@wordpress/data'
-import { models } from '@wordpress/api'
 
 export { GlobalColorSchemeStyles } from './editor-loader'
 
@@ -53,11 +53,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-color-scheme
 	const onChangeDefaultColorScheme = ( mode, colorSchemeKey ) => {
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			const settings = new models.Settings( {
+			saveSettings( {
 				[ COLOR_SCHEME_OPTION_NAMES[ mode ] ]: colorSchemeKey, // eslint-disable-line camelcase
 				stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
-			} )
-			settings.save()
+			} ).catch( () => {} )
 		}, 300 )
 
 		// Update our store.
@@ -141,8 +140,7 @@ addFilter( 'stackable.global-settings.inspector.global-colors.toggle-controls', 
 			hideColorSchemeColors: value,
 		} )
 
-		const settings = new models.Settings( { stackable_global_hide_color_scheme_colors: value } ) // eslint-disable-line camelcase
-		settings.save()
+		saveSettings( { stackable_global_hide_color_scheme_colors: value } ).catch( () => {} ) // eslint-disable-line camelcase
 	}
 
 	return <>

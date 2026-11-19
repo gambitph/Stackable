@@ -8,8 +8,10 @@ import { camelCase } from 'lodash'
  * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const TypographyControlHelper = props => {
+const TypographyControlHelper = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, TYPOGRAPHY_CONTROL_HELPER_DEFAULT_PROPS )
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 
@@ -72,7 +74,7 @@ const TypographyControlHelper = props => {
 	)
 }
 
-TypographyControlHelper.defaultProps = {
+const TYPOGRAPHY_CONTROL_HELPER_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},

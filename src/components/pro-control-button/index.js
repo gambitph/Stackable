@@ -8,8 +8,10 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { useState } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ProControlButton = props => {
+const ProControlButton = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, PRO_CONTROL_BUTTON_DEFAULT_PROPS )
 	const {
 		initialOpen,
 		...propsToPass
@@ -37,7 +39,7 @@ const ProControlButton = props => {
 	)
 }
 
-ProControlButton.defaultProps = {
+const PRO_CONTROL_BUTTON_DEFAULT_PROPS = {
 	initialOpen: false,
 }
 

@@ -10,8 +10,10 @@ import ResponsiveControl from '../responsive-control'
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const ContentAlignControl = props => {
+const ContentAlignControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CONTENT_ALIGN_CONTROL_DEFAULT_PROPS )
 	return (
 		<ResponsiveControl
 			attrNameTemplate="%sContentAlign"
@@ -26,7 +28,7 @@ const ContentAlignControl = props => {
 	)
 }
 
-ContentAlignControl.defaultProps = {
+const CONTENT_ALIGN_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	setAttributes: () => {},
 	blockAttributes: {},

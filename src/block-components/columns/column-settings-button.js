@@ -10,10 +10,12 @@ import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
 import { useLocalStorage } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 const PASSTHRU = ( func, numColumns ) => func( numColumns )
 
-export const ColumnsControl = props => {
+export const ColumnsControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMNS_CONTROL_DEFAULT_PROPS )
 	const {
 		label,
 		sliderMax = 6,
@@ -153,7 +155,8 @@ export const ColumnsControl = props => {
 	)
 }
 
-export const CloneButton = props => {
+export const CloneButton = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CLONE_BUTTON_DEFAULT_PROPS )
 	return (
 		<Tooltip
 			text={ __( 'When enabled, the last column will be cloned instead of adding a blank column.', i18n ) }
@@ -171,14 +174,14 @@ export const CloneButton = props => {
 	)
 }
 
-ColumnsControl.defaultProps = {
+const COLUMNS_CONTROL_DEFAULT_PROPS = {
 	label: __( 'Columns', i18n ),
 	rootClientId: null,
 	onChangeCallback: PASSTHRU,
 	newColumnAttributes: {},
 }
 
-CloneButton.defaultProps = {
+const CLONE_BUTTON_DEFAULT_PROPS = {
 	isPressed: false,
 	onClick: null,
 }

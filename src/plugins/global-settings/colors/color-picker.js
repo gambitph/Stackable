@@ -13,14 +13,15 @@ import {
 import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
 import { SortablePicker } from '~stackable/components'
+import { saveSettings } from '~stackable/util'
 
 import { useRef } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
-import { models } from '@wordpress/api'
 import { __, sprintf } from '@wordpress/i18n'
 import { ColorIndicator, ColorPicker } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../../util/props'
 
 let saveTimeout = null
 
@@ -37,7 +38,8 @@ const ItemPickerColor = ( { item, onChange } ) => {
 	</div>
 }
 
-const ColorPickers = props => {
+const ColorPickers = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLOR_PICKERS_DEFAULT_PROPS )
 	const ref = useRef()
 	const {
 		colors,
@@ -61,8 +63,7 @@ const ColorPickers = props => {
 		// Save settings.
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			const settings = new models.Settings( { stackable_global_colors: [ newColors ] } ) // eslint-disable-line camelcase
-			settings.save()
+			saveSettings( { stackable_global_colors: [ newColors ] } ).catch( () => {} ) // eslint-disable-line camelcase
 		}, 300 )
 
 		// Update our store.
@@ -163,7 +164,7 @@ const ColorPickers = props => {
 	)
 }
 
-ColorPickers.defaultProps = {
+const COLOR_PICKERS_DEFAULT_PROPS = {
 	className: '',
 	label: '',
 	onReset: () => {},

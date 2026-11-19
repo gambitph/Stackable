@@ -30,6 +30,7 @@ import {
 	usePresetControls,
 } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * WordPress dependencies
@@ -54,7 +55,8 @@ export const IMAGE_SHADOWS = [
 	'70px 60px 60px #48497933',
 ]
 
-const Controls = props => {
+const Controls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CONTROLS_DEFAULT_PROPS )
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
 			imageId: attributes.imageId,
@@ -578,7 +580,7 @@ const Controls = props => {
 	)
 }
 
-Controls.defaultProps = {
+const CONTROLS_DEFAULT_PROPS = {
 	hasAlt: true,
 	hasWidth: true,
 	hasSelector: true,
@@ -599,7 +601,8 @@ Controls.defaultProps = {
 	hasShape: true,
 }
 
-export const Edit = props => {
+export const Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const imageShow = useBlockAttributesContext( attributes => attributes.imageShow )
 	const setAttributes = useBlockSetAttributesContext()
 
@@ -622,7 +625,7 @@ export const Edit = props => {
 	)
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	initialOpen: false,
 	label: __( 'Image', i18n ),
 	hasToggle: false,

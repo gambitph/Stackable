@@ -3,6 +3,7 @@
  */
 import FontAwesomeIcon from '../font-awesome-icon'
 import { getShapeSVG } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import classnames from 'classnames'
 
 /**
@@ -39,7 +40,8 @@ const extractSvg = _htmlString => {
 	return htmlString
 }
 
-const SvgIcon = props => {
+const SvgIcon = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SVG_ICON_DEFAULT_PROPS )
 	const propsToPass = {
 		...props,
 		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
@@ -75,7 +77,7 @@ const SvgIcon = props => {
 	return ret
 }
 
-SvgIcon.defaultProps = {
+const SVG_ICON_DEFAULT_PROPS = {
 	className: '',
 
 	value: '', // The icon name or icon SVG.
@@ -94,7 +96,8 @@ SvgIcon.defaultProps = {
 	gradientDirection: 0, // Only supports every 45 degrees.
 }
 
-SvgIcon.Content = props => {
+SvgIcon.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SVG_ICON_CONTENT_DEFAULT_PROPS )
 	const propsToPass = {
 		...props,
 		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
@@ -128,8 +131,8 @@ SvgIcon.Content = props => {
 	return ret
 }
 
-SvgIcon.Content.defaultProps = {
-	...SvgIcon.defaultProps,
+const SVG_ICON_CONTENT_DEFAULT_PROPS = {
+	...SVG_ICON_DEFAULT_PROPS,
 }
 
 export default SvgIcon

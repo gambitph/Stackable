@@ -21,6 +21,7 @@ export {
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
 export const Separator = ( { children } ) => {
 	const separatorAttributes = useBlockAttributesContext( attributes => {
@@ -73,7 +74,9 @@ export const Separator = ( { children } ) => {
 	)
 }
 
-Separator.Content = ( { children, attributes } ) => {
+Separator.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SEPARATOR_CONTENT_DEFAULT_PROPS )
+	const { children, attributes } = props
 	return (
 		<>
 			{ attributes.topSeparatorShow && (
@@ -103,7 +106,7 @@ Separator.Content = ( { children, attributes } ) => {
 	)
 }
 
-Separator.Content.defaultProps = {
+const SEPARATOR_CONTENT_DEFAULT_PROPS = {
 	attributes: {},
 }
 

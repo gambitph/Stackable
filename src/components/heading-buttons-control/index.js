@@ -22,6 +22,7 @@ import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
 const TAG_OPTIONS = [
 	{
@@ -63,7 +64,8 @@ const TAG_OPTIONS = [
 
 const TAG_OPTIONS_NOP = TAG_OPTIONS.filter( ( { value } ) => value !== 'p' )
 
-const HeadingButtonsControl = memo( props => {
+const HeadingButtonsControl = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, HEADING_BUTTONS_CONTROL_DEFAULT_PROPS )
 	return (
 		<AdvancedToolbarControl
 			{ ...props }
@@ -75,7 +77,7 @@ const HeadingButtonsControl = memo( props => {
 	)
 } )
 
-HeadingButtonsControl.defaultProps = {
+const HEADING_BUTTONS_CONTROL_DEFAULT_PROPS = {
 	label: sprintf( _x( '%s HTML Tag', 'component', i18n ), __( 'Title', i18n ) ),
 	value: undefined,
 	hasP: true,

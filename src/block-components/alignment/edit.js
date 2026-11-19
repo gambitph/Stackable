@@ -27,6 +27,7 @@ import { memo } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
+import { getPropsWithDefaults } from '../../util/props'
 
 const ALIGN_OPTIONS = [
 	{
@@ -53,7 +54,8 @@ const ALIGN_OPTIONS = [
 
 const ALIGN_OPTIONS_NO_JUSTIFY = ALIGN_OPTIONS.filter( option => option.align !== 'justify' )
 
-export const Edit = memo( props => {
+export const Edit = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const {
 		contentAlign,
 		columnJustify,
@@ -382,7 +384,7 @@ if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
 	} )
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	hasColumnJustify: false,
 	hasRowAlignment: false,
 	hasColumnAlignment: false,

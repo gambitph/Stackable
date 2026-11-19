@@ -9,8 +9,10 @@ import { i18n } from 'stackable'
 import { TextareaControl, ExternalLink } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { useInternalValue } from '~stackable/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ImageAltControl = props => {
+const ImageAltControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_ALT_CONTROL_DEFAULT_PROPS )
 	// Keep track of the internal value because we will move the cursor to the
 	// end of the text when the user types.
 	const [ internalValue, setInternalValue ] = useInternalValue( props.value )
@@ -36,7 +38,7 @@ const ImageAltControl = props => {
 	)
 }
 
-ImageAltControl.defaultProps = {
+const IMAGE_ALT_CONTROL_DEFAULT_PROPS = {
 	label: __( 'Alt Text (Alternative Text)', i18n ),
 }
 

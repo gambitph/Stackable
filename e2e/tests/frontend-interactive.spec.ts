@@ -1,5 +1,9 @@
-import { test, expect } from 'e2e/test-utils'
-import { publishAndVisitFrontend, getEditorPostId } from 'e2e/test-utils'
+import {
+	test,
+	expect,
+	publishAndVisitFrontend,
+	getEditorPostId,
+} from 'e2e/test-utils'
 
 const pickDefaultLayoutIfPresent = async editor => {
 	const picker = editor.canvas.locator( '.stk-variation-picker' )
@@ -117,6 +121,106 @@ test.describe( 'Interactive frontend', () => {
 		await expect( tabButtons.nth( 1 ) ).toHaveAttribute( 'aria-selected', 'true' )
 	} )
 
+	test( 'Nested tabs with labels below switch their own panels', async ( {
+		page, editor, requestUtils, admin,
+	} ) => {
+		const tabPanel = { customAttributes: [ [ 'role', 'tabpanel' ] ] }
+
+		await editor.insertBlock( {
+			name: 'stackable/tabs',
+			innerBlocks: [
+				{
+					name: 'stackable/tab-content',
+					innerBlocks: [
+						{
+							name: 'stackable/column',
+							attributes: tabPanel,
+							innerBlocks: [
+								{
+									name: 'stackable/tabs',
+									innerBlocks: [
+										{
+											name: 'stackable/tab-labels',
+											attributes: {
+												tabLabels: [
+													{ label: 'Inner 1', icon: '' },
+													{ label: 'Inner 2', icon: '' },
+												],
+											},
+										},
+										{
+											name: 'stackable/tab-content',
+											innerBlocks: [
+												{
+													name: 'stackable/column',
+													attributes: tabPanel,
+													innerBlocks: [ {
+														name: 'stackable/heading',
+														attributes: { text: 'Inner panel 1' },
+													} ],
+												},
+												{
+													name: 'stackable/column',
+													attributes: tabPanel,
+													innerBlocks: [ {
+														name: 'stackable/heading',
+														attributes: { text: 'Inner panel 2' },
+													} ],
+												},
+											],
+										},
+									],
+								},
+							],
+						},
+						{
+							name: 'stackable/column',
+							attributes: tabPanel,
+							innerBlocks: [ {
+								name: 'stackable/heading',
+								attributes: { text: 'Outer panel 2' },
+							} ],
+						},
+					],
+				},
+				{
+					name: 'stackable/tab-labels',
+					attributes: {
+						tabLabels: [
+							{ label: 'Outer 1', icon: '' },
+							{ label: 'Outer 2', icon: '' },
+						],
+					},
+				},
+			],
+		} )
+
+		await expect( editor.canvas.getByText( 'Inner panel 1' ) ).toBeVisible()
+		await expect( editor.canvas.getByText( 'Outer 2' ) ).toBeVisible()
+
+		await publishAndVisitFrontend( page, editor, requestUtils, admin )
+
+		const innerPanel1 = page.getByText( 'Inner panel 1' )
+		const innerPanel2 = page.getByText( 'Inner panel 2' )
+		const outerPanel2 = page.getByText( 'Outer panel 2' )
+
+		await expect( page.getByRole( 'tab', { name: 'Inner 1' } ) ).toBeVisible()
+		await expect( innerPanel1 ).toBeVisible()
+		await expect( innerPanel2 ).toBeHidden()
+		await expect( outerPanel2 ).toBeHidden()
+
+		await page.getByRole( 'tab', { name: 'Inner 2' } ).click()
+		await expect( page.getByRole( 'tab', { name: 'Inner 2' } ) ).toHaveAttribute( 'aria-selected', 'true' )
+		await expect( page.getByRole( 'tab', { name: 'Outer 1' } ) ).toHaveAttribute( 'aria-selected', 'true' )
+		await expect( innerPanel2 ).toBeVisible()
+		await expect( innerPanel1 ).toBeHidden()
+		await expect( outerPanel2 ).toBeHidden()
+
+		await page.getByRole( 'tab', { name: 'Outer 2' } ).click()
+		await expect( page.getByRole( 'tab', { name: 'Outer 2' } ) ).toHaveAttribute( 'aria-selected', 'true' )
+		await expect( outerPanel2 ).toBeVisible()
+	} )
+
 	test( 'Carousel next control changes the slide', async ( {
 		page, editor, requestUtils, admin,
 	} ) => {
@@ -187,6 +291,46 @@ test.describe( 'Interactive frontend', () => {
 		await expect( popup ).toBeVisible()
 		await popup.locator( 'div[role="button"], button' ).first().click()
 		await expect( page.locator( '.bp-container, .glightbox-container, .stk-video-popup, iframe' ).first() ).toBeVisible( { timeout: 10_000 } )
+	} )
+
+	test( 'Lightbox escapes markup in an entity-decoded video URL', async ( {
+		page, editor, requestUtils, admin,
+	} ) => {
+		await editor.insertBlock( {
+			name: 'stackable/columns',
+			attributes: { uniqueId: 'lightbox-columns' },
+			innerBlocks: [ {
+				name: 'stackable/column',
+				attributes: {
+					uniqueId: 'lightbox-column',
+					blockLinkHasLightbox: true,
+				},
+				innerBlocks: [ {
+					name: 'core/html',
+					attributes: {
+						content: '<a href="https://YOUTUBE.COM/watch?v=x&quot;&gt;&lt;img data-stackable-lightbox-injection src=x&gt;"><img alt="Lightbox trigger" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="></a>',
+					},
+				} ],
+			} ],
+		} )
+
+		await publishAndVisitFrontend( page, editor, requestUtils, admin )
+
+		await page.route( 'https://cdn.plyr.io/**/*.css', route => route.fulfill( {
+			contentType: 'text/css',
+			body: '',
+		} ) )
+		await page.route( 'https://cdn.plyr.io/**/*.js', route => route.fulfill( {
+			contentType: 'text/javascript',
+			body: 'window.Plyr = class { on() {} };',
+		} ) )
+
+		const trigger = page.getByRole( 'img', { name: 'Lightbox trigger' } )
+		await expect( trigger ).toBeVisible()
+		await expect( trigger.locator( '..' ) ).toHaveAttribute( 'role', 'button' )
+		await trigger.click()
+		await expect( page.locator( '.glightbox-container' ) ).toBeVisible()
+		await expect( page.locator( '[data-stackable-lightbox-injection]' ) ).toHaveCount( 0 )
 	} )
 
 	test( 'Notification can be dismissed', async ( {
@@ -315,6 +459,8 @@ test.describe( 'Interactive frontend', () => {
 					const text = block.attributes.text || block.attributes.content || ''
 					const match = anchors.find( heading => heading.text === text )
 					if ( match && ( block.name === 'core/heading' || block.name === 'stackable/heading' ) ) {
+						// This test setup updates the editor store from outside the block's Edit component.
+						// eslint-disable-next-line stackable/no-update-block-attributes
 						updateBlockAttributes( block.clientId, { anchor: match.anchor } )
 					}
 					if ( block.innerBlocks?.length ) {

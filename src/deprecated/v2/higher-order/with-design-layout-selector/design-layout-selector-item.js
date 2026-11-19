@@ -11,13 +11,16 @@ import classnames from 'classnames'
  */
 import { Icon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const DesignLayoutSelectorItem = ( {
-	image,
-	label,
-	className,
-	...otherProps
-} ) => {
+const DesignLayoutSelectorItem = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DESIGN_LAYOUT_SELECTOR_ITEM_DEFAULT_PROPS )
+	const {
+		image,
+		label,
+		className,
+		...otherProps
+	} = props
 	const src = ! image ? ''
 	            : image.match( /https?:/i ) ? image
 	            : srcUrl ? `${ srcUrl }/${ image }`
@@ -64,7 +67,7 @@ const DesignLayoutSelectorItem = ( {
 	)
 }
 
-DesignLayoutSelectorItem.defaultProps = {
+const DESIGN_LAYOUT_SELECTOR_ITEM_DEFAULT_PROPS = {
 	name: '',
 	label: '',
 	className: '',

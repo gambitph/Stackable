@@ -5,8 +5,10 @@ import {
 	Children, cloneElement, Fragment,
 } from '@wordpress/element'
 import { useDeviceType } from '~stackable/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
-const ResponsiveControl2 = props => {
+const ResponsiveControl2 = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, RESPONSIVE_CONTROL2_DEFAULT_PROPS )
 	const deviceType = useDeviceType()
 
 	return (
@@ -21,7 +23,7 @@ const ResponsiveControl2 = props => {
 	)
 }
 
-ResponsiveControl2.defaultProps = {
+const RESPONSIVE_CONTROL2_DEFAULT_PROPS = {
 	screens: 'all',
 	desktopProps: {},
 	tabletProps: {},

@@ -12,8 +12,10 @@ import { i18n } from 'stackable'
 import { compose } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
 import { getImageSize } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const ImageShapeControls = props => {
+const ImageShapeControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_SHAPE_CONTROLS_DEFAULT_PROPS )
 	const imageSizeData = props.imageData ? getImageSize( props.imageData, props.imageSize || 'full' ) : null
 	const isSquareImage = props.isSquareImage !== null ? props.isSquareImage
 		: imageSizeData ? imageSizeData.width === imageSizeData.height : false
@@ -55,7 +57,7 @@ const ImageShapeControls = props => {
 	)
 }
 
-ImageShapeControls.defaultProps = {
+const IMAGE_SHAPE_CONTROLS_DEFAULT_PROPS = {
 	// For detecting whether the image is square.
 	imageId: '',
 	imageSize: 'full',

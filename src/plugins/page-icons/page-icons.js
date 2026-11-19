@@ -72,10 +72,15 @@ const parseSVGString = svgString => {
 		while ( ( attrMatch = attrRegex.exec( attributesPart ) ) !== null ) {
 			const key = attrMatch[ 1 ]
 			const attrNameLower = key.toLowerCase()
+			const value = attrMatch[ 2 ] || attrMatch[ 3 ] || attrMatch[ 4 ] || ''
 			// Skip width and height as symbols don't need them
-			if ( attrNameLower !== 'width' && attrNameLower !== 'height' && ! attrNameLower.startsWith( 'on' ) ) {
-				// Value can be in double quotes, single quotes, or unquoted
-				const value = attrMatch[ 2 ] || attrMatch[ 3 ] || attrMatch[ 4 ] || ''
+			// Skip explicit fills so each <use> instance can inherit its block's icon color.
+			// Preserve fill="none" because it is structural for stroke-based icons.
+			if ( attrNameLower !== 'width' &&
+				attrNameLower !== 'height' &&
+				! attrNameLower.startsWith( 'on' ) &&
+				( attrNameLower !== 'fill' || value.trim().toLowerCase() === 'none' )
+			) {
 				svgAttributes[ key ] = value
 			}
 		}

@@ -40,7 +40,4 @@ export const Switcher = props => {
 	)
 }
 
-Switcher.defaultProps = {
-}
-
 export default Switcher
