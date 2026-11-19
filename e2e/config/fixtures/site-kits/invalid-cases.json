@@ -1,0 +1,39 @@
+{
+	"unknown-version": {
+		"mutations": [
+			{
+				"path": "version",
+				"value": 2
+			}
+		],
+		"expectedCodes": [ "unknown_version" ]
+	},
+	"invalid-path": {
+		"mutations": [
+			{
+				"path": "media.0.path",
+				"value": "../outside.svg"
+			}
+		],
+		"expectedCodes": [ "invalid_path" ]
+	},
+	"slug-mismatch": {
+		"directorySlug": "wrong-directory",
+		"mutations": [],
+		"expectedCodes": [ "slug_mismatch" ]
+	},
+	"missing-file": {
+		"mutations": [],
+		"removeFiles": [ "assets/hero-office.png" ],
+		"expectedCodes": [ "missing_file" ]
+	},
+	"external-media": {
+		"mutations": [
+			{
+				"path": "pages.0.content",
+				"value": "<!-- wp:image --><figure class=\"wp-block-image\"><img src=\"https://cdn.example.com/hero.webp\" alt=\"Remote hero\" /></figure><!-- /wp:image -->"
+			}
+		],
+		"expectedCodes": [ "external_media_url" ]
+	}
+}

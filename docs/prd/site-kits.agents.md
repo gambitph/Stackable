@@ -1,154 +1,290 @@
 # Site Kits - agent implementation guide
 
-Load this file before adding Site Kit admin UI, import REST, kit packages, or e2e for kits.
-Product law here wins over Design Library page-insert behavior (that is a different feature).
+Load this file before changing Site Kit export, catalog, preview, import, package data, or E2E coverage.
+The approved **Site Kits Design Document**, dated November 18, 2026, is the master product reference.
+When it conflicts with repository documentation, follow the design document and update the repository documentation in the same change.
+When it does not specify a behavior, preserve the existing product contracts documented here, in the developer guide, and in the ADRs.
+
 Developer companion: [`site-kits.md`](./site-kits.md).
-Package schema: [`site-kits.CONTRACT.md`](./site-kits.CONTRACT.md).
+Package, export, and import contract: [`site-kits.CONTRACT.md`](./site-kits.CONTRACT.md).
 Theme shell: sibling `../Start-Stackable/docs/prd/start-stackable.agents.md`.
-ADR: [`../adr/0003-default-is-the-theme.md`](../adr/0003-default-is-the-theme.md).
+Ownership ADR: [`../adr/0002-site-kits-owned-by-plugin.md`](../adr/0002-site-kits-owned-by-plugin.md).
+Default ADR: [`../adr/0003-default-is-the-theme.md`](../adr/0003-default-is-the-theme.md).
 
-## Law
+## Product law
 
-A **Site Kit** is a plugin-owned import package: pages + optional patterns + menu + front page + template map + theme styles (variation slug and/or overlay) + optional design-system payload + theme snap-in.
-**Design Library Pages** insert one page of markup into the current editor. That is not a Site Kit.
-**Default** is Start Stackable on activate. It is not a kit package. Catalog may label it; that label does not import or reset.
-Start Stackable is the **intended shell**. Import still runs without it; header flags no-op and a notice says the header and footer are limited.
+A **Site Kit** is a plugin-owned package that can assemble a complete website.
+It contains pages, media, FSE settings, theme templates, website settings, Stackable settings and design-system data, and supported plugin data.
+It may also contain navigation, patterns, template-part assignments, theme styles, and Start Stackable shell flags.
 
-v1 ships **three** kits (not counting Default).
-Wizard: catalog → preview → optional design-system tweaks (side panel) → import.
-Import requires an explicit user click. Never import on plugin or theme activation.
+**Design Library Pages** insert one page of markup into the current editor.
+That is not a Site Kit.
 
-Deepen existing seams:
+**Default** is Start Stackable on activation.
+It is not a package and must never be imported or used as a reset slug.
+The catalog may show it only as a non-importable label when the current product experience requires it.
 
-- Catalog/preview UI: admin under Stackable (same app as welcome/settings), not a parallel options framework.
-- Tokens: write **existing** Global Settings options. Do not add a second design-system store.
-- Markup: `stackable/*` + core, same as Design Library packages.
-- CDN: same design-library retrieve/cache pattern unless an ADR says otherwise.
+Start Stackable is required to apply a Site Kit.
+Users may browse the catalog and previews without it, but Apply must lead to the shared install or activate notice until the theme is active.
 
-Premium: applying Stackable Global Design System from the side panel and extra kit patterns follow existing Freemius gates for those surfaces.
-Theme style variation and/or `theme.styles` overlay + pages/menu/templates may run for free users when the markup is free blocks.
-Do not put premium PHP in the free tree.
+v1 ships three kits unless a newer product decision changes the count.
+The user flow is catalog, detail preview, color-scheme selection or customization, apply options, and import.
+Import requires an explicit user click.
+Never import on plugin activation or theme activation.
+
+## Deepen existing seams
+
+- Put Site Kit PHP orchestration under `src/site-kits/`.
+- Add the admin page to the existing Stackable welcome and settings app.
+- Put the Site Kits page directly below Getting Started.
+- Reuse the Design Library fetch and cache pattern where it fits the package catalog.
+- Reuse the Design Library preview renderer where it satisfies live Site Kit preview requirements.
+- Write existing Global Settings options instead of adding a second design-system store.
+- Use existing WordPress media APIs to sideload assets and rewrite URLs.
+- Keep premium-only PHP under `pro__premium_only/` and use existing Freemius gates.
 
 ## Do not
 
-Ship kit HTML in the Start Stackable repo.
-Build a theme options panel that imports kits.
-Import on theme or plugin activation.
-Treat Default as an importable slug or a kit reset.
-Fork a new style generator or a second REST “demo” plugin.
-Fake sticky/transparent headers in plugin CSS. Extend the theme shell contract instead.
+- Do not ship Site Kit page markup in the Start Stackable repository.
+- Do not put the importer in the theme.
+- Do not import on activation.
+- Do not treat Default as a package.
+- Do not permit Apply while Start Stackable is inactive.
+- Do not build a parallel options framework or design-system store.
+- Do not dump arbitrary plugin options into an export.
+- Do not leave imported content hotlinked to the Design Library CDN.
+- Do not fake sticky or transparent headers in plugin CSS.
+- Do not allow re-import to create duplicate pages or menus.
 
-## Wizard
+## Package source
 
-1. User opens Stackable admin → Site Kits (theme activation does not open this).
-2. Catalog lists three kits. Optional Default **label** is not clickable-as-import.
-3. Select a kit. Side panel shows design-system controls bound to the kit’s `designSystem` defaults (colors, fonts, spacing that already exist in Global Settings).
-4. Confirm import. Capability check. Consent string in the UI.
-5. Importer: create/update pages, assign templates, set front page, create menu, apply `styleVariation` then `theme.styles` overlay if Start Stackable is active, write header flags, write GDS if allowed, register optional patterns.
-6. Redirect to the front page or a “view site” success state.
+Source packages live in the Stackable Design Library repository.
 
-**Done when:** one click from step 4 produces a front page that uses `full-width`, kit blocks render (no recovery UI), nav contains kit items, and with Start Stackable active the home header overlays the hero.
+```text
+library/src/site-kits/
+├── site-kits.json
+└── SITE_KIT_SLUG/
+    ├── meta.json
+    ├── preview.webp
+    └── assets/
+```
 
-## Module map (intended)
+Follow [`site-kits.CONTRACT.md`](./site-kits.CONTRACT.md) for the normative schema.
+The catalog is keyed by slug and follows the current `pages-v4/pages.json` shape.
+Every package directory contains all media that package needs.
+
+## Module map
 
 | Path | Role |
 | --- | --- |
-| `src/site-kits/` (new cluster) | PHP register, REST, import orchestration |
-| `src/welcome/` or admin app | Catalog + wizard UI (reuse admin stack) |
-| Existing `src/plugins/global-settings/` | Target of `designSystem` writes |
-| Existing `src/design-library/` | Package fetch/cache if kits live next to library JSON |
-| `pro__premium_only/` | Premium-only GDS apply / extra patterns |
-| `e2e/config/fixtures/site-kits-*.json` | Mock packages for Playwright |
-| `e2e/tests/site-kits.spec.ts` | Free-safe catalog/preview |
-| `pro__premium_only/e2e/tests/site-kits.spec.ts` | Full import + GDS |
+| `src/site-kits/` | Schema, exporter, catalog retrieval, theme state, import orchestration, and plugin adapters. |
+| `src/welcome/` | Site Kits admin route, catalog, detail view, notices, apply modal, and development export UI. |
+| `src/plugins/global-settings/` | Existing target for Stackable design-system and color-scheme data. |
+| `src/design-library/` | Existing fetch, cache, and media-import seams to deepen where appropriate. |
+| `src/lazy-components/design-library/` | Existing preview machinery to reuse where appropriate. |
+| `pro__premium_only/` | Premium entitlement and premium-only extension points. |
+| `e2e/config/fixtures/site-kits/` | Valid and invalid package fixtures for Playwright. |
+| `e2e/tests/site-kits-*.spec.ts` | Export, catalog, preview, theme requirement, and free-safe import coverage. |
+| `pro__premium_only/e2e/tests/site-kits-*.spec.ts` | Premium catalog, apply, and design-system coverage. |
+
+## Exporter law
+
+The exporter is the first implementation milestone.
+It is visible only when `WP_ENV` is defined as `development`.
+It lives under Stackable > Settings and exports the current site as one complete Site Kit directory.
+
+The exporter captures:
+
+- User Global Styles and portable FSE settings.
+- Theme templates and template parts.
+- The static front page, posts page, and other allowlisted website settings.
+- Pages, serialized block content, and allowlisted post metadata.
+- Navigation used by the exported templates.
+- Referenced local media and portable attachment metadata.
+- Active plugin identities and settings supplied by registered adapters.
+- Stackable settings, design-system data, and color schemes.
+
+The exporter must validate before download.
+It must report missing media, remaining external media, invalid schema, invalid slugs, unsupported blocks, and omitted plugin settings.
+It must not export secrets, credentials, arbitrary options, revisions, caches, transients, generated CSS, or machine-specific paths.
+
+**Done when:** a developer can export a site, unzip the archive into `library/src/site-kits/SITE_KIT_SLUG/`, add or replace `preview.webp`, run package validation, and hand the package to the catalog build without manually reconstructing site data.
+
+## Picker law
+
+The Site Kits page appears below Getting Started.
+The catalog uses homepage screenshots and follows the Design Library premium treatment.
+Selecting a kit opens its detail screen.
+Page thumbnails appear at the top, with the homepage selected by default.
+The large preview displays only the selected page.
+
+The sidebar shows kit information and a **Color Scheme** picker.
+Do not label it **Design System**.
+Changing or customizing a color scheme updates both thumbnail previews and the large preview without saving the live site.
+All users may preview package color schemes.
+Persisting premium Global Design System data during Apply follows the existing premium gate.
+
+When Start Stackable is missing or inactive, show the shared requirement banner.
+The same content appears in the Apply requirement modal.
+Offer Install and Activate, Activate, or an administrator-required explanation based on theme state and capabilities.
+
+## Apply law
+
+Apply offers complete and partial modes.
+All available groups are selected by default.
+
+Partial groups are:
+
+1. Pages and content.
+2. Theme templates and template parts.
+3. Navigation and website settings.
+4. Stackable design system and color schemes.
+5. Plugins, enumerated individually.
+6. Supported settings nested under their plugin.
+
+Media follows selected content and cannot be deselected when that would leave broken references or hotlinks.
+Complete apply selects every group and makes the kit the active site presentation.
+Complete apply does not delete unrelated posts or media because the master design does not require destructive deletion.
 
 ## Import orchestration
 
 Follow [`site-kits.CONTRACT.md`](./site-kits.CONTRACT.md).
 
+The importer performs preflight before it changes the site.
+It validates version, permissions, entitlement, active theme, media, required blocks, selected groups, and plugin availability.
+
 Order:
 
-1. Validate `version` and capability.
-2. If theme is `start-stackable`, apply `styleVariation` (if set), then `theme.styles` overlay (if set), then header/footer flags.
-3. Write GDS (gated).
-4. Upsert pages by `stk_site_kit` + `stk_site_kit_page` post meta (slug).
-5. Assign page templates (`full-width` default for marketing).
-6. Upsert a menu; assign to the theme’s primary navigation location / block ref via supported WP APIs.
-7. Set static front page.
-8. Flush uniqueId/CSS caches if the plugin has that hook.
+1. Record rollback data.
+2. Install and activate selected plugins.
+3. Import media and build the attachment map.
+4. Apply theme variation, FSE settings, Global Styles, templates, template parts, and shell flags.
+5. Write selected Stackable design-system values through existing options.
+6. Upsert pages by `stk_site_kit` and `stk_site_kit_page` post meta.
+7. Import navigation and resolve page references.
+8. Apply selected website and supported plugin settings.
+9. Set the static front page and posts page.
+10. Flush Stackable generated CSS and related caches.
 
-Re-import updates the same posts. It does not create `Home (2)`.
-
-**Done when:** running import twice leaves one Home, one menu, and updated content.
-
-## Without Start Stackable
-
-Import pages + GDS + menu + front page.
-Skip header flags and missing style variations.
-Show an admin notice: install Start Stackable for sticky/transparent header behavior.
-Do not refuse import.
+Re-import updates the same posts and navigation.
+It does not create `Home (2)`.
 
 ## Implementation sequence
 
-### 1. Contract + fixtures
+Complete these milestones in order.
+Do not begin the catalog or picker implementation before the exporter contract and fixture are usable by a Site Kit author.
 
-Check in one v1 JSON fixture with two pages (home + about), `full-width`, dummy Stackable markup that already exists in e2e catalog.
+### 1. Export schema and fixture
 
-**Done when:** schema in CONTRACT matches the fixture; PHP validator rejects unknown `version`.
+Finalize the version 1 package schema in the contract.
+Add valid and invalid fixtures that cover pages, FSE data, navigation, Stackable settings, plugins, and media.
+Add a validator that rejects unknown versions, invalid paths, mismatched slugs, missing files, and forbidden external media.
 
-### 2. REST catalog + get
+Implementation paths:
 
-GET list and GET package. Permission: `edit_pages` for get; import stays stricter.
+- Schema: `src/site-kits/schema/site-kit-v1.schema.json`.
+- Validator: `tools/site-kits/validate-package.js`.
+- Canonical fixture: `e2e/config/fixtures/site-kits/valid/consultant/`.
+- Invalid cases: `e2e/config/fixtures/site-kits/invalid-cases.json`.
+- Unit coverage: `src/site-kits/schema/__test__/validator.test.js`.
 
-**Done when:** authenticated e2e can fetch three slugs; unauthenticated gets 401/403.
+**Done when:** the validator accepts the canonical fixture and produces specific errors for every invalid fixture.
 
-### 3. Import without GDS
+### 2. Export collectors and archive
 
-Pages, templates, menu, front page.
+Add focused collectors for theme data, site settings, pages, navigation, media, Stackable settings, and plugin adapters.
+Keep each collector independently testable.
+Build one package model and write it as a complete Site Kit directory archive.
 
-**Done when:** e2e import fixture, visit `/`, see kit heading text, no block recovery.
+**Done when:** an automated test exports a representative site and verifies `meta.json`, media files, relative references, redaction, and schema validity.
 
-### 4. Snap-in
+### 3. Development export UI
 
-Detect `stk--is-stackable-theme`. Write flags + variation + styles overlay.
+Add the Site Kit Export entry under Stackable > Settings.
+Gate both the UI and server action on `WP_ENV === 'development'`, `manage_options`, and a nonce.
+Show validation results before download.
 
-**Done when:** with Start Stackable mounted, home uses transparent overlay; with another block theme, import still succeeds.
+**Done when:** Playwright downloads a valid Site Kit archive in development and proves the control and endpoint are unavailable otherwise.
 
-### 5. Side panel GDS
+### 4. Design Library author workflow
 
-Bind to existing Global Settings REST/options.
+Add the canonical example package, `site-kits.json`, package validation, and catalog build support in the Design Library repository.
+Document the unzip, preview-image, validation, and publication workflow.
 
-**Done when:** changing primary color in the panel then importing makes frontend kit buttons use that token (premium path if gated).
+**Done when:** another developer can begin creating Site Kit entries using the exporter while picker work continues.
 
-### 6. Admin wizard UI
+### 5. Catalog and package retrieval
 
-Three previews, side panel, confirm.
-Default label does not import.
+Add cached catalog and package retrieval through Stackable REST routes.
+Return plan data, page data, and current Start Stackable state.
+Reject malformed packages and the `default` slug.
 
-**Done when:** the e2e table below that matches this surface is green.
+**Done when:** authenticated E2E coverage fetches three kit slugs, rejects invalid packages, and proves no content is created.
 
-## E2E (create these)
+### 6. Site Kits admin and catalog UI
 
-Use Playground + Playwright like the rest of `e2e/`.
-Mock kit JSON via `pre_http_request` (same pattern as Design Library fixtures).
-Mount Start Stackable as a theme in the **snap-in** specs only (blueprint extra).
+Register Site Kits below Getting Started.
+Build the screenshot catalog, premium indicators, loading state, empty state, error state, and Start Stackable banner.
+
+**Done when:** the catalog matches the required hierarchy and remains usable with Start Stackable missing.
+
+### 7. Detail preview and color schemes
+
+Build page thumbnails, the selected-page preview, Color Scheme picker, and Customize controls.
+Keep edits in memory until Apply succeeds.
+Reuse the Design Library preview renderer where it meets the requirement.
+
+**Done when:** switching pages and editing a scheme updates every required preview without changing saved site options.
+
+### 8. Theme install and activation flow
+
+Implement shared banner and modal content for active, inactive, missing, and insufficient-capability states.
+Refresh and recheck after installation or activation.
+
+**Done when:** Apply cannot reach import until Start Stackable is active, and keyboard and pointer users can open the explanation.
+
+### 9. Apply modal and importer
+
+Implement complete and partial selection, dependency validation, preflight, media sideload, FSE writes, page upsert, navigation, settings, plugin adapters, rollback, and success state.
+
+**Done when:** complete apply produces the Site Kit site, partial apply changes only selected groups, and no imported media remains hotlinked.
+
+### 10. Re-import, premium, and recovery
+
+Add idempotent re-import, server-side premium checks, rollback coverage, cache flushing, and final UX states.
+
+**Done when:** a second import updates existing kit-owned content, premium access cannot be bypassed, and a forced failure leaves the site recoverable.
+
+## E2E coverage
+
+Use Playground and Playwright like the rest of `e2e/`.
+Mock catalog and package HTTP with the existing Design Library fixture pattern.
+Mount Start Stackable for apply tests.
 
 | Spec | Assertions |
 | --- | --- |
-| `e2e/tests/site-kits-catalog.spec.ts` | Site Kits screen lists three kits; preview loads; no import on page load or on theme/plugin activate; Default label (if shown) does not create pages. |
-| `e2e/tests/site-kits-import.spec.ts` | Import fixture; Home is front page; About exists; menu links work; `full-width` (no theme post title on Home); frontend shows `.stk-block`; no recovery UI in editor. |
-| `e2e/tests/site-kits-reimport.spec.ts` | Import twice; still one Home; content is the second payload. |
-| `e2e/tests/site-kits-without-theme.spec.ts` | Core theme (not Start Stackable); import succeeds; notice about Start Stackable; pages work. |
-| `e2e/tests/site-kits-permissions.spec.ts` | Editor without `edit_theme_options` cannot import (403). |
-| `pro__premium_only/e2e/tests/site-kits-gds.spec.ts` | Side panel changes a color; after import, Global Settings and frontend reflect it; no `ProControl` while premium mocked. |
-| `e2e/tests/site-kits-snap-in.spec.ts` | Start Stackable active; after import, `body.stk--is-stackable-theme`; header has sticky/transparent class; hero sits under header (geometry assertion). |
+| `e2e/tests/site-kits-export.spec.ts` | Development-only control; permission and nonce checks; downloaded archive validates; media is local; secrets are absent. |
+| `e2e/tests/site-kits-catalog.spec.ts` | Three kits; previews load; premium indicators render; no import on page load or activation; Default label cannot import. |
+| `e2e/tests/site-kits-theme-required.spec.ts` | Catalog works without Start Stackable; banner and modal agree; missing theme can be installed; inactive theme can be activated; Apply remains blocked until active. |
+| `e2e/tests/site-kits-preview.spec.ts` | Homepage is selected; page selection changes the large preview; color-scheme selection and customization update thumbnails and large preview. |
+| `e2e/tests/site-kits-import.spec.ts` | Complete apply creates pages, navigation, front page, templates, local media, and valid Stackable blocks with no recovery UI. |
+| `e2e/tests/site-kits-partial-import.spec.ts` | Only selected groups change; dependency rules prevent broken media and references. |
+| `e2e/tests/site-kits-reimport.spec.ts` | Import twice; one Home and one kit navigation remain; content is updated. |
+| `e2e/tests/site-kits-snap-in.spec.ts` | Start Stackable is active; shell classes and selected parts apply; a transparent sticky header overlays the hero and becomes opaque after scroll. |
+| `e2e/tests/site-kits-permissions.spec.ts` | Users without required export, theme, plugin, or import capabilities receive the correct blocked state. |
+| `e2e/tests/site-kits-rollback.spec.ts` | A forced failure restores recorded site state and reports unrecoverable operations. |
+| `pro__premium_only/e2e/tests/site-kits-premium.spec.ts` | Premium kit and design-system access work only with premium entitlement; no `ProControl` remains after entitlement is mocked. |
 
-Design Library “Pages” tab tests stay in `design-library.spec.ts`.
-Do not reuse those as kit coverage.
+Design Library Pages tests remain in `design-library.spec.ts`.
+Do not reuse page insertion coverage as Site Kit coverage.
 
-## Completion for a plugin PR
+## Completion for a Site Kits change
 
-- CONTRACT still accurate.
-- No kit importer in the theme repo.
-- Matching e2e specs green.
-- `CONTEXT.md` terms updated if you added language.
+- The master design and this contract agree.
+- Export remains the first implementation milestone.
+- Package fixtures and validators match the contract.
+- No Site Kit importer or package markup lives in the theme repository.
+- Start Stackable is active before Apply reaches import.
+- All selected media is imported locally.
+- Matching unit and E2E tests pass.
+- `CONTEXT.md`, architecture, developer documentation, and the Start Stackable contract are updated when their interfaces change.

@@ -1,0 +1,163 @@
+{
+	"version": 1,
+	"slug": "consultant",
+	"title": "Consultant",
+	"description": "A two-page professional services website used to validate Site Kit exports.",
+	"plan": "free",
+	"requires": {
+		"stackable": ">=3.20.0",
+		"theme": "start-stackable"
+	},
+	"theme": {
+		"styleVariation": "indigo",
+		"styles": {
+			"color": {
+				"background": "var:preset|color|base",
+				"text": "var:preset|color|contrast"
+			}
+		},
+		"settings": {
+			"layout": {
+				"contentSize": "780px",
+				"wideSize": "1200px"
+			}
+		},
+		"templates": [
+			{
+				"slug": "page-full-width",
+				"theme": "start-stackable",
+				"type": "wp_template",
+				"title": "Full Width Page",
+				"description": "A full-width marketing page template.",
+				"status": "publish",
+				"content": "<!-- wp:template-part {\"slug\":\"header-transparent\",\"theme\":\"start-stackable\"} /--><!-- wp:post-content /--><!-- wp:template-part {\"slug\":\"footer\",\"theme\":\"start-stackable\"} /-->"
+			}
+		],
+		"templateParts": [
+			{
+				"slug": "header-transparent",
+				"theme": "start-stackable",
+				"type": "wp_template_part",
+				"area": "header",
+				"title": "Transparent Header",
+				"status": "publish",
+				"content": "<!-- wp:group {\"tagName\":\"header\"} --><header class=\"wp-block-group\"><!-- wp:site-title /--></header><!-- /wp:group -->"
+			},
+			{
+				"slug": "footer",
+				"theme": "start-stackable",
+				"type": "wp_template_part",
+				"area": "footer",
+				"title": "Footer",
+				"status": "publish",
+				"content": "<!-- wp:group {\"tagName\":\"footer\"} --><footer class=\"wp-block-group\"><!-- wp:paragraph --><p>Consultant</p><!-- /wp:paragraph --></footer><!-- /wp:group -->"
+			}
+		],
+		"headerPart": "header-transparent",
+		"footerPart": "footer",
+		"headerFlags": {
+			"sticky": true,
+			"transparent": true
+		}
+	},
+	"site": {
+		"showOnFront": "page",
+		"frontPage": "home",
+		"postsPage": null
+	},
+	"pages": [
+		{
+			"slug": "home",
+			"title": "Home",
+			"status": "publish",
+			"template": "full-width",
+			"content": "<!-- wp:stackable/hero {\"uniqueId\":\"fixture-hero\",\"backgroundMediaUrl\":\"assets/hero-office.png\"} --><div class=\"wp-block-stackable-hero stk-block-hero\"><img src=\"assets/hero-office.png\" alt=\"Office team\" /></div><!-- /wp:stackable/hero -->",
+			"meta": {
+				"stk_header_transparent": true
+			},
+			"featuredMedia": "hero-office"
+		},
+		{
+			"slug": "about",
+			"title": "About",
+			"status": "publish",
+			"template": "page",
+			"content": "<!-- wp:heading --><h2 class=\"wp-block-heading\">About the consultant</h2><!-- /wp:heading -->",
+			"meta": {}
+		}
+	],
+	"menu": {
+		"location": "primary",
+		"items": [
+			{
+				"page": "home",
+				"label": "Home"
+			},
+			{
+				"page": "about",
+				"label": "About"
+			}
+		],
+		"entities": [
+			{
+				"slug": "primary-navigation",
+				"title": "Primary Navigation",
+				"status": "publish",
+				"content": "<!-- wp:navigation-link {\"label\":\"Home\",\"type\":\"page\"} /--><!-- wp:navigation-link {\"label\":\"About\",\"type\":\"page\"} /-->"
+			}
+		]
+	},
+	"patterns": [
+		{
+			"slug": "consultant-call-to-action",
+			"title": "Consultant Call to Action",
+			"status": "publish",
+			"content": "<!-- wp:stackable/button {\"uniqueId\":\"fixture-button\"} /-->"
+		}
+	],
+	"stackable": {
+		"designSystem": {
+			"colors": {
+				"primary": "#1f4acc",
+				"secondary": "#eef2ff"
+			},
+			"colorSchemes": {
+				"scheme-consultant": {
+					"name": "Consultant",
+					"colors": [ "#1f4acc", "#eef2ff", "#111827", "#ffffff" ]
+				}
+			},
+			"typography": {
+				"headingFontFamily": "Inter",
+				"bodyFontFamily": "Inter"
+			},
+			"spacing": {
+				"blockGap": 32
+			}
+		},
+		"settings": {
+			"stackable_global_force_typography": "1"
+		}
+	},
+	"plugins": [
+		{
+			"slug": "stackable-ultimate-gutenberg-blocks/plugin.php",
+			"name": "Stackable",
+			"required": true,
+			"version": "3.20.3",
+			"settings": {
+				"stackable_enable_design_library": "1"
+			}
+		}
+	],
+	"media": [
+		{
+			"id": "hero-office",
+			"path": "assets/hero-office.png",
+			"mimeType": "image/png",
+			"title": "Office team",
+			"alt": "A team working together in an office",
+			"caption": ""
+		}
+	]
+}

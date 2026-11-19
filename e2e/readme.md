@@ -124,7 +124,7 @@ Do not listen for console `Block validation` messages.
 | Block catalog | `createBlock` every inserter-facing `stackable/*`, save, reload, no recovery UI, frontend `.stk-block` |
 | Global settings | Color / typography; spacing & buttons tokens; Preview Design System style guide (live values + website preview) |
 | Design Library | Open, load patterns, insert a free page/pattern |
-| Site Kits (planned) | Catalog/preview; import fixture; re-import; without Start Stackable; snap-in with theme; see `docs/prd/site-kits.agents.md` |
+| Site Kits (planned) | Development export first; catalog and preview; Start Stackable install or activation requirement; color-scheme preview; complete and partial import; local media; rollback; re-import; see `docs/prd/site-kits.agents.md` |
 | Existing blocks | REST-save `post-content.txt`, open in editor, no recovery UI |
 | Interactive frontend | Accordion, Tabs, Carousel, Expand, Video Popup, Notification, scroller, countdown/progress, Posts, TOC |
 
@@ -142,7 +142,7 @@ Fail if a panel still shows `ProControl` / "Get Premium" while premium is mocked
 | Motion / Transform / Custom CSS | Entrance class, hover transform CSS, applied custom CSS on frontend |
 | Columns / Posts / Image / Icon / Separator | Arrangement (2+ columns), Offset after layout pick, circle shape, gradient, extra separator layer |
 | Design Library | Premium pattern inserts; Saved tab save, style options, and insert |
-| Site Kits (planned) | GDS side panel apply on import; no `ProControl` while premium mocked |
+| Site Kits (planned) | Premium catalog and apply enforcement; premium design-system data applies; no `ProControl` while premium mocked |
 | Settings | Role Manager tab + toggle save; Custom Fields tab can create a field |
 | Toolbar | Copy & paste styles (block attributes, nested + smart paste) |
 
@@ -157,6 +157,7 @@ Fail if a panel still shows `ProControl` / "Get Premium" while premium is mocked
 | `config/global-setup.js` | Cookie auth + write `e2e/.auth/test-env.json` |
 | `config/stackable-e2e-mu-plugin.php` | DC post meta + Design Library CDN mock |
 | `config/fixtures/design-library-*.json` | Mock patterns/pages served via `pre_http_request` |
+| `config/fixtures/site-kits/` | Valid and invalid Site Kit packages used by export, preview, and import coverage |
 | `test-utils/` | Shared fixtures, catalog insert, recovery-UI assertions |
 | `tests/*.spec.ts` | Free browser specs |
 | `../pro__premium_only/e2e/tests/*.spec.ts` | Premium browser specs |

@@ -3,7 +3,7 @@
 High-level map of Stackable for engineers and agents.
 
 **Glossary:** [`CONTEXT.md`](../CONTEXT.md) · **ADRs:** [`docs/adr/`](./adr/) · **Agent notes:** [`AGENTS.md`](../AGENTS.md)
-**Product PRDs / contracts:** [`docs/prd/`](./prd/) (Site Kits: [`prd/site-kits.md`](./prd/site-kits.md), agents: [`prd/site-kits.agents.md`](./prd/site-kits.agents.md), import: [`prd/site-kits.CONTRACT.md`](./prd/site-kits.CONTRACT.md))
+**Product PRDs / contracts:** [`docs/prd/`](./prd/) (Site Kits: [`prd/site-kits.md`](./prd/site-kits.md), agents: [`prd/site-kits.agents.md`](./prd/site-kits.agents.md), package/export/import: [`prd/site-kits.CONTRACT.md`](./prd/site-kits.CONTRACT.md))
 
 ---
 
@@ -14,7 +14,7 @@ Stackable is a **Gutenberg block plugin** for WordPress:
 - Primary runtime: block editor (React) → saved block markup + generated CSS → frontend view scripts where needed
 - Global settings: design tokens (colors, typography, spacing, schemes, block styles) that influence blocks site-wide
 - Design Library: insert curated designs / patterns / pages into the current editor document
-- Site Kits (planned): full-site import packages that snap into the Start Stackable theme shell (Default look is the theme itself, not a kit)
+- Site Kits (planned): development export plus catalog, preview, color-scheme customization, and selective complete-site import into the required Start Stackable theme shell
 - PHP: block registration, enqueue, REST, options, Freemius (premium), capability gates
 
 Free = core `stackable/*` blocks, editor tooling, design library (free surface), global settings, WordPress.org package.
@@ -47,11 +47,11 @@ Premium = same spine + Dynamic Content, conditional display, extra features/bloc
  Cross-cutting:
  Global settings ──► tokens / presets ──► blocks
  Design Library  ──► insert patterns/pages into the current post
- Site Kits       ──► import pages + menu + GDS + theme styles overlay + shell flags
+ Site Kits       ──► export/import pages + media + FSE + navigation + GDS + plugins
  Premium filters (applyFilters 'stackable.…') ──► pro__premium_only/
 
  Start Stackable theme (sibling repo) ──► Default site + shell: header, footer, theme.json, sticky/transparent
- Site Kit package ──► snaps into that shell (plugin executes import; never on activate)
+ Site Kit package ──► applies into that shell after explicit confirmation (never on activate)
 ```
 
 ---
@@ -75,7 +75,7 @@ Build tooling flips `STACKABLE_BUILD` (`npm run update-build-type` / `tools/upda
 | Editor components | `src/components/`, `src/higher-order/`, `src/hooks/` | Shared UI and HOCs |
 | Global settings | `src/plugins/global-settings/`, `src/global-settings.php` | Colors, typography, schemes, presets, block styles |
 | Design Library | `src/design-library/`, `src/lazy-components/design-library/` | Insert designs into the current document |
-| Site Kits | `src/site-kits/` (planned) | Catalog, preview, import; see `docs/prd/site-kits.md` |
+| Site Kits | `src/site-kits/` (planned) | Development export first, then catalog, preview, theme requirement flow, and selective import; see `docs/prd/site-kits.md` |
 | Admin / welcome | `src/welcome/`, `src/admin.php` | Settings, onboarding, notices, planned Site Kits UI |
 | Dynamic Content | `pro__premium_only/.../dynamic-content` | Premium |
 | Conditional display | `pro__premium_only/.../conditional-display` | Premium |
