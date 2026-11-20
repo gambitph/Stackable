@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { saveSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -11,7 +12,6 @@ import {
 } from '@wordpress/components'
 import { useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { models } from '@wordpress/api'
 
 const MigrationModal = () => {
 	const [ isOpen, setIsOpen ] = useState( true )
@@ -23,8 +23,7 @@ const MigrationModal = () => {
 
 	const save = ( settings, refresh = false ) => {
 		setIsBusy( true )
-		const model = new models.Settings( settings )
-		model.save().then( () => {
+		saveSettings( settings ).then( () => {
 			setIsBusy( false )
 			setIsOpen( false )
 			// Reload the page.
@@ -32,6 +31,8 @@ const MigrationModal = () => {
 				window.alert( __( 'The page will now reload for the old blocks to load. Please reload it if it does not refresh automatically.', i18n ) ) // eslint-disable-line no-alert
 				window.location.href = window.location.href
 			}
+		} ).catch( () => {
+			setIsBusy( false )
 		} )
 	}
 

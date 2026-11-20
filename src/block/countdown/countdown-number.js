@@ -1,4 +1,5 @@
 import { useEffect, useState } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
 const SECONDS = 1
 const SECONDS_IN_MINUTE = SECONDS * 60
@@ -30,7 +31,8 @@ const getDuration = ( days, hours, minutes, seconds ) => {
 	return a + Math.floor( Date.now() / 1000 )
 }
 
-export const CountdownNumber = props => {
+export const CountdownNumber = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COUNTDOWN_NUMBER_DEFAULT_PROPS )
 	const [ value, setValue ] = useState( '' )
 
 	useEffect( () => {
@@ -76,7 +78,7 @@ CountdownNumber.Content = props => {
 	return <div className={ props.className }></div>
 }
 
-CountdownNumber.defaultProps = {
+const COUNTDOWN_NUMBER_DEFAULT_PROPS = {
 	datetime: '',
 	type: 'seconds',
 	value: 0,

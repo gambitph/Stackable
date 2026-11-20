@@ -15,8 +15,10 @@ import { __ } from '@wordpress/i18n'
 import { select, dispatch } from '@wordpress/data'
 import { addFilter } from '@wordpress/hooks'
 import { createHigherOrderComponent } from '@wordpress/compose'
+import { getPropsWithDefaults } from '../../util/props'
 
-const LayoutPickerButton = props => {
+const LayoutPickerButton = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, LAYOUT_PICKER_BUTTON_DEFAULT_PROPS )
 	const { disabled, clientId } = props
 
 	return (
@@ -36,7 +38,7 @@ const LayoutPickerButton = props => {
 	)
 }
 
-LayoutPickerButton.defaultProps = {
+const LAYOUT_PICKER_BUTTON_DEFAULT_PROPS = {
 	disabled: false,
 }
 

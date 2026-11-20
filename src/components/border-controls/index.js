@@ -13,8 +13,10 @@ import { i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
-const BorderControls = props => {
+const BorderControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, BORDER_CONTROLS_DEFAULT_PROPS )
 	return (
 		<Fragment>
 			{ props.onChangeBorderType &&
@@ -137,7 +139,7 @@ const BorderControls = props => {
 	)
 }
 
-BorderControls.defaultProps = {
+const BORDER_CONTROLS_DEFAULT_PROPS = {
 	onResetBorder: () => {},
 	borderType: '',
 	onChangeBorderType: () => {},

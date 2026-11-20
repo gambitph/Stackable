@@ -25,8 +25,10 @@ import {
 import { Dashicon, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { getPropsWithDefaults } from '../../../util/props'
 
-const DesignLibraryListItem = memo( props => {
+const DesignLibraryListItem = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DESIGN_LIBRARY_LIST_ITEM_DEFAULT_PROPS )
 	const {
 		shouldRender,
 		presetMarks,
@@ -205,7 +207,7 @@ const DesignLibraryListItem = memo( props => {
 	)
 } )
 
-DesignLibraryListItem.defaultProps = {
+const DESIGN_LIBRARY_LIST_ITEM_DEFAULT_PROPS = {
 	designId: '',
 	image: '',
 	label: '',

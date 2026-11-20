@@ -16,12 +16,14 @@ import { memo } from '@wordpress/element'
  * External dependencies
  */
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
 // This is only used for display purposes in the focal picker because it doesn't
 // accept blank/empty string/null/undefined.
 const FOCAL_DEFAULT_VALUE = { x: 0.5, y: 0.5 }
 
-const AdvancedFocalPointControl = props => {
+const AdvancedFocalPointControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADVANCED_FOCAL_POINT_CONTROL_DEFAULT_PROPS )
 	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
@@ -54,7 +56,7 @@ const AdvancedFocalPointControl = props => {
 	)
 }
 
-AdvancedFocalPointControl.defaultProps = {
+const ADVANCED_FOCAL_POINT_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	url: '',
 

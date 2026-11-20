@@ -11,8 +11,10 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers, useAttributeValue } from '~stackable/hooks'
+import { getPropsWithDefaults } from '../../../util/props'
 
-export const LinkControls = props => {
+export const LinkControls = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, LINK_CONTROLS_DEFAULT_PROPS )
 	const {
 		hasLink,
 		hasTitle,
@@ -95,7 +97,7 @@ export const LinkControls = props => {
 	)
 }
 
-LinkControls.defaultProps = {
+const LINK_CONTROLS_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	hasLink: true,
 	hasTitle: false,

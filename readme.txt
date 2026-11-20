@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.9.3
-Tested up to: 7.1.3
+Requires at least: 6.9.5
+Tested up to: 7.1.5
 Requires PHP: 7.4
-Stable tag: 3.20.3
+Stable tag: 3.20.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -309,6 +309,21 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.20.4 =
+
+* New: Dynamic Content - Live updating values in the editor #3388
+* New: Dynamic Content - Post Type Singular and Plural Name fields #3388
+* New: Image block - accessibility label for linked images #3745
+* Change: Link controls - direct URL input supports shortcodes and dynamic values #3756
+* Fixed: Posts block - featured image now includes alt text #3774
+* Fixed: Timeline block - lines work on tablet and mobile #3775
+* Fixed: Tabs block - nested tabs labels display correctly #3776
+* Fixed: Icon block - Google Material Icons display correctly in the editor #3764
+* Fixed: Editor - blocks no longer crash with Gutenberg React 19 #3767
+* Fixed: Video Lightbox - unsafe video URLs are sanitized #3773
+* Fixed: Dynamic Content - button styles corrected #3782
+* Fixed: Button - removed extra spacing in shadow popover #3783
 
 = 3.20.3 =
 

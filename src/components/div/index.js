@@ -3,8 +3,10 @@
  */
 import classnames from 'classnames'
 import VideoBackground from './video-background'
+import { getPropsWithDefaults } from '../../util/props'
 
-const Div = props => {
+const Div = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DIV_DEFAULT_PROPS )
 	const {
 		blockTag: BlockTag,
 		className,
@@ -40,7 +42,7 @@ const Div = props => {
 	)
 }
 
-Div.defaultProps = {
+const DIV_DEFAULT_PROPS = {
 	blockTag: 'div',
 	className: '',
 	hasBackground: true,
@@ -50,7 +52,8 @@ Div.defaultProps = {
 	backgroundColorType: '',
 }
 
-Div.Content = props => {
+Div.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DIV_CONTENT_DEFAULT_PROPS )
 	const {
 		blockTag: BlockTag,
 		className,
@@ -86,8 +89,8 @@ Div.Content = props => {
 	)
 }
 
-Div.Content.defaultProps = {
-	...Div.defaultProps,
+const DIV_CONTENT_DEFAULT_PROPS = {
+	...DIV_DEFAULT_PROPS,
 }
 
 export default Div

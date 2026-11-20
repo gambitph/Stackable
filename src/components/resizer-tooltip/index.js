@@ -19,6 +19,7 @@ import {
 	Fragment, useState, useEffect, useRef,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
+import { getPropsWithDefaults } from '../../util/props'
 
 const clampSize = ( value, unit = '%' ) => {
 	let ret
@@ -45,7 +46,8 @@ const convertSizeByUnit = ( value, toUnit = '%', side = 'height', imgEl ) => {
 	return clamp( Math.round( value / parentSize * 10 ) * 10, 10, 100 ) // Round nearest 10%
 }
 
-const ResizerTooltip = props => {
+const ResizerTooltip = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, RESIZER_TOOLTIP_DEFAULT_PROPS )
 	const [ isEditing, setIsEditing ] = useState( false )
 	const [ currentWidth, setCurrentWidth ] = useState( '' )
 	const [ currentHeight, setCurrentHeight ] = useState( '' )
@@ -266,7 +268,7 @@ const ResizerTooltip = props => {
 	)
 }
 
-ResizerTooltip.defaultProps = {
+const RESIZER_TOOLTIP_DEFAULT_PROPS = {
 	width: '',
 	height: '',
 	widthUnit: '%',

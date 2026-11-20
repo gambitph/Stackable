@@ -21,6 +21,7 @@ import useResponsiveControlVisibility from '~stackable/hooks/use-responsive-cont
 import useCoreResponsiveStylesCompatibility from './use-core-responsive-styles-compatibility'
 
 const { Slot: LayoutPanelSlot, Fill: LayoutPanelFill } = createSlotFill( 'StackableLayoutPanel' )
+const DEFAULT_TABS = [ 'layout', 'style', 'advanced' ]
 
 const InspectorLayoutControls = ( { children } ) => {
 	return <ResponsiveControlFilterProvider>
@@ -87,10 +88,13 @@ const ResponsivePanelTabs = props => {
 	/>
 }
 
-const InspectorTabs = props => {
+const InspectorTabs = ( {
+	tabs = DEFAULT_TABS,
+	hasLayoutPanel = true,
+} ) => {
 	const { name, clientId } = useBlockEditContext()
 	const defaultTab = getBlockSupport( name, 'stkDefaultTab' ) || 'style'
-	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, props.tabs.includes( defaultTab ) ? defaultTab : 'style' )
+	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, tabs.includes( defaultTab ) ? defaultTab : 'style' )
 
 	useCoreResponsiveStylesCompatibility( clientId )
 
@@ -101,7 +105,7 @@ const InspectorTabs = props => {
 					{ ( isPro || showProNotice ) && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
 				</ResponsiveControlVisibility>
 				<ResponsivePanelTabs
-					tabs={ props.tabs }
+					tabs={ tabs }
 					initialTab={ activeTab }
 					onClick={ setActiveTab }
 				/>
@@ -109,7 +113,7 @@ const InspectorTabs = props => {
 
 			{ /* Make sure the layout panel is the very first one */ }
 			<InspectorBlockControls>
-				{ props.hasLayoutPanel && (
+				{ hasLayoutPanel && (
 					<PanelAdvancedSettings
 						title={ __( 'Layout', i18n ) }
 						id="layout"
@@ -122,11 +126,6 @@ const InspectorTabs = props => {
 
 		</ResponsiveControlFilterProvider>
 	)
-}
-
-InspectorTabs.defaultProps = {
-	tabs: [ 'layout', 'style', 'advanced' ],
-	hasLayoutPanel: true,
 }
 
 export default memo( InspectorTabs )

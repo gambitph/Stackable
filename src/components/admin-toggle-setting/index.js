@@ -3,8 +3,10 @@ import AdminBaseSetting from '../admin-base-setting'
 import { createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
-const AdminToggleSetting = props => {
+const AdminToggleSetting = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADMIN_TOGGLE_SETTING_DEFAULT_PROPS )
 	const ref = createRef()
 	return (
 		<AdminBaseSetting
@@ -42,7 +44,7 @@ const AdminToggleSetting = props => {
 	)
 }
 
-AdminToggleSetting.defaultProps = {
+const ADMIN_TOGGLE_SETTING_DEFAULT_PROPS = {
 	label: '',
 	value: false,
 	placeholder: '',

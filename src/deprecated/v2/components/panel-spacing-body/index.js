@@ -10,8 +10,10 @@ import { applyFilters } from '@wordpress/hooks'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
 import { PanelAdvancedSettings } from '~stackable/components'
+import { getPropsWithDefaults } from '../../../../util/props'
 
-const PanelSpacingBody = props => {
+const PanelSpacingBody = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, PANEL_SPACING_BODY_DEFAULT_PROPS )
 	const { blockProps } = props
 	return (
 		<PanelAdvancedSettings
@@ -26,7 +28,7 @@ const PanelSpacingBody = props => {
 	)
 }
 
-PanelSpacingBody.defaultProps = {
+const PANEL_SPACING_BODY_DEFAULT_PROPS = {
 	className: '',
 	blockProps: {},
 }

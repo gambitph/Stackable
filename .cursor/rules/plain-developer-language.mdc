@@ -1,0 +1,23 @@
+---
+description: Write every user-facing reply in beginner to intermediate developer language
+alwaysApply: true
+---
+
+# Plain developer language
+
+Write every user-facing reply for a developer who can read the code and is still learning this codebase. Explain the effect first, then the mechanism.
+
+## How to write
+
+- Open with what is wrong, or what to do.
+- Name the file, then say what a person will see in the editor or on the live page.
+- When a specialist word is needed, give its plain meaning in the same sentence. Fine after a short gloss: specificity (which CSS rule wins), promise (a value that arrives later), default props, REST, capability (what that WordPress user is allowed to do).
+- Keep code words in backticks: function names, options, CSS selectors.
+- Use short paragraphs. A table is fine for a list of pull requests.
+- Stay accurate. Simpler words still have to describe the real bug.
+
+## Example
+
+Specialist: "The rule at specificity 0,3,0 overrides the block custom property, so the inspector and the frontend diverge."
+
+Plain: "The new CSS is stronger than the gap the block saves. In the editor the gap still looks right. On the live page it snaps back to 24px."

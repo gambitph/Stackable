@@ -17,8 +17,10 @@ import { __ } from '@wordpress/i18n'
  */
 import { LinkControls } from '../helpers/link'
 import { getAttrNameFunction } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 
-export const Edit = props => {
+export const Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const getAttrName = getAttrNameFunction( 'link%s' )
 	const attrName = getAttrName( 'hasLink' )
 	const hasLink = useBlockAttributesContext( attributes => attributes[ attrName ] )
@@ -46,7 +48,7 @@ export const Edit = props => {
 	)
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	hasToggle: false,
 	isAdvancedTab: false,
 	hasAnchorId: false,

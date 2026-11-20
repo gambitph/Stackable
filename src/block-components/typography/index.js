@@ -15,6 +15,7 @@ import {
 import {
 	getAttributeName, getAttrName, getAttrNameFunction,
 } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { useDynamicContent } from '~stackable/components/dynamic-content-control'
 
 /**
@@ -32,7 +33,8 @@ export {
 	deprecateTypographyGradientColor, deprecateTypographyShadowColor, deprecateTypographyFontSize,
 } from './deprecated'
 
-export const Typography = memo( forwardRef( ( props, ref ) => {
+export const Typography = memo( forwardRef( ( incomingProps, ref ) => {
+	const props = getPropsWithDefaults( incomingProps, TYPOGRAPHY_DEFAULT_PROPS )
 	const {
 		className,
 		attrNameTemplate,
@@ -121,7 +123,7 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 	)
 } ) )
 
-Typography.defaultProps = {
+const TYPOGRAPHY_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	tagName: null,
 	defaultTag: 'p',
@@ -131,7 +133,8 @@ Typography.defaultProps = {
 	identifier: 'text',
 }
 
-Typography.Content = props => {
+Typography.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, TYPOGRAPHY_CONTENT_DEFAULT_PROPS )
 	const {
 		className,
 		attrNameTemplate,
@@ -160,7 +163,7 @@ Typography.Content = props => {
 	)
 }
 
-Typography.Content.defaultProps = {
+const TYPOGRAPHY_CONTENT_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	attributes: {},
 	tagName: null,

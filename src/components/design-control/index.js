@@ -14,8 +14,10 @@ import LabelTooltip from '../base-control2/label-tooltip'
  * WordPress dependencies
  */
 import { RadioControl } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../util/props'
 
-const DesignControl = props => {
+const DesignControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DESIGN_CONTROL_DEFAULT_PROPS )
 	// Convert the options.
 	const _options = props.options.filter( option => option.premium ? isPro : true )
 	const fixedOptions = _options.map( option => {
@@ -58,7 +60,7 @@ const DesignControl = props => {
 	)
 }
 
-DesignControl.defaultProps = {
+const DESIGN_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	columns: 2,
 	selected: '',

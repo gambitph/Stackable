@@ -15,6 +15,7 @@ import { __ } from '@wordpress/i18n'
  */
 import { srcUrl, i18n } from 'stackable'
 import classnames from 'classnames'
+import { getPropsWithDefaults } from '../../util/props'
 
 const prependBaseUrl = src => `${ srcUrl }/${ src }`
 
@@ -93,7 +94,8 @@ const LABELS = {
 	},
 }
 
-const ProControl = props => {
+const ProControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, PRO_CONTROL_DEFAULT_PROPS )
 	const classNames = classnames( [ 'ugb-design-control-pro-note', props.className ] )
 	const description = props.description || LABELS[ props.type ]?.description
 
@@ -130,7 +132,7 @@ const ProControl = props => {
 	)
 }
 
-ProControl.defaultProps = {
+const PRO_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	type: '',
 	title: '',

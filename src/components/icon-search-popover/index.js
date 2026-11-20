@@ -25,6 +25,7 @@ import {
 	Button, FontAwesomeIcon, Popover,
 } from '~stackable/components'
 import { faGetIcon, faFetchIcon } from '~stackable/util'
+import { getPropsWithDefaults } from '../../util/props'
 import { FileDrop } from 'react-file-drop'
 import classnames from 'classnames'
 import { applyFilters, doAction } from '@wordpress/hooks'
@@ -84,7 +85,8 @@ export const cleanSvgString = svgString => {
 	return newSvg
 }
 
-const IconSearchPopover = props => {
+const IconSearchPopover = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ICON_SEARCH_POPOVER_DEFAULT_PROPS )
 	const [ value, setValue ] = useState( '' )
 	const [ results, setResults ] = useState( { faIcons: [], iconLibrary: [] } )
 	const [ isBusy, setIsBusy ] = useState( false )
@@ -330,7 +332,7 @@ const IconSearchPopover = props => {
 
 const noop = () => {}
 
-IconSearchPopover.defaultProps = {
+const ICON_SEARCH_POPOVER_DEFAULT_PROPS = {
 	onChange: noop,
 	onClose: noop,
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.

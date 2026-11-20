@@ -9,8 +9,10 @@ import { useDeviceType } from '~stackable/hooks'
 import {
 	Children, cloneElement, Fragment,
 } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
-const WhenResponsiveScreen = props => {
+const WhenResponsiveScreen = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, WHEN_RESPONSIVE_SCREEN_DEFAULT_PROPS )
 	const deviceType = useDeviceType()
 
 	const children = Children.toArray( props.children ).map( child => {
@@ -35,7 +37,7 @@ const WhenResponsiveScreen = props => {
 	)
 }
 
-WhenResponsiveScreen.defaultProps = {
+const WHEN_RESPONSIVE_SCREEN_DEFAULT_PROPS = {
 	screen: 'desktop',
 	screens: [ 'desktop', 'tablet', 'mobile' ],
 }

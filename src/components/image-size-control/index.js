@@ -18,18 +18,21 @@ import {
 import { __ } from '@wordpress/i18n'
 import { withSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
+import { getPropsWithDefaults } from '../../util/props'
 
 const getImageSizeOptions = imageSizes => {
 	return map( imageSizes, ( { name, slug } ) => ( { value: slug, label: name } ) )
 }
 
-const ImageSizeControl = ( {
-	imageSizes,
-	value,
-	className,
-	defaultValue,
-	...propsToPass
-} ) => {
+const ImageSizeControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_SIZE_CONTROL_DEFAULT_PROPS )
+	const {
+		imageSizes,
+		value,
+		className,
+		defaultValue,
+		...propsToPass
+	} = props
 	const imageSizeOptions = getImageSizeOptions( imageSizes )
 
 	if ( isEmpty( imageSizeOptions ) ) {
@@ -46,7 +49,7 @@ const ImageSizeControl = ( {
 	/>
 }
 
-ImageSizeControl.defaultProps = {
+const IMAGE_SIZE_CONTROL_DEFAULT_PROPS = {
 	className: '',
 	label: __( 'Image Size', i18n ),
 	value: 'large',

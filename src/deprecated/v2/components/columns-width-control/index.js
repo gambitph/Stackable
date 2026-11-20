@@ -55,6 +55,7 @@ import {
 	BaseControlMultiLabel,
 	DesignControl,
 } from '~stackable/components'
+import { getPropsWithDefaults } from '../../../../util/props'
 
 const MIN = 10
 
@@ -181,7 +182,8 @@ const adjustColumns = ( newColumnWidth, column, columnWidths, adjustRightFirst =
 
 const isBlank = columns => columns.every( column => ! column )
 
-const ColumnsWidthControl = props => {
+const ColumnsWidthControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, COLUMNS_WIDTH_CONTROL_DEFAULT_PROPS )
 	const [ lastColumnAdjusted, setLastColumnAdjusted ] = useState( -1 )
 	const [ adjustRightFirst, setAdjustRightFirst ] = useState( true )
 	const [ selectedPreset, setSelectedPreset ] = useState( '' )
@@ -287,7 +289,7 @@ const ColumnsWidthControl = props => {
 	)
 }
 
-ColumnsWidthControl.defaultProps = {
+const COLUMNS_WIDTH_CONTROL_DEFAULT_PROPS = {
 	columns: 2,
 	design: 'plain',
 	values: [ '', '' ],

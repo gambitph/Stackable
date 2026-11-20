@@ -20,8 +20,10 @@ import { __ } from '@wordpress/i18n'
 import {
 	useState, useEffect, useRef, memo, useMemo,
 } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../../util/props'
 
-const DesignLibraryList = memo( props => {
+const DesignLibraryList = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, DESIGN_LIBRARY_LIST_DEFAULT_PROPS )
 	const {
 		className = '',
 		designs,
@@ -91,7 +93,7 @@ const DesignLibraryList = memo( props => {
 	</div>
 } )
 
-DesignLibraryList.defaultProps = {
+const DESIGN_LIBRARY_LIST_DEFAULT_PROPS = {
 	designs: [],
 	columns: 3,
 	onSelect: () => {},

@@ -17,6 +17,7 @@ import {
 	IconSearchPopover, SvgIcon, Button, BaseControl,
 } from '~stackable/components'
 import { Dropdown } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../util/props'
 
 const popoverProps = {
 	placement: 'left-start',
@@ -24,7 +25,8 @@ const popoverProps = {
 	shift: true,
 }
 
-const IconControl = props => {
+const IconControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ICON_CONTROL_DEFAULT_PROPS )
 	return (
 		<BaseControl
 			className="ugb-icon-control stk-control"
@@ -65,7 +67,7 @@ const IconControl = props => {
 	)
 }
 
-IconControl.defaultProps = {
+const ICON_CONTROL_DEFAULT_PROPS = {
 	label: __( 'Icon', i18n ),
 	value: '',
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.

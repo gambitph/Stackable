@@ -1,6 +1,8 @@
 import AdminBaseSetting from '../admin-base-setting'
+import { getPropsWithDefaults } from '../../util/props'
 
-const AdminSelectSetting = props => {
+const AdminSelectSetting = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADMIN_SELECT_SETTING_DEFAULT_PROPS )
 	return (
 		<AdminBaseSetting { ...props }>
 			{ /* eslint-disable-next-line jsx-a11y/no-onchange */ }
@@ -23,7 +25,7 @@ const AdminSelectSetting = props => {
 	)
 }
 
-AdminSelectSetting.defaultProps = {
+const ADMIN_SELECT_SETTING_DEFAULT_PROPS = {
 	label: '',
 	value: '',
 	onChange: () => {},

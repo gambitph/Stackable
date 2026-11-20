@@ -3,6 +3,7 @@
  */
 import { ImageControls } from '..'
 import { __getValue } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import { camelCase } from 'lodash'
 
 /**
@@ -10,7 +11,8 @@ import { camelCase } from 'lodash'
  */
 import { sprintf } from '@wordpress/i18n'
 
-const ImageControlsHelper = props => {
+const ImageControlsHelper = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, IMAGE_CONTROLS_HELPER_DEFAULT_PROPS )
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
 	const getValue = __getValue( props.blockAttributes, getAttrName, '' )
@@ -98,7 +100,7 @@ const ImageControlsHelper = props => {
 	)
 }
 
-ImageControlsHelper.defaultProps = {
+const IMAGE_CONTROLS_HELPER_DEFAULT_PROPS = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},

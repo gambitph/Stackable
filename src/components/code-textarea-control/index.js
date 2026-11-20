@@ -12,8 +12,10 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { BaseControl } from '@wordpress/components'
+import { getPropsWithDefaults } from '../../util/props'
 
-const CodeTextareaControl = props => {
+const CodeTextareaControl = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, CODE_TEXTAREA_CONTROL_DEFAULT_PROPS )
 	return (
 		<BaseControl
 			help={ props.help }
@@ -33,7 +35,7 @@ const CodeTextareaControl = props => {
 	)
 }
 
-CodeTextareaControl.defaultProps = {
+const CODE_TEXTAREA_CONTROL_DEFAULT_PROPS = {
 	help: '',
 	className: '',
 	value: '',

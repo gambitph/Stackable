@@ -12,8 +12,10 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { LinkControls } from '../helpers/link'
+import { getPropsWithDefaults } from '../../util/props'
 
-export const Edit = props => {
+export const Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const {
 		hasLink,
 		hasTitle,
@@ -41,7 +43,7 @@ export const Edit = props => {
 	)
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	hasLink: true,
 	hasTitle: true,
 	hasLightbox: true,

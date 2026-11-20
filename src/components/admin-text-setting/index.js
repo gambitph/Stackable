@@ -1,8 +1,10 @@
 import AdminBaseSetting from '../admin-base-setting'
 import { useRef, useState } from '@wordpress/element'
 import { maskSensitiveValue } from '~stackable/util/mask-sensitive-value'
+import { getPropsWithDefaults } from '../../util/props'
 
-const AdminTextSetting = props => {
+const AdminTextSetting = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, ADMIN_TEXT_SETTING_DEFAULT_PROPS )
 	const ref = useRef()
 	const [ isEditing, setIsEditing ] = useState( false )
 	const value = props.maskValue && ! isEditing ? maskSensitiveValue( props.value ) : props.value
@@ -48,7 +50,7 @@ const AdminTextSetting = props => {
 	)
 }
 
-AdminTextSetting.defaultProps = {
+const ADMIN_TEXT_SETTING_DEFAULT_PROPS = {
 	label: '',
 	type: 'text',
 	value: '',

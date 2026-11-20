@@ -3,6 +3,7 @@
  */
 import { ButtonEdit } from '../'
 import { SOCIAL_SITES } from '~stackable/util'
+import { getPropsWithDefaults } from '../../../../util/props'
 import { upperFirst } from 'lodash'
 import classnames from 'classnames'
 
@@ -12,7 +13,8 @@ import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 export { default as SocialButtonEditHelper } from './helper'
 
-const SocialButtonEdit = props => {
+const SocialButtonEdit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SOCIAL_BUTTON_EDIT_DEFAULT_PROPS )
 	return (
 		<Fragment>
 			{ Object.keys( SOCIAL_SITES ).map( socialId => {
@@ -62,12 +64,13 @@ const socialDefaultProps = Object.keys( SOCIAL_SITES ).reduce( ( socialUrlProps,
 	}
 }, {} )
 
-SocialButtonEdit.defaultProps = {
+const SOCIAL_BUTTON_EDIT_DEFAULT_PROPS = {
 	useSocialColors: true,
 	...socialDefaultProps,
 }
 
-SocialButtonEdit.Content = props => {
+SocialButtonEdit.Content = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, SOCIAL_BUTTON_EDIT_CONTENT_DEFAULT_PROPS )
 	return (
 		<Fragment>
 			{ Object.keys( SOCIAL_SITES ).map( socialId => {
@@ -104,7 +107,7 @@ const socialContentDefaultProps = Object.keys( SOCIAL_SITES ).reduce( ( socialUr
 	}
 }, {} )
 
-SocialButtonEdit.Content.defaultProps = {
+const SOCIAL_BUTTON_EDIT_CONTENT_DEFAULT_PROPS = {
 	useSocialColors: true,
 	...socialContentDefaultProps,
 }

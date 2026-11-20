@@ -30,8 +30,10 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
+import { getPropsWithDefaults } from '../../util/props'
 
-export const Edit = memo( props => {
+export const Edit = memo( incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const {
 		hasSizeSpacing,
 		initialOpen,
@@ -126,7 +128,7 @@ export const Edit = memo( props => {
 	)
 } )
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	hasSizeSpacing: true,
 	initialOpen: false,
 	sizeControlLayoutProps: {},
