@@ -1,4 +1,4 @@
-import { i18n } from 'stackable'
+import { i18n, settings as stackableSettings } from 'stackable'
 import DEFAULT_PRESETS from '~stackable/plugins/global-settings/preset-controls/presets.json'
 import { useSettings } from '@wordpress/block-editor'
 import { useSelect } from '@wordpress/data'
@@ -24,10 +24,23 @@ const PRESET_MAPPING = {
 		prefix: 'block-height',
 	},
 	borderRadius: {
-		settings: [ 'borderRadius' ],
-		defaultSizes: '',
+		settings: [ 'border', 'radiusSizes' ],
+		themeSizes: 'border.radiusSizes.theme',
+		defaultSizes: 'border.radiusSizes.default',
 		defaultEnabled: '',
+		useDefaultPresetsAsFallback: true,
+		useWordPressPresetsSetting: 'stackable_use_theme_border_radius_presets',
 		prefix: 'border-radius',
+	},
+	shadows: {
+		settings: [ 'shadow', 'presets' ],
+		themeSizes: 'shadow.presets.theme',
+		defaultSizes: 'shadow.presets.default',
+		defaultEnabled: 'shadow.defaultPresets',
+		useDefaultPresetsAsFallback: true,
+		includeStackablePresets: true,
+		prefix: 'shadow',
+		valueKey: 'shadow',
 	},
 }
 
@@ -37,7 +50,34 @@ const nonePreset = {
 	slug: 'none',
 }
 
+export const PRESET_SOURCES = {
+	STACKABLE: 'stackable',
+	WORDPRESS: 'wordpress',
+}
+
+const normalizePresetValue = value => typeof value === 'string'
+	? value.trim().replace( /\s+/g, ' ' )
+	: value
+
+export const dedupeShadowPresets = presets => {
+	const seenPresets = new Set()
+
+	return presets.filter( preset => {
+		const key = `${ preset.slug }\u0000${ normalizePresetValue( preset.shadow ) }`
+		if ( seenPresets.has( key ) ) {
+			return false
+		}
+
+		seenPresets.add( key )
+		return true
+	} )
+}
+
 export const usePresetControls = property => {
+	const mapping = PRESET_MAPPING[ property ]
+	const useWordPressPresets = ! mapping.useWordPressPresetsSetting ||
+		!! ( stackableSettings?.[ mapping.useWordPressPresetsSetting ] ?? false )
+
 	// Get the theme presets for the property
 	const [
 		_themePresets,
@@ -54,9 +94,9 @@ export const usePresetControls = property => {
 		wpDefaultPresets,
 		defaultSizesEnabled,
 	] = useSettings(
-		PRESET_MAPPING[ property ].settings.join( '.' ),
-		PRESET_MAPPING[ property ].defaultSizes,
-		PRESET_MAPPING[ property ].defaultEnabled
+		mapping.themeSizes || mapping.settings.join( '.' ),
+		mapping.defaultSizes,
+		mapping.defaultEnabled
 	)
 
 	// Get all custom presets
@@ -65,8 +105,11 @@ export const usePresetControls = property => {
 		return { allCustomPresets: { ..._customPresetControls } }
 	}, [] )
 
-	let themePresets = _themePresets
+	let themePresets = useWordPressPresets ? _themePresets : []
 	const hasThemePresets = Array.isArray( themePresets ) && themePresets.length > 0
+	const hasDefaultPresets = useWordPressPresets && mapping.useDefaultPresetsAsFallback &&
+		Array.isArray( wpDefaultPresets ) && wpDefaultPresets.length > 0 &&
+		defaultSizesEnabled !== false
 
 	// Merge theme presets with default presets when default sizes are enabled.
 	// This happens when settings like `typography.defaultFontSizes` or `spacing.defaultSpacingSizes`
@@ -74,22 +117,33 @@ export const usePresetControls = property => {
 	if ( hasThemePresets && wpDefaultPresets && defaultSizesEnabled !== false ) {
 		// Create a set for removing duplicates.
 		const existingSlugs = new Set()
-		_themePresets.forEach( item => {
+		themePresets.forEach( item => {
 			if ( item && typeof item.slug === 'string' ) {
 				existingSlugs.add( item.slug )
 			}
 		} )
 
 		themePresets = [
-			..._themePresets,
+			...themePresets,
 			...wpDefaultPresets.filter( item => ! existingSlugs.has( item.slug ) ),
 		]
 	}
 
-	// Get the theme/default presets if the user have one, else return the stackable presets
-	const basePresets = hasThemePresets
+	// Get the theme/default presets if the user has one, else return the Stackable presets.
+	const wordpressPresets = hasThemePresets
 		? themePresets
-		: PRESET_MAPPING[ property ].settings.reduce( ( acc, key ) => acc?.[ key ], DEFAULT_PRESETS.settings )
+		: hasDefaultPresets
+			? wpDefaultPresets
+			: []
+	const stackablePresets = mapping.settings.reduce( ( acc, key ) => acc?.[ key ], DEFAULT_PRESETS.settings )
+	const basePresets = mapping.includeStackablePresets
+		? [
+			...wordpressPresets.map( preset => ( { ...preset, source: PRESET_SOURCES.WORDPRESS } ) ),
+			...stackablePresets.map( preset => ( { ...preset, source: PRESET_SOURCES.STACKABLE } ) ),
+		]
+		: wordpressPresets.length
+			? wordpressPresets
+			: stackablePresets
 
 	// Returns the base presets overriden by the custom presets
 	const getMergedPresets = () => {
@@ -101,18 +155,25 @@ export const usePresetControls = property => {
 		}, {} )
 
 		// Merge base presets with custom presets (priority)
-		return basePresets.map( baseItem =>
+		const mergedPresets = basePresets.map( baseItem =>
 			customMap[ baseItem.slug ]
 				? { ...baseItem, ...customMap[ baseItem.slug ] }
 				: baseItem
 		)
+
+		return property === 'shadows'
+			? dedupeShadowPresets( mergedPresets )
+			: mergedPresets
 	}
 
 	// Get the merge preset marks with the CSS Variable value
 	// Setting customOnly to true returns the preset marks for custom presets only
 	// Setting addNonePreset to true adds a none preset with a value of 0
 	const getPresetMarks = ( { customOnly = false, addNonePreset = false } = {} ) => {
-		const prefix = PRESET_MAPPING[ property ].prefix
+		const {
+			prefix,
+			valueKey = 'size',
+		} = PRESET_MAPPING[ property ]
 		let presets = customOnly ? allCustomPresets[ property ] ?? [] : getMergedPresets()
 		// Add the none preset
 		presets = [ ...( addNonePreset ? [ nonePreset ] : [] ), ...presets ]
@@ -121,7 +182,7 @@ export const usePresetControls = property => {
 			.filter( preset => ! ( preset?.isDiscarded ) )
 			.map( preset => ( {
 				...preset,
-				value: `var(--stk--preset--${ prefix }--${ preset.slug }, ${ preset.size })`,
+				value: `var(--stk--preset--${ prefix }--${ preset.slug }, ${ preset[ valueKey ] })`,
 			} ) )
 	}
 
