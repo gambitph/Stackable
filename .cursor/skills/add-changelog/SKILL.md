@@ -4,7 +4,7 @@ description: >-
   Adds or updates a WordPress plugin changelog entry in readme.txt from the
   project's Release Roadmap for a confirmed plugin version. Use when the user
   asks to add a changelog, write changelog entries, update readme.txt
-  Changelog, or invokes add-changelog.
+  Changelog, invokes add-changelog, or runs npm run release:changelog.
 disable-model-invocation: true
 ---
 
@@ -56,6 +56,11 @@ Tell the user the proposed version (e.g. `Found Version: 3.20.0 in plugin.php`).
 - Type a different version number to use instead
 
 Do not proceed until they reply. Use their confirmed (or overridden) value as `VERSION`.
+
+**Exception:** `npm run release:changelog` already confirms the version.
+It passes the `Version:` header from `plugin.php` and tells you not to ask.
+Use that version and continue from step 3.
+Do not stop for confirmation.
 
 ### 3. Detect new vs existing section
 
@@ -155,7 +160,7 @@ Briefly summarize what was written. Do not commit unless the user asks.
 
 ## Quality checklist
 
-- [ ] Version confirmed (or overridden) by the user
+- [ ] Version confirmed by the user, or passed in as already confirmed by `npm run release:changelog`
 - [ ] Correct mode: new insert vs update existing section
 - [ ] Items come from the Release Roadmap for that version (via project Cursor rules)
 - [ ] Lines use `New:` / `Change:` / `Fixed:` and end with `#number`
