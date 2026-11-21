@@ -300,11 +300,11 @@ Yes! Stackable blocks play well with other Gutenberg block plugins like Kadence,
 
 == Screenshots ==
 
-1. Design Library: Browse 375+ patterns and full page templates that inherit your block theme's styles
-2. Global Design System: Set colors, typography, and spacing for your entire site in one place
-3. Responsive Editing: Preview and adjust your designs for desktop, tablet, and mobile
-4. 42 Custom Blocks: Professional blocks for headers, features, testimonials, pricing, and more
-5. Page Builder Controls: Advanced design options including flexbox, backgrounds, hover effects, and animations
+1. Insert a full, ready-made page from the Stackable Design Library in one click
+2. Tabs, accordion, countdown, icon list and pricing box blocks: 40+ free blocks
+3. Style without code: gradient text, colors and mobile-responsive controls
+4. Works with block themes: add Stackable blocks to templates in the Site Editor
+5. Fast and lightweight: only loads what you use
 
 == Upgrade Notice ==
 
