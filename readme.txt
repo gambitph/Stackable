@@ -1,6 +1,6 @@
 === Stackable - Page Builder Gutenberg Blocks & Patterns ===
 Contributors: bfintal, gambitph
-Tags: gutenberg blocks, page builder, block patterns, starter templates, design library
+Tags: blocks, gutenberg blocks, page builder, block patterns, design library
 Requires at least: 6.9.5
 Tested up to: 7.1.5
 Requires PHP: 7.4
@@ -8,13 +8,13 @@ Stable tag: 3.20.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Build stunning websites with 40+ blocks, 375+ ready-made patterns, and a design library. Works with any theme, optimized for block themes.
+Build stunning websites with 42 custom blocks, 375+ ready-made patterns, and a design library. Works with any theme, optimized for block themes.
 
 == Description ==
 
 **Build Beautiful Websites Faster with the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a powerful, lightweight page builder for WordPress. Get 40+ custom Gutenberg blocks, 375+ ready-made patterns and templates, and a complete design system - all optimized for performance and built to work seamlessly with block themes and Full Site Editing.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a powerful, lightweight page builder for WordPress. Get 42 custom Gutenberg blocks, 375+ ready-made patterns and templates, and a complete design system - all optimized for performance and built to work seamlessly with block themes and Full Site Editing.
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
@@ -43,12 +43,12 @@ Design faster with global controls that apply to your entire site from one place
 Never start from scratch. The Design Library gives you professionally-made patterns and full page templates that automatically inherit your block theme's styles.
 
 - 375+ block patterns for every section type
-- 40+ full page templates (landing pages, about, contact, and more)
+- 40 full page templates (landing pages, about, contact, and more)
 - Patterns adapt to your theme's colors and typography
 - Save and reuse your own custom patterns (Premium)
 - Block layouts and shape separators included
 
-## 40+ Powerful Custom Blocks
+## 42 Powerful Custom Blocks
 
 Feature-rich Gutenberg blocks that look great out of the box. Enable only the blocks you need for a streamlined editing experience.
 
@@ -262,7 +262,7 @@ You'll need WordPress version 6.8.1 or higher for this to work.
 
 **Is Stackable Free?**
 
-Yes, Stackable is free forever with 40+ blocks, 375+ patterns, and a complete design system.
+Yes, Stackable is free forever with 42 blocks, 375+ patterns, and a complete design system.
 
 [Stackable Premium](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) adds advanced features like dynamic content, motion effects, custom saved patterns, WooCommerce integration, and more.
 
@@ -280,7 +280,7 @@ Stackable works with any WordPress theme. For the best experience, we recommend 
 
 **What's the difference between Free and Premium?**
 
-The free version includes all 40+ blocks, 375+ patterns, the design library, global settings, and full block theme support.
+The free version includes all 42 blocks, 375+ patterns, the design library, global settings, and full block theme support.
 
 Premium adds: dynamic content, scroll and entrance animations, saved custom patterns, WooCommerce integration, ACF/Metabox support, conditional display, role manager, and agency tools.
 
@@ -303,7 +303,7 @@ Yes! Stackable blocks play well with other Gutenberg block plugins like Kadence,
 1. Design Library: Browse 375+ patterns and full page templates that inherit your block theme's styles
 2. Global Design System: Set colors, typography, and spacing for your entire site in one place
 3. Responsive Editing: Preview and adjust your designs for desktop, tablet, and mobile
-4. 40+ Custom Blocks: Professional blocks for headers, features, testimonials, pricing, and more
+4. 42 Custom Blocks: Professional blocks for headers, features, testimonials, pricing, and more
 5. Page Builder Controls: Advanced design options including flexbox, backgrounds, hover effects, and animations
 
 == Upgrade Notice ==
