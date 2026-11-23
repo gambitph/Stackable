@@ -172,7 +172,7 @@ It does not create `Home (2)`.
 ## Implementation sequence
 
 Complete these milestones in order.
-Do not begin the catalog or picker implementation before the exporter contract and fixture are usable by a Site Kit author.
+Do not begin the catalog or picker implementation before the development export UI, shared importer core, and export/import round trip are usable.
 
 ### 1. Export schema and fixture
 
@@ -196,6 +196,19 @@ Add focused collectors for theme data, site settings, pages, navigation, media, 
 Keep each collector independently testable.
 Build one package model and write it as a complete Site Kit directory archive.
 
+Implementation paths:
+
+- Export factory and orchestration: `src/site-kits/export/index.php` and `class-exporter.php`.
+- Focused WordPress collectors: `src/site-kits/export/class-*-collector.php`.
+- Portable data redaction: `src/site-kits/export/class-portable-data.php`.
+- Plugin adapter contract: `src/site-kits/export/class-plugin-adapter.php`.
+- ZIP and PclZip archive writing: `src/site-kits/export/class-archive-writer.php`.
+- PHP coverage: `tests/phpunit/SiteKitExporterTest.php`, `tests/phpunit/SiteKitMediaCollectorTest.php`, and `tests/phpunit/SiteKitStackableCollectorTest.php`.
+
+The archive root contains `meta.json` and `assets/`.
+Navigation page links use `stkSiteKitPage` until the importer resolves them against imported page IDs.
+Do not add plugin settings directly to the collector allowlist when an adapter is the correct ownership boundary.
+
 **Done when:** an automated test exports a representative site and verifies `meta.json`, media files, relative references, redaction, and schema validity.
 
 ### 3. Development export UI
@@ -206,14 +219,36 @@ Show validation results before download.
 
 **Done when:** Playwright downloads a valid Site Kit archive in development and proves the control and endpoint are unavailable otherwise.
 
-### 4. Design Library author workflow
+### 4. Importer core and development import UI
+
+Build one importer orchestration under `src/site-kits/` for both development uploads and the later customer-facing picker.
+Add a development-only ZIP upload under Stackable > Settings.
+Gate both the UI and server action on `WP_ENV === 'development'`, `manage_options`, operation-specific capabilities, and a nonce.
+Safely extract the archive and reject path traversal, symbolic links, unknown files, oversized input, malformed archives, and invalid packages before writing anything.
+Require Start Stackable to be active.
+Use a complete import plan in the development UI, while keeping the importer capable of accepting the explicit selection plan that the picker will provide later.
+Implement preflight, rollback recording, plugin actions, media import, theme and FSE writes, Stackable design data, page upsert, navigation resolution, website and plugin settings, front-page settings, and cache flushing in the contract order.
+Always remove temporary files and perform basic cleanup after a failed import.
+
+**Done when:** a valid exported ZIP imports into a clean development site through the same importer engine the picker will use, and an invalid upload causes no site writes.
+
+### 5. Export/import round-trip validation
+
+Export a representative site and import the resulting ZIP into a clean site.
+Compare the imported pages, FSE data, navigation, settings, Stackable design data, and local media with the export source.
+Prove that source IDs and source URLs do not leak into the imported result.
+Repeat the import to cover basic idempotence and force a failure to cover basic cleanup.
+
+**Done when:** automated round-trip coverage proves the package contract before catalog and picker work begins.
+
+### 6. Design Library author workflow
 
 Add the canonical example package, `site-kits.json`, package validation, and catalog build support in the Design Library repository.
 Document the unzip, preview-image, validation, and publication workflow.
 
 **Done when:** another developer can begin creating Site Kit entries using the exporter while picker work continues.
 
-### 5. Catalog and package retrieval
+### 7. Catalog and package retrieval
 
 Add cached catalog and package retrieval through Stackable REST routes.
 Return plan data, page data, and current Start Stackable state.
@@ -221,37 +256,29 @@ Reject malformed packages and the `default` slug.
 
 **Done when:** authenticated E2E coverage fetches three kit slugs, rejects invalid packages, and proves no content is created.
 
-### 6. Site Kits admin and catalog UI
+### 8. Site Kits catalog, preview, and theme requirement
 
 Register Site Kits below Getting Started.
 Build the screenshot catalog, premium indicators, loading state, empty state, error state, and Start Stackable banner.
-
-**Done when:** the catalog matches the required hierarchy and remains usable with Start Stackable missing.
-
-### 7. Detail preview and color schemes
-
 Build page thumbnails, the selected-page preview, Color Scheme picker, and Customize controls.
 Keep edits in memory until Apply succeeds.
 Reuse the Design Library preview renderer where it meets the requirement.
-
-**Done when:** switching pages and editing a scheme updates every required preview without changing saved site options.
-
-### 8. Theme install and activation flow
-
 Implement shared banner and modal content for active, inactive, missing, and insufficient-capability states.
 Refresh and recheck after installation or activation.
 
-**Done when:** Apply cannot reach import until Start Stackable is active, and keyboard and pointer users can open the explanation.
+**Done when:** the catalog remains usable without Start Stackable, preview changes do not alter saved options, and Apply remains blocked until Start Stackable is active.
 
-### 9. Apply modal and importer
+### 9. Apply modal integration
 
-Implement complete and partial selection, dependency validation, preflight, media sideload, FSE writes, page upsert, navigation, settings, plugin adapters, rollback, and success state.
+Connect the picker to the shared importer built in milestone 4 instead of creating a second importer path.
+Implement complete and partial selection, dependency validation, selected groups, media and plugin dependencies, and success state.
+Send the resulting explicit import plan through the same preflight, rollback, and apply orchestration used by the development ZIP upload.
 
-**Done when:** complete apply produces the Site Kit site, partial apply changes only selected groups, and no imported media remains hotlinked.
+**Done when:** complete and partial apply work, only selected groups change, no imported media remains hotlinked, and a complete picker import produces the same result as importing the same package through the development UI.
 
-### 10. Re-import, premium, and recovery
+### 10. Production hardening
 
-Add idempotent re-import, server-side premium checks, rollback coverage, cache flushing, and final UX states.
+Complete idempotent re-import, server-side premium checks, rollback and recovery coverage, cache flushing, security checks, accessibility, performance, and final UX states.
 
 **Done when:** a second import updates existing kit-owned content, premium access cannot be bypassed, and a forced failure leaves the site recoverable.
 
@@ -264,10 +291,12 @@ Mount Start Stackable for apply tests.
 | Spec | Assertions |
 | --- | --- |
 | `e2e/tests/site-kits-export.spec.ts` | Development-only control; permission and nonce checks; downloaded archive validates; media is local; secrets are absent. |
+| `e2e/tests/site-kits-development-import.spec.ts` | Development-only ZIP upload; permission, nonce, and active-theme checks; invalid packages cause no writes; temporary files are removed. |
+| `e2e/tests/site-kits-round-trip.spec.ts` | Export a representative site, import into a clean site, compare portable content and settings, and prove source IDs and URLs are absent. |
 | `e2e/tests/site-kits-catalog.spec.ts` | Three kits; previews load; premium indicators render; no import on page load or activation; Default label cannot import. |
 | `e2e/tests/site-kits-theme-required.spec.ts` | Catalog works without Start Stackable; banner and modal agree; missing theme can be installed; inactive theme can be activated; Apply remains blocked until active. |
 | `e2e/tests/site-kits-preview.spec.ts` | Homepage is selected; page selection changes the large preview; color-scheme selection and customization update thumbnails and large preview. |
-| `e2e/tests/site-kits-import.spec.ts` | Complete apply creates pages, navigation, front page, templates, local media, and valid Stackable blocks with no recovery UI. |
+| `e2e/tests/site-kits-import.spec.ts` | Complete picker apply delegates to the shared importer and creates pages, navigation, front page, templates, local media, and valid Stackable blocks with no recovery UI. |
 | `e2e/tests/site-kits-partial-import.spec.ts` | Only selected groups change; dependency rules prevent broken media and references. |
 | `e2e/tests/site-kits-reimport.spec.ts` | Import twice; one Home and one kit navigation remain; content is updated. |
 | `e2e/tests/site-kits-snap-in.spec.ts` | Start Stackable is active; shell classes and selected parts apply; a transparent sticky header overlays the hero and becomes opaque after scroll. |
@@ -282,6 +311,7 @@ Do not reuse page insertion coverage as Site Kit coverage.
 
 - The master design and this contract agree.
 - Export remains the first implementation milestone.
+- The development importer and export/import round trip work before catalog and picker implementation begins.
 - Package fixtures and validators match the contract.
 - No Site Kit importer or package markup lives in the theme repository.
 - Start Stackable is active before Apply reaches import.

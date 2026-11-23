@@ -14,7 +14,7 @@ Stackable is a **Gutenberg block plugin** for WordPress:
 - Primary runtime: block editor (React) → saved block markup + generated CSS → frontend view scripts where needed
 - Global settings: design tokens (colors, typography, spacing, schemes, block styles) that influence blocks site-wide
 - Design Library: insert curated designs / patterns / pages into the current editor document
-- Site Kits (planned): development export plus catalog, preview, color-scheme customization, and selective complete-site import into the required Start Stackable theme shell
+- Site Kits: export schema, validation, collectors, and archive core, followed by development export, shared import, round-trip validation, catalog, preview, color-scheme customization, and selective complete-site import into the required Start Stackable theme shell
 - PHP: block registration, enqueue, REST, options, Freemius (premium), capability gates
 
 Free = core `stackable/*` blocks, editor tooling, design library (free surface), global settings, WordPress.org package.
@@ -75,7 +75,7 @@ Build tooling flips `STACKABLE_BUILD` (`npm run update-build-type` / `tools/upda
 | Editor components | `src/components/`, `src/higher-order/`, `src/hooks/` | Shared UI and HOCs |
 | Global settings | `src/plugins/global-settings/`, `src/global-settings.php` | Colors, typography, schemes, presets, block styles |
 | Design Library | `src/design-library/`, `src/lazy-components/design-library/` | Insert designs into the current document |
-| Site Kits | `src/site-kits/` (planned) | Development export first, then catalog, preview, theme requirement flow, and selective import; see `docs/prd/site-kits.md` |
+| Site Kits | `src/site-kits/` | Export schema, validation, collectors, and archive core, followed by the planned development export and shared import UI, round-trip validation, catalog, preview, theme requirement flow, and selective import; see `docs/prd/site-kits.md` |
 | Admin / welcome | `src/welcome/`, `src/admin.php` | Settings, onboarding, notices, planned Site Kits UI |
 | Dynamic Content | `pro__premium_only/.../dynamic-content` | Premium |
 | Conditional display | `pro__premium_only/.../conditional-display` | Premium |

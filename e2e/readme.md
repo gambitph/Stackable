@@ -124,7 +124,7 @@ Do not listen for console `Block validation` messages.
 | Block catalog | `createBlock` every inserter-facing `stackable/*`, save, reload, no recovery UI, frontend `.stk-block` |
 | Global settings | Color / typography; spacing & buttons tokens; Preview Design System style guide (live values + website preview) |
 | Design Library | Open, load patterns, insert a free page/pattern |
-| Site Kits (planned) | Development export first; catalog and preview; Start Stackable install or activation requirement; color-scheme preview; complete and partial import; local media; rollback; re-import; see `docs/prd/site-kits.agents.md` |
+| Site Kits (planned) | Development export and direct ZIP import round trip first; then catalog and preview; Start Stackable install or activation requirement; color-scheme preview; complete and partial picker import through the shared importer; local media; rollback; re-import; see `docs/prd/site-kits.agents.md` |
 | Existing blocks | REST-save `post-content.txt`, open in editor, no recovery UI |
 | Interactive frontend | Accordion, Tabs, Carousel, Expand, Video Popup, Notification, scroller, countdown/progress, Posts, TOC |
 

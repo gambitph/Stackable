@@ -114,6 +114,17 @@ Validate an exported directory with `npm run validate:site-kit -- path/to/SITE_K
 
 A Site Kit author unzips the archive into `library/src/site-kits/SITE_KIT_SLUG/`, adds or replaces `preview.webp`, completes catalog metadata, and runs package validation.
 
+The exporter core is implemented under `src/site-kits/export/`.
+It builds the package through focused collectors and writes an archive with `meta.json` and `assets/` at the archive root.
+Local WordPress attachments are copied into the archive and their source URLs are replaced with package-relative paths.
+Navigation page links use portable page slugs instead of source-site post IDs.
+Plugin settings require an explicit `Stackable_Site_Kit_Plugin_Adapter`, and sensitive keys are removed before archive writing.
+
+This core has no admin control yet.
+The development-only Settings UI and download endpoint belong to implementation sequence item 3.
+Item 4 then adds a development-only ZIP upload backed by the shared importer engine, and item 5 proves the export/import round trip on a clean site.
+The later picker must call that same importer instead of implementing a parallel import path.
+
 ## Current codebase seams
 
 Use the current Stackable architecture instead of building parallel systems.
@@ -123,6 +134,8 @@ Use the current Stackable architecture instead of building parallel systems.
 | Site Kits submenu and page shell | `src/welcome/index.php` and the existing Stackable admin tabs. |
 | Development export entry | The Settings app in `src/welcome/admin.js`, next to the existing Import/Export surface. |
 | Export server orchestration | New focused classes under `src/site-kits/`, loaded by `plugin.php`. |
+| Development import entry | The Settings app in `src/welcome/admin.js`, next to the Site Kit export control. |
+| Shared import orchestration | Focused classes under `src/site-kits/`, called by both the development upload and the picker Apply route. |
 | Catalog fetch and cache | The retrieval and transient pattern in `src/design-library/init.php`. |
 | Live isolated previews | `src/lazy-components/design-library/design-library-list/`. |
 | Media sideload | Existing WordPress media use in `src/design-library/init.php`, extracted or deepened when sharing is useful. |
@@ -215,15 +228,15 @@ The order is:
 1. Export schema and fixtures.
 2. Export collectors and archive.
 3. Development export UI.
-4. Design Library author workflow.
-5. Catalog and package retrieval.
-6. Site Kits admin and catalog UI.
-7. Detail preview and color schemes.
-8. Theme install and activation flow.
-9. Apply modal and importer.
-10. Re-import, premium, recovery, and final quality gates.
+4. Importer core and development import UI.
+5. Export/import round-trip validation.
+6. Design Library author workflow.
+7. Catalog and package retrieval.
+8. Site Kits catalog, preview, and theme requirement.
+9. Apply modal integration with the shared importer.
+10. Production hardening, including re-import, premium enforcement, recovery, and final quality gates.
 
-The exporter and Design Library workflow must be usable before picker implementation begins.
+The exporter, development importer, and round-trip validation must be usable before catalog and picker implementation begins.
 
 ## Local testing
 

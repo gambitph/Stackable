@@ -113,4 +113,14 @@ describe( 'Site Kit package validator', () => {
 			expect( isPortablePackagePath( filePath ) ).toBe( false )
 		}
 	)
+
+	test( 'accepts a single-file WordPress plugin slug', () => {
+		const packageData = clone( validPackage )
+		packageData.plugins[ 0 ].slug = 'hello.php'
+
+		expect( validateSiteKitPackage( packageData, {
+			directorySlug: packageData.slug,
+			files: listPackageFiles( validPackageDirectory ),
+		} ) ).toEqual( [] )
+	} )
 } )
