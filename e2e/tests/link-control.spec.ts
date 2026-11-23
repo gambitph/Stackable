@@ -56,9 +56,8 @@ test.describe( 'Link control URL input', () => {
 		const clientId = await buttonBlock.getAttribute( 'data-block' )
 
 		const setLinkValue = async ( value: string ) => {
-			await input.click()
 			await input.fill( value )
-			await page.keyboard.press( 'Escape' )
+			await input.press( 'Escape' )
 			await input.blur()
 		}
 
