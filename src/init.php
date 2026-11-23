@@ -312,8 +312,13 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @since 3.2.0
 		 */
 		public function register_block_editor_assets_admin() {
+			// Frontend block editors may fire this hook without loading the admin screen API.
+			if ( ! function_exists( 'get_current_screen' ) ) {
+				return;
+			}
+
 			$current_screen = get_current_screen();
-			if ( $current_screen->is_block_editor() ) {
+			if ( $current_screen && $current_screen->is_block_editor() ) {
 				// Enqueue CodeMirror for Custom CSS.
 				wp_enqueue_code_editor( array(
 					'type' => 'text/css', // @see https://developer.wordpress.org/reference/functions/wp_get_code_editor_settings/
