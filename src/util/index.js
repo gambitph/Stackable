@@ -36,6 +36,8 @@ import { inRange } from 'lodash'
 import { getBlockVariations } from '@wordpress/blocks'
 import { compare } from 'compare-versions'
 
+export { replaceBlockStyleSelectors } from './block-style-css'
+
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
 /**

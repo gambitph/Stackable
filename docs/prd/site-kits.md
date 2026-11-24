@@ -7,6 +7,7 @@ When the design document is silent, preserve the contracts and engineering safeg
 
 Agent checklist: [`site-kits.agents.md`](./site-kits.agents.md).
 Package, export, and import schema: [`site-kits.CONTRACT.md`](./site-kits.CONTRACT.md).
+Authoring quick guide: [`site-kits-authoring.md`](./site-kits-authoring.md).
 Ownership ADR: [`../adr/0002-site-kits-owned-by-plugin.md`](../adr/0002-site-kits-owned-by-plugin.md).
 Default ADR: [`../adr/0003-default-is-the-theme.md`](../adr/0003-default-is-the-theme.md).
 Theme shell: `../Start-Stackable/docs/prd/start-stackable.md`.
@@ -120,9 +121,13 @@ Local WordPress attachments are copied into the archive and their source URLs ar
 Navigation page links use portable page slugs instead of source-site post IDs.
 Plugin settings require an explicit `Stackable_Site_Kit_Plugin_Adapter`, and sensitive keys are removed before archive writing.
 
-This core has no admin control yet.
-The development-only Settings UI and download endpoint belong to implementation sequence item 3.
-Item 4 then adds a development-only ZIP upload backed by the shared importer engine, and item 5 proves the export/import round trip on a clean site.
+The development-only Settings UI is implemented in `src/welcome/site-kit-export.js`.
+Its REST request builds and validates the package before returning warnings and a short-lived, single-use download URL.
+The download action rebuilds and revalidates the package, streams a temporary ZIP, and removes the temporary file immediately.
+Both surfaces are loaded only when `WP_ENV` is explicitly `development`, and both require an administrator plus a valid nonce.
+The development-only ZIP upload now calls the shared importer engine.
+It validates the ZIP through a preparation request, regenerates Global Block Styles with the target Stackable build, and sends the verified result through the shared importer.
+Item 5 next proves full export/import fidelity on a clean site.
 The later picker must call that same importer instead of implementing a parallel import path.
 
 ## Current codebase seams

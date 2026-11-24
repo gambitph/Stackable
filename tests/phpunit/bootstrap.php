@@ -40,6 +40,10 @@ if ( ! defined( 'STACKABLE_BUILD' ) ) {
 	define( 'STACKABLE_BUILD', 'free' );
 }
 
+if ( ! defined( 'ARRAY_A' ) ) {
+	define( 'ARRAY_A', 'ARRAY_A' );
+}
+
 if ( ! defined( 'STACKABLE_PLUGIN_DIR' ) ) {
 	define( 'STACKABLE_PLUGIN_DIR', $stackable_root . '/' );
 }
@@ -73,6 +77,15 @@ if ( ! class_exists( 'WP_Error' ) ) {
 
 		public function get_error_message() {
 			return $this->message;
+		}
+
+		public function add_data( $data, $code = '' ) {
+			$this->error_data[ $code ? $code : $this->code ] = $data;
+		}
+
+		public function get_error_data( $code = '' ) {
+			$code = $code ? $code : $this->code;
+			return isset( $this->error_data[ $code ] ) ? $this->error_data[ $code ] : null;
 		}
 	}
 }

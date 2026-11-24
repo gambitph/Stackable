@@ -15,11 +15,13 @@ if ( ! class_exists( 'Stackable_Site_Kit_Exporter' ) ) {
 		private $collectors;
 		private $media;
 		private $archive_writer;
+		private $validator;
 
-		public function __construct( $collectors, $media, $archive_writer ) {
+		public function __construct( $collectors, $media, $archive_writer, $validator ) {
 			$this->collectors = $collectors;
 			$this->media = $media;
 			$this->archive_writer = $archive_writer;
+			$this->validator = $validator;
 		}
 
 		/**
@@ -84,6 +86,14 @@ if ( ! class_exists( 'Stackable_Site_Kit_Exporter' ) ) {
 			if ( is_wp_error( $package ) ) {
 				return $package;
 			}
+			$validation = $this->validate_package( $package );
+			if ( $validation['errors'] ) {
+				return new WP_Error(
+					'site_kit_validation_failed',
+					__( 'The Site Kit package did not pass validation.', STACKABLE_I18N ),
+					array( 'errors' => $validation['errors'] )
+				);
+			}
 
 			$written_path = $this->archive_writer->write( $package, $archive_path );
 			if ( is_wp_error( $written_path ) ) {
@@ -93,8 +103,18 @@ if ( ! class_exists( 'Stackable_Site_Kit_Exporter' ) ) {
 			return array(
 				'path' => $written_path,
 				'package' => $package,
-				'warnings' => $package->get_warnings(),
+				'warnings' => array_merge( $package->get_warnings(), $validation['warnings'] ),
 			);
+		}
+
+		/**
+		 * Validate a built Site Kit package.
+		 *
+		 * @param Stackable_Site_Kit_Export_Package $package Package to validate.
+		 * @return array Validation errors and warnings.
+		 */
+		public function validate_package( $package ) {
+			return $this->validator->validate( $package );
 		}
 
 		private function validate_metadata( $metadata ) {

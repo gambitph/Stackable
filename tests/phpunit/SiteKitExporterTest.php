@@ -62,7 +62,7 @@ class SiteKitExporterTest extends Stackable_TestCase {
 				'assets/hero-office.png' => $fixture_directory . '/assets/hero-office.png',
 			)
 		);
-		$exporter = new Stackable_Site_Kit_Exporter( $collectors, $media, new Stackable_Site_Kit_Archive_Writer() );
+		$exporter = new Stackable_Site_Kit_Exporter( $collectors, $media, new Stackable_Site_Kit_Archive_Writer(), new Stackable_Site_Kit_Package_Validator() );
 		$temp_directory = sys_get_temp_dir() . '/stk-site-kit-' . uniqid( '', true );
 		$package_directory = $temp_directory . '/' . $fixture->slug;
 		$archive_path = $temp_directory . '/' . $fixture->slug . '.zip';
@@ -106,7 +106,7 @@ class SiteKitExporterTest extends Stackable_TestCase {
 	}
 
 	public function test_rejects_reserved_package_slug() {
-		$exporter = new Stackable_Site_Kit_Exporter( array(), new Stackable_Site_Kit_Test_Media_Collector( array(), array() ), new Stackable_Site_Kit_Archive_Writer() );
+		$exporter = new Stackable_Site_Kit_Exporter( array(), new Stackable_Site_Kit_Test_Media_Collector( array(), array() ), new Stackable_Site_Kit_Archive_Writer(), new Stackable_Site_Kit_Package_Validator() );
 		$result = $exporter->build_package(
 			array(
 				'slug' => 'default',

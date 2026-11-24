@@ -282,10 +282,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/kses.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
-// Site Kit export tools are available only when WP_ENV is explicitly set to development.
-if ( defined( 'WP_ENV' ) && 'development' === WP_ENV ) {
-	require_once( plugin_dir_path( __FILE__ ) . 'src/site-kits/export/index.php' );
-}
+require_once( plugin_dir_path( __FILE__ ) . 'src/site-kits/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/styles/block-design-system.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/theme-block-style-inheritance/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );

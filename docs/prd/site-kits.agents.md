@@ -7,6 +7,7 @@ When it does not specify a behavior, preserve the existing product contracts doc
 
 Developer companion: [`site-kits.md`](./site-kits.md).
 Package, export, and import contract: [`site-kits.CONTRACT.md`](./site-kits.CONTRACT.md).
+Authoring quick guide: [`site-kits-authoring.md`](./site-kits-authoring.md).
 Theme shell: sibling `../Start-Stackable/docs/prd/start-stackable.agents.md`.
 Ownership ADR: [`../adr/0002-site-kits-owned-by-plugin.md`](../adr/0002-site-kits-owned-by-plugin.md).
 Default ADR: [`../adr/0003-default-is-the-theme.md`](../adr/0003-default-is-the-theme.md).
@@ -217,6 +218,17 @@ Add the Site Kit Export entry under Stackable > Settings.
 Gate both the UI and server action on `WP_ENV === 'development'`, `manage_options`, and a nonce.
 Show validation results before download.
 
+Implementation paths:
+
+- Settings UI: `src/welcome/site-kit-export.js` and `src/welcome/site-kit-export.scss`.
+- Validation and download controller: `src/site-kits/export/class-export-controller.php`.
+- Runtime package validation: `src/site-kits/class-package-validator.php`.
+- Development coverage: `e2e/tests/site-kits-export.spec.ts`.
+- Production absence coverage: `e2e/production-tests/site-kits-export-production.spec.ts` and `playwright.site-kits-production.config.js`.
+
+The validation request returns a short-lived, single-use download URL only after package validation succeeds.
+The download action rebuilds and revalidates the package, streams a temporary archive, and deletes the archive immediately.
+
 **Done when:** Playwright downloads a valid Site Kit archive in development and proves the control and endpoint are unavailable otherwise.
 
 ### 4. Importer core and development import UI
@@ -229,6 +241,17 @@ Require Start Stackable to be active.
 Use a complete import plan in the development UI, while keeping the importer capable of accepting the explicit selection plan that the picker will provide later.
 Implement preflight, rollback recording, plugin actions, media import, theme and FSE writes, Stackable design data, page upsert, navigation resolution, website and plugin settings, front-page settings, and cache flushing in the contract order.
 Always remove temporary files and perform basic cleanup after a failed import.
+
+Implementation paths:
+
+- Shared bootstrap and factory: `src/site-kits/import/index.php`.
+- Secure package reader: `src/site-kits/import/class-package-reader.php`.
+- Import plan and orchestration: `src/site-kits/import/class-import-plan.php` and `src/site-kits/import/class-importer.php`.
+- Focused media, theme, content, Stackable settings, and plugin importers: `src/site-kits/import/class-*-importer.php`.
+- Development upload controller: `src/site-kits/import/class-import-controller.php`.
+- Settings UI and target-side Global Block Styles regeneration: `src/welcome/site-kit-import.js`, `src/welcome/site-kit-block-styles.js`, and `src/welcome/site-kit-import.scss`.
+- PHP coverage: `tests/phpunit/SiteKitImportPlanTest.php`, `tests/phpunit/SiteKitImportRollbackTest.php`, `tests/phpunit/SiteKitPackageReaderTest.php`, and `tests/phpunit/SiteKitSettingsImporterTest.php`.
+- Development browser coverage: `e2e/tests/site-kits-export.spec.ts`.
 
 **Done when:** a valid exported ZIP imports into a clean development site through the same importer engine the picker will use, and an invalid upload causes no site writes.
 
@@ -290,8 +313,8 @@ Mount Start Stackable for apply tests.
 
 | Spec | Assertions |
 | --- | --- |
-| `e2e/tests/site-kits-export.spec.ts` | Development-only control; permission and nonce checks; downloaded archive validates; media is local; secrets are absent. |
-| `e2e/tests/site-kits-development-import.spec.ts` | Development-only ZIP upload; permission, nonce, and active-theme checks; invalid packages cause no writes; temporary files are removed. |
+| `e2e/tests/site-kits-export.spec.ts` | Development-only export and ZIP import controls; permission, nonce, and active-theme checks; downloaded archive validates; media is local; invalid uploads cause no writes. |
+| `e2e/production-tests/site-kits-export-production.spec.ts` | Production Settings omits the export and import controls, and neither development REST route is registered. |
 | `e2e/tests/site-kits-round-trip.spec.ts` | Export a representative site, import into a clean site, compare portable content and settings, and prove source IDs and URLs are absent. |
 | `e2e/tests/site-kits-catalog.spec.ts` | Three kits; previews load; premium indicators render; no import on page load or activation; Default label cannot import. |
 | `e2e/tests/site-kits-theme-required.spec.ts` | Catalog works without Start Stackable; banner and modal agree; missing theme can be installed; inactive theme can be activated; Apply remains blocked until active. |

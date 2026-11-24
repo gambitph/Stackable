@@ -6,6 +6,8 @@ import SVGEssentialIcon from './images/settings-icon-essential.svg'
 import SVGSpecialIcon from './images/settings-icon-special.svg'
 import SVGSectionIcon from './images/settings-icon-section.svg'
 import { ImportExportModal } from './import-export'
+import { SiteKitExport } from './site-kit-export'
+import { SiteKitImport } from './site-kit-import'
 
 /**
  * WordPress dependencies
@@ -30,6 +32,8 @@ import {
 	v2disabledBlocks,
 	defaultBreakpoints,
 	editorRoles,
+	siteKitExport,
+	siteKitImport,
 } from 'stackable'
 import classnames from 'classnames'
 import {
@@ -237,6 +241,13 @@ const SEARCH_TREE = [
 		id: 'import-export',
 		label: __( 'Import/Export', i18n ),
 		groups: [
+			...( siteKitImport?.enabled ? [ {
+				id: 'site-kit-import',
+				children: [
+					__( 'Site Kit Import', i18n ),
+					__( 'Choose Site Kit ZIP', i18n ),
+				],
+			} ] : [] ),
 			{
 				id: 'import',
 				children: [
@@ -249,6 +260,13 @@ const SEARCH_TREE = [
 					__( 'Export', i18n ),
 				],
 			},
+			...( siteKitExport?.enabled ? [ {
+				id: 'site-kit-export',
+				children: [
+					__( 'Site Kit Export', i18n ),
+					__( 'Validate Site Kit', i18n ),
+				],
+			} ] : [] ),
 		],
 	},
 	{
@@ -1645,6 +1663,8 @@ const ImportExportSettings = props => {
 	const groups = filteredSearchTree.find( tab => tab.id === 'import-export' ).groups
 	const importSettings = groups.find( group => group.id === 'import' )
 	const exportSettings = groups.find( group => group.id === 'export' )
+	const siteKitExportSettings = groups.find( group => group.id === 'site-kit-export' )
+	const siteKitImportSettings = groups.find( group => group.id === 'site-kit-import' )
 	const hasGroupMatch = groups.some( group => group.children === null || group.children.length > 0 )
 
 	const [ modalState, setModalState ] = useState( 'CLOSED' )
@@ -1662,6 +1682,9 @@ const ImportExportSettings = props => {
 				<h3>{ __( 'No matching settings', i18n ) }</h3>
 			) : (
 				<>
+					{ siteKitImportSettings && ( siteKitImportSettings.children === null || siteKitImportSettings.children.length > 0 ) &&
+						<SiteKitImport />
+					}
 					{ ( importSettings.children === null || importSettings.children.length > 0 ) &&
 						<div className="s-setting-group">
 							<h2>{ __( 'Import', i18n ) }</h2>
@@ -1717,6 +1740,9 @@ const ImportExportSettings = props => {
 								onClick={ () => setModalState( 'EXPORT' ) }
 							/>
 						</div>
+					}
+					{ siteKitExportSettings && ( siteKitExportSettings.children === null || siteKitExportSettings.children.length > 0 ) &&
+						<SiteKitExport />
 					}
 					{ <ImportExportModal
 						modalState={ modalState }

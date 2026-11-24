@@ -135,6 +135,7 @@
 		"build:e2e:premium": "cd pro__premium_only && npm run build:no-translate",
 		"test": "npm run test:e2e",
 		"test:e2e": "npx playwright test",
+		"test:e2e:site-kits-production": "npx playwright test -c playwright.site-kits-production.config.js",
 		"test:e2e:premium": "npx playwright test -c playwright.premium.config.js",
 		"test:debug": "npx playwright test --ui",
 		"test:debug:premium": "npx playwright test -c playwright.premium.config.js --ui",

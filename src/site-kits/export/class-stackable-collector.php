@@ -42,30 +42,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Stackable_Collector' ) ) {
 		}
 
 		private function collect_settings() {
-			$option_names = array(
-				'stackable_global_hide_theme_colors',
-				'stackable_global_hide_default_colors',
-				'stackable_global_hide_site_editor_colors',
-				'stackable_global_typography_apply_to',
-				'stackable_global_force_typography',
-				'stackable_selected_font_pair',
-				'stackable_custom_font_pairs',
-				'stackable_use_typography_as_presets',
-				'stackable_is_apply_body_to_html',
-				'stackable_icon_library',
-				'stackable_global_buttons_and_icons',
-				'stackable_global_custom_preset_controls',
-				'stackable_global_hide_color_scheme_colors',
-				'stackable_global_base_color_scheme',
-				'stackable_global_background_mode_color_scheme',
-				'stackable_global_container_mode_color_scheme',
-				'stackable_use_size_presets_by_default',
-			);
-
-			$option_names = apply_filters( 'stackable_site_kit_export_stackable_option_names', $option_names );
 			$settings = array();
 			$missing = new stdClass();
-			foreach ( array_unique( array_filter( $option_names, 'is_string' ) ) as $option_name ) {
+			foreach ( Stackable_Site_Kit_Stackable_Settings::option_names() as $option_name ) {
+				if ( 'stackable_global_block_styles' === $option_name ) {
+					continue;
+				}
 				$value = get_option( $option_name, $missing );
 				if ( $missing !== $value ) {
 					$settings[ $option_name ] = $value;

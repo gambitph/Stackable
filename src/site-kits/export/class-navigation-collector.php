@@ -113,6 +113,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Navigation_Collector' ) ) {
 
 		private function collect_navigation_entities( $theme ) {
 			$references = array();
+			$slugs = array();
 			foreach ( array( 'templates', 'templateParts' ) as $collection ) {
 				foreach ( isset( $theme[ $collection ] ) ? $theme[ $collection ] : array() as $template ) {
 					if ( preg_match_all( '/<!--\s+wp:navigation\s+({.*?})\s*(?:\/)?-->/', $template['content'], $matches ) ) {
@@ -123,23 +124,42 @@ if ( ! class_exists( 'Stackable_Site_Kit_Navigation_Collector' ) ) {
 							}
 						}
 					}
+					if ( preg_match_all( '/"stkSiteKitNavigation"\s*:\s*"([a-z0-9]+(?:-[a-z0-9]+)*)"/', $template['content'], $token_matches ) ) {
+						$slugs = array_merge( $slugs, $token_matches[1] );
+					}
 				}
 			}
 
 			$references = array_values( array_unique( array_filter( $references ) ) );
-			if ( ! $references ) {
+			$slugs = array_values( array_unique( array_filter( $slugs ) ) );
+			if ( ! $references && ! $slugs ) {
 				return array();
 			}
 
-			$posts = get_posts(
-				array(
+			$posts = array();
+			if ( $references ) {
+				$posts = get_posts( array(
 					'post_type' => 'wp_navigation',
 					'post__in' => $references,
 					'posts_per_page' => -1,
 					'post_status' => array( 'publish', 'draft', 'private', 'pending', 'future' ),
 					'no_found_rows' => true,
-				)
-			);
+				) );
+			}
+			if ( $slugs ) {
+				$posts = array_merge( $posts, get_posts( array(
+					'post_type' => 'wp_navigation',
+					'post_name__in' => $slugs,
+					'posts_per_page' => -1,
+					'post_status' => array( 'publish', 'draft', 'private', 'pending', 'future' ),
+					'no_found_rows' => true,
+				) ) );
+			}
+			$posts_by_id = array();
+			foreach ( $posts as $post ) {
+				$posts_by_id[ $post->ID ] = $post;
+			}
+			$posts = array_values( $posts_by_id );
 
 			$entities = array();
 			foreach ( $posts as $post ) {
@@ -157,6 +177,14 @@ if ( ! class_exists( 'Stackable_Site_Kit_Navigation_Collector' ) ) {
 					'code' => 'missing_navigation',
 					'path' => '/menu/entities',
 					'message' => 'A referenced navigation entity could not be exported: ' . $missing_id,
+				);
+			}
+			$found_slugs = wp_list_pluck( $posts, 'post_name' );
+			foreach ( array_diff( $slugs, $found_slugs ) as $missing_slug ) {
+				$this->warnings[] = array(
+					'code' => 'missing_navigation',
+					'path' => '/menu/entities',
+					'message' => 'A referenced navigation entity could not be exported: ' . $missing_slug,
 				);
 			}
 

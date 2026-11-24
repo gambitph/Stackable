@@ -13,6 +13,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Collector' ) ) {
 	class Stackable_Site_Kit_Theme_Collector {
 
 		private $media;
+		private $warnings = array();
 
 		public function __construct( $media ) {
 			$this->media = $media;
@@ -21,7 +22,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Collector' ) ) {
 		public function collect( $context = array() ) {
 			$user_data = array();
 			if ( class_exists( 'WP_Theme_JSON_Resolver' ) && function_exists( 'wp_get_theme' ) ) {
-				$theme_json = WP_Theme_JSON_Resolver::get_user_data_from_wp_global_styles( wp_get_theme() );
+				$theme_json = WP_Theme_JSON_Resolver::get_user_data();
 				if ( is_object( $theme_json ) && method_exists( $theme_json, 'get_data' ) ) {
 					$user_data = $theme_json->get_data();
 				}
@@ -55,6 +56,14 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Collector' ) ) {
 			return $theme;
 		}
 
+		public function get_warnings() {
+			return $this->warnings;
+		}
+
+		public function reset() {
+			$this->warnings = array();
+		}
+
 		private function collect_templates( $post_type ) {
 			if ( ! function_exists( 'get_block_templates' ) ) {
 				return array();
@@ -72,7 +81,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Collector' ) ) {
 					'type' => $post_type,
 					'title' => isset( $template->title ) ? (string) $template->title : '',
 					'status' => isset( $template->status ) ? $template->status : 'publish',
-					'content' => $this->media->localize_content( isset( $template->content ) ? $template->content : '' ),
+					'content' => $this->portable_navigation_references( $this->media->localize_content( isset( $template->content ) ? $template->content : '' ) ),
 				);
 
 				if ( 'wp_template' === $post_type ) {
@@ -85,6 +94,66 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Collector' ) ) {
 			}
 
 			return $templates;
+		}
+
+		private function portable_navigation_references( $content ) {
+			if ( ! function_exists( 'parse_blocks' ) || ! function_exists( 'serialize_blocks' ) ) {
+				return $content;
+			}
+
+			$blocks = parse_blocks( $content );
+			$references = array();
+			$this->collect_navigation_references( $blocks, $references );
+			if ( ! $references ) {
+				return $content;
+			}
+
+			$posts = get_posts(
+				array(
+					'post_type' => 'wp_navigation',
+					'post__in' => array_values( array_unique( $references ) ),
+					'posts_per_page' => -1,
+					'post_status' => array( 'publish', 'draft', 'private', 'pending', 'future' ),
+					'no_found_rows' => true,
+				)
+			);
+			$slugs = array();
+			foreach ( $posts as $post ) {
+				$slugs[ (int) $post->ID ] = sanitize_title( $post->post_name );
+			}
+			$this->rewrite_navigation_references( $blocks, $slugs );
+			foreach ( array_diff( array_unique( $references ), array_keys( $slugs ) ) as $missing_id ) {
+				$this->warnings[] = array(
+					'code' => 'missing_navigation',
+					'path' => '/theme',
+					'message' => 'A referenced navigation entity could not be made portable: ' . $missing_id,
+				);
+			}
+			return serialize_blocks( $blocks );
+		}
+
+		private function collect_navigation_references( $blocks, &$references ) {
+			foreach ( $blocks as $block ) {
+				if ( isset( $block['blockName'] ) && 'core/navigation' === $block['blockName'] && ! empty( $block['attrs']['ref'] ) ) {
+					$references[] = (int) $block['attrs']['ref'];
+				}
+				if ( ! empty( $block['innerBlocks'] ) ) {
+					$this->collect_navigation_references( $block['innerBlocks'], $references );
+				}
+			}
+		}
+
+		private function rewrite_navigation_references( &$blocks, $slugs ) {
+			foreach ( $blocks as &$block ) {
+				if ( isset( $block['blockName'] ) && 'core/navigation' === $block['blockName'] && ! empty( $block['attrs']['ref'] ) && isset( $slugs[ $block['attrs']['ref'] ] ) ) {
+					$block['attrs']['stkSiteKitNavigation'] = $slugs[ $block['attrs']['ref'] ];
+					unset( $block['attrs']['ref'] );
+				}
+				if ( ! empty( $block['innerBlocks'] ) ) {
+					$this->rewrite_navigation_references( $block['innerBlocks'], $slugs );
+				}
+			}
+			unset( $block );
 		}
 	}
 }

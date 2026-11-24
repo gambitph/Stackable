@@ -5,6 +5,12 @@
 	},
 	"steps": [
 		{
+			"step": "defineWpConfigConsts",
+			"consts": {
+				"WP_ENV": "development"
+			}
+		},
+		{
 			"step": "login",
 			"username": "admin",
 			"password": "password"
@@ -16,7 +22,7 @@
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php\nrequire_once '/wordpress/wp-load.php';\nupdate_option( 'stackable_guided_tour_states', array( 'design-system', 'editor', 'design-library', 'blocks' ), false );\n"
+			"code": "<?php\nrequire_once '/wordpress/wp-load.php';\nupdate_option( 'stackable_guided_tour_states', array( 'design-system', 'editor', 'design-library', 'blocks' ), false );\n$theme_dir = WP_CONTENT_DIR . '/themes/start-stackable';\nwp_mkdir_p( $theme_dir . '/templates' );\nfile_put_contents( $theme_dir . '/style.css', \"/*\\nTheme Name: Start Stackable E2E Fixture\\nVersion: 1.0\\n*/\\n\" );\nfile_put_contents( $theme_dir . '/theme.json', '{\"version\":3,\"settings\":{},\"styles\":{}}' );\nfile_put_contents( $theme_dir . '/templates/index.html', '<!-- wp:post-content /-->' );\n"
 		}
 	]
 }

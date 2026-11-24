@@ -69,7 +69,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 				}
 			}
 
-			return $content;
+			return $this->localize_attachment_ids( $content );
 		}
 
 		/**
@@ -156,6 +156,61 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 
 		public function get_warnings() {
 			return $this->warnings;
+		}
+
+		private function localize_attachment_ids( $content ) {
+			if ( ! function_exists( 'parse_blocks' ) || ! function_exists( 'serialize_blocks' ) || ! $this->attachment_ids ) {
+				return $content;
+			}
+			$blocks = parse_blocks( $content );
+			$this->rewrite_attachment_ids( $blocks );
+			return serialize_blocks( $blocks );
+		}
+
+		private function rewrite_attachment_ids( &$blocks ) {
+			foreach ( $blocks as &$block ) {
+				$tokens = array();
+				foreach ( isset( $block['attrs'] ) ? $block['attrs'] : array() as $name => $value ) {
+					$changed = false;
+					$portable = $this->portable_attachment_value( $value, $name, $changed );
+					if ( $changed ) {
+						$tokens[ $name ] = $portable;
+						unset( $block['attrs'][ $name ] );
+					}
+				}
+				if ( $tokens ) {
+					$block['attrs']['stkSiteKitMediaIds'] = $tokens;
+				}
+				if ( ! empty( $block['innerBlocks'] ) ) {
+					$this->rewrite_attachment_ids( $block['innerBlocks'] );
+				}
+			}
+			unset( $block );
+		}
+
+		private function portable_attachment_value( $value, $name, &$changed ) {
+			$is_id = 'id' === $name || 1 === preg_match( '/I[dD]$/', $name );
+			$is_ids = 'ids' === $name || 1 === preg_match( '/I[dD]s$/', $name );
+
+			if ( $is_id && ( is_int( $value ) || ( is_string( $value ) && ctype_digit( $value ) ) ) ) {
+				$attachment_id = (int) $value;
+				if ( isset( $this->attachment_ids[ $attachment_id ] ) ) {
+					$changed = true;
+					return $this->attachment_ids[ $attachment_id ]['id'];
+				}
+				return $value;
+			}
+
+			if ( ! is_array( $value ) ) {
+				return $value;
+			}
+
+			$portable = array();
+			foreach ( $value as $key => $item ) {
+				$child_name = is_string( $key ) ? $key : ( $is_ids ? 'id' : '' );
+				$portable[ $key ] = $this->portable_attachment_value( $item, $child_name, $changed );
+			}
+			return $portable;
 		}
 
 		private function unique_package_path( $path ) {
