@@ -67,7 +67,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Navigation_Collector' ) ) {
 					)
 				);
 				foreach ( $pages as $page ) {
-					$page_slugs[ $page->ID ] = sanitize_title( $page->post_name );
+					$page_slugs[ $page->ID ] = Stackable_Site_Kit_Portable_Data::slug( $page->post_name, 'page-' . $page->ID );
 				}
 			}
 
@@ -88,6 +88,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Navigation_Collector' ) ) {
 					'children' => array(),
 				);
 			}
+			foreach ( $items as &$item ) {
+				if ( $item['parent'] && ! isset( $items[ $item['parent'] ] ) ) {
+					$item['parent'] = 0;
+				}
+			}
+			unset( $item );
 
 			return $this->nest_menu_items( $items, 0 );
 		}
@@ -164,7 +170,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Navigation_Collector' ) ) {
 			$entities = array();
 			foreach ( $posts as $post ) {
 				$entities[] = array(
-					'slug' => sanitize_title( $post->post_name ),
+					'slug' => Stackable_Site_Kit_Portable_Data::slug( $post->post_name, 'navigation-' . $post->ID ),
 					'title' => (string) $post->post_title,
 					'status' => $post->post_status,
 					'content' => $this->portable_navigation_content( $this->media->localize_content( $post->post_content ) ),
@@ -211,7 +217,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Navigation_Collector' ) ) {
 					)
 				);
 				foreach ( $pages as $page ) {
-					$page_slugs[ $page->ID ] = sanitize_title( $page->post_name );
+					$page_slugs[ $page->ID ] = Stackable_Site_Kit_Portable_Data::slug( $page->post_name, 'page-' . $page->ID );
 				}
 			}
 

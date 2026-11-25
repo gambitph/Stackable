@@ -64,8 +64,9 @@ class SiteKitExporterTest extends Stackable_TestCase {
 		);
 		$exporter = new Stackable_Site_Kit_Exporter( $collectors, $media, new Stackable_Site_Kit_Archive_Writer(), new Stackable_Site_Kit_Package_Validator() );
 		$temp_directory = sys_get_temp_dir() . '/stk-site-kit-' . uniqid( '', true );
+		$package_directory = $temp_directory . '/' . $fixture->slug;
 		$archive_path = $temp_directory . '/' . $fixture->slug . '.zip';
-		mkdir( $temp_directory, 0777, true );
+		mkdir( $package_directory, 0777, true );
 
 		try {
 			$result = $exporter->export(
@@ -90,7 +91,15 @@ class SiteKitExporterTest extends Stackable_TestCase {
 				file_get_contents( $fixture_directory . '/assets/hero-office.png' ),
 				$archive->getFromName( 'assets/hero-office.png' )
 			);
+			$this->assertTrue( $archive->extractTo( $package_directory ) );
 			$archive->close();
+
+			$validator = STACKABLE_PLUGIN_DIR . 'tools/site-kits/validate-package.js';
+			$command = 'node ' . escapeshellarg( $validator ) . ' ' . escapeshellarg( $package_directory ) . ' 2>&1';
+			$output = array();
+			$exit_code = 1;
+			exec( $command, $output, $exit_code );
+			$this->assertSame( 0, $exit_code, implode( "\n", $output ) );
 		} finally {
 			$this->delete_directory( $temp_directory );
 		}

@@ -36,15 +36,9 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 			}
 
 			$uploads = wp_get_upload_dir();
-			if ( empty( $uploads['baseurl'] ) ) {
-				return $content;
-			}
-
 			$pattern = '#https?://[^\s"\'<>\\)]+#i';
-			if ( ! preg_match_all( $pattern, $content, $matches ) ) {
-				return $content;
-			}
-
+			$matches = array();
+			if ( ! empty( $uploads['baseurl'] ) && preg_match_all( $pattern, $content, $matches ) ) {
 			foreach ( array_unique( $matches[0] ) as $url ) {
 				$clean_url = strtok( $url, '?#' );
 				if ( 0 !== strpos( $clean_url, $uploads['baseurl'] . '/' ) ) {
@@ -67,6 +61,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 				if ( $media_id && isset( $this->attachment_ids[ $attachment_id ]['path'] ) ) {
 					$content = str_replace( $url, $this->attachment_ids[ $attachment_id ]['path'], $content );
 				}
+			}
 			}
 
 			return $this->localize_attachment_ids( $content );
@@ -97,6 +92,25 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 			return $value;
 		}
 
+		public function localize_block_attributes( $block_name, $attributes ) {
+			if ( ! is_array( $attributes ) ) {
+				return $attributes;
+			}
+			$tokens = array();
+			foreach ( $attributes as $name => $value ) {
+				$changed = false;
+				$portable = $this->portable_attachment_value( $value, $name, $changed, $block_name );
+				if ( $changed ) {
+					$tokens[ $name ] = $portable;
+					unset( $attributes[ $name ] );
+				}
+			}
+			if ( $tokens ) {
+				$attributes['stkSiteKitMediaIds'] = $tokens;
+			}
+			return $this->localize_value( $attributes );
+		}
+
 		/**
 		 * Add an attachment to the package manifest.
 		 *
@@ -122,9 +136,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 				return null;
 			}
 
-			$filename = sanitize_file_name( wp_basename( $source ) );
+			$source_filename = sanitize_file_name( wp_basename( $source ) );
+			$extension = strtolower( pathinfo( $source_filename, PATHINFO_EXTENSION ) );
+			$stem = Stackable_Site_Kit_Portable_Data::slug( pathinfo( $source_filename, PATHINFO_FILENAME ), 'media-' . $attachment_id );
+			$filename = $stem . ( $extension ? '.' . preg_replace( '/[^a-z0-9]+/', '', $extension ) : '' );
 			$package_path = $this->unique_package_path( 'assets/' . $filename );
-			$media_id = $this->unique_media_id( sanitize_title( pathinfo( $filename, PATHINFO_FILENAME ) ) );
+			$media_id = $this->unique_media_id( $stem );
 			$attachment = get_post( $attachment_id );
 
 			$entry = array(
@@ -159,7 +176,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 		}
 
 		private function localize_attachment_ids( $content ) {
-			if ( ! function_exists( 'parse_blocks' ) || ! function_exists( 'serialize_blocks' ) || ! $this->attachment_ids ) {
+			if ( ! function_exists( 'parse_blocks' ) || ! function_exists( 'serialize_blocks' ) ) {
 				return $content;
 			}
 			$blocks = parse_blocks( $content );
@@ -172,7 +189,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 				$tokens = array();
 				foreach ( isset( $block['attrs'] ) ? $block['attrs'] : array() as $name => $value ) {
 					$changed = false;
-					$portable = $this->portable_attachment_value( $value, $name, $changed );
+					$portable = $this->portable_attachment_value( $value, $name, $changed, isset( $block['blockName'] ) ? $block['blockName'] : '' );
 					if ( $changed ) {
 						$tokens[ $name ] = $portable;
 						unset( $block['attrs'][ $name ] );
@@ -188,12 +205,15 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 			unset( $block );
 		}
 
-		private function portable_attachment_value( $value, $name, &$changed ) {
-			$is_id = 'id' === $name || 1 === preg_match( '/I[dD]$/', $name );
-			$is_ids = 'ids' === $name || 1 === preg_match( '/I[dD]s$/', $name );
+		private function portable_attachment_value( $value, $name, &$changed, $block_name = '', $media_context = false ) {
+			$is_id = $media_context || $this->is_attachment_attribute( $block_name, $name, false );
+			$is_ids = $this->is_attachment_attribute( $block_name, $name, true );
 
 			if ( $is_id && ( is_int( $value ) || ( is_string( $value ) && ctype_digit( $value ) ) ) ) {
 				$attachment_id = (int) $value;
+				if ( 'attachment' === get_post_type( $attachment_id ) ) {
+					$this->register_attachment( $attachment_id );
+				}
 				if ( isset( $this->attachment_ids[ $attachment_id ] ) ) {
 					$changed = true;
 					return $this->attachment_ids[ $attachment_id ]['id'];
@@ -208,9 +228,30 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 			$portable = array();
 			foreach ( $value as $key => $item ) {
 				$child_name = is_string( $key ) ? $key : ( $is_ids ? 'id' : '' );
-				$portable[ $key ] = $this->portable_attachment_value( $item, $child_name, $changed );
+				$portable[ $key ] = $this->portable_attachment_value( $item, $child_name, $changed, $block_name, $media_context || $is_ids || in_array( $name, array( 'image', 'images', 'media' ), true ) );
 			}
 			return $portable;
+		}
+
+		private function is_attachment_attribute( $block_name, $name, $multiple ) {
+			$core = array(
+				'core/audio' => array( 'id' ),
+				'core/cover' => array( 'id' ),
+				'core/file' => array( 'id' ),
+				'core/gallery' => array( 'ids', 'images' ),
+				'core/image' => array( 'id' ),
+				'core/media-text' => array( 'mediaId' ),
+				'core/video' => array( 'id' ),
+			);
+			if ( isset( $core[ $block_name ] ) && in_array( $name, $core[ $block_name ], true ) ) {
+				return $multiple ? in_array( $name, array( 'ids', 'images' ), true ) : ! in_array( $name, array( 'ids', 'images' ), true );
+			}
+			if ( false !== strpos( $block_name, '/' ) && 0 !== strpos( $block_name, 'stackable/' ) ) {
+				return false;
+			}
+			return $multiple
+				? 1 === preg_match( '/(?:media|image)I[dD]s$/', $name )
+				: 1 === preg_match( '/(?:media|image)I[dD]$/', $name );
 		}
 
 		private function unique_package_path( $path ) {

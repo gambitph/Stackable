@@ -44,13 +44,13 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Collector' ) ) {
 			$footer_part = apply_filters( 'stackable_site_kit_export_footer_part', '' );
 
 			if ( $style_variation ) {
-				$theme['styleVariation'] = sanitize_title( $style_variation );
+				$theme['styleVariation'] = Stackable_Site_Kit_Portable_Data::slug( $style_variation, 'style' );
 			}
 			if ( $header_part ) {
-				$theme['headerPart'] = sanitize_title( $header_part );
+				$theme['headerPart'] = Stackable_Site_Kit_Portable_Data::slug( $header_part, 'header' );
 			}
 			if ( $footer_part ) {
-				$theme['footerPart'] = sanitize_title( $footer_part );
+				$theme['footerPart'] = Stackable_Site_Kit_Portable_Data::slug( $footer_part, 'footer' );
 			}
 
 			return $theme;
@@ -76,12 +76,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Collector' ) ) {
 				}
 
 				$entry = array(
-					'slug' => sanitize_title( $template->slug ),
+					'slug' => Stackable_Site_Kit_Portable_Data::slug( $template->slug, $post_type ),
 					'theme' => 'start-stackable',
 					'type' => $post_type,
 					'title' => isset( $template->title ) ? (string) $template->title : '',
 					'status' => isset( $template->status ) ? $template->status : 'publish',
-					'content' => $this->portable_navigation_references( $this->media->localize_content( isset( $template->content ) ? $template->content : '' ) ),
+					'content' => $this->portable_template_content( $this->media->localize_content( isset( $template->content ) ? $template->content : '' ) ),
 				);
 
 				if ( 'wp_template' === $post_type ) {
@@ -94,6 +94,63 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Collector' ) ) {
 			}
 
 			return $templates;
+		}
+
+		private function portable_template_content( $content ) {
+			$content = $this->portable_navigation_references( $content );
+			$content = $this->portable_page_references( $content );
+			return Stackable_Site_Kit_Portable_Data::localize_pattern_references( $content, $this->warnings, '/theme' );
+		}
+
+		private function portable_page_references( $content ) {
+			if ( ! function_exists( 'parse_blocks' ) || ! function_exists( 'serialize_blocks' ) ) {
+				return $content;
+			}
+			$blocks = parse_blocks( $content );
+			$page_ids = array();
+			$this->collect_navigation_page_ids( $blocks, $page_ids );
+			if ( ! $page_ids ) {
+				return $content;
+			}
+			$pages = get_posts(
+				array(
+					'post_type' => 'page',
+					'post__in' => array_values( array_unique( $page_ids ) ),
+					'posts_per_page' => -1,
+					'post_status' => array( 'publish', 'draft', 'private', 'pending', 'future' ),
+					'no_found_rows' => true,
+				)
+			);
+			$page_slugs = array();
+			foreach ( $pages as $page ) {
+				$page_slugs[ $page->ID ] = Stackable_Site_Kit_Portable_Data::slug( $page->post_name, 'page-' . $page->ID );
+			}
+			$this->rewrite_navigation_page_ids( $blocks, $page_slugs );
+			return serialize_blocks( $blocks );
+		}
+
+		private function collect_navigation_page_ids( $blocks, &$page_ids ) {
+			foreach ( $blocks as $block ) {
+				if ( isset( $block['blockName'] ) && in_array( $block['blockName'], array( 'core/navigation-link', 'core/navigation-submenu' ), true ) && ! empty( $block['attrs']['id'] ) && isset( $block['attrs']['type'] ) && 'page' === $block['attrs']['type'] ) {
+					$page_ids[] = (int) $block['attrs']['id'];
+				}
+				if ( ! empty( $block['innerBlocks'] ) ) {
+					$this->collect_navigation_page_ids( $block['innerBlocks'], $page_ids );
+				}
+			}
+		}
+
+		private function rewrite_navigation_page_ids( &$blocks, $page_slugs ) {
+			foreach ( $blocks as &$block ) {
+				if ( isset( $block['blockName'] ) && in_array( $block['blockName'], array( 'core/navigation-link', 'core/navigation-submenu' ), true ) && ! empty( $block['attrs']['id'] ) && isset( $block['attrs']['type'] ) && 'page' === $block['attrs']['type'] && isset( $page_slugs[ $block['attrs']['id'] ] ) ) {
+					$block['attrs']['stkSiteKitPage'] = $page_slugs[ $block['attrs']['id'] ];
+					unset( $block['attrs']['id'], $block['attrs']['url'] );
+				}
+				if ( ! empty( $block['innerBlocks'] ) ) {
+					$this->rewrite_navigation_page_ids( $block['innerBlocks'], $page_slugs );
+				}
+			}
+			unset( $block );
 		}
 
 		private function portable_navigation_references( $content ) {
@@ -119,7 +176,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Collector' ) ) {
 			);
 			$slugs = array();
 			foreach ( $posts as $post ) {
-				$slugs[ (int) $post->ID ] = sanitize_title( $post->post_name );
+				$slugs[ (int) $post->ID ] = Stackable_Site_Kit_Portable_Data::slug( $post->post_name, 'navigation-' . $post->ID );
 			}
 			$this->rewrite_navigation_references( $blocks, $slugs );
 			foreach ( array_diff( array_unique( $references ), array_keys( $slugs ) ) as $missing_id ) {

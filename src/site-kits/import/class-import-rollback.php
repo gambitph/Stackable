@@ -64,17 +64,18 @@ if ( ! class_exists( 'Stackable_Site_Kit_Import_Rollback' ) ) {
 		public function record_post_terms( $post_id, $taxonomy ) {
 			$key = (int) $post_id . ':' . $taxonomy;
 			if ( isset( $this->post_terms[ $key ] ) ) {
-				return;
+				return true;
 			}
 			$terms = wp_get_object_terms( $post_id, $taxonomy, array( 'fields' => 'ids' ) );
 			if ( is_wp_error( $terms ) ) {
-				return;
+				return $terms;
 			}
 			$this->post_terms[ $key ] = array(
 				'postId' => (int) $post_id,
 				'taxonomy' => $taxonomy,
 				'terms' => $terms,
 			);
+			return true;
 		}
 
 		public function record_term_meta( $term_id ) {
@@ -159,7 +160,9 @@ if ( ! class_exists( 'Stackable_Site_Kit_Import_Rollback' ) ) {
 				}
 				foreach ( $snapshot['meta'] as $key => $values ) {
 					foreach ( $values as $value ) {
-						add_post_meta( $post_id, $key, maybe_unserialize( $value ) );
+						if ( false === add_post_meta( $post_id, $key, wp_slash( maybe_unserialize( $value ) ) ) ) {
+							$errors[] = 'Could not restore metadata for post ' . $post_id . '.';
+						}
 					}
 				}
 			}
@@ -177,16 +180,20 @@ if ( ! class_exists( 'Stackable_Site_Kit_Import_Rollback' ) ) {
 				}
 				foreach ( $meta as $key => $values ) {
 					foreach ( $values as $value ) {
-						add_term_meta( $term_id, $key, maybe_unserialize( $value ) );
+						if ( false === add_term_meta( $term_id, $key, wp_slash( maybe_unserialize( $value ) ) ) ) {
+							$errors[] = 'Could not restore metadata for menu ' . $term_id . '.';
+						}
 					}
 				}
 			}
 
 			foreach ( $this->options as $name => $snapshot ) {
 				if ( $snapshot['exists'] ) {
-					update_option( $name, $snapshot['value'] );
-				} else {
-					delete_option( $name );
+					if ( false === update_option( $name, $snapshot['value'] ) && get_option( $name ) !== $snapshot['value'] ) {
+						$errors[] = 'Could not restore option ' . $name . '.';
+					}
+				} elseif ( false === delete_option( $name ) && false !== get_option( $name, false ) ) {
+					$errors[] = 'Could not remove option ' . $name . '.';
 				}
 			}
 

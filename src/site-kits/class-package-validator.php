@@ -185,11 +185,11 @@ if ( ! class_exists( 'Stackable_Site_Kit_Package_Validator' ) ) {
 			$page_slugs = array_flip( $this->pluck( $data['pages'], 'slug' ) );
 			$media_ids = array_flip( $this->pluck( $data['media'], 'id' ) );
 
-			if ( 'page' === $data['site']['showOnFront'] && empty( $data['site']['frontPage'] ) ) {
+			if ( 'page' === $data['site']['showOnFront'] && ( null === $data['site']['frontPage'] || '' === $data['site']['frontPage'] ) ) {
 				$errors[] = $this->error( 'front_page_required', '/site/frontPage', __( 'A front page is required when the Site Kit uses a static front page.', STACKABLE_I18N ) );
 			}
 			foreach ( array( 'frontPage', 'postsPage' ) as $property ) {
-				if ( ! empty( $data['site'][ $property ] ) && ! isset( $page_slugs[ $data['site'][ $property ] ] ) ) {
+				if ( null !== $data['site'][ $property ] && '' !== $data['site'][ $property ] && ! isset( $page_slugs[ $data['site'][ $property ] ] ) ) {
 					$errors[] = $this->error( 'unknown_page_reference', '/site/' . $property, __( 'A website setting references a page that is not in the Site Kit.', STACKABLE_I18N ) );
 				}
 			}
@@ -197,6 +197,11 @@ if ( ! class_exists( 'Stackable_Site_Kit_Package_Validator' ) ) {
 				$page = is_object( $page ) ? get_object_vars( $page ) : $page;
 				if ( ! empty( $page['featuredMedia'] ) && ! isset( $media_ids[ $page['featuredMedia'] ] ) ) {
 					$errors[] = $this->error( 'unknown_media_reference', '/pages/' . $index . '/featuredMedia', __( 'A page references media that is not in the Site Kit.', STACKABLE_I18N ) );
+				}
+			}
+			foreach ( $this->collect_media_id_tokens( $data ) as $media_id ) {
+				if ( ! isset( $media_ids[ $media_id ] ) ) {
+					$errors[] = $this->error( 'unknown_media_reference', '/', __( 'A block references media that is not in the Site Kit.', STACKABLE_I18N ) );
 				}
 			}
 			foreach ( $this->flatten_menu_items( $data['menu']['items'] ) as $index => $item ) {
@@ -232,10 +237,18 @@ if ( ! class_exists( 'Stackable_Site_Kit_Package_Validator' ) ) {
 		private function external_media_errors( $value, $path = '' ) {
 			$errors = array();
 			if ( is_string( $value ) ) {
-				if ( preg_match_all( '~(?:https?:)?//[^\s"\'<>\\)]+?\.(?:avif|gif|jpe?g|png|svg|webp|mp4|webm|mp3|wav|ogg|pdf)(?:[?#][^\s"\'<>\\)]*)?~i', $value, $matches ) ) {
-					foreach ( $matches[0] as $url ) {
+				$urls = array();
+				if ( preg_match_all( '~(?:https?:)?//[^\s"\'<>\\)]+?\.(?:avif|gif|jpe?g|png|svg|webp|mp4|webm|mp3|wav|ogg|pdf|woff2?|ttf|otf)(?:[?#][^\s"\'<>\\)]*)?~i', $value, $matches ) ) {
+					$urls = $matches[0];
+				}
+				if ( preg_match_all( '~(?:\b(?:src|poster)\s*=\s*["\']|\burl\(\s*["\']?)((?:https?:)?//[^\s"\'<>\\)]+)~i', $value, $embedded_matches ) ) {
+					$urls = array_merge( $urls, $embedded_matches[1] );
+				}
+				if ( preg_match_all( '~["\'](?:[^"\']*(?:image|media|background|poster|video|audio|font|logo|icon|src)[^"\']*)["\']\s*:\s*["\']((?:https?:)?//[^\s"\'<>\\)]+)~i', $value, $named_matches ) ) {
+					$urls = array_merge( $urls, $named_matches[1] );
+				}
+				foreach ( array_unique( $urls ) as $url ) {
 						$errors[] = $this->error( 'external_media_url', $path, sprintf( __( 'External media must be packaged locally: %s', STACKABLE_I18N ), $url ) );
-					}
 				}
 				return $errors;
 			}
@@ -244,6 +257,29 @@ if ( ! class_exists( 'Stackable_Site_Kit_Package_Validator' ) ) {
 				$errors = array_merge( $errors, $this->external_media_errors( $item, $path . '/' . $key ) );
 			}
 			return $errors;
+		}
+
+		private function collect_media_id_tokens( $value, $collecting = false ) {
+			if ( is_string( $value ) ) {
+				if ( $collecting ) {
+					return array( $value );
+				}
+				$tokens = array();
+				if ( preg_match_all( '/<!--\s+wp:[^\s]+\s+({.*?})\s*(?:\/)?-->/', $value, $matches ) ) {
+					foreach ( $matches[1] as $attributes_json ) {
+						$attributes = json_decode( $attributes_json, true );
+						if ( is_array( $attributes ) ) {
+							$tokens = array_merge( $tokens, $this->collect_media_id_tokens( $attributes ) );
+						}
+					}
+				}
+				return $tokens;
+			}
+			$tokens = array();
+			foreach ( $this->iterable_value( $value ) as $key => $item ) {
+				$tokens = array_merge( $tokens, $this->collect_media_id_tokens( $item, $collecting || 'stkSiteKitMediaIds' === $key ) );
+			}
+			return $tokens;
 		}
 
 		private function collect_package_media_references( $value ) {

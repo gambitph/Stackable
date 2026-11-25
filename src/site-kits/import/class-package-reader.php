@@ -14,6 +14,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Package_Reader' ) ) {
 
 		const MAX_ARCHIVE_BYTES = 52428800;
 		const MAX_EXTRACTED_BYTES = 104857600;
+		const MAX_META_BYTES = 5242880;
 		const MAX_FILES = 500;
 
 		private $validator;
@@ -55,7 +56,13 @@ if ( ! class_exists( 'Stackable_Site_Kit_Package_Reader' ) ) {
 				return $this->error( 'site_kit_import_missing_meta', __( 'The Site Kit archive does not contain meta.json at its root.', STACKABLE_I18N ) );
 			}
 
-			$data = json_decode( file_get_contents( $meta_path ) );
+			$max_meta_bytes = (int) apply_filters( 'stackable_site_kit_import_max_meta_bytes', self::MAX_META_BYTES );
+			if ( filesize( $meta_path ) > $max_meta_bytes ) {
+				$this->delete_directory( $directory );
+				return $this->error( 'site_kit_import_meta_too_large', __( 'The Site Kit meta.json file is larger than the allowed limit.', STACKABLE_I18N ) );
+			}
+			$meta_contents = file_get_contents( $meta_path );
+			$data = false !== $meta_contents ? json_decode( $meta_contents ) : null;
 			if ( ! is_object( $data ) || JSON_ERROR_NONE !== json_last_error() ) {
 				$this->delete_directory( $directory );
 				return $this->error( 'site_kit_import_invalid_json', __( 'The Site Kit meta.json file is not valid JSON.', STACKABLE_I18N ) );
@@ -138,7 +145,8 @@ if ( ! class_exists( 'Stackable_Site_Kit_Package_Reader' ) ) {
 					return $this->error( 'site_kit_import_extract_failed', __( 'A Site Kit archive file could not be extracted.', STACKABLE_I18N ) );
 				}
 				$destination = $directory . '/' . $name;
-				if ( ! wp_mkdir_p( dirname( $destination ) ) || false === file_put_contents( $destination, $contents ) ) {
+				$written = wp_mkdir_p( dirname( $destination ) ) ? file_put_contents( $destination, $contents ) : false;
+				if ( false === $written || strlen( $contents ) !== $written ) {
 					$archive->close();
 					return $this->error( 'site_kit_import_extract_failed', __( 'A Site Kit archive file could not be written.', STACKABLE_I18N ) );
 				}

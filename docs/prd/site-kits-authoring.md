@@ -24,6 +24,7 @@ Enable the same setting there, install Stackable, and activate the Start Stackab
 5. Click **Download Site Kit** when validation passes.
 
 The ZIP contains `meta.json` and an `assets/` directory.
+After extracting it into the Design Library, add or replace `preview.webp` in the Site Kit directory.
 
 ## Validate the package
 
@@ -35,6 +36,8 @@ npm run validate:site-kit -- path/to/SITE_KIT_SLUG
 ```
 
 Do not publish or hand off a package while this command reports errors.
+The Stackable package validator does not check `preview.webp` because the preview is added by the curator after export.
+The Design Library publication validator must check it before publishing.
 
 ## Import and test the Site Kit
 
@@ -50,7 +53,7 @@ The current development uploader always performs a complete import.
 
 ## Current MVP limits
 
-For now, use this workflow for page-based Site Kits with local media and simple Global Block Styles.
-Custom FSE templates, header and footer selection, sticky or transparent header flags, plugin settings, image-based Global Block Styles, and complete re-import synchronization still need the fixes recorded for the next correction pass.
+For now, plugin settings are exported and imported only when that plugin registers a Site Kit adapter.
+Header and footer selection plus sticky and transparent header flags still depend on the Start Stackable integration filters documented in the package contract.
 
 The package contract is documented in [`site-kits.CONTRACT.md`](./site-kits.CONTRACT.md).

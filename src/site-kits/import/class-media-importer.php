@@ -52,7 +52,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 
 			$selected_media = null === $selected_media ? $package_data['media'] : $selected_media;
 			foreach ( $selected_media as $media ) {
-				$existing = $this->find_attachment( $package_data['slug'], $media['id'] );
+				$source = $package_files[ $media['path'] ];
+				$source_hash = hash_file( 'sha256', $source );
+				if ( false === $source_hash ) {
+					return new WP_Error( 'site_kit_import_missing_media', __( 'A selected Site Kit media file could not be read.', STACKABLE_I18N ) );
+				}
+				$existing = $this->find_attachment( $package_data['slug'], $media['id'], $source_hash );
 				if ( $existing ) {
 					$this->map[ $media['id'] ] = array(
 						'id' => $existing,
@@ -62,7 +67,6 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 					continue;
 				}
 
-				$source = $package_files[ $media['path'] ];
 				$filename = sanitize_file_name( wp_basename( $media['path'] ) );
 				$filetype = wp_check_filetype_and_ext( $source, $filename );
 				if ( empty( $filetype['type'] ) || $filetype['type'] !== $media['mimeType'] || ! in_array( $filetype['type'], get_allowed_mime_types(), true ) ) {
@@ -76,6 +80,11 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 				$upload = wp_upload_bits( $filename, null, $contents );
 				if ( ! empty( $upload['error'] ) ) {
 					return new WP_Error( 'site_kit_import_media_upload_failed', $upload['error'] );
+				}
+				$uploaded_hash = is_file( $upload['file'] ) ? hash_file( 'sha256', $upload['file'] ) : false;
+				if ( ! $uploaded_hash || ! hash_equals( $source_hash, $uploaded_hash ) || filesize( $upload['file'] ) !== strlen( $contents ) ) {
+					wp_delete_file( $upload['file'] );
+					return new WP_Error( 'site_kit_import_media_upload_failed', __( 'A Site Kit media file was not written completely.', STACKABLE_I18N ) );
 				}
 
 				$attachment_id = wp_insert_attachment(
@@ -98,6 +107,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 				update_post_meta( $attachment_id, '_wp_attachment_image_alt', $media['alt'] );
 				update_post_meta( $attachment_id, 'stk_site_kit', $package_data['slug'] );
 				update_post_meta( $attachment_id, 'stk_site_kit_media', $media['id'] );
+				update_post_meta( $attachment_id, '_stk_site_kit_media_hash', $source_hash );
 				if ( function_exists( 'wp_generate_attachment_metadata' ) ) {
 					$metadata = wp_generate_attachment_metadata( $attachment_id, $upload['file'] );
 					if ( $metadata ) {
@@ -116,12 +126,22 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 
 		public function rewrite_value( $value ) {
 			if ( is_string( $value ) ) {
-				foreach ( $this->map as $entry ) {
+				$entries = array_values( $this->map );
+				usort( $entries, function( $left, $right ) {
+					return strlen( $right['path'] ) - strlen( $left['path'] );
+				} );
+				foreach ( $entries as $entry ) {
 					$value = str_replace( $entry['path'], $entry['url'], $value );
 				}
 				return $value;
 			}
 			if ( is_array( $value ) ) {
+				if ( isset( $value['stkSiteKitMediaIds'] ) && is_array( $value['stkSiteKitMediaIds'] ) ) {
+					foreach ( $value['stkSiteKitMediaIds'] as $name => $portable ) {
+						$value[ $name ] = $this->restore_attachment_value( $portable );
+					}
+					unset( $value['stkSiteKitMediaIds'] );
+				}
 				foreach ( $value as $key => $item ) {
 					$value[ $key ] = $this->rewrite_value( $item );
 				}
@@ -146,12 +166,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 			return count( $this->map );
 		}
 
-		private function find_attachment( $kit_slug, $media_id ) {
+		private function find_attachment( $kit_slug, $media_id, $source_hash ) {
 			$posts = get_posts(
 				array(
 					'post_type' => 'attachment',
 					'post_status' => 'inherit',
-					'posts_per_page' => 1,
+					'posts_per_page' => -1,
 					'fields' => 'ids',
 					'meta_query' => array(
 						array( 'key' => 'stk_site_kit', 'value' => $kit_slug ),
@@ -162,9 +182,24 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 			if ( ! $posts ) {
 				return 0;
 			}
-			$attachment_id = (int) $posts[0];
-			$path = get_attached_file( $attachment_id, true );
-			return $path && is_readable( $path ) ? $attachment_id : 0;
+			foreach ( $posts as $post_id ) {
+				$attachment_id = (int) $post_id;
+				$path = get_attached_file( $attachment_id, true );
+				if ( ! $path || ! is_readable( $path ) ) {
+					continue;
+				}
+				$stored_hash = get_post_meta( $attachment_id, '_stk_site_kit_media_hash', true );
+				if ( ! $stored_hash ) {
+					$stored_hash = hash_file( 'sha256', $path );
+					if ( $stored_hash ) {
+						update_post_meta( $attachment_id, '_stk_site_kit_media_hash', $stored_hash );
+					}
+				}
+				if ( is_string( $stored_hash ) && hash_equals( $source_hash, $stored_hash ) ) {
+					return $attachment_id;
+				}
+			}
+			return 0;
 		}
 
 		private function restore_attachment_ids( &$blocks ) {

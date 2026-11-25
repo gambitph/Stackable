@@ -52,7 +52,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Plugins_Collector' ) ) {
 
 				$settings = Stackable_Site_Kit_Portable_Data::sanitize( $settings, $this->warnings, '/plugins/' . $plugin_file . '/settings' );
 				$plugins[] = array(
-					'slug' => $plugin_file === $stackable_plugin ? 'stackable-ultimate-gutenberg-blocks/plugin.php' : strtolower( $plugin_file ),
+					'slug' => $plugin_file === $stackable_plugin ? 'stackable-ultimate-gutenberg-blocks/plugin.php' : $plugin_file,
 					'name' => (string) $plugin_data[ $plugin_file ]['Name'],
 					'required' => (bool) $required,
 					'version' => (string) $plugin_data[ $plugin_file ]['Version'],

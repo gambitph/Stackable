@@ -38,4 +38,14 @@ class SiteKitImportPlanTest extends Stackable_TestCase {
 		$this->assertTrue( is_wp_error( $plan ) );
 		$this->assertSame( 'site_kit_import_invalid_plan', $plan->get_error_code() );
 	}
+
+	public function test_missing_mode_does_not_expand_to_a_complete_import() {
+		$plan = Stackable_Site_Kit_Import_Plan::from_request(
+			array(),
+			array( 'plugins' => array( array( 'slug' => 'example/example.php' ) ) )
+		);
+
+		$this->assertTrue( is_wp_error( $plan ) );
+		$this->assertSame( 'site_kit_import_invalid_plan', $plan->get_error_code() );
+	}
 }

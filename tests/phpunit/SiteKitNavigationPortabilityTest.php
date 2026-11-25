@@ -95,4 +95,34 @@ class SiteKitNavigationPortabilityTest extends Stackable_TestCase {
 		$this->assertCount( 1, $result['entities'] );
 		$this->assertSame( 'primary-navigation', $result['entities'][0]['slug'] );
 	}
+
+	public function test_theme_templates_replace_inline_page_links_with_slugs() {
+		Functions\when( 'get_block_templates' )->justReturn(
+			array(
+				(object) array(
+					'source' => 'custom',
+					'slug' => 'home',
+					'title' => 'Home',
+					'status' => 'publish',
+					'content' => '<!-- wp:navigation-link {"id":7,"type":"page","url":"https://source.test/about"} /-->',
+				),
+			)
+		);
+		Functions\when( 'parse_blocks' )->justReturn(
+			array(
+				array( 'blockName' => 'core/navigation-link', 'attrs' => array( 'id' => 7, 'type' => 'page', 'url' => 'https://source.test/about' ), 'innerBlocks' => array() ),
+			)
+		);
+		Functions\when( 'serialize_blocks' )->alias( 'json_encode' );
+		Functions\when( 'get_posts' )->justReturn(
+			array( (object) array( 'ID' => 7, 'post_name' => 'about' ) )
+		);
+
+		$collector = new Stackable_Site_Kit_Theme_Collector( new Stackable_Site_Kit_Navigation_Test_Media() );
+		$blocks = json_decode( $collector->collect()['templates'][0]['content'], true );
+
+		$this->assertSame( 'about', $blocks[0]['attrs']['stkSiteKitPage'] );
+		$this->assertArrayNotHasKey( 'id', $blocks[0]['attrs'] );
+		$this->assertArrayNotHasKey( 'url', $blocks[0]['attrs'] );
+	}
 }

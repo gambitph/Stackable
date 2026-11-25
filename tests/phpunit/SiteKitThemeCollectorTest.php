@@ -14,6 +14,12 @@ if ( ! class_exists( 'WP_Theme_JSON_Resolver' ) ) {
 		public static function get_user_data() {
 			return new Stackable_Site_Kit_Test_Theme_JSON( self::$site_kit_user_data );
 		}
+
+		public static function get_user_data_from_wp_global_styles() {
+			return array();
+		}
+
+		public static function clean_cached_data() {}
 	}
 }
 

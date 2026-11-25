@@ -8,7 +8,9 @@ const Ajv = require( 'ajv' )
 const schema = require( '../../src/site-kits/schema/site-kit-v1.schema.json' )
 
 const SITE_KIT_VERSION = 1
-const MEDIA_URL_PATTERN = /(?:https?:)?\/\/[^\s"'<>\\)]+?\.(?:avif|gif|jpe?g|png|svg|webp|mp4|webm|mp3|wav|ogg|pdf)(?:[?#][^\s"'<>\\)]*)?/gi
+const MEDIA_URL_PATTERN = /(?:https?:)?\/\/[^\s"'<>\\)]+?\.(?:avif|gif|jpe?g|png|svg|webp|mp4|webm|mp3|wav|ogg|pdf|woff2?|ttf|otf)(?:[?#][^\s"'<>\\)]*)?/gi
+const EMBEDDED_MEDIA_URL_PATTERN = /(?:\b(?:src|poster)\s*=\s*["']|\burl\(\s*["']?)((?:https?:)?\/\/[^\s"'<>\\)]+)/gi
+const NAMED_MEDIA_URL_PATTERN = /["'](?:[^"']*(?:image|media|background|poster|video|audio|font|logo|icon|src)[^"']*)["']\s*:\s*["']((?:https?:)?\/\/[^\s"'<>\\)]+)/gi
 const PACKAGE_MEDIA_PATTERN = /(?:^|["'(\s])((?:assets\/)[A-Za-z0-9._/-]+)/g
 
 const ajv = new Ajv( {
@@ -72,8 +74,17 @@ const collectDuplicateErrors = ( values, fieldPath, name ) => {
 
 const collectExternalMediaErrors = ( value, fieldPath = '' ) => {
 	if ( typeof value === 'string' ) {
-		const urls = value.match( MEDIA_URL_PATTERN ) || []
-		return urls.map( url => createError(
+		const urls = new Set( value.match( MEDIA_URL_PATTERN ) || [] )
+		let embeddedMatch
+		EMBEDDED_MEDIA_URL_PATTERN.lastIndex = 0
+		while ( ( embeddedMatch = EMBEDDED_MEDIA_URL_PATTERN.exec( value ) ) !== null ) {
+			urls.add( embeddedMatch[ 1 ] )
+		}
+		NAMED_MEDIA_URL_PATTERN.lastIndex = 0
+		while ( ( embeddedMatch = NAMED_MEDIA_URL_PATTERN.exec( value ) ) !== null ) {
+			urls.add( embeddedMatch[ 1 ] )
+		}
+		return Array.from( urls ).map( url => createError(
 			'external_media_url',
 			fieldPath || '/',
 			`External media must be packaged locally: ${ url }`
@@ -117,12 +128,40 @@ const collectPackageMediaReferences = value => {
 
 const flattenMenuItems = items => items.flatMap( item => [ item, ...flattenMenuItems( item.children || [] ) ] )
 
+const collectMediaIdTokens = ( value, collecting = false ) => {
+	if ( typeof value === 'string' ) {
+		if ( collecting ) {
+			return [ value ]
+		}
+		const tokens = []
+		const blockPattern = /<!--\s+wp:[^\s]+\s+({.*?})\s*(?:\/)?-->/g
+		let blockMatch
+		while ( ( blockMatch = blockPattern.exec( value ) ) !== null ) {
+			try {
+				tokens.push( ...collectMediaIdTokens( JSON.parse( blockMatch[ 1 ] ) ) )
+			} catch ( error ) {
+				// Schema and block validation report malformed content separately.
+			}
+		}
+		return tokens
+	}
+	if ( Array.isArray( value ) ) {
+		return value.flatMap( item => collectMediaIdTokens( item, collecting ) )
+	}
+	if ( value && typeof value === 'object' ) {
+		return Object.entries( value ).flatMap( ( [ key, item ] ) =>
+			collectMediaIdTokens( item, collecting || key === 'stkSiteKitMediaIds' )
+		)
+	}
+	return []
+}
+
 const validateReferences = packageData => {
 	const errors = []
 	const pageSlugs = new Set( packageData.pages.map( page => page.slug ) )
 	const mediaIds = new Set( packageData.media.map( media => media.id ) )
 
-	if ( packageData.site.showOnFront === 'page' && ! packageData.site.frontPage ) {
+	if ( packageData.site.showOnFront === 'page' && ( packageData.site.frontPage === null || packageData.site.frontPage === '' ) ) {
 		errors.push( createError(
 			'front_page_required',
 			'/site/frontPage',
@@ -132,7 +171,7 @@ const validateReferences = packageData => {
 
 	for ( const key of [ 'frontPage', 'postsPage' ] ) {
 		const pageSlug = packageData.site[ key ]
-		if ( pageSlug && ! pageSlugs.has( pageSlug ) ) {
+		if ( pageSlug !== null && pageSlug !== '' && ! pageSlugs.has( pageSlug ) ) {
 			errors.push( createError(
 				'unknown_page_reference',
 				`/site/${ key }`,
@@ -147,6 +186,16 @@ const validateReferences = packageData => {
 				'unknown_media_reference',
 				`/pages/${ index }/featuredMedia`,
 				`Referenced media does not exist: ${ page.featuredMedia }`
+			) )
+		}
+	} )
+
+	collectMediaIdTokens( packageData ).forEach( mediaId => {
+		if ( ! mediaIds.has( mediaId ) ) {
+			errors.push( createError(
+				'unknown_media_reference',
+				'/',
+				`Referenced media does not exist: ${ mediaId }`
 			) )
 		}
 	} )
@@ -181,8 +230,9 @@ const validateSiteKitPackage = ( packageData, options = {} ) => {
 	}
 
 	if ( ! validateSchema( packageData ) ) {
+		const hasUnknownVersion = errors.some( error => error.code === 'unknown_version' )
 		validateSchema.errors
-			.filter( error => ! ( error.keyword === 'const' && error.dataPath === '/version' ) )
+			.filter( error => ! ( hasUnknownVersion && error.keyword === 'const' && error.dataPath === '/version' ) )
 			.forEach( error => {
 				errors.push( createError(
 					getSchemaErrorCode( error ),

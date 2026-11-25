@@ -29,7 +29,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Site_Collector' ) ) {
 			}
 
 			$slug = get_post_field( 'post_name', (int) $post_id );
-			return $slug ? sanitize_title( $slug ) : null;
+			return Stackable_Site_Kit_Portable_Data::slug( $slug, 'page-' . (int) $post_id );
 		}
 	}
 }

@@ -16,12 +16,14 @@ if ( ! class_exists( 'Stackable_Site_Kit_Plugin_Importer' ) ) {
 		private $available = array();
 		private $adapters = array();
 		private $snapshots = array();
+		private $pending_activation = false;
 
 		public function __construct( $rollback ) {
 			$this->rollback = $rollback;
 		}
 
 		public function preflight( $package_data, $plan ) {
+			$this->pending_activation = false;
 			$this->load_plugin_api();
 			$installed = function_exists( 'get_plugins' ) ? get_plugins() : array();
 			$this->adapters = apply_filters( 'stackable_site_kit_export_plugin_adapters', array() );
@@ -33,8 +35,13 @@ if ( ! class_exists( 'Stackable_Site_Kit_Plugin_Importer' ) ) {
 				$plugin_file = $this->local_plugin_file( $plugin['slug'] );
 				if ( isset( $installed[ $plugin_file ] ) ) {
 					$this->available[ $plugin['slug'] ] = $plugin_file;
+					if ( ! is_plugin_active( $plugin_file ) ) {
+						$this->pending_activation = true;
+					}
 				} elseif ( ! current_user_can( 'install_plugins' ) ) {
 					return new WP_Error( 'site_kit_import_cannot_install_plugin', sprintf( __( 'The plugin %s is not installed and cannot be installed by this user.', STACKABLE_I18N ), $plugin['name'] ) );
+				} else {
+					$this->pending_activation = true;
 				}
 
 				if ( $plan->includes_plugin_settings( $plugin['slug'] ) && ! empty( $plugin['settings'] ) ) {
@@ -56,6 +63,10 @@ if ( ! class_exists( 'Stackable_Site_Kit_Plugin_Importer' ) ) {
 			return true;
 		}
 
+		public function has_pending_activation() {
+			return $this->pending_activation;
+		}
+
 		public function import( $package_data, $plan ) {
 			$this->load_plugin_api();
 			foreach ( $package_data['plugins'] as $plugin ) {
@@ -69,6 +80,9 @@ if ( ! class_exists( 'Stackable_Site_Kit_Plugin_Importer' ) ) {
 				if ( ! is_plugin_active( $plugin_file ) ) {
 					$result = activate_plugin( $plugin_file, '', false, true );
 					if ( is_wp_error( $result ) ) {
+						if ( is_plugin_active( $plugin_file ) ) {
+							$this->rollback->record_activated_plugin( $plugin_file );
+						}
 						return $result;
 					}
 					$this->rollback->record_activated_plugin( $plugin_file );
@@ -79,7 +93,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Plugin_Importer' ) ) {
 
 		public function import_settings( $package_data, $plan ) {
 			$warnings = array();
-			$adapters = $this->adapters ? $this->adapters : apply_filters( 'stackable_site_kit_export_plugin_adapters', array() );
+			$adapters = $this->adapters;
 			foreach ( $package_data['plugins'] as $plugin ) {
 				if ( ! $plan->includes_plugin_settings( $plugin['slug'] ) || empty( $plugin['settings'] ) ) {
 					continue;
@@ -87,7 +101,10 @@ if ( ! class_exists( 'Stackable_Site_Kit_Plugin_Importer' ) ) {
 				$plugin_file = $this->local_plugin_file( $plugin['slug'] );
 				if ( ! empty( $adapters[ $plugin_file ] ) && $adapters[ $plugin_file ] instanceof Stackable_Site_Kit_Plugin_Import_Adapter ) {
 					$adapter = $adapters[ $plugin_file ];
-					$snapshot = isset( $this->snapshots[ $plugin_file ] ) ? $this->snapshots[ $plugin_file ] : null;
+					if ( ! array_key_exists( $plugin_file, $this->snapshots ) ) {
+						return new WP_Error( 'site_kit_import_plugin_settings_not_preflighted', sprintf( __( 'Settings for %s were not prepared before import.', STACKABLE_I18N ), $plugin['name'] ) );
+					}
+					$snapshot = $this->snapshots[ $plugin_file ];
 					$this->rollback->record_callback(
 						function() use ( $adapter, $snapshot ) {
 							return $adapter->restore_import_settings( $snapshot );
@@ -127,10 +144,13 @@ if ( ! class_exists( 'Stackable_Site_Kit_Plugin_Importer' ) ) {
 				return is_wp_error( $result ) ? $result : new WP_Error( 'site_kit_import_plugin_install_failed', __( 'A selected plugin could not be installed.', STACKABLE_I18N ) );
 			}
 
+			$plugin_file = $upgrader->plugin_info();
 			wp_clean_plugins_cache( true );
-			$after = function_exists( 'get_plugins' ) ? array_keys( get_plugins() ) : array();
-			$new_plugins = array_values( array_diff( $after, $before ) );
-			$plugin_file = in_array( $plugin['slug'], $new_plugins, true ) ? $plugin['slug'] : reset( $new_plugins );
+			if ( ! $plugin_file ) {
+				$after = function_exists( 'get_plugins' ) ? array_keys( get_plugins() ) : array();
+				$new_plugins = array_values( array_diff( $after, $before ) );
+				$plugin_file = in_array( $plugin['slug'], $new_plugins, true ) ? $plugin['slug'] : reset( $new_plugins );
+			}
 			if ( ! $plugin_file ) {
 				return new WP_Error( 'site_kit_import_plugin_install_failed', __( 'The installed plugin entry point could not be found.', STACKABLE_I18N ) );
 			}

@@ -123,4 +123,44 @@ describe( 'Site Kit package validator', () => {
 			files: listPackageFiles( validPackageDirectory ),
 		} ) ).toEqual( [] )
 	} )
+
+	test( 'rejects extensionless media embedded in markup', () => {
+		const packageData = clone( validPackage )
+		packageData.pages[ 0 ].content = '<img src="https://cdn.example.com/media/123" />'
+
+		expect( validateSiteKitPackage( packageData, {
+			directorySlug: packageData.slug,
+			files: listPackageFiles( validPackageDirectory ),
+		} ).map( error => error.code ) ).toContain( 'external_media_url' )
+	} )
+
+	test( 'rejects extensionless media stored in a block media attribute', () => {
+		const packageData = clone( validPackage )
+		packageData.pages[ 0 ].content = '<!-- wp:stackable/image {"imageUrl":"https://cdn.example.com/media/123"} /-->'
+
+		expect( validateSiteKitPackage( packageData, {
+			directorySlug: packageData.slug,
+			files: listPackageFiles( validPackageDirectory ),
+		} ).map( error => error.code ) ).toContain( 'external_media_url' )
+	} )
+
+	test( 'rejects media ID tokens missing from the manifest', () => {
+		const packageData = clone( validPackage )
+		packageData.pages[ 0 ].content = '<!-- wp:image {"stkSiteKitMediaIds":{"id":"missing-media"}} /-->'
+
+		expect( validateSiteKitPackage( packageData, {
+			directorySlug: packageData.slug,
+			files: listPackageFiles( validPackageDirectory ),
+		} ).map( error => error.code ) ).toContain( 'unknown_media_reference' )
+	} )
+
+	test( 'does not hide a wrong version type as an unknown supported version', () => {
+		const packageData = clone( validPackage )
+		packageData.version = '1'
+
+		expect( validateSiteKitPackage( packageData, {
+			directorySlug: packageData.slug,
+			files: listPackageFiles( validPackageDirectory ),
+		} ).map( error => error.code ) ).toContain( 'schema_const' )
+	} )
 } )

@@ -56,7 +56,7 @@ class SiteKitPackageReaderTest extends Stackable_TestCase {
 		$this->assertSame( 'consultant', $package->get_data_array()['slug'] );
 		$this->assertArrayHasKey( 'assets/hero-office.png', $package->get_files() );
 		$temporary_directory = dirname( $package->get_files()['assets/hero-office.png'], 2 );
-		$package->cleanup();
+		$this->assertTrue( $package->cleanup() );
 		$this->assertDirectoryDoesNotExist( $temporary_directory );
 	}
 

@@ -16,6 +16,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Content_Importer' ) ) {
 		private $media;
 		private $page_map = array();
 		private $navigation_map = array();
+		private $pattern_map = array();
 
 		public function __construct( $rollback, $media ) {
 			$this->rollback = $rollback;
@@ -77,9 +78,43 @@ if ( ! class_exists( 'Stackable_Site_Kit_Content_Importer' ) ) {
 				if ( is_wp_error( $result ) ) {
 					return $result;
 				}
+				$this->pattern_map[ $pattern['slug'] ] = (int) $result;
 			}
 
 			return $this->page_map;
+		}
+
+		public function resolve_pattern_tokens( $package_data ) {
+			return $this->resolve_owned_post_tokens( $package_data, 'stkSiteKitPattern', $this->pattern_map, false );
+		}
+
+		public function resolve_page_tokens( $package_data ) {
+			return $this->resolve_owned_post_tokens( $package_data, 'stkSiteKitPage', $this->page_map, true );
+		}
+
+		private function resolve_owned_post_tokens( $package_data, $attribute, $map, $include_url ) {
+			foreach ( array( 'page', 'wp_block', 'wp_template', 'wp_template_part' ) as $post_type ) {
+				$posts = get_posts(
+					array(
+						'post_type' => $post_type,
+						'post_status' => array( 'publish', 'draft', 'private', 'pending', 'future' ),
+						'posts_per_page' => -1,
+						'meta_key' => 'stk_site_kit',
+						'meta_value' => $package_data['slug'],
+					)
+				);
+				foreach ( $posts as $post ) {
+					$content = $this->rewrite_block_tokens( $post->post_content, $attribute, $map, $include_url );
+					if ( $content !== $post->post_content ) {
+						$this->rollback->record_post( $post->ID );
+						$result = wp_update_post( wp_slash( array( 'ID' => $post->ID, 'post_content' => $content ) ), true );
+						if ( is_wp_error( $result ) ) {
+							return $result;
+						}
+					}
+				}
+			}
+			return true;
 		}
 
 		public function import_navigation( $package_data ) {
@@ -143,9 +178,10 @@ if ( ! class_exists( 'Stackable_Site_Kit_Content_Importer' ) ) {
 			if ( ! $package_data['menu']['items'] ) {
 				return true;
 			}
-			$menu_name = 'Site Kit: ' . $package_data['title'];
-			$menu = wp_get_nav_menu_object( $menu_name );
-			$menu_id = $menu ? (int) $menu->term_id : wp_create_nav_menu( $menu_name );
+			$menu = $this->find_owned_menu( $package_data['slug'] );
+			$menu_id = $menu
+				? (int) $menu->term_id
+				: wp_create_nav_menu( $this->unique_menu_name( 'Site Kit: ' . $package_data['title'] . ' [' . $package_data['slug'] . ']' ) );
 			if ( is_wp_error( $menu_id ) ) {
 				return $menu_id;
 			}
@@ -155,7 +191,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Content_Importer' ) ) {
 				$this->rollback->record_term_meta( $menu_id );
 			}
 			update_term_meta( $menu_id, 'stk_site_kit', $package_data['slug'] );
-			$result = $this->upsert_menu_items( $menu_id, $package_data['slug'], $package_data['menu']['items'], 0 );
+			$imported_paths = array();
+			$result = $this->upsert_menu_items( $menu_id, $package_data['slug'], $package_data['menu']['items'], 0, '', $imported_paths );
+			if ( is_wp_error( $result ) ) {
+				return $result;
+			}
+			$result = $this->remove_obsolete_menu_items( $menu_id, $package_data['slug'], $imported_paths );
 			if ( is_wp_error( $result ) ) {
 				return $result;
 			}
@@ -168,12 +209,13 @@ if ( ! class_exists( 'Stackable_Site_Kit_Content_Importer' ) ) {
 			return true;
 		}
 
-		private function upsert_menu_items( $menu_id, $kit_slug, $items, $parent_id, $parent_path = '' ) {
+		private function upsert_menu_items( $menu_id, $kit_slug, $items, $parent_id, $parent_path, &$imported_paths ) {
 			foreach ( $items as $index => $item ) {
 				if ( empty( $this->page_map[ $item['page'] ] ) ) {
 					return new WP_Error( 'site_kit_import_unknown_page', __( 'Navigation references a page that was not imported.', STACKABLE_I18N ) );
 				}
 				$item_path = '' === $parent_path ? (string) $index : $parent_path . '.' . $index;
+				$imported_paths[] = $item_path;
 				$existing = get_posts(
 					array(
 						'post_type' => 'nav_menu_item',
@@ -194,7 +236,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Content_Importer' ) ) {
 					$menu_id,
 					$item_id,
 					array(
-						'menu-item-title' => $item['label'],
+						'menu-item-title' => wp_slash( $item['label'] ),
 						'menu-item-object' => 'page',
 						'menu-item-object-id' => $this->page_map[ $item['page'] ],
 						'menu-item-type' => 'post_type',
@@ -212,10 +254,63 @@ if ( ! class_exists( 'Stackable_Site_Kit_Content_Importer' ) ) {
 				update_post_meta( $item_id, '_stk_site_kit_page', $item['page'] );
 				update_post_meta( $item_id, '_stk_site_kit_item', $item_path );
 				if ( ! empty( $item['children'] ) ) {
-					$result = $this->upsert_menu_items( $menu_id, $kit_slug, $item['children'], $item_id, $item_path );
+					$result = $this->upsert_menu_items( $menu_id, $kit_slug, $item['children'], $item_id, $item_path, $imported_paths );
 					if ( is_wp_error( $result ) ) {
 						return $result;
 					}
+				}
+			}
+			return true;
+		}
+
+		private function find_owned_menu( $kit_slug ) {
+			$menus = get_terms(
+				array(
+					'taxonomy' => 'nav_menu',
+					'hide_empty' => false,
+					'number' => 1,
+					'meta_key' => 'stk_site_kit',
+					'meta_value' => $kit_slug,
+				)
+			);
+			return ! is_wp_error( $menus ) && $menus ? $menus[0] : false;
+		}
+
+		private function unique_menu_name( $base_name ) {
+			$candidate = $base_name;
+			$suffix = 2;
+			while ( wp_get_nav_menu_object( $candidate ) ) {
+				$candidate = $base_name . ' ' . $suffix;
+				++$suffix;
+			}
+			return $candidate;
+		}
+
+		private function remove_obsolete_menu_items( $menu_id, $kit_slug, $imported_paths ) {
+			$items = get_posts(
+				array(
+					'post_type' => 'nav_menu_item',
+					'post_status' => 'any',
+					'posts_per_page' => -1,
+					'fields' => 'ids',
+					'meta_key' => '_stk_site_kit',
+					'meta_value' => $kit_slug,
+					'tax_query' => array(
+						array(
+							'taxonomy' => 'nav_menu',
+							'field' => 'term_id',
+							'terms' => array( $menu_id ),
+						),
+					),
+				)
+			);
+			foreach ( $items as $item_id ) {
+				if ( in_array( get_post_meta( $item_id, '_stk_site_kit_item', true ), $imported_paths, true ) ) {
+					continue;
+				}
+				$this->rollback->record_post( $item_id );
+				if ( ! wp_trash_post( $item_id ) ) {
+					return new WP_Error( 'site_kit_import_menu_cleanup_failed', __( 'An obsolete Site Kit menu item could not be removed.', STACKABLE_I18N ) );
 				}
 			}
 			return true;

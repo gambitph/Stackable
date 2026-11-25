@@ -29,7 +29,10 @@ if ( ! class_exists( 'Stackable_Site_Kit_Import_Plan' ) ) {
 		}
 
 		public static function from_request( $selection, $package_data ) {
-			if ( ! is_array( $selection ) || empty( $selection['mode'] ) || 'complete' === $selection['mode'] ) {
+			if ( ! is_array( $selection ) || ! isset( $selection['mode'] ) || ! is_string( $selection['mode'] ) ) {
+				return new WP_Error( 'site_kit_import_invalid_plan', __( 'The Site Kit import mode is required.', STACKABLE_I18N ) );
+			}
+			if ( 'complete' === $selection['mode'] ) {
 				return self::complete( $package_data );
 			}
 			if ( 'partial' !== $selection['mode'] ) {

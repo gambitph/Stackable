@@ -56,9 +56,11 @@ if ( ! class_exists( 'Stackable_Site_Kit_Importer' ) ) {
 					if ( is_wp_error( $result ) ) {
 						return $this->fail( $result );
 					}
-					$result = $this->validate_blocks( $selected_data );
-					if ( is_wp_error( $result ) ) {
-						return $this->fail( $result );
+					if ( ! $this->plugins->has_pending_activation() ) {
+						$result = $this->validate_blocks( $selected_data );
+						if ( is_wp_error( $result ) ) {
+							return $this->fail( $result );
+						}
 					}
 				}
 
@@ -88,6 +90,14 @@ if ( ! class_exists( 'Stackable_Site_Kit_Importer' ) ) {
 					$page_map = $this->content->import_pages( $data );
 					if ( is_wp_error( $page_map ) ) {
 						return $this->fail( $page_map );
+					}
+					$result = $this->content->resolve_page_tokens( $data );
+					if ( is_wp_error( $result ) ) {
+						return $this->fail( $result );
+					}
+					$result = $this->content->resolve_pattern_tokens( $data );
+					if ( is_wp_error( $result ) ) {
+						return $this->fail( $result );
 					}
 				}
 				if ( $plan->includes( 'theme' ) ) {
@@ -177,7 +187,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Importer' ) ) {
 			}
 
 			$block_result = $this->validate_blocks( $selected_data );
-			if ( is_wp_error( $block_result ) && ! $plan->includes( 'plugins' ) ) {
+			if ( is_wp_error( $block_result ) && ( ! $plan->includes( 'plugins' ) || ! $this->plugins->has_pending_activation() ) ) {
 				return $block_result;
 			}
 

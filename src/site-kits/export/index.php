@@ -40,7 +40,7 @@ if ( ! function_exists( 'stackable_create_site_kit_exporter' ) ) {
 			'pages' => new Stackable_Site_Kit_Pages_Collector( $media ),
 			'menu' => new Stackable_Site_Kit_Navigation_Collector( $media ),
 			'patterns' => new Stackable_Site_Kit_Patterns_Collector( $media ),
-			'stackable' => new Stackable_Site_Kit_Stackable_Collector(),
+			'stackable' => new Stackable_Site_Kit_Stackable_Collector( $media ),
 			'plugins' => new Stackable_Site_Kit_Plugins_Collector(),
 		);
 

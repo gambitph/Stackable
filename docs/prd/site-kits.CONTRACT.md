@@ -183,6 +183,10 @@ Package content may reference only package-relative media paths or stable media 
 The importer resolves those references against the package directory, downloads each selected asset, creates a WordPress attachment, and rewrites block content and metadata to the new local attachment URL or ID.
 Block attributes that store attachment IDs use a temporary `stkSiteKitMediaIds` map keyed by the original block attribute name.
 The exporter removes the source attachment ID, and the importer restores that block attribute with the new local attachment ID before saving content.
+The same token map is used inside portable Global Block Style attributes.
+Only known media attributes are converted, so unrelated numeric block attributes remain unchanged.
+Re-import reuses an owned attachment only when its stored content hash matches the package file.
+When the bytes change under the same media identifier, the importer creates and uses a new attachment instead of silently retaining stale media.
 The importer must reject paths that escape the Site Kit directory.
 The importer must report missing or unsupported media before changing the site.
 
@@ -267,6 +271,9 @@ Navigation blocks that reference pages replace source-site post IDs and URLs wit
 The importer resolves that token after package pages have been upserted.
 Template navigation blocks replace source `ref` IDs with `stkSiteKitNavigation` navigation-slug tokens.
 The importer resolves those tokens after package navigation entities have been upserted.
+Synced pattern blocks replace source `ref` IDs with `stkSiteKitPattern` pattern-slug tokens.
+The importer resolves those tokens after package patterns have been upserted.
+Package entity identifiers use the schema slug grammar even when the source WordPress slug is empty, encoded, or contains unsupported characters.
 
 Plugins register export adapters through `stackable_site_kit_export_plugin_adapters`.
 The filter returns an array keyed by plugin basename, and every value implements `Stackable_Site_Kit_Plugin_Adapter`.
@@ -304,6 +311,8 @@ It rejects path traversal, symbolic links, unknown files, oversized input, malfo
 It requires Start Stackable to be active and completes the normal importer preflight before applying the package.
 Temporary files are removed after success or failure.
 An invalid package or failed preflight causes no site writes.
+Import selections must explicitly use `complete` or `partial` mode.
+Missing and invalid modes are rejected instead of expanding to a complete import.
 
 Round-trip coverage exports a representative site, imports the generated ZIP into a clean site, and compares the portable result.
 The comparison covers pages, theme and FSE data, navigation, website settings, Stackable design data, supported plugin settings, and locally imported media.
@@ -403,6 +412,8 @@ When selected, the importer applies data in this order:
 If a selected operation fails, the importer rolls back completed operations where WordPress supports reversal and returns a clear error for anything that could not be restored.
 Re-importing the same slug updates its existing kit-owned pages and navigation.
 It must not create `Home (2)` or duplicate menus indefinitely.
+Classic menus are located by their `stk_site_kit` ownership metadata rather than their display title.
+Kit-owned menu items omitted by a later package are removed from the active menu during re-import.
 
 ## REST API
 

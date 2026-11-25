@@ -36,12 +36,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Pages_Collector' ) ) {
 			$pages = array();
 			foreach ( $posts as $post ) {
 				$entry = array(
-					'slug' => sanitize_title( $post->post_name ),
+					'slug' => Stackable_Site_Kit_Portable_Data::slug( $post->post_name, 'page-' . $post->ID ),
 					'title' => (string) $post->post_title,
 					'status' => $this->normalize_status( $post->post_status ),
 					'template' => $this->normalize_template( get_page_template_slug( $post->ID ), $post->ID ),
-					'content' => $this->media->localize_content( $post->post_content ),
-					'meta' => Stackable_Site_Kit_Portable_Data::as_object( $this->collect_meta( $post->ID ) ),
+					'content' => Stackable_Site_Kit_Portable_Data::localize_pattern_references( $this->media->localize_content( $post->post_content ), $this->warnings, '/pages/content' ),
+					'meta' => Stackable_Site_Kit_Portable_Data::as_object( $this->media->localize_value( $this->collect_meta( $post->ID ) ) ),
 				);
 
 				$featured_media = get_post_thumbnail_id( $post->ID );

@@ -13,6 +13,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Patterns_Collector' ) ) {
 	class Stackable_Site_Kit_Patterns_Collector {
 
 		private $media;
+		private $warnings = array();
 
 		public function __construct( $media ) {
 			$this->media = $media;
@@ -35,14 +36,22 @@ if ( ! class_exists( 'Stackable_Site_Kit_Patterns_Collector' ) ) {
 			$patterns = array();
 			foreach ( $posts as $post ) {
 				$patterns[] = array(
-					'slug' => sanitize_title( $post->post_name ? $post->post_name : $post->post_title ),
+					'slug' => Stackable_Site_Kit_Portable_Data::slug( $post->post_name ? $post->post_name : $post->post_title, 'pattern-' . $post->ID ),
 					'title' => (string) $post->post_title,
 					'status' => $post->post_status,
-					'content' => $this->media->localize_content( $post->post_content ),
+					'content' => Stackable_Site_Kit_Portable_Data::localize_pattern_references( $this->media->localize_content( $post->post_content ), $this->warnings, '/patterns/content' ),
 				);
 			}
 
 			return $patterns;
+		}
+
+		public function get_warnings() {
+			return $this->warnings;
+		}
+
+		public function reset() {
+			$this->warnings = array();
 		}
 	}
 }

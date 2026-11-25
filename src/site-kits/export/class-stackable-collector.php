@@ -13,6 +13,11 @@ if ( ! class_exists( 'Stackable_Site_Kit_Stackable_Collector' ) ) {
 	class Stackable_Site_Kit_Stackable_Collector {
 
 		private $warnings = array();
+		private $media;
+
+		public function __construct( $media = null ) {
+			$this->media = $media;
+		}
 
 		public function collect( $context = array() ) {
 			$colors = $this->unwrap_single_value( get_option( 'stackable_global_colors', array() ) );
@@ -81,6 +86,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Stackable_Collector' ) ) {
 						if ( array_key_exists( $field, $style ) ) {
 							$entry[ $field ] = $style[ $field ];
 						}
+					}
+					if ( $this->media && isset( $entry['attributes'] ) ) {
+						$entry['attributes'] = $this->media->localize_block_attributes( $block_name, $entry['attributes'] );
+					}
+					if ( $this->media && isset( $entry['nonCssAttributes'] ) ) {
+						$entry['nonCssAttributes'] = $this->media->localize_value( $entry['nonCssAttributes'] );
 					}
 					$portable[ $block_name ][] = $entry;
 				}

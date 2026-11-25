@@ -54,8 +54,6 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Importer' ) ) {
 			$front_page_id = 0;
 			if ( $package_data['site']['frontPage'] && isset( $page_map[ $package_data['site']['frontPage'] ] ) ) {
 				$front_page_id = $page_map[ $package_data['site']['frontPage'] ];
-			} elseif ( 'page' === get_option( 'show_on_front' ) ) {
-				$front_page_id = (int) get_option( 'page_on_front' );
 			}
 
 			if ( $front_page_id ) {
@@ -148,7 +146,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Importer' ) ) {
 			$is_existing = (bool) $post_id;
 			$post = array(
 				'post_type' => $post_type,
-				'post_name' => 'start-stackable//' . $template['slug'],
+				'post_name' => $template['slug'],
 				'post_title' => isset( $template['title'] ) ? $template['title'] : '',
 				'post_status' => $template['status'],
 				'post_content' => $this->media->rewrite_content( $template['content'] ),
@@ -166,12 +164,24 @@ if ( ! class_exists( 'Stackable_Site_Kit_Theme_Importer' ) ) {
 			if ( is_wp_error( $post_id ) ) {
 				return $post_id;
 			}
-			update_post_meta( $post_id, '_wp_theme', 'start-stackable' );
 			update_post_meta( $post_id, 'stk_site_kit', $kit_slug );
 			update_post_meta( $post_id, 'stk_site_kit_template', $template['slug'] );
+			if ( $is_existing ) {
+				$result = $this->rollback->record_post_terms( $post_id, 'wp_theme' );
+				if ( is_wp_error( $result ) ) {
+					return $result;
+				}
+			}
+			$term_result = wp_set_object_terms( $post_id, 'start-stackable', 'wp_theme' );
+			if ( is_wp_error( $term_result ) ) {
+				return $term_result;
+			}
 			if ( 'wp_template_part' === $post_type ) {
 				if ( $is_existing ) {
-					$this->rollback->record_post_terms( $post_id, 'wp_template_part_area' );
+					$result = $this->rollback->record_post_terms( $post_id, 'wp_template_part_area' );
+					if ( is_wp_error( $result ) ) {
+						return $result;
+					}
 				}
 				$term_result = wp_set_object_terms( $post_id, $template['area'], 'wp_template_part_area' );
 				if ( is_wp_error( $term_result ) ) {

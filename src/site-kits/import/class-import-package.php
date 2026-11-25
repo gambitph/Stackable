@@ -40,9 +40,12 @@ if ( ! class_exists( 'Stackable_Site_Kit_Import_Package' ) ) {
 
 		public function cleanup() {
 			if ( $this->directory && is_dir( $this->directory ) ) {
-				$this->delete_directory( $this->directory );
+				if ( ! $this->delete_directory( $this->directory ) ) {
+					return false;
+				}
 			}
 			$this->directory = '';
+			return true;
 		}
 
 		private function to_array( $value ) {
@@ -61,7 +64,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Import_Package' ) ) {
 		private function delete_directory( $directory ) {
 			$items = scandir( $directory );
 			if ( false === $items ) {
-				return;
+				return false;
 			}
 			foreach ( $items as $item ) {
 				if ( '.' === $item || '..' === $item ) {
@@ -69,12 +72,14 @@ if ( ! class_exists( 'Stackable_Site_Kit_Import_Package' ) ) {
 				}
 				$path = $directory . DIRECTORY_SEPARATOR . $item;
 				if ( is_dir( $path ) && ! is_link( $path ) ) {
-					$this->delete_directory( $path );
-				} else {
-					wp_delete_file( $path );
+					if ( ! $this->delete_directory( $path ) ) {
+						return false;
+					}
+				} elseif ( ! wp_delete_file( $path ) && file_exists( $path ) ) {
+					return false;
 				}
 			}
-			rmdir( $directory );
+			return rmdir( $directory );
 		}
 	}
 }

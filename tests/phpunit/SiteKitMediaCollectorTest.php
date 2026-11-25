@@ -18,6 +18,7 @@ class SiteKitMediaCollectorTest extends Stackable_TestCase {
 		Functions\when( 'serialize_blocks' )->alias( function( $blocks ) {
 			return $blocks[0]['innerHTML'];
 		} );
+		Functions\when( 'get_post_type' )->justReturn( 'attachment' );
 	}
 
 	public function test_localizes_attachment_url_and_builds_manifest() {
@@ -113,5 +114,31 @@ class SiteKitMediaCollectorTest extends Stackable_TestCase {
 		$this->assertSame( array( 'hero-office' ), $attributes['stkSiteKitMediaIds']['ids'] );
 		$this->assertSame( 'hero-office', $attributes['stkSiteKitMediaIds']['images'][0]['id'] );
 		$this->assertSame( 'large', $attributes['stkSiteKitMediaIds']['images'][0]['size'] );
+	}
+
+	public function test_localizes_an_id_only_media_block_without_rewriting_an_unrelated_id() {
+		$source = STACKABLE_PLUGIN_DIR . 'e2e/config/fixtures/site-kits/valid/consultant/assets/hero-office.png';
+		Functions\when( 'wp_get_upload_dir' )->justReturn( array( 'baseurl' => 'https://example.test/wp-content/uploads' ) );
+		Functions\when( 'get_attached_file' )->justReturn( $source );
+		Functions\when( 'get_post_mime_type' )->justReturn( 'image/png' );
+		Functions\when( 'get_allowed_mime_types' )->justReturn( array( 'png' => 'image/png' ) );
+		Functions\when( 'sanitize_file_name' )->alias( 'basename' );
+		Functions\when( 'wp_basename' )->alias( 'basename' );
+		Functions\when( 'get_post' )->justReturn( (object) array( 'post_title' => '', 'post_excerpt' => '' ) );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+		Functions\when( 'wp_list_pluck' )->justReturn( array() );
+		Functions\when( 'parse_blocks' )->justReturn(
+			array(
+				array( 'blockName' => 'core/image', 'attrs' => array( 'id' => 25 ), 'innerBlocks' => array() ),
+				array( 'blockName' => 'core/categories', 'attrs' => array( 'id' => 25 ), 'innerBlocks' => array() ),
+			)
+		);
+		Functions\when( 'serialize_blocks' )->alias( 'json_encode' );
+
+		$collector = new Stackable_Site_Kit_Media_Collector();
+		$blocks = json_decode( $collector->localize_content( '<!-- wp:image /--><!-- wp:categories /-->' ), true );
+
+		$this->assertSame( 'hero-office', $blocks[0]['attrs']['stkSiteKitMediaIds']['id'] );
+		$this->assertSame( 25, $blocks[1]['attrs']['id'] );
 	}
 }

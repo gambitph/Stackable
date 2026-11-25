@@ -101,7 +101,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Settings_Importer' ) ) {
 				return false;
 			}
 			foreach ( $portable as $block_name => $styles ) {
-				if ( ! isset( $generated[ $block_name ] ) || count( $generated[ $block_name ] ) !== count( $styles ) ) {
+				if ( ! isset( $generated[ $block_name ] ) || ! is_array( $generated[ $block_name ] ) || count( $generated[ $block_name ] ) !== count( $styles ) ) {
 					return false;
 				}
 				foreach ( $styles as $index => $style ) {
