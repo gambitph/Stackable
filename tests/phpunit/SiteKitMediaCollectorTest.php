@@ -110,10 +110,45 @@ class SiteKitMediaCollectorTest extends Stackable_TestCase {
 		$attributes = json_decode( $content, true )[0]['attrs'];
 
 		$this->assertArrayNotHasKey( 'ids', $attributes );
-		$this->assertArrayNotHasKey( 'images', $attributes );
+		$this->assertSame( array( array( 'size' => 'large' ) ), $attributes['images'] );
 		$this->assertSame( array( 'hero-office' ), $attributes['stkSiteKitMediaIds']['ids'] );
 		$this->assertSame( 'hero-office', $attributes['stkSiteKitMediaIds']['images'][0]['id'] );
-		$this->assertSame( 'large', $attributes['stkSiteKitMediaIds']['images'][0]['size'] );
+		$this->assertArrayNotHasKey( 'size', $attributes['stkSiteKitMediaIds']['images'][0] );
+	}
+
+	public function test_preserves_ordinary_media_object_fields_and_numeric_values() {
+		$source = STACKABLE_PLUGIN_DIR . 'e2e/config/fixtures/site-kits/valid/consultant/assets/hero-office.png';
+		Functions\when( 'wp_get_upload_dir' )->justReturn( array( 'baseurl' => 'https://example.test/wp-content/uploads' ) );
+		Functions\when( 'get_attached_file' )->justReturn( $source );
+		Functions\when( 'get_post_mime_type' )->justReturn( 'image/png' );
+		Functions\when( 'get_allowed_mime_types' )->justReturn( array( 'png' => 'image/png' ) );
+		Functions\when( 'sanitize_file_name' )->alias( 'basename' );
+		Functions\when( 'wp_basename' )->alias( 'basename' );
+		Functions\when( 'get_post' )->justReturn( (object) array( 'post_title' => '', 'post_excerpt' => '' ) );
+		Functions\when( 'get_post_meta' )->justReturn( '' );
+		Functions\when( 'wp_list_pluck' )->justReturn( array() );
+
+		$collector = new Stackable_Site_Kit_Media_Collector();
+		$attributes = $collector->localize_block_attributes(
+			'core/gallery',
+			array(
+				'images' => array(
+					array(
+						'id' => 25,
+						'url' => 'assets/hero-office.png',
+						'alt' => 'Office team',
+						'caption' => 2026,
+						'metadata' => array(),
+					),
+				),
+			)
+		);
+
+		$this->assertSame(
+			array( 'url' => 'assets/hero-office.png', 'alt' => 'Office team', 'caption' => 2026, 'metadata' => array() ),
+			$attributes['images'][0]
+		);
+		$this->assertSame( array( 'id' => 'hero-office' ), $attributes['stkSiteKitMediaIds']['images'][0] );
 	}
 
 	public function test_localizes_an_id_only_media_block_without_rewriting_an_unrelated_id() {

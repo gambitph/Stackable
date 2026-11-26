@@ -47,7 +47,10 @@ test( 'development Site Kit export downloads and imports a portable archive', as
 					attributes: {
 						height: 123,
 					},
-					nonCssAttributes: {},
+					nonCssAttributes: {
+						imageId: media.id,
+						imageUrl: media.source_url,
+					},
 				} ],
 			},
 		},
@@ -91,12 +94,10 @@ test( 'development Site Kit export downloads and imports a portable archive', as
 		expect( pageData.content ).not.toContain( `"id":${ media.id }` )
 		expect( pageData.content ).toContain( 'stkSiteKitMediaIds' )
 		expect( JSON.stringify( packageData ) ).not.toContain( media.source_url )
-		expect( collectObjectKeys( packageData ) ).not.toEqual( expect.arrayContaining( [
-			'api_key',
-			'access_token',
-			'password',
-			'private_key',
-		] ) )
+		const packageKeys = collectObjectKeys( packageData )
+		for ( const sensitiveKey of [ 'api_key', 'access_token', 'password', 'private_key' ] ) {
+			expect( packageKeys ).not.toContain( sensitiveKey )
+		}
 		const mediaData = packageData.media.find( item => pageData.content.includes( item.path ) )
 		expect( mediaData ).toBeTruthy()
 		expect( ( await stat( path.join( packageDirectory, mediaData.path ) ) ).isFile() ).toBe( true )
@@ -120,13 +121,13 @@ test( 'development Site Kit export downloads and imports a portable archive', as
 		)
 		await page.locator( 'input[type="file"][accept*=".zip"]' ).setInputFiles( archivePath )
 		expect( ( await importResponse ).status() ).toBe( 200 )
-		await expect( page.locator( '#import-export p' ).getByText( /Site Kit imported: \d+ pages? and \d+ media items?\./ ) ).toBeVisible()
 		importedPageIds = ( await requestUtils.rest( { path: '/wp/v2/pages?per_page=100' } ) )
 			.map( item => item.id )
 			.filter( id => ! pageIdsBeforeImport.includes( id ) )
 		importedMediaIds = ( await requestUtils.rest( { path: '/wp/v2/media?per_page=100' } ) )
 			.map( item => item.id )
 			.filter( id => ! mediaIdsBeforeImport.includes( id ) )
+		await expect( page.locator( '#import-export p' ).getByText( /Site Kit imported: \d+ pages? and \d+ media items?\./ ) ).toBeVisible()
 
 		const pagesAfterImport = await requestUtils.rest( { path: '/wp/v2/pages?search=Site%20Kit%20Export%20Page&per_page=100' } )
 		expect( pagesAfterImport ).toHaveLength( 1 )
@@ -140,6 +141,9 @@ test( 'development Site Kit export downloads and imports a portable archive', as
 		const importedBlockStyle = importedSettings.stackable_global_block_styles[ 'stackable/spacer' ][ 0 ]
 		expect( importedBlockStyle.saveCss ).toContain( '123px' )
 		expect( importedBlockStyle.editCss ).toBe( '' )
+		expect( importedMediaIds ).toContain( importedBlockStyle.nonCssAttributes.imageId )
+		const importedBlockStyleMedia = await requestUtils.rest( { path: `/wp/v2/media/${ importedBlockStyle.nonCssAttributes.imageId }` } )
+		expect( importedBlockStyle.nonCssAttributes.imageUrl ).toBe( importedBlockStyleMedia.source_url )
 
 		const invalidArchivePath = path.join( temporaryDirectory, 'invalid.zip' )
 		await writeFile( invalidArchivePath, 'not a zip archive' )

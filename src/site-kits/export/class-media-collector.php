@@ -98,11 +98,14 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 			}
 			$tokens = array();
 			foreach ( $attributes as $name => $value ) {
-				$changed = false;
-				$portable = $this->portable_attachment_value( $value, $name, $changed, $block_name );
-				if ( $changed ) {
-					$tokens[ $name ] = $portable;
-					unset( $attributes[ $name ] );
+				$split = $this->split_attachment_value( $value, $name, $block_name );
+				if ( $split['has_token'] ) {
+					$tokens[ $name ] = $split['token'];
+					if ( $split['has_value'] ) {
+						$attributes[ $name ] = $split['value'];
+					} else {
+						unset( $attributes[ $name ] );
+					}
 				}
 			}
 			if ( $tokens ) {
@@ -188,11 +191,14 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 			foreach ( $blocks as &$block ) {
 				$tokens = array();
 				foreach ( isset( $block['attrs'] ) ? $block['attrs'] : array() as $name => $value ) {
-					$changed = false;
-					$portable = $this->portable_attachment_value( $value, $name, $changed, isset( $block['blockName'] ) ? $block['blockName'] : '' );
-					if ( $changed ) {
-						$tokens[ $name ] = $portable;
-						unset( $block['attrs'][ $name ] );
+					$split = $this->split_attachment_value( $value, $name, isset( $block['blockName'] ) ? $block['blockName'] : '' );
+					if ( $split['has_token'] ) {
+						$tokens[ $name ] = $split['token'];
+						if ( $split['has_value'] ) {
+							$block['attrs'][ $name ] = $split['value'];
+						} else {
+							unset( $block['attrs'][ $name ] );
+						}
 					}
 				}
 				if ( $tokens ) {
@@ -205,9 +211,9 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 			unset( $block );
 		}
 
-		private function portable_attachment_value( $value, $name, &$changed, $block_name = '', $media_context = false ) {
-			$is_id = $media_context || $this->is_attachment_attribute( $block_name, $name, false );
-			$is_ids = $this->is_attachment_attribute( $block_name, $name, true );
+		private function split_attachment_value( $value, $name, $block_name = '', $media_context = '' ) {
+			$is_id = 'id' === $media_context || ( ! $media_context && $this->is_attachment_attribute( $block_name, $name, false ) );
+			$is_ids = ! $media_context && $this->is_attachment_attribute( $block_name, $name, true );
 
 			if ( $is_id && ( is_int( $value ) || ( is_string( $value ) && ctype_digit( $value ) ) ) ) {
 				$attachment_id = (int) $value;
@@ -215,22 +221,71 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Collector' ) ) {
 					$this->register_attachment( $attachment_id );
 				}
 				if ( isset( $this->attachment_ids[ $attachment_id ] ) ) {
-					$changed = true;
-					return $this->attachment_ids[ $attachment_id ]['id'];
+					return array(
+						'has_token' => true,
+						'token' => $this->attachment_ids[ $attachment_id ]['id'],
+						'has_value' => false,
+						'value' => null,
+					);
 				}
-				return $value;
 			}
 
 			if ( ! is_array( $value ) ) {
-				return $value;
+				return array(
+					'has_token' => false,
+					'token' => null,
+					'has_value' => true,
+					'value' => $value,
+				);
 			}
 
 			$portable = array();
+			$remaining = array();
 			foreach ( $value as $key => $item ) {
-				$child_name = is_string( $key ) ? $key : ( $is_ids ? 'id' : '' );
-				$portable[ $key ] = $this->portable_attachment_value( $item, $child_name, $changed, $block_name, $media_context || $is_ids || in_array( $name, array( 'image', 'images', 'media' ), true ) );
+				$child_name = is_string( $key ) ? $key : '';
+				$child_context = '';
+				if ( $is_ids || 'ids' === $media_context ) {
+					$child_context = is_array( $item ) ? 'object' : 'id';
+				} elseif ( 'object' === $media_context || in_array( $name, array( 'image', 'images', 'media' ), true ) ) {
+					if ( $this->is_attachment_member( $child_name, false ) ) {
+						$child_context = 'id';
+					} elseif ( $this->is_attachment_member( $child_name, true ) ) {
+						$child_context = 'ids';
+					} elseif ( is_int( $key ) && is_array( $item ) ) {
+						$child_context = 'object';
+					}
+				}
+				$split = $this->split_attachment_value( $item, $child_name, $block_name, $child_context );
+				if ( $split['has_token'] ) {
+					$portable[ $key ] = $split['token'];
+				}
+				if ( $split['has_value'] ) {
+					$remaining[ $key ] = $split['value'];
+				}
 			}
-			return $portable;
+			if ( ! $portable ) {
+				return array(
+					'has_token' => false,
+					'token' => null,
+					'has_value' => true,
+					'value' => $value,
+				);
+			}
+			return array(
+				'has_token' => (bool) $portable,
+				'token' => $portable,
+				'has_value' => (bool) $remaining,
+				'value' => $remaining,
+			);
+		}
+
+		private function is_attachment_member( $name, $multiple ) {
+			if ( ! is_string( $name ) || '' === $name ) {
+				return false;
+			}
+			return $multiple
+				? 1 === preg_match( '/(?:^|media|image)I[dD]s$/', $name ) || 'ids' === $name
+				: 1 === preg_match( '/(?:^|media|image)I[dD]$/', $name ) || 'id' === $name;
 		}
 
 		private function is_attachment_attribute( $block_name, $name, $multiple ) {

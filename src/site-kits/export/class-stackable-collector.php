@@ -91,7 +91,7 @@ if ( ! class_exists( 'Stackable_Site_Kit_Stackable_Collector' ) ) {
 						$entry['attributes'] = $this->media->localize_block_attributes( $block_name, $entry['attributes'] );
 					}
 					if ( $this->media && isset( $entry['nonCssAttributes'] ) ) {
-						$entry['nonCssAttributes'] = $this->media->localize_value( $entry['nonCssAttributes'] );
+						$entry['nonCssAttributes'] = $this->media->localize_block_attributes( $block_name, $entry['nonCssAttributes'] );
 					}
 					$portable[ $block_name ][] = $entry;
 				}

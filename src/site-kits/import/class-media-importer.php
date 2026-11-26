@@ -138,7 +138,8 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 			if ( is_array( $value ) ) {
 				if ( isset( $value['stkSiteKitMediaIds'] ) && is_array( $value['stkSiteKitMediaIds'] ) ) {
 					foreach ( $value['stkSiteKitMediaIds'] as $name => $portable ) {
-						$value[ $name ] = $this->restore_attachment_value( $portable );
+						$current = array_key_exists( $name, $value ) ? $value[ $name ] : null;
+						$value[ $name ] = $this->restore_attachment_value( $portable, $current );
 					}
 					unset( $value['stkSiteKitMediaIds'] );
 				}
@@ -206,7 +207,8 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 			foreach ( $blocks as &$block ) {
 				if ( ! empty( $block['attrs']['stkSiteKitMediaIds'] ) && is_array( $block['attrs']['stkSiteKitMediaIds'] ) ) {
 					foreach ( $block['attrs']['stkSiteKitMediaIds'] as $name => $portable ) {
-						$block['attrs'][ $name ] = $this->restore_attachment_value( $portable );
+						$current = array_key_exists( $name, $block['attrs'] ) ? $block['attrs'][ $name ] : null;
+						$block['attrs'][ $name ] = $this->restore_attachment_value( $portable, $current );
 					}
 					unset( $block['attrs']['stkSiteKitMediaIds'] );
 				}
@@ -217,21 +219,37 @@ if ( ! class_exists( 'Stackable_Site_Kit_Media_Importer' ) ) {
 			unset( $block );
 		}
 
-		private function restore_attachment_value( $value ) {
+		private function restore_attachment_value( $value, $current = null ) {
 			if ( is_string( $value ) && isset( $this->map[ $value ] ) ) {
 				return $this->map[ $value ]['id'];
 			}
 			if ( is_array( $value ) ) {
+				$current = is_array( $current ) ? $current : array();
 				foreach ( $value as $key => $item ) {
-					$value[ $key ] = $this->restore_attachment_value( $item );
+					$existing = array_key_exists( $key, $current ) ? $current[ $key ] : null;
+					$current[ $key ] = $this->restore_attachment_value( $item, $existing );
 				}
+				return $current;
 			}
 			return $value;
 		}
 
 		private function contains_reference( $value, $media_id, $media_path, $is_media_id = false ) {
 			if ( is_string( $value ) ) {
-				return ( $is_media_id && $value === $media_id ) || false !== strpos( $value, $media_path );
+				if ( ( $is_media_id && $value === $media_id ) || false !== strpos( $value, $media_path ) ) {
+					return true;
+				}
+				if ( false !== strpos( $value, 'stkSiteKitMediaIds' ) && function_exists( 'parse_blocks' ) ) {
+					foreach ( parse_blocks( $value ) as $block ) {
+						if ( ! empty( $block['attrs']['stkSiteKitMediaIds'] ) && $this->contains_reference( $block['attrs']['stkSiteKitMediaIds'], $media_id, $media_path, true ) ) {
+							return true;
+						}
+						if ( ! empty( $block['innerBlocks'] ) && $this->contains_reference( $block['innerBlocks'], $media_id, $media_path ) ) {
+							return true;
+						}
+					}
+				}
+				return false;
 			}
 			if ( is_array( $value ) ) {
 				foreach ( $value as $key => $item ) {
