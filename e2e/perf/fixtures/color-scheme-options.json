@@ -1,0 +1,203 @@
+{
+ "stackable_global_background_mode_color_scheme": "scheme-default-2",
+ "stackable_global_base_color_scheme": "scheme-default-1",
+ "stackable_global_color_scheme_generated_css": "\n/* Global Color Schemes */\n:root{--stk-heading-color:#14132b;--stk-text-color:#3d3c55;--stk-link-color:#3b2fd6;--stk-accent-color:#3b2fd6;--stk-subtitle-color:#3b2fd6;--stk-button-background-color:#3b2fd6;--stk-button-text-color:#ffffff;--stk-button-outline-color:#3b2fd6;--stk-link-color-hover:#ff6b4a;--stk-button-background-color-hover:#2a20a8;}.stk-block-background{--stk-block-background-color:#eef0fb;--stk-heading-color:#14132b;--stk-text-color:#4a4960;--stk-link-color:#3b2fd6;--stk-accent-color:#ff6b4a;--stk-subtitle-color:#ff6b4a;--stk-button-background-color:#ff6b4a;--stk-button-text-color:#ffffff;--stk-button-outline-color:#ff6b4a;--stk-button-background-color-hover:#e2553a;}.stk-container:where(:not(.stk--no-background)){--stk-heading-color:#14132b;--stk-text-color:#3d3c55;--stk-link-color:#3b2fd6;--stk-accent-color:#3b2fd6;--stk-subtitle-color:#3b2fd6;--stk-button-background-color:#3b2fd6;--stk-button-text-color:#ffffff;--stk-button-outline-color:#3b2fd6;--stk-link-color-hover:#ff6b4a;--stk-button-background-color-hover:#2a20a8;}\n/* Global Color Schemes (background-scheme-default-1) */\n.stk--background-scheme--scheme-default-1{--stk-heading-color:#14132b;--stk-text-color:#3d3c55;--stk-link-color:#3b2fd6;--stk-accent-color:#3b2fd6;--stk-subtitle-color:#3b2fd6;--stk-button-background-color:#3b2fd6;--stk-button-text-color:#ffffff;--stk-button-outline-color:#3b2fd6;--stk-link-color-hover:#ff6b4a;--stk-button-background-color-hover:#2a20a8;}\n/* Global Color Schemes (background-scheme-default-2) */\n.stk--background-scheme--scheme-default-2{--stk-block-background-color:#eef0fb;--stk-heading-color:#14132b;--stk-text-color:#4a4960;--stk-link-color:#3b2fd6;--stk-accent-color:#ff6b4a;--stk-subtitle-color:#ff6b4a;--stk-button-background-color:#ff6b4a;--stk-button-text-color:#ffffff;--stk-button-outline-color:#ff6b4a;--stk-button-background-color-hover:#e2553a;}\n/* Global Color Schemes (background-scheme-default-3) */\n.stk--background-scheme--scheme-default-3{--stk-block-background-color:#0f0e17;--stk-heading-color:#fffffe;--stk-text-color:#d9d8e6;--stk-link-color:#ff8a70;--stk-accent-color:#f00069;--stk-subtitle-color:#f00069;--stk-button-background-color:#f00069;--stk-button-text-color:#fffffe;--stk-button-outline-color:#fffffe;}\n/* Global Color Schemes (background-scheme-lmmint) */\n.stk--background-scheme--scheme-lmmint{--stk-block-background-color:#e6f8f4;--stk-heading-color:#0b4f43;--stk-text-color:#1f5e53;--stk-link-color:#0b8a73;--stk-accent-color:#22c3a6;--stk-subtitle-color:#22c3a6;--stk-button-background-color:#22c3a6;--stk-button-text-color:#06302a;--stk-button-outline-color:#0b8a73;--stk-block-background-color-hover:#d3f3ec;}\n/* Global Color Schemes (background-scheme-lmindigo) */\n.stk--background-scheme--scheme-lmindigo{--stk-block-background-color:#1d1a5e;--stk-heading-color:#ffffff;--stk-text-color:#c9c6ff;--stk-link-color:#ffd166;--stk-accent-color:#ffd166;--stk-subtitle-color:#ffd166;--stk-button-background-color:#ffd166;--stk-button-text-color:#1d1a5e;--stk-button-outline-color:#ffd166;}\n/* Global Color Schemes (container-scheme-default-1) */\n.stk--container-scheme--scheme-default-1{--stk-heading-color:#14132b;--stk-text-color:#3d3c55;--stk-link-color:#3b2fd6;--stk-accent-color:#3b2fd6;--stk-subtitle-color:#3b2fd6;--stk-button-background-color:#3b2fd6;--stk-button-text-color:#ffffff;--stk-button-outline-color:#3b2fd6;--stk-link-color-hover:#ff6b4a;--stk-button-background-color-hover:#2a20a8;}\n/* Global Color Schemes (container-scheme-default-2) */\n.stk--container-scheme--scheme-default-2{--stk-container-background-color:#eef0fb;--stk-heading-color:#14132b;--stk-text-color:#4a4960;--stk-link-color:#3b2fd6;--stk-accent-color:#ff6b4a;--stk-subtitle-color:#ff6b4a;--stk-button-background-color:#ff6b4a;--stk-button-text-color:#ffffff;--stk-button-outline-color:#ff6b4a;--stk-button-background-color-hover:#e2553a;}\n/* Global Color Schemes (container-scheme-default-3) */\n.stk--container-scheme--scheme-default-3{--stk-container-background-color:#0f0e17;--stk-heading-color:#fffffe;--stk-text-color:#d9d8e6;--stk-link-color:#ff8a70;--stk-accent-color:#f00069;--stk-subtitle-color:#f00069;--stk-button-background-color:#f00069;--stk-button-text-color:#fffffe;--stk-button-outline-color:#fffffe;}\n/* Global Color Schemes (container-scheme-lmmint) */\n.stk--container-scheme--scheme-lmmint{--stk-container-background-color:#e6f8f4;--stk-heading-color:#0b4f43;--stk-text-color:#1f5e53;--stk-link-color:#0b8a73;--stk-accent-color:#22c3a6;--stk-subtitle-color:#22c3a6;--stk-button-background-color:#22c3a6;--stk-button-text-color:#06302a;--stk-button-outline-color:#0b8a73;--stk-container-background-color-hover:#d3f3ec;}\n/* Global Color Schemes (container-scheme-lmindigo) */\n.stk--container-scheme--scheme-lmindigo{--stk-container-background-color:#1d1a5e;--stk-heading-color:#ffffff;--stk-text-color:#c9c6ff;--stk-link-color:#ffd166;--stk-accent-color:#ffd166;--stk-subtitle-color:#ffd166;--stk-button-background-color:#ffd166;--stk-button-text-color:#1d1a5e;--stk-button-outline-color:#ffd166;}",
+ "stackable_global_color_schemes": [
+  {
+   "name": "Default Scheme",
+   "key": "scheme-default-1",
+   "colorScheme": {
+    "backgroundColor": {
+     "desktop": ""
+    },
+    "headingColor": {
+     "desktop": "#14132b"
+    },
+    "textColor": {
+     "desktop": "#3d3c55"
+    },
+    "linkColor": {
+     "desktop": "#3b2fd6",
+     "desktopHover": "#ff6b4a"
+    },
+    "accentColor": {
+     "desktop": "#3b2fd6"
+    },
+    "buttonBackgroundColor": {
+     "desktop": "#3b2fd6",
+     "desktopHover": "#2a20a8"
+    },
+    "buttonTextColor": {
+     "desktop": "#ffffff"
+    },
+    "buttonOutlineColor": {
+     "desktop": "#3b2fd6"
+    }
+   },
+   "hideInPicker": false
+  },
+  {
+   "name": "Background Scheme",
+   "key": "scheme-default-2",
+   "colorScheme": {
+    "backgroundColor": {
+     "desktop": "#eef0fb"
+    },
+    "headingColor": {
+     "desktop": "#14132b"
+    },
+    "textColor": {
+     "desktop": "#4a4960"
+    },
+    "linkColor": {
+     "desktop": "#3b2fd6"
+    },
+    "accentColor": {
+     "desktop": "#ff6b4a"
+    },
+    "buttonBackgroundColor": {
+     "desktop": "#ff6b4a",
+     "desktopHover": "#e2553a"
+    },
+    "buttonTextColor": {
+     "desktop": "#ffffff"
+    },
+    "buttonOutlineColor": {
+     "desktop": "#ff6b4a"
+    }
+   },
+   "hideInPicker": false
+  },
+  {
+   "name": "Alternate Scheme",
+   "key": "scheme-default-3",
+   "colorScheme": {
+    "backgroundColor": {
+     "desktop": "#0f0e17"
+    },
+    "headingColor": {
+     "desktop": "#fffffe"
+    },
+    "textColor": {
+     "desktop": "#d9d8e6"
+    },
+    "linkColor": {
+     "desktop": "#ff8a70"
+    },
+    "accentColor": {
+     "desktop": "#f00069"
+    },
+    "buttonBackgroundColor": {
+     "desktop": "#f00069"
+    },
+    "buttonTextColor": {
+     "desktop": "#fffffe"
+    },
+    "buttonOutlineColor": {
+     "desktop": "#fffffe"
+    }
+   },
+   "hideInPicker": false
+  }
+ ],
+ "stackable_global_colors": [
+  [
+   {
+    "name": "Lumen Indigo",
+    "slug": "stk-global-color-lm001",
+    "color": "#3b2fd6",
+    "rgb": "59, 47, 214"
+   },
+   {
+    "name": "Lumen Coral",
+    "slug": "stk-global-color-lm002",
+    "color": "#ff6b4a",
+    "rgb": "255, 107, 74"
+   },
+   {
+    "name": "Lumen Ink",
+    "slug": "stk-global-color-lm003",
+    "color": "#14132b",
+    "rgb": "20, 19, 43"
+   },
+   {
+    "name": "Lumen Mist",
+    "slug": "stk-global-color-lm004",
+    "color": "#eef0fb",
+    "rgb": "238, 240, 251"
+   },
+   {
+    "name": "Lumen Mint",
+    "slug": "stk-global-color-lm005",
+    "color": "#22c3a6",
+    "rgb": "34, 195, 166"
+   }
+  ]
+ ],
+ "stackable_global_container_mode_color_scheme": "scheme-default-1",
+ "stackable_global_custom_color_schemes": [
+  {
+   "name": "Mint Card",
+   "key": "scheme-lmmint",
+   "colorScheme": {
+    "backgroundColor": {
+     "desktop": "#e6f8f4",
+     "desktopHover": "#d3f3ec"
+    },
+    "headingColor": {
+     "desktop": "#0b4f43"
+    },
+    "textColor": {
+     "desktop": "#1f5e53"
+    },
+    "linkColor": {
+     "desktop": "#0b8a73"
+    },
+    "accentColor": {
+     "desktop": "#22c3a6"
+    },
+    "buttonBackgroundColor": {
+     "desktop": "#22c3a6"
+    },
+    "buttonTextColor": {
+     "desktop": "#06302a"
+    },
+    "buttonOutlineColor": {
+     "desktop": "#0b8a73"
+    }
+   },
+   "hideInPicker": false
+  },
+  {
+   "name": "Indigo Night",
+   "key": "scheme-lmindigo",
+   "colorScheme": {
+    "backgroundColor": {
+     "desktop": "#1d1a5e"
+    },
+    "headingColor": {
+     "desktop": "#ffffff"
+    },
+    "textColor": {
+     "desktop": "#c9c6ff"
+    },
+    "linkColor": {
+     "desktop": "#ffd166"
+    },
+    "accentColor": {
+     "desktop": "#ffd166"
+    },
+    "buttonBackgroundColor": {
+     "desktop": "#ffd166"
+    },
+    "buttonTextColor": {
+     "desktop": "#1d1a5e"
+    },
+    "buttonOutlineColor": {
+     "desktop": "#ffd166"
+    }
+   },
+   "hideInPicker": false
+  }
+ ]
+}

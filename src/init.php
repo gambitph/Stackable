@@ -81,10 +81,14 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @return void
 		 */
 		public function maybe_force_css_load() {
-			if ( ! self::$is_main_script_loaded && apply_filters( 'stackable_force_css_load', false ) ) {
-				self::block_enqueue_frontend_assets();
-				self::$is_main_script_loaded = true;
-				// We don't know which blocks will be used, load them all.
+			if ( apply_filters( 'stackable_force_css_load', false ) ) {
+				if ( ! self::$is_main_script_loaded ) {
+					self::block_enqueue_frontend_assets();
+					self::$is_main_script_loaded = true;
+				}
+				// We don't know which blocks will be used, load them all. This
+				// is needed even if blocks were already found (block themes
+				// render the content before this runs).
 				Stackable_Frontend_CSS::enqueue_all_block_styles();
 			}
 		}

@@ -9,6 +9,8 @@
  * - Header "X-Stk-Perf-No-Stk: 1" Loads the request without Stackable (for the "core" reference).
  * - ?stk_late=<post id>           Prints that post's blocks after the footer scripts (late render).
  * - ?stk_force=1                  Turns on the stackable_force_css_load filter.
+ * - ?stk_inject=<post id>         A script in the footer adds that post's saved HTML (not rendered by
+ *                                  PHP) to the page content, like a script that adds markup after load.
  * - admin-ajax action stk_perf_ajax&post=<id>  Returns the rendered blocks of a post (AJAX render).
  * - Header "X-Stk-Perf-Admin: 1"  Loads the request as user 1 (to fetch wp-admin pages without logging in).
  * - Header "X-Stk-Perf-Fs-Action: <tag>"  In the admin, fires that Freemius action (sugb_fs()->do_action())
@@ -70,6 +72,15 @@ if ( ! empty( $_GET['stk_late'] ) ) {
 			echo '<div id="stk-perf-late">' . do_blocks( $post->post_content ) . '</div>';
 		}
 	}, 100 );
+}
+
+if ( ! empty( $_GET['stk_inject'] ) ) {
+	add_action( 'wp_footer', function() {
+		$post = get_post( (int) $_GET['stk_inject'] );
+		if ( $post ) {
+			echo '<script>(function(){var d=document.createElement("div");d.id="stk-perf-injected";d.innerHTML=' . wp_json_encode( $post->post_content ) . ';var t=document.querySelector(".wp-block-post-content, .entry-content, main")||document.body;t.appendChild(d);})();</script>';
+		}
+	}, 1 );
 }
 
 $stk_perf_ajax = function() {

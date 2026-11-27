@@ -45,6 +45,12 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		const SCHEME_MARKER = 'stk-has-scheme';
 
 		/**
+		 * The selector list the marker replaces ($stk-has-color-schemes-selector
+		 * in src/styles/cssvars.scss).
+		 */
+		const COLOR_SCHEME_SELECTORS = "[class*='stk--background-scheme'],[class*='stk--container-scheme'],.stk--has-base-scheme,.stk--has-background-scheme .stk-block-background,.stk--has-container-scheme .stk-container:not(.stk--no-background)";
+
+		/**
 		 * The version where the per-block CSS was introduced. Sites upgrading
 		 * from below this version keep the legacy frontend CSS.
 		 */
@@ -739,7 +745,10 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		 */
 		public static function get_css_subset( $path, $tokens, $max_columns ) {
 			$rules_file = substr( $path, 0, -4 ) . '.rules';
-			if ( self::$load_all || substr( $path, -4 ) !== '.css' || ! file_exists( $rules_file ) ) {
+			if ( self::$load_all ) {
+				return self::expand_color_scheme_marker( (string) file_get_contents( $path ) );
+			}
+			if ( substr( $path, -4 ) !== '.css' || ! file_exists( $rules_file ) ) {
 				return (string) file_get_contents( $path );
 			}
 			$data = file_get_contents( $rules_file );
@@ -1030,6 +1039,24 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 				);
 			}
 			return self::$scheme_flags;
+		}
+
+		/**
+		 * When all styles are loaded (stackable_force_css_load), Stackable
+		 * markup can be added by scripts after the page loads, and that markup
+		 * doesn't have the color scheme marker class that PHP adds. Match the
+		 * old color scheme selector list again instead of the marker. The
+		 * marker is always inside :where() so the specificity is the same.
+		 *
+		 * @param string $css
+		 * @return string
+		 */
+		public static function expand_color_scheme_marker( $css ) {
+			$marker = ':where(.' . self::SCHEME_MARKER . ')';
+			if ( strpos( $css, $marker ) === false ) {
+				return $css;
+			}
+			return str_replace( $marker, ':where(' . self::COLOR_SCHEME_SELECTORS . ')', $css );
 		}
 
 		/**

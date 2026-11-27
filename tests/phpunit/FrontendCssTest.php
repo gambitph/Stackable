@@ -69,6 +69,37 @@ class FrontendCssTest extends Stackable_TestCase {
 		$this->assertSame( '.b{color:red}', Stackable_Frontend_CSS::get_css_subset( $this->dir . '/b.css', array(), 0 ) );
 	}
 
+	private function set_load_all( $value ) {
+		$property = new ReflectionProperty( 'Stackable_Frontend_CSS', 'load_all' );
+		$property->setAccessible( true );
+		$property->setValue( null, $value );
+	}
+
+	/**
+	 * stackable_force_css_load: the whole file, and the color scheme rules
+	 * match markup without the marker class (e.g. added by scripts).
+	 */
+	public function test_load_all_uses_the_whole_file_and_the_old_color_scheme_selectors() {
+		$path = $this->write( '.a{color:red}:where(.stk-has-scheme) .stk-block>p{color:var(--stk-text-color)}', array( "r\t\t\t.a\tcolor:red" ) );
+		$this->assertSame( '.a{color:red}', Stackable_Frontend_CSS::get_css_subset( $path, array(), 0 ) );
+		$this->set_load_all( true );
+		try {
+			$this->assertSame(
+				'.a{color:red}:where(' . Stackable_Frontend_CSS::COLOR_SCHEME_SELECTORS . ') .stk-block>p{color:var(--stk-text-color)}',
+				Stackable_Frontend_CSS::get_css_subset( $path, array(), 0 )
+			);
+		} finally {
+			$this->set_load_all( false );
+		}
+	}
+
+	public function test_color_scheme_selectors_match_the_scss_list() {
+		$scss = file_get_contents( dirname( __DIR__, 2 ) . '/src/styles/cssvars.scss' );
+		$this->assertSame( 1, preg_match( '/\$stk-has-color-schemes-selector:(.*?)!default;/s', $scss, $m ) );
+		preg_match_all( '/"([^"]+)"/', $m[1], $items );
+		$this->assertSame( implode( ',', $items[1] ), Stackable_Frontend_CSS::COLOR_SCHEME_SELECTORS );
+	}
+
 	public function test_fresh_install_stores_the_flag_off_and_autoloaded() {
 		$added = null;
 		Functions\when( 'add_option' )->alias( function( $name, $value = '', $deprecated = '', $autoload = null ) use ( &$added ) {

@@ -37,6 +37,7 @@ npm run test:perf
 | `benchmark-budget.spec.js` | DynamicWP method (page size, queries, DOM, peak memory) vs the core-blocks page without Stackable; budgets via `STK_PERF_BUDGET_*`. |
 | `premium.spec.js` | Premium: block stylesheet handles, Premium CSS only for its blocks, no Freemius queries on the frontend, memory. |
 | `freemius-cache.spec.js` | Premium (with the e2e license mock): the frontend license cache follows license activation / deactivation and admin page loads on the next request. |
+| `force-load.spec.js` | `stackable_force_css_load`: Stackable markup added by a script after load (`?stk_inject`), blocks rendered late, custom breakpoints and color schemes (with and without a base scheme) are styled the same as with the legacy bundle. |
 
 ## Visual / computed-style regression (`visual/`)
 
