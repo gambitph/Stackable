@@ -26,7 +26,7 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 			$register_options = apply_filters( 'stackable.register-blocks.options',
 				// This automatically enqueues all our styles and scripts.
 				array(
-					'style' => 'ugb-style-css', // Frontend styles.
+					'style' => Stackable_Frontend_CSS::get_block_style( $metadata['name'] ), // Frontend styles.
 					// 'script' => 'ugb-block-frontend-js', // Frontend scripts.
 					'editor_script' => 'ugb-block-js', // Editor scripts.
 					'editor_style' => 'ugb-block-editor-css', // Editor styles.

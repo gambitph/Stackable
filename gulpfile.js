@@ -569,6 +569,183 @@ exit;
 	}
 ) )
 
+/**
+ * Per-block frontend CSS.
+ *
+ * Builds the same sources as the `style` task, but instead of one bundle it
+ * writes:
+ *
+ *  - dist/frontend_core.css              Shared styles (common, styles/*, block-components/*) minus the
+ *                                        design-system, color-scheme and theme-specific rules below.
+ *  - dist/frontend_core_responsive.css   Shared styles that come after the blocks in the bundle
+ *                                        (highlight, div, cimo) + all shared screen media queries.
+ *  - dist/frontend_color_schemes.css     Shared color scheme rules (only loaded if color schemes are used).
+ *  - dist/frontend_design_system.css     Spacing & borders / buttons & icons rules (only loaded if used).
+ *  - dist/frontend_theme_{theme}.css     Theme compatibility rules (only loaded for that theme).
+ *  - dist/blocks/{block}.css             One file per block (with its own media queries).
+ *  - dist/frontend_css_manifest.php      Block order (the order the bundle used) and file info for PHP.
+ *
+ * The color scheme selector list is replaced with a single marker class, PHP
+ * adds the marker to all the elements the list used to match.
+ *
+ * The legacy bundle (frontend_blocks.css) is still built as before, it's used
+ * by the editor and when the "legacy frontend CSS" compatibility option is on.
+ */
+const STK_SCHEME_MARKER = 'stk-has-scheme'
+const THEME_COMPAT_DIRS = {
+	blocksy: 'blocksy',
+	'hello-elementor': 'helloelementor',
+	tove: 'tove',
+	'twenty-twenty-five': 'twentytwentyfive',
+}
+
+const splitFrontendSources = () => [
+	path.resolve( __dirname, './src/common.scss' ),
+	path.resolve( __dirname, './src/styles/*.scss' ),
+	path.resolve( __dirname, './src/**/style.scss' ),
+	'!' + path.resolve( __dirname, './src/styles/editor-*.scss' ),
+	// Editor-only styles for deprecated blocks, not needed in the frontend.
+	'!' + path.resolve( __dirname, './src/styles/deprecated-editor-block.scss' ),
+	'!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ),
+]
+
+// Compiles each source file (in the same order as the bundle) and returns [ { file, css } ].
+const compileEach = ( sources, variables = {}, options = sassOptions ) => new Promise( ( resolve, reject ) => {
+	const through2 = require( 'through2' )
+	const out = []
+	gulp.src( sources )
+		.pipe( sassVariables( variables ) )
+		.pipe( sass( options ).on( 'error', reject ) )
+		.pipe( through2.obj( ( file, enc, cb ) => {
+			out.push( { file: path.relative( __dirname, file.history[ 0 ] ).replace( /\\/g, '/' ), css: file.contents.toString() } )
+			cb()
+		} ) )
+		.on( 'finish', () => resolve( out ) )
+		.on( 'error', reject )
+} )
+module.exports.compileEach = compileEach
+
+const postcssProcess = async ( css, prepend = '' ) => {
+	const result = await require( 'postcss' )( postCSSOptions ).process( prepend + css, { from: undefined } )
+	// Remove the dummy styles added in src/styles/breakpoints.scss
+	return result.css.replace( /.z\s?{\s?opacity:\s?1;?}/g, '' )
+		// And remove media queries left empty.
+		.replace( /@media[^{}]+\{\}/g, '' )
+}
+module.exports.postcssProcess = postcssProcess
+
+const isScreenMedia = node => node.type === 'atrule' && node.name === 'media' && /screen/.test( node.params )
+const nodesToCss = nodes => nodes.map( n => n.toString() ).join( '' )
+
+gulp.task( 'style-split', async function styleSplitFrontend() {
+	const postcssLib = require( 'postcss' )
+	const variables = { '$stk-has-color-schemes-selector': `.${ STK_SCHEME_MARKER }` }
+	const compiled = await compileEach( splitFrontendSources(), variables )
+
+	// Block styles start with `@import "common"`, which prints all the shared
+	// styles again (the bundle relied on cssnano removing the duplicates). Strip
+	// the shared styles from the start of each block's compiled CSS.
+	const commonCss = compiled.find( ( { file } ) => file === 'src/common.scss' ).css
+	// The dummy media query rules in breakpoints.scss fix the order of media
+	// queries (mqpacker keeps the order of first appearance). Prepend them to
+	// each separately processed file so its media queries are ordered the same
+	// as in the bundle.
+	const mediaOrderCss = compiled.find( ( { file } ) => file === 'src/styles/breakpoints.scss' ).css
+
+	const core = [], blocks = [], themes = {}
+	compiled.forEach( ( { file, css } ) => {
+		let m
+		if ( ( m = file.match( /^src\/block\/([^/]+)\/style\.scss$/ ) ) ) {
+			if ( /^@import\s+["']common["']/m.test( fs.readFileSync( file, 'utf8' ) ) ) {
+				if ( ! css.startsWith( commonCss ) ) {
+					throw new Error( `style-split: cannot strip the common styles from ${ file }` )
+				}
+				css = css.substring( commonCss.length )
+			}
+			blocks.push( { name: m[ 1 ], css } )
+		} else if ( ( m = file.match( /^src\/compatibility\/([^/]+)\/style\.scss$/ ) ) ) {
+			const theme = THEME_COMPAT_DIRS[ m[ 1 ] ] || m[ 1 ].replace( /-/g, '' )
+			themes[ theme ] = ( themes[ theme ] || [] ).concat( css )
+		} else {
+			core.push( css )
+		}
+	} )
+
+	// The shared styles are processed together so duplicates are removed and
+	// media queries are combined/sorted the same way as in the bundle.
+	const root = postcssLib.parse( await postcssProcess( core.join( '' ) ) )
+	const out = { core: [], responsive: [], schemes: [], designSystem: [] }
+	const themeRules = {}
+	root.nodes.forEach( node => {
+		if ( isScreenMedia( node ) ) {
+			return out.responsive.push( node )
+		}
+		if ( node.type === 'rule' ) {
+			const sels = node.selectors
+			if ( sels.every( s => s.includes( '.' + STK_SCHEME_MARKER ) ) ) {
+				return out.schemes.push( node )
+			}
+			if ( sels.every( s => s.startsWith( ':where(.stk-has-design-system-' ) ) ) {
+				return out.designSystem.push( node )
+			}
+			const themesUsed = [ ...new Set( sels.map( s => ( s.match( /\.stk--is-([a-z0-9]+)-theme/ ) || [] )[ 1 ] ) ) ]
+			if ( themesUsed.length === 1 && themesUsed[ 0 ] ) {
+				themeRules[ themesUsed[ 0 ] ] = ( themeRules[ themesUsed[ 0 ] ] || [] ).concat( node )
+				return
+			}
+		}
+		out.core.push( node )
+	} )
+
+	// Same order as in the bundle (by block folder name), independent of the
+	// order the files were found.
+	blocks.sort( ( a, b ) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0 )
+	for ( const block of blocks ) {
+		block.processed = await postcssProcess( block.css, mediaOrderCss )
+	}
+
+	// Start clean so removed blocks / themes don't leave stale files.
+	fs.rmSync( 'dist/blocks', { recursive: true, force: true } )
+	fs.mkdirSync( 'dist/blocks', { recursive: true } )
+	glob.sync( 'dist/frontend_theme_*.css' ).forEach( f => fs.unlinkSync( f ) )
+	const write = ( file, css ) => fs.writeFileSync( path.resolve( __dirname, file ), css )
+	write( 'dist/frontend_core.css', nodesToCss( out.core ) )
+	write( 'dist/frontend_core_responsive.css', nodesToCss( out.responsive ) )
+	write( 'dist/frontend_color_schemes.css', nodesToCss( out.schemes ) )
+	write( 'dist/frontend_design_system.css', nodesToCss( out.designSystem ) )
+
+	const manifest = { blocks: {}, themes: {} }
+	for ( const theme of [ ...new Set( Object.keys( themeRules ).concat( Object.keys( themes ) ) ) ] ) {
+		const extra = themes[ theme ] ? await postcssProcess( themes[ theme ].join( '' ), mediaOrderCss ) : ''
+		const css = nodesToCss( themeRules[ theme ] || [] ) + extra
+		if ( css.trim() ) {
+			write( `dist/frontend_theme_${ theme }.css`, css )
+			manifest.themes[ theme ] = css.length
+		}
+	}
+	for ( const { name, processed: blockCss } of blocks ) {
+		if ( blockCss.trim() ) {
+			write( `dist/blocks/${ name }.css`, blockCss )
+			manifest.blocks[ name ] = blockCss.length
+		}
+	}
+
+	// PHP manifest, the block order is the order in the bundle.
+	const phpArray = obj => 'array( ' + Object.entries( obj ).map( ( [ k, v ] ) => `'${ k }' => ${ v }` ).join( ', ' ) + ' )'
+	write( 'dist/frontend_css_manifest.php', `<?php
+// This is a generated file by gulp style-split.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+return array(
+	'blocks' => ${ phpArray( manifest.blocks ) },
+	'themes' => ${ phpArray( manifest.themes ) },
+	'color_schemes' => ${ out.schemes.length ? 'true' : 'false' },
+	'design_system' => ${ out.designSystem.length ? 'true' : 'false' },
+);
+` )
+} )
+
 gulp.task( 'style-editor', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/**/editor.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/editor.scss' ) ] )
 		// The active theme can change the editor preview widths at runtime.
@@ -636,15 +813,17 @@ gulp.task( 'style', gulp.series(
 	function styleGenerateResponsivePHP() {
 		const css = fs.readFileSync( 'dist/frontend_blocks_responsive.css', 'utf8' )
 
-		return gulp.src( [ path.resolve( __dirname, './src/dynamic-breakpoints.php' ) ] )
+		// Only used by the legacy frontend CSS loading.
+		return gulp.src( [ path.resolve( __dirname, './src/deprecated/legacy-frontend-css.php' ) ] )
 			.pipe( replace(
 				/return <<<STK_RESPONSIVE_CSS([\s\S]*?)STK_RESPONSIVE_CSS;/gm,
 				`return <<<STK_RESPONSIVE_CSS
 ${ css }
 STK_RESPONSIVE_CSS;`
 			) )
-			.pipe( gulp.dest( path.resolve( __dirname, './src/' ) ) )
-	}
+			.pipe( gulp.dest( path.resolve( __dirname, './src/deprecated/' ) ) )
+	},
+	'style-split'
 ) )
 
 gulp.task( 'welcome-styles', function() {

@@ -270,6 +270,7 @@ if ( STACKABLE_BUILD !== 'free' ) {
 require_once( plugin_dir_path( __FILE__ ) . 'src/editor-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/admin.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/frontend-css.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/stk-block-types.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
@@ -342,6 +343,9 @@ if ( STACKABLE_BUILD === 'premium' ) {
 
 // Deprecated.
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/editor-settings.php' );
+if ( get_option( 'stackable_use_legacy_frontend_css' ) ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/legacy-frontend-css.php' );
+}
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/navigation-panel-pre-enabled.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/font-awesome-version.php' );

@@ -84,6 +84,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			if ( ! self::$is_main_script_loaded && apply_filters( 'stackable_force_css_load', false ) ) {
 				self::block_enqueue_frontend_assets();
 				self::$is_main_script_loaded = true;
+				// We don't know which blocks will be used, load them all.
+				Stackable_Frontend_CSS::enqueue_all_block_styles();
 			}
 		}
 
@@ -93,13 +95,26 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @since 0.1
 		 */
 		public static function register_frontend_assets() {
-			// Frontend block styles.
-			wp_register_style(
-				'ugb-style-css',
-				plugins_url( 'dist/frontend_blocks.css', STACKABLE_FILE ),
-				apply_filters( 'stackable_frontend_css_dependencies', array() ),
-				STACKABLE_VERSION
-			);
+			$files = Stackable_Frontend_CSS::get_shared_style_files();
+			// The path lets WordPress inline small stylesheets (like it does for core blocks), and lets us adjust breakpoints.
+			$add_path = apply_filters( 'stackable_frontend_css_add_path', true );
+			$register = function( $handle, $deps ) use ( $files, $add_path ) {
+				$file = isset( $files[ $handle ] ) ? $files[ $handle ] : false;
+				wp_register_style( $handle, $file ? plugins_url( $file, STACKABLE_FILE ) : false, $deps, STACKABLE_VERSION );
+				if ( $file && $add_path ) {
+					wp_style_add_data( $handle, 'path', plugin_dir_path( STACKABLE_FILE ) . $file );
+				}
+			};
+
+			// Frontend shared styles. The block styles are registered in
+			// Stackable_Frontend_CSS and are loaded only for rendered blocks.
+			$register( 'ugb-style-css', apply_filters( 'stackable_frontend_css_dependencies', array() ) );
+
+			// Shared styles that are only loaded if used (color schemes,
+			// design system, theme compatibility).
+			$register( 'ugb-style-css-color-schemes', array( 'ugb-style-css' ) );
+			$register( 'ugb-style-css-design-system', array( 'ugb-style-css' ) );
+			$register( 'ugb-style-css-theme', array( 'ugb-style-css' ) );
 
 			// Frtonend only inline styles.
 			if ( ! is_admin() ) {
@@ -109,13 +124,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				}
 			}
 
-			// Frontend block styles (responsive).
-			wp_register_style(
-				'ugb-style-css-responsive',
-				plugins_url( 'dist/frontend_blocks_responsive.css', STACKABLE_FILE ),
-				array( 'ugb-style-css' ),
-				STACKABLE_VERSION
-			);
+			// Frontend shared styles (responsive).
+			$register( 'ugb-style-css-responsive', array( 'ugb-style-css' ) );
 			wp_enqueue_style( 'ugb-style-css-responsive' );
 
 			if ( ! is_admin() ) {
@@ -175,6 +185,27 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				return;
 			}
 
+			// Classic themes print the widgets after the head, load the
+			// styles of the Stackable blocks in block widgets now so they're
+			// printed in the head.
+			if ( apply_filters( 'stackable_frontend_css_preload_widget_styles', ! wp_is_block_theme() ) ) {
+				$widgets = get_option( 'widget_block' );
+				if ( is_array( $widgets ) && stripos( wp_json_encode( $widgets ), 'wp:stackable\\/' ) !== false ) {
+					$names = array();
+					foreach ( $widgets as $widget ) {
+						if ( is_array( $widget ) && ! empty( $widget['content'] ) && preg_match_all( '/<!-- wp:(stackable\/[a-zA-Z_-]+)/', $widget['content'], $matches ) ) {
+							$names = array_merge( $names, $matches[1] );
+						}
+					}
+					if ( count( $names ) ) {
+						// Only the stylesheets, the rest is loaded when the widgets are rendered.
+						Stackable_Frontend_CSS::enqueue_block_styles( array_map( function( $name ) {
+							return rtrim( $name, '-' );
+						}, $names ) );
+					}
+				}
+			}
+
 			// Only do this for singular posts.
 			$post_id = get_the_ID();
 			if ( is_singular() && ! empty( $post_id ) ) {
@@ -188,6 +219,13 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 						// Enqueue our main scripts and styles.
 						self::block_enqueue_frontend_assets();
 						self::$is_main_script_loaded = true;
+
+						// Enqueue the styles of the blocks in the content now
+						// so they're printed in the head.
+						preg_match_all( '/<!-- wp:(stackable\/[a-zA-Z_-]+)/', $post->post_content, $matches );
+						Stackable_Frontend_CSS::enqueue_block_styles( array_map( function( $name ) {
+							return rtrim( $name, '-' );
+						}, $matches[1] ) );
 					}
 				}
 			}
@@ -263,6 +301,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
 			}
 			wp_enqueue_style( 'ugb-style-css-nodep' );
+			if ( is_frontend() ) {
+				wp_enqueue_style( 'ugb-style-css-theme' );
+			}
 			wp_enqueue_script( 'ugb-block-frontend-js' );
 			do_action( 'stackable_block_enqueue_frontend_assets' );
 		}
@@ -488,6 +529,18 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes = explode( ' ', $classes );
 			}
 
+			$classes = array_merge( $classes, self::get_theme_compatibility_classes() );
+
+			return $convert_to_string ? implode( ' ', $classes ) : $classes;
+		}
+
+		/**
+		 * The theme compatibility class of the current theme.
+		 *
+		 * @return array
+		 */
+		public static function get_theme_compatibility_classes() {
+			$classes = array();
 			if ( defined( 'ASTRA_THEME_VERSION' ) ) {
 				$classes[] = 'stk--is-astra-theme';
 			} else if ( class_exists( 'Blocksy_Translations_Manager' ) ) {
@@ -510,7 +563,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-tove-theme';
 			}
 
-			return $convert_to_string ? implode( ' ', $classes ) : $classes;
+			return $classes;
 		}
 
 		/**

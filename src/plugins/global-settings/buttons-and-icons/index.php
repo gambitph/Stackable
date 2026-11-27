@@ -104,6 +104,7 @@ if ( ! class_exists( 'Stackable_Global_Buttons_And_Icons' ) ) {
 			// Add a body class if there are any global buttons and icons styles.
 			if ( $generated_css !== '' ) {
 				add_filter( 'body_class', array( $this, 'add_body_class_buttons_and_icons' ) );
+				wp_enqueue_style( 'ugb-style-css-design-system' );
 			}
 
 			$current_css .= $generated_css;

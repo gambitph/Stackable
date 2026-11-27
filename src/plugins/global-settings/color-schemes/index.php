@@ -265,6 +265,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				add_filter( 'body_class', function( $classes ) use ( $cached_color_scheme_css ) {
 					return $this->add_body_class_color_schemes( $classes, $cached_color_scheme_css );
 				} );
+				wp_enqueue_style( 'ugb-style-css-color-schemes' );
 				$current_css .= $cached_color_scheme_css;
 				return apply_filters( 'stackable_frontend_css' , $current_css );
 			}
@@ -376,6 +377,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				add_filter( 'body_class', function( $classes ) use ( $color_scheme_css ) {
 					return $this->add_body_class_color_schemes( $classes, $color_scheme_css );
 				}  );
+				wp_enqueue_style( 'ugb-style-css-color-schemes' );
 			}
 
 			// Add the generated CSS to the database
@@ -386,6 +388,21 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		}
 
 		public function add_body_class_color_schemes( $classes, $color_scheme_css ) {
+			$scheme_classes = self::get_color_scheme_body_classes( $color_scheme_css );
+
+			// The body is matched by the color scheme styles if there's a base scheme.
+			if ( in_array( 'stk--has-base-scheme', $scheme_classes ) ) {
+				$marker = apply_filters( 'stackable_color_scheme_marker_class', Stackable_Frontend_CSS::SCHEME_MARKER );
+				if ( $marker ) {
+					$scheme_classes[] = $marker;
+				}
+			}
+
+			return array_merge( $classes, $scheme_classes );
+		}
+
+		public static function get_color_scheme_body_classes( $color_scheme_css ) {
+			$classes = array();
 			if ( $color_scheme_css ) {
 				if ( strpos( $color_scheme_css, ':root' ) !== false ) {
 					$classes[] = 'stk--has-base-scheme';

@@ -105,6 +105,7 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 			// Add a body class if there are any global spacing and borders styles.
 			if ( $generated_css !== '' ) {
 				add_filter( 'body_class', array( $this, 'add_body_class_spacing_and_borders' ) );
+				wp_enqueue_style( 'ugb-style-css-design-system' );
 			}
 
 			$current_css .= $generated_css;
