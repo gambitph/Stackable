@@ -45,6 +45,18 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		const SCHEME_MARKER = 'stk-has-scheme';
 
 		/**
+		 * The class added to the outermost elements of content rendered over
+		 * AJAX / REST. The CSS printed with that content only applies inside
+		 * it, so it can't restyle the page it's added to.
+		 */
+		const INJECTED_CLASS = 'stk-injected-content';
+
+		/**
+		 * The classes of the printed <body> tag (null until it's printed).
+		 */
+		private static $printed_body_classes = null;
+
+		/**
 		 * The selector list the marker replaces ($stk-has-color-schemes-selector
 		 * in src/styles/cssvars.scss).
 		 */
@@ -116,6 +128,9 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 
 			add_action( 'init', array( $this, 'register_block_styles' ), 9 );
 			add_filter( 'print_styles_array', array( $this, 'order_styles' ), 20 );
+			add_filter( 'body_class', array( $this, 'remember_body_classes' ), PHP_INT_MAX );
+			// Stylesheets for Stackable blocks added to the page by scripts.
+			add_action( 'wp_footer', array( $this, 'print_injected_loader' ), PHP_INT_MAX );
 
 			// Sites that don't load block assets on demand (classic themes
 			// below WordPress 6.9, or sites that opted out): WordPress enqueues
@@ -195,6 +210,9 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			}
 			$count = 0;
 			$css = $start ? self::get_css_from_first_change( $start, self::$printed_css ) : self::$printed_css;
+			if ( self::scope_injected_css() ) {
+				$css = self::scope_css( $css, '.' . self::INJECTED_CLASS );
+			}
 			while ( $processor->next_tag( 'STYLE' ) ) {
 				$id = $processor->get_attribute( 'id' );
 				if ( ! is_string( $id ) || ! preg_match( '/^stk-frontend-css-\d+-inline-css$/', $id ) ) {
@@ -818,6 +836,18 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		}
 
 		/**
+		 * Remember the classes of the <body> tag. Only the last call before
+		 * the body is printed counts, later get_body_class() calls (e.g. in
+		 * the footer) aren't the body tag, so stop once wp_body_open ran.
+		 */
+		public function remember_body_classes( $classes ) {
+			if ( ! did_action( 'wp_body_open' ) && did_action( 'wp_head' ) ) {
+				self::$printed_body_classes = array_values( array_filter( (array) $classes, 'is_string' ) );
+			}
+			return $classes;
+		}
+
+		/**
 		 * Keep track of the block depth so we only process outermost blocks.
 		 */
 		public function block_depth_start( $parsed_block, $source_block = null, $parent_block = null ) {
@@ -857,6 +887,9 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 
 			if ( self::is_combined() ) {
 				self::add_tokens_from_html( $block_content );
+				if ( self::is_injected_request() ) {
+					$block_content = self::mark_injected_content( $block_content );
+				}
 				return $this->maybe_print_late_combined_css( $block_content );
 			}
 
@@ -916,7 +949,12 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			$tokens = self::$tokens;
 			if ( ! wp_doing_ajax() && function_exists( 'get_body_class' ) && did_action( 'wp' ) ) {
 				static $body = null;
-				if ( $body === null ) {
+				// The body tag was printed already: only its classes match
+				// (our global settings may have added their body classes
+				// too late for it, e.g. blocks only rendered by a page builder).
+				if ( self::$printed_body_classes !== null ) {
+					$body = array_fill_keys( self::$printed_body_classes, true );
+				} elseif ( $body === null ) {
 					$body = array();
 					foreach ( get_body_class() as $class ) {
 						$body[ $class ] = true;
@@ -947,7 +985,15 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			}
 			$css = get_option( 'stackable_global_color_scheme_generated_css' );
 			if ( $css && class_exists( 'Stackable_Global_Color_Schemes' ) ) {
-				$classes = array_merge( $classes, Stackable_Global_Color_Schemes::get_color_scheme_body_classes( $css ) );
+				$scheme_classes = Stackable_Global_Color_Schemes::get_color_scheme_body_classes( $css );
+				// The body also gets the color scheme marker with a base scheme.
+				if ( in_array( 'stk--has-base-scheme', $scheme_classes, true ) ) {
+					$marker = apply_filters( 'stackable_color_scheme_marker_class', self::SCHEME_MARKER );
+					if ( $marker ) {
+						$scheme_classes[] = $marker;
+					}
+				}
+				$classes = array_merge( $classes, $scheme_classes );
 			}
 			return $classes;
 		}
@@ -1127,7 +1173,9 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 				$path = self::get_style_path( $handle );
 				if ( $path ) {
 					$subset = self::get_css_subset( $path, $tokens, self::$max_columns );
-					if ( $adjust && strpos( $subset, '@media' ) !== false ) {
+					// Premium stylesheets kept the default breakpoints before
+					// (only the shared responsive styles were adjusted).
+					if ( $adjust && strpos( $subset, '@media' ) !== false && strpos( $handle, 'premium' ) === false ) {
 						$subset = apply_filters( 'stackable_frontend_css', $subset );
 					}
 					$css .= $subset;
@@ -1299,7 +1347,266 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			if ( $css === false ) {
 				return $block_content;
 			}
+			if ( $is_ajax && self::scope_injected_css() ) {
+				$css = self::scope_css( $css, '.' . self::INJECTED_CLASS );
+			}
 			return sprintf( "<style id='stk-frontend-css-%d-inline-css'>%s</style>", self::$print_count, $css ) . $block_content;
+		}
+
+		/**
+		 * A small script for Stackable blocks that scripts add to the page
+		 * after it loads (e.g. HTML copied from another page, or content
+		 * without its CSS). Only the rules used by the page are printed, so
+		 * it loads the full stylesheets of the blocks it finds, once each.
+		 *
+		 * One MutationObserver, the added elements are checked in one batch
+		 * when the browser is idle, only added elements are searched.
+		 */
+		public function print_injected_loader() {
+			if ( ! self::is_combined() || self::$load_all || self::$print_count === 0 || self::is_injected_request() ) {
+				return;
+			}
+			if ( ! apply_filters( 'stackable_frontend_css_injected_loader', true ) ) {
+				return;
+			}
+			$files = self::get_shared_style_files();
+			$shared = array();
+			$keys = array( 'ugb-style-css', 'ugb-style-css-theme' );
+			// The responsive stylesheet has the default breakpoints.
+			if ( ! apply_filters( 'stackable_frontend_css_has_custom_breakpoints', false ) ) {
+				$keys[] = 'ugb-style-css-responsive';
+			}
+			if ( count( array_intersect( array( 'stk-has-design-system-spacing-and-borders', 'stk-has-design-system-buttons-and-icons' ), self::get_global_body_classes() ) ) ) {
+				$keys[] = 'ugb-style-css-design-system';
+			}
+			foreach ( $keys as $key ) {
+				if ( ! empty( $files[ $key ] ) ) {
+					$shared[] = substr( $files[ $key ], 5 ); // Without dist/
+				}
+			}
+			$premium = array();
+			if ( function_exists( 'stackable_premium_get_css_manifest' ) ) {
+				foreach ( stackable_premium_get_css_manifest()['styles'] as $style ) {
+					if ( $style['type'] === 'block' ) {
+						$premium[] = $style['name'];
+					}
+				}
+			}
+			$manifest = self::get_manifest();
+			$no_css = array();
+			foreach ( WP_Block_Type_Registry::get_instance()->get_all_registered() as $name => $block_type ) {
+				if ( strpos( $name, 'stackable/' ) === 0 && ! isset( $manifest['blocks'][ substr( $name, 10 ) ] ) ) {
+					$no_css[] = substr( $name, 10 );
+				}
+			}
+			$config = array(
+				'u' => plugins_url( 'dist/', STACKABLE_FILE ),
+				'v' => STACKABLE_VERSION,
+				's' => $shared,
+				'c' => empty( $files['ugb-style-css-color-schemes'] ) ? '' : substr( $files['ugb-style-css-color-schemes'], 5 ),
+				'p' => $premium,
+				'n' => $no_css,
+			);
+			$script = file_get_contents( __DIR__ . '/frontend-css-injected-loader.min.js' );
+			if ( ! $script ) {
+				return;
+			}
+			$script = str_replace( '__STK_CONFIG__', wp_json_encode( $config, JSON_UNESCAPED_SLASHES ), trim( $script ) );
+			if ( function_exists( 'wp_print_inline_script_tag' ) ) {
+				wp_print_inline_script_tag( $script, array( 'id' => 'stk-injected-css-loader' ) );
+			} else {
+				echo '<script id="stk-injected-css-loader">' . $script . '</script>'; // phpcs:ignore WordPress.Security.EscapeOutput
+			}
+		}
+
+		/**
+		 * AJAX / REST request that renders content for a page (not the editor).
+		 */
+		public static function is_injected_request() {
+			$is_rest = wp_is_json_request() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
+			return wp_doing_ajax() || ( $is_rest && ! self::is_editor_rest_request() );
+		}
+
+		/**
+		 * Whether the CSS printed with AJAX / REST content only applies inside
+		 * that content. Before, that content added no CSS (the page's
+		 * stylesheet styled it), so its CSS must not restyle the page.
+		 */
+		public static function scope_injected_css() {
+			return apply_filters( 'stackable_frontend_css_scope_injected', true );
+		}
+
+		/**
+		 * Adds the injected content class to the first element of an outermost
+		 * block rendered over AJAX / REST.
+		 */
+		public static function mark_injected_content( $html ) {
+			if ( ! self::scope_injected_css() || ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
+				return $html;
+			}
+			$tags = new WP_HTML_Tag_Processor( $html );
+			while ( $tags->next_tag() ) {
+				if ( in_array( $tags->get_tag(), array( 'STYLE', 'SCRIPT', 'LINK', 'META' ), true ) ) {
+					continue;
+				}
+				$tags->add_class( self::INJECTED_CLASS );
+				return $tags->get_updated_html();
+			}
+			return $html;
+		}
+
+		/**
+		 * Limits every style rule to $scope and its descendants, keeping the
+		 * specificity (:where()). Rules for :root, html and body (custom
+		 * properties) and @font-face / @keyframes stay as they are.
+		 *
+		 * @param string $css
+		 * @param string $scope e.g. '.stk-injected-content'
+		 * @return string
+		 */
+		public static function scope_css( $css, $scope ) {
+			$where = ':where(' . $scope . ',' . $scope . ' *)';
+			$out = '';
+			$len = strlen( $css );
+			$i = 0;
+			while ( $i < $len ) {
+				// Read the prelude up to { or ; (or the end of a block).
+				$start = $i;
+				$paren = 0;
+				$quote = '';
+				while ( $i < $len ) {
+					$c = $css[ $i ];
+					if ( $quote !== '' ) {
+						if ( $c === '\\' ) {
+							$i++;
+						} elseif ( $c === $quote ) {
+							$quote = '';
+						}
+					} elseif ( $c === '"' || $c === "'" ) {
+						$quote = $c;
+					} elseif ( $c === '/' && isset( $css[ $i + 1 ] ) && $css[ $i + 1 ] === '*' ) {
+						$end = strpos( $css, '*/', $i + 2 );
+						$i = $end === false ? $len : $end + 1;
+					} elseif ( $c === '(' || $c === '[' ) {
+						$paren++;
+					} elseif ( $c === ')' || $c === ']' ) {
+						$paren--;
+					} elseif ( $paren <= 0 && ( $c === '{' || $c === ';' || $c === '}' ) ) {
+						break;
+					}
+					$i++;
+				}
+				$prelude = substr( $css, $start, $i - $start );
+				if ( $i >= $len ) {
+					$out .= $prelude;
+					break;
+				}
+				$c = $css[ $i ];
+				if ( $c !== '{' ) {
+					$out .= $prelude . $c;
+					$i++;
+					continue;
+				}
+				// Find the matching }.
+				$body_start = $i + 1;
+				$depth = 1;
+				$quote = '';
+				for ( $j = $body_start; $j < $len && $depth > 0; $j++ ) {
+					$d = $css[ $j ];
+					if ( $quote !== '' ) {
+						if ( $d === '\\' ) {
+							$j++;
+						} elseif ( $d === $quote ) {
+							$quote = '';
+						}
+					} elseif ( $d === '"' || $d === "'" ) {
+						$quote = $d;
+					} elseif ( $d === '{' ) {
+						$depth++;
+					} elseif ( $d === '}' ) {
+						$depth--;
+					}
+				}
+				$body = substr( $css, $body_start, $j - 1 - $body_start );
+				$trimmed = ltrim( $prelude );
+				if ( $trimmed !== '' && $trimmed[0] === '@' ) {
+					if ( preg_match( '/^@(media|supports|container|layer|document|-moz-document)\b/i', $trimmed ) ) {
+						$body = self::scope_css( $body, $scope );
+					}
+					$out .= $prelude . '{' . $body . '}';
+				} else {
+					$out .= self::scope_selector_list( $prelude, $where ) . '{' . $body . '}';
+				}
+				$i = $j;
+			}
+			return $out;
+		}
+
+		/**
+		 * Adds $where to the subject of each selector in a list.
+		 */
+		public static function scope_selector_list( $selectors, $where ) {
+			// Comments are not part of a selector, e.g. "/* Block style inheritance */:root".
+			$selectors = preg_replace( '#/\*.*?\*/#s', '', $selectors );
+			$parts = array();
+			$depth = 0;
+			$quote = '';
+			$current = '';
+			$len = strlen( $selectors );
+			for ( $i = 0; $i < $len; $i++ ) {
+				$c = $selectors[ $i ];
+				if ( $quote !== '' ) {
+					if ( $c === $quote ) {
+						$quote = '';
+					}
+				} elseif ( $c === '"' || $c === "'" ) {
+					$quote = $c;
+				} elseif ( $c === '(' || $c === '[' ) {
+					$depth++;
+				} elseif ( $c === ')' || $c === ']' ) {
+					$depth--;
+				} elseif ( $c === ',' && $depth === 0 ) {
+					$parts[] = $current;
+					$current = '';
+					continue;
+				}
+				$current .= $c;
+			}
+			$parts[] = $current;
+			foreach ( $parts as $k => $selector ) {
+				$selector = trim( $selector );
+				// The last compound selector (after the last combinator).
+				$last = 0;
+				$depth = 0;
+				for ( $i = 0, $len = strlen( $selector ); $i < $len; $i++ ) {
+					$c = $selector[ $i ];
+					if ( $c === '(' || $c === '[' ) {
+						$depth++;
+					} elseif ( $c === ')' || $c === ']' ) {
+						$depth--;
+					} elseif ( $depth === 0 && ( $c === ' ' || $c === '>' || $c === '+' || $c === '~' ) ) {
+						$last = $i + 1;
+					}
+				}
+				$compound = substr( $selector, $last );
+				if ( $selector === '' || $compound === '' ) {
+					$parts[ $k ] = $selector;
+					continue;
+				}
+				// Custom properties on :root / html / body would change the page's
+				// own blocks, so set them on the injected content instead.
+				if ( preg_match( '/^(:root|html|body)(?![\w-])/i', $compound ) ) {
+					$parts[ $k ] = $last === 0 ? $selector . ' ' . $where : $selector;
+					continue;
+				}
+				// Before a pseudo-element.
+				$at = strlen( $selector );
+				if ( preg_match( '/(::?(before|after|first-line|first-letter|marker|placeholder|selection|backdrop|file-selector-button)\b|::-?[a-z-]+).*$/i', $compound, $m, PREG_OFFSET_CAPTURE ) ) {
+					$at = $last + $m[0][1];
+				}
+				$parts[ $k ] = substr( $selector, 0, $at ) . $where . substr( $selector, $at );
+			}
+			return implode( ',', $parts );
 		}
 
 		/**
@@ -1307,6 +1614,15 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		 * default schemes are set (same as the color scheme body classes).
 		 */
 		public static function get_color_scheme_flags() {
+			// The body tag was printed already: use its classes (the color
+			// scheme ones are missing if the global styles were loaded after it).
+			if ( self::$printed_body_classes !== null && ! wp_doing_ajax() ) {
+				return array(
+					'enabled' => ! empty( get_option( 'stackable_global_color_scheme_generated_css' ) ),
+					'background' => in_array( 'stk--has-background-scheme', self::$printed_body_classes, true ),
+					'container' => in_array( 'stk--has-container-scheme', self::$printed_body_classes, true ),
+				);
+			}
 			if ( self::$scheme_flags === null ) {
 				$css = get_option( 'stackable_global_color_scheme_generated_css' );
 				$classes = $css ? Stackable_Global_Color_Schemes::get_color_scheme_body_classes( $css ) : array();

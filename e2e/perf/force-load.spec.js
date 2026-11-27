@@ -31,7 +31,9 @@ function setSchemeOptions( on, { base = true } = {} ) {
 
 async function styles( page, url, root ) {
 	await page.goto( cfg.url + url )
+	// The injected-block loader adds its <link>s when the browser is idle.
 	await page.waitForTimeout( 300 )
+	await page.waitForLoadState( 'networkidle' )
 	return page.evaluate( ( { root, PROPS } ) => {
 		const out = {}
 		const scope = document.querySelector( root )
@@ -97,10 +99,25 @@ test.beforeAll( async () => {
 	ids.schemes = createPage( 'force-schemes', 'design-system.html' )
 } )
 
-test( 'without the filter, injected markup misses styles (shows the test can tell)', async ( { page } ) => {
+test( 'without the injected-block loader, injected markup misses styles (shows the test can tell)', async ( { page } ) => {
 	test.skip( cfg.isLegacyMode, 'the legacy bundle always has every block style' )
-	const d = await compare( page, `stk_inject=${ ids.ref }` )
+	const d = await compare( page, `stk_no_loader=1&stk_inject=${ ids.ref }` )
 	expect( d.diff.length ).toBeGreaterThan( 0 )
+} )
+
+test( 'injected markup (e.g. HTML copied from another page) is styled by the injected-block loader @ci', async ( { page } ) => {
+	const d = await compare( page, `stk_inject=${ ids.ref }` )
+	expect( d.diff ).toEqual( [] )
+} )
+
+test( 'the injected-block loader also loads the color scheme rules @ci', async ( { page } ) => {
+	setSchemeOptions( true )
+	try {
+		const d = await compare( page, `stk_inject=${ ids.schemes }` )
+		expect( d.diff ).toEqual( [] )
+	} finally {
+		setSchemeOptions( false )
+	}
 } )
 
 test( 'with the filter, injected markup is styled', async ( { page } ) => {
@@ -141,3 +158,35 @@ for ( const base of [ true, false ] ) {
 		}
 	} )
 }
+
+// Example: Ajax Load More appends posts that carry their own <style>. Those rules
+// are scoped to the added content, so the blocks already on the page keep their
+// color scheme and design system styles, as with the old single stylesheet.
+test( 'CSS that comes with REST content does not restyle the blocks already on the page @ci', async ( { page } ) => {
+	setSchemeOptions( true )
+	try {
+		await page.goto( `${ cfg.url }/?page_id=${ ids.schemes }&stk_no_loader=1` )
+		const readPageBlocks = () => page.evaluate( props => {
+			const values = []
+			for ( const el of document.querySelectorAll( '[class*="stk-"]' ) ) {
+				if ( el.closest( '#stk-added' ) ) {
+					continue
+				}
+				const cs = getComputedStyle( el )
+				values.push( props.map( prop => cs.getPropertyValue( prop ) ).join( ';' ) )
+			}
+			return values
+		}, PROPS )
+		const before = await readPageBlocks()
+		const rendered = ( await ( await fetch( `${ cfg.url }/wp-json/wp/v2/pages/${ ids.schemes }` ) ).json() ).content.rendered
+		await page.evaluate( html => {
+			const div = document.createElement( 'div' )
+			div.id = 'stk-added'
+			div.innerHTML = html
+			document.body.appendChild( div )
+		}, rendered )
+		expect( await readPageBlocks() ).toEqual( before )
+	} finally {
+		setSchemeOptions( false )
+	}
+} )

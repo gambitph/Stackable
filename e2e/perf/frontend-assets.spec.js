@@ -24,6 +24,7 @@ test.beforeAll( async () => {
 	ids.none = createPage( 'none', 'no-stackable.html' )
 	ids.tabs = createPage( 'tabs-late', 'tabs.html', [ '--post_status=draft' ] )
 	ids.headingAccordion = createPage( 'heading-then-accordion', 'heading-then-accordion.html' )
+	ids.carousel = createPage( 'carousel', 'carousel.html' )
 } )
 
 test.describe( 'assets per scenario', () => {
@@ -196,7 +197,29 @@ test.describe( 'assets per scenario', () => {
 			expect( css ).not.toMatch( MARK.tabs )
 		}
 		expect( allCss( await stkStyles( ( await get( '/accordion/?stk_all_block_assets=1' ) ).text ) ) ).toMatch( MARK.accordion )
-		expect( allCss( await stkStyles( ( await get( '/none/?stk_all_block_assets=1&stk_late=' + ids.tabs ) ).text ) ) ).toMatch( MARK.tabs )
+		if ( ! legacy ) {
+			// Blocks rendered after the footer scripts only get CSS in the new behavior (as in the test above).
+			expect( allCss( await stkStyles( ( await get( '/none/?stk_all_block_assets=1&stk_late=' + ids.tabs ) ).text ) ) ).toMatch( MARK.tabs )
+		}
+	} )
+
+	test( 'injected-block loader: printed only in the new mode on pages with Stackable, off with the filter @ci', async () => {
+		const has = async url => /<script[^>]+id=["']stk-injected-css-loader["']/.test( ( await get( url ) ).text )
+		expect( await has( '/heading/' ) ).toBe( ! legacy )
+		expect( await has( '/none/' ) ).toBe( false )
+		expect( await has( '/heading/?stk_no_loader=1' ) ).toBe( false )
+		// Everything is loaded already.
+		expect( await has( '/heading/?stk_force=1' ) ).toBe( false )
+	} )
+
+	test( 'injected-block loader: no stylesheets added on normal pages (blocks cloned by their own scripts included) @ci', async ( { page } ) => {
+		for ( const url of [ '/heading/', '/accordion/', '/carousel/', '/benchmark/' ] ) {
+			await page.goto( cfg.url + url )
+			await page.waitForTimeout( 500 )
+			await page.waitForLoadState( 'networkidle' )
+			const links = await page.evaluate( () => [ ...document.querySelectorAll( 'link[href*="/dist/blocks/"], link[href*="/dist/frontend_core"]' ) ].map( l => l.href ) )
+			expect( links, url ).toEqual( [] )
+		}
 	} )
 
 	test( 'stackable_force_css_load loads the CSS of all blocks', async () => {

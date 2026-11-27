@@ -155,4 +155,20 @@ class FrontendCssTest extends Stackable_TestCase {
 		$this->assertContains( 'stk--has-base-scheme', $classes );
 		$this->assertContains( 'stk--has-background-scheme', $classes );
 	}
+
+	public function test_scope_css_for_injected_content() {
+		$w = ':where(.x,.x *)';
+		$css = ':root{--a:1}body.stk--has-base-scheme{--b:2}.stk-block .stk-a>p,.stk-b:hover{color:red}'
+			. '@media (max-width:767px){.stk-c::before{content:"{,}"}}'
+			. '@keyframes k{from{opacity:0}to{opacity:1}}@font-face{font-family:f}'
+			. ':where(.stk-has-scheme) .stk-d:is(.a,.b) :not(.c){margin:0}.stk-e:after{x:y}';
+		$this->assertSame(
+			':root ' . $w . '{--a:1}body.stk--has-base-scheme ' . $w . '{--b:2}.stk-block .stk-a>p' . $w . ',.stk-b:hover' . $w . '{color:red}'
+			. '@media (max-width:767px){.stk-c' . $w . '::before{content:"{,}"}}'
+			. '@keyframes k{from{opacity:0}to{opacity:1}}@font-face{font-family:f}'
+			. ':where(.stk-has-scheme) .stk-d:is(.a,.b) :not(.c)' . $w . '{margin:0}.stk-e' . $w . ':after{x:y}'
+			. ':root ' . $w . '{--c:3}body.stk--anim-init .stk-f' . $w . '{x:y}',
+			Stackable_Frontend_CSS::scope_css( $css . '/* comment */:root{--c:3}body.stk--anim-init .stk-f{x:y}', '.x' )
+		);
+	}
 }

@@ -10,10 +10,11 @@
  * - ?stk_late=<post id>           Prints that post's blocks after the footer scripts (late render).
  * - ?stk_force=1                  Turns on the stackable_force_css_load filter.
  * - ?stk_inject=<post id>         A script in the footer adds that post's saved HTML (not rendered by
- *                                  PHP) to the page content, like a script that adds markup after load.
+ *                                  PHP) to the page content on DOMContentLoaded, like a script that adds markup after load.
  * - ?stk_all_block_assets=1       WordPress enqueues every block stylesheet (not on demand), like classic
  *                                  themes below WordPress 6.9 or sites that turn on-demand loading off.
  * - ?stk_notices=1               Appends <!-- stk-notices [..] --> with the _doing_it_wrong() messages of the request.
+ * - ?stk_no_loader=1             Turns off the injected-block CSS loader (stackable_frontend_css_injected_loader).
  * - ?stk_no_finalize=1            Turns off moving late CSS into the first <style> (stackable_frontend_css_finalize_in_buffer).
  * - admin-ajax action stk_perf_ajax&post=<id>  Returns the rendered blocks of a post (AJAX render).
  * - Header "X-Stk-Perf-Admin: 1"  Loads the request as user 1 (to fetch wp-admin pages without logging in).
@@ -84,6 +85,10 @@ if ( ! empty( $_GET['stk_notices'] ) ) {
 	}, 0 );
 }
 
+if ( ! empty( $_GET['stk_no_loader'] ) ) {
+	add_filter( 'stackable_frontend_css_injected_loader', '__return_false' );
+}
+
 if ( ! empty( $_GET['stk_force'] ) ) {
 	add_filter( 'stackable_force_css_load', '__return_true' );
 }
@@ -101,7 +106,8 @@ if ( ! empty( $_GET['stk_inject'] ) ) {
 	add_action( 'wp_footer', function() {
 		$post = get_post( (int) $_GET['stk_inject'] );
 		if ( $post ) {
-			echo '<script>(function(){var d=document.createElement("div");d.id="stk-perf-injected";d.innerHTML=' . wp_json_encode( $post->post_content ) . ';var t=document.querySelector(".wp-block-post-content, .entry-content, main")||document.body;t.appendChild(d);})();</script>';
+			// Added on DOMContentLoaded, after every footer script ran, like markup fetched and added by a script.
+			echo '<script>document.addEventListener("DOMContentLoaded",function(){var d=document.createElement("div");d.id="stk-perf-injected";d.innerHTML=' . wp_json_encode( $post->post_content ) . ';var t=document.querySelector(".wp-block-post-content, .entry-content, main")||document.body;t.appendChild(d);});</script>';
 		}
 	}, 1 );
 }
