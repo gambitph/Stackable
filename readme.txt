@@ -134,7 +134,7 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
 
 Stackable is designed with Core Web Vitals in mind. Your visitors get fast page loads, and your SEO benefits.
 
-- Only ~7.8kb CSS + JS on the frontend
+- Only ~15KB gzipped CSS + JS on the frontend
 - Zero jQuery, zero bloat, no heavy dependencies
 - Minimal PHP server overhead
 - Responsive image loading for mobile
@@ -272,7 +272,7 @@ Yes! Stackable is optimized for block themes and Full Site Editing (FSE). Blocks
 
 **Will Stackable slow down my site?**
 
-No. Stackable is built for performance. It loads only ~7.8kb of CSS and JS on the frontend, has zero jQuery dependencies, and is optimized for Core Web Vitals. We use responsive image loading and work well with caching and optimization plugins.
+No. Stackable is built for performance. It loads only ~15KB gzipped CSS and JS on the frontend, has zero jQuery dependencies, and is optimized for Core Web Vitals. We use responsive image loading and work well with caching and optimization plugins.
 
 **Does Stackable work with my theme?**
 
