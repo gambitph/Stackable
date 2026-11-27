@@ -38,7 +38,7 @@ Design faster with global controls that apply to your entire site from one place
 - Global Spacing, Borders, Buttons and Icons
 - Style Guide Preview
 
-## 375+ Ready-Made Patterns & Templates
+## 375+ Ready-Made Patterns & Templates (Some are Premium)
 
 Never start from scratch. The Design Library gives you professionally-made patterns and full page templates that automatically inherit your block theme's styles.
 
