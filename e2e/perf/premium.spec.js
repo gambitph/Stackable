@@ -14,6 +14,8 @@ test.beforeAll( async () => {
 	await resetSite()
 	createPage( 'card', 'card.html' )
 	createPage( 'benchmark', 'benchmark.html' )
+	createPage( 'dynamic-content', 'dynamic-content.html' )
+	createPage( 'conditional-display', 'conditional-display.html' )
 	for ( let i = 0; i < 3; i++ ) {
 		await get( '/benchmark/' )
 	}
@@ -65,4 +67,18 @@ test( 'Premium memory over WordPress without Stackable within +4 MB', async () =
 	const delta = ( med( a ) - med( b ) ) / 1048576
 	test.info().annotations.push( { type: 'metric', description: `premium memory delta ${ delta.toFixed( 2 ) } MB (opcache ${ cfg.opcache })` } )
 	expect( delta ).toBeLessThanOrEqual( 4 )
+} )
+
+// Dynamic content and conditional display PHP is loaded only when a block uses them (round 2).
+test( 'dynamic content is still replaced in the frontend', async () => {
+	const html = ( await get( '/dynamic-content/' ) ).text
+	expect( html ).toContain( 'DYNA[dynamic-content]' )
+	expect( html ).toContain( 'DYNB[dynamic-content]' )
+	expect( html ).not.toContain( '!#stk_dynamic/' )
+} )
+
+test( 'conditional display still hides and shows blocks in the frontend', async () => {
+	const html = ( await get( '/conditional-display/' ) ).text
+	expect( html ).not.toContain( 'CD-LOGGED-IN-ONLY' )
+	expect( html ).toContain( 'CD-LOGGED-OUT-ONLY' )
 } )
