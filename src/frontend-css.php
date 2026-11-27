@@ -509,7 +509,9 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		 */
 		public function maybe_print_late_style_links( $block_content, $block_name ) {
 			$is_late = did_action( 'wp_print_footer_scripts' );
-			$is_ajax = wp_doing_ajax() || ( wp_is_json_request() && ! self::is_editor_rest_request() );
+			// REST requests too: fetch() calls often don't send a JSON Accept header.
+			$is_rest = wp_is_json_request() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
+			$is_ajax = wp_doing_ajax() || ( $is_rest && ! self::is_editor_rest_request() );
 			if ( ! $is_late && ! $is_ajax ) {
 				return $block_content;
 			}
@@ -717,11 +719,32 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 				}
 				$tokens += $body;
 			} else {
-				foreach ( Stackable_Init::get_theme_compatibility_classes() as $class ) {
+				// AJAX / REST: no body classes. The content is added to a page
+				// that has them, so use the site-wide ones we would add there.
+				foreach ( array_merge( Stackable_Init::get_theme_compatibility_classes(), self::get_global_body_classes() ) as $class ) {
 					$tokens[ $class ] = true;
 				}
 			}
 			return $tokens;
+		}
+
+		/**
+		 * The body classes our global settings add on every page (design
+		 * system and color schemes). Extra classes only keep more rules.
+		 */
+		public static function get_global_body_classes() {
+			$classes = array();
+			if ( get_option( 'stackable_global_spacing_and_borders' ) ) {
+				$classes[] = 'stk-has-design-system-spacing-and-borders';
+			}
+			if ( get_option( 'stackable_global_buttons_and_icons' ) ) {
+				$classes[] = 'stk-has-design-system-buttons-and-icons';
+			}
+			$css = get_option( 'stackable_global_color_scheme_generated_css' );
+			if ( $css && class_exists( 'Stackable_Global_Color_Schemes' ) ) {
+				$classes = array_merge( $classes, Stackable_Global_Color_Schemes::get_color_scheme_body_classes( $css ) );
+			}
+			return $classes;
 		}
 
 		/**
@@ -1030,7 +1053,9 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		 */
 		public function maybe_print_late_combined_css( $block_content ) {
 			$is_late = did_action( 'wp_print_footer_scripts' );
-			$is_ajax = wp_doing_ajax() || ( wp_is_json_request() && ! self::is_editor_rest_request() );
+			// REST requests too: fetch() calls often don't send a JSON Accept header.
+			$is_rest = wp_is_json_request() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
+			$is_ajax = wp_doing_ajax() || ( $is_rest && ! self::is_editor_rest_request() );
 			if ( ! $is_late && ! $is_ajax ) {
 				return $block_content;
 			}

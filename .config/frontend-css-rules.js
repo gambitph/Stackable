@@ -49,7 +49,8 @@ function getScriptClasses( root ) {
 			if ( /\/deprecated\//.test( f ) || /\/(node_modules|test|__tests__)\//.test( f ) ) {
 				continue
 			}
-			if ( /(^|\/)(frontend[^/]*|[^/]*-frontend|block-frontend)\.js$/.test( f ) ) {
+			// Frontend entries, and polyfills loaded in the frontend (e.g. the image optimizer polyfill).
+			if ( /(^|\/)(frontend[^/]*|[^/]*-frontend|block-frontend|[^/]*polyfill[^/]*)\.js$/.test( f ) ) {
 				const m = f.match( /\/block\/([^/]+)\/[^/]+$/ )
 				entries.push( { file: path.resolve( root, f ), trigger: m ? 'stk-block-' + m[ 1 ] : '' } )
 			}
@@ -122,6 +123,20 @@ function getScriptClasses( root ) {
 			for ( const m of src.matchAll( /([A-Za-z0-9_-]+-)(?:\$\{|['"`]\s*\+)/g ) ) {
 				if ( TOKEN.test( m[ 1 ] ) && m[ 1 ].length > 6 ) {
 					prefixes.add( m[ 1 ] )
+				}
+			}
+		}
+	}
+	// Inline scripts printed by PHP, e.g. the `stk--anim-init` body class
+	// added in src/init.php. These run on every page.
+	for ( const base of [ 'src', 'pro__premium_only/src' ] ) {
+		for ( const f of glob.sync( base + '/**/*.php', { cwd: root } ) ) {
+			const src = fs.readFileSync( path.resolve( root, f ), 'utf8' )
+			for ( const m of src.matchAll( /classList\.(?:add|toggle|replace)\(([^)]*)\)/g ) ) {
+				for ( const w of m[ 1 ].match( /[A-Za-z0-9_-]+/g ) || [] ) {
+					if ( TOKEN.test( w ) && ! w.endsWith( '-' ) ) {
+						always.add( w )
+					}
 				}
 			}
 		}

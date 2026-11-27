@@ -127,3 +127,8 @@ test( 'classes added by frontend scripts are found (e.g. carousel dots)', () => 
 	assert.ok( has( 'stk-block-carousel__dot--active', 'stk-block-carousel' ) )
 	assert.ok( s.prefixes.includes( 'stk-block-tab-label-' ) )
 } )
+
+test( 'classes added by inline scripts printed from PHP are found (stk--anim-init)', () => {
+	const s = getScriptClasses( ROOT )
+	assert.ok( s.always.has( 'stk--anim-init' ) )
+} )

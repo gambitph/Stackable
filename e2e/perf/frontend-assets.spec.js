@@ -113,6 +113,40 @@ test.describe( 'assets per scenario', () => {
 		}
 	} )
 
+	test( 'blocks rendered over the REST API carry their CSS (new behavior)', async () => {
+		// Like a theme or plugin that fetch()es posts and adds them to the page.
+		// fetch() doesn't send a JSON Accept header.
+		const r = await fetch( `${ cfg.url }/wp-json/wp/v2/pages/${ ids.accordion }` )
+		const html = ( await r.json() ).content.rendered
+		expect( html ).toContain( 'stk-block-accordion' )
+		const css = allCss( await stkStyles( html ) )
+		if ( legacy ) {
+			expect( css ).toBe( '' )
+		} else {
+			expect( css ).toMatch( MARK.accordion )
+			expect( css ).toMatch( MARK.core )
+		}
+	} )
+
+	test( 'AJAX / REST CSS has the design system rules (body classes are site-wide)', async () => {
+		test.skip( legacy, 'new behavior only' )
+		wp( 'option', 'update', 'stackable_global_spacing_and_borders', '{"container-padding":{"desktop":{"top":36,"right":32,"bottom":36,"left":32}}}', '--format=json' )
+		try {
+			const ajax = allCss( await stkStyles( ( await get( `/wp-admin/admin-ajax.php?action=stk_perf_ajax&post=${ ids.columns }` ) ).text ) )
+			const rest = allCss( await stkStyles( ( await ( await fetch( `${ cfg.url }/wp-json/wp/v2/pages/${ ids.columns }` ) ).json() ).content.rendered ) )
+			for ( const css of [ ajax, rest ] ) {
+				expect( css ).toMatch( /\.stk-has-design-system-spacing-and-borders/ )
+			}
+		} finally {
+			wp( 'option', 'delete', 'stackable_global_spacing_and_borders' )
+		}
+	} )
+
+	test( 'rules for classes added by inline scripts are kept (body.stk--anim-init transitions)', async () => {
+		const css = allCss( await stkStyles( ( await get( '/benchmark/' ) ).text ) )
+		expect( css ).toMatch( /body\.stk--anim-init/ )
+	} )
+
 	test( 'stackable_force_css_load loads the CSS of all blocks', async () => {
 		const css = allCss( await stkStyles( ( await get( '/none/?stk_force=1' ) ).text ) )
 		expect( css ).toMatch( MARK.accordion )

@@ -136,4 +136,23 @@ class FrontendCssTest extends Stackable_TestCase {
 		$this->assertSame( '.b{x:2}', Stackable_Frontend_CSS::get_css_from_first_change( '.a{x:1}', '.a{x:1}.b{x:2}' ) );
 		$this->assertSame( '.b{x:2}.a{x:1}', Stackable_Frontend_CSS::get_css_from_first_change( '.a{x:1}', '.b{x:2}.a{x:1}' ) );
 	}
+
+	public function test_global_body_classes_for_ajax_and_rest() {
+		$this->require_plugin_file( 'src/plugins/global-settings/color-schemes/index.php' );
+		$options = array();
+		Functions\when( 'get_option' )->alias( function( $name, $default = false ) use ( &$options ) {
+			return array_key_exists( $name, $options ) ? $options[ $name ] : $default;
+		} );
+		$this->assertSame( array(), Stackable_Frontend_CSS::get_global_body_classes() );
+		$options = array(
+			'stackable_global_spacing_and_borders' => array( 'container-padding' => array( 'desktop' => array( 'top' => 36 ) ) ),
+			'stackable_global_buttons_and_icons' => array( 'button-padding' => array( 'desktop' => array( 'top' => 12 ) ) ),
+			'stackable_global_color_scheme_generated_css' => ':root{--stk-text-color:#000}.stk-block-background{--stk-text-color:#111}',
+		);
+		$classes = Stackable_Frontend_CSS::get_global_body_classes();
+		$this->assertContains( 'stk-has-design-system-spacing-and-borders', $classes );
+		$this->assertContains( 'stk-has-design-system-buttons-and-icons', $classes );
+		$this->assertContains( 'stk--has-base-scheme', $classes );
+		$this->assertContains( 'stk--has-background-scheme', $classes );
+	}
 }
