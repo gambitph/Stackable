@@ -100,8 +100,56 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 	        return $show;
 		}, 10, 2 );
 
+		// Keep the frontend license cache in step with the SDK: refresh it
+		// at the end of every request that loaded the SDK (any admin page),
+		// and right away when the license or plan changes.
+		if ( ! has_action( 'shutdown', 'stackable_freemius_save_frontend_cache' ) ) {
+			add_action( 'shutdown', 'stackable_freemius_save_frontend_cache', 1000 );
+		}
+		foreach ( stackable_freemius_license_change_hooks() as $hook ) {
+			sugb_fs()->add_action( $hook, 'stackable_freemius_license_changed' );
+		}
+		sugb_fs()->add_action( 'after_uninstall', 'stackable_freemius_delete_frontend_cache' );
+
 		// Signal that SDK was initiated.
 		do_action( 'sugb_fs_loaded' );
+	}
+
+	/**
+	 * Freemius actions fired when the license, plan or account changes.
+	 * Trials starting or ending come in as a plan sync or license change.
+	 */
+	function stackable_freemius_license_change_hooks() {
+		return array(
+			'after_license_activation',
+			'after_license_deactivation',
+			'after_license_change',
+			'after_account_plan_sync',
+			'after_plans_sync',
+			'after_account_connection',
+			'after_network_account_connection',
+			'after_account_delete',
+			'after_network_account_delete',
+			'after_premium_version_activation',
+			'after_free_version_reactivation',
+		);
+	}
+
+	/**
+	 * Uninstalled: remove the cache and don't save it again.
+	 */
+	function stackable_freemius_delete_frontend_cache() {
+		delete_option( 'stackable_freemius_frontend_cache' );
+		remove_action( 'shutdown', 'stackable_freemius_save_frontend_cache', 1000 );
+	}
+
+	/**
+	 * The license or plan changed: drop the frontend cache now, and save it
+	 * again with the new values at the end of this request.
+	 */
+	function stackable_freemius_license_changed() {
+		delete_option( 'stackable_freemius_frontend_cache' );
+		$GLOBALS['stackable_freemius_cache_changed'] = true;
 	}
 
 	/**
@@ -155,7 +203,7 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 		$cache = get_option( 'stackable_freemius_frontend_cache' );
 		$data['version'] = STACKABLE_VERSION;
 		// Only write if something changed, or to keep it fresh.
-		if ( is_array( $cache ) && isset( $cache['time'] ) ) {
+		if ( empty( $GLOBALS['stackable_freemius_cache_changed'] ) && is_array( $cache ) && isset( $cache['time'] ) ) {
 			$old = $cache;
 			unset( $old['time'] );
 			if ( $old == $data && $cache['time'] > time() - 6 * HOUR_IN_SECONDS && $cache['time'] <= time() ) {
@@ -223,7 +271,6 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 		$GLOBALS['sugb_fs'] = new Stackable_Freemius_Frontend( $stackable_freemius_cache );
 	} else {
 		sugb_fs();
-		add_action( 'shutdown', 'stackable_freemius_save_frontend_cache' );
 	}
 	unset( $stackable_freemius_cache );
 }

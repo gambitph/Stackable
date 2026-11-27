@@ -36,6 +36,7 @@ npm run test:perf
 | `legacy-identical.spec.js` | With the legacy flag on the output is identical to the old release (record the reference with `STK_PERF_LEGACY=release STK_PERF_REF_WRITE=1`). |
 | `benchmark-budget.spec.js` | DynamicWP method (page size, queries, DOM, peak memory) vs the core-blocks page without Stackable; budgets via `STK_PERF_BUDGET_*`. |
 | `premium.spec.js` | Premium: block stylesheet handles, Premium CSS only for its blocks, no Freemius queries on the frontend, memory. |
+| `freemius-cache.spec.js` | Premium (with the e2e license mock): the frontend license cache follows license activation / deactivation and admin page loads on the next request. |
 
 ## Visual / computed-style regression (`visual/`)
 
