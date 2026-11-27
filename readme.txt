@@ -276,7 +276,7 @@ No. Stackable is built for performance. It loads only ~7.8kb of CSS and JS on th
 
 **Does Stackable work with my theme?**
 
-Stackable works with any WordPress theme. For the best experience, we recommend block themes (like Twenty Twenty-Four or Flavor Theme) where Stackable blocks automatically inherit your theme's design tokens.
+Stackable works with any WordPress theme. For the best experience, we recommend block themes (like the default WordPress themes) where Stackable blocks automatically inherit your theme's design tokens.
 
 **What's the difference between Free and Premium?**
 
