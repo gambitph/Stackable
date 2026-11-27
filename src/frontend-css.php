@@ -874,12 +874,11 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 					if ( isset( self::$blocks[ $block ] ) || ! count( array_intersect_key( $tokens, array_flip( $classes ) ) ) ) {
 						continue;
 					}
-					$handle = self::get_block_style_handle( 'stackable/' . $block );
-					if ( $handle ) {
-						$triggered[ $block ] = true;
-						$handles[] = $handle;
-						if ( wp_style_is( $handle . '-premium', 'registered' ) ) {
-							$handles[] = $handle . '-premium';
+					// The free stylesheet and / or the Premium one.
+					foreach ( array( self::get_block_style_handle( 'stackable/' . $block ), 'stk-block-' . $block . '-premium' ) as $handle ) {
+						if ( $handle && wp_style_is( $handle, 'registered' ) ) {
+							$triggered[ $block ] = true;
+							$handles[] = $handle;
 						}
 					}
 				}
