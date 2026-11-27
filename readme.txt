@@ -8,13 +8,13 @@ Stable tag: 3.20.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Build stunning websites with 42 custom blocks, 375+ ready-made patterns, and a design library. Works with any theme, optimized for block themes.
+Build stunning websites with 42 custom blocks, 100+ free patterns, and a 375 design library. Works with any theme, optimized for block themes.
 
 == Description ==
 
 **Build Beautiful Websites Faster with the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a powerful, lightweight page builder for WordPress. Get 42 custom Gutenberg blocks, 375+ ready-made patterns and templates, and a complete design system, all optimized for performance and built to work seamlessly with block themes and Full Site Editing.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a powerful, lightweight page builder for WordPress. Get 42 custom Gutenberg blocks, 100+ free patterns, and 15 free page templates. The Design Library has 375 patterns and 40 page templates in all, plus a complete design system optimized for performance and built to work seamlessly with block themes and Full Site Editing.
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
@@ -38,15 +38,15 @@ Design faster with global controls that apply to your entire site from one place
 - Global Spacing, Borders, Buttons and Icons
 - Style Guide Preview
 
-## 375+ Ready-Made Patterns & Templates (100+ are Free Patterns)
+## Ready-Made Patterns & Page Templates
 
-Never start from scratch. The Design Library gives you professionally-made patterns and full page templates that automatically inherit your block theme's styles.
+The Design Library includes 100+ free patterns and 15 free page templates. The full library has 375 patterns and 40 page templates. Premium includes the full set.
 
-- 375+ block patterns for every section type
-- 40 full page templates (landing pages, about, contact, and more)
-- Patterns adapt to your theme's colors and typography
-- Save and reuse your own custom patterns (Premium)
-- Block layouts and shape separators included
+- 100+ free patterns, ready to insert
+- 375 patterns in the full Design Library
+- 15 free page templates, 40 in the full library
+- Patterns follow your theme's colors and typography
+- Save and reuse your own patterns (Premium)
 
 ## 42 Powerful Custom Blocks
 
@@ -262,9 +262,9 @@ You'll need WordPress version 6.8.1 or higher for this to work.
 
 **Is Stackable Free?**
 
-Yes, Stackable is free forever with 42 blocks, a design library of 375+ designs (some are Premium), and a complete design system.
+Yes. The free plugin includes all 42 blocks, 100+ patterns, 15 page templates, and the global design system.
 
-[Stackable Premium](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) adds advanced features like dynamic content, motion effects, custom saved patterns, WooCommerce integration, and more.
+[Stackable Premium](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) includes the full Design Library (375 patterns and 40 page templates), plus dynamic content, motion effects, saved patterns, WooCommerce integration, and more.
 
 **Does Stackable work with block themes and Full Site Editing?**
 
@@ -280,9 +280,9 @@ Stackable works with any WordPress theme. For the best experience, we recommend 
 
 **What's the difference between Free and Premium?**
 
-The free version includes 40 blocks, 100~ patterns, the design library, global settings, and full block theme support.
+The free version includes 42 blocks, 100+ patterns, 15 page templates, the design library, global settings, and block theme support.
 
-Premium adds: dynamic content, scroll and entrance animations, saved custom patterns, WooCommerce integration, ACF/Metabox support, conditional display, role manager, and agency tools.
+Premium adds the rest of the Design Library (375 patterns and 40 page templates), dynamic content, scroll and entrance animations, saved custom patterns, WooCommerce integration, ACF/Metabox support, conditional display, role manager, and agency tools.
 
 [See the full comparison](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
@@ -301,7 +301,7 @@ Yes! Stackable blocks play well with other Gutenberg block plugins like Kadence,
 == Screenshots ==
 
 1. Insert a full, ready-made page from the Stackable Design Library in one click
-2. Tabs, accordion, countdown, icon list and pricing box blocks: 40+ free blocks
+2. Tabs, accordion, countdown, icon list and pricing box blocks: 42 custom blocks
 3. Style without code: gradient text, colors and mobile-responsive controls
 4. Works with block themes: add Stackable blocks to templates in the Site Editor
 5. Fast and lightweight: only loads what you use
