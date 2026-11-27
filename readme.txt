@@ -38,7 +38,7 @@ Design faster with global controls that apply to your entire site from one place
 - Global Spacing, Borders, Buttons and Icons
 - Style Guide Preview
 
-## 375+ Ready-Made Patterns & Templates (Some are Premium)
+## 375+ Ready-Made Patterns & Templates (100+ are Free Patterns)
 
 Never start from scratch. The Design Library gives you professionally-made patterns and full page templates that automatically inherit your block theme's styles.
 
@@ -280,7 +280,7 @@ Stackable works with any WordPress theme. For the best experience, we recommend 
 
 **What's the difference between Free and Premium?**
 
-The free version includes all 42 blocks, 375+ patterns, the design library, global settings, and full block theme support.
+The free version includes 40 blocks, 100~ patterns, the design library, global settings, and full block theme support.
 
 Premium adds: dynamic content, scroll and entrance animations, saved custom patterns, WooCommerce integration, ACF/Metabox support, conditional display, role manager, and agency tools.
 
