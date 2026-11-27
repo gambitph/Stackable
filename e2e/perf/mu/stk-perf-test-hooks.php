@@ -11,6 +11,9 @@
  * - ?stk_force=1                  Turns on the stackable_force_css_load filter.
  * - ?stk_inject=<post id>         A script in the footer adds that post's saved HTML (not rendered by
  *                                  PHP) to the page content, like a script that adds markup after load.
+ * - ?stk_all_block_assets=1       WordPress enqueues every block stylesheet (not on demand), like classic
+ *                                  themes below WordPress 6.9 or sites that turn on-demand loading off.
+ * - ?stk_notices=1               Appends <!-- stk-notices [..] --> with the _doing_it_wrong() messages of the request.
  * - ?stk_no_finalize=1            Turns off moving late CSS into the first <style> (stackable_frontend_css_finalize_in_buffer).
  * - admin-ajax action stk_perf_ajax&post=<id>  Returns the rendered blocks of a post (AJAX render).
  * - Header "X-Stk-Perf-Admin: 1"  Loads the request as user 1 (to fetch wp-admin pages without logging in).
@@ -64,6 +67,21 @@ if ( ! empty( $_SERVER['HTTP_X_STK_PERF'] ) ) {
 
 if ( ! empty( $_GET['stk_no_finalize'] ) ) {
 	add_filter( 'stackable_frontend_css_finalize_in_buffer', '__return_false' );
+}
+
+if ( ! empty( $_GET['stk_all_block_assets'] ) ) {
+	add_filter( 'should_load_block_assets_on_demand', '__return_false', 99 );
+	add_filter( 'should_load_separate_core_block_assets', '__return_false', 99 );
+}
+
+if ( ! empty( $_GET['stk_notices'] ) ) {
+	$GLOBALS['stk_perf_notices'] = array();
+	add_action( 'doing_it_wrong_run', function( $function, $message ) {
+		$GLOBALS['stk_perf_notices'][] = $function . ': ' . wp_strip_all_tags( $message );
+	}, 10, 2 );
+	add_action( 'shutdown', function() {
+		echo "\n<!-- stk-notices " . str_replace( '--', '- -', wp_json_encode( $GLOBALS['stk_perf_notices'] ) ) . " -->\n";
+	}, 0 );
 }
 
 if ( ! empty( $_GET['stk_force'] ) ) {

@@ -182,6 +182,23 @@ test.describe( 'assets per scenario', () => {
 		expect( css ).toMatch( /body\.stk--anim-init/ )
 	} )
 
+	test( 'block assets not loaded on demand (classic themes below WP 6.9): only the used block CSS, nothing on other pages @ci', async () => {
+		// WordPress then enqueues the stylesheets of all registered blocks.
+		const noneHtml = ( await get( '/none/?stk_all_block_assets=1&stk_notices=1' ) ).text
+		expect( ( await stkStyles( noneHtml ) ).map( s => s.id ) ).toEqual( [] )
+		// No "enqueued with dependencies that are not registered" notices.
+		expect( noneHtml ).toContain( '<!-- stk-notices [] -->' )
+		const css = allCss( await stkStyles( ( await get( '/heading/?stk_all_block_assets=1' ) ).text ) )
+		expect( css ).toMatch( MARK.heading )
+		expect( css ).toMatch( MARK.core )
+		if ( ! legacy ) {
+			expect( css ).not.toMatch( MARK.accordion )
+			expect( css ).not.toMatch( MARK.tabs )
+		}
+		expect( allCss( await stkStyles( ( await get( '/accordion/?stk_all_block_assets=1' ) ).text ) ) ).toMatch( MARK.accordion )
+		expect( allCss( await stkStyles( ( await get( '/none/?stk_all_block_assets=1&stk_late=' + ids.tabs ) ).text ) ) ).toMatch( MARK.tabs )
+	} )
+
 	test( 'stackable_force_css_load loads the CSS of all blocks', async () => {
 		const css = allCss( await stkStyles( ( await get( '/none/?stk_force=1' ) ).text ) )
 		expect( css ).toMatch( MARK.accordion )

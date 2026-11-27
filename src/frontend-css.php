@@ -117,6 +117,13 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			add_action( 'init', array( $this, 'register_block_styles' ), 9 );
 			add_filter( 'print_styles_array', array( $this, 'order_styles' ), 20 );
 
+			// Sites that don't load block assets on demand (classic themes
+			// below WordPress 6.9, or sites that opted out): WordPress enqueues
+			// every block stylesheet. Keep only the Stackable ones that are
+			// used, and enqueue the others when their block is rendered.
+			add_action( 'enqueue_block_assets', array( $this, 'dequeue_unused_block_styles' ), 11 );
+			add_filter( 'render_block', array( $this, 'enqueue_rendered_block_style' ), 10, 2 );
+
 			// Color scheme marker class.
 			add_filter( 'render_block_data', array( $this, 'block_depth_start' ), 1, 3 );
 			add_filter( 'render_block', array( $this, 'block_depth_end' ), 999, 2 );
@@ -458,10 +465,60 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 				$block_type = $registry->get_registered( $block_name );
 				if ( $block_type && ! empty( $block_type->style_handles ) ) {
 					foreach ( $block_type->style_handles as $handle ) {
+						self::$wanted_block_styles[ $handle ] = true;
 						wp_enqueue_style( $handle );
 					}
 				}
 			}
+		}
+
+		/**
+		 * Block stylesheets we enqueued ourselves (not WordPress's
+		 * load-everything mode).
+		 */
+		private static $wanted_block_styles = array();
+
+		/**
+		 * When block assets aren't loaded on demand, WordPress enqueues the
+		 * stylesheets of all registered blocks. Before, Stackable had one
+		 * stylesheet that was loaded only on pages with Stackable blocks, so
+		 * remove the Stackable block stylesheets that aren't used (they also
+		 * need the shared stylesheet, which isn't registered on pages without
+		 * Stackable blocks). Used ones are enqueued again when rendered.
+		 */
+		public function dequeue_unused_block_styles() {
+			if ( ! is_frontend() || self::$load_all || self::block_assets_on_demand() ) {
+				return;
+			}
+			global $wp_styles;
+			if ( empty( $wp_styles ) ) {
+				return;
+			}
+			foreach ( $wp_styles->queue as $handle ) {
+				if ( strpos( $handle, 'stk-block-' ) === 0 && empty( self::$wanted_block_styles[ $handle ] ) ) {
+					wp_dequeue_style( $handle );
+				}
+			}
+		}
+
+		/**
+		 * Whether WordPress enqueues block stylesheets only for rendered blocks.
+		 */
+		public static function block_assets_on_demand() {
+			return function_exists( 'wp_should_load_block_assets_on_demand' ) ? wp_should_load_block_assets_on_demand() : wp_should_load_separate_core_block_assets();
+		}
+
+		/**
+		 * Enqueue the stylesheet of a rendered Stackable block. WordPress does
+		 * this itself only when block assets are loaded on demand.
+		 */
+		public function enqueue_rendered_block_style( $block_content, $block ) {
+			if ( ! empty( $block['blockName'] ) && strpos( $block['blockName'], 'stackable/' ) === 0 && ! self::$load_all && is_frontend() ) {
+				if ( ! self::block_assets_on_demand() ) {
+					self::enqueue_block_styles( array( $block['blockName'] ) );
+				}
+			}
+			return $block_content;
 		}
 
 		/**
