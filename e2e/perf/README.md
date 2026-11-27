@@ -37,7 +37,28 @@ npm run test:perf
 | `benchmark-budget.spec.js` | DynamicWP method (page size, queries, DOM, peak memory) vs the core-blocks page without Stackable; budgets via `STK_PERF_BUDGET_*`. |
 | `premium.spec.js` | Premium: block stylesheet handles, Premium CSS only for its blocks, no Freemius queries on the frontend, memory. |
 | `freemius-cache.spec.js` | Premium (with the e2e license mock): the frontend license cache follows license activation / deactivation and admin page loads on the next request. |
+| `visual-compare.spec.js` | Computed styles of every element with the new loading vs the legacy bundle, same site and markup (TT5 + TT1, 1440/768/375, color schemes + custom breakpoints). Catches rules a block's stylesheet has for other blocks' markup. |
 | `force-load.spec.js` | `stackable_force_css_load`: Stackable markup added by a script after load (`?stk_inject`), blocks rendered late, custom breakpoints and color schemes (with and without a base scheme) are styled the same as with the legacy bundle. |
+
+Tests tagged `@bench` (page size, memory, DynamicWP numbers) vary between
+machines: `npm run test:perf:ci` leaves them out, `npm run test:perf:bench`
+runs only them.
+
+## CI
+
+`.github/workflows/e2e-tests.yml` (job `frontend-css`, legacy flag off and on)
+runs `e2e/perf/ci/run.sh build/stackable <off|on>`:
+
+* `ci/setup-site.sh` makes the site (WordPress 6.8.3 + SQLite, TT5 + TT1, WP-CLI)
+  and the snapshot.
+* `off`: the static CSS order check (`visual/run-css-order.js`), then `test:perf:ci`.
+* `on`: records the output of the last release from WordPress.org for
+  `legacy-identical.spec.js` (`STK_PERF_RELEASE`, default 3.20.3; the stylesheets
+  are compared as sets of rules because the release's rule order wasn't fixed),
+  then `test:perf:ci`.
+
+Run the same thing locally with `bash e2e/perf/ci/run.sh <plugin build> off`
+(`STK_PERF_CI_DIR` for the site folder, `STK_PERF_URL` for another port).
 
 ## Visual / computed-style regression (`visual/`)
 

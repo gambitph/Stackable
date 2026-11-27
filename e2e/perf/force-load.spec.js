@@ -9,7 +9,7 @@
  */
 const { test, expect } = require( '@playwright/test' )
 const fs = require( 'fs' ), path = require( 'path' )
-const { cfg, wp, resetSite, createPage, FIX } = require( './lib/site' )
+const { cfg, wp, wpEval, resetSite, createPage, FIX } = require( './lib/site' )
 
 const PROPS = [ 'color', 'background-color', 'background-image', 'font-size', 'font-weight', 'line-height', 'padding-top', 'padding-left', 'margin-top', 'margin-bottom', 'border-top-width', 'border-top-left-radius', 'flex-direction', 'flex-wrap', 'column-gap', 'justify-content', 'text-align', 'box-shadow' ]
 const INJECT = [ 'color-scheme.html', 'tabs.html', 'accordion.html', 'carousel.html', 'columns.html' ]
@@ -24,9 +24,9 @@ function setSchemeOptions( on, { base = true } = {} ) {
 		delete opts.stackable_global_base_color_scheme
 		opts.stackable_global_color_scheme_generated_css = opts.stackable_global_color_scheme_generated_css.replace( /:root\s*\{[^}]*\}/g, '' )
 	}
-	for ( const [ name, value ] of Object.entries( opts ) ) {
-		on ? wp( 'option', 'update', name, JSON.stringify( value ), '--format=json' ) : wp( 'option', 'delete', name )
-	}
+	// One WP-CLI call for all the options.
+	const json = Buffer.from( JSON.stringify( opts ) ).toString( 'base64' )
+	wpEval( `foreach ( json_decode( base64_decode( '${ json }' ), true ) as $name => $value ) { ${ on ? 'update_option( $name, $value );' : 'delete_option( $name );' } }` )
 }
 
 async function styles( page, url, root ) {

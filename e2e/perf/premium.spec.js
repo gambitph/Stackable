@@ -57,7 +57,7 @@ test( 'no Freemius queries on a frontend page view', async () => {
 	expect( fs ).toEqual( [] )
 } )
 
-test( 'Premium memory over WordPress without Stackable within +4 MB', async () => {
+test( 'Premium memory over WordPress without Stackable within +4 MB @bench', async () => {
 	const a = [], b = []
 	for ( let i = 0; i < 3; i++ ) {
 		a.push( ( await metrics( '/benchmark/' ) ).peak )

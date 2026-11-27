@@ -28,7 +28,7 @@ test( 'Stackable style tags on the benchmark page', async () => {
 	expect( tags.every( t => t.inHead ) ).toBe( true )
 } )
 
-test( 'DOM nodes over core (DynamicWP method)', async ( { browser } ) => {
+test( 'DOM nodes over core (DynamicWP method) @bench', async ( { browser } ) => {
 	const count = async ( p, headers = {} ) => {
 		const ctx = await browser.newContext( { extraHTTPHeaders: headers } )
 		const page = await ctx.newPage()

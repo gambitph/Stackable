@@ -87,19 +87,19 @@ test.beforeAll( async ( { browser } ) => {
 	}
 } )
 
-test( `page size within +${ BUDGET.pageKB } kB`, async () => {
+test( `page size within +${ BUDGET.pageKB } kB @bench`, async () => {
 	test.info().annotations.push( { type: 'metric', description: `page delta ${ results.pageKB.toFixed( 1 ) } kB` } )
 	expect( results.pageKB ).toBeLessThanOrEqual( BUDGET.pageKB )
 } )
-test( `queries within +${ BUDGET.queries }`, async () => {
+test( `queries within +${ BUDGET.queries } @bench`, async () => {
 	test.info().annotations.push( { type: 'metric', description: `queries delta ${ results.queries }` } )
 	expect( results.queries ).toBeLessThanOrEqual( BUDGET.queries )
 } )
-test( `DOM nodes within +${ BUDGET.dom }`, async () => {
+test( `DOM nodes within +${ BUDGET.dom } @bench`, async () => {
 	test.info().annotations.push( { type: 'metric', description: `dom delta ${ results.dom }` } )
 	expect( results.dom ).toBeLessThanOrEqual( BUDGET.dom )
 } )
-test( `peak memory within +${ BUDGET.memMB } MB`, async () => {
+test( `peak memory within +${ BUDGET.memMB } MB @bench`, async () => {
 	test.info().annotations.push( { type: 'metric', description: `memory delta ${ results.memMB.toFixed( 2 ) } MB (opcache ${ cfg.opcache })` } )
 	expect( results.memMB ).toBeLessThanOrEqual( BUDGET.memMB )
 } )

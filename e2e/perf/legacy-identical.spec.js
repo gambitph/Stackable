@@ -5,6 +5,11 @@
  * Record the reference with the old release:
  *   STK_PERF_PLUGIN=<3.20.3> STK_PERF_LEGACY=release STK_PERF_REF_WRITE=1 npx playwright test -c playwright.perf.config.js legacy-identical
  * Then run with the new build and STK_PERF_LEGACY=on to compare.
+ *
+ * With STK_PERF_LEGACY_CSS_ORDER=ignore the stylesheets are compared as sets
+ * of rules. CI records the reference from the WordPress.org release, whose
+ * bundle has the rules in a slightly different order (the build order wasn't
+ * fixed before 3.21.0, see sortByGlobOrder in gulpfile.js).
  */
 const fs = require( 'fs' )
 const path = require( 'path' )
@@ -20,6 +25,15 @@ const WRITE = !! process.env.STK_PERF_REF_WRITE
 const PAGES = [ 'benchmark', 'heading', 'accordion', 'columns', 'scheme', 'tabs', 'image', 'icon-list', 'none' ]
 const FIXTURE = { scheme: 'color-scheme.html', none: 'no-stackable.html' }
 const sha = s => crypto.createHash( 'sha1' ).update( s ).digest( 'hex' ).slice( 0, 16 )
+const IGNORE_CSS_ORDER = process.env.STK_PERF_LEGACY_CSS_ORDER === 'ignore'
+// The top-level rules (and at-rules) of a stylesheet, sorted.
+const sortedRules = css => {
+	try {
+		return require( 'postcss' ).parse( css ).nodes.map( n => n.toString() ).sort().join( '\n' )
+	} catch ( e ) {
+		return css
+	}
+}
 // Version strings differ between the release and the new build.
 const normalize = html => html
 	.replace( /<!-- stk-perf .*? -->/g, '' )
@@ -33,6 +47,7 @@ const snapshot = async ( p ) => {
 	return {
 		tags: styles.map( s => `${ s.tag }#${ s.id }${ s.href ? ' ' + s.href : '' }@${ s.inHead ? 'head' : 'body' }` ),
 		css: styles.map( s => sha( s.css ) ),
+		rules: styles.map( s => sha( sortedRules( s.css ) ) ),
 		html: sha( normalize( html ) ),
 		htmlBytes: normalize( html ).length,
 		_html: normalize( html ),
@@ -68,7 +83,11 @@ for ( const theme of [ 'twentytwentyfive', 'twentytwentyone' ] ) {
 			expect( ref, `reference ${ REF } missing` ).not.toBeNull()
 			const r = ref[ key ]
 			expect( snap.tags ).toEqual( r.tags )
-			expect( snap.css ).toEqual( r.css )
+			if ( IGNORE_CSS_ORDER ) {
+				expect( snap.rules ).toEqual( r.rules )
+			} else {
+				expect( snap.css ).toEqual( r.css )
+			}
 			if ( snap.html !== r.html ) {
 				// Show the first difference.
 				const a = r._html, b = snap._html

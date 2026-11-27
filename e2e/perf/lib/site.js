@@ -37,8 +37,9 @@ function wpEval( code ) {
 
 function dbFile() {
 	const dir = path.join( cfg.wpPath, 'wp-content/database' )
+	// Some SQLite setups keep the database in a hashed folder.
 	const sub = fs.readdirSync( dir ).find( f => f.startsWith( '.ht.' ) && fs.statSync( path.join( dir, f ) ).isDirectory() )
-	return path.join( dir, sub, '.ht.sqlite' )
+	return path.join( dir, sub || '', '.ht.sqlite' )
 }
 
 function stopServer() {
