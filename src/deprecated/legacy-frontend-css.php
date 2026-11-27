@@ -43,6 +43,11 @@ add_filter( 'stackable_frontend_style_files', function( $files ) {
 add_filter( 'stackable_color_scheme_marker_class', '__return_empty_string' );
 
 /**
+ * Print the stylesheets as files, not as one inline style.
+ */
+add_filter( 'stackable_frontend_css_combine', '__return_false' );
+
+/**
  * No <link> tags for late rendered blocks (this wasn't done before).
  */
 add_filter( 'stackable_frontend_css_print_late_links', '__return_false' );

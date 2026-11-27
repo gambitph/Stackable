@@ -102,7 +102,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$file = isset( $files[ $handle ] ) ? $files[ $handle ] : false;
 				wp_register_style( $handle, $file ? plugins_url( $file, STACKABLE_FILE ) : false, $deps, STACKABLE_VERSION );
 				if ( $file && $add_path ) {
-					wp_style_add_data( $handle, 'path', plugin_dir_path( STACKABLE_FILE ) . $file );
+					wp_style_add_data( $handle, Stackable_Frontend_CSS::get_path_key(), plugin_dir_path( STACKABLE_FILE ) . $file );
 				}
 			};
 
@@ -198,6 +198,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 						}
 					}
 					if ( count( $names ) ) {
+						foreach ( $widgets as $widget ) {
+							if ( is_array( $widget ) && ! empty( $widget['content'] ) ) {
+								Stackable_Frontend_CSS::add_known_content( $widget['content'] );
+							}
+						}
 						// Only the stylesheets, the rest is loaded when the widgets are rendered.
 						Stackable_Frontend_CSS::enqueue_block_styles( array_map( function( $name ) {
 							return rtrim( $name, '-' );
@@ -222,6 +227,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 						// Enqueue the styles of the blocks in the content now
 						// so they're printed in the head.
+						Stackable_Frontend_CSS::add_known_content( $post->post_content );
 						preg_match_all( '/<!-- wp:(stackable\/[a-zA-Z_-]+)/', $post->post_content, $matches );
 						Stackable_Frontend_CSS::enqueue_block_styles( array_map( function( $name ) {
 							return rtrim( $name, '-' );

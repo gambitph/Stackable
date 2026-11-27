@@ -584,6 +584,8 @@ exit;
  *  - dist/frontend_theme_{theme}.css     Theme compatibility rules (only loaded for that theme).
  *  - dist/blocks/{block}.css             One file per block (with its own media queries).
  *  - dist/frontend_css_manifest.php      Block order (the order the bundle used) and file info for PHP.
+ *  - dist/{file}.rules                   Rule data of each file above, PHP prints only the rules
+ *                                        that can match the page (see .config/frontend-css-rules.js).
  *
  * The color scheme selector list is replaced with a single marker class, PHP
  * adds the marker to all the elements the list used to match.
@@ -729,6 +731,18 @@ gulp.task( 'style-split', async function styleSplitFrontend() {
 			manifest.blocks[ name ] = blockCss.length
 		}
 	}
+
+	// Rule data so PHP can print only the rules that can match the page
+	// (see .config/frontend-css-rules.js).
+	glob.sync( 'dist/**/*.rules' ).forEach( f => fs.unlinkSync( f ) )
+	require( './.config/frontend-css-rules.js' ).writeRulesFiles( __dirname, [
+		'dist/frontend_core.css',
+		'dist/frontend_core_responsive.css',
+		'dist/frontend_color_schemes.css',
+		'dist/frontend_design_system.css',
+		...Object.keys( manifest.themes ).map( theme => `dist/frontend_theme_${ theme }.css` ),
+		...Object.keys( manifest.blocks ).map( name => `dist/blocks/${ name }.css` ),
+	] )
 
 	// PHP manifest, the block order is the order in the bundle.
 	const phpArray = obj => 'array( ' + Object.entries( obj ).map( ( [ k, v ] ) => `'${ k }' => ${ v }` ).join( ', ' ) + ' )'

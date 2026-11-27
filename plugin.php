@@ -52,6 +52,88 @@ defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://stackable-files.pages.dev' ); // Design Library CDN URL
 
+/**
+ * Whether this is a page view in the frontend (not the admin, AJAX, REST API,
+ * cron or WP-CLI). Code only used outside the frontend isn't loaded here.
+ *
+ * @since 3.21.0
+ */
+if ( ! function_exists( 'stackable_is_frontend_request' ) ) {
+	function stackable_is_frontend_request() {
+		static $is_frontend = null;
+		if ( $is_frontend === null ) {
+			$uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : ''; // phpcs:ignore
+			$is_frontend = ! is_admin() && ! wp_doing_ajax() && ! wp_doing_cron() && ! ( defined( 'WP_CLI' ) && WP_CLI ) &&
+				strpos( $uri, '/' . rest_get_url_prefix() . '/' ) === false && ! isset( $_GET['rest_route'] ) && // phpcs:ignore WordPress.Security.NonceVerification
+				apply_filters( 'stackable_lazy_load', true );
+		}
+		return $is_frontend;
+	}
+}
+
+/**
+ * Load the options we read on every page in one query. Most of these aren't
+ * saved (so they're not autoloaded) unless changed in the settings, without
+ * this each one is a query.
+ *
+ * @since 3.21.0
+ */
+if ( ! function_exists( 'stackable_prime_option_caches' ) ) {
+	function stackable_prime_option_caches() {
+		if ( ! function_exists( 'wp_prime_option_caches' ) || wp_installing() ) {
+			return;
+		}
+		$options = array(
+			'stackable_other_stackable_plugin_info',
+			'stackable_current_version_installed',
+			'stackable_use_legacy_frontend_css',
+			'stackable_global_typography',
+			'stackable_global_typography_apply_to',
+			'stackable_optimize_inline_css',
+			'stackable_v2_frontend_compatibility',
+			'stackable_v2_editor_compatibility',
+			'stackable_v2_editor_compatibility_usage',
+			'stackable_global_colors_native_compatibility',
+			'stackable_enable_block_defaults',
+			'stackable_block_default_width',
+			'stackable_block_wide_width',
+			'stackable_global_colors',
+			'stackable_global_spacing_and_borders',
+			'stackable_global_buttons_and_icons',
+			'stackable_global_color_scheme_generated_css',
+			'stackable_global_color_schemes',
+			'stackable_global_custom_color_schemes',
+			'stackable_global_base_color_scheme',
+			'stackable_global_background_mode_color_scheme',
+			'stackable_global_container_mode_color_scheme',
+			'stackable_global_custom_preset_controls',
+			'stackable_dynamic_breakpoints',
+			'stackable_global_block_styles',
+			'stackable_disable_block_style_inheritance',
+			'stackable_custom_fields_admin',
+			'stackable_global_force_typography',
+			'stackable_is_apply_body_to_html',
+			'stackable_global_colors_palette_only',
+			'stackable_icons_fa_free_version',
+			'stackable_google_maps_api_key',
+			'_transient_stackable_block_style_inheritance_hash',
+			'_transient_timeout_stackable_block_style_inheritance_hash',
+			'_transient_stackable_block_style_inheritance_css',
+			'_transient_timeout_stackable_block_style_inheritance_css',
+		);
+		if ( STACKABLE_BUILD !== 'free' ) {
+			// Read by Freemius when it loads. In the frontend it usually
+			// doesn't load (see stackable_freemius_frontend_cache).
+			$fs_cache = stackable_is_frontend_request() ? get_option( 'stackable_freemius_frontend_cache' ) : false;
+			if ( ! is_array( $fs_cache ) || empty( $fs_cache['version'] ) || $fs_cache['version'] !== STACKABLE_VERSION ) {
+				$options = array_merge( $options, array( 'fs_storage_logger', 'fs_clone_management', 'fs_cache_1748' ) );
+			}
+		}
+		wp_prime_option_caches( $options );
+	}
+	stackable_prime_option_caches();
+}
+
 /********************************************************************************************
  * Activation & PHP version checks.
  ********************************************************************************************/
@@ -282,7 +364,9 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/kses.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
+if ( ! stackable_is_frontend_request() ) { // Editor and REST API only.
+	require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
+}
 require_once( plugin_dir_path( __FILE__ ) . 'src/styles/block-design-system.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/theme-block-style-inheritance/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
@@ -319,7 +403,9 @@ if ( ! is_admin() ) {
 /**
  * Welcome screen.
  */
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/getting-started.php' );
+if ( ! stackable_is_frontend_request() ) { // Admin and REST API only.
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/getting-started.php' );
+}
 if ( is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/useful-plugins.php' ); // For cross-marketing
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );

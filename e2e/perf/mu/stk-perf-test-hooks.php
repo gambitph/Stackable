@@ -35,8 +35,10 @@ if ( ! empty( $_SERVER['HTTP_X_STK_PERF'] ) ) {
 			return;
 		}
 		$included = get_included_files();
-		$stk = array_values( array_filter( $included, function( $f ) {
-			return strpos( $f, '/plugins/stackable' ) !== false;
+		// Plugins can be symlinked, included files have the real path.
+		$dir = defined( 'STACKABLE_FILE' ) ? realpath( dirname( STACKABLE_FILE ) ) . '/' : '/plugins/stackable';
+		$stk = array_values( array_filter( $included, function( $f ) use ( $dir ) {
+			return strpos( $f, $dir ) !== false;
 		} ) );
 		echo "\n<!-- stk-perf " . wp_json_encode( array(
 			'queries' => (int) $wpdb->num_queries,
@@ -45,6 +47,9 @@ if ( ! empty( $_SERVER['HTTP_X_STK_PERF'] ) ) {
 			'stk_files' => count( $stk ),
 			'opcache' => function_exists( 'opcache_get_status' ) && @opcache_get_status( false ) ? 1 : 0,
 			'query_log' => $GLOBALS['stk_perf_queries'],
+			'stk_file_list' => empty( $_SERVER['HTTP_X_STK_PERF_FILES'] ) ? array() : array_map( function( $f ) use ( $dir ) {
+				return str_replace( $dir, '', $f ) . ' ' . filesize( $f );
+			}, $stk ),
 		) ) . " -->\n";
 	}, PHP_INT_MAX );
 }
