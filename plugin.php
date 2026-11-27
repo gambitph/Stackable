@@ -429,7 +429,8 @@ if ( STACKABLE_BUILD === 'premium' ) {
 
 // Deprecated.
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/editor-settings.php' );
-if ( ! Stackable_Frontend_CSS::is_enabled() ) {
+// The "Use Legacy Frontend CSS Loading" setting: the old loading turns the new one off through hooks.
+if ( get_option( Stackable_Frontend_CSS::LEGACY_OPTION ) ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/legacy-frontend-css.php' );
 }
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors.php' );

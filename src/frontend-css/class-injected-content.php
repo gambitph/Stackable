@@ -154,9 +154,6 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Injected_Content' ) ) {
 			if ( ! is_string( $content ) || strpos( $content, 'stk-frontend-css-' ) === false ) {
 				return $content;
 			}
-			if ( ! Stackable_Frontend_CSS::is_enabled() ) {
-				return $content;
-			}
 			if ( ! wp_doing_ajax() && ! self::is_rest_request() ) {
 				return $content;
 			}

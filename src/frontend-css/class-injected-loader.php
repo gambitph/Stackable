@@ -50,7 +50,7 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Injected_Loader' ) ) {
 		 * @return bool
 		 */
 		private static function is_needed() {
-			if ( ! Stackable_Frontend_CSS::is_enabled() || Stackable_Frontend_CSS_Block_Styles::is_loading_all() ) {
+			if ( Stackable_Frontend_CSS_Block_Styles::is_loading_all() ) {
 				return false;
 			}
 			// Only pages that load Stackable.

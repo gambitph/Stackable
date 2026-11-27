@@ -123,6 +123,20 @@ class FrontendCssTest extends Stackable_TestCase {
 		$this->assertTrue( true );
 	}
 
+	public function test_legacy_file_turns_the_new_loading_off_through_hooks() {
+		Functions\when( 'is_admin' )->justReturn( false );
+		Functions\when( 'wp_doing_ajax' )->justReturn( false );
+		new Stackable_Frontend_CSS();
+		$this->assertSame( 2, has_action( 'init', array( 'Stackable_Frontend_CSS', 'start' ) ) );
+		$this->assertFalse( Stackable_Frontend_CSS_Stylesheets::uses_big_stylesheet() );
+
+		// include, not require_once: the hooks are added again for this test.
+		include STACKABLE_PLUGIN_DIR . 'src/deprecated/legacy-frontend-css.php';
+		$this->assertFalse( has_action( 'init', array( 'Stackable_Frontend_CSS', 'start' ) ) );
+		$this->assertTrue( Stackable_Frontend_CSS_Stylesheets::uses_big_stylesheet() );
+		$this->assertSame( 'ugb-style-css', Stackable_Frontend_CSS_Stylesheets::get_block_style( 'stackable/heading' ) );
+	}
+
 	public function test_upgrade_keeps_a_flag_the_user_already_set() {
 		Functions\when( 'get_option' )->justReturn( '' );
 		Functions\expect( 'update_option' )->never();
@@ -142,6 +156,8 @@ class FrontendCssTest extends Stackable_TestCase {
 
 	public function test_global_body_classes_for_ajax_and_rest() {
 		$this->require_plugin_file( 'src/plugins/global-settings/color-schemes/index.php' );
+		// The new loading adds the marker class through this filter.
+		add_filter( 'stackable_color_scheme_body_classes', array( 'Stackable_Frontend_CSS_Color_Schemes', 'add_body_marker' ) );
 		$options = array();
 		Functions\when( 'get_option' )->alias( function( $name, $default = false ) use ( &$options ) {
 			return array_key_exists( $name, $options ) ? $options[ $name ] : $default;

@@ -417,15 +417,18 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				if ( strpos( $color_scheme_css, '--stk-default-container-background-color' ) !== false ) {
 					$classes[] = 'stk--has-default-container-scheme';
 				}
-
-				// The base scheme styles the body, so the body gets the marker
-				// class the color scheme styles use (see
-				// src/frontend-css/class-color-schemes.php).
-				if ( in_array( 'stk--has-base-scheme', $classes, true ) && Stackable_Frontend_CSS::is_enabled() ) {
-					$classes[] = Stackable_Frontend_CSS_Color_Schemes::MARKER;
-				}
 			}
-			return $classes;
+
+			/**
+			 * Filters the body classes for the color schemes. The frontend
+			 * CSS loading adds its marker class here (see
+			 * Stackable_Frontend_CSS_Color_Schemes::add_body_marker()).
+			 *
+			 * @since 3.21.0
+			 *
+			 * @param array $classes e.g. array( 'stk--has-base-scheme' )
+			 */
+			return apply_filters( 'stackable_color_scheme_body_classes', $classes );
 		}
 
 		/**

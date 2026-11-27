@@ -8,16 +8,30 @@
  *
  * Sites that upgraded from an older version have the
  * "stackable_use_legacy_frontend_css" option turned on, and keep the old
- * loading: the new loading checks Stackable_Frontend_CSS::is_enabled() and
- * steps aside. This file is only loaded when that option is on, and has the
- * one thing the old loading needs that the new one doesn't: the old way of
- * applying custom breakpoints.
+ * loading. This file is only loaded when that option is on (see plugin.php,
+ * and Stackable_Frontend_CSS::keep_legacy_loading_on_upgrade() for the first
+ * request after upgrading). All the old behavior is here, through hooks:
+ *
+ * - the new loading isn't started,
+ * - blocks use the big stylesheet, like in the editor,
+ * - custom breakpoints are applied the old way.
  */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+/**
+ * Don't start the new loading (see Stackable_Frontend_CSS::start()).
+ */
+remove_action( 'init', array( 'Stackable_Frontend_CSS', 'start' ), 2 );
+
+/**
+ * Blocks use the big stylesheet (dist/frontend_blocks.css), and Premium blocks
+ * the big Premium stylesheet (see Stackable_Frontend_CSS_Stylesheets::uses_big_stylesheet()).
+ */
+add_filter( 'stackable_frontend_css_use_big_stylesheet', '__return_true' );
 
 if ( ! function_exists( 'stackable_legacy_enqueue_adjusted_responsive_css' ) ) {
 	/**

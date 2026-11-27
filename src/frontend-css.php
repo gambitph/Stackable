@@ -25,8 +25,9 @@
  *
  * Sites that upgraded from an older version keep the old loading through
  * the "Use Legacy Frontend CSS Loading" setting (the
- * stackable_use_legacy_frontend_css option). When it's on, none of the above
- * runs, see src/deprecated/legacy-frontend-css.php
+ * stackable_use_legacy_frontend_css option). When it's on, plugin.php loads
+ * src/deprecated/legacy-frontend-css.php, which turns all of the above off
+ * through hooks. The old behavior only lives in that file.
  *
  * The editor always uses the big stylesheet.
  *
@@ -74,31 +75,27 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			add_action( 'stackable_early_version_upgraded', array( $this, 'keep_legacy_loading_on_upgrade' ), 10, 2 );
 			add_action( 'stackable_early_version_upgraded_frontend', array( $this, 'keep_legacy_loading_on_upgrade' ), 10, 2 );
 
-			// The rest is only for pages and AJAX / REST responses, the admin
-			// (block editor) uses the big stylesheet.
+			// Priority 2: after the upgrade check (init, priority 1), which
+			// can turn the legacy setting on. The legacy file removes this.
+			add_action( 'init', array( __CLASS__, 'start' ), 2 );
+		}
+
+		/**
+		 * Connects all the frontend CSS classes to WordPress.
+		 *
+		 * Only for pages and AJAX / REST responses, the admin (block editor)
+		 * uses the big stylesheet.
+		 */
+		public static function start() {
 			if ( is_admin() && ! wp_doing_ajax() ) {
 				return;
 			}
-
-			// Each class checks is_enabled() itself when its hooks run, since
-			// the legacy setting can be turned on during this request (on the
-			// first request after upgrading).
 			Stackable_Frontend_CSS_Block_Styles::add_hooks();
 			Stackable_Frontend_CSS_Page_Content::add_hooks();
 			Stackable_Frontend_CSS_Color_Schemes::add_hooks();
 			Stackable_Frontend_CSS_Printer::add_hooks();
 			Stackable_Frontend_CSS_Injected_Content::add_hooks();
 			Stackable_Frontend_CSS_Injected_Loader::add_hooks();
-		}
-
-		/**
-		 * Whether the new CSS loading is used (true), or the legacy one
-		 * (false, the "Use Legacy Frontend CSS Loading" setting is on).
-		 *
-		 * @return bool
-		 */
-		public static function is_enabled() {
-			return ! get_option( self::LEGACY_OPTION );
 		}
 
 		/**
@@ -145,7 +142,8 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			}
 
 			update_option( self::LEGACY_OPTION, '1' );
-			// Use the legacy loading already in this request.
+			// Use the legacy loading already in this request. This runs
+			// before start(), so the legacy file can still turn it off.
 			require_once( plugin_dir_path( STACKABLE_FILE ) . 'src/deprecated/legacy-frontend-css.php' );
 		}
 	}

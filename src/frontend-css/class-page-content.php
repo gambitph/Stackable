@@ -122,7 +122,7 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Page_Content' ) ) {
 		 * @param string $content Block markup.
 		 */
 		public static function add_known_content( $content ) {
-			if ( ! Stackable_Frontend_CSS::is_enabled() || ! is_string( $content ) ) {
+			if ( ! is_string( $content ) ) {
 				return;
 			}
 			$block_names = Stackable_Frontend_CSS_Block_Styles::get_block_names_in_content( $content );
@@ -279,9 +279,6 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Page_Content' ) ) {
 		 */
 		public static function after_block_render( $block_content, $block ) {
 			self::$block_depth = max( 0, self::$block_depth - 1 );
-			if ( ! Stackable_Frontend_CSS::is_enabled() ) {
-				return $block_content;
-			}
 
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if ( $block_name && strpos( $block_name, 'stackable/' ) === 0 ) {

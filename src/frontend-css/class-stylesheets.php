@@ -88,14 +88,15 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Stylesheets' ) ) {
 		}
 
 		/**
-		 * Whether the page uses the old big stylesheet instead of the split
-		 * ones: in the editor, and when the legacy loading is on.
+		 * Whether blocks use the old big stylesheet instead of the split
+		 * ones: in the editor, and with the legacy loading (it turns this on
+		 * with the stackable_frontend_css_use_big_stylesheet filter).
 		 *
 		 * @return bool
 		 */
 		public static function uses_big_stylesheet() {
 			$is_editor = is_admin() && ! wp_doing_ajax();
-			return $is_editor || ! Stackable_Frontend_CSS::is_enabled();
+			return (bool) apply_filters( 'stackable_frontend_css_use_big_stylesheet', $is_editor );
 		}
 
 		/**
@@ -195,15 +196,13 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Stylesheets' ) ) {
 
 		/**
 		 * Remembers the file of a stylesheet, so we can read and trim it
-		 * when we print it (only with the new loading).
+		 * when we print it.
 		 *
 		 * @param string $handle
 		 * @param string $path Full path of the file.
 		 */
 		public static function add_file_path( $handle, $path ) {
-			if ( Stackable_Frontend_CSS::is_enabled() ) {
-				wp_style_add_data( $handle, self::FILE_PATH_KEY, $path );
-			}
+			wp_style_add_data( $handle, self::FILE_PATH_KEY, $path );
 		}
 
 		/**

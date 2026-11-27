@@ -44,6 +44,8 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Block_Styles' ) ) {
 			add_action( 'init', array( __CLASS__, 'register_block_styles' ), 9 );
 			add_action( 'enqueue_block_assets', array( __CLASS__, 'dequeue_unused_block_styles' ), 11 );
 			add_filter( 'render_block', array( __CLASS__, 'enqueue_rendered_block_style' ), 10, 2 );
+			add_action( 'stackable_frontend_head_content_checked', array( __CLASS__, 'enqueue_head_block_styles' ) );
+			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'maybe_enqueue_all_block_styles' ), 11 );
 		}
 
 		/**
@@ -79,9 +81,6 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Block_Styles' ) ) {
 		 * @param array $block_names e.g. [ 'stackable/heading' ]
 		 */
 		public static function enqueue_block_styles( $block_names ) {
-			if ( ! Stackable_Frontend_CSS::is_enabled() ) {
-				return;
-			}
 			$registry = WP_Block_Type_Registry::get_instance();
 			foreach ( array_unique( $block_names ) as $block_name ) {
 				$block_type = $registry->get_registered( $block_name );
@@ -92,6 +91,55 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Block_Styles' ) ) {
 					self::$wanted_block_styles[ $handle ] = true;
 					wp_enqueue_style( $handle );
 				}
+			}
+		}
+
+		/**
+		 * Loads the stylesheets of the blocks we already know will be on the
+		 * page, so they are printed in the <head>: the blocks in the post
+		 * content, and in classic themes, the blocks in block widgets.
+		 *
+		 * Runs when Stackable_Init has checked the post content, before the
+		 * <head> is printed.
+		 *
+		 * @param string $post_content The post content if it has Stackable
+		 *                             blocks (the main Stackable styles are
+		 *                             then loaded), or ''.
+		 */
+		public static function enqueue_head_block_styles( $post_content ) {
+			// Classic themes print the widgets after the <head>. Note the
+			// Stackable blocks in block widgets now.
+			$widget_block_names = array();
+			foreach ( self::get_block_widgets_with_stackable_blocks() as $widget_content ) {
+				Stackable_Frontend_CSS_Page_Content::add_known_content( $widget_content );
+				$widget_block_names = array_merge( $widget_block_names, self::get_block_names_in_content( $widget_content ) );
+			}
+
+			if ( $post_content ) {
+				Stackable_Frontend_CSS_Page_Content::add_known_content( $post_content );
+				self::enqueue_block_styles( self::get_block_names_in_content( $post_content ) );
+			}
+
+			// Only the stylesheets of the widget blocks, the rest is loaded
+			// when the widgets are rendered. If only the widgets have
+			// Stackable blocks, the stylesheets are enqueued when they are
+			// rendered (WordPress moves them to the head), like the single
+			// stylesheet before. Enqueuing them here would print a notice,
+			// since the shared stylesheet they depend on isn't loaded.
+			if ( count( $widget_block_names ) && $post_content ) {
+				self::enqueue_block_styles( $widget_block_names );
+			}
+		}
+
+		/**
+		 * The stackable_force_css_load filter: load the stylesheets of every
+		 * Stackable block (Stackable_Init loads the main styles). This is
+		 * needed even if blocks were already found, block themes render the
+		 * content before this runs.
+		 */
+		public static function maybe_enqueue_all_block_styles() {
+			if ( apply_filters( 'stackable_force_css_load', false ) ) {
+				self::enqueue_all_block_styles();
 			}
 		}
 
@@ -140,7 +188,7 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Block_Styles' ) ) {
 		 * @return array Block markup of each widget.
 		 */
 		public static function get_block_widgets_with_stackable_blocks() {
-			if ( ! Stackable_Frontend_CSS::is_enabled() || wp_is_block_theme() ) {
+			if ( wp_is_block_theme() ) {
 				return array();
 			}
 			$widgets = get_option( 'widget_block' );

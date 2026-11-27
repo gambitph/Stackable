@@ -50,6 +50,21 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Color_Schemes' ) ) {
 		public static function add_hooks() {
 			// Premium runs this on posts it renders itself (load more button).
 			add_filter( 'stackable_process_frontend_html', array( __CLASS__, 'add_markers' ) );
+			add_filter( 'stackable_color_scheme_body_classes', array( __CLASS__, 'add_body_marker' ) );
+		}
+
+		/**
+		 * The base scheme styles the <body>, so the <body> gets the marker
+		 * class too.
+		 *
+		 * @param array $classes The color scheme body classes, e.g. array( 'stk--has-base-scheme' )
+		 * @return array e.g. array( 'stk--has-base-scheme', 'stk-has-scheme' )
+		 */
+		public static function add_body_marker( $classes ) {
+			if ( in_array( 'stk--has-base-scheme', $classes, true ) ) {
+				$classes[] = self::MARKER;
+			}
+			return $classes;
 		}
 
 		/**
@@ -65,7 +80,7 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Color_Schemes' ) ) {
 		 * @return string
 		 */
 		public static function add_markers( $html ) {
-			if ( ! Stackable_Frontend_CSS::is_enabled() || ! is_string( $html ) || $html === '' ) {
+			if ( ! is_string( $html ) || $html === '' ) {
 				return $html;
 			}
 

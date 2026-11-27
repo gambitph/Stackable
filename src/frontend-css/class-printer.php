@@ -108,9 +108,6 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Printer' ) ) {
 		 * @return array
 		 */
 		public static function combine_styles( $handles ) {
-			if ( ! Stackable_Frontend_CSS::is_enabled() ) {
-				return $handles;
-			}
 			global $wp_styles;
 
 			$our_handles = array();
@@ -465,7 +462,7 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Printer' ) ) {
 		 * @return bool
 		 */
 		private static function can_buffer_page() {
-			return Stackable_Frontend_CSS::is_enabled() && apply_filters( 'stackable_frontend_css_finalize_in_buffer', true );
+			return apply_filters( 'stackable_frontend_css_finalize_in_buffer', true );
 		}
 
 		/**

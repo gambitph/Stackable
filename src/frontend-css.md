@@ -45,9 +45,14 @@ Sites that upgrade from v3.20 or older keep the old loading: the `stackable_use_
 New installs get the new loading.
 The setting is in Settings > Miscellaneous ("Use Legacy Frontend CSS Loading").
 
-`Stackable_Frontend_CSS::is_enabled()` tells which one is used.
-When the legacy setting is on, every class above steps aside, and the blocks use the big stylesheets again.
-`src/deprecated/legacy-frontend-css.php` only has the old way of applying custom breakpoints.
+All the old behavior is in `src/deprecated/legacy-frontend-css.php`, which `plugin.php` only loads when the setting is on.
+It turns the new loading off through hooks:
+
+- It removes `Stackable_Frontend_CSS::start()`, so none of the classes above are connected to WordPress.
+- It turns on `stackable_frontend_css_use_big_stylesheet`, so the blocks (and Premium blocks) use the big stylesheets again.
+- It applies custom breakpoints the old way.
+
+The new loading starts on `init` (priority 2), after the upgrade check (priority 1) that can turn the setting on.
 
 The block editor always uses the big stylesheets.
 
@@ -59,3 +64,9 @@ The block editor always uses the big stylesheets.
 - `stackable_frontend_css_block_style_triggers` - classes that need a block's stylesheet even without the block, e.g. the button styles used by other blocks.
 - `stackable_frontend_css_dependencies` - the dependencies of the shared stylesheet.
 - `stackable_frontend_css` - filters the CSS of stylesheets with media queries, used for custom breakpoints.
+
+Hooks between the files (not meant for other plugins):
+
+- `stackable_frontend_head_content_checked` (action, `src/init.php`) - the post content was checked for Stackable blocks, so their stylesheets can be loaded in the `<head>`.
+- `stackable_color_scheme_body_classes` (`src/plugins/global-settings/color-schemes/index.php`) - adds the `stk-has-scheme` marker to the `<body>`.
+- `stackable_frontend_css_use_big_stylesheet` - turned on by the legacy file.
