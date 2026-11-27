@@ -56,15 +56,15 @@ test.describe( 'assets per scenario', () => {
 	test( 'color scheme CSS only when a scheme is used', async () => {
 		const none = allCss( await stkStyles( ( await get( '/benchmark/' ) ).text ) )
 		const used = allCss( await stkStyles( ( await get( '/scheme/' ) ).text ) )
+		// The color scheme rules apply to the block using a scheme. (A fresh
+		// install has no generated color scheme CSS, the block only gets
+		// the shared color scheme rules.)
 		expect( used ).toMatch( MARK.schemes )
-		// The generated CSS of the scheme the block uses.
-		expect( used ).toMatch( /stk--background-scheme--scheme-default-3/ )
 		if ( legacy ) {
 			expect( none ).toMatch( MARK.schemes )
 		} else {
-			// Fresh install: a default scheme exists but nothing on the page uses it.
+			// Nothing on the page uses a color scheme.
 			expect( none ).not.toMatch( MARK.schemes )
-			expect( none ).not.toMatch( /stk--background-scheme--scheme-default-3/ )
 		}
 	} )
 
@@ -96,12 +96,9 @@ test.describe( 'assets per scenario', () => {
 		expect( late.length ).toBeGreaterThan( 50 )
 		const styles = await stkStyles( html )
 		const css = allCss( styles )
-		if ( legacy ) {
-			// The old behavior didn't load CSS for blocks rendered this late.
-			expect( css ).not.toMatch( MARK.tabs )
-		} else {
-			expect( css ).toMatch( MARK.tabs )
-		}
+		// The old single stylesheet has the CSS of all blocks, the new
+		// behavior prints the CSS of the late blocks with them.
+		expect( css ).toMatch( MARK.tabs )
 	} )
 
 	test( 'blocks rendered over admin-ajax carry their CSS (new behavior)', async () => {
