@@ -12,7 +12,7 @@ const path = require( 'path' )
 const { execFileSync } = require( 'child_process' )
 const postcss = require( 'postcss' )
 const selectorParser = require( 'postcss-selector-parser' )
-const { buildRules, subset, selectorCondition } = require( '../../../.config/frontend-css-rules' )
+const { buildRules, subset, selectorCondition, getScriptClasses } = require( '../../../.config/frontend-css-rules' )
 
 const ROOT = path.resolve( __dirname, '../../..' )
 const noScripts = { always: new Set(), prefixes: [], triggered: new Map() }
@@ -118,4 +118,12 @@ test( 'PHP get_css_subset prints the same CSS as the JS subset', { skip: ! built
 			assert.strictEqual( out, subset( rules, new Set( tokens ), cols ), `${ path.relative( ROOT, file ) } set ${ i }` )
 		}
 	}
+} )
+
+test( 'classes added by frontend scripts are found (e.g. carousel dots)', () => {
+	const s = getScriptClasses( ROOT )
+	const has = ( cls, block ) => s.always.has( cls ) || ( s.triggered.get( cls ) || new Set() ).has( block )
+	assert.ok( has( 'stk-block-carousel__dot', 'stk-block-carousel' ) )
+	assert.ok( has( 'stk-block-carousel__dot--active', 'stk-block-carousel' ) )
+	assert.ok( s.prefixes.includes( 'stk-block-tab-label-' ) )
 } )
