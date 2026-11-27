@@ -7,12 +7,13 @@
  *
  *   node e2e/perf/visual/run-css-order.js <pluginDir> [--legacy=<dist of a release-order bundle>] [--premium]
  */
-const fs = require( 'fs' ), path = require( 'path' )
+const fs = require( 'fs' ),
+	path = require( 'path' )
 const { spawnSync } = require( 'child_process' )
 const args = process.argv.slice( 2 )
 const dir = args.find( a => ! a.startsWith( '--' ) )
 const rest = args.filter( a => a.startsWith( '--' ) && a !== '--write-known' )
-const NODE_PATH = [ path.resolve( __dirname, '../../../node_modules' ), '/workspace/stackable-css-bloat/harness/node_modules' ].join( ':' )
+const NODE_PATH = [ path.resolve( __dirname, '../../../node_modules' ), process.env.NODE_PATH ].filter( Boolean ).join( path.delimiter )
 const r = spawnSync( 'node', [ path.join( __dirname, 'css-order-check.js' ), path.join( dir, 'dist' ), ...rest ], { encoding: 'utf8', env: { ...process.env, NODE_PATH } } )
 process.stdout.write( r.stdout )
 process.stderr.write( r.stderr )

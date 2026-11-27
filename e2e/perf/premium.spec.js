@@ -2,7 +2,9 @@
  * Premium: block stylesheet handles, Freemius queries and memory on the frontend.
  */
 const { test, expect } = require( '@playwright/test' )
-const { cfg, resetSite, createPage, get, metrics, stkStyles, allCss, wpEval } = require( './lib/site' )
+const {
+	cfg, resetSite, createPage, get, metrics, stkStyles, allCss, wpEval,
+} = require( './lib/site' )
 
 test.skip( ! cfg.isPremium, 'Premium build only' )
 
@@ -58,7 +60,8 @@ test( 'no Freemius queries on a frontend page view', async () => {
 } )
 
 test( 'Premium memory over WordPress without Stackable within +4 MB @bench', async () => {
-	const a = [], b = []
+	const a = [],
+		b = []
 	for ( let i = 0; i < 3; i++ ) {
 		a.push( ( await metrics( '/benchmark/' ) ).peak )
 		b.push( ( await metrics( '/benchmark/', { 'X-Stk-Perf-No-Stk': '1' } ) ).peak )

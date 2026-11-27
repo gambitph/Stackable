@@ -3,7 +3,9 @@
  * in the admin right away (no waiting for the 1-day TTL).
  */
 const { test, expect } = require( '@playwright/test' )
-const { cfg, wp, resetSite, get } = require( './lib/site' )
+const {
+	cfg, wp, resetSite, get,
+} = require( './lib/site' )
 
 test.skip( ! cfg.isPremium || ! cfg.premiumMock, 'Premium build with the e2e license mock only' )
 test.describe.configure( { mode: 'serial' } )

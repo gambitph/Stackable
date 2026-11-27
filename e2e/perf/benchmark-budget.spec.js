@@ -13,7 +13,9 @@
  * DOM +10, memory +4 MB.
  */
 const { test, expect } = require( '@playwright/test' )
-const { cfg, resetSite, createPage, get, metrics } = require( './lib/site' )
+const {
+	cfg, resetSite, createPage, get, metrics,
+} = require( './lib/site' )
 
 const BUDGET = {
 	pageKB: parseFloat( process.env.STK_PERF_BUDGET_PAGE || '6' ),
@@ -67,20 +69,27 @@ test.beforeAll( async ( { browser } ) => {
 		await get( '/test-page/' )
 		await get( '/core-test-page/', noStk )
 	}
-	const s = { page: [], dom: [], q: [], mem: [] }
-	const c = { page: [], dom: [], q: [], mem: [] }
+	const s = {
+		page: [], dom: [], q: [], mem: [],
+	}
+	const c = {
+		page: [], dom: [], q: [], mem: [],
+	}
 	for ( let i = 0; i < RUNS; i++ ) {
 		const a = await netRun( browser, '/test-page/', {} )
 		const b = await netRun( browser, '/core-test-page/', noStk )
 		s.page.push( a.decoded ); s.dom.push( a.dom ); c.page.push( b.decoded ); c.dom.push( b.dom )
-		const ma = await metrics( '/test-page/' ), mb = await metrics( '/core-test-page/', noStk )
+		const ma = await metrics( '/test-page/' ),
+			mb = await metrics( '/core-test-page/', noStk )
 		s.q.push( ma.queries ); s.mem.push( ma.peak ); c.q.push( mb.queries ); c.mem.push( mb.peak )
 	}
 	results.pageKB = ( median( s.page ) - median( c.page ) ) / 1000
 	results.dom = median( s.dom ) - median( c.dom )
 	results.queries = median( s.q ) - median( c.q ) - MOCK_QUERIES
 	results.memMB = ( median( s.mem ) - median( c.mem ) ) / 1048576
-	results.raw = { stk: s, core: c, opcache: cfg.opcache, mockQueries: MOCK_QUERIES }
+	results.raw = {
+		stk: s, core: c, opcache: cfg.opcache, mockQueries: MOCK_QUERIES,
+	}
 	console.log( 'benchmark deltas', JSON.stringify( results ) )
 	if ( CACHE ) {
 		require( 'fs' ).writeFileSync( CACHE, JSON.stringify( results ) )

@@ -11,9 +11,12 @@
  * noisy with animations and timers). The full 36-target screenshot run is
  * e2e/perf/visual/run-visual.js.
  */
-const fs = require( 'fs' ), path = require( 'path' )
+const fs = require( 'fs' ),
+	path = require( 'path' )
 const { test, expect } = require( '@playwright/test' )
-const { cfg, wp, wpEval, resetSite, createPage, FIX } = require( './lib/site' )
+const {
+	cfg, wp, wpEval, resetSite, createPage, FIX,
+} = require( './lib/site' )
 const { computedStyles, diffStyles } = require( './lib/computed' )
 
 test.skip( cfg.isLegacyMode, 'compares the new loading (flag off) against the legacy bundle' )
@@ -65,11 +68,15 @@ async function captureAll( browser, theme ) {
 }
 
 const scenarios = [
-	{ name: 'defaults', themes: [ 'twentytwentyfive', 'twentytwentyone' ], setup: () => {} },
-	{ name: 'color schemes and custom breakpoints', themes: [ 'twentytwentyfive' ], setup: () => {
-		setSchemeOptions()
-		wp( 'option', 'update', 'stackable_dynamic_breakpoints', '{"tablet":900,"mobile":600}', '--format=json' )
-	} },
+	{
+		name: 'defaults', themes: [ 'twentytwentyfive', 'twentytwentyone' ], setup: () => {},
+	},
+	{
+		name: 'color schemes and custom breakpoints', themes: [ 'twentytwentyfive' ], setup: () => {
+			setSchemeOptions()
+			wp( 'option', 'update', 'stackable_dynamic_breakpoints', '{"tablet":900,"mobile":600}', '--format=json' )
+		},
+	},
 ]
 
 for ( const scenario of scenarios ) {
@@ -88,7 +95,9 @@ for ( const scenario of scenarios ) {
 				elements += Object.keys( ref ).length
 				const d = diffStyles( ref, current[ key ] || {} )
 				if ( d.length ) {
-					failures.push( { page: key, diff: d.slice( 0, 5 ), count: d.length } )
+					failures.push( {
+						page: key, diff: d.slice( 0, 5 ), count: d.length,
+					} )
 				}
 			}
 			test.info().annotations.push( { type: 'metric', description: `${ Object.keys( legacy ).length } page captures, ${ elements } elements, ${ failures.length } pages differ` } )

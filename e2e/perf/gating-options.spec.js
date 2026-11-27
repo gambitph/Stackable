@@ -10,7 +10,9 @@
  *   without Stackable (missing options must not cost one query each).
  */
 const { test, expect } = require( '@playwright/test' )
-const { cfg, resetSite, createPage, get, metrics, stkStyles, wp } = require( './lib/site' )
+const {
+	cfg, resetSite, createPage, get, metrics, stkStyles, wp,
+} = require( './lib/site' )
 
 // The e2e Freemius license mock (Premium only) reads 1 option and deletes a
 // transient twice per request; those queries aren't Stackable's.

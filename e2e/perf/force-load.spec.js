@@ -8,8 +8,11 @@
  * has every rule (the styling before the CSS was split per block).
  */
 const { test, expect } = require( '@playwright/test' )
-const fs = require( 'fs' ), path = require( 'path' )
-const { cfg, wp, wpEval, resetSite, createPage, FIX } = require( './lib/site' )
+const fs = require( 'fs' ),
+	path = require( 'path' )
+const {
+	cfg, wp, wpEval, resetSite, createPage, FIX,
+} = require( './lib/site' )
 
 const PROPS = [ 'color', 'background-color', 'background-image', 'font-size', 'font-weight', 'line-height', 'padding-top', 'padding-left', 'margin-top', 'margin-bottom', 'border-top-width', 'border-top-left-radius', 'flex-direction', 'flex-wrap', 'column-gap', 'justify-content', 'text-align', 'box-shadow' ]
 const INJECT = [ 'color-scheme.html', 'tabs.html', 'accordion.html', 'carousel.html', 'columns.html' ]
@@ -58,7 +61,11 @@ async function styles( page, url, root ) {
 
 function differences( a, b ) {
 	const keys = Object.keys( a ).filter( k => k in b )
-	return { compared: keys.length, diff: keys.filter( k => a[ k ] !== b[ k ] ).map( k => ( { el: k, rendered: a[ k ], injected: b[ k ] } ) ) }
+	return {
+		compared: keys.length, diff: keys.filter( k => a[ k ] !== b[ k ] ).map( k => ( {
+			el: k, rendered: a[ k ], injected: b[ k ],
+		} ) ),
+	}
 }
 
 const setLegacy = on => on ? wp( 'option', 'update', 'stackable_use_legacy_frontend_css', '1' ) : wp( 'option', 'delete', 'stackable_use_legacy_frontend_css' )

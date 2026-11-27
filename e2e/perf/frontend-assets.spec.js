@@ -9,7 +9,9 @@
  * Legacy flag on / old release: the single frontend_blocks.css bundle.
  */
 const { test, expect } = require( '@playwright/test' )
-const { cfg, resetSite, createPage, get, stkStyles, allCss, MARK, wp } = require( './lib/site' )
+const {
+	cfg, resetSite, createPage, get, stkStyles, allCss, MARK, wp,
+} = require( './lib/site' )
 
 const legacy = cfg.isLegacyMode
 const ids = {}

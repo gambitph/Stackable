@@ -12,14 +12,17 @@
  * fixed before 3.21.0, see sortByGlobOrder in gulpfile.js).
  */
 const fs = require( 'fs' )
+const os = require( 'os' )
 const path = require( 'path' )
 const crypto = require( 'crypto' )
 const { test, expect } = require( '@playwright/test' )
-const { cfg, resetSite, createPage, get, stkStyles, wp } = require( './lib/site' )
+const {
+	cfg, resetSite, createPage, get, stkStyles, wp,
+} = require( './lib/site' )
 
 test.skip( ! cfg.isLegacyMode, 'legacy flag on / old release only' )
 
-const REF_DIR = process.env.STK_PERF_REF_DIR || '/workspace/stackable-css-bloat/round2/legacy-ref'
+const REF_DIR = process.env.STK_PERF_REF_DIR || path.join( os.tmpdir(), 'stk-perf-ci', 'legacy-ref' )
 const REF = path.join( REF_DIR, `legacy-${ cfg.isPremium ? 'premium' : 'free' }.json` )
 const WRITE = !! process.env.STK_PERF_REF_WRITE
 const PAGES = [ 'benchmark', 'heading', 'accordion', 'columns', 'scheme', 'tabs', 'image', 'icon-list', 'none' ]
@@ -41,7 +44,7 @@ const normalize = html => html
 	.replace( /"version":"[^"]*"/g, '"version":"X"' )
 	.replace( /stackable_version[^,]*,/g, '' )
 
-const snapshot = async ( p ) => {
+const snapshot = async p => {
 	const html = ( await get( p ) ).text
 	const styles = await stkStyles( html )
 	return {
@@ -90,7 +93,8 @@ for ( const theme of [ 'twentytwentyfive', 'twentytwentyone' ] ) {
 			}
 			if ( snap.html !== r.html ) {
 				// Show the first difference.
-				const a = r._html, b = snap._html
+				const a = r._html,
+					b = snap._html
 				let i = 0
 				while ( i < a.length && a[ i ] === b[ i ] ) {
 					i++

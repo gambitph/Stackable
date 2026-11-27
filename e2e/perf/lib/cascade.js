@@ -47,7 +47,14 @@ function readManifest( dist, file ) {
 	return JSON.parse( json )
 }
 
-/** Canonical rule sequence of the split stylesheets of a plugin build. */
+/**
+ * Canonical rule sequence of the split stylesheets of a plugin build.
+ *
+ * @param {string} pluginDir     The plugin build folder (with dist/).
+ * @param {Object} options
+ * @param {string} options.theme Theme slug, for the theme-specific stylesheet.
+ * @return {string[]} Rule keys in print order.
+ */
 function canonical( pluginDir, { theme = 'twentytwentyfive' } = {} ) {
 	const dist = path.join( pluginDir, 'dist' )
 	const read = f => fs.existsSync( path.join( dist, f ) ) ? fs.readFileSync( path.join( dist, f ), 'utf8' ) : ''
@@ -71,12 +78,15 @@ function canonical( pluginDir, { theme = 'twentytwentyfive' } = {} ) {
 		}
 		index.get( t ).push( i )
 	} )
-	return { seq, index, files }
+	return {
+		seq, index, files,
+	}
 }
 
 /**
  * @param {string} pageCss All Stackable static CSS on the page in document order.
- * @return {{ known: number, unknown: number, inversions: Array }}
+ * @param {string[]} canon  The canonical rule order from canonical().
+ * @return {{ known: number, unknown: number, inversions: Array }} Counts of rules found in / missing from canon, and the out-of-order pairs.
  */
 function check( pageCss, canon ) {
 	const list = tuples( pageCss )
@@ -84,7 +94,9 @@ function check( pageCss, canon ) {
 	const last = new Map()
 	list.forEach( ( t, i ) => last.set( t, i ) )
 	const ordered = [ ...last.entries() ].sort( ( a, b ) => a[ 1 ] - b[ 1 ] ).map( e => e[ 0 ] )
-	let prev = -1, known = 0, unknown = 0
+	let known = 0
+	let prev = -1
+	let unknown = 0
 	const inversions = []
 	for ( const t of ordered ) {
 		const idx = canon.index.get( t )
@@ -98,12 +110,18 @@ function check( pageCss, canon ) {
 		if ( next === undefined ) {
 			// Only a problem if this rule can conflict with a rule printed
 			// before it; report it, the caller decides.
-			inversions.push( { rule: t.slice( 0, 200 ), at: idx[ idx.length - 1 ], after: canon.seq[ prev ].slice( 0, 200 ) } )
+			inversions.push( {
+				rule: t.slice( 0, 200 ), at: idx[ idx.length - 1 ], after: canon.seq[ prev ].slice( 0, 200 ),
+			} )
 			continue
 		}
 		prev = next
 	}
-	return { known, unknown, inversions }
+	return {
+		known, unknown, inversions,
+	}
 }
 
-module.exports = { tuples, canonical, check }
+module.exports = {
+	tuples, canonical, check,
+}

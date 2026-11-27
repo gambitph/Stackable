@@ -10,7 +10,7 @@ switch plugin builds, switch themes and measure memory/queries.
 
 ## Site
 
-* `STK_PERF_WP_PATH` (default `/workspace/perf-site`): a WordPress install with the
+* `STK_PERF_WP_PATH` (default `<tmp>/stk-perf-ci/site`, what `ci/setup-site.sh` creates): a WordPress install with the
   SQLite drop-in, Twenty Twenty-Five and Twenty Twenty-One.
 * `STK_PERF_SNAPSHOT`: the fresh-install SQLite DB restored before each spec.
 * `STK_PERF_URL` (default `http://127.0.0.1:8896`): the specs start `php -S` there.
@@ -67,6 +67,9 @@ site (Twenty Twenty-Five, Twenty Twenty-One, custom breakpoints; 1440/768/375)
 and compares them with a baseline capture. Computed styles are the pass/fail
 signal; pixel diffs are reported only (animations make them noisy). With
 `STK_PERF_LEGACY=on` the Stackable asset list must also match the baseline.
+Set `STK_VISUAL_WP_PATH` (the regression site), `SITE` (its URL, default
+`http://127.0.0.1:8891`), `--baseline=<capture dir>` (or `STK_VISUAL_BASELINE`)
+and optionally `--noise=<report.json>` (two captures of the same build).
 
 `npm run test:perf:css-order -- <pluginDir> --legacy=<release dist> [--premium]`
 checks the split stylesheets against the legacy bundle (missing rules and order

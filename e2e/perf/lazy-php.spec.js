@@ -2,7 +2,9 @@
  * PHP that round 2 loads lazily in the frontend still works when it's needed.
  */
 const { test, expect } = require( '@playwright/test' )
-const { resetSite, createPage, get, wp } = require( './lib/site' )
+const {
+	resetSite, createPage, get, wp,
+} = require( './lib/site' )
 
 test( 'v2 Posts block (blog-posts) still renders with v2 frontend compatibility on', async () => {
 	await resetSite()

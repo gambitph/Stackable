@@ -4,7 +4,9 @@
  * WordPress without Stackable (DynamicWP counts document.getElementsByTagName('*')).
  */
 const { test, expect } = require( '@playwright/test' )
-const { cfg, resetSite, createPage, get, stkTags } = require( './lib/site' )
+const {
+	cfg, resetSite, createPage, get, stkTags,
+} = require( './lib/site' )
 
 const legacy = cfg.isLegacyMode
 

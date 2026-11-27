@@ -1,21 +1,22 @@
 /**
  * Helpers for the frontend performance suite (e2e/perf).
  *
- * The suite runs against a throwaway WordPress site (default /workspace/perf-site,
+ * The suite runs against a throwaway WordPress site (default <tmp>/stk-perf-ci/site,
  * a fresh-install SQLite snapshot of WP 6.8.3 + Twenty Twenty-Five, the same as
  * the DynamicWP replica). Every run restores the snapshot, links the plugin
  * build under test and starts `php -S`. See e2e/perf/README.md.
  */
 const fs = require( 'fs' )
+const os = require( 'os' )
 const path = require( 'path' )
 const { execFileSync, spawn } = require( 'child_process' )
 const cheerio = require( 'cheerio' )
 
 const cfg = {
-	wpPath: process.env.STK_PERF_WP_PATH || '/workspace/perf-site',
+	wpPath: process.env.STK_PERF_WP_PATH || path.join( os.tmpdir(), 'stk-perf-ci', 'site' ),
 	url: process.env.STK_PERF_URL || 'http://127.0.0.1:8896',
 	plugin: process.env.STK_PERF_PLUGIN || '',
-	snapshot: process.env.STK_PERF_SNAPSHOT || '/workspace/stackable-css-bloat/round2/perf-site/base.sqlite',
+	snapshot: process.env.STK_PERF_SNAPSHOT || path.join( os.tmpdir(), 'stk-perf-ci', 'base.sqlite' ),
 	// 'off' (new behavior), 'on' (legacy flag on), 'release' (an old release without the flag)
 	legacy: process.env.STK_PERF_LEGACY || 'off',
 	opcache: process.env.STK_PERF_OPCACHE || '0',
@@ -114,7 +115,9 @@ function createPage( slug, fixture, extra = [] ) {
 
 async function get( p, headers = {} ) {
 	const r = await fetch( p.startsWith( 'http' ) ? p : cfg.url + p, { headers } )
-	return { status: r.status, text: await r.text(), headers: r.headers }
+	return {
+		status: r.status, text: await r.text(), headers: r.headers,
+	}
 }
 
 async function metrics( p, headers = {} ) {
@@ -136,6 +139,8 @@ const isStkStaticTag = ( el, $ ) => {
  * The Stackable stylesheets on a page, in document order (the static CSS:
  * <link>s to our files and our <style id="..."> tags, not the generated
  * per-block styles inside the content).
+ *
+ * @param {string} html Page HTML.
  */
 async function stkStyles( html ) {
 	const $ = cheerio.load( html )
@@ -149,24 +154,34 @@ async function stkStyles( html ) {
 		if ( el.tagName === 'link' ) {
 			const href = $( el ).attr( 'href' ).replace( /&#038;/g, '&' )
 			const css = ( await get( href ) ).text
-			out.push( { tag: 'link', id, href: href.replace( /[?&]ver=[^&]*/, '' ).replace( cfg.url, '' ), css, bytes: Buffer.byteLength( css ), inHead } )
+			out.push( {
+				tag: 'link', id, href: href.replace( /[?&]ver=[^&]*/, '' ).replace( cfg.url, '' ), css, bytes: Buffer.byteLength( css ), inHead,
+			} )
 		} else {
 			const css = $( el ).html() || ''
-			out.push( { tag: 'style', id, css, bytes: Buffer.byteLength( css ), inHead } )
+			out.push( {
+				tag: 'style', id, css, bytes: Buffer.byteLength( css ), inHead,
+			} )
 		}
 	}
 	return out
 }
 const allCss = styles => styles.map( s => s.css ).join( '\n' )
 
-/** The Stackable tags (link/style/script) in the whole page, for counting DOM nodes. */
+/**
+ * The Stackable tags (link/style/script) in the whole page, for counting DOM nodes.
+ *
+ * @param {string} html Page HTML.
+ */
 function stkTags( html ) {
 	const $ = cheerio.load( html )
 	return $( 'link[rel="stylesheet"], style, script' ).toArray().filter( el => {
 		const id = $( el ).attr( 'id' ) || ''
 		const src = $( el ).attr( 'href' ) || $( el ).attr( 'src' ) || ''
 		return /^(ugb|stk)[-_]/.test( id ) || src.includes( `/plugins/${ cfg.slug }/` )
-	} ).map( el => ( { tag: el.tagName, id: $( el ).attr( 'id' ) || '', inHead: $( el ).closest( 'head' ).length > 0 } ) )
+	} ).map( el => ( {
+		tag: el.tagName, id: $( el ).attr( 'id' ) || '', inHead: $( el ).closest( 'head' ).length > 0,
+	} ) )
 }
 
 /** Unique CSS markers used to tell which stylesheet's rules are on a page. */
@@ -185,4 +200,6 @@ const MARK = {
 	themeTT5: /stk--is-twentytwentyfive-theme/,
 }
 
-module.exports = { cfg, wp, wpEval, resetSite, startServer, stopServer, createPage, get, metrics, stkStyles, allCss, stkTags, MARK, FIX, sleep }
+module.exports = {
+	cfg, wp, wpEval, resetSite, startServer, stopServer, createPage, get, metrics, stkStyles, allCss, stkTags, MARK, FIX, sleep,
+}

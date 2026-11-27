@@ -6,7 +6,9 @@
  * old bundle (see legacy-identical.spec.js).
  */
 const { test, expect } = require( '@playwright/test' )
-const { cfg, resetSite, createPage, get, stkStyles, allCss, wp } = require( './lib/site' )
+const {
+	cfg, resetSite, createPage, get, stkStyles, allCss, wp,
+} = require( './lib/site' )
 const { canonical, check } = require( './lib/cascade' )
 
 test.skip( cfg.isLegacyMode, 'new behavior only' )

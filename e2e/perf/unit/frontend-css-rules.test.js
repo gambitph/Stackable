@@ -12,10 +12,14 @@ const path = require( 'path' )
 const { execFileSync } = require( 'child_process' )
 const postcss = require( 'postcss' )
 const selectorParser = require( 'postcss-selector-parser' )
-const { buildRules, subset, selectorCondition, getScriptClasses } = require( '../../../.config/frontend-css-rules' )
+const {
+	buildRules, subset, selectorCondition, getScriptClasses,
+} = require( '../../../.config/frontend-css-rules' )
 
 const ROOT = path.resolve( __dirname, '../../..' )
-const noScripts = { always: new Set(), prefixes: [], triggered: new Map() }
+const noScripts = {
+	always: new Set(), prefixes: [], triggered: new Map(),
+}
 const cond = ( sel, scripts = noScripts ) => {
 	let out
 	selectorParser( root => {
@@ -49,7 +53,9 @@ test( 'selector conditions', () => {
 	assert.deepStrictEqual( cond( '.stk-a:not(.stk-b)' ), [ 'stk-a' ] ) // :not() never adds a requirement
 	assert.deepStrictEqual( cond( '.has-text-align-center-tablet' ), [ 'has-text-align-center-tablet' ] )
 	assert.deepStrictEqual( cond( '.has-text-align-center' ), [] )
-	const scripts = { always: new Set( [ 'stk--is-loaded' ] ), prefixes: [ 'stk-block-tab-label-' ], triggered: new Map( [ [ 'stk--is-open', [ 'stk-block-accordion' ] ] ] ) }
+	const scripts = {
+		always: new Set( [ 'stk--is-loaded' ] ), prefixes: [ 'stk-block-tab-label-' ], triggered: new Map( [ [ 'stk--is-open', [ 'stk-block-accordion' ] ] ] ),
+	}
 	assert.deepStrictEqual( cond( '.stk-x.stk--is-loaded .stk-block-tab-label-2', scripts ), [ 'stk-x' ] ) // added by JS: not required
 	assert.deepStrictEqual( cond( '.stk--is-open', scripts ), [ 'stk--is-open|stk-block-accordion' ] ) // added by a block script
 } )
@@ -114,7 +120,7 @@ test( 'PHP get_matching_css prints the same CSS as the JS subset', { skip: ! bui
 		const sets = [ [], all, all.filter( ( _, i ) => i % 2 ), all.filter( ( _, i ) => i % 3 === 0 ) ]
 		for ( const [ i, tokens ] of sets.entries() ) {
 			const cols = [ 0, 99, 2, 4 ][ i ]
-			const out = execFileSync( 'php', [ php, file, tokens.join( ',' ), String( cols ) ], { encoding: 'utf8', maxBuffer: 1 << 26 } )
+			const out = execFileSync( 'php', [ php, file, tokens.join( ',' ), String( cols ) ], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 } )
 			assert.strictEqual( out, subset( rules, new Set( tokens ), cols ), `${ path.relative( ROOT, file ) } set ${ i }` )
 		}
 	}
