@@ -96,13 +96,13 @@ const isSizeFinding = ( oldBytes, newBytes ) => {
 	return delta > SIZE_DELTA_BYTES || delta / oldBytes > SIZE_DELTA_RATIO
 }
 
-const unifiedDiff = ( oldRoot, newRoot, relPath ) => {
-	const oldFile = join( oldRoot, relPath )
-	const newFile = join( newRoot, relPath )
+const unifiedDiff = ( oldRoot, newRoot, oldRel, newRel ) => {
+	const oldFile = join( oldRoot, oldRel )
+	const newFile = join( newRoot, newRel )
 	try {
 		return execFileSync(
 			'diff',
-			[ '-u', '--label', `a/${ relPath }`, '--label', `b/${ relPath }`, oldFile, newFile ],
+			[ '-u', '--label', `a/${ oldRel }`, '--label', `b/${ newRel }`, oldFile, newFile ],
 			{ encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 }
 		)
 	} catch ( error ) {
@@ -110,9 +110,59 @@ const unifiedDiff = ( oldRoot, newRoot, relPath ) => {
 			return error.stdout
 		}
 		if ( error.status === 2 ) {
-			return `--- a/${ relPath }\n+++ b/${ relPath }\n@@ binary or unreadable @@\n`
+			return `--- a/${ oldRel }\n+++ b/${ newRel }\n@@ binary or unreadable @@\n`
 		}
 		throw error
+	}
+}
+
+// Webpack writes chunks as dist/chunks/<name>.<contenthash>.js.
+const CHUNK_HASHED_FILE = /^(dist\/chunks\/.*?)\.[0-9a-f]{16,}(\.js(?:\.LICENSE\.txt)?)$/
+
+export const logicalChunkPath = relPath => {
+	const match = CHUNK_HASHED_FILE.exec( relPath )
+	return match ? `${ match[ 1 ] }${ match[ 2 ] }` : relPath
+}
+
+const pairHashedChunks = ( added, removed ) => {
+	const group = files => {
+		const map = new Map()
+		for ( const file of files ) {
+			const key = logicalChunkPath( file )
+			if ( key === file ) {
+				continue
+			}
+			const list = map.get( key ) || []
+			list.push( file )
+			map.set( key, list )
+		}
+		return map
+	}
+
+	const addedBy = group( added )
+	const removedBy = group( removed )
+	const renames = []
+	const pairedAdded = new Set()
+	const pairedRemoved = new Set()
+
+	for ( const [ key, newFiles ] of addedBy ) {
+		const oldFiles = removedBy.get( key )
+		if ( ! oldFiles || newFiles.length !== 1 || oldFiles.length !== 1 ) {
+			continue
+		}
+		renames.push( {
+			key,
+			oldPath: oldFiles[ 0 ],
+			newPath: newFiles[ 0 ],
+		} )
+		pairedAdded.add( newFiles[ 0 ] )
+		pairedRemoved.add( oldFiles[ 0 ] )
+	}
+
+	return {
+		renames,
+		added: added.filter( file => ! pairedAdded.has( file ) ),
+		removed: removed.filter( file => ! pairedRemoved.has( file ) ),
 	}
 }
 
@@ -121,18 +171,23 @@ export const comparePluginTrees = ( oldRoot, newRoot, destDir, prefix ) => {
 
 	const oldFiles = new Set( walkFiles( oldRoot ) )
 	const newFiles = new Set( walkFiles( newRoot ) )
-	const added = [ ...newFiles ].filter( file => ! oldFiles.has( file ) ).sort()
-	const removed = [ ...oldFiles ].filter( file => ! newFiles.has( file ) ).sort()
+	const addedRaw = [ ...newFiles ].filter( file => ! oldFiles.has( file ) ).sort()
+	const removedRaw = [ ...oldFiles ].filter( file => ! newFiles.has( file ) ).sort()
+	const paired = pairHashedChunks( addedRaw, removedRaw )
+	const added = paired.added
+	const removed = paired.removed
+	const renames = paired.renames
 	const common = [ ...newFiles ].filter( file => oldFiles.has( file ) ).sort()
 
 	const sizes = []
 	const sourceChunks = []
 
-	const consider = ( relPath, oldBytes, newBytes, status ) => {
+	const consider = ( oldRel, newRel, oldBytes, newBytes, status ) => {
+		const relPath = newRel || oldRel
 		const kind = classifyPath( relPath )
 		if ( kind === 'compiled' ) {
 			sizes.push( {
-				path: relPath,
+				path: status === 'renamed' ? logicalChunkPath( relPath ) : relPath,
 				oldBytes,
 				newBytes,
 				deltaBytes: newBytes - oldBytes,
@@ -146,29 +201,38 @@ export const comparePluginTrees = ( oldRoot, newRoot, destDir, prefix ) => {
 			return
 		}
 		if ( status === 'removed' ) {
-			sourceChunks.push( `--- a/${ relPath }\n+++ /dev/null\n@@ removed ${ oldBytes } bytes @@\n` )
+			sourceChunks.push( `--- a/${ oldRel }\n+++ /dev/null\n@@ removed ${ oldBytes } bytes @@\n` )
 			return
 		}
 		if ( oldBytes > HUGE_SOURCE_BYTES || newBytes > HUGE_SOURCE_BYTES ) {
 			sourceChunks.push(
-				`--- a/${ relPath }\n+++ b/${ relPath }\n@@ huge source file omitted (${ oldBytes } -> ${ newBytes } bytes) @@\n`
+				`--- a/${ oldRel }\n+++ b/${ newRel }\n@@ huge source file omitted (${ oldBytes } -> ${ newBytes } bytes) @@\n`
 			)
 			return
 		}
-		const hunk = unifiedDiff( oldRoot, newRoot, relPath )
+		const hunk = unifiedDiff( oldRoot, newRoot, oldRel, newRel )
 		if ( hunk && hunk.trim() ) {
 			sourceChunks.push( hunk )
 		}
 	}
 
 	for ( const relPath of added ) {
-		consider( relPath, 0, fileSize( newRoot, relPath ), 'added' )
+		consider( null, relPath, 0, fileSize( newRoot, relPath ), 'added' )
 	}
 	for ( const relPath of removed ) {
-		consider( relPath, fileSize( oldRoot, relPath ), 0, 'removed' )
+		consider( relPath, null, fileSize( oldRoot, relPath ), 0, 'removed' )
 	}
 	for ( const relPath of common ) {
-		consider( relPath, fileSize( oldRoot, relPath ), fileSize( newRoot, relPath ), 'changed' )
+		consider( relPath, relPath, fileSize( oldRoot, relPath ), fileSize( newRoot, relPath ), 'changed' )
+	}
+	for ( const rename of renames ) {
+		consider(
+			rename.oldPath,
+			rename.newPath,
+			fileSize( oldRoot, rename.oldPath ),
+			fileSize( newRoot, rename.newPath ),
+			'renamed'
+		)
 	}
 
 	writeFileSync( join( destDir, `${ prefix }.source.diff` ), sourceChunks.join( '\n' ) )
@@ -179,6 +243,7 @@ export const comparePluginTrees = ( oldRoot, newRoot, destDir, prefix ) => {
 			`# ${ prefix } file tree`,
 			`added: ${ added.length }`,
 			`removed: ${ removed.length }`,
+			`renamed: ${ renames.length }`,
 			`common: ${ common.length }`,
 			'',
 			'## added',
@@ -187,12 +252,16 @@ export const comparePluginTrees = ( oldRoot, newRoot, destDir, prefix ) => {
 			'## removed',
 			...removed.map( file => `- ${ file }` ),
 			'',
+			'## renamed (webpack content hash, same asset)',
+			...renames.map( rename => `~ ${ rename.oldPath } -> ${ rename.newPath }` ),
+			'',
 		].join( '\n' )
 	)
 
 	return {
 		added,
 		removed,
+		renames,
 		sizes,
 	}
 }

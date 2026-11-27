@@ -41,6 +41,9 @@ Every source hunk should map to a changelog line, or be Freemius-processor noise
 Compiled files (`dist/**/*.js`, `dist/**/*.css`, images, fonts, maps) are size-only in `*.sizes.json`.
 Do not read compiled diffs.
 Flag a compiled row when `flag` is true (absolute delta over 200KB or over 50%, or the file appeared or disappeared).
+Lines under `renamed (webpack content hash, same asset)` are the same chunk, or its license file, with a new content hash.
+They are not added or removed files.
+Judge that chunk only when its `*.sizes.json` row has `flag` true.
 
 Lost files, unexpected libraries, new vendor-looking dirs, and new security surface are findings.
 Security surface includes unescaped output, new REST or AJAX, a new remote URL, or a loosened capability check.

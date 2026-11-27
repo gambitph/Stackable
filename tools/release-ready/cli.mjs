@@ -436,8 +436,8 @@ const formatBytes = bytes => {
 }
 
 const printAutomatedChecklist = version => {
-	const freeRoot = join( REPORT_DIR, 'unpacked', 'free' )
-	const paidRoot = join( REPORT_DIR, 'unpacked', 'paid-new' )
+	const freeRoot = pluginRootFromExtract( join( REPORT_DIR, 'unpacked', 'free' ) )
+	const paidRoot = pluginRootFromExtract( join( REPORT_DIR, 'unpacked', 'paid-new' ) )
 	let failed = 0
 	const record = ( pass, message ) => {
 		if ( ! pass ) {
@@ -467,12 +467,10 @@ const printAutomatedChecklist = version => {
 	)
 
 	const paidStable = readZipStableTag( paidRoot )
-	if ( paidStable !== null ) {
-		record(
-			paidStable === version,
-			`PAID readme Stable tag: ${ paidStable } (expected ${ version })`
-		)
-	}
+	record(
+		paidStable === version,
+		`PAID readme Stable tag: ${ paidStable ?? '(missing)' } (expected ${ version })`
+	)
 
 	const premiumDirInFree = existsSync( join( freeRoot, 'pro__premium_only' ) )
 	record( ! premiumDirInFree, 'FREE zip: no pro__premium_only/' )
