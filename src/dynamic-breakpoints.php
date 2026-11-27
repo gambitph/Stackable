@@ -212,8 +212,11 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return void
 		 */
 		public function adjust_block_styles( $block_content, $block ) {
+			// Don't remove this filter while blocks are rendered: removing the
+			// only callback of a priority inside nested render_block calls
+			// makes WordPress (below 6.9) skip the later render_block
+			// callbacks of the parent block.
 			if ( ! $this->has_custom_breakpoints() ) {
-				remove_filter( 'render_block', array( $this, 'adjust_block_styles' ), 11 );
 				return $block_content;
 			}
 

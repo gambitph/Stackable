@@ -116,9 +116,90 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			add_filter( 'print_styles_array', array( $this, 'order_styles' ), 20 );
 
 			// Color scheme marker class.
-			add_filter( 'render_block_data', array( $this, 'block_depth_start' ), 1 );
+			add_filter( 'render_block_data', array( $this, 'block_depth_start' ), 1, 3 );
 			add_filter( 'render_block', array( $this, 'block_depth_end' ), 999, 2 );
 			add_filter( 'stackable_process_frontend_html', array( $this, 'add_color_scheme_markers' ) );
+
+			// Put the CSS of late content (e.g. blocks in the footer or
+			// widgets) in the first combined <style>. WordPress (6.9+) only
+			// buffers the page if a filter is added before the template is
+			// included.
+			add_action( 'wp_before_include_template', array( $this, 'maybe_buffer_template' ), 10 );
+			// WordPress below 6.9: no template output buffer, use our own.
+			if ( ! function_exists( 'wp_start_template_enhancement_output_buffer' ) ) {
+				add_filter( 'template_include', array( $this, 'maybe_buffer_template_fallback' ), PHP_INT_MAX );
+			}
+		}
+
+		/**
+		 * WordPress below 6.9: buffer the page ourselves.
+		 *
+		 * @param string $template
+		 * @return string
+		 */
+		public function maybe_buffer_template_fallback( $template ) {
+			if ( is_string( $template ) && $template !== '' && self::is_combined() && apply_filters( 'stackable_frontend_css_finalize_in_buffer', true ) ) {
+				ob_start( array( $this, 'finalize_combined_css' ) );
+			}
+			return $template;
+		}
+
+		/**
+		 * Buffer the page so the CSS needed by late content can be moved to
+		 * the first combined <style>.
+		 */
+		public function maybe_buffer_template() {
+			if ( ! self::is_combined() || ! apply_filters( 'stackable_frontend_css_finalize_in_buffer', true ) ) {
+				return;
+			}
+			add_filter( 'wp_template_enhancement_output_buffer', array( $this, 'finalize_combined_css' ), 20 );
+		}
+
+		/**
+		 * When Stackable content after the first combined <style> needed
+		 * more rules, they were printed again later in the page. Since the
+		 * page is buffered, put all the rules in the first <style> instead
+		 * and drop the later ones, so the cascade is the same as if all the
+		 * CSS was in the head (like the single stylesheet before).
+		 *
+		 * @param string $html The page
+		 * @return string
+		 */
+		public function finalize_combined_css( $html, $phase = null ) {
+			if ( self::$print_count < 2 || ! is_string( $html ) || ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
+				return $html;
+			}
+			$processor = new WP_HTML_Tag_Processor( $html );
+			if ( ! method_exists( $processor, 'set_modifiable_text' ) ) {
+				return $html;
+			}
+			$found_first = false;
+			$late = 0;
+			while ( $processor->next_tag( 'STYLE' ) ) {
+				$id = $processor->get_attribute( 'id' );
+				if ( ! is_string( $id ) || strpos( $id, 'stk-frontend-css' ) !== 0 ) {
+					continue;
+				}
+				if ( ! $found_first ) {
+					if ( $id !== 'stk-frontend-css-inline-css' ) {
+						// Not ours, or printed differently, leave as is.
+						return $html;
+					}
+					$found_first = true;
+					if ( ! $processor->set_modifiable_text( self::$printed_css ) ) {
+						return $html;
+					}
+				} elseif ( preg_match( '/^stk-frontend-css-\d+-inline-css$/', $id ) ) {
+					$processor->set_modifiable_text( '' );
+					$late++;
+				}
+			}
+			if ( ! $found_first || ! $late ) {
+				return $html;
+			}
+			$html = $processor->get_updated_html();
+			// Remove the emptied tags.
+			return preg_replace( '/<style id=([\'"])stk-frontend-css-\d+-inline-css\1[^>]*>\s*<\/style>\n?/', '', $html );
 		}
 
 		/**
@@ -620,7 +701,12 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		/**
 		 * Keep track of the block depth so we only process outermost blocks.
 		 */
-		public function block_depth_start( $parsed_block ) {
+		public function block_depth_start( $parsed_block, $source_block = null, $parent_block = null ) {
+			// A top-level block (no parent): start over, in case a block
+			// before it was never rendered after its data was filtered.
+			if ( $parent_block === null && func_num_args() >= 3 ) {
+				$this->depth = 0;
+			}
 			$this->depth++;
 			return $parsed_block;
 		}
@@ -1064,7 +1150,10 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			}
 			global $wp_styles;
 			$handles = array( 'ugb-style-css', 'ugb-style-css-responsive' );
-			foreach ( array( 'ugb-block-style-inheritance-nodep', 'ugb-style-css-nodep' ) as $handle ) {
+			// The global styles (typography, etc.) also style the rest of the
+			// page, and the page printed them already if it has Stackable
+			// blocks, so leave them out of AJAX / REST responses.
+			foreach ( $is_late ? array( 'ugb-block-style-inheritance-nodep', 'ugb-style-css-nodep' ) : array() as $handle ) {
 				if ( isset( $wp_styles->registered[ $handle ] ) && $wp_styles->get_data( $handle, 'after' ) ) {
 					$handles[] = $handle;
 				}

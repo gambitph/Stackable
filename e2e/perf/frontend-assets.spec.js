@@ -101,6 +101,42 @@ test.describe( 'assets per scenario', () => {
 		expect( css ).toMatch( MARK.tabs )
 	} )
 
+	test( 'the CSS of late blocks is moved into the first <style> (same cascade as the old head stylesheet) @ci', async () => {
+		test.skip( legacy, 'new behavior only' )
+		const html = ( await get( `/heading/?stk_late=${ ids.tabs }` ) ).text
+		const styles = ( await stkStyles( html ) ).filter( s => s.tag === 'style' && /^stk-frontend-css/.test( s.id ) )
+		// One combined <style> in the head, no reprints after the theme's stylesheet.
+		expect( styles.map( s => s.id ) ).toEqual( [ 'stk-frontend-css-inline-css' ] )
+		expect( styles[ 0 ].inHead ).toBe( true )
+		expect( styles[ 0 ].css ).toMatch( MARK.tabs )
+		expect( styles[ 0 ].css ).toMatch( MARK.heading )
+	} )
+
+	test( 'late CSS stays a reprint when the buffer is turned off (stackable_frontend_css_finalize_in_buffer) @ci', async () => {
+		test.skip( legacy, 'new behavior only' )
+		const html = ( await get( `/heading/?stk_late=${ ids.tabs }&stk_no_finalize=1` ) ).text
+		const styles = ( await stkStyles( html ) ).filter( s => s.tag === 'style' && /^stk-frontend-css/.test( s.id ) )
+		expect( styles.length ).toBeGreaterThan( 1 )
+		expect( allCss( styles ) ).toMatch( MARK.tabs )
+	} )
+
+	test( 'AJAX / REST CSS leaves out the global styles the page already has (global typography) @ci', async () => {
+		test.skip( legacy, 'new behavior only' )
+		wp( 'option', 'update', 'stackable_global_typography', '[{"h4":{"fontSize":37}}]', '--format=json' )
+		try {
+			const page = allCss( await stkStyles( ( await get( '/heading/' ) ).text ) )
+			expect( page ).toMatch( /font-size:\s*37px/ )
+			const ajax = allCss( await stkStyles( ( await get( `/wp-admin/admin-ajax.php?action=stk_perf_ajax&post=${ ids.heading }` ) ).text ) )
+			const rest = allCss( await stkStyles( ( await ( await fetch( `${ cfg.url }/wp-json/wp/v2/pages/${ ids.heading }` ) ).json() ).content.rendered ) )
+			for ( const css of [ ajax, rest ] ) {
+				expect( css ).toMatch( MARK.heading )
+				expect( css ).not.toMatch( /font-size:\s*37px/ )
+			}
+		} finally {
+			wp( 'option', 'delete', 'stackable_global_typography' )
+		}
+	} )
+
 	test( 'blocks rendered over admin-ajax carry their CSS (new behavior)', async () => {
 		const html = ( await get( `/wp-admin/admin-ajax.php?action=stk_perf_ajax&post=${ ids.accordion }` ) ).text
 		expect( html ).toContain( 'stk-block-accordion' )
@@ -113,7 +149,7 @@ test.describe( 'assets per scenario', () => {
 		}
 	} )
 
-	test( 'blocks rendered over the REST API carry their CSS (new behavior)', async () => {
+	test( 'blocks rendered over the REST API carry their CSS (new behavior) @ci', async () => {
 		// Like a theme or plugin that fetch()es posts and adds them to the page.
 		// fetch() doesn't send a JSON Accept header.
 		const r = await fetch( `${ cfg.url }/wp-json/wp/v2/pages/${ ids.accordion }` )
@@ -128,7 +164,7 @@ test.describe( 'assets per scenario', () => {
 		}
 	} )
 
-	test( 'AJAX / REST CSS has the design system rules (body classes are site-wide)', async () => {
+	test( 'AJAX / REST CSS has the design system rules (body classes are site-wide) @ci', async () => {
 		test.skip( legacy, 'new behavior only' )
 		wp( 'option', 'update', 'stackable_global_spacing_and_borders', '{"container-padding":{"desktop":{"top":36,"right":32,"bottom":36,"left":32}}}', '--format=json' )
 		try {
@@ -142,7 +178,7 @@ test.describe( 'assets per scenario', () => {
 		}
 	} )
 
-	test( 'rules for classes added by inline scripts are kept (body.stk--anim-init transitions)', async () => {
+	test( 'rules for classes added by inline scripts are kept (body.stk--anim-init transitions) @ci', async () => {
 		const css = allCss( await stkStyles( ( await get( '/benchmark/' ) ).text ) )
 		expect( css ).toMatch( /body\.stk--anim-init/ )
 	} )

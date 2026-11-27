@@ -11,6 +11,7 @@
  * - ?stk_force=1                  Turns on the stackable_force_css_load filter.
  * - ?stk_inject=<post id>         A script in the footer adds that post's saved HTML (not rendered by
  *                                  PHP) to the page content, like a script that adds markup after load.
+ * - ?stk_no_finalize=1            Turns off moving late CSS into the first <style> (stackable_frontend_css_finalize_in_buffer).
  * - admin-ajax action stk_perf_ajax&post=<id>  Returns the rendered blocks of a post (AJAX render).
  * - Header "X-Stk-Perf-Admin: 1"  Loads the request as user 1 (to fetch wp-admin pages without logging in).
  * - Header "X-Stk-Perf-Fs-Action: <tag>"  In the admin, fires that Freemius action (sugb_fs()->do_action())
@@ -59,6 +60,10 @@ if ( ! empty( $_SERVER['HTTP_X_STK_PERF'] ) ) {
 			}, $stk ),
 		) ) . " -->\n";
 	}, PHP_INT_MAX );
+}
+
+if ( ! empty( $_GET['stk_no_finalize'] ) ) {
+	add_filter( 'stackable_frontend_css_finalize_in_buffer', '__return_false' );
 }
 
 if ( ! empty( $_GET['stk_force'] ) ) {

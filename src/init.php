@@ -191,7 +191,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Classic themes print the widgets after the head, load the
 			// styles of the Stackable blocks in block widgets now so they're
-			// printed in the head.
+			// printed in the head (only if the page content has Stackable
+			// blocks, see below).
+			$widget_block_names = array();
 			if ( apply_filters( 'stackable_frontend_css_preload_widget_styles', ! wp_is_block_theme() ) ) {
 				$widgets = get_option( 'widget_block' );
 				if ( is_array( $widgets ) && stripos( wp_json_encode( $widgets ), 'wp:stackable\\/' ) !== false ) {
@@ -207,10 +209,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 								Stackable_Frontend_CSS::add_known_content( $widget['content'] );
 							}
 						}
-						// Only the stylesheets, the rest is loaded when the widgets are rendered.
-						Stackable_Frontend_CSS::enqueue_block_styles( array_map( function( $name ) {
-							return rtrim( $name, '-' );
-						}, $names ) );
+						$widget_block_names = $names;
 					}
 				}
 			}
@@ -238,6 +237,18 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 						}, $matches[1] ) );
 					}
 				}
+			}
+
+			// Only the stylesheets of the widget blocks, the rest is loaded
+			// when the widgets are rendered. If only the widgets have
+			// Stackable blocks, the stylesheets are enqueued when they are
+			// rendered (WordPress moves them to the head), like the single
+			// stylesheet before. Enqueuing them here would print a notice,
+			// since the shared stylesheet they depend on isn't registered.
+			if ( count( $widget_block_names ) && self::$is_main_script_loaded ) {
+				Stackable_Frontend_CSS::enqueue_block_styles( array_map( function( $name ) {
+					return rtrim( $name, '-' );
+				}, $widget_block_names ) );
 			}
 		}
 
