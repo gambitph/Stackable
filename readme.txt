@@ -1,6 +1,6 @@
-=== Stackable - Page Builder Gutenberg Blocks ===
+=== Stackable - Page Builder Gutenberg Blocks & Patterns ===
 Contributors: bfintal, gambitph
-Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
+Tags: blocks, gutenberg blocks, page builder, block patterns, design library
 Requires at least: 6.9.5
 Tested up to: 7.1.5
 Requires PHP: 7.4
@@ -8,50 +8,49 @@ Stable tag: 3.20.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-The complete website builder for the WordPress block editor. Build professional sites faster with powerful blocks, block styles, and a global design system.
+Build stunning websites with 42 custom blocks, 100+ free patterns, and a 375 design library. Works with any theme, optimized for block themes.
 
 == Description ==
 
-**The Ultimate Companion to the WordPress Block Editor**
+**Build Beautiful Websites Faster with the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, global design system, ready-made designs, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a powerful, lightweight page builder for WordPress. Get 42 custom Gutenberg blocks, 100+ free patterns, and 15 free page templates. The Design Library has 375 patterns and 40 page templates in all, plus a complete design system optimized for performance and built to work seamlessly with block themes and Full Site Editing.
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
 [youtube https://www.youtube.com/watch?v=ZSo3t1l5tHQ]
 
-## Transform Gutenberg into a Page Builder.
+## Transform the Block Editor into a Page Builder
 
-Stackable is the all-in-one block plugin for creating stunning websites by transforming the WordPress Block Editor into a Page Builder. Stackable has helped thousands of bloggers, merchants, marketers, designers and web development professionals make the most out of the WordPress Block Editor through fast, powerful and intuitive features.
+Stackable turns the WordPress Block Editor into a complete page builder. Whether you're a blogger, marketer, designer, or developer, Stackable gives you the blocks, patterns, and design tools to build professional websites without writing code.
+
+## Works with Block Themes & Full Site Editing
+
+Stackable is built for the modern WordPress experience. Blocks inherit styles from your block theme and theme.json, so your designs stay consistent whether you're building pages, templates, or entire sites with Full Site Editing (FSE).
 
 ## Global Design System
 
-Design faster and more efficiently with our global controls, which make designing in one place and applying it to your entire site a breeze.
+Design faster with global controls that apply to your entire site from one place:
 
-- Inherit styles from your Block Theme
-- Theme.json 
-- Pattern Library
-- Full Page Templates
-- Global Design System
+- Block Theme & Theme.json Integration
 - Global Color Schemes
-- Global Typography
+- Global Typography with Font Pairs
 - Global Spacing, Borders, Buttons and Icons
+- Style Guide Preview
 
-## Ready Made Designs & Patterns
+## Ready-Made Patterns & Page Templates
 
-Enjoy an impressive Design Library to jumpstart your designing process. Never start from scratch and design like a pro with the help of our stunning and professionally-made designs and templates.
+The Design Library includes 100+ free patterns and 15 free page templates. The full library has 375 patterns and 40 page templates. Premium includes the full set.
 
-- Hundreds of ready-made designs
-- Dozens of ready-made page templates
-- Designs that inherit the styles of your block theme
-- Dozens of block layouts
-- Various shape separator designs
+- 100+ free patterns, ready to insert
+- 375 patterns in the full Design Library
+- 15 free page templates, 40 in the full library
+- Patterns follow your theme's colors and typography
+- Save and reuse your own patterns (Premium)
 
-## Powerful Custom Blocks
+## 42 Powerful Custom Blocks
 
-Get 42 flexible custom WordPress blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
-
-You can choose which of these blocks you need, depending on your workflow. You can also disable blocks if you don't need them.
+Feature-rich Gutenberg blocks that look great out of the box. Enable only the blocks you need for a streamlined editing experience.
 
 **Essential Blocks**
 
@@ -131,16 +130,15 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
     - Custom Tablet and Mobile breakpoints
 - Custom `data-*` attributes
 
-## Fast Page Loading Speed
+## Built for Performance
 
-Optimize your website’s performance, and get lightning fast page loading to make your site visitors stay. Have the chance to maximize your page speed insights and achieve high Core Web Vitals and higher SEO rankings.
+Stackable is designed with Core Web Vitals in mind. Your visitors get fast page loads, and your SEO benefits.
 
-- Loads the smallest file size possible of CSS and JS files in the frontend, ~ only 7.8kb total
-- Adds almost no PHP server overhead for fast page loads
-- Zero Bloat, no jQuery, no dependencies
-- Optimized page loading with focus on Core Web Vitals
-- Responsive image loading for faster browsing speeds in mobile devices
-- Compatible with Optimization Plugins and use optimization techniques such as combining CSS and JS files and minification
+- Only ~7.8kb CSS + JS on the frontend
+- Zero jQuery, zero bloat, no heavy dependencies
+- Minimal PHP server overhead
+- Responsive image loading for mobile
+- Works with caching and optimization plugins
 
 ## Integrations & Compatibility
 
@@ -258,53 +256,55 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 6.8.1 or higher for this to work.
+You'll need WordPress version 6.9.5 or higher for this to work.
 
 == Frequently Asked Questions ==
 
 **Is Stackable Free?**
 
-Yes, Stackable is free forever.
+Yes. The free plugin includes all 42 blocks, 100+ patterns, 15 page templates, and the global design system.
 
-We have a premium version that adds more designs and advanced features. You may want to check [Stackable Premium here](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
+[Stackable Premium](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) includes the full Design Library (375 patterns and 40 page templates), plus dynamic content, motion effects, saved patterns, WooCommerce integration, and more.
 
-**Do I need to know how to code to use Stackable?**
+**Does Stackable work with block themes and Full Site Editing?**
 
-No, you don't need to know a single line of code when using Stackable
+Yes! Stackable is optimized for block themes and Full Site Editing (FSE). Blocks inherit styles from your theme.json, and you can use Stackable blocks in templates, template parts, and anywhere the Site Editor allows.
 
-**Do you have a live demo of what's in the Premium version?**
+**Will Stackable slow down my site?**
 
-Yes, we have [live demo that you can check out here](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
+No. Stackable is built for performance. It loads only ~7.8kb of CSS and JS on the frontend, has zero jQuery dependencies, and is optimized for Core Web Vitals. We use responsive image loading and work well with caching and optimization plugins.
 
-**What are Blocks?**
+**Does Stackable work with my theme?**
 
-Blocks are the new shortcodes in WordPress 5.0 / Gutenberg. They're the basic elements that you add into your content to build your pages, like buttons, cards, videos, etc.
+Stackable works with any WordPress theme. For the best experience, we recommend block themes (like the default WordPress themes) where Stackable blocks automatically inherit your theme's design tokens.
 
-Stackable gives you an extensive collection of blocks that allows you to flexibly create any kind of professional landing page and front page.
+**What's the difference between Free and Premium?**
 
-**What themes can I use with Stackable?**
+The free version includes 42 blocks, 100+ patterns, 15 page templates, the design library, global settings, and block theme support.
 
-Stackable should work with any theme, we recommend using it with a block theme for the best experience.
+Premium adds the rest of the Design Library (375 patterns and 40 page templates), dynamic content, scroll and entrance animations, saved custom patterns, WooCommerce integration, ACF/Metabox support, conditional display, role manager, and agency tools.
 
-**Can I disable blocks that I do not use?**
+[See the full comparison](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
-Yes, you can manage your blocks and choose what blocks to enable/disable.
+**Can I migrate from Elementor, Divi, or other page builders?**
 
-**Can I use this plugin with other block plugins?**
+Stackable works alongside other page builders, so you can gradually transition. For new pages, use Stackable with the block editor. Existing pages built with other builders will continue to work.
 
-Yes! Stackable blocks play well with other blocks.
+**Can I disable blocks I don't use?**
 
-**Can I use this add-on for other page builders I'm using?**
+Yes. Go to Stackable > Settings to enable or disable individual blocks, keeping your editor clean.
 
-Nope. Stackable only works with Gutenberg, the new WordPress editor.
+**Does Stackable work with other block plugins?**
+
+Yes! Stackable blocks play well with other Gutenberg block plugins like Kadence, GenerateBlocks, and core WordPress blocks.
 
 == Screenshots ==
 
-1. Design Library with 375+ designs that fit your Block Theme
-2. Global Settings that affect your entire site
-3. Responsive Gutenberg Blocks
-4. Powerful Custom Gutenberg Blocks
-5. Page Builder-like Block Options
+1. Insert a full, ready-made page from the Stackable Design Library in one click
+2. Tabs, accordion, countdown, icon list and pricing box blocks: 42 custom blocks
+3. Style without code: gradient text, colors and mobile-responsive controls
+4. Works with block themes: add Stackable blocks to templates in the Site Editor
+5. Fast and lightweight: only loads what you use
 
 == Upgrade Notice ==
 
