@@ -205,6 +205,30 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		}
 
 		/**
+		 * Block stylesheets with rules for markup that can be on the page
+		 * without that block (in the old single stylesheet they applied
+		 * everywhere). The stylesheet is also used when one of the classes is
+		 * on the page, and the rule subsetting keeps only the rules that can
+		 * match.
+		 *
+		 * - columns: the column sizes, for column blocks in other blocks
+		 *   (accordion, tabs, etc.)
+		 * - separator: the default color of the top / bottom separators of
+		 *   any block
+		 * - button: the .stk-button base rules (also used by the icon button
+		 *   and other blocks with buttons)
+		 *
+		 * @return array block name => classes
+		 */
+		public static function get_block_style_triggers() {
+			return apply_filters( 'stackable_frontend_css_block_style_triggers', array(
+				'columns' => array( 'stk-block-column' ),
+				'separator' => array( 'stk-separator__wrapper' ),
+				'button' => array( 'stk-button' ),
+			) );
+		}
+
+		/**
 		 * The `style` to register a block with.
 		 *
 		 * @param string $block_name
@@ -842,14 +866,31 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 					}
 				}
 			}
-			$handles = self::sort_handles( array_unique( $handles ) );
 			$tokens = self::get_tokens();
+			// Block stylesheets that also style markup of other blocks.
+			$triggered = array();
+			if ( ! self::$load_all ) {
+				foreach ( self::get_block_style_triggers() as $block => $classes ) {
+					if ( isset( self::$blocks[ $block ] ) || ! count( array_intersect_key( $tokens, array_flip( $classes ) ) ) ) {
+						continue;
+					}
+					$handle = self::get_block_style_handle( 'stackable/' . $block );
+					if ( $handle ) {
+						$triggered[ $block ] = true;
+						$handles[] = $handle;
+						if ( wp_style_is( $handle . '-premium', 'registered' ) ) {
+							$handles[] = $handle . '-premium';
+						}
+					}
+				}
+			}
+			$handles = self::sort_handles( array_unique( $handles ) );
 			$adjust = apply_filters( 'stackable_frontend_css_has_custom_breakpoints', false );
 			$css = '';
 			foreach ( $handles as $handle ) {
 				// Block stylesheets: only for blocks on the page.
 				$block = self::get_block_name_from_handle( $handle );
-				if ( $block !== false && ! self::$load_all && ! isset( self::$blocks[ $block ] ) ) {
+				if ( $block !== false && ! self::$load_all && ! isset( self::$blocks[ $block ] ) && ! isset( $triggered[ $block ] ) ) {
 					continue;
 				}
 				$before = isset( $wp_styles ) ? $wp_styles->get_data( $handle, 'before' ) : false;
