@@ -23,6 +23,7 @@ test.beforeAll( async () => {
 	ids.scheme = createPage( 'scheme', 'color-scheme.html' )
 	ids.none = createPage( 'none', 'no-stackable.html' )
 	ids.tabs = createPage( 'tabs-late', 'tabs.html', [ '--post_status=draft' ] )
+	ids.headingAccordion = createPage( 'heading-then-accordion', 'heading-then-accordion.html' )
 } )
 
 test.describe( 'assets per scenario', () => {
@@ -120,21 +121,16 @@ test.describe( 'assets per scenario', () => {
 		expect( allCss( styles ) ).toMatch( MARK.tabs )
 	} )
 
-	test( 'AJAX / REST CSS leaves out the global styles the page already has (global typography) @ci', async () => {
+	test( 'REST: one <style> per post content, before all its blocks (block styles of earlier blocks are not overridden) @ci', async () => {
 		test.skip( legacy, 'new behavior only' )
-		wp( 'option', 'update', 'stackable_global_typography', '[{"h4":{"fontSize":37}}]', '--format=json' )
-		try {
-			const page = allCss( await stkStyles( ( await get( '/heading/' ) ).text ) )
-			expect( page ).toMatch( /font-size:\s*37px/ )
-			const ajax = allCss( await stkStyles( ( await get( `/wp-admin/admin-ajax.php?action=stk_perf_ajax&post=${ ids.heading }` ) ).text ) )
-			const rest = allCss( await stkStyles( ( await ( await fetch( `${ cfg.url }/wp-json/wp/v2/pages/${ ids.heading }` ) ).json() ).content.rendered ) )
-			for ( const css of [ ajax, rest ] ) {
-				expect( css ).toMatch( MARK.heading )
-				expect( css ).not.toMatch( /font-size:\s*37px/ )
-			}
-		} finally {
-			wp( 'option', 'delete', 'stackable_global_typography' )
-		}
+		const html = ( await ( await fetch( `${ cfg.url }/wp-json/wp/v2/pages/${ ids.headingAccordion }` ) ).json() ).content.rendered
+		const ids_ = [ ...html.matchAll( /<style id=['"](stk-frontend-css-[^'"]+)['"]/g ) ].map( m => m[ 1 ] )
+		expect( ids_.length ).toBe( 1 )
+		// Before the first block and its block styles.
+		expect( html.indexOf( 'stk-frontend-css-' ) ).toBeLessThan( html.indexOf( 'stk-block-heading' ) )
+		const css = allCss( await stkStyles( html ) )
+		expect( css ).toMatch( MARK.heading )
+		expect( css ).toMatch( MARK.accordion )
 	} )
 
 	test( 'blocks rendered over admin-ajax carry their CSS (new behavior)', async () => {
@@ -172,6 +168,9 @@ test.describe( 'assets per scenario', () => {
 			const rest = allCss( await stkStyles( ( await ( await fetch( `${ cfg.url }/wp-json/wp/v2/pages/${ ids.columns }` ) ).json() ).content.rendered ) )
 			for ( const css of [ ajax, rest ] ) {
 				expect( css ).toMatch( /\.stk-has-design-system-spacing-and-borders/ )
+				// The global values too, or the rules printed again here would
+				// override them on the page (admin-ajax is an admin request).
+				expect( css ).toMatch( /--stk-container-padding:36px 32px 36px 32px/ )
 			}
 		} finally {
 			wp( 'option', 'delete', 'stackable_global_spacing_and_borders' )

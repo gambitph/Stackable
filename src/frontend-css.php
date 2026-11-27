@@ -98,6 +98,8 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		private static $queued = array();
 		private static $load_all = false;
 		private static $printed_css = '';
+		private static $first_print_in_head = false;
+		private static $content_start_css = array();
 		private static $printed_state = '';
 		private static $print_count = 0;
 		private static $combine = null;
@@ -125,6 +127,10 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			// buffers the page if a filter is added before the template is
 			// included.
 			add_action( 'wp_before_include_template', array( $this, 'maybe_buffer_template' ), 10 );
+
+			// AJAX / REST: one <style> per post content, before its blocks.
+			add_filter( 'the_content', array( $this, 'content_start' ), 0 );
+			add_filter( 'the_content', array( $this, 'merge_content_css' ), PHP_INT_MAX );
 			// WordPress below 6.9: no template output buffer, use our own.
 			if ( ! function_exists( 'wp_start_template_enhancement_output_buffer' ) ) {
 				add_filter( 'template_include', array( $this, 'maybe_buffer_template_fallback' ), PHP_INT_MAX );
@@ -142,6 +148,58 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 				ob_start( array( $this, 'finalize_combined_css' ) );
 			}
 			return $template;
+		}
+
+		/**
+		 * Remember the CSS printed so far when a post content starts.
+		 *
+		 * @param string $content
+		 * @return string
+		 */
+		public function content_start( $content ) {
+			self::$content_start_css[] = self::$printed_css;
+			return $content;
+		}
+
+		/**
+		 * In AJAX / REST responses, each top-level block that needs more rules
+		 * prints the rules again from the first new one, so the later copies
+		 * come after the block styles of the blocks before them and can
+		 * override them. Put the CSS of the whole post content in the first
+		 * <style> instead, so all our rules come before the block styles (like
+		 * the single stylesheet in the head before).
+		 *
+		 * @param string $content
+		 * @return string
+		 */
+		public function merge_content_css( $content ) {
+			$start = array_pop( self::$content_start_css );
+			if ( ! is_string( $content ) || strpos( $content, 'stk-frontend-css-' ) === false || ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
+				return $content;
+			}
+			// Page requests are handled in finalize_combined_css().
+			$is_rest = wp_is_json_request() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
+			if ( ! self::is_combined() || ( ! wp_doing_ajax() && ! $is_rest ) ) {
+				return $content;
+			}
+			$processor = new WP_HTML_Tag_Processor( $content );
+			if ( ! method_exists( $processor, 'set_modifiable_text' ) ) {
+				return $content;
+			}
+			$count = 0;
+			$css = $start ? self::get_css_from_first_change( $start, self::$printed_css ) : self::$printed_css;
+			while ( $processor->next_tag( 'STYLE' ) ) {
+				$id = $processor->get_attribute( 'id' );
+				if ( ! is_string( $id ) || ! preg_match( '/^stk-frontend-css-\d+-inline-css$/', $id ) ) {
+					continue;
+				}
+				$processor->set_modifiable_text( $count === 0 ? $css : '' );
+				$count++;
+			}
+			if ( $count < 2 ) {
+				return $content;
+			}
+			return preg_replace( '/<style id=([\'"])stk-frontend-css-\d+-inline-css\1[^>]*>\s*<\/style>\n?/', '', $processor->get_updated_html() );
 		}
 
 		/**
@@ -166,7 +224,11 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 		 * @return string
 		 */
 		public function finalize_combined_css( $html, $phase = null ) {
-			if ( self::$print_count < 2 || ! is_string( $html ) || ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
+			// Only when the first <style> is in the head. If it was printed
+			// late (e.g. only widgets have Stackable blocks in classic themes),
+			// the single stylesheet was printed late before too, and
+			// WordPress moves it to the head the same way.
+			if ( self::$print_count < 2 || ! self::$first_print_in_head || ! is_string( $html ) || ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
 				return $html;
 			}
 			$processor = new WP_HTML_Tag_Processor( $html );
@@ -1091,6 +1153,9 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			$printed = self::$printed_css;
 			self::$printed_css = $css;
 			self::$print_count++;
+			if ( self::$print_count === 1 ) {
+				self::$first_print_in_head = doing_action( 'wp_head' );
+			}
 			return $printed ? self::get_css_from_first_change( $printed, $css ) : $css;
 		}
 
@@ -1149,11 +1214,13 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 				return $block_content;
 			}
 			global $wp_styles;
+			// admin-ajax is an admin request, the frontend styles (and the
+			// global styles printed with them) aren't registered there.
+			if ( $is_ajax && ! wp_style_is( 'ugb-style-css-nodep', 'registered' ) && is_callable( array( 'Stackable_Init', 'register_frontend_assets' ) ) ) {
+				Stackable_Init::register_frontend_assets();
+			}
 			$handles = array( 'ugb-style-css', 'ugb-style-css-responsive' );
-			// The global styles (typography, etc.) also style the rest of the
-			// page, and the page printed them already if it has Stackable
-			// blocks, so leave them out of AJAX / REST responses.
-			foreach ( $is_late ? array( 'ugb-block-style-inheritance-nodep', 'ugb-style-css-nodep' ) : array() as $handle ) {
+			foreach ( array( 'ugb-block-style-inheritance-nodep', 'ugb-style-css-nodep' ) as $handle ) {
 				if ( isset( $wp_styles->registered[ $handle ] ) && $wp_styles->get_data( $handle, 'after' ) ) {
 					$handles[] = $handle;
 				}

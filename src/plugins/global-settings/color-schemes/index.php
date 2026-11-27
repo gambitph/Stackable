@@ -31,7 +31,9 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 
 			add_action( 'stackable_early_version_upgraded', array( $this, 'extend_color_scheme' ), 10, 2 );
 
-			if ( is_frontend() ) {
+			// Also over AJAX, blocks rendered there carry their CSS (see
+			// Stackable_Frontend_CSS), which needs the global styles too.
+			if ( is_frontend() || wp_doing_ajax() ) {
 
 				/**
 				 * Global Color Schemes hooks
