@@ -12,7 +12,8 @@
  * A target fails if
  *  - more elements changed computed style than the noise allowance
  *    (noise = two captures of the same build), or
- *  - the cascade check in compare.js finds a stylesheet printed out of order, or
+ *  - the cascade check in compare.js finds a stylesheet printed out of order
+ *    (new behavior; with the legacy flag the order must be the old one), or
  *  - (legacy flag on) the Stackable asset list differs from the baseline.
  * Exit code 0 = pass.
  */
@@ -91,7 +92,9 @@ for ( const [ id, r ] of Object.entries( report.targets ) ) {
 			why.push( `missing/extra elements ${ me } > ${ allowME }` )
 		}
 	}
-	if ( r.cascade.issues.length ) {
+	// With the legacy flag the stylesheets are printed like the old release
+	// (checked below), the cascade check is for the new print order.
+	if ( r.cascade.issues.length && ! ( LEGACY && r.assetOrder.identical ) ) {
 		why.push( `cascade: ${ r.cascade.issues.slice( 0, 3 ).join( '; ' ) }` )
 	}
 	if ( LEGACY && ! r.assetOrder.identical ) {
