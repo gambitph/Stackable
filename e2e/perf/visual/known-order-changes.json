@@ -1,0 +1,28 @@
+{
+ "missing": [
+  "|#start-resizable-editor-section|display:none",
+  "|.stk-button-group:not(.stk-collapse-on-desktop) .block-editor-block-list__layout|justify-content:var(--stk-alignment-justify-content)",
+  "|.stk-button-group:is(.stk--collapse-on-desktop)>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-block]|margin-inline-end:var(--stk-alignment-margin-right);margin-inline-start:var(--stk-alignment-margin-left)",
+  "|.stk--block-orientation-horizontal>.block-editor-inner-blocks>.block-editor-block-list__layout>*+*|margin-left:var(--stk-block-margin-bottom)",
+  "|.stk--block-orientation-horizontal>.block-editor-inner-blocks>.block-editor-block-list__layout|display:flex!;flex-direction:row",
+  "|.stk--block-orientation-horizontal>.block-editor-inner-blocks>.block-editor-block-list__layout>*|margin-bottom:0;margin-top:0",
+  "|.stk--block-orientation-horizontal>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-block]|width:auto",
+  "|.stk-button-group|max-width:none!",
+  "|#end-resizable-editor-section|display:none",
+  "@media only screen and (min-width:768px) and (max-width:1023px)|.stk-button-group:is(.stk--collapse-on-tablet)>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-block]|margin-inline-end:var(--stk-alignment-margin-right);margin-inline-start:var(--stk-alignment-margin-left)",
+  "@media only screen and (max-width:767px)|.stk-button-group:is(.stk--collapse-on-mobile)>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-block]|margin-inline-end:var(--stk-alignment-margin-right);margin-inline-start:var(--stk-alignment-margin-left)",
+  "@media only screen and (max-width:767px)|.stk-button-group:is(.stk--collapse-on-tablet)>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-block]|margin-inline-end:var(--stk-alignment-margin-right);margin-inline-start:var(--stk-alignment-margin-left)",
+  "@media only screen and (min-width:1024px)|.z|opacity:1",
+  "@media only screen and (min-width:768px)|.z|opacity:1",
+  "@media only screen and (min-width:768px) and (max-width:1023px)|.z|opacity:1",
+  "@media only screen and (max-width:1023px)|.z|opacity:1",
+  "@media only screen and (max-width:767px)|.z|opacity:1"
+ ],
+ "flips": [
+  "[display] blocks/card__premium_only.css @media only screen and (max-width:767px) .stk-block-card.is-style-horizontal>.stk-container {display:block} <> blocks/posts__premium_only.css  .stk-block-posts.is-style-vertical-card-2 .stk-container {display:flex}",
+  "[width] blocks/card__premium_only.css @media only screen and (max-width:767px) .stk-block-card.is-style-horizontal>.stk-container>.stk-img-wrapper {width:auto} <> blocks/posts__premium_only.css  .stk-block-posts:is(.is-style-portfolio,.is-style-portfolio-2) .stk-block-posts__item .stk-img-wrapper {width:100%}",
+  "[position] blocks/timeline.css @media only screen and (max-width:767px) .stk-block-timeline .stk-block-timeline__middle {position:absolute} <> frontend_core.css  .stk--has-background-overlay>:not(.stk-video-background) {position:relative}",
+  "[flex-wrap] blocks/feature.css @media only screen and (min-width:1024px) .stk-block-feature>*>.stk-row {flex-wrap:var(--stk-feature-flex-wrap,nowrap)} <> blocks/icon-label.css  .stk-block-icon-label .stk-row {flex-wrap:nowrap}",
+  "[grid-template-columns] blocks/tabs.css @media only screen and (max-width:767px) .stk-block-tabs>.stk-inner-blocks {grid-template-columns:1fr} <> blocks/timeline.css  .stk-block-timeline>.stk-inner-blocks {grid-template-columns:1fr var(--line-dot-size,16px) 1fr}"
+ ]
+}
