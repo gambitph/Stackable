@@ -11,8 +11,8 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		columnAlignSelectorEditCallback = ( () => '' ),
 		columnAlignSelectorSaveCallback = ( () => '' ),
-		innerBlockSelectorCallback = getAttribute => `.stk-${ getAttribute( 'uniqueId' ) }-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout`,
-		editorInnerBlockSelectorCallback = getAttribute => `.stk-${ getAttribute( 'uniqueId' ) }-inner-blocks`,
+		editorInnerBlockSelectorCallback = getAttribute => `.stk-${ getAttribute( 'uniqueId' ) }-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+		innerBlockSelectorCallback = getAttribute => `.stk-${ getAttribute( 'uniqueId' ) }-inner-blocks`,
 		dependencies = [],
 	} = props
 
@@ -62,16 +62,15 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		],
 	} ] )
 
-	{ /* When blocks are vertical */ }
-	blockStyleGenerator.addBlockStyles( 'innerBlockJustify', [ {
+	blockStyleGenerator.addBlockStyles( 'innerBlockOrientation', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
-		styleRule: 'alignItems',
-		attrName: 'innerBlockJustify',
-		key: 'innerBlockJustifyVerticalEdit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'flexDirection',
+		attrName: 'innerBlockOrientation',
+		key: 'innerBlockOrientation',
 		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		valueCallback: value => value === 'horizontal' ? 'row' : 'column',
 		dependencies: [
 			'innerBlockOrientation',
 			...dependencies,
@@ -79,27 +78,50 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
-		styleRule: 'alignItems',
-		attrName: 'innerBlockJustify',
-		key: 'innerBlockJustifyVerticalSave',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'flexDirection',
+		attrName: 'innerBlockOrientation',
+		key: 'innerBlockOrientation-save',
 		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		valueCallback: value => value === 'horizontal' ? 'row' : 'column',
 		dependencies: [
 			'innerBlockOrientation',
 			...dependencies,
-		],
+		 ],
 	} ] )
 
-	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
+	blockStyleGenerator.addBlockStyles( 'innerBlockOrientation', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
-		styleRule: 'justifyContent',
-		attrName: 'innerBlockAlign',
-		key: 'innerBlockAlignVerticalEdit',
+		selectorCallback: editorInnerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockOrientation',
+		key: 'innerBlockOrientationAlignItems',
 		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		valuePreCallback: ( value, getAttribute, device ) => {
+			if ( device === 'desktop' ) {
+				if ( value === 'horizontal' ) {
+					return getAttribute( 'innerBlockAlign' )
+				}
+
+				return getAttribute( 'innerBlockJustify' )
+			}
+
+			const inheritOrientation = device === 'tablet' ? getAttribute( 'innerBlockOrientation', 'desktop' ) : getAttribute( 'innerBlockOrientation', 'tablet' ) || getAttribute( 'innerBlockOrientation', 'desktop' )
+
+			// For tablet and mobile, inner block orientation is '' if it is the same as the previous device
+			// otherwise, it will have a value of either 'horizontal' or 'vertical'
+			// reset alignItems to default if inner block orientation is different than the previous device
+			if ( value === 'horizontal' ) {
+				return getAttribute( 'innerBlockAlign', device ) || 'initial'
+			} else if ( value === 'vertical' ) {
+				return getAttribute( 'innerBlockJustify', device ) || 'initial'
+			} else if ( inheritOrientation === 'horizontal' ) {
+				return getAttribute( 'innerBlockAlign', device )
+			}
+
+			return getAttribute( 'innerBlockJustify', device )
+		},
 		dependencies: [
 			'innerBlockOrientation',
 			...dependencies,
@@ -107,28 +129,73 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
-		styleRule: 'justifyContent',
-		attrName: 'innerBlockAlign',
-		key: 'innerBlockAlignVerticalSave',
+		selectorCallback: innerBlockSelectorCallback,
+		styleRule: 'alignItems',
+		attrName: 'innerBlockOrientation',
+		key: 'innerBlockOrientationAlignItems-save',
 		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		valuePreCallback: ( value, getAttribute, device ) => {
+			if ( device === 'desktop' ) {
+				if ( value === 'horizontal' ) {
+					return getAttribute( 'innerBlockAlign' )
+				}
+
+				return getAttribute( 'innerBlockJustify' )
+			}
+
+			const inheritOrientation = device === 'tablet' ? getAttribute( 'innerBlockOrientation', 'desktop' ) : getAttribute( 'innerBlockOrientation', 'tablet' ) || getAttribute( 'innerBlockOrientation', 'desktop' )
+
+			// For tablet and mobile, inner block orientation is '' if it is the same as the previous device
+			// otherwise, it will have a value of either 'horizontal' or 'vertical'
+			// reset alignItems to default if inner block orientation is different than the previous device
+			if ( value === 'horizontal' ) {
+				return getAttribute( 'innerBlockAlign', device ) || 'initial'
+			} else if ( value === 'vertical' ) {
+				return getAttribute( 'innerBlockJustify', device ) || 'initial'
+			} else if ( inheritOrientation === 'horizontal' ) {
+				return getAttribute( 'innerBlockAlign', device )
+			}
+
+			return getAttribute( 'innerBlockJustify', device )
+		},
 		dependencies: [
 			'innerBlockOrientation',
 			...dependencies,
-		],
+		 ],
 	} ] )
 
-	{ /* When blocks are horizontal */ }
-	blockStyleGenerator.addBlockStyles( 'innerBlockJustify', [ {
+	blockStyleGenerator.addBlockStyles( 'innerBlockOrientation', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'justifyContent',
-		attrName: 'innerBlockJustify',
-		key: 'innerBlockJustifyHorizontalEdit',
+		attrName: 'innerBlockOrientation',
+		key: 'innerBlockOrientationJustifyContent',
 		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
+		valuePreCallback: ( value, getAttribute, device ) => {
+			if ( device === 'desktop' ) {
+				if ( value === 'horizontal' ) {
+					return getAttribute( 'innerBlockJustify' )
+				}
+
+				return getAttribute( 'innerBlockAlign' )
+			}
+
+			const inheritOrientation = device === 'tablet' ? getAttribute( 'innerBlockOrientation', 'desktop' ) : getAttribute( 'innerBlockOrientation', 'tablet' ) || getAttribute( 'innerBlockOrientation', 'desktop' )
+
+			// For tablet and mobile, inner block orientation is '' if it is the same as the previous device
+			// otherwise, it will have a value of either 'horizontal' or 'vertical'
+			// reset justifyContent to default if inner block orientation is different than the previous device
+			if ( value === 'horizontal' ) {
+				return getAttribute( 'innerBlockJustify', device ) || 'space-evenly'
+			} else if ( value === 'vertical' ) {
+				return getAttribute( 'innerBlockAlign', device ) || 'initial'
+			} else if ( inheritOrientation === 'horizontal' ) {
+				return getAttribute( 'innerBlockJustify', device )
+			}
+
+			return getAttribute( 'innerBlockAlign', device )
+		},
 		dependencies: [
 			'innerBlockOrientation',
 			...dependencies,
@@ -136,50 +203,46 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
-		styleRule: 'justifyContent',
-		attrName: 'innerBlockJustify',
-		key: 'innerBlockJustifyHorizontalSave',
-		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
-		dependencies: [
-			'innerBlockOrientation',
-			...dependencies,
-		],
-	} ] )
-
-	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
-		...propsToPass,
-		renderIn: 'edit',
 		selectorCallback: innerBlockSelectorCallback,
-		styleRule: 'alignItems',
-		attrName: 'innerBlockAlign',
-		key: 'innerBlockAlignHorizontalEdit',
+		styleRule: 'justifyContent',
+		attrName: 'innerBlockOrientation',
+		key: 'innerBlockOrientationJustifyContent-save',
 		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
+		valuePreCallback: ( value, getAttribute, device ) => {
+			if ( device === 'desktop' ) {
+				if ( value === 'horizontal' ) {
+					return getAttribute( 'innerBlockJustify' )
+				}
+
+				return getAttribute( 'innerBlockAlign' )
+			}
+
+			const inheritOrientation = device === 'tablet' ? getAttribute( 'innerBlockOrientation', 'desktop' ) : getAttribute( 'innerBlockOrientation', 'tablet' ) || getAttribute( 'innerBlockOrientation', 'desktop' )
+
+			// For tablet and mobile, inner block orientation is '' if it is the same as the previous device
+			// otherwise, it will have a value of either 'horizontal' or 'vertical'
+			// reset justifyContent to default if inner block orientation is different than the previous device
+			if ( value === 'horizontal' ) {
+				return getAttribute( 'innerBlockJustify', device ) || 'space-evenly'
+			} else if ( value === 'vertical' ) {
+				return getAttribute( 'innerBlockAlign', device ) || 'initial'
+			} else if ( inheritOrientation === 'horizontal' ) {
+				return getAttribute( 'innerBlockJustify', device )
+			}
+
+			return getAttribute( 'innerBlockAlign', device )
+		},
 		dependencies: [
 			'innerBlockOrientation',
 			...dependencies,
-		],
-	}, {
-		...propsToPass,
-		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
-		styleRule: 'alignItems',
-		attrName: 'innerBlockAlign',
-		key: 'innerBlockAlignHorizontalSave',
-		responsive: 'all',
-		enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
-		dependencies: [
-			'innerBlockOrientation',
-			...dependencies,
-		],
+		 ],
 	} ] )
 
+	/* Inner Block Wrap */
 	blockStyleGenerator.addBlockStyles( 'innerBlockWrap', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'flexWrap',
 		attrName: 'innerBlockWrap',
 		key: 'innerBlockWrapEdit',
@@ -192,7 +255,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'flexWrap',
 		attrName: 'innerBlockWrap',
 		key: 'innerBlockWrapSave',
@@ -207,7 +270,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'innerBlockColumnGap', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'columnGap',
 		attrName: 'innerBlockColumnGap',
 		key: 'innerBlockColumnGapEdit',
@@ -227,7 +290,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'columnGap',
 		attrName: 'innerBlockColumnGap',
 		key: 'innerBlockColumnGapSave',
@@ -249,7 +312,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'innerBlockRowGap', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'rowGap',
 		attrName: 'innerBlockRowGap',
 		key: 'innerBlockRowGapEdit',
@@ -273,7 +336,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'rowGap',
 		attrName: 'innerBlockRowGap',
 		key: 'innerBlockRowGapSave',
@@ -300,7 +363,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	blockStyleGenerator.addBlockStyles( 'innerBlockAlign', [ {
 		...propsToPass,
 		renderIn: 'edit',
-		selectorCallback: innerBlockSelectorCallback,
+		selectorCallback: editorInnerBlockSelectorCallback,
 		styleRule: 'alignContent',
 		attrName: 'innerBlockAlign',
 		key: 'innerBlockAlignWrapEdit',
@@ -314,7 +377,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	}, {
 		...propsToPass,
 		renderIn: 'save',
-		selectorCallback: editorInnerBlockSelectorCallback,
+		selectorCallback: innerBlockSelectorCallback,
 		styleRule: 'alignContent',
 		attrName: 'innerBlockAlign',
 		key: 'innerBlockAlignWrapSave',
