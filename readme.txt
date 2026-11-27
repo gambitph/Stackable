@@ -14,7 +14,7 @@ Build stunning websites with 42 custom blocks, 375+ ready-made patterns, and a d
 
 **Build Beautiful Websites Faster with the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a powerful, lightweight page builder for WordPress. Get 42 custom Gutenberg blocks, 375+ ready-made patterns and templates, and a complete design system - all optimized for performance and built to work seamlessly with block themes and Full Site Editing.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a powerful, lightweight page builder for WordPress. Get 42 custom Gutenberg blocks, 375+ ready-made patterns and templates, and a complete design system, all optimized for performance and built to work seamlessly with block themes and Full Site Editing.
 
 > [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
