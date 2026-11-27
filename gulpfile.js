@@ -21,6 +21,7 @@ const autoprefixer = require( 'autoprefixer' ),
 	replace = require( 'gulp-replace' ),
 	sass = require( 'gulp-sass' )( require( 'sass' ) ),
 	sassVariables = require( 'gulp-sass-variables' ),
+	{ Transform } = require( 'stream' ),
 	zip = require( 'gulp-zip' )
 
 // These files are the ones which will be included in the `package` task.
@@ -54,10 +55,56 @@ const sassOptions = {
 	],
 }
 
+/**
+ * gulp.src emits files in the order the file system returns them, and that
+ * order can change from build to build (and with it the CSS cascade). Put this
+ * before concat() so that the combined CSS always has the same rule order.
+ * Files keep the order of the globs they matched, then shallower paths come
+ * first, then paths are compared folder by folder (so block/ comes before
+ * block-components/). This is the order most builds already produced.
+ *
+ * @param {Array} globs The same globs given to gulp.src
+ * @return {Transform} A stream that emits the files sorted
+ */
+const sortByGlobOrder = globs => {
+	const groups = globs.filter( g => ! g.startsWith( '!' ) )
+		.map( g => new Set( glob.sync( g ).map( file => path.resolve( file ) ) ) )
+	const getKey = file => {
+		const source = file.history[ 0 ]
+		const parts = path.relative( __dirname, source ).split( path.sep )
+		return { group: groups.findIndex( group => group.has( source ) ), parts }
+	}
+	const compare = ( a, b ) => {
+		if ( a.group !== b.group ) {
+			return a.group - b.group
+		}
+		if ( a.parts.length !== b.parts.length ) {
+			return a.parts.length - b.parts.length
+		}
+		const i = a.parts.findIndex( ( part, j ) => part !== b.parts[ j ] )
+		return i === -1 ? 0 : ( a.parts[ i ] < b.parts[ i ] ? -1 : 1 )
+	}
+
+	const files = []
+	return new Transform( {
+		objectMode: true,
+		transform( file, encoding, callback ) {
+			files.push( { file, key: getKey( file ) } )
+			callback()
+		},
+		flush( callback ) {
+			files.sort( ( a, b ) => compare( a.key, b.key ) )
+				.forEach( ( { file } ) => this.push( file ) )
+			callback()
+		},
+	} )
+}
+
 module.exports = {
 	buildInclude,
 	postCSSOptions,
 	sassOptions,
+	sortByGlobOrder,
 }
 
 // Gets all directories recursively.
@@ -618,6 +665,8 @@ const compileEach = ( sources, variables = {}, options = sassOptions ) => new Pr
 	gulp.src( sources )
 		.pipe( sassVariables( variables ) )
 		.pipe( sass( options ).on( 'error', reject ) )
+		// Files come out of sass() in the order they finish, keep the order fixed.
+		.pipe( sortByGlobOrder( sources ) )
 		.pipe( through2.obj( ( file, enc, cb ) => {
 			out.push( { file: path.relative( __dirname, file.history[ 0 ] ).replace( /\\/g, '/' ), css: file.contents.toString() } )
 			cb()
@@ -761,13 +810,15 @@ return array(
 } )
 
 gulp.task( 'style-editor', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/**/editor.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/editor.scss' ) ] )
+	const globs = [ path.resolve( __dirname, './src/**/editor.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/editor.scss' ) ]
+	return gulp.src( globs )
 		// The active theme can change the editor preview widths at runtime.
 		// Use the editor's current device class rather than fixed Sass breakpoints.
 		.pipe( sassVariables( {
 			'$use-editor-preview-classes': true,
 		} ) )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( sortByGlobOrder( globs ) )
 		.pipe( concat( 'editor_blocks.css' ) )
 		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
 		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
@@ -781,8 +832,10 @@ gulp.task( 'style-editor', function() {
 
 gulp.task( 'style', gulp.series(
 	function styleGenerateFrontend() {
-		return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/styles/*.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/styles/editor-*.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
+		const globs = [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/styles/*.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/styles/editor-*.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ]
+		return gulp.src( globs )
 			.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+			.pipe( sortByGlobOrder( globs ) )
 			.pipe( concat( 'frontend_blocks.css' ) )
 			// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
 			.pipe( header( '#start-resizable-editor-section{display:none}' ) )
@@ -861,8 +914,10 @@ const deprecatedV2SassOptions = {
 module.exports.deprecatedV2SassOptions = deprecatedV2SassOptions
 
 gulp.task( 'style-editor-deprecated-v2', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/**/editor.scss' ) ] )
+	const globs = [ path.resolve( __dirname, './src/deprecated/v2/**/editor.scss' ) ]
+	return gulp.src( globs )
 		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
+		.pipe( sortByGlobOrder( globs ) )
 		.pipe( concat( 'editor_blocks_deprecated_v2.css' ) )
 		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
 		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
@@ -872,12 +927,14 @@ gulp.task( 'style-editor-deprecated-v2', function() {
 } )
 
 gulp.task( 'style-deprecated-v2', function() {
-	return gulp.src( [
+	const globs = [
 		path.resolve( __dirname, './src/deprecated/v2/common.scss' ),
 		path.resolve( __dirname, './src/format-types/highlight/style.scss' ),
 		path.resolve( __dirname, './src/deprecated/v2/**/style.scss' ),
-	] )
+	]
+	return gulp.src( globs )
 		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
+		.pipe( sortByGlobOrder( globs ) )
 		.pipe( concat( 'frontend_blocks_deprecated_v2.css' ) )
 		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
 		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
