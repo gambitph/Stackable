@@ -4,7 +4,7 @@
  * For each frontend stylesheet we write a `.rules` file next to it, with one
  * CSS rule per line and, for each selector, the Stackable classes an element
  * needs for that selector to match anything. At runtime PHP only prints the
- * rules whose classes are on the page (see Stackable_Frontend_CSS::get_css_subset).
+ * rules whose classes are on the page (see Stackable_Frontend_CSS_Rules::get_matching_css).
  *
  * Line format (tab separated):
  *

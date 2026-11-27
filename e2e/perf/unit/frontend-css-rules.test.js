@@ -1,6 +1,6 @@
 /**
  * Unit tests for the build-time CSS rule data (.config/frontend-css-rules.js)
- * and its PHP reader (Stackable_Frontend_CSS::get_css_subset).
+ * and its PHP reader (Stackable_Frontend_CSS_Rules::get_matching_css).
  *
  * Run: node --test e2e/perf/unit/   (npm run test:perf:unit)
  * The dist/*.rules checks need a build (npm run build / gulp style-split).
@@ -102,7 +102,7 @@ test( 'built .rules files: all tokens give back the whole stylesheet', { skip: !
 	}
 } )
 
-test( 'PHP get_css_subset prints the same CSS as the JS subset', { skip: ! builtRules().length && 'no build' }, () => {
+test( 'PHP get_matching_css prints the same CSS as the JS subset', { skip: ! builtRules().length && 'no build' }, () => {
 	const php = path.join( __dirname, 'subset-harness.php' )
 	const files = builtRules()
 	const pick = [ 'frontend_core.css', 'frontend_responsive.css', 'blocks/heading.css', 'blocks/columns.css', 'blocks/accordion.css', '__premium_only.css' ]

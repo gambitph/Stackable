@@ -429,7 +429,7 @@ if ( STACKABLE_BUILD === 'premium' ) {
 
 // Deprecated.
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/editor-settings.php' );
-if ( get_option( 'stackable_use_legacy_frontend_css' ) ) {
+if ( ! Stackable_Frontend_CSS::is_enabled() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/legacy-frontend-css.php' );
 }
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors.php' );

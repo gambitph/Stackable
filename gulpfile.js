@@ -686,104 +686,191 @@ const postcssProcess = async ( css, prepend = '' ) => {
 module.exports.postcssProcess = postcssProcess
 
 const isScreenMedia = node => node.type === 'atrule' && node.name === 'media' && /screen/.test( node.params )
-const nodesToCss = nodes => nodes.map( n => n.toString() ).join( '' )
+const nodesToCss = nodes => nodes.map( node => node.toString() ).join( '' )
+const writeDistFile = ( file, css ) => fs.writeFileSync( path.resolve( __dirname, file ), css )
+
+/**
+ * Sorts the compiled source files into the shared styles, the block styles
+ * and the theme compatibility styles.
+ *
+ * Block styles start with `@import "common"`, which prints all the shared
+ * styles again (the bundle relied on cssnano removing the duplicates), so
+ * the shared styles are removed from the start of each block's CSS.
+ *
+ * @param {Array} compiled [ { file, css } ] from compileEach()
+ * @return {Object} { shared: [ css ], blocks: [ { name, css } ], themes: { theme: [ css ] } }
+ */
+const groupCompiledFiles = compiled => {
+	const commonCss = compiled.find( ( { file } ) => file === 'src/common.scss' ).css
+	const groups = {
+		shared: [], blocks: [], themes: {},
+	}
+
+	compiled.forEach( ( { file, css } ) => {
+		// e.g. src/block/heading/style.scss
+		const blockMatch = file.match( /^src\/block\/([^/]+)\/style\.scss$/ )
+		// e.g. src/compatibility/blocksy/style.scss
+		const themeMatch = file.match( /^src\/compatibility\/([^/]+)\/style\.scss$/ )
+
+		if ( blockMatch ) {
+			const importsCommon = /^@import\s+["']common["']/m.test( fs.readFileSync( file, 'utf8' ) )
+			if ( importsCommon ) {
+				if ( ! css.startsWith( commonCss ) ) {
+					throw new Error( `style-split: cannot strip the common styles from ${ file }` )
+				}
+				css = css.substring( commonCss.length )
+			}
+			groups.blocks.push( { name: blockMatch[ 1 ], css } )
+		} else if ( themeMatch ) {
+			const theme = THEME_COMPAT_DIRS[ themeMatch[ 1 ] ] || themeMatch[ 1 ].replace( /-/g, '' )
+			groups.themes[ theme ] = ( groups.themes[ theme ] || [] ).concat( css )
+		} else {
+			groups.shared.push( css )
+		}
+	} )
+
+	// Same order as in the bundle (by block folder name).
+	groups.blocks.sort( ( a, b ) => {
+		if ( a.name === b.name ) {
+			return 0
+		}
+		return a.name < b.name ? -1 : 1
+	} )
+	return groups
+}
+
+/**
+ * The theme a rule is for, e.g. "blocksy" for `.stk--is-blocksy-theme .stk-block`,
+ * or false if it isn't for one theme only.
+ *
+ * @param {Object} rule A PostCSS rule
+ * @return {string|false} The theme
+ */
+const getRuleTheme = rule => {
+	const themes = new Set( rule.selectors.map( selector => {
+		const match = selector.match( /\.stk--is-([a-z0-9]+)-theme/ )
+		return match ? match[ 1 ] : undefined
+	} ) )
+	if ( themes.size !== 1 ) {
+		return false
+	}
+	const [ theme ] = themes
+	return theme || false
+}
+
+/**
+ * Splits the processed shared styles into the files that are only loaded
+ * when needed.
+ *
+ * @param {Object} root The PostCSS root of the shared styles
+ * @return {Object} PostCSS nodes: { core, responsive, colorSchemes, designSystem, themes: { theme: [] } }
+ */
+const splitSharedRules = root => {
+	const parts = {
+		core: [], responsive: [], colorSchemes: [], designSystem: [], themes: {},
+	}
+
+	root.nodes.forEach( node => {
+		if ( isScreenMedia( node ) ) {
+			parts.responsive.push( node )
+			return
+		}
+		if ( node.type !== 'rule' ) {
+			parts.core.push( node )
+			return
+		}
+
+		const isColorSchemeRule = node.selectors.every( selector => selector.includes( '.' + STK_SCHEME_MARKER ) )
+		const isDesignSystemRule = node.selectors.every( selector => selector.startsWith( ':where(.stk-has-design-system-' ) )
+		const theme = getRuleTheme( node )
+		if ( isColorSchemeRule ) {
+			parts.colorSchemes.push( node )
+		} else if ( isDesignSystemRule ) {
+			parts.designSystem.push( node )
+		} else if ( theme ) {
+			parts.themes[ theme ] = ( parts.themes[ theme ] || [] ).concat( node )
+		} else {
+			parts.core.push( node )
+		}
+	} )
+	return parts
+}
+
+/**
+ * Writes the PHP manifest: the blocks and themes that have a stylesheet.
+ * The block order is the order in the bundle, PHP prints them in that order.
+ *
+ * @param {Object} manifest { blocks: { name: size }, themes: { name: size } }
+ */
+const writeManifest = manifest => {
+	const toPhpArray = object => {
+		const items = Object.entries( object ).map( ( [ key, value ] ) => `'${ key }' => ${ value }` )
+		return 'array( ' + items.join( ', ' ) + ' )'
+	}
+	writeDistFile( 'dist/frontend_css_manifest.php', `<?php
+// This is a generated file by gulp style-split.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+return array(
+	'blocks' => ${ toPhpArray( manifest.blocks ) },
+	'themes' => ${ toPhpArray( manifest.themes ) },
+);
+` )
+}
 
 gulp.task( 'style-split', async function styleSplitFrontend() {
-	const postcssLib = require( 'postcss' )
 	const variables = { '$stk-has-color-schemes-selector': `.${ STK_SCHEME_MARKER }` }
 	const compiled = await compileEach( splitFrontendSources(), variables )
+	const groups = groupCompiledFiles( compiled )
 
-	// Block styles start with `@import "common"`, which prints all the shared
-	// styles again (the bundle relied on cssnano removing the duplicates). Strip
-	// the shared styles from the start of each block's compiled CSS.
-	const commonCss = compiled.find( ( { file } ) => file === 'src/common.scss' ).css
 	// The dummy media query rules in breakpoints.scss fix the order of media
 	// queries (mqpacker keeps the order of first appearance). Prepend them to
 	// each separately processed file so its media queries are ordered the same
 	// as in the bundle.
 	const mediaOrderCss = compiled.find( ( { file } ) => file === 'src/styles/breakpoints.scss' ).css
 
-	const core = [], blocks = [], themes = {}
-	compiled.forEach( ( { file, css } ) => {
-		let m
-		if ( ( m = file.match( /^src\/block\/([^/]+)\/style\.scss$/ ) ) ) {
-			if ( /^@import\s+["']common["']/m.test( fs.readFileSync( file, 'utf8' ) ) ) {
-				if ( ! css.startsWith( commonCss ) ) {
-					throw new Error( `style-split: cannot strip the common styles from ${ file }` )
-				}
-				css = css.substring( commonCss.length )
-			}
-			blocks.push( { name: m[ 1 ], css } )
-		} else if ( ( m = file.match( /^src\/compatibility\/([^/]+)\/style\.scss$/ ) ) ) {
-			const theme = THEME_COMPAT_DIRS[ m[ 1 ] ] || m[ 1 ].replace( /-/g, '' )
-			themes[ theme ] = ( themes[ theme ] || [] ).concat( css )
-		} else {
-			core.push( css )
-		}
-	} )
-
 	// The shared styles are processed together so duplicates are removed and
 	// media queries are combined/sorted the same way as in the bundle.
-	const root = postcssLib.parse( await postcssProcess( core.join( '' ) ) )
-	const out = { core: [], responsive: [], schemes: [], designSystem: [] }
-	const themeRules = {}
-	root.nodes.forEach( node => {
-		if ( isScreenMedia( node ) ) {
-			return out.responsive.push( node )
-		}
-		if ( node.type === 'rule' ) {
-			const sels = node.selectors
-			if ( sels.every( s => s.includes( '.' + STK_SCHEME_MARKER ) ) ) {
-				return out.schemes.push( node )
-			}
-			if ( sels.every( s => s.startsWith( ':where(.stk-has-design-system-' ) ) ) {
-				return out.designSystem.push( node )
-			}
-			const themesUsed = [ ...new Set( sels.map( s => ( s.match( /\.stk--is-([a-z0-9]+)-theme/ ) || [] )[ 1 ] ) ) ]
-			if ( themesUsed.length === 1 && themesUsed[ 0 ] ) {
-				themeRules[ themesUsed[ 0 ] ] = ( themeRules[ themesUsed[ 0 ] ] || [] ).concat( node )
-				return
-			}
-		}
-		out.core.push( node )
-	} )
-
-	// Same order as in the bundle (by block folder name), independent of the
-	// order the files were found.
-	blocks.sort( ( a, b ) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0 )
-	for ( const block of blocks ) {
-		block.processed = await postcssProcess( block.css, mediaOrderCss )
-	}
+	const sharedRoot = require( 'postcss' ).parse( await postcssProcess( groups.shared.join( '' ) ) )
+	const shared = splitSharedRules( sharedRoot )
 
 	// Start clean so removed blocks / themes don't leave stale files.
 	fs.rmSync( 'dist/blocks', { recursive: true, force: true } )
 	fs.mkdirSync( 'dist/blocks', { recursive: true } )
-	glob.sync( 'dist/frontend_theme_*.css' ).forEach( f => fs.unlinkSync( f ) )
-	const write = ( file, css ) => fs.writeFileSync( path.resolve( __dirname, file ), css )
-	write( 'dist/frontend_core.css', nodesToCss( out.core ) )
-	write( 'dist/frontend_core_responsive.css', nodesToCss( out.responsive ) )
-	write( 'dist/frontend_color_schemes.css', nodesToCss( out.schemes ) )
-	write( 'dist/frontend_design_system.css', nodesToCss( out.designSystem ) )
+	glob.sync( 'dist/frontend_theme_*.css' ).forEach( file => fs.unlinkSync( file ) )
+
+	writeDistFile( 'dist/frontend_core.css', nodesToCss( shared.core ) )
+	writeDistFile( 'dist/frontend_core_responsive.css', nodesToCss( shared.responsive ) )
+	writeDistFile( 'dist/frontend_color_schemes.css', nodesToCss( shared.colorSchemes ) )
+	writeDistFile( 'dist/frontend_design_system.css', nodesToCss( shared.designSystem ) )
 
 	const manifest = { blocks: {}, themes: {} }
-	for ( const theme of [ ...new Set( Object.keys( themeRules ).concat( Object.keys( themes ) ) ) ] ) {
-		const extra = themes[ theme ] ? await postcssProcess( themes[ theme ].join( '' ), mediaOrderCss ) : ''
-		const css = nodesToCss( themeRules[ theme ] || [] ) + extra
+
+	// A theme's file has its rules from the shared styles, then its own
+	// compatibility styles (src/compatibility/{theme}/style.scss).
+	const themeNames = new Set( Object.keys( shared.themes ).concat( Object.keys( groups.themes ) ) )
+	for ( const theme of themeNames ) {
+		const sharedThemeCss = nodesToCss( shared.themes[ theme ] || [] )
+		const compatibilityCss = groups.themes[ theme ] ? await postcssProcess( groups.themes[ theme ].join( '' ), mediaOrderCss ) : ''
+		const css = sharedThemeCss + compatibilityCss
 		if ( css.trim() ) {
-			write( `dist/frontend_theme_${ theme }.css`, css )
+			writeDistFile( `dist/frontend_theme_${ theme }.css`, css )
 			manifest.themes[ theme ] = css.length
 		}
 	}
-	for ( const { name, processed: blockCss } of blocks ) {
-		if ( blockCss.trim() ) {
-			write( `dist/blocks/${ name }.css`, blockCss )
-			manifest.blocks[ name ] = blockCss.length
+
+	for ( const block of groups.blocks ) {
+		const css = await postcssProcess( block.css, mediaOrderCss )
+		if ( css.trim() ) {
+			writeDistFile( `dist/blocks/${ block.name }.css`, css )
+			manifest.blocks[ block.name ] = css.length
 		}
 	}
 
 	// Rule data so PHP can print only the rules that can match the page
 	// (see .config/frontend-css-rules.js).
-	glob.sync( 'dist/**/*.rules' ).forEach( f => fs.unlinkSync( f ) )
+	glob.sync( 'dist/**/*.rules' ).forEach( file => fs.unlinkSync( file ) )
 	require( './.config/frontend-css-rules.js' ).writeRulesFiles( __dirname, [
 		'dist/frontend_core.css',
 		'dist/frontend_core_responsive.css',
@@ -793,20 +880,7 @@ gulp.task( 'style-split', async function styleSplitFrontend() {
 		...Object.keys( manifest.blocks ).map( name => `dist/blocks/${ name }.css` ),
 	] )
 
-	// PHP manifest, the block order is the order in the bundle.
-	const phpArray = obj => 'array( ' + Object.entries( obj ).map( ( [ k, v ] ) => `'${ k }' => ${ v }` ).join( ', ' ) + ' )'
-	write( 'dist/frontend_css_manifest.php', `<?php
-// This is a generated file by gulp style-split.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-return array(
-	'blocks' => ${ phpArray( manifest.blocks ) },
-	'themes' => ${ phpArray( manifest.themes ) },
-	'color_schemes' => ${ out.schemes.length ? 'true' : 'false' },
-	'design_system' => ${ out.designSystem.length ? 'true' : 'false' },
-);
-` )
+	writeManifest( manifest )
 } )
 
 gulp.task( 'style-editor', function() {

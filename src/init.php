@@ -89,7 +89,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				// We don't know which blocks will be used, load them all. This
 				// is needed even if blocks were already found (block themes
 				// render the content before this runs).
-				Stackable_Frontend_CSS::enqueue_all_block_styles();
+				Stackable_Frontend_CSS_Block_Styles::enqueue_all_block_styles();
 			}
 		}
 
@@ -99,19 +99,18 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @since 0.1
 		 */
 		public static function register_frontend_assets() {
-			$files = Stackable_Frontend_CSS::get_shared_style_files();
-			// The path lets WordPress inline small stylesheets (like it does for core blocks), and lets us adjust breakpoints.
-			$add_path = apply_filters( 'stackable_frontend_css_add_path', true );
-			$register = function( $handle, $deps ) use ( $files, $add_path ) {
+			$files = Stackable_Frontend_CSS_Stylesheets::get_shared_style_files();
+			$register = function( $handle, $deps ) use ( $files ) {
 				$file = isset( $files[ $handle ] ) ? $files[ $handle ] : false;
 				wp_register_style( $handle, $file ? plugins_url( $file, STACKABLE_FILE ) : false, $deps, STACKABLE_VERSION );
-				if ( $file && $add_path ) {
-					wp_style_add_data( $handle, Stackable_Frontend_CSS::get_path_key(), plugin_dir_path( STACKABLE_FILE ) . $file );
+				if ( $file ) {
+					// The frontend CSS reads the file to print the rules the page uses.
+					Stackable_Frontend_CSS_Stylesheets::add_file_path( $handle, plugin_dir_path( STACKABLE_FILE ) . $file );
 				}
 			};
 
 			// Frontend shared styles. The block styles are registered in
-			// Stackable_Frontend_CSS and are loaded only for rendered blocks.
+			// Stackable_Frontend_CSS_Block_Styles and are loaded only for rendered blocks.
 			$register( 'ugb-style-css', apply_filters( 'stackable_frontend_css_dependencies', array() ) );
 
 			// Shared styles that are only loaded if used (color schemes,
@@ -189,29 +188,14 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				return;
 			}
 
-			// Classic themes print the widgets after the head, load the
-			// styles of the Stackable blocks in block widgets now so they're
+			// Classic themes print the widgets after the head. Note the
+			// Stackable blocks in block widgets now, so their styles are
 			// printed in the head (only if the page content has Stackable
 			// blocks, see below).
 			$widget_block_names = array();
-			if ( apply_filters( 'stackable_frontend_css_preload_widget_styles', ! wp_is_block_theme() ) ) {
-				$widgets = get_option( 'widget_block' );
-				if ( is_array( $widgets ) && stripos( wp_json_encode( $widgets ), 'wp:stackable\\/' ) !== false ) {
-					$names = array();
-					foreach ( $widgets as $widget ) {
-						if ( is_array( $widget ) && ! empty( $widget['content'] ) && preg_match_all( '/<!-- wp:(stackable\/[a-zA-Z_-]+)/', $widget['content'], $matches ) ) {
-							$names = array_merge( $names, $matches[1] );
-						}
-					}
-					if ( count( $names ) ) {
-						foreach ( $widgets as $widget ) {
-							if ( is_array( $widget ) && ! empty( $widget['content'] ) ) {
-								Stackable_Frontend_CSS::add_known_content( $widget['content'] );
-							}
-						}
-						$widget_block_names = $names;
-					}
-				}
+			foreach ( Stackable_Frontend_CSS_Block_Styles::get_block_widgets_with_stackable_blocks() as $widget_content ) {
+				Stackable_Frontend_CSS_Page_Content::add_known_content( $widget_content );
+				$widget_block_names = array_merge( $widget_block_names, Stackable_Frontend_CSS_Block_Styles::get_block_names_in_content( $widget_content ) );
 			}
 
 			// Only do this for singular posts.
@@ -230,11 +214,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 						// Enqueue the styles of the blocks in the content now
 						// so they're printed in the head.
-						Stackable_Frontend_CSS::add_known_content( $post->post_content );
-						preg_match_all( '/<!-- wp:(stackable\/[a-zA-Z_-]+)/', $post->post_content, $matches );
-						Stackable_Frontend_CSS::enqueue_block_styles( array_map( function( $name ) {
-							return rtrim( $name, '-' );
-						}, $matches[1] ) );
+						Stackable_Frontend_CSS_Page_Content::add_known_content( $post->post_content );
+						Stackable_Frontend_CSS_Block_Styles::enqueue_block_styles( Stackable_Frontend_CSS_Block_Styles::get_block_names_in_content( $post->post_content ) );
 					}
 				}
 			}
@@ -246,9 +227,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// stylesheet before. Enqueuing them here would print a notice,
 			// since the shared stylesheet they depend on isn't registered.
 			if ( count( $widget_block_names ) && self::$is_main_script_loaded ) {
-				Stackable_Frontend_CSS::enqueue_block_styles( array_map( function( $name ) {
-					return rtrim( $name, '-' );
-				}, $widget_block_names ) );
+				Stackable_Frontend_CSS_Block_Styles::enqueue_block_styles( $widget_block_names );
 			}
 		}
 

@@ -32,7 +32,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 			add_action( 'stackable_early_version_upgraded', array( $this, 'extend_color_scheme' ), 10, 2 );
 
 			// Also over AJAX, blocks rendered there carry their CSS (see
-			// Stackable_Frontend_CSS), which needs the global styles too.
+			// Stackable_Frontend_CSS_Printer), which needs the global styles too.
 			if ( is_frontend() || wp_doing_ajax() ) {
 
 				/**
@@ -390,19 +390,15 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		}
 
 		public function add_body_class_color_schemes( $classes, $color_scheme_css ) {
-			$scheme_classes = self::get_color_scheme_body_classes( $color_scheme_css );
-
-			// The body is matched by the color scheme styles if there's a base scheme.
-			if ( in_array( 'stk--has-base-scheme', $scheme_classes ) ) {
-				$marker = apply_filters( 'stackable_color_scheme_marker_class', Stackable_Frontend_CSS::SCHEME_MARKER );
-				if ( $marker ) {
-					$scheme_classes[] = $marker;
-				}
-			}
-
-			return array_merge( $classes, $scheme_classes );
+			return array_merge( $classes, self::get_color_scheme_body_classes( $color_scheme_css ) );
 		}
 
+		/**
+		 * The body classes for the color schemes that are set.
+		 *
+		 * @param string $color_scheme_css The generated color scheme CSS.
+		 * @return array e.g. array( 'stk--has-base-scheme', 'stk-has-scheme' )
+		 */
 		public static function get_color_scheme_body_classes( $color_scheme_css ) {
 			$classes = array();
 			if ( $color_scheme_css ) {
@@ -420,6 +416,13 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 
 				if ( strpos( $color_scheme_css, '--stk-default-container-background-color' ) !== false ) {
 					$classes[] = 'stk--has-default-container-scheme';
+				}
+
+				// The base scheme styles the body, so the body gets the marker
+				// class the color scheme styles use (see
+				// src/frontend-css/class-color-schemes.php).
+				if ( in_array( 'stk--has-base-scheme', $classes, true ) && Stackable_Frontend_CSS::is_enabled() ) {
+					$classes[] = Stackable_Frontend_CSS_Color_Schemes::MARKER;
 				}
 			}
 			return $classes;

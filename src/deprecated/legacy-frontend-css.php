@@ -2,76 +2,22 @@
 /**
  * Legacy frontend CSS loading (v3.20 and below).
  *
- * Stackable used to load a single stylesheet with the styles of all the blocks
- * whenever a Stackable block was on the page. Since v3.21.0, only the styles of
- * the blocks on the page are loaded (see src/frontend-css.php).
+ * Stackable used to load one big stylesheet with the styles of all the blocks
+ * whenever a Stackable block was on the page. Since v3.21.0, only the CSS the
+ * page uses is printed (see src/frontend-css.php).
  *
  * Sites that upgraded from an older version have the
  * "stackable_use_legacy_frontend_css" option turned on, and keep the old
- * behavior. This file is only loaded when that option is on, and brings back
- * the old behavior through the hooks of the frontend CSS loader.
+ * loading: the new loading checks Stackable_Frontend_CSS::is_enabled() and
+ * steps aside. This file is only loaded when that option is on, and has the
+ * one thing the old loading needs that the new one doesn't: the old way of
+ * applying custom breakpoints.
  */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-/**
- * Blocks use the single stylesheet again.
- */
-add_filter( 'stackable_block_frontend_style', function() {
-	return 'ugb-style-css';
-} );
-
-/**
- * The shared stylesheets are the single stylesheet and its responsive
- * styles. The optional stylesheets are already inside the single stylesheet.
- */
-add_filter( 'stackable_frontend_style_files', function( $files ) {
-	$files['ugb-style-css'] = 'dist/frontend_blocks.css';
-	$files['ugb-style-css-responsive'] = 'dist/frontend_blocks_responsive.css';
-	$files['ugb-style-css-color-schemes'] = false;
-	$files['ugb-style-css-design-system'] = false;
-	$files['ugb-style-css-theme'] = false;
-	return $files;
-} );
-
-/**
- * The single stylesheet uses the full color scheme selector, no marker class needed.
- */
-add_filter( 'stackable_color_scheme_marker_class', '__return_empty_string' );
-
-/**
- * Print the stylesheets as files, not as one inline style.
- */
-add_filter( 'stackable_frontend_css_combine', '__return_false' );
-
-/**
- * No <link> tags for late rendered blocks (this wasn't done before).
- */
-add_filter( 'stackable_frontend_css_print_late_links', '__return_false' );
-
-/**
- * Block widget styles weren't loaded in the head before.
- */
-add_filter( 'stackable_frontend_css_preload_widget_styles', '__return_false' );
-
-/**
- * Block stylesheets were enqueued only when the blocks were rendered.
- */
-add_filter( 'stackable_frontend_css_enqueue_block_styles', '__return_false' );
-
-/**
- * Custom breakpoints: the responsive styles are added inline to the single
- * stylesheet, instead of adjusting each stylesheet.
- */
-add_filter( 'stackable_frontend_css_adjust_breakpoints_handles', '__return_empty_array' );
-
-/**
- * Don't let WordPress inline the stylesheets (the responsive stylesheet is small enough).
- */
-add_filter( 'stackable_frontend_css_add_path', '__return_false' );
 
 if ( ! function_exists( 'stackable_legacy_enqueue_adjusted_responsive_css' ) ) {
 	/**

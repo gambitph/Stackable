@@ -52,7 +52,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			add_action( 'rest_api_init', array( $this, 'register_global_settings' ) );
 
 			// Also over AJAX, blocks rendered there carry their CSS (see
-			// Stackable_Frontend_CSS), which needs the global styles too.
+			// Stackable_Frontend_CSS_Printer), which needs the global styles too.
 			if ( is_frontend() || wp_doing_ajax() ) {
 
 				/**

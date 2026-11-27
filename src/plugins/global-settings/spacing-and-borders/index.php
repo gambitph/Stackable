@@ -24,7 +24,7 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 			add_action( 'stackable_early_version_upgraded',  array( $this, 'migrate_spacing_and_borders_schema_changes' ), 10, 2 );
 
 			// Also over AJAX, blocks rendered there carry their CSS (see
-			// Stackable_Frontend_CSS), which needs the global styles too.
+			// Stackable_Frontend_CSS_Printer), which needs the global styles too.
 			if ( is_frontend() || wp_doing_ajax() ) {
 
 				/**
