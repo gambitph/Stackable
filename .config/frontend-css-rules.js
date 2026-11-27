@@ -110,6 +110,20 @@ function getScriptClasses( root ) {
 					} )
 				} )
 			}
+			// Pairing quotes can go out of step (e.g. an apostrophe in a
+			// comment), so also take every class-like word in the file.
+			// Extra words only keep more rules, never fewer.
+			for ( const m of src.matchAll( /[A-Za-z0-9_-]+/g ) ) {
+				if ( TOKEN.test( m[ 0 ] ) && ! m[ 0 ].endsWith( '-' ) ) {
+					add( m[ 0 ], trigger )
+				}
+			}
+			// Class names built at runtime: `stk-foo-${ x }` or 'stk-foo-' + x
+			for ( const m of src.matchAll( /([A-Za-z0-9_-]+-)(?:\$\{|['"`]\s*\+)/g ) ) {
+				if ( TOKEN.test( m[ 1 ] ) && m[ 1 ].length > 6 ) {
+					prefixes.add( m[ 1 ] )
+				}
+			}
 		}
 	}
 	return { always, prefixes: [ ...prefixes ], triggered }

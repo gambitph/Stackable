@@ -30,6 +30,9 @@ function pixelDiff( fa, fb, out ) {
 const kind = a => {
 	const h = a.handle || ''
 	if ( a.tag === 'style' && a.blockScoped ) return 'inline-block'
+	// Round 2: one combined <style> (core, blocks, responsive and the global inline styles in the canonical
+	// order; printed again from the first new rule when later content needs more), counts as the core stylesheet.
+	if ( /^stk-frontend-css(-\d+)?$/.test( h ) ) return 'core'
 	if ( /premium/.test( h ) || /__premium_only/.test( a.src || '' ) ) return 'premium'
 	if ( /^ugb-style-css-nodep|nodep/.test( h ) ) return 'global-inline'
 	if ( /responsive/.test( h ) ) return 'responsive'

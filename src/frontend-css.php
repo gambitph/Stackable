@@ -930,9 +930,48 @@ if ( ! class_exists( 'Stackable_Frontend_CSS' ) ) {
 			if ( $css === self::$printed_css || $css === '' ) {
 				return false;
 			}
+			$printed = self::$printed_css;
 			self::$printed_css = $css;
 			self::$print_count++;
-			return $css;
+			return $printed ? self::get_css_from_first_change( $printed, $css ) : $css;
+		}
+
+		/**
+		 * When printing again, the rules from the first new one onwards (the
+		 * CSS is in the canonical order and only gets more rules). The rules
+		 * before it were printed already in the same order, so the cascade is
+		 * the same as printing everything again, but less of our CSS ends up
+		 * after the theme's stylesheet.
+		 *
+		 * @param string $printed The CSS printed before
+		 * @param string $css The CSS now
+		 * @return string
+		 */
+		public static function get_css_from_first_change( $printed, $css ) {
+			$length = min( strlen( $printed ), strlen( $css ) );
+			$cut = 0;
+			$depth = 0;
+			$quote = '';
+			for ( $i = 0; $i < $length && $printed[ $i ] === $css[ $i ]; $i++ ) {
+				$c = $css[ $i ];
+				if ( $quote !== '' ) {
+					if ( $c === '\\' ) {
+						$i++;
+					} elseif ( $c === $quote ) {
+						$quote = '';
+					}
+				} elseif ( $c === '"' || $c === "'" ) {
+					$quote = $c;
+				} elseif ( $c === '{' ) {
+					$depth++;
+				} elseif ( $c === '}' ) {
+					$depth--;
+					if ( $depth === 0 ) {
+						$cut = $i + 1;
+					}
+				}
+			}
+			return substr( $css, $cut );
 		}
 
 		/**

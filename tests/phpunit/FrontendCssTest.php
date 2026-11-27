@@ -95,4 +95,14 @@ class FrontendCssTest extends Stackable_TestCase {
 		( new Stackable_Frontend_CSS() )->set_legacy_on_upgrade( '3.20.3', '3.21.0' );
 		$this->assertTrue( true );
 	}
+
+	public function test_reprint_starts_at_the_first_new_rule() {
+		$old = '.a{x:1}@media (max-width:767px){.b{x:2}.d{x:4}}.e{content:"}"}';
+		$new = '.a{x:1}@media (max-width:767px){.b{x:2}.c{x:3}.d{x:4}}.e{content:"}"}.f{x:6}';
+		// The media query with the new rule is printed whole, with everything after it.
+		$this->assertSame( '@media (max-width:767px){.b{x:2}.c{x:3}.d{x:4}}.e{content:"}"}.f{x:6}', Stackable_Frontend_CSS::get_css_from_first_change( $old, $new ) );
+		$this->assertSame( '.f{x:6}', Stackable_Frontend_CSS::get_css_from_first_change( '.a{x:1}.e{content:"}"}', '.a{x:1}.e{content:"}"}.f{x:6}' ) );
+		$this->assertSame( '.b{x:2}', Stackable_Frontend_CSS::get_css_from_first_change( '.a{x:1}', '.a{x:1}.b{x:2}' ) );
+		$this->assertSame( '.b{x:2}.a{x:1}', Stackable_Frontend_CSS::get_css_from_first_change( '.a{x:1}', '.b{x:2}.a{x:1}' ) );
+	}
 }
