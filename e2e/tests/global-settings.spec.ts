@@ -139,35 +139,30 @@ test.describe( 'Global Settings', () => {
 	} )
 
 	test( 'Global Typography Styles should be applied when adding a heading', async ( {
-		page,
-		editor,
-	} ) => {
-		await page.getByLabel( 'Stackable Design System' ).click()
-		await page.getByRole( 'button', { name: 'Global Typography' } ).click()
-
-		// Set Global Typography Styles of Heading 2 to uppercase.
-		await page.locator( '.ugb-global-settings-typography-control' )
-			.nth( 1 )
-			.locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' )
-			.click()
-
-		const settingsSave = page.waitForResponse( response =>
-			response.url().includes( 'wp/v2/settings' ) &&
-			response.request().method() === 'POST' &&
+																						  page,
+																						  editor,
+																					  } ) => {
+		const waitForStackableSettings = () => page.waitForResponse( response =>
+			response.url().includes( '/wp-json/stackable/v3/settings' ) &&
+			response.request().method() === 'GET' &&
 			response.ok()
 		)
 
-		await page.locator( '.stk-popover .components-base-control:nth-of-type(4)', {
-			hasText: /Transform/,
-		} ).getByRole( 'listbox' ).selectOption( 'uppercase' )
+		const settingsLoaded = waitForStackableSettings()
+		await page.getByLabel( 'Stackable Design System' ).click()
+		await settingsLoaded
+		await page.getByRole( 'button', { name: 'Global Typography' } ).click()
 
-		await settingsSave
-
-		await page.locator( '.ugb-global-settings-typography-control' )
-			.nth( 1 )
-			.locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' )
-			.click()
-
+		// Set Global Typography Styles of Heading 2 to have a text-transform uppercase
+		await page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' ).click()
+		const typographySaved = page.waitForResponse( response =>
+			response.url().includes( '/wp-json/wp/v2/settings' ) &&
+			response.request().method() === 'POST' &&
+			response.ok()
+		)
+		await page.locator( '.stk-popover .components-base-control:nth-of-type(4)', { hasText: /Transform/ } ).getByRole( 'listbox' ).selectOption( 'uppercase' )
+		await typographySaved
+		await page.locator( '.ugb-global-settings-typography-control' ).nth( 1 ).locator( '.components-base-control__field > .ugb-button-icon-control__wrapper > .components-button' ).click()
 
 		// Verify if the Heading 2 in Global Typography Styles has correct text-transform
 		await expect( page.getByRole( 'heading', { name: 'Heading 2' } ) ).toHaveCSS( 'text-transform', 'uppercase' )
@@ -188,7 +183,9 @@ test.describe( 'Global Settings', () => {
 		).toHaveCSS( 'text-transform', 'uppercase' )
 
 		// Reset Global Typography Styles
+		const settingsReloaded = waitForStackableSettings()
 		await page.getByLabel( 'Stackable Design System' ).click()
+		await settingsReloaded
 		await expandSidebarPanel( page, 'Global Typography' )
 
 		const heading2Control = page.locator( '.ugb-global-settings-typography-control' ).nth( 1 )
@@ -197,10 +194,13 @@ test.describe( 'Global Settings', () => {
 
 		const resetButton = heading2Control.getByLabel( 'Reset' )
 		await expect( resetButton ).toBeVisible()
-		const deleteRequest = page.waitForResponse( response => response.url().includes( 'wp/v2/settings' ) && response.request().method() === 'POST' )
+		const resetRequest = page.waitForResponse( response =>
+			response.url().includes( '/wp-json/wp/v2/settings' ) &&
+			response.request().method() === 'POST' &&
+			response.ok()
+		)
 		await resetButton.click()
-
-		await deleteRequest
+		await resetRequest
 		await expect( resetButton ).not.toBeVisible()
 	} )
 
