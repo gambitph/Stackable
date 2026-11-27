@@ -262,7 +262,7 @@ You'll need WordPress version 6.8.1 or higher for this to work.
 
 **Is Stackable Free?**
 
-Yes, Stackable is free forever with 42 blocks, 375+ patterns, and a complete design system.
+Yes, Stackable is free forever with 42 blocks, a design library of 375+ designs (some are Premium), and a complete design system.
 
 [Stackable Premium](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) adds advanced features like dynamic content, motion effects, custom saved patterns, WooCommerce integration, and more.
 
