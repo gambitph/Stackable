@@ -324,6 +324,8 @@ Yes! Stackable blocks play well with other Gutenberg block plugins like Kadence,
 * Fixed: Video Lightbox - unsafe video URLs are sanitized #3773
 * Fixed: Dynamic Content - button styles corrected #3782
 * Fixed: Button - removed extra spacing in shadow popover #3783
+* Fixed: Design Library - designs keep a zero column gap #8
+* Fixed: GreenLight Board - frontend topic editor no longer crashes #3786
 
 = 3.20.3 =
 
