@@ -1,9 +1,7 @@
 #!/bin/bash
-# Runs the CI part of the frontend performance suite (e2e/perf) against a
-# throwaway WordPress site made by setup-site.sh (WordPress + SQLite served
-# by `php -S`, so the tests can reset the database between files and use
-# WP-CLI). The size budget, memory and DynamicWP benchmark tests (@bench) are
-# left out, their numbers vary on shared CI machines (npm run test:perf:bench).
+# Runs the frontend CSS checks (e2e/perf) against a throwaway WordPress site
+# made by setup-site.sh (WordPress + SQLite served by `php -S`, so the tests
+# can reset the database between files and use WP-CLI).
 #
 #   e2e/perf/ci/run.sh <plugin dir> <off|on>
 #
@@ -39,12 +37,12 @@ if [ "$MODE" = on ]; then
 		unzip -q -o "$WORK/release.zip" -d "$WORK/release-$REL"
 	fi
 	STK_PERF_PLUGIN="$WORK/release-$REL/stackable-ultimate-gutenberg-blocks" STK_PERF_LEGACY=release STK_PERF_REF_WRITE=1 STK_PERF_JSON="$WORK/legacy-ref.json" \
-		npx playwright test -c playwright.perf.config.js legacy-identical
+		npx playwright test -c playwright.perf.config.js legacy-identical.spec.js
 	echo "::notice::legacy reference ($REL) $(( $( date +%s ) - t1 ))s"
 else
 	node e2e/perf/visual/run-css-order.js "$PLUGIN"
 fi
 
 t2=$( date +%s )
-STK_PERF_PLUGIN="$PLUGIN" STK_PERF_LEGACY="$MODE" STK_PERF_LEGACY_CSS_ORDER=ignore npm run test:perf:ci
+STK_PERF_PLUGIN="$PLUGIN" STK_PERF_LEGACY="$MODE" STK_PERF_LEGACY_CSS_ORDER=ignore npm run test:perf
 echo "::notice::perf suite (legacy $MODE) $(( $( date +%s ) - t2 ))s"

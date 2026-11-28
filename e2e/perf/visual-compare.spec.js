@@ -8,8 +8,7 @@
  * color) that the per-block loading would leave out.
  *
  * Compares the computed styles of every element (pixel screenshots are too
- * noisy with animations and timers). The full 36-target screenshot run is
- * e2e/perf/visual/run-visual.js.
+ * noisy with animations and timers).
  */
 const fs = require( 'fs' ),
 	path = require( 'path' )

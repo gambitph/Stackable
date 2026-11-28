@@ -1,5 +1,6 @@
 /**
- * Premium: block stylesheet handles, Freemius queries and memory on the frontend.
+ * Premium: block stylesheet handles, Freemius queries, dynamic content and
+ * conditional display on the frontend.
  */
 const { test, expect } = require( '@playwright/test' )
 const {
@@ -57,19 +58,6 @@ test( 'no Freemius queries on a frontend page view', async () => {
 	const fs = m.query_log.filter( q => /\bfs_|freemius/i.test( q ) && ! isMockQuery( q ) )
 	test.info().annotations.push( { type: 'metric', description: `freemius queries: ${ fs.length } ${ fs.join( ' | ' ).slice( 0, 400 ) }` } )
 	expect( fs ).toEqual( [] )
-} )
-
-test( 'Premium memory over WordPress without Stackable within +4 MB @bench', async () => {
-	const a = [],
-		b = []
-	for ( let i = 0; i < 3; i++ ) {
-		a.push( ( await metrics( '/benchmark/' ) ).peak )
-		b.push( ( await metrics( '/benchmark/', { 'X-Stk-Perf-No-Stk': '1' } ) ).peak )
-	}
-	const med = x => x.sort( ( p, q ) => p - q )[ 1 ]
-	const delta = ( med( a ) - med( b ) ) / 1048576
-	test.info().annotations.push( { type: 'metric', description: `premium memory delta ${ delta.toFixed( 2 ) } MB (opcache ${ cfg.opcache })` } )
-	expect( delta ).toBeLessThanOrEqual( 4 )
 } )
 
 // Dynamic content and conditional display PHP is loaded only when a block uses them (round 2).

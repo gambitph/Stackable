@@ -106,12 +106,11 @@ jobs:
           echo "${{ steps.mto.outputs.body }}" >> $GITHUB_STEP_SUMMARY
           echo "Report: [playwright-report-php_${{ matrix.php_version }}-wp_${{ matrix.wp_version }}-${{ env.VERSION_SUFFIX }}.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }})" >> $GITHUB_STEP_SUMMARY
 
-  # Frontend CSS loading (round 2): CSS order, computed styles vs the legacy
-  # bundle, block detection, the legacy flag staying identical to the last
-  # release, the stackable_force_css_load filter. Runs e2e/perf against a
-  # WordPress + SQLite site served by `php -S` (the tests reset the database
-  # and use WP-CLI, see e2e/perf/ci/run.sh). The size, memory and DynamicWP
-  # benchmark tests (@bench) only run by hand: npm run test:perf:bench
+  # Frontend CSS loading: CSS order, computed styles vs the legacy bundle,
+  # block detection, the legacy flag staying identical to the last release,
+  # the stackable_force_css_load filter. Runs e2e/perf against a WordPress +
+  # SQLite site served by `php -S` (the tests reset the database and use
+  # WP-CLI, see e2e/perf/ci/run.sh).
   frontend-css:
     needs: build
     timeout-minutes: 20

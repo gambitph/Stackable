@@ -8,7 +8,7 @@
 #   e2e/perf/ci/setup-site.sh <wp dir> <snapshot file> [wp version] [url]
 #
 # Then run the suite with
-#   STK_PERF_WP_PATH=<wp dir> STK_PERF_SNAPSHOT=<snapshot file> STK_PERF_PLUGIN=<plugin build> npm run test:perf:ci
+#   STK_PERF_WP_PATH=<wp dir> STK_PERF_SNAPSHOT=<snapshot file> STK_PERF_PLUGIN=<plugin build> npm run test:perf
 set -euo pipefail
 WPDIR=$1
 SNAP=$2

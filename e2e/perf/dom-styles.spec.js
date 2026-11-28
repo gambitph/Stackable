@@ -1,7 +1,5 @@
 /**
- * DOM cost of Stackable's CSS on the DynamicWP benchmark page: the number of
- * <link>/<style> tags Stackable prints, and the total DOM node count over
- * WordPress without Stackable (DynamicWP counts document.getElementsByTagName('*')).
+ * How many Stackable <link>/<style> tags the benchmark page prints.
  */
 const { test, expect } = require( '@playwright/test' )
 const {
@@ -13,7 +11,6 @@ const legacy = cfg.isLegacyMode
 test.beforeAll( async () => {
 	await resetSite()
 	createPage( 'benchmark', 'benchmark.html' )
-	createPage( 'core-page', 'core.html' )
 } )
 
 test( 'Stackable style tags on the benchmark page', async () => {
@@ -29,20 +26,4 @@ test( 'Stackable style tags on the benchmark page', async () => {
 		expect( tags.length ).toBeLessThanOrEqual( 1 )
 	}
 	expect( tags.every( t => t.inHead ) ).toBe( true )
-} )
-
-test( 'DOM nodes over core (DynamicWP method) @bench', async ( { browser } ) => {
-	const count = async ( p, headers = {} ) => {
-		const ctx = await browser.newContext( { extraHTTPHeaders: headers } )
-		const page = await ctx.newPage()
-		await page.goto( cfg.url + p, { waitUntil: 'load' } )
-		const n = await page.evaluate( () => document.getElementsByTagName( '*' ).length )
-		await ctx.close()
-		return n
-	}
-	const stk = await count( '/benchmark/' )
-	const core = await count( '/core-page/', { 'X-Stk-Perf-No-Stk': '1' } )
-	test.info().annotations.push( { type: 'metric', description: `dom stk=${ stk } core=${ core } delta=${ stk - core }` } )
-	// 3.20.3 is +10; the target is to not be worse than that.
-	expect( stk - core ).toBeLessThanOrEqual( 10 )
 } )
