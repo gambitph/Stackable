@@ -175,17 +175,22 @@ async function compareWithRenderedPage( page, query, root ) {
 }
 
 for ( const base of [ true, false ] ) {
-	test( `with the filter and global color schemes (${ base ? 'with' : 'without' } a base scheme), added markup gets the scheme colors`, async ( { page } ) => {
-		setSchemeOptions( true, { base } )
-		try {
-			await page.goto( `${ cfg.url }/?page_id=${ ids.host }` )
-			expect( await page.evaluate( () => document.body.classList.contains( 'stk--has-base-scheme' ) ) ).toBe( base )
-			expect( ( await compareWithRenderedPage( page, `stk_force=1&stk_inject=${ ids.schemes }`, '#stk-perf-injected' ) ).diff ).toEqual( [] )
-			expect( ( await compareWithRenderedPage( page, `stk_force=1&stk_late=${ ids.schemes }`, '#stk-perf-late' ) ).diff ).toEqual( [] )
-		} finally {
-			setSchemeOptions( false )
-		}
-	} )
+	for ( const force of [ true, false ] ) {
+		const how = force ? 'with the filter' : 'with the injected-block loader'
+		test( `${ how } and global color schemes (${ base ? 'with' : 'without' } a base scheme), added markup gets the scheme colors`, async ( { page } ) => {
+			test.skip( ! force && cfg.isLegacyMode, 'no injected-block loader in the legacy mode' )
+			setSchemeOptions( true, { base } )
+			try {
+				await page.goto( `${ cfg.url }/?page_id=${ ids.host }` )
+				expect( await page.evaluate( () => document.body.classList.contains( 'stk--has-base-scheme' ) ) ).toBe( base )
+				const filter = force ? 'stk_force=1&' : ''
+				expect( ( await compareWithRenderedPage( page, `${ filter }stk_inject=${ ids.schemes }`, '#stk-perf-injected' ) ).diff ).toEqual( [] )
+				expect( ( await compareWithRenderedPage( page, `${ filter }stk_late=${ ids.schemes }`, '#stk-perf-late' ) ).diff ).toEqual( [] )
+			} finally {
+				setSchemeOptions( false )
+			}
+		} )
+	}
 }
 
 // Example: Ajax Load More appends posts that carry their own <style>. Those rules

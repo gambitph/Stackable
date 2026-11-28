@@ -6,7 +6,7 @@
  * plugin builds and reset the database to a fresh install.
  *
  *   STK_PERF_PLUGIN=/path/to/built/stackable \
- *   STK_PERF_LEGACY=off|on|release \
+ *   STK_PERF_LEGACY=off|on \
  *   npx playwright test -c playwright.perf.config.js
  *
  * See e2e/perf/README.md.

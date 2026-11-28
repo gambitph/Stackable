@@ -23,6 +23,8 @@ const config = __STK_CONFIG__
 // config.version: the plugin version, for the ?ver= of the stylesheets.
 // config.sharedFiles: the stylesheets every block needs, e.g. frontend_core.css.
 // config.colorSchemesFile: the color schemes stylesheet, or '' if not needed.
+// config.schemeMarker: the color scheme marker class, see class-color-schemes.php.
+// config.schemeSelectors: the elements that get the marker class.
 // config.premiumBlocks: the blocks with a Premium stylesheet.
 // config.blocksWithoutCss: the blocks without a free stylesheet.
 
@@ -88,8 +90,17 @@ const hasStackableContent = element => {
 	return getClasses( element ).includes( 'stk-' ) || element.querySelector( '[class*=stk-]' ) !== null
 }
 
-const hasColorSchemes = element => {
-	return getClasses( element ).includes( '-scheme' ) || element.querySelector( '[class*=-scheme]' ) !== null
+// The color scheme rules start with :where(.stk-has-scheme). PHP adds that
+// marker class to the blocks it renders, so we add it to the added markup the
+// same way (see Stackable_Frontend_CSS_Color_Schemes::add_markers()).
+// Returns whether any element got the marker.
+const addColorSchemeMarkers = element => {
+	const elements = [ ...element.querySelectorAll( config.schemeSelectors ) ]
+	if ( element.matches( config.schemeSelectors ) ) {
+		elements.push( element )
+	}
+	elements.forEach( el => el.classList.add( config.schemeMarker ) )
+	return elements.length > 0
 }
 
 const checkElement = element => {
@@ -104,7 +115,7 @@ const checkElement = element => {
 	loadBlockFiles( element )
 	element.querySelectorAll( '[class*=wp-block-stackable-]' ).forEach( loadBlockFiles )
 
-	if ( config.colorSchemesFile && hasColorSchemes( element ) ) {
+	if ( addColorSchemeMarkers( element ) && config.colorSchemesFile ) {
 		loadFile( config.colorSchemesFile )
 	}
 }

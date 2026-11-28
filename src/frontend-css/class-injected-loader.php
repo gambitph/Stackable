@@ -101,6 +101,8 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Injected_Loader' ) ) {
 				'version' => STACKABLE_VERSION,
 				'sharedFiles' => self::get_shared_files_for_blocks( $shared_files ),
 				'colorSchemesFile' => $color_schemes_file,
+				'schemeMarker' => Stackable_Frontend_CSS_Color_Schemes::MARKER,
+				'schemeSelectors' => Stackable_Frontend_CSS_Color_Schemes::OLD_SELECTORS,
 				'premiumBlocks' => self::get_premium_blocks(),
 				'blocksWithoutCss' => self::get_blocks_without_css(),
 			);

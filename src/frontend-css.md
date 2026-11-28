@@ -21,6 +21,7 @@ Premium does the same in `gulp premium-style-split` (`dist/blocks/{block}__premi
 
 The color scheme selector list is replaced by one marker class, `stk-has-scheme`.
 PHP adds that class to every element the old selector list matched (`Stackable_Frontend_CSS_Color_Schemes`).
+The injected-block loader does the same for markup that scripts add after the page loaded.
 
 ## How a page gets its CSS
 
