@@ -125,7 +125,7 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Page_Content' ) ) {
 			if ( ! is_string( $content ) ) {
 				return;
 			}
-			$block_names = Stackable_Frontend_CSS_Block_Styles::get_block_names_in_content( $content );
+			$block_names = Stackable_Init::get_block_names_in_content( $content );
 			if ( count( $block_names ) ) {
 				foreach ( $block_names as $block_name ) {
 					self::$blocks[ substr( $block_name, strlen( 'stackable/' ) ) ] = true;

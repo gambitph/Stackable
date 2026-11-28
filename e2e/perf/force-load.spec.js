@@ -3,8 +3,10 @@
  *
  * - With the filter, every block stylesheet loads in full (rules are not
  *   trimmed to the blocks on the page).
- * - Stackable markup added by a script after load (which PHP never saw) and
- *   blocks rendered late are styled the same as when every style is loaded.
+ * - Stackable markup added by a script after load (which PHP never saw),
+ *   blocks rendered late, and content given to
+ *   Stackable_Init::enqueue_frontend_assets_for_content() are styled the same
+ *   as when every style is loaded.
  *
  * The styled cases compare the computed styles of every Stackable element
  * (keyed by its unique id class) with the same request with the filter on,
@@ -146,6 +148,10 @@ test( 'the injected-block loader also loads the color scheme rules @ci', async (
 
 test( 'blocks rendered late (widgets, dynamic content) are styled', async ( { page } ) => {
 	expect( ( await late( page, ids.ref ) ).diff ).toEqual( [] )
+} )
+
+test( 'content given to enqueue_frontend_assets_for_content() is styled, also without being rendered', async ( { page } ) => {
+	expect( ( await compare( page, `stk_content_assets=${ ids.ref }`, `stk_force=1&stk_content_assets=${ ids.ref }`, '#stk-perf-content' ) ).diff ).toEqual( [] )
 } )
 
 test( 'with custom breakpoints, injected markup gets the responsive rules at tablet and mobile widths', async ( { page } ) => {

@@ -9,6 +9,9 @@
  * - Header "X-Stk-Perf-No-Stk: 1" Loads the request without Stackable (for the "core" reference).
  * - ?stk_late=<post id>           Prints that post's blocks after the footer scripts (late render).
  * - ?stk_force=1                  Turns on the stackable_force_css_load filter.
+ * - ?stk_content_assets=<post id> Prints that post's saved HTML (not rendered by PHP) in the footer after
+ *                                  calling Stackable_Init::enqueue_frontend_assets_for_content() with it,
+ *                                  like a page builder that prints cached block HTML.
  * - ?stk_inject=<post id>         A script in the footer adds that post's saved HTML (not rendered by
  *                                  PHP) to the page content on DOMContentLoaded, like a script that adds markup after load.
  * - ?stk_all_block_assets=1       WordPress enqueues every block stylesheet (not on demand), like classic
@@ -92,6 +95,16 @@ if ( ! empty( $_GET['stk_late'] ) ) {
 			echo '<div id="stk-perf-late">' . do_blocks( $post->post_content ) . '</div>';
 		}
 	}, 100 );
+}
+
+if ( ! empty( $_GET['stk_content_assets'] ) ) {
+	add_action( 'wp_footer', function() {
+		$post = get_post( (int) $_GET['stk_content_assets'] );
+		if ( $post ) {
+			Stackable_Init::enqueue_frontend_assets_for_content( $post->post_content );
+			echo '<div id="stk-perf-content">' . $post->post_content . '</div>';
+		}
+	}, 1 );
 }
 
 if ( ! empty( $_GET['stk_inject'] ) ) {

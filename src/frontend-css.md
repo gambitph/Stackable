@@ -27,6 +27,7 @@ The injected-block loader does the same for markup that scripts add after the pa
 
 1. Detect: while the page renders, `Stackable_Frontend_CSS_Page_Content` notes the Stackable blocks and the Stackable classes in the HTML.
    For the post content, this happens before the `<head>` is printed, so its CSS can go in the `<head>`.
+   Content given to `Stackable_Init::enqueue_frontend_assets_for_content()` (e.g. block HTML a page builder prints without rendering it) is detected too: the same call loads the scripts and the styles of its blocks.
 2. Pick stylesheets: the shared styles, plus the stylesheet of each block on the page (`Stackable_Frontend_CSS_Stylesheets`, `Stackable_Frontend_CSS_Block_Styles`).
 3. Trim: from those stylesheets, only the rules whose classes are on the page are kept (`Stackable_Frontend_CSS_Rules`).
 4. Print: everything is printed as one inline `<style id="stk-frontend-css-inline-css">`, in the same order as the big stylesheet, so the CSS cascade stays the same (`Stackable_Frontend_CSS_Printer`).

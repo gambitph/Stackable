@@ -260,12 +260,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				self::$is_main_script_loaded = true;
 			}
 
-			// Enqueue the block script once.
 			// Do not enqueue if the block content is empty (e.g. due to conditional display)
-			if ( ! isset( self::$scripts_loaded[ $block['blockName'] ] ) && $block_content !== '' ) {
-				$stackable_block = substr( $block['blockName'], 10 );
-				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
-				self::$scripts_loaded[ $block['blockName'] ] = true;
+			if ( $block_content !== '' ) {
+				self::enqueue_block_script( $block['blockName'] );
 			}
 
 			// Check whether the current block needs to enqueue some scripts.
@@ -309,24 +306,60 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				}
 			}
 
-			// Gather all the unique Stackable blocks and load all the block scripts once.
-			// Gather all the "<!-- wp:stackable/BLOCK_NAME"
-			preg_match_all( '/<!-- wp:stackable\/([a-zA-Z_-]+)/', $post_content, $stackable_blocks );
-			// Go through each unique block name.
-			foreach ( $stackable_blocks[1] as $_block_name ) {
-				// Clean up the block name, trailing "-" from the end since it may have "--" in the end if the post content is compressed.
-				$block_name = trim( $_block_name, '-' );
-
-				// Enqueue the block script once.
-				if ( ! isset( self::$scripts_loaded[ $block_name ] ) ) {
-					do_action( 'stackable/' . $block_name . '/enqueue_scripts' );
-					self::$scripts_loaded[ $block_name ] = true;
-				}
+			// Load the script of each Stackable block in the content.
+			foreach ( self::get_block_names_in_content( $post_content ) as $block_name ) {
+				self::enqueue_block_script( $block_name );
 			}
 
 			// Check whether the current block needs to enqueue some scripts.
 			// This gets called across all the blocks.
 			do_action( 'stackable/enqueue_scripts', $post_content );
+
+			/**
+			 * Fires after the scripts of the blocks in some content were
+			 * loaded. The frontend CSS loading uses it to load the CSS of
+			 * these blocks too (see
+			 * Stackable_Frontend_CSS_Block_Styles::enqueue_content_block_styles()).
+			 *
+			 * @since 3.21.0
+			 *
+			 * @param string $post_content The content.
+			 */
+			do_action( 'stackable_frontend_assets_for_content', $post_content );
+		}
+
+		/**
+		 * Loads the script of a Stackable block (if it has one), once.
+		 *
+		 * @param string $block_name e.g. stackable/tabs
+		 */
+		public static function enqueue_block_script( $block_name ) {
+			if ( isset( self::$scripts_loaded[ $block_name ] ) ) {
+				return;
+			}
+			self::$scripts_loaded[ $block_name ] = true;
+			// e.g. stackable/tabs/enqueue_scripts
+			do_action( $block_name . '/enqueue_scripts' );
+		}
+
+		/**
+		 * The Stackable block names in some block markup. The scripts and the
+		 * styles of these blocks are loaded.
+		 *
+		 * @param string $content Block markup, e.g. the post content.
+		 * @return array e.g. [ 'stackable/heading', 'stackable/columns' ]
+		 */
+		public static function get_block_names_in_content( $content ) {
+			if ( ! is_string( $content ) || ! preg_match_all( '/<!-- wp:stackable\/([a-z0-9-]+)/', $content, $matches ) ) {
+				return array();
+			}
+			$block_names = array();
+			foreach ( $matches[1] as $name ) {
+				// "<!-- wp:stackable/icon-list-" is the start of
+				// "stackable/icon-list-item", not a block.
+				$block_names[] = 'stackable/' . rtrim( $name, '-' );
+			}
+			return array_values( array_unique( $block_names ) );
 		}
 
 		/**

@@ -45,6 +45,7 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Block_Styles' ) ) {
 			add_action( 'enqueue_block_assets', array( __CLASS__, 'dequeue_unused_block_styles' ), 11 );
 			add_filter( 'render_block', array( __CLASS__, 'enqueue_rendered_block_style' ), 10, 2 );
 			add_action( 'stackable_frontend_head_content_checked', array( __CLASS__, 'enqueue_head_block_styles' ) );
+			add_action( 'stackable_frontend_assets_for_content', array( __CLASS__, 'enqueue_content_block_styles' ) );
 			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'maybe_enqueue_all_block_styles' ), 11 );
 		}
 
@@ -112,12 +113,11 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Block_Styles' ) ) {
 			$widget_block_names = array();
 			foreach ( self::get_block_widgets_with_stackable_blocks() as $widget_content ) {
 				Stackable_Frontend_CSS_Page_Content::add_known_content( $widget_content );
-				$widget_block_names = array_merge( $widget_block_names, self::get_block_names_in_content( $widget_content ) );
+				$widget_block_names = array_merge( $widget_block_names, Stackable_Init::get_block_names_in_content( $widget_content ) );
 			}
 
 			if ( $post_content ) {
-				Stackable_Frontend_CSS_Page_Content::add_known_content( $post_content );
-				self::enqueue_block_styles( self::get_block_names_in_content( $post_content ) );
+				self::enqueue_content_block_styles( $post_content );
 			}
 
 			// Only the stylesheets of the widget blocks, the rest is loaded
@@ -129,6 +129,20 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Block_Styles' ) ) {
 			if ( count( $widget_block_names ) && $post_content ) {
 				self::enqueue_block_styles( $widget_block_names );
 			}
+		}
+
+		/**
+		 * Loads the stylesheets of the blocks in some content, and notes its
+		 * blocks and classes so their CSS rules are kept. Used for the post
+		 * content, and for content given to
+		 * Stackable_Init::enqueue_frontend_assets_for_content() (the same
+		 * content gets the block scripts).
+		 *
+		 * @param string $content Block markup.
+		 */
+		public static function enqueue_content_block_styles( $content ) {
+			Stackable_Frontend_CSS_Page_Content::add_known_content( $content );
+			self::enqueue_block_styles( Stackable_Init::get_block_names_in_content( $content ) );
 		}
 
 		/**
@@ -160,25 +174,6 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Block_Styles' ) ) {
 		}
 
 		/**
-		 * The Stackable block names in some block markup.
-		 *
-		 * @param string $content Block markup, e.g. the post content.
-		 * @return array e.g. [ 'stackable/heading', 'stackable/columns' ]
-		 */
-		public static function get_block_names_in_content( $content ) {
-			if ( ! is_string( $content ) || ! preg_match_all( '/<!-- wp:stackable\/([a-z0-9-]+)/', $content, $matches ) ) {
-				return array();
-			}
-			$block_names = array();
-			foreach ( $matches[1] as $name ) {
-				// "<!-- wp:stackable/icon-list-" is the start of
-				// "stackable/icon-list-item", not a block.
-				$block_names[] = 'stackable/' . rtrim( $name, '-' );
-			}
-			return array_values( array_unique( $block_names ) );
-		}
-
-		/**
 		 * The content of the block widgets that have Stackable blocks.
 		 *
 		 * Classic themes print the widgets after the <head>, so we read
@@ -202,7 +197,7 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Block_Styles' ) ) {
 					continue;
 				}
 				$contents[] = $widget['content'];
-				if ( count( self::get_block_names_in_content( $widget['content'] ) ) ) {
+				if ( count( Stackable_Init::get_block_names_in_content( $widget['content'] ) ) ) {
 					$has_stackable_blocks = true;
 				}
 			}
