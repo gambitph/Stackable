@@ -69,7 +69,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterItem'
 				],
 				'parent' => [
 					'stackable/button-group'
@@ -92,7 +93,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterItem'
 				],
 				'keywords' => [
 					__( 'Link', STACKABLE_I18N )
@@ -431,7 +433,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterItem'
 				],
 				'keywords' => [
 					__( 'Title', STACKABLE_I18N )
@@ -636,7 +639,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterItem'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',
@@ -1076,7 +1080,8 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 					'postId',
 					'postType',
 					'queryId',
-					'stackable/innerBlockOrientation'
+					'stackable/innerBlockOrientation',
+					'stackable/repeaterItem'
 				],
 				'keywords' => [
 					__( 'Paragraph', STACKABLE_I18N )

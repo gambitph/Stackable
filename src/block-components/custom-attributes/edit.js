@@ -13,6 +13,7 @@ import {
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
+import { getPropsWithDefaults } from '../../util/props'
 
 /**
  * WordPress dependencies
@@ -40,7 +41,8 @@ const CustomAttributesHelp = ( { hasLink } ) => {
 	</>
 }
 
-export const Edit = props => {
+export const Edit = incomingProps => {
+	const props = getPropsWithDefaults( incomingProps, EDIT_DEFAULT_PROPS )
 	const {
 		customAttributes,
 		linkCustomAttributes,
@@ -81,6 +83,6 @@ export const Edit = props => {
 	)
 }
 
-Edit.defaultProps = {
+const EDIT_DEFAULT_PROPS = {
 	linkAttributeName: '',
 }

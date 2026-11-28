@@ -38,6 +38,16 @@ import SVGDatabaseIcon from './icons/database-light.svg'
 import { ResetButton } from '../base-control2/reset-button'
 import { getPropsWithDefaults } from '../../util/props'
 
+const useBlockDetails = () => {
+	const { clientId } = useBlockEditContext()
+	const context = useContext( QueryLoopContext )
+
+	return {
+		...select( 'core/block-editor' ).getBlock( clientId ),
+		context,
+	}
+}
+
 /**
  * Custom hook for generating component props
  * for the DynamicContentButton.
@@ -55,6 +65,7 @@ import { getPropsWithDefaults } from '../../util/props'
  * @return {Object} control props for DynamicContentControl.
  */
 export const useDynamicContentControlProps = props => {
+	const blockDetails = useBlockDetails()
 	const [ isPopoverOpen, setIsPopoverOpen ] = useState( false )
 
 	// Debounce the value for performance.
@@ -155,6 +166,7 @@ export const useDynamicContentControlProps = props => {
 		onReset,
 		onChange,
 		activeAttribute,
+		blockDetails,
 	}
 }
 
@@ -233,9 +245,8 @@ export const useQueryLoopContext = () => {
  * @param {string} value
  */
 export const useDynamicContent = ( value = '' ) => {
-	const { clientId } = useBlockEditContext()
-	const blockDetails = select( 'core/block-editor' ).getBlock( clientId )
-	const queryLoopContext = useContext( QueryLoopContext )
+	const blockDetails = useBlockDetails()
+	const queryLoopContext = blockDetails.context
 
 	return useSelect( select => {
 		if ( ! value || ! isString( value ) ) {
@@ -333,7 +344,7 @@ export const useDynamicContent = ( value = '' ) => {
 		}
 
 		return parsedContent
-	}, [ value, queryLoopContext?.postId ] )
+	}, [ value, queryLoopContext?.postId, queryLoopContext?.[ 'stackable/repeaterItem' ] ] )
 }
 
 // This is the same as with the useDynamicContent hook, but it's a function
@@ -535,6 +546,7 @@ export const DynamicContentButton = memo( props => {
 							onChange={ props.onChange }
 							activeAttribute={ props.activeAttribute }
 							type={ props.type }
+							blockDetails={ props.blockDetails }
 						/>
 					) }
 

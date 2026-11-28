@@ -21,6 +21,21 @@ test.describe( 'Link control URL input', () => {
 		requestUtils,
 		stackable,
 	} ) => {
+		// This test covers link validation, not Gutenberg's asynchronous link
+		// suggestions. Slow Playground search requests can otherwise overlap the
+		// next value and leave URLInput handling a stale suggestion response.
+		await page.route( '**/wp-json/wp/v2/search**', async route => {
+			await route.fulfill( {
+				status: 200,
+				contentType: 'application/json',
+				headers: {
+					'X-WP-Total': '0',
+					'X-WP-TotalPages': '0',
+				},
+				body: '[]',
+			} )
+		} )
+
 		await admin.createNewPost( { title: 'Link Control URL Input' } )
 		await editor.saveDraft()
 		const postQuery = new URL( editor.page.url() ).search
@@ -56,9 +71,8 @@ test.describe( 'Link control URL input', () => {
 		const clientId = await buttonBlock.getAttribute( 'data-block' )
 
 		const setLinkValue = async ( value: string ) => {
-			await input.click()
 			await input.fill( value )
-			await page.keyboard.press( 'Escape' )
+			await input.press( 'Escape' )
 			await input.blur()
 		}
 
