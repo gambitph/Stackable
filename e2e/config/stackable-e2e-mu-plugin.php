@@ -5,6 +5,8 @@
  * - Registers post meta used by Dynamic Content tests so it can be set via REST.
  * - Mocks Design Library CDN responses so free/premium suites do not depend on
  *   outbound network to stackable-files.pages.dev.
+ * - Allows a REST request to run as a specific test user so capability checks
+ *   can be covered despite Playground's automatic administrator login.
  *
  * Mounted by playwright.config.js and playwright.premium.config.js into
  * Playground as `wp-content/mu-plugins/stackable-e2e.php`.
@@ -23,6 +25,19 @@ add_action( 'init', function() {
 		},
 	) );
 } );
+
+add_filter( 'rest_authentication_errors', function( $result ) {
+	if ( empty( $_SERVER['HTTP_X_STACKABLE_E2E_USER_ID'] ) ) {
+		return $result;
+	}
+
+	$user = get_user_by( 'id', absint( $_SERVER['HTTP_X_STACKABLE_E2E_USER_ID'] ) );
+	if ( $user ) {
+		wp_set_current_user( $user->ID );
+	}
+
+	return $result;
+}, PHP_INT_MAX );
 
 /**
  * Serve local Design Library fixtures instead of hitting the CDN.

@@ -25,7 +25,7 @@ In-editor library for inserting designs, patterns, pages, and related layouts in
 _Avoid_: pattern library alone (too vague), template kit (unless marketing copy), Site Kit (full-site import)
 
 **Site Kit**:
-A plugin-owned import package that seeds a site: pages, optional patterns, menu, front page, canvas templates, theme styles overlay and/or variation, optional Global Design System, and Start Stackable snap-in flags.
+A plugin-owned complete-website package containing pages, media, FSE settings, theme templates, website settings, navigation, Stackable settings and design-system data, supported plugin data, and Start Stackable shell data.
 _Avoid_: Design Library page (insert-into-editor), theme demo import, starter site (competitor name), Default (the theme on activate)
 
 **Default**:
@@ -33,11 +33,13 @@ The Start Stackable first-activation site (designed blog, no import). Not a kit 
 _Avoid_: default kit package, reset, import-on-activate
 
 **Start Stackable**:
-The companion block theme (sibling repo). Complete block theme on its own and the site shell. Not this plugin.
+The companion block theme (sibling repo), complete block theme, and required shell for applying Site Kits.
+The Site Kit catalog and previews remain available before the theme is installed or active.
 _Avoid_: putting theme header, footer, or sticky-header CSS in this plugin, chrome
 
 **Shell contract**:
-Theme primitives a Site Kit may depend on (header parts, sticky/transparent flags, full-width canvas, header-height token, theme styles overlay reception). Defined in Start Stackable PRDs and `docs/prd/site-kits.CONTRACT.md`.
+Theme primitives a Site Kit may depend on, including header parts, sticky and transparent flags, full-width canvas, header-height token, FSE templates and settings, and theme styles overlay reception.
+Defined in Start Stackable PRDs and `docs/prd/site-kits.CONTRACT.md`.
 _Avoid_: kit-only CSS hacks that fake the header or footer in the plugin, chrome
 
 **Global settings**:

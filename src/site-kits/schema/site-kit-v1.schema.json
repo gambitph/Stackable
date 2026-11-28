@@ -1,0 +1,431 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "https://wpstackable.com/schemas/site-kit-v1.json",
+	"title": "Stackable Site Kit package version 1",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"version",
+		"slug",
+		"title",
+		"description",
+		"plan",
+		"requires",
+		"theme",
+		"site",
+		"pages",
+		"menu",
+		"patterns",
+		"stackable",
+		"plugins",
+		"media"
+	],
+	"properties": {
+		"version": {
+			"const": 1
+		},
+		"slug": {
+			"$ref": "#/definitions/packageSlug"
+		},
+		"title": {
+			"$ref": "#/definitions/nonEmptyString"
+		},
+		"description": {
+			"type": "string"
+		},
+		"plan": {
+			"enum": [ "free", "premium" ]
+		},
+		"requires": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "stackable", "theme" ],
+			"properties": {
+				"stackable": {
+					"$ref": "#/definitions/nonEmptyString"
+				},
+				"theme": {
+					"const": "start-stackable"
+				}
+			}
+		},
+		"theme": {
+			"$ref": "#/definitions/theme"
+		},
+		"site": {
+			"$ref": "#/definitions/site"
+		},
+		"pages": {
+			"type": "array",
+			"minItems": 1,
+			"items": {
+				"$ref": "#/definitions/page"
+			}
+		},
+		"menu": {
+			"$ref": "#/definitions/menu"
+		},
+		"patterns": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/pattern"
+			}
+		},
+		"stackable": {
+			"$ref": "#/definitions/stackable"
+		},
+		"plugins": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/plugin"
+			}
+		},
+		"media": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/media"
+			}
+		}
+	},
+	"definitions": {
+		"nonEmptyString": {
+			"type": "string",
+			"minLength": 1
+		},
+		"slug": {
+			"type": "string",
+			"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+		},
+		"packageSlug": {
+			"type": "string",
+			"pattern": "^(?!default$)[a-z0-9]+(?:-[a-z0-9]+)*$"
+		},
+		"portableData": {
+			"type": "object"
+		},
+		"theme": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [
+				"styles",
+				"settings",
+				"templates",
+				"templateParts",
+				"headerFlags"
+			],
+			"properties": {
+				"styleVariation": {
+					"$ref": "#/definitions/slug"
+				},
+				"styles": {
+					"$ref": "#/definitions/portableData"
+				},
+				"settings": {
+					"$ref": "#/definitions/portableData"
+				},
+				"templates": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/template"
+					}
+				},
+				"templateParts": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/templatePart"
+					}
+				},
+				"headerPart": {
+					"$ref": "#/definitions/slug"
+				},
+				"footerPart": {
+					"$ref": "#/definitions/slug"
+				},
+				"headerFlags": {
+					"type": "object",
+					"additionalProperties": false,
+					"required": [ "sticky", "transparent" ],
+					"properties": {
+						"sticky": {
+							"type": "boolean"
+						},
+						"transparent": {
+							"type": "boolean"
+						}
+					}
+				}
+			}
+		},
+		"template": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "slug", "theme", "type", "status", "content" ],
+			"properties": {
+				"slug": {
+					"$ref": "#/definitions/slug"
+				},
+				"theme": {
+					"const": "start-stackable"
+				},
+				"type": {
+					"const": "wp_template"
+				},
+				"title": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"status": {
+					"$ref": "#/definitions/postStatus"
+				},
+				"content": {
+					"type": "string"
+				}
+			}
+		},
+		"templatePart": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "slug", "theme", "type", "area", "status", "content" ],
+			"properties": {
+				"slug": {
+					"$ref": "#/definitions/slug"
+				},
+				"theme": {
+					"const": "start-stackable"
+				},
+				"type": {
+					"const": "wp_template_part"
+				},
+				"area": {
+					"$ref": "#/definitions/slug"
+				},
+				"title": {
+					"type": "string"
+				},
+				"status": {
+					"$ref": "#/definitions/postStatus"
+				},
+				"content": {
+					"type": "string"
+				}
+			}
+		},
+		"site": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "showOnFront", "frontPage", "postsPage" ],
+			"properties": {
+				"showOnFront": {
+					"enum": [ "page", "posts" ]
+				},
+				"frontPage": {
+					"$ref": "#/definitions/nullableSlug"
+				},
+				"postsPage": {
+					"$ref": "#/definitions/nullableSlug"
+				}
+			}
+		},
+		"page": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "slug", "title", "status", "template", "content", "meta" ],
+			"properties": {
+				"slug": {
+					"$ref": "#/definitions/slug"
+				},
+				"title": {
+					"$ref": "#/definitions/nonEmptyString"
+				},
+				"status": {
+					"$ref": "#/definitions/postStatus"
+				},
+				"template": {
+					"enum": [ "full-width", "page", "blank" ]
+				},
+				"content": {
+					"type": "string"
+				},
+				"meta": {
+					"$ref": "#/definitions/portableData"
+				},
+				"featuredMedia": {
+					"$ref": "#/definitions/nullableSlug"
+				}
+			}
+		},
+		"menu": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "location", "items", "entities" ],
+			"properties": {
+				"location": {
+					"$ref": "#/definitions/slug"
+				},
+				"items": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/menuItem"
+					}
+				},
+				"entities": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/navigationEntity"
+					}
+				}
+			}
+		},
+		"menuItem": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "page", "label" ],
+			"properties": {
+				"page": {
+					"$ref": "#/definitions/slug"
+				},
+				"label": {
+					"$ref": "#/definitions/nonEmptyString"
+				},
+				"children": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/menuItem"
+					}
+				}
+			}
+		},
+		"navigationEntity": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "slug", "title", "status", "content" ],
+			"properties": {
+				"slug": {
+					"$ref": "#/definitions/slug"
+				},
+				"title": {
+					"$ref": "#/definitions/nonEmptyString"
+				},
+				"status": {
+					"$ref": "#/definitions/postStatus"
+				},
+				"content": {
+					"type": "string"
+				}
+			}
+		},
+		"pattern": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "slug", "title", "status", "content" ],
+			"properties": {
+				"slug": {
+					"$ref": "#/definitions/slug"
+				},
+				"title": {
+					"$ref": "#/definitions/nonEmptyString"
+				},
+				"status": {
+					"$ref": "#/definitions/postStatus"
+				},
+				"content": {
+					"type": "string"
+				}
+			}
+		},
+		"stackable": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "designSystem", "settings" ],
+			"properties": {
+				"designSystem": {
+					"type": "object",
+					"additionalProperties": false,
+					"required": [ "colors", "colorSchemes", "typography", "spacing" ],
+					"properties": {
+						"colors": {
+							"$ref": "#/definitions/portableData"
+						},
+						"colorSchemes": {
+							"$ref": "#/definitions/portableData"
+						},
+						"typography": {
+							"$ref": "#/definitions/portableData"
+						},
+						"spacing": {
+							"$ref": "#/definitions/portableData"
+						}
+					}
+				},
+				"settings": {
+					"$ref": "#/definitions/portableData"
+				}
+			}
+		},
+		"plugin": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "slug", "name", "required", "version", "settings" ],
+			"properties": {
+				"slug": {
+					"type": "string",
+					"pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+\\.php)?$"
+				},
+				"name": {
+					"$ref": "#/definitions/nonEmptyString"
+				},
+				"required": {
+					"type": "boolean"
+				},
+				"version": {
+					"$ref": "#/definitions/nonEmptyString"
+				},
+				"settings": {
+					"$ref": "#/definitions/portableData"
+				}
+			}
+		},
+		"media": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [ "id", "path", "mimeType", "title", "alt", "caption" ],
+			"properties": {
+				"id": {
+					"$ref": "#/definitions/slug"
+				},
+				"path": {
+					"type": "string",
+					"minLength": 1,
+					"pattern": "^assets/[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$"
+				},
+				"mimeType": {
+					"$ref": "#/definitions/nonEmptyString"
+				},
+				"title": {
+					"type": "string"
+				},
+				"alt": {
+					"type": "string"
+				},
+				"caption": {
+					"type": "string"
+				}
+			}
+		},
+		"postStatus": {
+			"enum": [ "publish", "draft", "private", "pending", "future" ]
+		},
+		"nullableSlug": {
+			"oneOf": [
+				{
+					"$ref": "#/definitions/slug"
+				},
+				{
+					"type": "null"
+				}
+			]
+		}
+	}
+}

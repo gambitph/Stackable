@@ -130,6 +130,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'planName' => STACKABLE_BUILD === 'free' ? '' : sugb_fs()->get_plan_name(),
 					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ),
 					'nonceNews' => stackable_get_news_feed_nonce(),
+					'settings' => apply_filters( 'stackable_js_settings', array() ),
 				) );
 				wp_localize_script( 'stackable-welcome', 'stackable', $args );
 			}

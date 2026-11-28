@@ -9,7 +9,8 @@
 | ADRs | [`docs/adr/`](./docs/adr/) |
 | Site Kits (agents) | [`docs/prd/site-kits.agents.md`](./docs/prd/site-kits.agents.md) |
 | Site Kits (devs) | [`docs/prd/site-kits.md`](./docs/prd/site-kits.md) |
-| Site Kit import contract | [`docs/prd/site-kits.CONTRACT.md`](./docs/prd/site-kits.CONTRACT.md) |
+| Site Kit authoring quick guide | [`docs/prd/site-kits-authoring.md`](./docs/prd/site-kits-authoring.md) |
+| Site Kit package, export, and import contract | [`docs/prd/site-kits.CONTRACT.md`](./docs/prd/site-kits.CONTRACT.md) |
 | Start Stackable theme (sibling) | `../Start-Stackable/docs/prd/start-stackable.agents.md` (plan / check in that repo) |
 | E2E harness | [`e2e/readme.md`](./e2e/readme.md) |
 | Release roadmap | [GitHub Project #2](https://github.com/orgs/gambitph/projects/2/views/1) |
