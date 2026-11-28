@@ -687,7 +687,11 @@ module.exports.postcssProcess = postcssProcess
 
 const isScreenMedia = node => node.type === 'atrule' && node.name === 'media' && /screen/.test( node.params )
 const nodesToCss = nodes => nodes.map( node => node.toString() ).join( '' )
-const writeDistFile = ( file, css ) => fs.writeFileSync( path.resolve( __dirname, file ), css )
+// Paths in this gulpfile are relative to the Free repo root (this file's
+// folder). Premium CI runs gulp from pro__premium_only/, so process.cwd()
+// is not this folder — always resolve from __dirname.
+const repoPath = file => path.resolve( __dirname, file )
+const writeDistFile = ( file, css ) => fs.writeFileSync( repoPath( file ), css )
 
 /**
  * Sorts the compiled source files into the shared styles, the block styles
@@ -713,7 +717,7 @@ const groupCompiledFiles = compiled => {
 		const themeMatch = file.match( /^src\/compatibility\/([^/]+)\/style\.scss$/ )
 
 		if ( blockMatch ) {
-			const importsCommon = /^@import\s+["']common["']/m.test( fs.readFileSync( file, 'utf8' ) )
+			const importsCommon = /^@import\s+["']common["']/m.test( fs.readFileSync( repoPath( file ), 'utf8' ) )
 			if ( importsCommon ) {
 				if ( ! css.startsWith( commonCss ) ) {
 					throw new Error( `style-split: cannot strip the common styles from ${ file }` )
@@ -836,9 +840,9 @@ gulp.task( 'style-split', async function styleSplitFrontend() {
 	const shared = splitSharedRules( sharedRoot )
 
 	// Start clean so removed blocks / themes don't leave stale files.
-	fs.rmSync( 'dist/blocks', { recursive: true, force: true } )
-	fs.mkdirSync( 'dist/blocks', { recursive: true } )
-	glob.sync( 'dist/frontend_theme_*.css' ).forEach( file => fs.unlinkSync( file ) )
+	fs.rmSync( repoPath( 'dist/blocks' ), { recursive: true, force: true } )
+	fs.mkdirSync( repoPath( 'dist/blocks' ), { recursive: true } )
+	glob.sync( repoPath( 'dist/frontend_theme_*.css' ) ).forEach( file => fs.unlinkSync( file ) )
 
 	writeDistFile( 'dist/frontend_core.css', nodesToCss( shared.core ) )
 	writeDistFile( 'dist/frontend_core_responsive.css', nodesToCss( shared.responsive ) )
@@ -870,7 +874,7 @@ gulp.task( 'style-split', async function styleSplitFrontend() {
 
 	// Rule data so PHP can print only the rules that can match the page
 	// (see .config/frontend-css-rules.js).
-	glob.sync( 'dist/**/*.rules' ).forEach( file => fs.unlinkSync( file ) )
+	glob.sync( repoPath( 'dist/**/*.rules' ) ).forEach( file => fs.unlinkSync( file ) )
 	require( './.config/frontend-css-rules.js' ).writeRulesFiles( __dirname, [
 		'dist/frontend_core.css',
 		'dist/frontend_core_responsive.css',
