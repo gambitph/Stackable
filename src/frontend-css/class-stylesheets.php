@@ -268,30 +268,5 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Stylesheets' ) ) {
 			} );
 			return $handles;
 		}
-
-		/**
-		 * Block stylesheets that also style markup outside their block. In
-		 * the old big stylesheet these rules applied everywhere, so we also
-		 * use the stylesheet when one of these classes is on the page (and
-		 * the rule trimming keeps only the rules that can match).
-		 *
-		 * - columns: the column sizes, for columns inside other blocks
-		 *   (e.g. accordions and tabs have columns inside them)
-		 * - separator: the default color of the top / bottom separators,
-		 *   which any block can have
-		 * - button: the base .stk-button styles, also used by the icon
-		 *   button and other blocks with buttons
-		 *
-		 * Premium adds its own with the filter.
-		 *
-		 * @return array block name => classes
-		 */
-		public static function get_block_style_triggers() {
-			return apply_filters( 'stackable_frontend_css_block_style_triggers', array(
-				'columns' => array( 'stk-block-column' ),
-				'separator' => array( 'stk-separator__wrapper' ),
-				'button' => array( 'stk-button' ),
-			) );
-		}
 	}
 }

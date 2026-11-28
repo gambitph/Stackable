@@ -201,15 +201,11 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Printer' ) ) {
 		public static function get_combined_css( $handles ) {
 			$classes = Stackable_Frontend_CSS_Page_Content::get_classes();
 			$handles = self::add_shared_handles( $handles );
-			$triggered_blocks = self::get_triggered_block_styles( $classes );
-			foreach ( $triggered_blocks as $block_handles ) {
-				$handles = array_merge( $handles, $block_handles );
-			}
 			$handles = Stackable_Frontend_CSS_Stylesheets::sort_by_print_order( array_unique( $handles ) );
 
 			$css = '';
 			foreach ( $handles as $handle ) {
-				if ( ! self::is_stylesheet_needed( $handle, $triggered_blocks ) ) {
+				if ( ! self::is_stylesheet_needed( $handle ) ) {
 					continue;
 				}
 				$css .= self::get_stylesheet_css( $handle, $classes );
@@ -238,50 +234,17 @@ if ( ! class_exists( 'Stackable_Frontend_CSS_Printer' ) ) {
 		}
 
 		/**
-		 * Block stylesheets needed because their classes are used outside
-		 * their block (see Stackable_Frontend_CSS_Stylesheets::get_block_style_triggers()).
-		 *
-		 * @param array $classes The classes on the page.
-		 * @return array block name => its stylesheet handles (free and Premium)
-		 */
-		private static function get_triggered_block_styles( $classes ) {
-			if ( Stackable_Frontend_CSS_Block_Styles::is_loading_all() ) {
-				return array();
-			}
-			$triggered = array();
-			foreach ( Stackable_Frontend_CSS_Stylesheets::get_block_style_triggers() as $block => $trigger_classes ) {
-				if ( Stackable_Frontend_CSS_Page_Content::has_block( $block ) ) {
-					continue;
-				}
-				if ( ! count( array_intersect_key( $classes, array_flip( $trigger_classes ) ) ) ) {
-					continue;
-				}
-				$possible_handles = array(
-					Stackable_Frontend_CSS_Stylesheets::get_block_style_handle( 'stackable/' . $block ),
-					'stk-block-' . $block . '-premium',
-				);
-				foreach ( $possible_handles as $handle ) {
-					if ( $handle && wp_style_is( $handle, 'registered' ) ) {
-						$triggered[ $block ][] = $handle;
-					}
-				}
-			}
-			return $triggered;
-		}
-
-		/**
 		 * Block stylesheets are only needed for blocks on the page.
 		 *
 		 * @param string $handle
-		 * @param array $triggered_blocks See get_triggered_block_styles().
 		 * @return bool
 		 */
-		private static function is_stylesheet_needed( $handle, $triggered_blocks ) {
+		private static function is_stylesheet_needed( $handle ) {
 			$block = Stackable_Frontend_CSS_Stylesheets::get_block_name_from_handle( $handle );
 			if ( $block === false || Stackable_Frontend_CSS_Block_Styles::is_loading_all() ) {
 				return true;
 			}
-			return Stackable_Frontend_CSS_Page_Content::has_block( $block ) || isset( $triggered_blocks[ $block ] );
+			return Stackable_Frontend_CSS_Page_Content::has_block( $block );
 		}
 
 		/**

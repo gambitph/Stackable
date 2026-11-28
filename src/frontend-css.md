@@ -63,7 +63,6 @@ The block editor always uses the big stylesheets.
 - `stackable_force_css_load` - return true to load the styles of all the blocks, for pages where Stackable blocks can't be detected.
 - `stackable_frontend_css_injected_loader` - return false to not print the injected-block loader.
 - `stackable_frontend_css_finalize_in_buffer` - return false to not move the late CSS into the first `<style>`, e.g. if this conflicts with another plugin that buffers the page.
-- `stackable_frontend_css_block_style_triggers` - classes that need a block's stylesheet even without the block, e.g. the button styles used by other blocks.
 - `stackable_frontend_css_dependencies` - the dependencies of the shared stylesheet.
 - `stackable_frontend_css` - filters the CSS of stylesheets with media queries, used for custom breakpoints.
 
