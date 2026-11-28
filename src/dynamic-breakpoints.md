@@ -5,7 +5,7 @@ Dynamic breakpoints work by separating all media queries from the main frontend 
 ## Compilation Process
 
 1. Every time the file `dist/frontend_blocks.css` is created, all `@media` queries are moved to a new file `dist/frontend_blocks_responsive.css`. This is done via Gulp.
-2. Afterwards, all the contents of `dist/frontend_blocks_responsive.css` are also placed inside the `stackable_get_responsive_css` function in `src/dynamic-breakpoints.php`. This is also done via Gulp.
+2. Afterwards, all the contents of `dist/frontend_blocks_responsive.css` are also placed inside the `stackable_get_responsive_css` function in `src/deprecated/legacy-frontend-css.php` (only used by the legacy frontend CSS loading; the new loading adjusts the stylesheets when it prints them, see `Stackable_Frontend_CSS_Breakpoints::adjust_css`). This is also done via Gulp.
 
 ## How it works
 

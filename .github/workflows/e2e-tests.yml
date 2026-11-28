@@ -105,3 +105,74 @@ jobs:
         run: |
           echo "${{ steps.mto.outputs.body }}" >> $GITHUB_STEP_SUMMARY
           echo "Report: [playwright-report-php_${{ matrix.php_version }}-wp_${{ matrix.wp_version }}-${{ env.VERSION_SUFFIX }}.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }})" >> $GITHUB_STEP_SUMMARY
+
+  # Frontend CSS loading: block stylesheets only style their own block,
+  # block detection, the legacy flag, the stackable_force_css_load filter
+  # and the performance budget. Runs e2e/perf against a WordPress +
+  # SQLite site served by `php -S` (the tests reset the database and use
+  # WP-CLI, see e2e/perf/ci/run.sh).
+  frontend-css:
+    needs: build
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        legacy: [ 'off', 'on' ]
+    name: Free frontend CSS (legacy ${{ matrix.legacy }})
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo_sqlite, sqlite3
+          coverage: none
+          tools: wp-cli
+      - name: Restore plugin build
+        uses: actions/download-artifact@v4
+        with:
+          name: stackable-e2e-build
+      - name: Extract plugin build
+        run: tar -xzf stackable-e2e-build.tar.gz
+      - name: Install dependencies
+        run: |
+          npm ci --legacy-peer-deps
+          # Only used by the e2e/perf helpers.
+          npm install --no-save --legacy-peer-deps cheerio@1
+      - name: Check that each block stylesheet only styles its own block
+        if: ${{ matrix.legacy == 'off' }}
+        run: npm run test:block-css-scope -- build/stackable/dist/blocks
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+      - name: Install Playwright Browsers
+        timeout-minutes: 15
+        run: |
+          for attempt in 1 2 3; do
+            npx playwright install chromium --with-deps && exit 0
+            echo "Playwright install failed on attempt $attempt"
+            sleep $((attempt * 30))
+          done
+          exit 1
+      - name: Run frontend CSS checks
+        id: run-perf-tests
+        env:
+          STK_PERF_JSON: playwright-perf/results.json
+        run: bash e2e/perf/ci/run.sh build/stackable ${{ matrix.legacy }}
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() && steps.run-perf-tests.outcome == 'failure' }}
+        with:
+          name: frontend-css-results-legacy-${{ matrix.legacy }}
+          path: |
+            playwright-perf/
+            test-results/
+          retention-days: 30

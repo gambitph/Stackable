@@ -259,7 +259,10 @@ if ( ! function_exists( 'stackable_block_editor_assets_v2' ) ) {
 	}
 }
 
-require_once( plugin_dir_path( __FILE__ ) . 'block/blog-posts/index.php' );
+// In the frontend, only loaded when the v2 blocks are used (see stackable_register_blocks_v2).
+if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() || ! function_exists( 'stackable_is_frontend_request' ) || ! stackable_is_frontend_request() ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'block/blog-posts/index.php' );
+}
 
 // Used in Fonts.
 if ( ! function_exists( 'stackable_is_stackable_block_v2' ) ) {

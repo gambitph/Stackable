@@ -9,7 +9,7 @@
  * Version: 3.20.4
  *
  * @package Stackable
- * @fs_premium_only /freemius.php, /freemius/
+ * @fs_premium_only /freemius/
  */
 
 // Exit if accessed directly.
@@ -39,9 +39,9 @@ if ( defined('STACKABLE_FILE') && STACKABLE_FILE !== __FILE__ && ! isset( $GLOBA
 	register_activation_hook( __FILE__, 'stackable_multiple_plugins_check' );
 }
 
-// Freemius SDK: Auto deactivate the free version when activating the paid one.
+// Stackable Premium is already loaded (its license code defines sugb_fs()), so
+// this copy of Stackable stops here.
 if ( function_exists( 'sugb_fs' ) ) {
-	sugb_fs()->set_basename( true, __FILE__ );
 	return;
 }
 
@@ -51,6 +51,205 @@ defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.20.4' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://stackable-files.pages.dev' ); // Design Library CDN URL
+
+/**
+ * Whether this is a page view in the frontend (not the admin, AJAX, REST API,
+ * cron or WP-CLI). Code only used outside the frontend isn't loaded here.
+ *
+ * @since 3.21.0
+ */
+if ( ! function_exists( 'stackable_is_frontend_request' ) ) {
+	function stackable_is_frontend_request() {
+		static $is_frontend = null;
+		if ( $is_frontend === null ) {
+			$uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : ''; // phpcs:ignore
+			$is_frontend = ! is_admin() && ! wp_doing_ajax() && ! wp_doing_cron() && ! ( defined( 'WP_CLI' ) && WP_CLI ) &&
+				strpos( $uri, '/' . rest_get_url_prefix() . '/' ) === false && ! isset( $_GET['rest_route'] ) && // phpcs:ignore WordPress.Security.NonceVerification
+				apply_filters( 'stackable_lazy_load', true );
+		}
+		return $is_frontend;
+	}
+}
+
+/**
+ * Load every saved Stackable option in one query so later get_option() calls
+ * don't each hit the database.
+ *
+ * Stackable option names all start with `stackable_`. A new setting such as
+ * `stackable_new_setting` is included automatically — there is no list to
+ * keep in sync. Options that were never saved are remembered as missing the
+ * first time they're requested, still without a second query (see
+ * stackable_mark_unsaved_option()).
+ *
+ * Autoloaded options are already in WordPress's `alloptions` cache, so they
+ * are skipped. Very large values (for example a custom icon library) are
+ * also left alone, so a frontend page doesn't load them unless that page
+ * actually needs them.
+ *
+ * WordPress transients use a `_transient_` prefix, so they would miss the
+ * `stackable_` rule. The theme block-style inheritance transients are read
+ * on the frontend (`get_transient( 'stackable_block_style_inheritance_css' )`
+ * and `_hash`), so those two prefixes are included as well. Other transients
+ * (for example the design library) are left for get_transient() to load when
+ * needed.
+ *
+ * @since 3.21.0
+ */
+if ( ! function_exists( 'stackable_prime_option_caches' ) ) {
+
+	/**
+	 * Names this request already loaded from the options table (or saw in
+	 * alloptions). Used so unsaved `stackable_*` options can be marked missing
+	 * without a second query.
+	 *
+	 * @var array<string, true>
+	 */
+	$GLOBALS['stackable_primed_option_names'] = array();
+
+	/**
+	 * Whether this option name is covered by the prefix query above.
+	 *
+	 * @param string $option Option name.
+	 * @return bool
+	 */
+	function stackable_is_primed_option_name( $option ) {
+		if ( strpos( $option, 'stackable_' ) === 0 ) {
+			return true;
+		}
+		// The inheritance transients (see stackable_prime_option_caches()).
+		return strpos( $option, '_transient_stackable_block_style_inheritance_' ) === 0
+			|| strpos( $option, '_transient_timeout_stackable_block_style_inheritance_' ) === 0;
+	}
+
+	/**
+	 * When get_option() asks for a covered name we didn't find in the
+	 * database, add it to WordPress's `notoptions` cache so the lookup
+	 * returns the default without a query.
+	 *
+	 * This hook runs *before* get_option() checks `notoptions`. Returning
+	 * false here means "keep looking" — we can't return the default
+	 * ourselves because a false value is how WordPress says "no short
+	 * circuit". After we add the name to `notoptions`, the rest of
+	 * get_option() sees it and stops.
+	 *
+	 * If the option was added later in this same request, its value is
+	 * already in the options cache and we leave it alone.
+	 *
+	 * @param mixed  $pre     Value already supplied by another filter, or false.
+	 * @param string $option  Option name.
+	 * @param mixed  $default Default passed to get_option() (unused).
+	 * @return mixed
+	 */
+	function stackable_mark_unsaved_option( $pre, $option, $default = false ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
+		if ( false !== $pre || ! stackable_is_primed_option_name( $option ) ) {
+			return $pre;
+		}
+		if ( ! empty( $GLOBALS['stackable_primed_option_names'][ $option ] ) ) {
+			return $pre;
+		}
+		$alloptions = wp_load_alloptions();
+		if ( isset( $alloptions[ $option ] ) ) {
+			return $pre;
+		}
+		if ( false !== wp_cache_get( $option, 'options' ) ) {
+			return $pre;
+		}
+		$notoptions = wp_cache_get( 'notoptions', 'options' );
+		if ( ! is_array( $notoptions ) ) {
+			$notoptions = array();
+		}
+		if ( ! isset( $notoptions[ $option ] ) ) {
+			$notoptions[ $option ] = true;
+			wp_cache_set( 'notoptions', $notoptions, 'options' );
+		}
+		return $pre;
+	}
+
+	function stackable_prime_option_caches() {
+		global $wpdb;
+
+		if ( ( function_exists( 'wp_installing' ) && wp_installing() ) || empty( $wpdb ) ) {
+			return;
+		}
+
+		// A LIKE pattern of `stackable_` plus %, with `_` escaped so it is a
+		// literal underscore (LIKE treats `_` as "any one character").
+		$stackable_like = $wpdb->esc_like( 'stackable_' ) . '%';
+		$transient_like = $wpdb->esc_like( '_transient_stackable_block_style_inheritance_' ) . '%';
+		$timeout_like = $wpdb->esc_like( '_transient_timeout_stackable_block_style_inheritance_' ) . '%';
+
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s",
+				$stackable_like,
+				$transient_like,
+				$timeout_like
+			)
+		);
+		if ( ! is_array( $rows ) ) {
+			$rows = array();
+		}
+
+		// 100 KB. Larger than color-scheme CSS and typography settings we
+		// always want primed; smaller than a full custom icon library.
+		$max_bytes = 100000;
+
+		$alloptions = wp_load_alloptions();
+		if ( ! is_array( $alloptions ) ) {
+			$alloptions = array();
+		}
+		$notoptions = wp_cache_get( 'notoptions', 'options' );
+		if ( ! is_array( $notoptions ) ) {
+			$notoptions = array();
+		}
+
+		$to_cache = array();
+		foreach ( $rows as $row ) {
+			$name = $row->option_name;
+			$value = $row->option_value;
+			$GLOBALS['stackable_primed_option_names'][ $name ] = true;
+
+			if ( isset( $alloptions[ $name ] ) ) {
+				continue;
+			}
+			if ( isset( $notoptions[ $name ] ) ) {
+				// The row exists, so a stale notoptions entry would hide it.
+				unset( $notoptions[ $name ] );
+				wp_cache_set( 'notoptions', $notoptions, 'options' );
+			}
+			if ( strlen( $value ) > $max_bytes ) {
+				// Leave it for get_option() if this request actually needs it.
+				unset( $GLOBALS['stackable_primed_option_names'][ $name ] );
+				continue;
+			}
+			// Already in the individual options cache (same as
+			// wp_prime_option_caches() skipping a cache hit).
+			$cached = wp_cache_get( $name, 'options' );
+			if ( false !== $cached ) {
+				continue;
+			}
+			// Store the raw value. get_option() unserializes it later.
+			$to_cache[ $name ] = $value;
+		}
+
+		if ( $to_cache ) {
+			if ( function_exists( 'wp_cache_set_multiple' ) ) {
+				wp_cache_set_multiple( $to_cache, 'options' );
+			} else {
+				foreach ( $to_cache as $name => $value ) {
+					wp_cache_add( $name, $value, 'options' );
+				}
+			}
+		}
+
+		if ( function_exists( 'add_filter' ) && (
+			! function_exists( 'has_filter' ) || ! has_filter( 'pre_option', 'stackable_mark_unsaved_option' )
+		) ) {
+			add_filter( 'pre_option', 'stackable_mark_unsaved_option', 10, 3 );
+		}
+	}
+	stackable_prime_option_caches();
+}
 
 /********************************************************************************************
  * Activation & PHP version checks.
@@ -257,11 +456,10 @@ if ( defined( 'STACKABLE_PHPUNIT' ) && STACKABLE_PHPUNIT ) {
 }
 
 /**
- * Freemius.
- * This needs to be first.
+ * The Premium license (sugb_fs()). This needs to be first.
  */
-if ( STACKABLE_BUILD !== 'free' ) {
-	require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
+if ( STACKABLE_BUILD !== 'free' && file_exists( plugin_dir_path( __FILE__ ) . 'pro__premium_only/freemius.php' ) ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'pro__premium_only/freemius.php' );
 }
 
 /**
@@ -270,6 +468,7 @@ if ( STACKABLE_BUILD !== 'free' ) {
 require_once( plugin_dir_path( __FILE__ ) . 'src/editor-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/admin.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/frontend-css.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/stk-block-types.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
@@ -281,7 +480,9 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/kses.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
+if ( ! stackable_is_frontend_request() ) { // Editor and REST API only.
+	require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
+}
 require_once( plugin_dir_path( __FILE__ ) . 'src/styles/block-design-system.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/theme-block-style-inheritance/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
@@ -318,12 +519,13 @@ if ( ! is_admin() ) {
 /**
  * Welcome screen.
  */
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/getting-started.php' );
+if ( ! stackable_is_frontend_request() ) { // Admin and REST API only.
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/getting-started.php' );
+}
 if ( is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/useful-plugins.php' ); // For cross-marketing
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/news.php' );
-	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/freemius.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/updates.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
@@ -342,6 +544,10 @@ if ( STACKABLE_BUILD === 'premium' ) {
 
 // Deprecated.
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/editor-settings.php' );
+// The "Use Legacy Frontend CSS Loading" setting: the old loading turns the new one off through hooks.
+if ( get_option( Stackable_Frontend_CSS::LEGACY_OPTION ) ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/legacy-frontend-css.php' );
+}
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/navigation-panel-pre-enabled.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/font-awesome-version.php' );

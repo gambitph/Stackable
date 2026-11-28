@@ -220,6 +220,7 @@ const SEARCH_TREE = [
 					__( 'Generate Global Colors for native blocks', i18n ),
 					__( 'Inherit Block Styles from theme.json', i18n ),
 					__( 'Use v3.16.0 Color Scheme Inheritance', i18n ),
+					__( 'Use Legacy Frontend CSS Loading', i18n ),
 					__( 'Block Defaults (Sunsetted)', i18n ),
 				],
 			},
@@ -1564,6 +1565,16 @@ const AdditionalOptions = props => {
 										stackable_use_v3_16_0_color_scheme_inheritance: checked,
 										stackable_global_color_scheme_generated_css: '', // eslint-disable-line camelcase
 									 } )
+								} }
+								__nextHasNoMarginBottom
+							/>
+							<CheckboxControl
+								label={ __( 'Use Legacy Frontend CSS Loading', i18n ) }
+								className={ searchClassname( __( 'Use Legacy Frontend CSS Loading', i18n ), miscellaneous ) }
+								help={ __( `Since v3.21.0, only the styles of the blocks used in a page are loaded, making pages lighter. Sites that were updated from an older version have this option turned on to load the styles the same way as before. You can turn this off to use the lighter loading.`, i18n ) }
+								checked={ !! settings.stackable_use_legacy_frontend_css }
+								onChange={ checked => {
+									handleSettingsChange( { stackable_use_legacy_frontend_css: checked } ) // eslint-disable-line camelcase
 								} }
 								__nextHasNoMarginBottom
 							/>

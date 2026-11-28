@@ -93,13 +93,25 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @since 0.1
 		 */
 		public static function register_frontend_assets() {
-			// Frontend block styles.
-			wp_register_style(
-				'ugb-style-css',
-				plugins_url( 'dist/frontend_blocks.css', STACKABLE_FILE ),
-				apply_filters( 'stackable_frontend_css_dependencies', array() ),
-				STACKABLE_VERSION
-			);
+			$files = Stackable_Frontend_CSS_Stylesheets::get_shared_style_files();
+			$register = function( $handle, $deps ) use ( $files ) {
+				$file = isset( $files[ $handle ] ) ? $files[ $handle ] : false;
+				wp_register_style( $handle, $file ? plugins_url( $file, STACKABLE_FILE ) : false, $deps, STACKABLE_VERSION );
+				if ( $file ) {
+					// The frontend CSS reads the file to print the rules the page uses.
+					Stackable_Frontend_CSS_Stylesheets::add_file_path( $handle, plugin_dir_path( STACKABLE_FILE ) . $file );
+				}
+			};
+
+			// Frontend shared styles. The block styles are registered in
+			// Stackable_Frontend_CSS_Block_Styles and are loaded only for rendered blocks.
+			$register( 'ugb-style-css', apply_filters( 'stackable_frontend_css_dependencies', array() ) );
+
+			// Shared styles that are only loaded if used (color schemes,
+			// design system, theme compatibility).
+			$register( 'ugb-style-css-color-schemes', array( 'ugb-style-css' ) );
+			$register( 'ugb-style-css-design-system', array( 'ugb-style-css' ) );
+			$register( 'ugb-style-css-theme', array( 'ugb-style-css' ) );
 
 			// Frtonend only inline styles.
 			if ( ! is_admin() ) {
@@ -109,13 +121,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				}
 			}
 
-			// Frontend block styles (responsive).
-			wp_register_style(
-				'ugb-style-css-responsive',
-				plugins_url( 'dist/frontend_blocks_responsive.css', STACKABLE_FILE ),
-				array( 'ugb-style-css' ),
-				STACKABLE_VERSION
-			);
+			// Frontend shared styles (responsive).
+			$register( 'ugb-style-css-responsive', array( 'ugb-style-css' ) );
 			wp_enqueue_style( 'ugb-style-css-responsive' );
 
 			if ( ! is_admin() ) {
@@ -175,6 +182,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				return;
 			}
 
+			$stackable_content = '';
+
 			// Only do this for singular posts.
 			$post_id = get_the_ID();
 			if ( is_singular() && ! empty( $post_id ) ) {
@@ -188,9 +197,24 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 						// Enqueue our main scripts and styles.
 						self::block_enqueue_frontend_assets();
 						self::$is_main_script_loaded = true;
+
+						$stackable_content = $post->post_content;
 					}
 				}
 			}
+
+			/**
+			 * Fires after the post content was checked for Stackable blocks,
+			 * before the <head> is printed. The frontend CSS loading uses
+			 * it to load the styles of these blocks in the <head> (see
+			 * Stackable_Frontend_CSS_Block_Styles::enqueue_head_block_styles()).
+			 *
+			 * @since 3.21.0
+			 *
+			 * @param string $stackable_content The post content if it has
+			 *                                  Stackable blocks, or ''.
+			 */
+			do_action( 'stackable_frontend_head_content_checked', $stackable_content );
 		}
 
 		/**
@@ -236,12 +260,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				self::$is_main_script_loaded = true;
 			}
 
-			// Enqueue the block script once.
 			// Do not enqueue if the block content is empty (e.g. due to conditional display)
-			if ( ! isset( self::$scripts_loaded[ $block['blockName'] ] ) && $block_content !== '' ) {
-				$stackable_block = substr( $block['blockName'], 10 );
-				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
-				self::$scripts_loaded[ $block['blockName'] ] = true;
+			if ( $block_content !== '' ) {
+				self::enqueue_block_script( $block['blockName'] );
 			}
 
 			// Check whether the current block needs to enqueue some scripts.
@@ -263,6 +284,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				wp_enqueue_style( 'ugb-block-style-inheritance-nodep' );
 			}
 			wp_enqueue_style( 'ugb-style-css-nodep' );
+			if ( is_frontend() ) {
+				wp_enqueue_style( 'ugb-style-css-theme' );
+			}
 			wp_enqueue_script( 'ugb-block-frontend-js' );
 			do_action( 'stackable_block_enqueue_frontend_assets' );
 		}
@@ -282,24 +306,60 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				}
 			}
 
-			// Gather all the unique Stackable blocks and load all the block scripts once.
-			// Gather all the "<!-- wp:stackable/BLOCK_NAME"
-			preg_match_all( '/<!-- wp:stackable\/([a-zA-Z_-]+)/', $post_content, $stackable_blocks );
-			// Go through each unique block name.
-			foreach ( $stackable_blocks[1] as $_block_name ) {
-				// Clean up the block name, trailing "-" from the end since it may have "--" in the end if the post content is compressed.
-				$block_name = trim( $_block_name, '-' );
-
-				// Enqueue the block script once.
-				if ( ! isset( self::$scripts_loaded[ $block_name ] ) ) {
-					do_action( 'stackable/' . $block_name . '/enqueue_scripts' );
-					self::$scripts_loaded[ $block_name ] = true;
-				}
+			// Load the script of each Stackable block in the content.
+			foreach ( self::get_block_names_in_content( $post_content ) as $block_name ) {
+				self::enqueue_block_script( $block_name );
 			}
 
 			// Check whether the current block needs to enqueue some scripts.
 			// This gets called across all the blocks.
 			do_action( 'stackable/enqueue_scripts', $post_content );
+
+			/**
+			 * Fires after the scripts of the blocks in some content were
+			 * loaded. The frontend CSS loading uses it to load the CSS of
+			 * these blocks too (see
+			 * Stackable_Frontend_CSS_Block_Styles::enqueue_content_block_styles()).
+			 *
+			 * @since 3.21.0
+			 *
+			 * @param string $post_content The content.
+			 */
+			do_action( 'stackable_frontend_assets_for_content', $post_content );
+		}
+
+		/**
+		 * Loads the script of a Stackable block (if it has one), once.
+		 *
+		 * @param string $block_name e.g. stackable/tabs
+		 */
+		public static function enqueue_block_script( $block_name ) {
+			if ( isset( self::$scripts_loaded[ $block_name ] ) ) {
+				return;
+			}
+			self::$scripts_loaded[ $block_name ] = true;
+			// e.g. stackable/tabs/enqueue_scripts
+			do_action( $block_name . '/enqueue_scripts' );
+		}
+
+		/**
+		 * The Stackable block names in some block markup. The scripts and the
+		 * styles of these blocks are loaded.
+		 *
+		 * @param string $content Block markup, e.g. the post content.
+		 * @return array e.g. [ 'stackable/heading', 'stackable/columns' ]
+		 */
+		public static function get_block_names_in_content( $content ) {
+			if ( ! is_string( $content ) || ! preg_match_all( '/<!-- wp:stackable\/([a-z0-9-]+)/', $content, $matches ) ) {
+				return array();
+			}
+			$block_names = array();
+			foreach ( $matches[1] as $name ) {
+				// "<!-- wp:stackable/icon-list-" is the start of
+				// "stackable/icon-list-item", not a block.
+				$block_names[] = 'stackable/' . rtrim( $name, '-' );
+			}
+			return array_values( array_unique( $block_names ) );
 		}
 
 		/**
@@ -488,6 +548,18 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes = explode( ' ', $classes );
 			}
 
+			$classes = array_merge( $classes, self::get_theme_compatibility_classes() );
+
+			return $convert_to_string ? implode( ' ', $classes ) : $classes;
+		}
+
+		/**
+		 * The theme compatibility class of the current theme.
+		 *
+		 * @return array
+		 */
+		public static function get_theme_compatibility_classes() {
+			$classes = array();
 			if ( defined( 'ASTRA_THEME_VERSION' ) ) {
 				$classes[] = 'stk--is-astra-theme';
 			} else if ( class_exists( 'Blocksy_Translations_Manager' ) ) {
@@ -510,7 +582,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-tove-theme';
 			}
 
-			return $convert_to_string ? implode( ' ', $classes ) : $classes;
+			return $classes;
 		}
 
 		/**

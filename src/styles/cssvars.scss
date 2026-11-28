@@ -140,4 +140,6 @@ $stk-has-color-schemes-selector:
 	"[class*='stk--container-scheme']", // For custom container schemes
 	".stk--has-base-scheme", // For base scheme
 	".stk--has-background-scheme .stk-block-background", // For default background schemes
-	".stk--has-container-scheme .stk-container:not(.stk--no-background)"; // For default container schemes
+	".stk--has-container-scheme .stk-container:not(.stk--no-background)" !default; // For default container schemes
+// The per-block frontend CSS build (gulp style-split) overrides this with a
+// single marker class that PHP adds to every element matched by the list above.

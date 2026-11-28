@@ -29,3 +29,4 @@ composer.lock
 /playwright/.cache/
 e2e/.auth/
 /releases
+/playwright-perf/

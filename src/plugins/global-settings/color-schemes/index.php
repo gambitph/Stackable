@@ -31,7 +31,9 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 
 			add_action( 'stackable_early_version_upgraded', array( $this, 'extend_color_scheme' ), 10, 2 );
 
-			if ( is_frontend() ) {
+			// Also over AJAX, blocks rendered there carry their CSS (see
+			// Stackable_Frontend_CSS_Printer), which needs the global styles too.
+			if ( is_frontend() || wp_doing_ajax() ) {
 
 				/**
 				 * Global Color Schemes hooks
@@ -265,6 +267,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				add_filter( 'body_class', function( $classes ) use ( $cached_color_scheme_css ) {
 					return $this->add_body_class_color_schemes( $classes, $cached_color_scheme_css );
 				} );
+				wp_enqueue_style( 'ugb-style-css-color-schemes' );
 				$current_css .= $cached_color_scheme_css;
 				return apply_filters( 'stackable_frontend_css' , $current_css );
 			}
@@ -376,6 +379,7 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 				add_filter( 'body_class', function( $classes ) use ( $color_scheme_css ) {
 					return $this->add_body_class_color_schemes( $classes, $color_scheme_css );
 				}  );
+				wp_enqueue_style( 'ugb-style-css-color-schemes' );
 			}
 
 			// Add the generated CSS to the database
@@ -386,6 +390,17 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 		}
 
 		public function add_body_class_color_schemes( $classes, $color_scheme_css ) {
+			return array_merge( $classes, self::get_color_scheme_body_classes( $color_scheme_css ) );
+		}
+
+		/**
+		 * The body classes for the color schemes that are set.
+		 *
+		 * @param string $color_scheme_css The generated color scheme CSS.
+		 * @return array e.g. array( 'stk--has-base-scheme', 'stk-has-scheme' )
+		 */
+		public static function get_color_scheme_body_classes( $color_scheme_css ) {
+			$classes = array();
 			if ( $color_scheme_css ) {
 				if ( strpos( $color_scheme_css, ':root' ) !== false ) {
 					$classes[] = 'stk--has-base-scheme';
@@ -403,7 +418,17 @@ if ( ! class_exists( 'Stackable_Global_Color_Schemes' ) ) {
 					$classes[] = 'stk--has-default-container-scheme';
 				}
 			}
-			return $classes;
+
+			/**
+			 * Filters the body classes for the color schemes. The frontend
+			 * CSS loading adds its marker class here (see
+			 * Stackable_Frontend_CSS_Color_Schemes::add_body_marker()).
+			 *
+			 * @since 3.21.0
+			 *
+			 * @param array $classes e.g. array( 'stk--has-base-scheme' )
+			 */
+			return apply_filters( 'stackable_color_scheme_body_classes', $classes );
 		}
 
 		/**

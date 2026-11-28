@@ -24,7 +24,9 @@ if ( ! class_exists( 'Stackable_Global_Block_Styles' ) ) {
 			// Register our settings.
 			add_action( 'register_stackable_global_settings', array( $this, 'register_block_styles' ) );
 
-			if ( is_frontend() ) {
+			// Also over AJAX, blocks rendered there carry their CSS (see
+			// Stackable_Frontend_CSS_Printer), which needs the global styles too.
+			if ( is_frontend() || wp_doing_ajax() ) {
 				// Add the Global Block Styles styles in the frontend only.
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'add_global_block_styles' ) );
 			}

@@ -8,6 +8,8 @@ on:
       - 'composer.json'
       - 'phpunit.xml.dist'
       - 'tests/phpunit/**'
+      # FrontendCssTest checks the color scheme selectors against this file.
+      - 'src/styles/cssvars.scss'
       - '.github/workflows/php-unit.yml'
   pull_request:
     branches: [ master, develop ]
@@ -16,6 +18,7 @@ on:
       - 'composer.json'
       - 'phpunit.xml.dist'
       - 'tests/phpunit/**'
+      - 'src/styles/cssvars.scss'
       - '.github/workflows/php-unit.yml'
 
 concurrency:

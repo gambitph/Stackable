@@ -51,7 +51,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			add_action( 'admin_init', array( $this, 'register_global_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_global_settings' ) );
 
-			if ( is_frontend() ) {
+			// Also over AJAX, blocks rendered there carry their CSS (see
+			// Stackable_Frontend_CSS_Printer), which needs the global styles too.
+			if ( is_frontend() || wp_doing_ajax() ) {
 
 				/**
 				 * Color hooks
@@ -78,7 +80,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 				// For some native blocks, add a note that they're core blocks.
 				// Only do this when we need to style native blocks.
-				if ( in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
+				if ( is_frontend() && in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
 					add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
 				}
 

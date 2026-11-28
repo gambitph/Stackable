@@ -23,7 +23,9 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 			add_action( 'register_stackable_global_settings', array( $this, 'register_spacing_and_borders' ) );
 			add_action( 'stackable_early_version_upgraded',  array( $this, 'migrate_spacing_and_borders_schema_changes' ), 10, 2 );
 
-			if ( is_frontend() ) {
+			// Also over AJAX, blocks rendered there carry their CSS (see
+			// Stackable_Frontend_CSS_Printer), which needs the global styles too.
+			if ( is_frontend() || wp_doing_ajax() ) {
 
 				/**
 				 * Global Spacing and Borders hooks
@@ -105,6 +107,7 @@ if ( ! class_exists( 'Stackable_Global_Spacing_And_Borders' ) ) {
 			// Add a body class if there are any global spacing and borders styles.
 			if ( $generated_css !== '' ) {
 				add_filter( 'body_class', array( $this, 'add_body_class_spacing_and_borders' ) );
+				wp_enqueue_style( 'ugb-style-css-design-system' );
 			}
 
 			$current_css .= $generated_css;

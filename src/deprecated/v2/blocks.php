@@ -67,6 +67,9 @@ if ( ! function_exists( 'stackable_get_all_v2_blocks_json_paths' ) ) {
 
 if ( ! function_exists( 'stackable_register_blocks_v2' ) ) {
 	function stackable_register_blocks_v2() {
+		// Not loaded in the frontend unless the v2 blocks are used.
+		require_once( plugin_dir_path( __FILE__ ) . 'block/blog-posts/index.php' );
+
 		$block_json_files = stackable_get_all_v2_blocks_json_paths();
 
 		$registry = WP_Block_Type_Registry::get_instance();

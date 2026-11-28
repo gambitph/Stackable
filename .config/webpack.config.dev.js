@@ -196,3 +196,19 @@ module.exports = [
 		warnings: true,
     },
 } ]
+
+/**
+ * The injected-block loader is printed inline by PHP (see
+ * src/frontend-css/class-injected-loader.php), so it's built like the other
+ * frontend scripts, but without adding a global variable.
+ */
+const frontendConfig = module.exports[ module.exports.length - 1 ]
+module.exports.push( {
+	...frontendConfig,
+	entry: {
+		'frontend_css_injected_loader': path.resolve( __dirname, '../src/frontend-css/injected-loader.js' ),
+	},
+	output: {
+		filename: '[name].js',
+	},
+} )
