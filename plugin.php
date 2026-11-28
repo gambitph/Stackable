@@ -72,64 +72,190 @@ if ( ! function_exists( 'stackable_is_frontend_request' ) ) {
 }
 
 /**
- * Load the options we read on every page in one query. Most of these aren't
- * saved (so they're not autoloaded) unless changed in the settings, without
- * this each one is a query.
+ * Load every saved Stackable option in one query so later get_option() calls
+ * don't each hit the database.
+ *
+ * Stackable option names all start with `stackable_`. A new setting such as
+ * `stackable_new_setting` is included automatically — there is no list to
+ * keep in sync. Options that were never saved are remembered as missing the
+ * first time they're requested, still without a second query (see
+ * stackable_mark_unsaved_option()).
+ *
+ * Autoloaded options are already in WordPress's `alloptions` cache, so they
+ * are skipped. Very large values (for example a custom icon library) are
+ * also left alone, so a frontend page doesn't load them unless that page
+ * actually needs them.
+ *
+ * WordPress transients use a `_transient_` prefix, so they would miss the
+ * `stackable_` rule. The theme block-style inheritance transients are read
+ * on the frontend (`get_transient( 'stackable_block_style_inheritance_css' )`
+ * and `_hash`), so those two prefixes are included as well. Other transients
+ * (for example the design library) are left for get_transient() to load when
+ * needed.
  *
  * @since 3.21.0
  */
 if ( ! function_exists( 'stackable_prime_option_caches' ) ) {
+
+	/**
+	 * Names this request already loaded from the options table (or saw in
+	 * alloptions). Used so unsaved `stackable_*` options can be marked missing
+	 * without a second query.
+	 *
+	 * @var array<string, true>
+	 */
+	$GLOBALS['stackable_primed_option_names'] = array();
+
+	/**
+	 * Whether this option name is covered by the prefix query above.
+	 *
+	 * @param string $option Option name.
+	 * @return bool
+	 */
+	function stackable_is_primed_option_name( $option ) {
+		if ( strpos( $option, 'stackable_' ) === 0 ) {
+			return true;
+		}
+		// The inheritance transients (see stackable_prime_option_caches()).
+		return strpos( $option, '_transient_stackable_block_style_inheritance_' ) === 0
+			|| strpos( $option, '_transient_timeout_stackable_block_style_inheritance_' ) === 0;
+	}
+
+	/**
+	 * When get_option() asks for a covered name we didn't find in the
+	 * database, add it to WordPress's `notoptions` cache so the lookup
+	 * returns the default without a query.
+	 *
+	 * This hook runs *before* get_option() checks `notoptions`. Returning
+	 * false here means "keep looking" — we can't return the default
+	 * ourselves because a false value is how WordPress says "no short
+	 * circuit". After we add the name to `notoptions`, the rest of
+	 * get_option() sees it and stops.
+	 *
+	 * If the option was added later in this same request, its value is
+	 * already in the options cache and we leave it alone.
+	 *
+	 * @param mixed  $pre     Value already supplied by another filter, or false.
+	 * @param string $option  Option name.
+	 * @param mixed  $default Default passed to get_option() (unused).
+	 * @return mixed
+	 */
+	function stackable_mark_unsaved_option( $pre, $option, $default = false ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
+		if ( false !== $pre || ! stackable_is_primed_option_name( $option ) ) {
+			return $pre;
+		}
+		if ( ! empty( $GLOBALS['stackable_primed_option_names'][ $option ] ) ) {
+			return $pre;
+		}
+		$alloptions = wp_load_alloptions();
+		if ( isset( $alloptions[ $option ] ) ) {
+			return $pre;
+		}
+		if ( false !== wp_cache_get( $option, 'options' ) ) {
+			return $pre;
+		}
+		$notoptions = wp_cache_get( 'notoptions', 'options' );
+		if ( ! is_array( $notoptions ) ) {
+			$notoptions = array();
+		}
+		if ( ! isset( $notoptions[ $option ] ) ) {
+			$notoptions[ $option ] = true;
+			wp_cache_set( 'notoptions', $notoptions, 'options' );
+		}
+		return $pre;
+	}
+
 	function stackable_prime_option_caches() {
-		if ( ! function_exists( 'wp_prime_option_caches' ) || wp_installing() ) {
+		global $wpdb;
+
+		if ( ( function_exists( 'wp_installing' ) && wp_installing() ) || empty( $wpdb ) ) {
 			return;
 		}
-		$options = array(
-			'stackable_other_stackable_plugin_info',
-			'stackable_current_version_installed',
-			'stackable_use_legacy_frontend_css',
-			'stackable_global_typography',
-			'stackable_global_typography_apply_to',
-			'stackable_optimize_inline_css',
-			'stackable_v2_frontend_compatibility',
-			'stackable_v2_editor_compatibility',
-			'stackable_v2_editor_compatibility_usage',
-			'stackable_global_colors_native_compatibility',
-			'stackable_enable_block_defaults',
-			'stackable_block_default_width',
-			'stackable_block_wide_width',
-			'stackable_global_colors',
-			'stackable_global_spacing_and_borders',
-			'stackable_global_buttons_and_icons',
-			'stackable_global_color_scheme_generated_css',
-			'stackable_global_color_schemes',
-			'stackable_global_custom_color_schemes',
-			'stackable_global_base_color_scheme',
-			'stackable_global_background_mode_color_scheme',
-			'stackable_global_container_mode_color_scheme',
-			'stackable_global_custom_preset_controls',
-			'stackable_dynamic_breakpoints',
-			'stackable_global_block_styles',
-			'stackable_disable_block_style_inheritance',
-			'stackable_custom_fields_admin',
-			'stackable_global_force_typography',
-			'stackable_is_apply_body_to_html',
-			'stackable_global_colors_palette_only',
-			'stackable_icons_fa_free_version',
-			'stackable_google_maps_api_key',
-			'_transient_stackable_block_style_inheritance_hash',
-			'_transient_timeout_stackable_block_style_inheritance_hash',
-			'_transient_stackable_block_style_inheritance_css',
-			'_transient_timeout_stackable_block_style_inheritance_css',
+
+		// A LIKE pattern of `stackable_` plus %, with `_` escaped so it is a
+		// literal underscore (LIKE treats `_` as "any one character").
+		$stackable_like = $wpdb->esc_like( 'stackable_' ) . '%';
+		$transient_like = $wpdb->esc_like( '_transient_stackable_block_style_inheritance_' ) . '%';
+		$timeout_like = $wpdb->esc_like( '_transient_timeout_stackable_block_style_inheritance_' ) . '%';
+
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s",
+				$stackable_like,
+				$transient_like,
+				$timeout_like
+			)
 		);
-		if ( STACKABLE_BUILD !== 'free' ) {
-			// Read by Freemius when it loads. In the frontend it usually
-			// doesn't load (see stackable_freemius_frontend_cache).
-			$fs_cache = stackable_is_frontend_request() ? get_option( 'stackable_freemius_frontend_cache' ) : false;
-			if ( ! is_array( $fs_cache ) || empty( $fs_cache['version'] ) || $fs_cache['version'] !== STACKABLE_VERSION ) {
-				$options = array_merge( $options, array( 'fs_storage_logger', 'fs_clone_management', 'fs_cache_1748' ) );
+		if ( ! is_array( $rows ) ) {
+			$rows = array();
+		}
+
+		// 100 KB. Larger than color-scheme CSS and typography settings we
+		// always want primed; smaller than a full custom icon library.
+		$max_bytes = 100000;
+
+		$alloptions = wp_load_alloptions();
+		if ( ! is_array( $alloptions ) ) {
+			$alloptions = array();
+		}
+		$notoptions = wp_cache_get( 'notoptions', 'options' );
+		if ( ! is_array( $notoptions ) ) {
+			$notoptions = array();
+		}
+
+		$to_cache = array();
+		foreach ( $rows as $row ) {
+			$name = $row->option_name;
+			$value = $row->option_value;
+			$GLOBALS['stackable_primed_option_names'][ $name ] = true;
+
+			if ( isset( $alloptions[ $name ] ) ) {
+				continue;
+			}
+			if ( isset( $notoptions[ $name ] ) ) {
+				// The row exists, so a stale notoptions entry would hide it.
+				unset( $notoptions[ $name ] );
+				wp_cache_set( 'notoptions', $notoptions, 'options' );
+			}
+			if ( strlen( $value ) > $max_bytes ) {
+				// Leave it for get_option() if this request actually needs it.
+				unset( $GLOBALS['stackable_primed_option_names'][ $name ] );
+				continue;
+			}
+			// Already in the individual options cache (same as
+			// wp_prime_option_caches() skipping a cache hit).
+			$cached = wp_cache_get( $name, 'options' );
+			if ( false !== $cached ) {
+				continue;
+			}
+			// Store the raw value. get_option() unserializes it later.
+			$to_cache[ $name ] = $value;
+		}
+
+		if ( $to_cache ) {
+			if ( function_exists( 'wp_cache_set_multiple' ) ) {
+				wp_cache_set_multiple( $to_cache, 'options' );
+			} else {
+				foreach ( $to_cache as $name => $value ) {
+					wp_cache_add( $name, $value, 'options' );
+				}
 			}
 		}
-		wp_prime_option_caches( $options );
+
+		if ( function_exists( 'add_filter' ) && (
+			! function_exists( 'has_filter' ) || ! has_filter( 'pre_option', 'stackable_mark_unsaved_option' )
+		) ) {
+			add_filter( 'pre_option', 'stackable_mark_unsaved_option', 10, 3 );
+		}
+
+		if ( STACKABLE_BUILD !== 'free' && function_exists( 'wp_prime_option_caches' ) ) {
+			// These Freemius option names are not `stackable_*`. They're only
+			// read when the SDK itself loads (admin, or a cold frontend cache).
+			$fs_cache = stackable_is_frontend_request() ? get_option( 'stackable_freemius_frontend_cache' ) : false;
+			if ( ! is_array( $fs_cache ) || empty( $fs_cache['version'] ) || $fs_cache['version'] !== STACKABLE_VERSION ) {
+				wp_prime_option_caches( array( 'fs_storage_logger', 'fs_clone_management', 'fs_cache_1748' ) );
+			}
+		}
 	}
 	stackable_prime_option_caches();
 }
