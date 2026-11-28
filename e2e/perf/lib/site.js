@@ -168,22 +168,6 @@ async function stkStyles( html ) {
 }
 const allCss = styles => styles.map( s => s.css ).join( '\n' )
 
-/**
- * The Stackable tags (link/style/script) in the whole page, for counting DOM nodes.
- *
- * @param {string} html Page HTML.
- */
-function stkTags( html ) {
-	const $ = cheerio.load( html )
-	return $( 'link[rel="stylesheet"], style, script' ).toArray().filter( el => {
-		const id = $( el ).attr( 'id' ) || ''
-		const src = $( el ).attr( 'href' ) || $( el ).attr( 'src' ) || ''
-		return /^(ugb|stk)[-_]/.test( id ) || src.includes( `/plugins/${ cfg.slug }/` )
-	} ).map( el => ( {
-		tag: el.tagName, id: $( el ).attr( 'id' ) || '', inHead: $( el ).closest( 'head' ).length > 0,
-	} ) )
-}
-
 /** Unique CSS markers used to tell which stylesheet's rules are on a page. */
 const MARK = {
 	// Rules only in that block's stylesheet (checked against the 3.20.3 and split builds).
@@ -201,5 +185,5 @@ const MARK = {
 }
 
 module.exports = {
-	cfg, wp, wpEval, resetSite, startServer, stopServer, createPage, get, metrics, stkStyles, allCss, stkTags, MARK, FIX, sleep,
+	cfg, wp, wpEval, resetSite, startServer, stopServer, createPage, get, metrics, stkStyles, allCss, MARK, FIX, sleep,
 }

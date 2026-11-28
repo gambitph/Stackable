@@ -17,7 +17,6 @@
  * - ?stk_no_loader=1             Turns off the injected-block CSS loader (stackable_frontend_css_injected_loader).
  * - ?stk_no_finalize=1            Turns off moving late CSS into the first <style> (stackable_frontend_css_finalize_in_buffer).
  * - admin-ajax action stk_perf_ajax&post=<id>  Returns the rendered blocks of a post (AJAX render).
- * - Header "X-Stk-Perf-Admin: 1"  Loads the request as user 1 (to fetch wp-admin pages without logging in).
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -55,9 +54,6 @@ if ( ! empty( $_SERVER['HTTP_X_STK_PERF'] ) ) {
 			'stk_files' => count( $stk ),
 			'opcache' => function_exists( 'opcache_get_status' ) && @opcache_get_status( false ) ? 1 : 0,
 			'query_log' => $GLOBALS['stk_perf_queries'],
-			'stk_file_list' => empty( $_SERVER['HTTP_X_STK_PERF_FILES'] ) ? array() : array_map( function( $f ) use ( $dir ) {
-				return str_replace( $dir, '', $f ) . ' ' . filesize( $f );
-			}, $stk ),
 		) ) . " -->\n";
 	}, PHP_INT_MAX );
 }
@@ -115,9 +111,3 @@ $stk_perf_ajax = function() {
 };
 add_action( 'wp_ajax_stk_perf_ajax', $stk_perf_ajax );
 add_action( 'wp_ajax_nopriv_stk_perf_ajax', $stk_perf_ajax );
-
-if ( ! empty( $_SERVER['HTTP_X_STK_PERF_ADMIN'] ) ) {
-	add_filter( 'determine_current_user', function() {
-		return 1;
-	}, 100 );
-}

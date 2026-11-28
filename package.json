@@ -137,7 +137,6 @@
 		"test:e2e": "npx playwright test",
 		"test:e2e:premium": "npx playwright test -c playwright.premium.config.js",
 		"test:perf": "npx playwright test -c playwright.perf.config.js",
-		"test:perf:css-order": "node e2e/perf/visual/run-css-order.js",
 		"test:debug": "npx playwright test --ui",
 		"test:debug:premium": "npx playwright test -c playwright.premium.config.js --ui",
 		"test:unit": "wp-scripts test-unit-js",
