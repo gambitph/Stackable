@@ -138,16 +138,13 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		public static function print_tabs() {
 			$screen = get_current_screen();
 
-			// The Account and Contact Us tabs are only in Premium.
-			$display_account_tab = STACKABLE_BUILD !== 'free';
+			// The Contact Us tab is only in Premium.
 			$display_contact_tab = STACKABLE_BUILD !== 'free';
-			$account_url = STACKABLE_BUILD === 'free' ? '' : sugb_fs()->get_account_url();
 			$contact_url = STACKABLE_BUILD === 'free' ? '' : sugb_fs()->contact_url();
 
 			if ( STACKABLE_BUILD !== 'free' ) {
-				// When network activated, the license is managed on the main site only.
+				// When network activated, only the main site shows it.
 				if ( is_multisite() && sugb_fs()->is_network_active() && ! is_main_site() ) {
-					$display_account_tab = false;
 					$display_contact_tab = false;
 				}
 				// A whitelabeled license hides our contact details.
@@ -167,13 +164,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					href="<?php echo admin_url( 'admin.php?page=stackable-settings' ) ?>">
 					<span><?php _e( 'Settings', STACKABLE_I18N ) ?></span>
 				</a>
-
-				<?php if ( $display_account_tab ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-account' ? 's-active' : '' ?>"
-						href="<?php echo esc_url( $account_url ) ?>">
-						<span><?php _e( 'Account', STACKABLE_I18N ) ?></span>
-					</a>
-				<?php } ?>
 
 				<?php if ( function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
 					<?php if ( stackable_is_custom_fields_enabled() && current_user_can( 'manage_stackable_custom_fields' ) ) { ?>
@@ -386,10 +376,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		 */
 		public function redirect_to_welcome_page() {
 
-			if ( get_option( 'stackable_redirect_to_welcome' ) &&
-				current_user_can( 'manage_options' ) &&
-				( STACKABLE_BUILD === 'free' || ! sugb_fs()->is_activation_mode() )
-			) {
+			// In Premium without an activated license, this page is the license
+			// activation screen.
+			if ( get_option( 'stackable_redirect_to_welcome' ) && current_user_can( 'manage_options' ) ) {
 				// Never go here again.
 				delete_option( 'stackable_redirect_to_welcome' );
 
@@ -408,11 +397,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 	new Stackable_Welcome_Screen();
 }
-
-// This filter is used by the Freemius activation screen, we can disable redirection with this.
-add_filter( 'fs_redirect_on_activation_stackable-ultimate-gutenberg-blocks', function ( $redirect ) {
-	return apply_filters( 'stackable_activation_screen_enabled', $redirect );
-} );
 
 // Redirect to the welcome screen.
 register_activation_hook( STACKABLE_FILE, array( 'Stackable_Welcome_Screen', 'start_redirect_to_welcome_page' ) );
