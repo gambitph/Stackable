@@ -44,5 +44,11 @@ else
 fi
 
 t2=$( date +%s )
-STK_PERF_PLUGIN="$PLUGIN" STK_PERF_LEGACY="$MODE" STK_PERF_LEGACY_CSS_ORDER=ignore npm run test:perf
+export STK_PERF_PLUGIN="$PLUGIN"
+export STK_PERF_LEGACY="$MODE"
+STK_PERF_LEGACY_CSS_ORDER=ignore npm run test:perf
 echo "::notice::perf suite (legacy $MODE) $(( $( date +%s ) - t2 ))s"
+
+t3=$( date +%s )
+node e2e/perf/ci/budget-check.js
+echo "::notice::budget check $(( $( date +%s ) - t3 ))s"

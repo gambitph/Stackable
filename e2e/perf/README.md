@@ -50,11 +50,34 @@ runs `e2e/perf/ci/run.sh build/stackable <off|on>`:
 
 * `ci/setup-site.sh` makes the site (WordPress 6.8.3 + SQLite, TT5 + TT1, WP-CLI)
   and the snapshot.
-* `off`: the static CSS order check (`visual/run-css-order.js`), then `test:perf`.
+* `off`: the static CSS order check (`visual/run-css-order.js`), then `test:perf`,
+  then the performance budget (`ci/budget-check.js`).
 * `on`: records the output of the last release from WordPress.org for
   `legacy-identical.spec.js` (`STK_PERF_RELEASE`, default 3.20.3; the stylesheets
   are compared as sets of rules because the release's rule order wasn't fixed),
-  then `test:perf`.
+  then `test:perf`, then the performance budget.
+
+## Performance budget (`ci/budget-check.js`)
+
+A short HTTP-only check (no browser) on the 4-block benchmark page. It fails
+if Stackable's CSS bytes, inline `<style>` bytes, JS bytes, extra database
+queries, or extra DOM nodes go over a limit. Typical run: about 2.5–3 seconds
+(one site reset and a few fetches).
+
+The limits live in `DEFAULT_BUDGETS` inside `ci/budget-check.js`. If a change
+legitimately needs more CSS, JS, queries, or DOM, raise the matching number
+there and say why in the commit. Do not raise a budget only to make CI green.
+
+| Mode | CSS | Inline `<style>` | JS | Queries over core | DOM nodes over core |
+|---|---:|---:|---:|---:|---:|
+| New loading (legacy flag off) | 28 kB | 28 kB | 4 kB | +3 | +12 |
+| Legacy loading (flag on) | 130 kB | 8 kB | 8 kB | +3 | +16 |
+
+On this branch the measured values were about 21 kB CSS (all of it inline) and
+1.7 kB JS (the injected-block loader), +1 query and +3 DOM nodes (flag off);
+flag on is about 109 kB CSS, 3.6 kB inline, no loader, +1 query and +5 DOM
+nodes. Override one limit while debugging with `STK_BUDGET_CSS`,
+`STK_BUDGET_INLINE`, `STK_BUDGET_JS`, `STK_BUDGET_QUERIES` or `STK_BUDGET_DOM`.
 
 `npm run test:perf:css-order -- <pluginDir> --legacy=<release dist> [--premium]`
 checks the split stylesheets against the legacy bundle (missing rules and order
