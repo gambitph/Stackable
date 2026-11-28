@@ -56,9 +56,10 @@ test.describe( 'Link control URL input', () => {
 		const clientId = await buttonBlock.getAttribute( 'data-block' )
 
 		const setLinkValue = async ( value: string ) => {
-			await input.click()
+			await expect( linkPanel ).toBeVisible()
+			await expect( input ).toBeVisible()
+
 			await input.fill( value )
-			await page.keyboard.press( 'Escape' )
 			await input.blur()
 		}
 
