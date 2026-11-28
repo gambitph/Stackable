@@ -247,15 +247,6 @@ if ( ! function_exists( 'stackable_prime_option_caches' ) ) {
 		) ) {
 			add_filter( 'pre_option', 'stackable_mark_unsaved_option', 10, 3 );
 		}
-
-		if ( STACKABLE_BUILD !== 'free' && function_exists( 'wp_prime_option_caches' ) ) {
-			// These Freemius option names are not `stackable_*`. They're only
-			// read when the SDK itself loads (admin, or a cold frontend cache).
-			$fs_cache = stackable_is_frontend_request() ? get_option( 'stackable_freemius_frontend_cache' ) : false;
-			if ( ! is_array( $fs_cache ) || empty( $fs_cache['version'] ) || $fs_cache['version'] !== STACKABLE_VERSION ) {
-				wp_prime_option_caches( array( 'fs_storage_logger', 'fs_clone_management', 'fs_cache_1748' ) );
-			}
-		}
 	}
 	stackable_prime_option_caches();
 }
