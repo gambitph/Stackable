@@ -2,8 +2,9 @@
 
 Correctness tests for how Stackable loads its frontend CSS: which stylesheets
 load for which blocks, the legacy-CSS compatibility flag, option queries,
-`stackable_force_css_load`, computed styles vs the legacy bundle, and a
-performance budget.
+the injected-block loader, `stackable_force_css_load`, and a performance
+budget. `npm run test:block-css-scope` (no WordPress) checks that each block
+stylesheet only styles its own block.
 
 Unlike the Playground e2e suites, this drives a **local throwaway WordPress
 site** (`php -S` + SQLite) because it needs to reset the database to a fresh
@@ -32,9 +33,8 @@ Or run the same path CI uses: `bash e2e/perf/ci/run.sh <plugin build> off`
 | Spec | Covers |
 |---|---|
 | `frontend-assets.spec.js` | Per-scenario CSS: no Stackable CSS without blocks; only the blocks on the page; color schemes only when used; design system only when set; theme compatibility; late (after footer) and admin-ajax rendered blocks; `stackable_force_css_load`. |
-| `gating-options.spec.js` | Fresh install vs upgrade from 3.20.3, the flag is autoloaded, turning it off sticks; Stackable's extra queries on a simple page, queries don't grow with block types; Stackable options are autoloaded. |
-| `visual-compare.spec.js` | Computed styles of every element with the new loading vs the legacy bundle, same site and markup (TT5 + TT1, 1440/768/375, color schemes + custom breakpoints). Catches rules a block's stylesheet has for other blocks' markup. |
-| `force-load.spec.js` | `stackable_force_css_load`: Stackable markup added by a script after load (`?stk_inject`), blocks rendered late, custom breakpoints and color schemes (with and without a base scheme) are styled the same as with the legacy bundle. |
+| `gating-options.spec.js` | Fresh install vs upgrade from a version before the flag, the flag is autoloaded, turning it off sticks; the flag switches between the `frontend_blocks.css` bundle and the per-block inline CSS + injected-block loader; Stackable's extra queries on a simple page, queries don't grow with block types; Stackable options are autoloaded. |
+| `force-load.spec.js` | With `stackable_force_css_load` every block stylesheet loads in full (not trimmed). Stackable markup added by a script after load (`?stk_inject`, the injected-block loader), blocks rendered late, custom breakpoints and color schemes (with and without a base scheme) are styled the same as when every style is loaded. |
 
 ## CI
 
@@ -44,6 +44,9 @@ runs `e2e/perf/ci/run.sh build/stackable <off|on>`:
 * `ci/setup-site.sh` makes the site (WordPress 6.8.3 + SQLite, TT5 + TT1, WP-CLI)
   and the snapshot.
 * Then `test:perf`, then the performance budget (`ci/budget-check.js`).
+* Before that (legacy off only), `npm run test:block-css-scope` checks the
+  built block stylesheets: every rule must target its own block
+  (`tools/check-block-css-scope.js`, well under a second, no WordPress).
 
 ## Performance budget (`ci/budget-check.js`)
 

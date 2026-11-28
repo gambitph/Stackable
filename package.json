@@ -137,6 +137,7 @@
 		"test:e2e": "npx playwright test",
 		"test:e2e:premium": "npx playwright test -c playwright.premium.config.js",
 		"test:perf": "npx playwright test -c playwright.perf.config.js",
+		"test:block-css-scope": "node tools/check-block-css-scope.js",
 		"test:debug": "npx playwright test --ui",
 		"test:debug:premium": "npx playwright test -c playwright.premium.config.js --ui",
 		"test:unit": "wp-scripts test-unit-js",

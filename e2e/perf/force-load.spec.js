@@ -1,17 +1,20 @@
 /**
- * The stackable_force_css_load filter: all block styles load and the rule
- * trimming is off, so Stackable markup added by scripts after load (which PHP
- * never saw) is styled the same as the same blocks rendered normally.
+ * The stackable_force_css_load filter and the injected-block loader.
  *
- * Each case compares the computed styles of every Stackable element (keyed by
- * its unique id class) with the same request using the legacy bundle, which
- * has every rule (the styling before the CSS was split per block).
+ * - With the filter, every block stylesheet loads in full (rules are not
+ *   trimmed to the blocks on the page).
+ * - Stackable markup added by a script after load (which PHP never saw) and
+ *   blocks rendered late are styled the same as when every style is loaded.
+ *
+ * The styled cases compare the computed styles of every Stackable element
+ * (keyed by its unique id class) with the same request with the filter on,
+ * where all the styles are on the page.
  */
 const { test, expect } = require( '@playwright/test' )
 const fs = require( 'fs' ),
 	path = require( 'path' )
 const {
-	cfg, wp, wpEval, resetSite, createPage, FIX,
+	cfg, wp, wpEval, resetSite, createPage, get, stkStyles, allCss, FIX,
 } = require( './lib/site' )
 
 const PROPS = [ 'color', 'background-color', 'background-image', 'font-size', 'font-weight', 'line-height', 'padding-top', 'padding-left', 'margin-top', 'margin-bottom', 'border-top-width', 'border-top-left-radius', 'flex-direction', 'flex-wrap', 'column-gap', 'justify-content', 'text-align', 'box-shadow' ]
@@ -32,12 +35,12 @@ function setSchemeOptions( on, { base = true } = {} ) {
 	wpEval( `foreach ( json_decode( base64_decode( '${ json }' ), true ) as $name => $value ) { ${ on ? 'update_option( $name, $value );' : 'delete_option( $name );' } }` )
 }
 
-async function styles( page, url, root ) {
+async function styles( page, url, root, props = PROPS ) {
 	await page.goto( cfg.url + url )
 	// The injected-block loader adds its <link>s when the browser is idle.
 	await page.waitForTimeout( 300 )
 	await page.waitForLoadState( 'networkidle' )
-	return page.evaluate( ( { root, PROPS } ) => {
+	return page.evaluate( ( { root, props } ) => {
 		const out = {}
 		const scope = document.querySelector( root )
 		if ( ! scope ) {
@@ -53,10 +56,10 @@ async function styles( page, url, root ) {
 				continue
 			}
 			const cs = getComputedStyle( el )
-			out[ key ] = PROPS.map( p => cs.getPropertyValue( p ) ).join( ';' )
+			out[ key ] = props.map( p => cs.getPropertyValue( p ) ).join( ';' )
 		}
 		return out
-	}, { root, PROPS } )
+	}, { root, props } )
 }
 
 function differences( a, b ) {
@@ -68,31 +71,28 @@ function differences( a, b ) {
 	}
 }
 
-const setLegacy = on => on ? wp( 'option', 'update', 'stackable_use_legacy_frontend_css', '1' ) : wp( 'option', 'delete', 'stackable_use_legacy_frontend_css' )
-
-// Reference for injected markup: the same request with the legacy bundle.
-async function legacyRef( page, query, root ) {
-	if ( cfg.isLegacyMode ) {
-		return styles( page, `/?page_id=${ ids.host }&${ query }`, root )
-	}
-	setLegacy( true )
-	try {
-		return await styles( page, `/?page_id=${ ids.host }&${ query }`, root )
-	} finally {
-		setLegacy( false )
-	}
-}
-
-async function compare( page, query, { lateRoot } = {} ) {
-	const root = lateRoot || '#stk-perf-injected'
-	const ref = await legacyRef( page, query, root )
+/**
+ * Compares the styles of the Stackable elements in `root` for two requests
+ * of the host page.
+ *
+ * @param {Object} page Playwright page.
+ * @param {string} query The request to check, e.g. `stk_inject=12`.
+ * @param {string} refQuery The reference request, where every style is loaded.
+ * @param {string} root The element with the added blocks.
+ */
+async function compare( page, query, refQuery, root = '#stk-perf-injected' ) {
+	const ref = await styles( page, `/?page_id=${ ids.host }&${ refQuery }`, root )
 	const got = await styles( page, `/?page_id=${ ids.host }&${ query }`, root )
-	expect( got, 'injected markup on the page' ).toBeTruthy()
+	expect( got, 'added markup on the page' ).toBeTruthy()
 	const d = differences( ref, got )
 	test.info().annotations.push( { type: 'metric', description: `${ query }: ${ d.compared } elements, ${ d.diff.length } differ ${ JSON.stringify( d.diff.slice( 0, 3 ) ).slice( 0, 600 ) }` } )
 	expect( d.compared ).toBeGreaterThan( 20 )
 	return d
 }
+
+// Shortcuts: markup added by a script, and blocks rendered after the footer.
+const inject = ( page, id, extra = '' ) => compare( page, `${ extra }stk_inject=${ id }`, `stk_force=1&stk_inject=${ id }` )
+const late = ( page, id, extra = '' ) => compare( page, `${ extra }stk_late=${ id }`, `stk_force=1&stk_late=${ id }`, '#stk-perf-late' )
 
 test.describe.configure( { mode: 'serial' } )
 
@@ -104,62 +104,84 @@ test.beforeAll( async () => {
 	ids.ref = createPage( 'force-ref', tmp )
 	ids.host = createPage( 'force-host', 'heading.html' )
 	ids.schemes = createPage( 'force-schemes', 'design-system.html' )
+	ids.empty = createPage( 'force-empty', 'no-stackable.html' )
+} )
+
+test( 'with the filter, every block stylesheet loads in full, not trimmed to the page @ci', async () => {
+	test.skip( cfg.isLegacyMode, 'the legacy bundle always has every block style' )
+	// A page without Stackable blocks: nothing would load without the filter.
+	const css = allCss( await stkStyles( ( await get( `/?page_id=${ ids.empty }&stk_force=1` ) ).text ) )
+	const dir = path.join( cfg.plugin, 'dist', 'blocks' )
+	const files = fs.readdirSync( dir ).filter( f => f.endsWith( '.css' ) )
+	expect( files.length ).toBeGreaterThan( 20 )
+	// Whole files have no color scheme marker class on the page, so the
+	// printer puts the color scheme selectors back in place of the marker
+	// (Stackable_Frontend_CSS_Color_Schemes::use_old_selectors()). Undo that
+	// before comparing.
+	const php = fs.readFileSync( path.join( cfg.plugin, 'src', 'frontend-css', 'class-color-schemes.php' ), 'utf8' )
+	const schemeSelectors = php.match( /const OLD_SELECTORS = "([^"]+)"/ )[ 1 ]
+	const pageCss = css.split( `:where(${ schemeSelectors })` ).join( ':where(.stk-has-scheme)' )
+	const missing = files.filter( f => ! pageCss.includes( fs.readFileSync( path.join( dir, f ), 'utf8' ).trim() ) )
+	expect( missing, 'block stylesheets not on the page in full' ).toEqual( [] )
 } )
 
 test( 'without the injected-block loader, injected markup misses styles (shows the test can tell)', async ( { page } ) => {
 	test.skip( cfg.isLegacyMode, 'the legacy bundle always has every block style' )
-	const d = await compare( page, `stk_no_loader=1&stk_inject=${ ids.ref }` )
+	const d = await inject( page, ids.ref, 'stk_no_loader=1&' )
 	expect( d.diff.length ).toBeGreaterThan( 0 )
 } )
 
 test( 'injected markup (e.g. HTML copied from another page) is styled by the injected-block loader @ci', async ( { page } ) => {
-	const d = await compare( page, `stk_inject=${ ids.ref }` )
-	expect( d.diff ).toEqual( [] )
+	expect( ( await inject( page, ids.ref ) ).diff ).toEqual( [] )
 } )
 
 test( 'the injected-block loader also loads the color scheme rules @ci', async ( { page } ) => {
 	setSchemeOptions( true )
 	try {
-		const d = await compare( page, `stk_inject=${ ids.schemes }` )
-		expect( d.diff ).toEqual( [] )
+		expect( ( await inject( page, ids.schemes ) ).diff ).toEqual( [] )
 	} finally {
 		setSchemeOptions( false )
 	}
 } )
 
-test( 'with the filter, injected markup is styled', async ( { page } ) => {
-	const d = await compare( page, `stk_force=1&stk_inject=${ ids.ref }` )
-	expect( d.diff ).toEqual( [] )
+test( 'blocks rendered late (widgets, dynamic content) are styled', async ( { page } ) => {
+	expect( ( await late( page, ids.ref ) ).diff ).toEqual( [] )
 } )
 
-test( 'with the filter, blocks rendered late (widgets, dynamic content) are styled', async ( { page } ) => {
-	const d = await compare( page, `stk_force=1&stk_late=${ ids.ref }`, { lateRoot: '#stk-perf-late' } )
-	expect( d.diff ).toEqual( [] )
-} )
-
-test( 'with the filter and custom breakpoints, responsive rules match at tablet and mobile widths', async ( { page } ) => {
+test( 'with custom breakpoints, injected markup gets the responsive rules at tablet and mobile widths', async ( { page } ) => {
 	wp( 'option', 'update', 'stackable_dynamic_breakpoints', '{"tablet":900,"mobile":600}', '--format=json' )
 	try {
 		for ( const width of [ 850, 560 ] ) {
 			await page.setViewportSize( { width, height: 900 } )
-			const d = await compare( page, `stk_force=1&stk_inject=${ ids.ref }` )
-			expect( d.diff, `at ${ width }px` ).toEqual( [] )
+			expect( ( await inject( page, ids.ref ) ).diff, `at ${ width }px` ).toEqual( [] )
 		}
 	} finally {
 		wp( 'option', 'delete', 'stackable_dynamic_breakpoints' )
 	}
 } )
 
+// The color schemes are set in the options. Markup added after load and late
+// blocks must get the same colors as the same blocks rendered on their own
+// page, where their color scheme CSS is printed for them. Only the colors are
+// compared: spacing can differ when the blocks are in another place.
+const COLOR_PROPS = [ 'color', 'background-color', 'background-image' ]
+async function compareWithRenderedPage( page, query, root ) {
+	const ref = await styles( page, `/?page_id=${ ids.schemes }`, 'body', COLOR_PROPS )
+	const got = await styles( page, `/?page_id=${ ids.host }&${ query }`, root, COLOR_PROPS )
+	const d = differences( ref, got )
+	test.info().annotations.push( { type: 'metric', description: `${ query }: ${ d.compared } elements, ${ d.diff.length } differ ${ JSON.stringify( d.diff.slice( 0, 3 ) ).slice( 0, 600 ) }` } )
+	expect( d.compared ).toBeGreaterThan( 20 )
+	return d
+}
+
 for ( const base of [ true, false ] ) {
-	test( `with the filter and global color schemes (${ base ? 'with' : 'without' } a base scheme), injected markup gets the scheme colors`, async ( { page } ) => {
+	test( `with the filter and global color schemes (${ base ? 'with' : 'without' } a base scheme), added markup gets the scheme colors`, async ( { page } ) => {
 		setSchemeOptions( true, { base } )
 		try {
 			await page.goto( `${ cfg.url }/?page_id=${ ids.host }` )
 			expect( await page.evaluate( () => document.body.classList.contains( 'stk--has-base-scheme' ) ) ).toBe( base )
-			const d = await compare( page, `stk_force=1&stk_inject=${ ids.schemes }` )
-			expect( d.diff ).toEqual( [] )
-			const late = await compare( page, `stk_force=1&stk_late=${ ids.schemes }`, { lateRoot: '#stk-perf-late' } )
-			expect( late.diff ).toEqual( [] )
+			expect( ( await compareWithRenderedPage( page, `stk_force=1&stk_inject=${ ids.schemes }`, '#stk-perf-injected' ) ).diff ).toEqual( [] )
+			expect( ( await compareWithRenderedPage( page, `stk_force=1&stk_late=${ ids.schemes }`, '#stk-perf-late' ) ).diff ).toEqual( [] )
 		} finally {
 			setSchemeOptions( false )
 		}

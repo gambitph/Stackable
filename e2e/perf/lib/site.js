@@ -17,7 +17,7 @@ const cfg = {
 	url: process.env.STK_PERF_URL || 'http://127.0.0.1:8896',
 	plugin: process.env.STK_PERF_PLUGIN || '',
 	snapshot: process.env.STK_PERF_SNAPSHOT || path.join( os.tmpdir(), 'stk-perf-ci', 'base.sqlite' ),
-	// 'off' (new behavior), 'on' (legacy flag on), 'release' (an old release without the flag)
+	// 'off' (new behavior) or 'on' (legacy flag on)
 	legacy: process.env.STK_PERF_LEGACY || 'off',
 	opcache: process.env.STK_PERF_OPCACHE || '0',
 	premiumMock: process.env.STK_PERF_PREMIUM_MOCK || '',
@@ -74,7 +74,7 @@ async function startServer() {
 /**
  * Restore the fresh-install snapshot and activate the plugin under test.
  *
- * @param {Object} o { legacy: 'off'|'on'|'release', upgradeFrom: version string to simulate an upgrade }
+ * @param {Object} o { legacy: 'off'|'on', upgradeFrom: version string to simulate an upgrade }
  */
 async function resetSite( o = {} ) {
 	const legacy = o.legacy || cfg.legacy
@@ -170,7 +170,7 @@ const allCss = styles => styles.map( s => s.css ).join( '\n' )
 
 /** Unique CSS markers used to tell which stylesheet's rules are on a page. */
 const MARK = {
-	// Rules only in that block's stylesheet (checked against the 3.20.3 and split builds).
+	// Rules only in that block's stylesheet.
 	accordion: /\.stk-block-accordion summary/,
 	tabs: /\.stk-block-tab-labels/,
 	heading: /\.stk-block-heading/,

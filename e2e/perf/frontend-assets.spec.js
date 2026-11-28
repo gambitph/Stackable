@@ -6,7 +6,7 @@
  * global design system is set, the theme compatibility CSS of the active
  * theme, and CSS for blocks rendered late or over AJAX.
  *
- * Legacy flag on / old release: the single frontend_blocks.css bundle.
+ * Legacy flag on: the single frontend_blocks.css bundle.
  */
 const { test, expect } = require( '@playwright/test' )
 const {
@@ -100,12 +100,12 @@ test.describe( 'assets per scenario', () => {
 		expect( late.length ).toBeGreaterThan( 50 )
 		const styles = await stkStyles( html )
 		const css = allCss( styles )
-		// The old single stylesheet has the CSS of all blocks, the new
-		// behavior prints the CSS of the late blocks with them.
+		// The legacy bundle has the CSS of all blocks, the per-block loading
+		// prints the CSS of the late blocks with them.
 		expect( css ).toMatch( MARK.tabs )
 	} )
 
-	test( 'the CSS of late blocks is moved into the first <style> (same cascade as the old head stylesheet) @ci', async () => {
+	test( 'the CSS of late blocks is moved into the first <style> in the head (keeps the cascade order) @ci', async () => {
 		test.skip( legacy, 'new behavior only' )
 		const html = ( await get( `/heading/?stk_late=${ ids.tabs }` ) ).text
 		const styles = ( await stkStyles( html ) ).filter( s => s.tag === 'style' && /^stk-frontend-css/.test( s.id ) )

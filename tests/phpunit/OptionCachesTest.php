@@ -79,8 +79,8 @@ class OptionCachesTest extends Stackable_TestCase {
 	}
 
 	/**
-	 * Saved stackable_* options (including a name that was never on the old
-	 * list) go into the options cache in one query. Autoloaded and oversized
+	 * Saved stackable_* options (any name with the prefix) go into the
+	 * options cache in one query. Autoloaded and oversized
 	 * values are left alone. Inheritance transients are included; other
 	 * transients are not.
 	 */
@@ -91,7 +91,7 @@ class OptionCachesTest extends Stackable_TestCase {
 		$this->wpdb->rows = array(
 			(object) array( 'option_name' => 'stackable_current_version_installed', 'option_value' => '3.20.4' ),
 			(object) array( 'option_name' => 'stackable_use_legacy_frontend_css', 'option_value' => '' ),
-			// A name that would have been missed by the old hard-coded list.
+			// A name no list knows about: options are loaded by their prefix.
 			(object) array( 'option_name' => 'stackable_new_setting', 'option_value' => 'yes' ),
 			(object) array( 'option_name' => '_transient_stackable_block_style_inheritance_css', 'option_value' => 'body{}' ),
 			(object) array( 'option_name' => '_transient_stackable_get_design_abc', 'option_value' => 'huge-library' ),

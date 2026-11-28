@@ -6,12 +6,13 @@
  *   it doesn't cost a query.
  * - Upgrade from 3.20.x: the flag turns on in the first request, autoloaded.
  * - Turning the flag off sticks.
+ * - The flag switches between the bundle and the per-block CSS.
  * - Query count on a simple page stays within a small budget over WordPress
  *   without Stackable (missing options must not cost one query each).
  */
 const { test, expect } = require( '@playwright/test' )
 const {
-	cfg, resetSite, createPage, get, metrics, stkStyles, wp,
+	cfg, resetSite, createPage, get, metrics, stkStyles, allCss, MARK, wp,
 } = require( './lib/site' )
 
 // The e2e Premium mock reads 1 option of its own per request; that query
@@ -28,8 +29,6 @@ const isAutoload = a => [ 'yes', 'on', 'auto', 'auto-on' ].includes( String( a )
 const usesBundle = styles => !! styles.find( s => s.tag === 'link' && /dist\/frontend_blocks\.css$/.test( s.href ) )
 
 test.describe( 'legacy flag gating', () => {
-	test.skip( cfg.legacy === 'release', 'the old release has no legacy flag' )
-
 	test( 'fresh install uses the new behavior and stores the flag autoloaded', async () => {
 		await resetSite( { legacy: 'off' } )
 		createPage( 'benchmark', 'benchmark.html' )
@@ -52,6 +51,22 @@ test.describe( 'legacy flag gating', () => {
 		expect( isAutoload( row.autoload ), `autoload=${ row.autoload }` ).toBe( true )
 		expect( usesBundle( await stkStyles( ( await get( '/benchmark/' ) ).text ) ) ).toBe( true )
 	} )
+
+	// The legacy option as a feature: one switch between the two ways of
+	// loading the CSS. Only the main signs of each are checked.
+	for ( const on of [ true, false ] ) {
+		test( `legacy option ${ on ? 'on: the single frontend_blocks.css bundle' : 'off: per-block inline CSS and the injected-block loader' } @ci`, async () => {
+			await resetSite( { legacy: on ? 'on' : 'off' } )
+			createPage( 'benchmark', 'benchmark.html' )
+			const html = ( await get( '/benchmark/' ) ).text
+			const styles = await stkStyles( html )
+			expect( usesBundle( styles ), 'frontend_blocks.css link' ).toBe( on )
+			expect( /<style[^>]+id=["']stk-frontend-css-inline-css["']/.test( html ), 'per-block inline CSS' ).toBe( ! on )
+			expect( /<script[^>]+id=["']stk-injected-css-loader["']/.test( html ), 'injected-block loader' ).toBe( ! on )
+			// Either way the blocks on the page are styled.
+			expect( allCss( styles ) ).toMatch( MARK.heading )
+		} )
+	}
 
 	test( 'turning the flag off after an upgrade sticks', async () => {
 		await resetSite( { legacy: 'off', upgradeFrom: '3.20.3' } )
