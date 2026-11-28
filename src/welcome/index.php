@@ -126,7 +126,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'isPro' => STACKABLE_BUILD !== 'free' && sugb_fs()->can_use_premium_code(),
 					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
-					'contactURL' => STACKABLE_BUILD === 'free' ? '' : ( ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '' ),
+					'contactURL' => STACKABLE_BUILD === 'free' ? '' : ( ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url() : '' ),
 					'planName' => STACKABLE_BUILD === 'free' ? '' : sugb_fs()->get_plan_name(),
 					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ( STACKABLE_BUILD === 'free' || ! sugb_fs()->can_use_premium_code() ),
 					'nonceNews' => stackable_get_news_feed_nonce(),
@@ -138,24 +138,19 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		public static function print_tabs() {
 			$screen = get_current_screen();
 
-			$display_account_tab = true;
-			$display_contact_tab = true;
+			// The Account and Contact Us tabs are only in Premium.
+			$display_account_tab = STACKABLE_BUILD !== 'free';
+			$display_contact_tab = STACKABLE_BUILD !== 'free';
 			$account_url = STACKABLE_BUILD === 'free' ? '' : sugb_fs()->get_account_url();
-			$contact_url = admin_url( 'admin.php?page=stackable-contact' );
+			$contact_url = STACKABLE_BUILD === 'free' ? '' : sugb_fs()->contact_url();
 
-			// If network activated and in multisite, the accounts page is in a different URL.
-			if ( STACKABLE_BUILD === 'free' ) {
-				$display_account_tab = false;
-				$display_contact_tab = false;
-			} else {
-				if ( is_multisite() && sugb_fs()->is_network_active() ) {
-					$account_url = str_replace( 'options-general.php', 'admin.php', $account_url );
-					$contact_url = admin_url( 'network/admin.php?page=stackable-contact' );
-					if ( ! is_main_site() ) {
-						$display_account_tab = false;
-						$display_contact_tab = false;
-					}
+			if ( STACKABLE_BUILD !== 'free' ) {
+				// When network activated, the license is managed on the main site only.
+				if ( is_multisite() && sugb_fs()->is_network_active() && ! is_main_site() ) {
+					$display_account_tab = false;
+					$display_contact_tab = false;
 				}
+				// A whitelabeled license hides our contact details.
 				if ( sugb_fs()->is_whitelabeled() ) {
 					$display_contact_tab = false;
 				}
@@ -173,17 +168,10 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<span><?php _e( 'Settings', STACKABLE_I18N ) ?></span>
 				</a>
 
-				<?php if ( $display_account_tab && STACKABLE_BUILD !== 'free' && sugb_fs()->get_user() ) { ?>
+				<?php if ( $display_account_tab ) { ?>
 					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-account' ? 's-active' : '' ?>"
-						href="<?php echo $account_url ?>">
+						href="<?php echo esc_url( $account_url ) ?>">
 						<span><?php _e( 'Account', STACKABLE_I18N ) ?></span>
-					</a>
-				<?php } ?>
-
-				<?php if ( STACKABLE_BUILD !== 'free' && sugb_fs()->has_affiliate_program() ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-affiliation' ? 's-active' : '' ?>"
-						href="<?php echo admin_url( 'options-general.php?page=stackable-affiliation' ) ?>">
-						<span><?php _e( 'Affiliation', STACKABLE_I18N ) ?></span>
 					</a>
 				<?php } ?>
 
@@ -199,9 +187,8 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				<a class="s-tab" href="https://docs.wpstackable.com" target="_docs">
 				<span><?php _e( 'Documentation', STACKABLE_I18N ) ?></span></a>
 
-				<?php if ( $display_contact_tab && STACKABLE_BUILD !== 'free' ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-contact' ? 's-active' : '' ?>"
-						href="<?php echo $contact_url ?>">
+				<?php if ( $display_contact_tab ) { ?>
+					<a class="s-tab" href="<?php echo esc_url( $contact_url ) ?>" target="_blank">
 						<span><?php _e( 'Contact Us', STACKABLE_I18N ) ?></span>
 					</a>
 				<?php } ?>

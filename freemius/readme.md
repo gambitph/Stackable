@@ -1,0 +1,1 @@
+This directory and the files are added here to force Freemius to allow us to upload the plugin zip file in the deployment area. If this is not present, our upload will be blocked saying that there are "no Freemius" files present in the zip file.

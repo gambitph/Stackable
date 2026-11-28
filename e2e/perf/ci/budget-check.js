@@ -21,9 +21,9 @@ const {
 	cfg, resetSite, createPage, get, metrics, stkStyles,
 } = require( '../lib/site' )
 
-// The e2e Freemius license mock (Premium only) adds a few queries that
-// are not Stackable's.
-const MOCK_QUERIES = cfg.isPremium && cfg.premiumMock ? 3 : 0
+// The e2e Premium mock reads 1 option of its own per request; that query
+// isn't Stackable's.
+const MOCK_QUERIES = cfg.isPremium && cfg.premiumMock ? 1 : 0
 
 // Limits for the 4-block page, a little above what this branch measures,
 // so a typo-sized change still fails but a tiny fluctuation does not.

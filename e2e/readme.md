@@ -60,10 +60,8 @@ Premium uses port `9421`, `playwright.premium.config.js`, and the shared
 
 - `e2e/config/stackable-e2e-mu-plugin.php` (Dynamic Content post meta for REST;
   Design Library CDN fixtures via `pre_http_request`)
-- `pro__premium_only/e2e/mu-plugins/stackable-e2e-mock-premium.php` (injects a
-  Freemius in-memory license, exits Freemius activation/opt-in mode, and
-  suppresses the post-activation admin redirect so Settings stays registered
-  and REST `rest-nonce` is not poisoned with Getting Started HTML)
+- `pro__premium_only/e2e/mu-plugins/stackable-e2e-mock-premium.php` (pretends
+  a Premium license is activated by filtering the `stackable_license` option)
 
 After premium builds, restore the free build type if you need free packaging:
 
@@ -160,7 +158,7 @@ Fail if a panel still shows `ProControl` / "Get Premium" while premium is mocked
 | `test-utils/` | Shared fixtures, catalog insert, recovery-UI assertions |
 | `tests/*.spec.ts` | Free browser specs |
 | `../pro__premium_only/e2e/tests/*.spec.ts` | Premium browser specs |
-| `../pro__premium_only/e2e/mu-plugins/stackable-e2e-mock-premium.php` | E2E-only Freemius license injection |
+| `../pro__premium_only/e2e/mu-plugins/stackable-e2e-mock-premium.php` | E2E-only fake activated Premium license |
 | `.auth/` | Gitignored; written by global setup |
 
 ## Troubleshooting

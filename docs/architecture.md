@@ -59,8 +59,8 @@ Premium = same spine + Dynamic Content, conditional display, extra features/bloc
 ## Bootstrap
 
 1. `plugin.php` defines `STACKABLE_BUILD` (`free` | `premium`) and loads free PHP.
-2. If not free, load Freemius (`freemius.php`).
-3. If premium and Freemius allows, require `pro__premium_only/index.php` when present.
+2. If not free, load the Premium license code (`pro__premium_only/freemius.php`, defines `sugb_fs()`; talks to the Freemius API directly, no Freemius SDK).
+3. If premium, require `pro__premium_only/index.php` when present.
 
 Build tooling flips `STACKABLE_BUILD` (`npm run update-build-type` / `tools/update-build-type.js`) and packages free vs premium zips accordingly.
 

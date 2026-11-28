@@ -14,9 +14,9 @@ const {
 	cfg, resetSite, createPage, get, metrics, stkStyles, wp,
 } = require( './lib/site' )
 
-// The e2e Freemius license mock (Premium only) reads 1 option and deletes a
-// transient twice per request; those queries aren't Stackable's.
-const MOCK_QUERIES = cfg.isPremium && cfg.premiumMock ? 3 : 0
+// The e2e Premium mock reads 1 option of its own per request; that query
+// isn't Stackable's.
+const MOCK_QUERIES = cfg.isPremium && cfg.premiumMock ? 1 : 0
 const QUERY_BUDGET = cfg.isPremium ? 3 : 2
 
 const optionRow = name => {

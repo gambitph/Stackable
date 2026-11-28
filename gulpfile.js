@@ -577,6 +577,7 @@ gulp.task( 'generate-translations-php', gulp.series(
 			'!' + path.resolve( __dirname, './**/__test__/*.js' ),
 			'!' + path.resolve( __dirname, './src/translation-strings.js' ),
 			path.resolve( __dirname, './pro__premium_only/*.php' ),
+			path.resolve( __dirname, './pro__premium_only/freemius/*.php' ),
 			path.resolve( __dirname, './pro__premium_only/src/**/*.php' ),
 			'!./**/dist/**/*',
 		 ] )

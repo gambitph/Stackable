@@ -9,7 +9,7 @@
  * Version: 3.20.4
  *
  * @package Stackable
- * @fs_premium_only /freemius.php, /freemius/
+ * @fs_premium_only /freemius/
  */
 
 // Exit if accessed directly.
@@ -39,9 +39,9 @@ if ( defined('STACKABLE_FILE') && STACKABLE_FILE !== __FILE__ && ! isset( $GLOBA
 	register_activation_hook( __FILE__, 'stackable_multiple_plugins_check' );
 }
 
-// Freemius SDK: Auto deactivate the free version when activating the paid one.
+// Stackable Premium is already loaded (its license code defines sugb_fs()), so
+// this copy of Stackable stops here.
 if ( function_exists( 'sugb_fs' ) ) {
-	sugb_fs()->set_basename( true, __FILE__ );
 	return;
 }
 
@@ -456,11 +456,10 @@ if ( defined( 'STACKABLE_PHPUNIT' ) && STACKABLE_PHPUNIT ) {
 }
 
 /**
- * Freemius.
- * This needs to be first.
+ * The Premium license (sugb_fs()). This needs to be first.
  */
-if ( STACKABLE_BUILD !== 'free' ) {
-	require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
+if ( STACKABLE_BUILD !== 'free' && file_exists( plugin_dir_path( __FILE__ ) . 'pro__premium_only/freemius.php' ) ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'pro__premium_only/freemius.php' );
 }
 
 /**
@@ -527,7 +526,6 @@ if ( is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/useful-plugins.php' ); // For cross-marketing
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/news.php' );
-	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/freemius.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/updates.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );

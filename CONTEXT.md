@@ -71,8 +71,8 @@ Text domain constant: `stackable-ultimate-gutenberg-blocks`.
 _Avoid_: inventing a shorter domain string in new strings
 
 **sugb_fs / Freemius**:
-Licensing and updates for premium builds via Freemius SDK helpers in this repo.
-_Avoid_: inventing a custom lite license stack beside Freemius in this repo
+Licensing and updates for premium builds. `sugb_fs()` is a small license class in `pro__premium_only/freemius.php` that talks to the Freemius API directly (no Freemius SDK, the same approach as Cimo). Its methods keep the SDK names (`can_use_premium_code()`, `is_plan()`, `is__premium_only()`).
+_Avoid_: adding the Freemius SDK back, or license code outside `pro__premium_only/`
 
 **~stackable**:
 JS path alias to `src/` (see `jsconfig.json`).
