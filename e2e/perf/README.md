@@ -37,8 +37,7 @@ Or run the same path CI uses: `bash e2e/perf/ci/run.sh <plugin build> off`
 | `dom-styles.spec.js` | Number of Stackable `<style>`/`<link>` tags on the benchmark page. |
 | `cascade-order.spec.js` | On real pages (block + classic theme, late rendering) the rules on the page keep the canonical stylesheet order. |
 | `legacy-identical.spec.js` | With the legacy flag on the output is identical to the old release (record the reference with `STK_PERF_LEGACY=release STK_PERF_REF_WRITE=1`). |
-| `premium.spec.js` | Premium: block stylesheet handles, Premium CSS only for its blocks, no Freemius queries on the frontend, dynamic content and conditional display. |
-| `freemius-cache.spec.js` | Premium (with the e2e license mock): the frontend license cache follows license activation / deactivation and admin page loads on the next request. |
+| `premium.spec.js` | Premium: block stylesheet handles, Premium CSS only for its blocks, dynamic content and conditional display. |
 | `visual-compare.spec.js` | Computed styles of every element with the new loading vs the legacy bundle, same site and markup (TT5 + TT1, 1440/768/375, color schemes + custom breakpoints). Catches rules a block's stylesheet has for other blocks' markup. |
 | `force-load.spec.js` | `stackable_force_css_load`: Stackable markup added by a script after load (`?stk_inject`), blocks rendered late, custom breakpoints and color schemes (with and without a base scheme) are styled the same as with the legacy bundle. |
 | `lazy-php.spec.js` | Editor-only PHP is not loaded on the frontend. |

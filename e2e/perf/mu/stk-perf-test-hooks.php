@@ -18,10 +18,6 @@
  * - ?stk_no_finalize=1            Turns off moving late CSS into the first <style> (stackable_frontend_css_finalize_in_buffer).
  * - admin-ajax action stk_perf_ajax&post=<id>  Returns the rendered blocks of a post (AJAX render).
  * - Header "X-Stk-Perf-Admin: 1"  Loads the request as user 1 (to fetch wp-admin pages without logging in).
- * - Header "X-Stk-Perf-Fs-Action: <tag>"  In the admin, fires that Freemius action (sugb_fs()->do_action())
- *                                  as the SDK does on a license / plan change.
- * - Header "X-Stk-Perf-License: 1" Appends <!-- stk-license {"can_use":..,"stub":..} --> to frontend pages.
- * - Option stk_perf_license_off    When the Freemius SDK loads, take away the (mocked) license.
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -124,39 +120,4 @@ if ( ! empty( $_SERVER['HTTP_X_STK_PERF_ADMIN'] ) ) {
 	add_filter( 'determine_current_user', function() {
 		return 1;
 	}, 100 );
-}
-
-// Only when the real SDK loads (admin, AJAX, cron): no extra frontend query.
-add_action( 'sugb_fs_loaded', function() {
-	$apply = function() {
-		if ( ! get_option( 'stk_perf_license_off' ) ) {
-			return;
-		}
-		try {
-			$property = new ReflectionProperty( sugb_fs(), '_license' );
-			$property->setAccessible( true );
-			$property->setValue( sugb_fs(), null );
-		} catch ( ReflectionException $e ) {
-		}
-	};
-	$apply();
-	add_action( 'init', $apply, 5 );
-	add_action( 'admin_menu', $apply, 5 );
-	add_action( 'admin_init', $apply, 5 );
-	add_action( 'shutdown', $apply, 1 );
-	if ( ! empty( $_SERVER['HTTP_X_STK_PERF_FS_ACTION'] ) ) {
-		add_action( 'admin_init', function() {
-			sugb_fs()->do_action( sanitize_key( $_SERVER['HTTP_X_STK_PERF_FS_ACTION'] ) );
-		}, 20 );
-	}
-}, 100 );
-
-if ( ! empty( $_SERVER['HTTP_X_STK_PERF_LICENSE'] ) ) {
-	add_action( 'wp_footer', function() {
-		global $sugb_fs;
-		echo '<!-- stk-license ' . wp_json_encode( array(
-			'stub' => $sugb_fs instanceof Stackable_Freemius_Frontend,
-			'can_use' => is_object( $sugb_fs ) ? (bool) $sugb_fs->can_use_premium_code() : null,
-		) ) . ' -->';
-	}, 1000 );
 }

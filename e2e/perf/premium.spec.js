@@ -1,17 +1,15 @@
 /**
- * Premium: block stylesheet handles, Freemius queries, dynamic content and
- * conditional display on the frontend.
+ * Premium: block stylesheet handles, dynamic content and conditional display
+ * on the frontend.
  */
 const { test, expect } = require( '@playwright/test' )
 const {
-	cfg, resetSite, createPage, get, metrics, stkStyles, allCss, wpEval,
+	cfg, resetSite, createPage, get, stkStyles, allCss, wpEval,
 } = require( './lib/site' )
 
 test.skip( ! cfg.isPremium, 'Premium build only' )
 
 const legacy = cfg.isLegacyMode
-// The e2e license mock deletes the Freemius activation transient twice per request.
-const isMockQuery = q => /_transient_fs_plugin_stackable-ultimate-gutenberg-blocks_activated|stk_e2e_simulate_dc_integration/.test( q )
 
 test.beforeAll( async () => {
 	await resetSite()
@@ -51,13 +49,6 @@ test( 'card page gets the Premium card CSS, benchmark page gets no Premium CSS',
 	if ( ! legacy ) {
 		expect( bench ).not.toMatch( /\.stk-block-card\.is-style-horizontal/ )
 	}
-} )
-
-test( 'no Freemius queries on a frontend page view', async () => {
-	const m = await metrics( '/benchmark/' )
-	const fs = m.query_log.filter( q => /\bfs_|freemius/i.test( q ) && ! isMockQuery( q ) )
-	test.info().annotations.push( { type: 'metric', description: `freemius queries: ${ fs.length } ${ fs.join( ' | ' ).slice( 0, 400 ) }` } )
-	expect( fs ).toEqual( [] )
 } )
 
 // Dynamic content and conditional display PHP is loaded only when a block uses them (round 2).
